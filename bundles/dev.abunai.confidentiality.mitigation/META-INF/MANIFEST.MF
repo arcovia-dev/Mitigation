@@ -3,5 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Mitigation
 Bundle-SymbolicName: dev.abunai.confidentiality.mitigation
 Bundle-Version: 1.0.0.qualifier
+Export-Package: 
+ dev.abunai.confidentiality.mitigation
+Require-Bundle: org.dataflowanalysis.converter;bundle-version="2.0.0",
+ org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
+ org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",
+ dev.abunai.confidentiality.analysis;bundle-version="1.0.0"
 Automatic-Module-Name: dev.abunai.confidentiality.mitigation
 Bundle-RequiredExecutionEnvironment: JavaSE-17
