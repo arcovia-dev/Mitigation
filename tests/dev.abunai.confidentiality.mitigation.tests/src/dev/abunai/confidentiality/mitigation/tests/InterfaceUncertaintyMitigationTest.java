@@ -36,8 +36,7 @@ public class InterfaceUncertaintyMitigationTest extends DFDTestBase{
 		var result = MitigationUtils.chooseInterfaceScenario(dfd,dd,intUn,(DFDInterfaceUncertaintyScenario)scenarios.get(0));
 		
 		// Store result
-		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		conv.storeDFD(result , "interface");
+		new DataFlowDiagramConverter().storeDFD(result , "interface");
 		
 	}
 }

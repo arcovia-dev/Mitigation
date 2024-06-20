@@ -40,8 +40,7 @@ public class BehaviorUncertaintyMitigationTest extends DFDTestBase{
 		var result = MitigationUtils.chooseBehaviorScenario(dfd,dd,behUn,(DFDBehaviorUncertaintyScenario)scenarios.get(0));
 		
 		// Store result
-		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		conv.storeDFD(result , "behaviour");
+		new DataFlowDiagramConverter().storeDFD(result , "behaviour");
 		
 	}
 	

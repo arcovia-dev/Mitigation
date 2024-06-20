@@ -35,8 +35,7 @@ public class ExternalUncertaintyMitigationTest extends DFDTestBase{
 		var result = MitigationUtils.chooseExternalScenario(dfd,dd,extUn,(DFDExternalUncertaintyScenario)scenarios.get(0));
 		
 		// Store result
-		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		conv.storeDFD(result , "external");
+		new DataFlowDiagramConverter().storeDFD(result , "external");
 		
 	}
 }

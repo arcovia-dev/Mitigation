@@ -36,8 +36,7 @@ public class ComponentUncertaintyMitigationTest extends DFDTestBase{
 		var result = MitigationUtils.chooseComponentScenario(dfd,dd,compUn,(DFDComponentUncertaintyScenario)scenarios.get(0));
 		
 		// Store result
-		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		conv.storeDFD(result , "component");
+		new DataFlowDiagramConverter().storeDFD(result , "component");
 		
 	}
 	
