@@ -8,9 +8,10 @@ import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintyScenario;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintySource;
 import dev.abunai.confidentiality.analysis.tests.DFDTestBase;
-import dev.abunai.confidentiality.mitigation.MitigationUtils;
+import dev.abunai.confidentiality.mitigation.UncertaintySourceMitigationUtils;
+import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
-public class ComponentUncertaintyMitigationTest extends DFDTestBase{
+public class ComponentUncertaintyMitigationTest extends MitigationTestBase{
 	protected String getFolderName() {
 		return "DFDComponentUncertainty";
 	}
@@ -23,17 +24,10 @@ public class ComponentUncertaintyMitigationTest extends DFDTestBase{
 	@Test
 	public void mitigate() {
 		
-		// Load datadictionary, dataflowdiagram and uncertainties
-		var resourceProvider = (DFDUncertaintyResourceProvider)this.analysis.getResourceProvider();
-		resourceProvider.loadRequiredResources();
-		var dd = resourceProvider.getDataDictionary();
-		var dfd = resourceProvider.getDataFlowDiagram();
-		var uncertainties = resourceProvider.getUncertaintySourceCollection().getSources();
-		
 		// Apply mitigating scenario to dd and dfd
-		var compUn = (DFDComponentUncertaintySource)uncertainties.get(0);
+		var compUn = (DFDComponentUncertaintySource)this.uncertaintySources.get(0);
 		var scenarios = UncertaintyUtils.getUncertaintyScenarios(compUn);
-		var result = MitigationUtils.chooseComponentScenario(dfd,dd,compUn,(DFDComponentUncertaintyScenario)scenarios.get(0));
+		var result = UncertaintySourceMitigationUtils.chooseComponentScenario(this.dfd,this.dd,compUn,(DFDComponentUncertaintyScenario)scenarios.get(0));
 		
 		// Store result
 		new DataFlowDiagramConverter().storeDFD(result , "component");
