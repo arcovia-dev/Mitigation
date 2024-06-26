@@ -97,7 +97,7 @@ public class MitigationModelCalculator {
 
 	private static void storeMitigationCandidates(List<DataFlowDiagramAndDictionary> candidates, String uncertaintyFilePath,
 			List<UncertaintySource> uncertaintiesToKeep, String outputPath, String mitigationUncertaintyPath) {
-
+		System.out.println(mitigationUncertaintyPath);
 		// Store uncertainties
 		ResourceSet resSet = new ResourceSetImpl();
 		Resource oldUncertaintyRes = resSet.getResource(URI.createURI(uncertaintyFilePath), true);
@@ -117,7 +117,7 @@ public class MitigationModelCalculator {
 		try {
 			newUncertaintyRes.save(Collections.EMPTY_MAP);
 		} catch (IOException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		// Store dataflowdigrams and datadictionarys

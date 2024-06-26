@@ -1,0 +1,66 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+from collections import OrderedDict
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), 'uncertainty_rankers'))
+from linear_regression_uncertainty_ranker import LinearRegressionUncertaintyRanker
+from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker 
+
+TRAIN_FILES_DIR = 'train_data_files'
+SEPERATOR = ';'
+
+def getAggregatedRanking(rankings:list[list[(str,float)]]):
+    aggregatedRanking = {}
+    for ranking in rankings:
+        for ranking_element in ranking:
+            if ranking_element[0] not in aggregatedRanking:
+                aggregatedRanking[ranking_element[0]] = ranking_element[1]
+            else:
+                aggregatedRanking[ranking_element[0]] = aggregatedRanking[ranking_element[0]] + ranking_element[1]
+
+    
+    return OrderedDict(sorted(aggregatedRanking.items(), key=lambda item: item[1], reverse=True))
+
+# Get a list of all filenames in the specified directory
+filenames = os.listdir(TRAIN_FILES_DIR)
+
+allRatings = []
+
+for filename in filenames:
+    # Load the CSV file
+    df = pd.read_csv(f'{TRAIN_FILES_DIR}/{filename}', sep=SEPERATOR)
+    print(f'First lines of file {filename}')
+    print(df.head())
+
+    # Assuming 'target' is the column we want to predict
+    X = df.drop('Constraint violated', axis=1)
+    y = df['Constraint violated']
+
+    # Identify categorical columns
+    categorical_cols = X.select_dtypes(include=['object', 'category']).columns
+
+    # One-hot encode categorical columns
+    encoder = OneHotEncoder(sparse_output=False)
+    X_encoded = pd.DataFrame(encoder.fit_transform(X[categorical_cols]), columns=encoder.get_feature_names_out())
+
+    # Drop original categorical columns and concatenate encoded columns
+    X = X.drop(categorical_cols, axis=1)
+    X = pd.concat([X, X_encoded], axis=1)
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    uncertainty_ranker = LinearRegressionUncertaintyRanker(X, X_train, X_test, y, y_train, y_test)
+    uncertainty_ranker.evaluate()
+    rating = uncertainty_ranker.show_ranking_with_correctness_score()
+    
+    print(f'Rating for file: {filename}')
+    print(rating)
+    print('------------------------------------------------------------------------------')
+    
+    allRatings.append(rating)
+
+print('Final Ranking:')
+print(getAggregatedRanking(allRatings))

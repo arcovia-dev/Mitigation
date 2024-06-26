@@ -9,6 +9,8 @@ import org.dataflowanalysis.dfd.datadictionary.Behaviour;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
+import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
+import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -99,6 +101,7 @@ public class UncertaintySourceMitigationUtils {
 
 		var newDia = (DataFlowDiagram)EcoreUtil.copy(dataFlowDiagram);
 		var newDD = (DataDictionary)EcoreUtil.copy(dataDictionary);
+		System.out.println(newDia.getNodes().get(0).getBehaviour().getAssignment().get(0));
 		
 		// Extract Node from default and given scenario
 		var oldNode = newDia.getNodes().stream().filter(n -> n.getId() == source.getTarget().getId()).toList()

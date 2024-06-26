@@ -43,7 +43,7 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase{
 		
 		var pathToModelsUncertainty = pathToDfdTestModels + "/DFDInterfaceUncertainty/default.uncertainty";
 		var pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
-		var pathToMitigationModelUncertainty = pathToMitigationModel +"/mitigation.uncertainty";
+		var pathToMitigationModelUncertainty = pathToDfdTestModels +"/mitigation/mitigation.uncertainty";
 		
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		
