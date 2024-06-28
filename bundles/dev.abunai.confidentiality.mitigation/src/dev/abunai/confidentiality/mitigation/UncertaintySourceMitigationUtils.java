@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.dfd.datadictionary.AbstractAssignment;
 import org.dataflowanalysis.dfd.datadictionary.Behaviour;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
@@ -17,7 +18,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-
 
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDBehaviorUncertaintyScenario;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDBehaviorUncertaintySource;
@@ -35,40 +35,45 @@ public class UncertaintySourceMitigationUtils {
 	public static DataFlowDiagramAndDictionary chooseBehaviorScenario(DataFlowDiagram dataFlowDiagram,
 			DataDictionary dataDictionary, DFDBehaviorUncertaintySource source,
 			DFDBehaviorUncertaintyScenario scenario) {
+
 		// Extract assignments from default scenario and given scenario
-		var newDD = (DataDictionary)EcoreUtil.copy(dataDictionary);
-		
+		var newDD = (DataDictionary) EcoreUtil.copy(dataDictionary);
+		var newDia = (DataFlowDiagram) EcoreUtil.copy(dataFlowDiagram);
+
 		var targetBehaviorId = source.getTarget().getId();
-		var newAssignments = scenario.getTargetAssignments();
-		var oldAssignments = source.getTargetAssignments();
-		var oldAssignmentsIds = oldAssignments.stream().map(a -> a.getId()).toList();
+		var oldAssignmentsIds = source.getTargetAssignments().stream().map(a -> a.getId()).toList();
+
+		var allAssignments = newDD.getBehaviour().stream().map(b -> b.getAssignment()).flatMap(List::stream).toList();
+		var oldAssignments = allAssignments.stream().filter(a -> oldAssignmentsIds.contains(a.getId())).toList();
+		var newAssignments = allAssignments.stream().filter(b -> oldAssignmentsIds.contains(b.getId())).toList();
 
 		correctNewAssignmentsPins(oldAssignments, newAssignments);
 
 		// Add assignments from given scenario, remove assignments from default scenario
-		var ddTargetBehaviors = newDD.getBehaviour().stream().filter(b -> b.getId() == targetBehaviorId)
-				.toList();
-		var ddTargetBehaviorAssignments = ddTargetBehaviors.stream().map(b -> b.getAssignment()).toList();
-		for (var ddTargetBehaviorAssignment : ddTargetBehaviorAssignments) {
-			ddTargetBehaviorAssignment.addAll(newAssignments);
-			ddTargetBehaviorAssignment.removeIf(a -> oldAssignmentsIds.contains(a.getId()));
+		var ddTargetBehaviors = newDD.getBehaviour().stream().filter(b -> b.getId() == targetBehaviorId).toList();
+
+		for (var targetBehavior : ddTargetBehaviors) {
+			targetBehavior.getAssignment().removeIf(a -> oldAssignmentsIds.contains(a.getId()));
+			targetBehavior.getAssignment().addAll(newAssignments);
 		}
-		return new DataFlowDiagramAndDictionary(dataFlowDiagram, newDD);
+
+		replaceNodeBehaviors(newDia, newDD);
+
+		return new DataFlowDiagramAndDictionary(newDia, newDD);
 	}
 
 	public static DataFlowDiagramAndDictionary chooseInterfaceScenario(DataFlowDiagram dataFlowDiagram,
 			DataDictionary dataDictionary, DFDInterfaceUncertaintySource source,
 			DFDInterfaceUncertaintyScenario scenario) {
+		var newDia = (DataFlowDiagram) EcoreUtil.copy(dataFlowDiagram);
 
-		var newDia = (DataFlowDiagram)EcoreUtil.copy(dataFlowDiagram);
 		// Extract destination node and pin from given scenario
 		var targetFlow = source.getTargetFlow();
 		var newDestinationNode = scenario.getTargetNode();
 		var newDestinationPin = scenario.getTargetInPin();
 
 		// Set destination node and pin to the ones in the given scenario
-		var ddTargetFlow = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList()
-				.get(0);
+		var ddTargetFlow = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList().get(0);
 		ddTargetFlow.setDestinationNode(newDestinationNode);
 		ddTargetFlow.setDestinationPin(newDestinationPin);
 
@@ -78,17 +83,16 @@ public class UncertaintySourceMitigationUtils {
 	public static DataFlowDiagramAndDictionary chooseExternalScenario(DataFlowDiagram dataFlowDiagram,
 			DataDictionary dataDictionary, DFDExternalUncertaintySource source,
 			DFDExternalUncertaintyScenario scenario) {
-
+		var newDia = (DataFlowDiagram) EcoreUtil.copy(dataFlowDiagram);
+		
 		// Extract Labels of default scenario (oldLabels) and of given scenario
 		// (newLabels)
-		var newDia = (DataFlowDiagram)EcoreUtil.copy(dataFlowDiagram);
 		var newNodeLabels = scenario.getTargetProperties();
 		var oldNodeLabels = source.getTargetProperties();
 		var targetNode = source.getTarget();
 
 		// Remove Labels from default scenario and add Labels of given scenario
-		var ddTargetNode = newDia.getNodes().stream().filter(n -> n.getId() == targetNode.getId()).toList()
-				.get(0);
+		var ddTargetNode = newDia.getNodes().stream().filter(n -> n.getId() == targetNode.getId()).toList().get(0);
 		ddTargetNode.getProperties().removeAll(oldNodeLabels);
 		ddTargetNode.getProperties().addAll(newNodeLabels);
 
@@ -98,28 +102,14 @@ public class UncertaintySourceMitigationUtils {
 	public static DataFlowDiagramAndDictionary chooseComponentScenario(DataFlowDiagram dataFlowDiagram,
 			DataDictionary dataDictionary, DFDComponentUncertaintySource source,
 			DFDComponentUncertaintyScenario scenario) {
+		var newDia = (DataFlowDiagram) EcoreUtil.copy(dataFlowDiagram);
+		var newDD = (DataDictionary) EcoreUtil.copy(dataDictionary);
 
-		var newDia = (DataFlowDiagram)EcoreUtil.copy(dataFlowDiagram);
-		var newDD = (DataDictionary)EcoreUtil.copy(dataDictionary);
-		System.out.println(newDia.getNodes().get(0).getBehaviour().getAssignment().get(0));
-		
 		// Extract Node from default and given scenario
-		var oldNode = newDia.getNodes().stream().filter(n -> n.getId() == source.getTarget().getId()).toList()
-				.get(0);
-		var newNode = newDia.getNodes().stream().filter(n -> n.getId() == scenario.getTarget().getId())
-				.toList().get(0);
-
-		// Take over pins from target node in default scenario
-		newNode.getBehaviour().getInPin().addAll(oldNode.getBehaviour().getInPin());
-		oldNode.getBehaviour().getInPin().clear();
-		newNode.getBehaviour().getOutPin().addAll(oldNode.getBehaviour().getOutPin());
-		oldNode.getBehaviour().getOutPin().clear();
-		var oldNodeBehavior = newDD.getBehaviour().stream().filter(b->b.getId() == oldNode.getBehaviour().getId())
-				.toList().get(0);
-		var newNodeBehavior = newDD.getBehaviour().stream().filter(b->b.getId() == newNode.getBehaviour().getId())
-				.toList().get(0);
-		newNodeBehavior.getInPin().addAll(oldNodeBehavior.getInPin());
-		newNodeBehavior.getOutPin().addAll(oldNodeBehavior.getOutPin());
+		var oldNode = newDia.getNodes().stream().filter(n -> n.getId() == source.getTarget().getId()).toList().get(0);
+		var oldNodeBehaviorId = oldNode.getBehaviour().getId();
+		var newNode = newDia.getNodes().stream().filter(n -> n.getId() == scenario.getTarget().getId()).toList().get(0);
+		var newNodeBehaviorId = newNode.getBehaviour().getId();
 
 		// Replace oldNode with newNode in all Flows
 		for (var flow : newDia.getFlows()) {
@@ -130,46 +120,79 @@ public class UncertaintySourceMitigationUtils {
 				flow.setSourceNode(newNode);
 			}
 		}
-
+		// Remove old Node
 		newDia.getNodes().removeIf(n -> n.getId() == oldNode.getId());
-		newDD.getBehaviour().remove(oldNodeBehavior);
-		return new DataFlowDiagramAndDictionary(newDia, newDD);
+
+		Behaviour newNodeNewBehavior = newDD.getBehaviour().stream().filter(b -> b.getId().equals(newNodeBehaviorId))
+				.toList().get(0);
+		Behaviour oldNodeOldBehavior = newDD.getBehaviour().stream().filter(b -> b.getId().equals(oldNodeBehaviorId))
+				.toList().get(0);
+		newNodeNewBehavior.getInPin().addAll(oldNodeOldBehavior.getInPin());
+		newNodeNewBehavior.getOutPin().addAll(oldNodeOldBehavior.getOutPin());
+		newDD.getBehaviour().remove(oldNodeOldBehavior);
+		newNode.setBehaviour(newNodeNewBehavior);
+
+		removeInPinsThatDontOccurInFlows(newDD, newDia);
+
+		var res = new DataFlowDiagramAndDictionary(newDia, newDD);
+		// DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
+		// var web = conv.dfdToWeb(res);
+		// conv.storeWeb(web, "compEx");
+		return res;
 	}
 
-	/*public static DataFlowDiagramAndDictionary chooseConnectorScenario(DataFlowDiagram dataFlowDiagram,
+	public static DataFlowDiagramAndDictionary chooseConnectorScenario(DataFlowDiagram dataFlowDiagram,
 			DataDictionary dataDictionary, DFDConnectorUncertaintySource source,
 			DFDConnectorUncertaintyScenario scenario) {
+		var newDia = (DataFlowDiagram) EcoreUtil.copy(dataFlowDiagram);
+		var newDD = (DataDictionary) EcoreUtil.copy(dataDictionary);
 
-		// Extract destination node and pin from given scenario
+		// Extract fields for replacements
 		var targetFlow = source.getTargetFlow();
 		var newDestinationNode = scenario.getTargetNode();
 		var newDestinationPin = scenario.getTargetPin();
-
-		var newAssignments = scenario.getTargetAssignments();
-		var oldAssignments = source.getTargetAssignments();
-		var oldAssignmentsIds = oldAssignments.stream().map(a -> a.getId()).toList();
-
-		correctNewAssignmentsPins(oldAssignments, newAssignments);
+		var oldAssignmentsIds = source.getTargetAssignments().stream().map(a -> a.getId()).toList();
+		var newAssignmentsIds = scenario.getTargetAssignments().stream().map(a -> a.getId()).toList();
+		var newAssignments = newDD.getBehaviour().stream().map(b -> b.getAssignment()).flatMap(List::stream)
+				.filter(a -> newAssignmentsIds.contains(a.getId())).toList();
 
 		// Set destination node and pin to the ones in the given scenario
-		var ddTargetFlow = dataFlowDiagram.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList()
-				.get(0);
+		var ddTargetFlow = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList().get(0);
 		ddTargetFlow.setDestinationNode(newDestinationNode);
 		ddTargetFlow.setDestinationPin(newDestinationPin);
 
-		// Add assignments from given scenario, remove assignments from default scenario
-		var ddTBehaviors = dataDictionary.getBehaviour();
-		var ddTargetAssignments = ddTBehaviors.stream()
-				.map(b -> b.getAssignment())
-				.filter(a -> )
-				.toList();
-		for (var ddTargetBehaviorAssignment : ddTargetAssignments) {
-			ddTargetBehaviorAssignment.addAll(newAssignments);
-			ddTargetBehaviorAssignment.removeIf(a -> oldAssignmentsIds.contains(a.getId()));
-		}
+		replaceAssignments(newDD, oldAssignmentsIds, newAssignmentsIds, newAssignments);
 
-		return new DataFlowDiagramAndDictionary(dataFlowDiagram, dataDictionary);
-	}*/
+		return new DataFlowDiagramAndDictionary(newDia, newDD);
+	}
+
+	private static void removeInPinsThatDontOccurInFlows(DataDictionary newDD, DataFlowDiagram newDia) {
+		List<String> idsOfDstPinsInFlows = newDia.getFlows().stream().map(f -> f.getDestinationPin().getId()).toList();
+		for (var behavior : newDD.getBehaviour()) {
+			var PinsToRemove = behavior.getInPin().stream().filter(p -> !idsOfDstPinsInFlows.contains(p.getId()))
+					.toList();
+			behavior.getInPin().removeAll(PinsToRemove);
+		}
+	}
+
+	private static void replaceAssignments(DataDictionary newDD, List<String> oldAssignmentsIds,
+			List<String> newAssignmentsIds, List<AbstractAssignment> newAssignments) {
+
+		for (var behavior : newDD.getBehaviour()) {
+			var addNewAssignments = false;
+			List<AbstractAssignment> assignmentsToRemove = new ArrayList<>();
+			for (var assignment : behavior.getAssignment()) {
+				if (oldAssignmentsIds.contains(assignment.getId())) {
+					assignmentsToRemove.add(assignment);
+					addNewAssignments = true;
+				}
+				behavior.getAssignment().removeAll(assignmentsToRemove);
+				if (addNewAssignments) {
+					behavior.getAssignment().addAll(newAssignments);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Replaces pins of newAssignments with the ones in the old assigments (matching
@@ -195,6 +218,15 @@ public class UncertaintySourceMitigationUtils {
 			}
 			var outputPin = assignment.getOutputPin();
 			outputPin.setId(inPinEntityNameToInPinId.get(outputPin.getEntityName()));
+		}
+	}
+
+	private static void replaceNodeBehaviors(DataFlowDiagram newDia, DataDictionary newDD) {
+		for (var node : newDia.getNodes()) {
+			var nodeBehaviorId = node.getBehaviour().getId();
+			var newNodeBehavior = newDD.getBehaviour().stream().filter(b -> b.getId().equals(nodeBehaviorId)).toList()
+					.get(0);
+			node.setBehaviour(newNodeBehavior);
 		}
 	}
 }

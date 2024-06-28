@@ -10,48 +10,39 @@ import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
-import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
-import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintyScenario;
-import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintySource;
-import dev.abunai.confidentiality.analysis.tests.DFDTestBase;
+import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUncertaintyScenario;
+import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUncertaintySource;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.UncertaintySourceMitigationUtils;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
-public class ComponentUncertaintyMitigationTest extends MitigationTestBase{
+public class ConnectorUncertaintyMitigationTest extends MitigationTestBase{
+	
 	protected String getFolderName() {
-		return "DFDComponentUncertainty";
+		return "DFDConnectorUncertainty";
 	}
 
 	protected String getFilesName() {
 		return "default";
 	}
-
-
+	
 	@Test
 	public void mitigateAutomatically() {
-		/*DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
-		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-		uncertainFlowGraphs.evaluate();
-		
-		List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs, it -> {
-			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
-		});
-		
-		TrainDataGeneration.violationDataToCSV(violations, uncertaintySources, "violations.csv");*/
-		
+
 		var pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
 		var pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
 		
-		var pathToModelsUncertainty = pathToDfdTestModels + "/DFDComponentUncertainty/default.uncertainty";
+		var pathToModelsUncertainty = pathToDfdTestModels + "/DFDConnectorUncertainty/default.uncertainty";
 		var pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
 		var pathToMitigationModelUncertainty = pathToDfdTestModels +"/mitigation/mitigation.uncertainty";
 		
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+		
 		constraints.add(it -> {
 			System.out.println(this.retrieveNodeLabels(it));
 			System.out.println(this.retrieveDataLabels(it));
-			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			if (this.retrieveNodeLabels(it).contains("EU")) return false;
+			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal") && !this.retrieveDataLabels(it).contains("Encrypted");
 		});
 		var result = MitigationModelCalculator.findMitigatingModel(
 				new DataFlowDiagramAndDictionary(this.dfd,this.dd),
@@ -69,13 +60,12 @@ public class ComponentUncertaintyMitigationTest extends MitigationTestBase{
 	public void mitigateManually() {
 		
 		// Apply mitigating scenario to dd and dfd
-		var compUn = (DFDComponentUncertaintySource)this.uncertaintySources.get(0);
-		var scenarios = UncertaintyUtils.getUncertaintyScenarios(compUn);
-		var result = UncertaintySourceMitigationUtils.chooseComponentScenario(this.dfd,this.dd,compUn,(DFDComponentUncertaintyScenario)scenarios.get(0));
+		var intUn = (DFDInterfaceUncertaintySource)this.uncertaintySources.get(0);
+		var scenarios = UncertaintyUtils.getUncertaintyScenarios(intUn);
+		var result = UncertaintySourceMitigationUtils.chooseInterfaceScenario(this.dfd,this.dd,intUn,(DFDInterfaceUncertaintyScenario)scenarios.get(0));
 		
 		// Store result
-		new DataFlowDiagramConverter().storeDFD(result , "component");
+		new DataFlowDiagramConverter().storeDFD(result , "interface");
 		
 	}
-	
 }

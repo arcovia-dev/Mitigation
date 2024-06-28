@@ -1,7 +1,7 @@
 package dev.abunai.confidentiality.mitigation;
 
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -24,6 +24,8 @@ import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDBehaviorUnce
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDBehaviorUncertaintySource;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintyScenario;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintySource;
+import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDConnectorUncertaintyScenario;
+import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDConnectorUncertaintySource;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDExternalUncertaintyScenario;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDExternalUncertaintySource;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUncertaintyScenario;
@@ -166,6 +168,11 @@ public class MitigationModelCalculator {
 						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseComponentScenario(
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDComponentUncertaintySource) actSource, castedScenario);
+						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
+					}else if (scenario instanceof DFDConnectorUncertaintyScenario castedScenario) {
+						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseConnectorScenario(
+								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
+								(DFDConnectorUncertaintySource) actSource, castedScenario);
 						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
 					} else {
 						throw new IllegalArgumentException("Unexpected DFD uncertainty scenario: %s"

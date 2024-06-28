@@ -31,6 +31,34 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase{
 	}
 	
 	@Test
+	public void mitigateAutomatically() {
+		var pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
+		var pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
+		
+		var pathToModelsUncertainty = pathToDfdTestModels + "/DFDBehaviorUncertainty/default.uncertainty";
+		var pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
+		var pathToMitigationModelUncertainty = pathToDfdTestModels +"/mitigation/mitigation.uncertainty";
+		
+		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+		constraints.add(it -> {
+			System.out.println(this.retrieveNodeLabels(it));
+			System.out.println(this.retrieveDataLabels(it));
+			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Unencrypted");
+		});
+		var result = MitigationModelCalculator.findMitigatingModel(
+				new DataFlowDiagramAndDictionary(this.dfd,this.dd),
+				uncertaintySources, 
+				uncertaintySources,
+				constraints,
+				pathToModelsUncertainty,
+				pathToMitigationModel,
+				pathFromTestModelsToMitigationFolder,
+				pathToMitigationModelUncertainty);
+		System.out.println(result);
+	}
+	
+	
+	@Test
 	public void mitigateWithScenario() {
 		// Apply mitigating scenario to dd and dfd
 		var behUn = (DFDBehaviorUncertaintySource)this.uncertaintySources.get(0);
