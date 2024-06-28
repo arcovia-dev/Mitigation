@@ -133,12 +133,48 @@ public class UncertaintySourceMitigationUtils {
 		newNode.setBehaviour(newNodeNewBehavior);
 
 		removeInPinsThatDontOccurInFlows(newDD, newDia);
+		replaceOldDDReferencesWithTheOnesFromNewDD(newDD, newDia);
 
-		var res = new DataFlowDiagramAndDictionary(newDia, newDD);
-		// DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		// var web = conv.dfdToWeb(res);
-		// conv.storeWeb(web, "compEx");
-		return res;
+		return new DataFlowDiagramAndDictionary(newDia, newDD);
+	}
+
+	private static void replaceOldDDReferencesWithTheOnesFromNewDD(DataDictionary newDD, DataFlowDiagram newDia) {
+		// Replace Behaviors and Properties
+		for(var node: newDia.getNodes()) {
+			var nodeBehaviorId = node.getBehaviour().getId();
+			var nodeBehaviorInDD = newDD.getBehaviour().stream()
+					.filter(b -> b.getId().equals(nodeBehaviorId))
+					.toList().get(0);
+			node.setBehaviour(nodeBehaviorInDD);
+			var nodePropertyIds = node.getProperties().stream()
+					.map(p -> p.getId()).toList();
+			node.getProperties().clear();
+			for (var npid : nodePropertyIds) {
+				var newProp = newDD.getLabelTypes().stream()
+						.map(l -> l.getLabel())
+						.flatMap(List::stream)
+						.filter(l -> l.getId().equals(npid))
+						.toList().get(0);		
+				node.getProperties().add(newProp);
+			}
+		}
+		// Replace pins
+		for(var flow : newDia.getFlows()) {
+			var srcPinId = flow.getSourcePin().getId();
+			var dstPinId = flow.getDestinationPin().getId();
+			var newSrcPin = newDD.getBehaviour().stream()
+					.map(b -> b.getOutPin())
+					.flatMap(List::stream)
+					.filter(p -> p.getId().equals(srcPinId))
+					.toList().get(0);
+			var newDstPin = newDD.getBehaviour().stream()
+					.map(b -> b.getInPin())
+					.flatMap(List::stream)
+					.filter(p -> p.getId().equals(dstPinId))
+					.toList().get(0);
+			flow.setSourcePin(newSrcPin);
+			flow.setDestinationPin(newDstPin);
+		}
 	}
 
 	public static DataFlowDiagramAndDictionary chooseConnectorScenario(DataFlowDiagram dataFlowDiagram,

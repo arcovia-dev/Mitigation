@@ -10,8 +10,8 @@ import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
-import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUncertaintyScenario;
-import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUncertaintySource;
+import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDConnectorUncertaintyScenario;
+import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDConnectorUncertaintySource;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.UncertaintySourceMitigationUtils;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
@@ -60,9 +60,9 @@ public class ConnectorUncertaintyMitigationTest extends MitigationTestBase{
 	public void mitigateManually() {
 		
 		// Apply mitigating scenario to dd and dfd
-		var intUn = (DFDInterfaceUncertaintySource)this.uncertaintySources.get(0);
+		var intUn = (DFDConnectorUncertaintySource)this.uncertaintySources.get(0);
 		var scenarios = UncertaintyUtils.getUncertaintyScenarios(intUn);
-		var result = UncertaintySourceMitigationUtils.chooseInterfaceScenario(this.dfd,this.dd,intUn,(DFDInterfaceUncertaintyScenario)scenarios.get(0));
+		var result = UncertaintySourceMitigationUtils.chooseConnectorScenario(this.dfd,this.dd,intUn,(DFDConnectorUncertaintyScenario)scenarios.get(0));
 		
 		// Store result
 		new DataFlowDiagramConverter().storeDFD(result , "interface");

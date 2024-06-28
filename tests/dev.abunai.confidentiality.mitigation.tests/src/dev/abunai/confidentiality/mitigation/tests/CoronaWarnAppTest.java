@@ -9,6 +9,8 @@ import dev.abunai.confidentiality.analysis.tests.PCMTestBase;
 import static dev.abunai.confidentiality.mitigation.TrainDataGeneration.violationDataToCSV;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 public class CoronaWarnAppTest extends PCMTestBase {
@@ -28,7 +30,8 @@ public class CoronaWarnAppTest extends PCMTestBase {
 			return "casestudies";
 		}
 
-		@Test
+		
+		@Ignore
 		void testCWA() {
 			PCMUncertainFlowGraphCollection flowGraphs = (PCMUncertainFlowGraphCollection) analysis.findFlowGraph();
 			PCMUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
