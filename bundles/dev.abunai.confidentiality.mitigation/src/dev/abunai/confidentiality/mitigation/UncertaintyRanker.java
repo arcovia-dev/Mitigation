@@ -26,18 +26,18 @@ System.out.println(command);
             }
 
             // Wait for the process to complete and get the exit code
-            int exitCode = process.waitFor();
-            System.out.println("Python script exited with code " + exitCode);
+            //int exitCode = process.waitFor();
+            //System.out.println("Python script exited with code " + exitCode);
 
             // Get the output as a String
             String result = output.toString();
-            System.out.println("Output from Python script:");
-            System.out.println(result);
+            //System.out.println("Output from Python script:");
+            //System.out.println(result);
             result = result.substring(0, result.length() - 1);
             result = result.replaceAll("[\n\r]", "");
             return Arrays.asList(result.split(","));
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 		return null;

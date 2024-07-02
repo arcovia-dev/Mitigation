@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -9,11 +10,17 @@ import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.junit.jupiter.api.Test;
 
+import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDExternalUncertaintyScenario;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDExternalUncertaintySource;
+import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
+import dev.abunai.confidentiality.analysis.testmodels.Activator;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
@@ -34,15 +41,39 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase{
 	private final String trainDataDirectory = scriptDirectory + "\\train_data_files";
 	private final String pathToUncertaintyRankingScript = scriptDirectory+"\\uncertainty_ranking.py";
 	
+	private void rebuildAnalysis() {
+		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
+				.toString();
+		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
+				.toString();
+		final var uncertaintyPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".uncertainty")
+				.toString();
+
+		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
+				.modelProjectName(TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
+				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
+				.useUncertaintyModel(uncertaintyPath);
+
+		UncertaintyAwareConfidentialityAnalysis newanalysis = builder.build();
+		analysis.initializeAnalysis();
+		var resourceProvider = (DFDUncertaintyResourceProvider) this.analysis.getResourceProvider();
+		resourceProvider.loadRequiredResources();
+		dd = resourceProvider.getDataDictionary();
+		dfd = resourceProvider.getDataFlowDiagram();
+		uncertaintySources = resourceProvider.getUncertaintySourceCollection().getSources();
+
+		analysis = newanalysis;
+		analysis.initializeAnalysis();
+	}
+	
 	@Test
-	public void createTrainData() {
-		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+	public void createTrainData(List<Predicate<? super AbstractVertex<?>>> constraints) {
+		/*List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
 			System.out.println(this.retrieveNodeLabels(it));
 			System.out.println(this.retrieveDataLabels(it));
 			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
-		});
-		
+		});*/
 		var count = 0;
 		for (var constraint : constraints) {
 			DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
@@ -70,6 +101,9 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase{
 			System.out.println(this.retrieveDataLabels(it));
 			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
 		});
+		
+		//createTrainData(constraints);
+		//rebuildAnalysis();
 		
 		var pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
 		var pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
