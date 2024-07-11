@@ -67,8 +67,9 @@ relevant_uncertainties = []
 printedCount = 0
 while printedCount < RELEVANT_UNCERTAINTIES_LENGTH and bool(final_ranking):
     item = final_ranking.popitem(last=False)
+    column = item[0].split('_').pop()
     uncertainty_name = '_'.join(item[0].split('_')[:-1])
-    if uncertainty_name not in relevant_uncertainties:
+    if uncertainty_name not in relevant_uncertainties and column != 'Irrelevant':
         relevant_uncertainties.append(uncertainty_name)
         printedCount = printedCount + 1
 

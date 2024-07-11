@@ -33,9 +33,8 @@ public class UncertaintyRanker {
             String result = output.toString();
             //System.out.println("Output from Python script:");
             //System.out.println(result);
-            result = result.substring(0, result.length() - 1);
-            result = result.replaceAll("[\n\r]", "");
-            return Arrays.asList(result.split(","));
+
+            return Arrays.asList(result.split(System.lineSeparator()));
 
         } catch (IOException e) {
             e.printStackTrace();

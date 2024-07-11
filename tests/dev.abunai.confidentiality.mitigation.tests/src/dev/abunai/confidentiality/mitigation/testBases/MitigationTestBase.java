@@ -22,6 +22,12 @@ public abstract class MitigationTestBase extends DFDTestBase {
 	public DataFlowDiagram dfd;
 	
 	public List<UncertaintySource> uncertaintySources;
+	
+	protected final String scriptDirectory = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\Mitigation\\bundles\\dev.abunai.confidentiality.mitigation\\scripts\\uncertaintyRanking";
+	protected final String trainDataDirectory = scriptDirectory + "\\train_data_files";
+	protected final String pathToUncertaintyRankingScript = scriptDirectory + "\\uncertainty_ranking.py";
+	protected final String pathToRelevantUncertainties = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/relevantUncertainties.txt";
+
 
 	@BeforeEach
 	public void before() {

@@ -10,10 +10,13 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
+import org.dataflowanalysis.analysis.dfd.core.DFDCharacteristicValue;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
@@ -22,37 +25,52 @@ import dev.abunai.confidentiality.mitigation.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
+public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "DFDExternalUncertainty";
+		return "OnlineBankingModel";
 	}
 
 	protected String getFilesName() {
-		return "default";
+		return "online_banking_model";
 	}
 
-	private List<Predicate<? super AbstractVertex<?>>> getConstraints(){
+	private final int uncertaintysToModify = 6;
+
+
+	private List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
 			System.out.println(this.retrieveNodeLabels(it));
 			System.out.println(this.retrieveDataLabels(it));
-			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			boolean res =  this.retrieveNodeLabels(it).contains("nonEU")
+					&& this.retrieveDataLabels(it).contains("Personal");
+			if(res) {
+				System.out.println("violation occured here:");
+				System.out.println(it.toString());
+			}
+			return res;
 		});
 		return constraints;
 	}
-	
+
 	@Test
 	@Order(1)
 	public void createTrainData() {
-		
+
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
-		
+
 		// Generate train data for each constraint
 		for (var constraint : constraints) {
 			DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
@@ -65,12 +83,14 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
 			count++;
 		}
-		
-		// Rank the uncertainties specified in the given model and store the result in the specified file
+
+		// Rank the uncertainties specified in the given model and store the result in
+		// the specified file
 		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
-				trainDataDirectory, 1);
+				trainDataDirectory, uncertaintysToModify);
 		Path filePath = Paths.get(pathToRelevantUncertainties);
-		var content = String.join(System.lineSeparator(), relevantUncertaintyIds);
+		var content = String.join("\n", relevantUncertaintyIds);
+		System.out.println(content);
 		try {
 			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
 		} catch (IOException e) {
@@ -80,8 +100,8 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(2)
-	public void mitigateAutomatically() {
-		
+	public void createMitigationCandidatesAutomatically() {
+
 		// Load uncertainties that should be modified for the mitigation
 		Path filePath = Paths.get(pathToRelevantUncertainties);
 		final List<String> lines;
@@ -97,7 +117,8 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
 		var pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
-		var pathToModelsUncertainty = pathToDfdTestModels + "/DFDExternalUncertainty/default.uncertainty";
+		var pathToModelsUncertainty = pathToDfdTestModels
+				+ String.format("/%s/%s.uncertainty", getFolderName(), getFilesName());
 		var pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
 		var pathToMitigationModelUncertainty = pathToDfdTestModels + "/mitigation/mitigation.uncertainty";
 
@@ -107,5 +128,5 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 				pathFromTestModelsToMitigationFolder, pathToMitigationModelUncertainty);
 		System.out.println(result);
 	}
-	
+
 }

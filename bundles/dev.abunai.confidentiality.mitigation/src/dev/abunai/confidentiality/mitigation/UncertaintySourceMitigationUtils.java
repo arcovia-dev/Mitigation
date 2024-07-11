@@ -58,6 +58,7 @@ public class UncertaintySourceMitigationUtils {
 		}
 
 		replaceNodeBehaviors(newDia, newDD);
+		replaceOldDDReferencesWithTheOnesFromNewDD(newDD, newDia);
 
 		return new DataFlowDiagramAndDictionary(newDia, newDD);
 	}

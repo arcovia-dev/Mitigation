@@ -60,6 +60,7 @@ public class MitigationModelCalculator {
 	private static List<String> getValidMitigationModels(String outputPath, int modelsAmount, List<Predicate<? super AbstractVertex<?>>> constraintFunctions) {
 		List<String> result = new ArrayList<>();
 		for (int i = 0; i < modelsAmount; i++) {
+			System.out.println(i);
 			final var dataFlowDiagramPath = Paths
 					.get(outputPath, "mitigation" + Integer.toString(i) + ".dataflowdiagram").toString();
 			final var dataDictionaryPath = Paths.get(outputPath, "mitigation" + Integer.toString(i) + ".datadictionary")
@@ -71,16 +72,16 @@ public class MitigationModelCalculator {
 					.usePluginActivator(Activator.class).useDataDictionary(dataDictionaryPath)
 					.useDataFlowDiagram(dataFlowDiagramPath).useUncertaintyModel(uncertaintyPath);
 
-			DFDUncertaintyAwareConfidentialityAnalysis analysis = builder.build();
-			analysis.initializeAnalysis();
+			DFDUncertaintyAwareConfidentialityAnalysis ana = builder.build();
+			ana.initializeAnalysis();
 
-			DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
+			DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) ana.findFlowGraph();
 			DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
 			uncertainFlowGraphs.evaluate();
 			
 			boolean noConstraintViolated = true;
 			for(var constraint: constraintFunctions) {
-				List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,constraint);
+				List<UncertainConstraintViolation> violations = ana.queryUncertainDataFlow(uncertainFlowGraphs,constraint);
 				if(violations.size() > 0) {
 					noConstraintViolated = false;
 					break;
@@ -109,11 +110,17 @@ public class MitigationModelCalculator {
 		var sourceCollection = oldUncertaintyRes.getContents().get(0);
 		newUncertaintyRes.getContents().add(sourceCollection);
 
+		Stack<EObject> objectsToRemove = new Stack<>();
 		for (EObject eObject : sourceCollection.eContents()) {
 			var id = EcoreUtil.getID(eObject);
 			if (!idsToKeep.contains(id)) {
-				EcoreUtil.delete(eObject);
+				objectsToRemove.push(eObject);
 			}
+		}
+		
+		while(!objectsToRemove.isEmpty()) {
+			var object = objectsToRemove.pop();
+			EcoreUtil.delete(object);
 		}
 		
 		try {
