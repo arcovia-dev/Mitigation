@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_UigB4D3FEe-khNoznyvETA" entityName="show_balance_uncertain">
+    <target href="online_banking_model.datadictionary#_UdqYgDzxEe-zu9ooA-6uGQ"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_ta1NYj3FEe-khNoznyvETA"/>
+    <scenarios id="_DDDTAD3GEe-khNoznyvETA">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_IJ_8kjzzEe-FZ5UvuKgeiA"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_MuWTqD3GEe-khNoznyvETA" entityName="change_cc_uncertain">
+    <target href="online_banking_model.datadictionary#_UdqYhDzxEe-zu9ooA-6uGQ"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_Uwm54j3GEe-khNoznyvETA"/>
+    <scenarios id="_npuU8D3GEe-khNoznyvETA">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_vx8hsjz0Ee-FZ5UvuKgeiA"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_iPkj-D3HEe-khNoznyvETA" entityName="banking_data_personal_uncertain">
+    <target href="online_banking_model.datadictionary#_UdrmpzzxEe-zu9ooA-6uGQ"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_UdxGMjzxEe-zu9ooA-6uGQ"/>
+    <scenarios id="_sDc40D3HEe-khNoznyvETA">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_PQaLQj3HEe-khNoznyvETA"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_UMYuoz7bEe-m-JpgVtQNVA" entityName="Banking_Data_Location_Uncertain">
+    <target xsi:type="dataflowdiagram:Store" href="online_banking_model.dataflowdiagram#euaus4"/>
+    <targetProperties href="online_banking_model.datadictionary#5hnugm"/>
+    <scenarios id="_elkI_T7bEe-m-JpgVtQNVA">
+      <targetProperties href="online_banking_model.datadictionary#g10hr"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_geQI6D7bEe-m-JpgVtQNVA" entityName="Customer_Settings_Location_Uncertain">
+    <target xsi:type="dataflowdiagram:Store" href="online_banking_model.dataflowdiagram#pn43tc"/>
+    <targetProperties href="online_banking_model.datadictionary#5hnugm"/>
+    <scenarios id="_mT_NMD7bEe-m-JpgVtQNVA">
+      <targetProperties href="online_banking_model.datadictionary#g10hr"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_pbfJpz7bEe-m-JpgVtQNVA" entityName="Fond_Manager_Location_Uncertain">
+    <target xsi:type="dataflowdiagram:External" href="online_banking_model.dataflowdiagram#e4v729"/>
+    <targetProperties href="online_banking_model.datadictionary#g10hr"/>
+    <scenarios id="_ziFmMD7bEe-m-JpgVtQNVA">
+      <targetProperties href="online_banking_model.datadictionary#5hnugm"/>
+    </scenarios>
+  </sources>
+
+  <sources xsi:type="dfd:DFDConnectorUncertaintySource" id="_hcMRZj-XEe-YAIUDUgYayg" entityName="loan_offer_process_uncertain">
+    <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_Udy7aDzxEe-zu9ooA-6uGQ"/>
+    <targetFlow href="online_banking_model.dataflowdiagram#npencu"/>
+    <scenarios id="_M1Z-LT-YEe-YAIUDUgYayg">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_PV70oj08Ee-NGYlxkxrTpw"/>
+      <targetPin href="online_banking_model.datadictionary#jrpupm"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="online_banking_model.dataflowdiagram#o1tz7k"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDConnectorUncertaintySource" id="_9TNJqj-ZEe-YAIUDUgYayg" entityName="fond_recommendation_process_uncertain">
+    <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_cCRfAj-aEe-YAIUDUgYayg"/>
+    <targetFlow href="online_banking_model.dataflowdiagram#r6v4zl"/>
+    <scenarios id="_9jqLAD-aEe-YAIUDUgYayg">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="online_banking_model.datadictionary#_tagWIj-aEe-YAIUDUgYayg"/>
+      <targetPin href="online_banking_model.datadictionary#s7mby"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="online_banking_model.dataflowdiagram#kylsiw"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>

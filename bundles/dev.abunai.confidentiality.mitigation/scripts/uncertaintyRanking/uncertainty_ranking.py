@@ -7,6 +7,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'uncertainty_rankers'))
 from linear_regression_uncertainty_ranker import LinearRegressionUncertaintyRanker
 from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker 
+from principal_component_uncertainty_ranker import PrincipalComponentUncertaintyRanker
 
 TRAIN_FILES_DIR = sys.argv[1]
 RELEVANT_UNCERTAINTIES_LENGTH = int(sys.argv[2])
@@ -51,7 +52,7 @@ for filename in filenames:
     # Split the data into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    uncertainty_ranker = LinearRegressionUncertaintyRanker(X, X_train, X_test, y, y_train, y_test)
+    uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, X_train, X_test, y, y_train, y_test)
     uncertainty_ranker.evaluate()
     rating = uncertainty_ranker.show_ranking_with_correctness_score()
     

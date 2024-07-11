@@ -22,6 +22,8 @@ import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.TrainDataGeneration;
+import dev.abunai.confidentiality.mitigation.TrainDataGenerationBinary;
+import dev.abunai.confidentiality.mitigation.TrainDataGenerationMinimal;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
@@ -44,7 +46,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		return "online_banking_model";
 	}
 
-	private final int uncertaintysToModify = 6;
+	private final int uncertaintysToModify = 4;
 
 
 	private List<Predicate<? super AbstractVertex<?>>> getConstraints() {
@@ -79,7 +81,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
 					constraint);
-			TrainDataGeneration.violationDataToCSV(violations, uncertaintySources,
+			TrainDataGenerationMinimal.violationDataToCSV(violations, uncertaintySources,
 					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
 			count++;
 		}
