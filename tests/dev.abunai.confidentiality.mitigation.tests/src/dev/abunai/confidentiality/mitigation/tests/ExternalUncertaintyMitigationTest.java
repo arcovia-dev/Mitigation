@@ -18,9 +18,11 @@ import org.junit.jupiter.api.TestMethodOrder;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
-import dev.abunai.confidentiality.mitigation.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
+import dev.abunai.confidentiality.mitigation.trainDataGeneration.ITrainDataGeneration;
+import dev.abunai.confidentiality.mitigation.trainDataGeneration.TrainDataGeneration;
+import dev.abunai.confidentiality.mitigation.trainDataGeneration.TrainDataGenerationMinimal;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
@@ -34,6 +36,8 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 	protected String getFilesName() {
 		return "default";
 	}
+	
+	private final ITrainDataGeneration trainDataGeneration = new TrainDataGenerationMinimal();
 
 	private List<Predicate<? super AbstractVertex<?>>> getConstraints(){
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
@@ -61,7 +65,7 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
 					constraint);
-			TrainDataGeneration.violationDataToCSV(violations, uncertaintySources,
+			trainDataGeneration.violationDataToCSV(violations, uncertaintySources,
 					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
 			count++;
 		}

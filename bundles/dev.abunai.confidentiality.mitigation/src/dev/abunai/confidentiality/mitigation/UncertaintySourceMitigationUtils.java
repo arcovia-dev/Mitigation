@@ -133,7 +133,7 @@ public class UncertaintySourceMitigationUtils {
 		newDD.getBehaviour().remove(oldNodeOldBehavior);
 		newNode.setBehaviour(newNodeNewBehavior);
 
-		removeInPinsThatDontOccurInFlows(newDD, newDia);
+		//removeInPinsThatDontOccurInFlows(newDD, newDia);
 		replaceOldDDReferencesWithTheOnesFromNewDD(newDD, newDia);
 
 		return new DataFlowDiagramAndDictionary(newDia, newDD);

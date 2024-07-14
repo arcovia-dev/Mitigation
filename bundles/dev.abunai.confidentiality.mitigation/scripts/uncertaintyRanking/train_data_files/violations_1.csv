@@ -1,2 +1,3 @@
 Banking_Data_Location_Uncertain;Bank_Data_View_Processability_Uncertain;transfer_money_uncertain;show_balance_uncertain;process_action_uncertain;view_balance_uncertain;Constraint violated
-I;D;I;I;D;D;True
+D;I;A;I;I;I;True
+D;I;D;I;I;I;True

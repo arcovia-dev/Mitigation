@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation;
+package dev.abunai.confidentiality.mitigation.trainDataGeneration;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,12 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
-import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
 
-public class TrainDataGenerationBinary {
+public class TrainDataGenerationBinary implements ITrainDataGeneration{
 	
-	public static void violationDataToCSV(List<UncertainConstraintViolation> violations,
+	public void violationDataToCSV(List<UncertainConstraintViolation> violations,
 			List<UncertaintySource> allUncertainties, String outputPath) {
 
 		HashSet<String> fastLookUpTable = new HashSet<>();
@@ -37,7 +36,7 @@ public class TrainDataGenerationBinary {
 		generateTestDataFile(allUncertainties, fastLookUpTable, outputPath);
 	}
 
-	private static void generateTestDataFile(List<UncertaintySource> allUncertainties, 
+	private void generateTestDataFile(List<UncertaintySource> allUncertainties, 
 			HashSet<String> fastLookUpTable, String outputPath) {
 
 		String[] elements = { "U", "I" }; 
@@ -61,7 +60,7 @@ public class TrainDataGenerationBinary {
 		generateCSVFromData(trainDataArray, allUncertainties, outputPath);
 	}
 
-	private static void generateCSVFromData(String[][] dataRows, List<UncertaintySource> allUncertainties, String outputPath) {
+	private void generateCSVFromData(String[][] dataRows, List<UncertaintySource> allUncertainties, String outputPath) {
 		
 		// Entity names of uncertainties as header
 		String[] header = new String[allUncertainties.size() + 1];
@@ -89,13 +88,13 @@ public class TrainDataGenerationBinary {
 		writer.write("\n");
 	}
 
-	private static List<String[]> generatePermutations(String[] elements, int size) {
+	private List<String[]> generatePermutations(String[] elements, int size) {
 		List<String[]> permutationsList = new ArrayList<>();
 		generatePermutationsHelper(elements, new String[size], 0, permutationsList);
 		return permutationsList;
 	}
 
-	private static void generatePermutationsHelper(String[] elements, String[] current, int index,
+	private void generatePermutationsHelper(String[] elements, String[] current, int index,
 			List<String[]> permutationsList) {
 		
 		// Once last element is reached the array will be added to the permutations list

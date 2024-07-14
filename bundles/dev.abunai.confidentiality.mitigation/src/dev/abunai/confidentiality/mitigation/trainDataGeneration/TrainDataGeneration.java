@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation;
+package dev.abunai.confidentiality.mitigation.trainDataGeneration;
 
 
 import java.util.*;
@@ -8,11 +8,10 @@ import java.io.IOException;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
-import dev.abunai.confidentiality.analysis.dfd.DFDUncertainTransposeFlowGraph;
 
-public class TrainDataGeneration{
+public class TrainDataGeneration implements ITrainDataGeneration{
 
-	public static void violationDataToCSV(List<UncertainConstraintViolation> violations,
+	public void violationDataToCSV(List<UncertainConstraintViolation> violations,
 			List<UncertaintySource> allUncertainties, String outputPath) {
 
 		HashSet<String> fastLookUpTable = new HashSet<>();
@@ -65,7 +64,7 @@ public class TrainDataGeneration{
 		generateTestDataFile(allUncertainties, scenarioAmounts, fastLookUpTable, outputPath);
 	}
 
-	private static void generateTestDataFile(List<UncertaintySource> allUncertainties, List<Integer> scenarioSizes,
+	private void generateTestDataFile(List<UncertaintySource> allUncertainties, List<Integer> scenarioSizes,
 			HashSet<String> fastLookUpTable, String outputPath) {
 
 		String[] elements = { "Irrelevant", "Default", "Alt0" }; 
@@ -117,13 +116,13 @@ public class TrainDataGeneration{
 		writer.write("\n");
 	}
 
-	private static List<String[]> generatePermutations(String[] elements, int size, List<Integer> scenarioSizes) {
+	private List<String[]> generatePermutations(String[] elements, int size, List<Integer> scenarioSizes) {
 		List<String[]> permutationsList = new ArrayList<>();
 		generatePermutationsHelper(elements, new String[size], 0, permutationsList, scenarioSizes);
 		return permutationsList;
 	}
 
-	private static void generatePermutationsHelper(String[] elements, String[] current, int index,
+	private void generatePermutationsHelper(String[] elements, String[] current, int index,
 			List<String[]> permutationsList, List<Integer> scenarioSizes) {
 		
 		// Once last element is reached the array will be added to the permutations list

@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation;
+package dev.abunai.confidentiality.mitigation.trainDataGeneration;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,20 +9,26 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
 
-public class TrainDataGenerationMinimal {
+public class TrainDataGenerationMinimal implements ITrainDataGeneration{
 
-	public static void violationDataToCSV(List<UncertainConstraintViolation> violations,
+	public void violationDataToCSV(List<UncertainConstraintViolation> violations,
 			List<UncertaintySource> allUncertainties, String outputPath) {
-
+		
 		HashSet<String> fastLookUpTable = new HashSet<>();
 
 		for (var violation : violations) {
 			var relevantSources = violation.transposeFlowGraph().getRelevantUncertaintySources();
-			var scenarioSources = violation.uncertainState().getSelectedUncertaintyScenarios();
 			var sourceToScenario = violation.uncertainState().getSourceToScenarioMapping();
 
 			String lookUpString = "";
@@ -33,9 +39,6 @@ public class TrainDataGenerationMinimal {
 				
 				if (relevantSources.contains(src)) {
 					if (scenario != null && !UncertaintyUtils.isDefaultScenario(src, scenario)) {
-						if (src.getEntityName().equals("Banking_Data_Location_Uncertain")) {
-							var b = 0;
-						}
 						lookUpString += "A";
 					}
 					else {
@@ -51,7 +54,7 @@ public class TrainDataGenerationMinimal {
 		generateTestDataFile(allUncertainties, fastLookUpTable, outputPath);
 	}
 
-	private static void generateTestDataFile(List<UncertaintySource> allUncertainties, HashSet<String> fastLookUpTable,
+	private void generateTestDataFile(List<UncertaintySource> allUncertainties, HashSet<String> fastLookUpTable,
 			String outputPath) {
 
 		String[] elements = { "A", "D","I" };
@@ -77,7 +80,7 @@ public class TrainDataGenerationMinimal {
 		generateCSVFromData(trainDataArray, allUncertainties, outputPath);
 	}
 
-	private static void generateCSVFromData(String[][] dataRows, List<UncertaintySource> allUncertainties,
+	private void generateCSVFromData(String[][] dataRows, List<UncertaintySource> allUncertainties,
 			String outputPath) {
 
 		// Entity names of uncertainties as header
@@ -106,13 +109,13 @@ public class TrainDataGenerationMinimal {
 		writer.write("\n");
 	}
 
-	private static List<String[]> generatePermutations(String[] elements, int size, HashSet<String> fastLookUpTable, int permutationChanceInverse) {
+	private List<String[]> generatePermutations(String[] elements, int size, HashSet<String> fastLookUpTable, int permutationChanceInverse) {
 		List<String[]> permutationsList = new ArrayList<>();
 		generatePermutationsHelper(elements, new String[size], 0, permutationsList, fastLookUpTable, permutationChanceInverse);
 		return permutationsList;
 	}
 
-	private static void generatePermutationsHelper(String[] elements, String[] current, int index,
+	private void generatePermutationsHelper(String[] elements, String[] current, int index,
 			List<String[]> permutationsList, HashSet<String> fastLookUpTable, int permutationChanceInverse) {
 
 		// Once last element is reached the array will be added to the permutations list
@@ -137,4 +140,5 @@ public class TrainDataGenerationMinimal {
 			generatePermutationsHelper(elements, current, index + 1, permutationsList, fastLookUpTable,  permutationChanceInverse);
 		}
 	}
+	
 }

@@ -15,10 +15,19 @@ import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.testmodels.Activator;
+import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 
 public class AnalysisTest {
 	
 	public final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.analysis.testmodels";
+	
+	@Test
+	public void convert() {
+		String path = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/online_banking_model_a.json";
+		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
+		var dd = conv.webToDfd(path);
+		conv.storeDFD(dd, "online_banking_model_a");
+	}
 	
 	@Test
 	public void runUIA() {
