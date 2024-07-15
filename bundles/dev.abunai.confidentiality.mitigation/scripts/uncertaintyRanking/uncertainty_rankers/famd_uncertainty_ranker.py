@@ -1,12 +1,11 @@
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from sklearn.decomposition import FactorAnalysis
 import pandas as pd
 
 from collections import OrderedDict
 
-from uncertainty_ranker import UncertaintyRanker
-
-class PrincipalComponentUncertaintyRanker(UncertaintyRanker):
+class FAMDUncertaintyRanker():
 
     def __init__(self, X, y):
         self.X = X
@@ -34,7 +33,7 @@ class PrincipalComponentUncertaintyRanker(UncertaintyRanker):
         # Standardize data
         scaler = StandardScaler()
         data_standardized = scaler.fit_transform(data)
-        
+
         # Additional PCA to determine amount of components
         pca_full = PCA()
         pca_full.fit(data_standardized)
@@ -43,13 +42,12 @@ class PrincipalComponentUncertaintyRanker(UncertaintyRanker):
         explained_variance = 0.8
         n_components = next(i for i, cumulative_variance in enumerate(pca_full.explained_variance_ratio_.cumsum(), 1) if cumulative_variance >= explained_variance)
 
-        # PCA with chosen number of components
-        pca = PCA(n_components=n_components)
-        pca.fit(data_standardized)
-        explained_variance = pca_full.explained_variance_ratio_
+        
+        fa = FactorAnalysis(n_components=n_components, random_state=0)
+        fa.fit(data_standardized)
 
         # Create ranking based on pca result
-        principal_components = pca_full.components_
+        principal_components = fa.components_
         column_names = data.columns.tolist()
         ranking = {}
         for comp in principal_components:

@@ -26,11 +26,11 @@ import dev.abunai.confidentiality.mitigation.trainDataGeneration.ITrainDataGener
 public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "Online_Banking_Model_A";
+		return "OnlineBankingModel";
 	}
 
 	protected String getFilesName() {
-		return "online_banking_model_a";
+		return "online_banking_model";
 	}
 
 	private final ITrainDataGeneration trainDataGeneration = new TrainDataGenerationMinimal();
