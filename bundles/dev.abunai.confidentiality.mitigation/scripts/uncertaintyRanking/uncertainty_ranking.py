@@ -8,6 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'uncertainty_rankers'))
 
 from principal_component_uncertainty_ranker import PrincipalComponentUncertaintyRanker
 from famd_uncertainty_ranker import FAMDUncertaintyRanker
+from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker
 
 # Constants
 TRAIN_FILES_DIR = sys.argv[1]

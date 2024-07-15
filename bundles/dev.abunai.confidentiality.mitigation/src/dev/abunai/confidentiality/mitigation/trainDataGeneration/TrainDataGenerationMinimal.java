@@ -2,30 +2,19 @@ package dev.abunai.confidentiality.mitigation.trainDataGeneration;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.util.*;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
 
-public class TrainDataGenerationMinimal implements ITrainDataGeneration{
+public class TrainDataGenerationMinimal implements ITrainDataGeneration {
 
 	public void violationDataToCSV(List<UncertainConstraintViolation> violations,
 			List<UncertaintySource> allUncertainties, String outputPath) {
-		
+
 		HashSet<String> fastLookUpTable = new HashSet<>();
+		HashMap<String, HashSet<String>> sourceIdToScenarioIds = new HashMap<>();
 
 		for (var violation : violations) {
 			var relevantSources = violation.transposeFlowGraph().getRelevantUncertaintySources();
@@ -36,12 +25,19 @@ public class TrainDataGenerationMinimal implements ITrainDataGeneration{
 			for (int i = 0; i < allUncertainties.size(); i++) {
 				var src = allUncertainties.get(i);
 				var scenario = sourceToScenario.containsKey(src) ? sourceToScenario.get(src) : null;
-				
+				var scenarioId = scenario == null ? "" : scenario.getId().replace('_','a');
+
 				if (relevantSources.contains(src)) {
 					if (scenario != null && !UncertaintyUtils.isDefaultScenario(src, scenario)) {
-						lookUpString += "A";
-					}
-					else {
+						lookUpString += "A" + scenarioId;
+						if (sourceIdToScenarioIds.containsKey(src.getId())) {
+							sourceIdToScenarioIds.get(src.getId()).add(scenarioId);
+						} else {
+							var newScenarioIdList = new HashSet<String>();
+							newScenarioIdList.add(scenarioId);
+							sourceIdToScenarioIds.put(src.getId(), newScenarioIdList);
+						}
+					} else {
 						lookUpString += "D";
 					}
 				} else {
@@ -51,17 +47,17 @@ public class TrainDataGenerationMinimal implements ITrainDataGeneration{
 
 			fastLookUpTable.add(lookUpString);
 		}
-		generateTestDataFile(allUncertainties, fastLookUpTable, outputPath);
+		generateTestDataFile(allUncertainties, fastLookUpTable, outputPath, sourceIdToScenarioIds);
 	}
 
 	private void generateTestDataFile(List<UncertaintySource> allUncertainties, HashSet<String> fastLookUpTable,
-			String outputPath) {
+			String outputPath, HashMap<String, HashSet<String>> sourceIdToScenarioIds) {
 
-		String[] elements = { "A", "D","I" };
+		String[] elements = { "D", "I" };
 		int permutationSize = allUncertainties.size();
-		int permutationChanceInverse = 4000;
 		System.out.println(fastLookUpTable);
-		List<String[]> permutationsList = generatePermutations(elements, permutationSize, fastLookUpTable,permutationChanceInverse);
+		List<String[]> permutationsList = generatePermutations(elements, permutationSize, fastLookUpTable,
+				allUncertainties, sourceIdToScenarioIds);
 
 		// Generate all random permutations
 		String[][] permutationsArray = new String[permutationsList.size()][permutationSize];
@@ -80,8 +76,7 @@ public class TrainDataGenerationMinimal implements ITrainDataGeneration{
 		generateCSVFromData(trainDataArray, allUncertainties, outputPath);
 	}
 
-	private void generateCSVFromData(String[][] dataRows, List<UncertaintySource> allUncertainties,
-			String outputPath) {
+	private void generateCSVFromData(String[][] dataRows, List<UncertaintySource> allUncertainties, String outputPath) {
 
 		// Entity names of uncertainties as header
 		String[] header = new String[allUncertainties.size() + 1];
@@ -109,36 +104,38 @@ public class TrainDataGenerationMinimal implements ITrainDataGeneration{
 		writer.write("\n");
 	}
 
-	private List<String[]> generatePermutations(String[] elements, int size, HashSet<String> fastLookUpTable, int permutationChanceInverse) {
+	private List<String[]> generatePermutations(String[] elements, int size, HashSet<String> fastLookUpTable, List<UncertaintySource> allUncertainties, HashMap<String, HashSet<String>> sourceIdToScenarioIds) {
 		List<String[]> permutationsList = new ArrayList<>();
-		generatePermutationsHelper(elements, new String[size], 0, permutationsList, fastLookUpTable, permutationChanceInverse);
+		generatePermutationsHelper(elements, new String[size], 0, permutationsList, fastLookUpTable, allUncertainties, sourceIdToScenarioIds);
 		return permutationsList;
 	}
 
 	private void generatePermutationsHelper(String[] elements, String[] current, int index,
-			List<String[]> permutationsList, HashSet<String> fastLookUpTable, int permutationChanceInverse) {
+			List<String[]> permutationsList, HashSet<String> fastLookUpTable, List<UncertaintySource> allUncertainties, HashMap<String, HashSet<String>> sourceIdToScenarioIds) {
 
 		// Once last element is reached the array will be added to the permutations list
 		if (index == current.length) {
 			String[] permutation = new String[current.length];
-
-			Random rand = new Random();
 			for (int i = 0; i < current.length; i++) {
 				permutation[i] = String.valueOf(current[i]);
 			}
-			if (fastLookUpTable.contains(Arrays
-				    .stream(permutation)
-				    .collect(Collectors.joining())) || rand.nextInt(permutationChanceInverse) == 1) {
-				permutationsList.add(permutation);
-			}
+			permutationsList.add(permutation);
 			return;
 		}
 
 		// Set all possible values and move on to the next index
 		for (String element : elements) {
 			current[index] = element;
-			generatePermutationsHelper(elements, current, index + 1, permutationsList, fastLookUpTable,  permutationChanceInverse);
+			generatePermutationsHelper(elements, current, index + 1, permutationsList, fastLookUpTable, allUncertainties, sourceIdToScenarioIds);
+		}
+		
+		var currentUncertaintyId = allUncertainties.get(index).getId();
+		if(sourceIdToScenarioIds.containsKey(currentUncertaintyId)){
+			for (var scenarioId: sourceIdToScenarioIds.get(currentUncertaintyId)) {
+				current[index] = "A"+scenarioId;
+				generatePermutationsHelper(elements, current, index + 1, permutationsList, fastLookUpTable, allUncertainties, sourceIdToScenarioIds);
+			}
 		}
 	}
-	
+
 }
