@@ -42,12 +42,11 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	private List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
-			return this.retrieveNodeLabels(it).contains("Processable") &&
-					 this.retrieveDataLabels(it).contains("Encrypted");
+			return this.retrieveNodeLabels(it).contains("Processable")
+					&& this.retrieveDataLabels(it).contains("Encrypted");
 		});
 		constraints.add(it -> {
-			return this.retrieveNodeLabels(it).contains("nonEU") &&
-					 this.retrieveDataLabels(it).contains("Personal");
+			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
 		});
 		return constraints;
 	}
@@ -65,6 +64,12 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		for (var constraint : constraints) {
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
 					constraint);
+
+			// If no violation occured no training data needs to be created
+			if (violations.size() == 0) {
+				continue;
+			}
+
 			trainDataGeneration.violationDataToCSV(violations, uncertaintySources,
 					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
 			count++;
@@ -84,7 +89,36 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	public void createMitigationCandidatesAutomatically() {
 		var rankedUncertaintyEntityName = loadRanking();
 		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName);
-		if(!success) {
+		if (!success) {
+			System.out.println("mitigation failed");
+		}
+	}
+
+	// @Test
+	// @Order(2)
+	public void createMitigationCandidatesAutomatically2() {
+		var rankedUncertaintyEntityName = loadRanking();
+		var success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+				rankedUncertaintyEntityName.size() / 2);
+		if (!success) {
+			var success2 = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					rankedUncertaintyEntityName.size());
+			if (!success2) {
+				System.out.println("mitigation failed");
+			}
+		}
+	}
+
+	// @Test
+	// @Order(2)
+	public void createMitigationCandidatesAutomatically3() {
+		var rankedUncertaintyEntityName = loadRanking();
+		boolean success = false;
+		for (int i = 1; i <= 4 && !success; i++) {
+			success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					i * (rankedUncertaintyEntityName.size() / 4));
+		}
+		if (!success) {
 			System.out.println("mitigation failed");
 		}
 	}
@@ -92,18 +126,18 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	private boolean mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName) {
 		// Increase amount of uncertainties used if the current amount is not enough
 		for (int i = 1; i <= rankedUncertaintyEntityName.size(); i++) {
-			
+
 			// Extract relevant uncertainties
 			var relevantUncertaintyEntityName = rankedUncertaintyEntityName.stream().limit(i).toList();
 			var relevantUncertainties = uncertaintySources.stream()
 					.filter(u -> relevantUncertaintyEntityName.contains(u.getEntityName())).toList();
-			
+
 			// Run mitigation with i+1 uncertainties
 			var result = MitigationModelCalculator.findMitigatingModel(
 					new DataFlowDiagramAndDictionary(this.dfd, this.dd), uncertaintySources, relevantUncertainties,
-					getConstraints(), pathToModelsUncertainty, pathToMitigationModel, pathFromTestModelsToMitigationFolder,
-					pathToMitigationModelUncertainty);
-			
+					getConstraints(), pathToModelsUncertainty, pathToMitigationModel,
+					pathFromTestModelsToMitigationFolder, pathToMitigationModelUncertainty);
+
 			// Print working mitigation if one was found
 			if (result.size() > 0) {
 				System.out.println(result);
@@ -116,16 +150,17 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	}
 
 	private boolean mitigateWithFixAmountOfUncertainties(List<String> rankedUncertaintyEntityName, int n) {
-		
+
 		// Extract relevant uncertainties
 		var relevantEntityNames = rankedUncertaintyEntityName.stream().limit(n).toList();
-		var relevantUncertainties = uncertaintySources.stream().filter(u -> relevantEntityNames.contains(u.getEntityName())).toList();
-		
+		var relevantUncertainties = uncertaintySources.stream()
+				.filter(u -> relevantEntityNames.contains(u.getEntityName())).toList();
+
 		// Execute mitigation
 		var result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
 				uncertaintySources, relevantUncertainties, getConstraints(), pathToModelsUncertainty,
 				pathToMitigationModel, pathFromTestModelsToMitigationFolder, pathToMitigationModelUncertainty);
-		
+
 		// Return success of mitgation
 		if (result.size() > 0) {
 			System.out.println(result);
@@ -143,7 +178,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private List<String> loadRanking() {
 		Path filePath = Paths.get(pathToRelevantUncertainties);
 		try {
