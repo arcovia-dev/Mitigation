@@ -1,23 +1,13 @@
 package dev.abunai.confidentiality.mitigation;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.dfd.datadictionary.AbstractAssignment;
 import org.dataflowanalysis.dfd.datadictionary.Behaviour;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
-import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
-import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
-import org.dataflowanalysis.dfd.dataflowdiagram.Node;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
 
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDBehaviorUncertaintyScenario;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDBehaviorUncertaintySource;
@@ -201,15 +191,6 @@ public class UncertaintySourceMitigationUtils {
 		replaceAssignments(newDD, oldAssignmentsIds, newAssignmentsIds, newAssignments);
 
 		return new DataFlowDiagramAndDictionary(newDia, newDD);
-	}
-
-	private static void removeInPinsThatDontOccurInFlows(DataDictionary newDD, DataFlowDiagram newDia) {
-		List<String> idsOfDstPinsInFlows = newDia.getFlows().stream().map(f -> f.getDestinationPin().getId()).toList();
-		for (var behavior : newDD.getBehaviour()) {
-			var PinsToRemove = behavior.getInPin().stream().filter(p -> !idsOfDstPinsInFlows.contains(p.getId()))
-					.toList();
-			behavior.getInPin().removeAll(PinsToRemove);
-		}
 	}
 
 	private static void replaceAssignments(DataDictionary newDD, List<String> oldAssignmentsIds,

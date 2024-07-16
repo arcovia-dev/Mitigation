@@ -5,7 +5,10 @@ import pandas as pd
 
 from collections import OrderedDict
 
-class FAMDUncertaintyRanker():
+from uncertainty_ranker import UncertaintyRanker
+
+
+class FAMDUncertaintyRanker(UncertaintyRanker):
 
     def __init__(self, X, y):
         self.X = X
@@ -46,19 +49,18 @@ class FAMDUncertaintyRanker():
         fa = FactorAnalysis(n_components=n_components, random_state=0)
         fa.fit(data_standardized)
 
+        print(data)
+        print(fa.components_.T)
+
         # Create ranking based on pca result
-        principal_components = fa.components_
+        #principal_components = fa.components_
+        loadings = fa.components_.T
         column_names = data.columns.tolist()
         ranking = {}
-        for comp in principal_components:
-            for i in range(len(comp)):
-                key = column_names[i]
-                value = comp[i]
-                if not key in ranking:
-                    ranking[key] = abs(value)
-                else:
-                    ranking[key] = ranking[key] + abs(value)
-        
+
+        for i in range(len(loadings)):
+            ranking[column_names[i]] = sum(loadings[i])
+
         self.ranking = OrderedDict(sorted(ranking.items(), key=lambda item: item[1], reverse=True))
 
     def show_ranking_with_correctness_score(self)-> list[(str,float)]:

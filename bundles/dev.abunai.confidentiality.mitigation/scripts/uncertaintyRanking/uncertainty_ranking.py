@@ -9,6 +9,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'uncertainty_rankers'))
 from principal_component_uncertainty_ranker import PrincipalComponentUncertaintyRanker
 from famd_uncertainty_ranker import FAMDUncertaintyRanker
 from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker
+from linear_discriminant_analysis import LinearDiscriminantAnalysisRanker
+
+import warnings
+
+# Disable all warnings
+warnings.filterwarnings("ignore")
 
 # Constants
 TRAIN_FILES_DIR = sys.argv[1]
@@ -69,7 +75,11 @@ def normalize_rankings(rankings:list[list[(str,float)]]):
         sum = 0
         for ranking_element in ranking:
             sum = sum + ranking_element[1]
-
+        
+        # If every element has score 0 normalization is already done
+        if (sum == 0):
+            return rankings
+        
         new_ranking = []
         for ranking_element in ranking:
             new_ranking.append((ranking_element[0], ranking_element[1]/sum))
@@ -101,7 +111,6 @@ for filename in filenames:
     uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
     uncertainty_ranker.evaluate()
     rating = uncertainty_ranker.show_ranking_with_correctness_score()
-    
     allRatings.append(rating)
 
 allRatings = normalize_rankings(allRatings)

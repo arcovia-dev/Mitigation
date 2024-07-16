@@ -11,7 +11,6 @@ public class UncertaintyRanker {
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath,String pathToTrainDataFolder,int rankingLength){
         // Command to run the Python script
         String command = "python " + scriptPath + " " +pathToTrainDataFolder+" "+Integer.toString(rankingLength);
-        //System.out.println(command);
         try {
             // Execute the command
             Process process = Runtime.getRuntime().exec(command);
@@ -25,14 +24,8 @@ public class UncertaintyRanker {
                 output.append(line).append(System.lineSeparator());
             }
 
-            // Wait for the process to complete and get the exit code
-            //int exitCode = process.waitFor();
-            //System.out.println("Python script exited with code " + exitCode);
-
             // Get the output as a String
             String result = output.toString();
-            //System.out.println("Output from Python script:");
-            //System.out.println(result);
 
             return Arrays.asList(result.split(System.lineSeparator()));
 

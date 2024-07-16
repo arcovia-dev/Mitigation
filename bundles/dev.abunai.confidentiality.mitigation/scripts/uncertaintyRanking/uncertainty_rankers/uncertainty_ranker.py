@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class UncertaintyRanker(ABC):
     
     @abstractmethod
-    def __init__(self,X, X_train, X_test, y, y_train, y_test):
+    def __init__(self,X, y):
         pass
 
     @abstractmethod

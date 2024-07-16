@@ -1,12 +1,14 @@
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.datasets import load_iris
 import pandas as pd
 
 from collections import OrderedDict
 
 from uncertainty_ranker import UncertaintyRanker
 
-class PrincipalComponentUncertaintyRanker(UncertaintyRanker):
+class LinearDiscriminantAnalysisRanker(UncertaintyRanker):
 
     def __init__(self, X, y):
         self.X = X
@@ -30,34 +32,18 @@ class PrincipalComponentUncertaintyRanker(UncertaintyRanker):
             for name in data.columns.tolist():
                 self.ranking[name] = 1
             return
-
-        # Standardize data
-        scaler = StandardScaler()
-        data_standardized = scaler.fit_transform(data)
         
-        # Additional PCA to determine amount of components
-        pca_full = PCA()
-        pca_full.fit(data_standardized)
-        
-        # Choose number of components
-        explained_variance = 0.8
-        n_components = next(i for i, cumulative_variance in enumerate(pca_full.explained_variance_ratio_.cumsum(), 1) if cumulative_variance >= explained_variance)
+        lda = LinearDiscriminantAnalysis()
+        lda.fit(self.X, self.y)
 
-        # PCA with chosen number of components
-        pca = PCA(n_components=n_components)
-        pca.fit(data_standardized)
-        explained_variance = pca_full.explained_variance_ratio_
-
-        # Create ranking based on pca result
-        principal_components = pca_full.components_
-        loadings = pca_full.components_.T
+        coefs = lda.coef_
         column_names = data.columns.tolist()
-        ranking = {}
-        
-        for i in range(len(loadings)):
-            ranking[column_names[i]] = sum(loadings[i])
-        
-        self.ranking = OrderedDict(sorted(ranking.items(), key=lambda item: item[1], reverse=True))
+        self.ranking = {}
+
+        for i in range(len(column_names)):
+            self.ranking[column_names[i]] = coefs[0][len(column_names)+i]
+
+        self.ranking = OrderedDict(sorted(self.ranking.items(), key=lambda item: item[1], reverse=True))
 
     def show_ranking_with_correctness_score(self)-> list[(str,float)]:
         result = []

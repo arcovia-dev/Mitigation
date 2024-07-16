@@ -10,10 +10,8 @@ import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
-import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintyScenario;
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDComponentUncertaintySource;
-import dev.abunai.confidentiality.analysis.tests.DFDTestBase;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.UncertaintySourceMitigationUtils;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
@@ -30,16 +28,6 @@ public class ComponentUncertaintyMitigationTest extends MitigationTestBase{
 
 	@Test
 	public void mitigateAutomatically() {
-		/*DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
-		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-		uncertainFlowGraphs.evaluate();
-		
-		List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs, it -> {
-			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
-		});
-		
-		TrainDataGeneration.violationDataToCSV(violations, uncertaintySources, "violations.csv");*/
-		
 		var pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
 		var pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
 		

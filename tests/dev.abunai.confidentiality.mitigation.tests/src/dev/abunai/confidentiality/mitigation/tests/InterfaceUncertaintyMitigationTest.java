@@ -15,7 +15,6 @@ import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUnc
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.UncertaintySourceMitigationUtils;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
-import dev.abunai.confidentiality.mitigation.trainDataGeneration.TrainDataGeneration;
 
 
 public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {

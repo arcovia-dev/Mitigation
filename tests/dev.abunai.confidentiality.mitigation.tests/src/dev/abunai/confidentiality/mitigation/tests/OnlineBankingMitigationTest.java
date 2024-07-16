@@ -2,7 +2,6 @@ package dev.abunai.confidentiality.mitigation.tests;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,10 +17,9 @@ import org.junit.jupiter.api.Test;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
+import dev.abunai.confidentiality.mitigation.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
-import dev.abunai.confidentiality.mitigation.trainDataGeneration.TrainDataGenerationMinimal;
-import dev.abunai.confidentiality.mitigation.trainDataGeneration.ITrainDataGeneration;
 
 public class OnlineBankingMitigationTest extends MitigationTestBase {
 
@@ -33,7 +31,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		return "online_banking_model";
 	}
 
-	private final ITrainDataGeneration trainDataGeneration = new TrainDataGenerationMinimal();
+	private final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
 	private final String pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
 	private final String pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
 	private final String pathToModelsUncertainty = pathToDfdTestModels
@@ -44,26 +42,12 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	private List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
-			System.out.println(this.retrieveNodeLabels(it));
-			System.out.println(this.retrieveDataLabels(it));
-			boolean res = this.retrieveNodeLabels(it).contains("Processable") &&
+			return this.retrieveNodeLabels(it).contains("Processable") &&
 					 this.retrieveDataLabels(it).contains("Encrypted");
-			if (res) {
-				System.out.println("violation occured here:");
-				System.out.println(it.toString());
-			}
-			return res;
 		});
 		constraints.add(it -> {
-			System.out.println(this.retrieveNodeLabels(it));
-			System.out.println(this.retrieveDataLabels(it));
-			boolean res = this.retrieveNodeLabels(it).contains("nonEU") &&
+			return this.retrieveNodeLabels(it).contains("nonEU") &&
 					 this.retrieveDataLabels(it).contains("Personal");
-			if (res) {
-				System.out.println("violation occured here:");
-				System.out.println(it.toString());
-			}
-			return res;
 		});
 		return constraints;
 	}

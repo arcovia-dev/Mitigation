@@ -1,29 +1,27 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
 import pandas as pd
-from uncertainty_ranker import UncertaintyRanker
+#from uncertainty_ranker import UncertaintyRanker
 
-class RandomForestUncertaintyRanker(UncertaintyRanker):
+class RandomForestUncertaintyRanker():
 
-    def __init__(self, X, X_train, X_test, y, y_train, y_test):
+    def __init__(self, X, y):
         self.X = X
-        self.X_train = X_train
-        self.X_test = X_test
         self.y = y
-        self.y_train = y_train
-        self.y_test = y_test
 
     def evaluate(self):
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
         self.rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 
         # Train the model
-        self.rf_model.fit(self.X_train, self.y_train)
+        self.rf_model.fit(X_train, y_train)
 
-        y_pred = self.rf_model.predict(self.X_test)
+        y_pred = self.rf_model.predict(X_test)
 
         # Evaluate the model
-        accuracy = accuracy_score(self.y_test, y_pred)
-        report = classification_report(self.y_test, y_pred)
+        accuracy = accuracy_score(y_test, y_pred)
+        report = classification_report(y_test, y_pred)
 
         #print(f"Accuracy: {accuracy}")
         #print("Classification Report:\n", report)

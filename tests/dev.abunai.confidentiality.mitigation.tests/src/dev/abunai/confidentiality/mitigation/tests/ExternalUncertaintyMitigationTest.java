@@ -18,11 +18,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
+import dev.abunai.confidentiality.mitigation.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
-import dev.abunai.confidentiality.mitigation.trainDataGeneration.ITrainDataGeneration;
-import dev.abunai.confidentiality.mitigation.trainDataGeneration.TrainDataGeneration;
-import dev.abunai.confidentiality.mitigation.trainDataGeneration.TrainDataGenerationMinimal;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
@@ -37,7 +35,7 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 		return "default";
 	}
 	
-	private final ITrainDataGeneration trainDataGeneration = new TrainDataGenerationMinimal();
+	private final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
 
 	private List<Predicate<? super AbstractVertex<?>>> getConstraints(){
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
