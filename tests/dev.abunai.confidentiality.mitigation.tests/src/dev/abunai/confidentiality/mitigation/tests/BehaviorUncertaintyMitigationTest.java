@@ -66,5 +66,11 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase{
 		new DataFlowDiagramConverter().storeDFD(result , "behaviour");
 		
 	}
+
+	@Override
+	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

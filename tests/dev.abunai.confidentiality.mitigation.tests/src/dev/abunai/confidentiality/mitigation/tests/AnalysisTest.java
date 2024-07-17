@@ -23,10 +23,10 @@ public class AnalysisTest {
 	
 	@Test
 	public void convert() {
-		String path = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/online_banking_model_a.json";
+		String path = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/tests/dev.abunai.confidentiality.mitigation.tests/int.json";
 		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
 		var dd = conv.webToDfd(path);
-		conv.storeDFD(dd, "online_banking_model_a");
+		conv.storeDFD(dd, "int");
 	}
 	
 	@Test

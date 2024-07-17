@@ -65,5 +65,11 @@ public class ComponentUncertaintyMitigationTest extends MitigationTestBase{
 		new DataFlowDiagramConverter().storeDFD(result , "component");
 		
 	}
+
+	@Override
+	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

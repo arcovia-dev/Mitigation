@@ -37,7 +37,7 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 	
 	private final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
 
-	private List<Predicate<? super AbstractVertex<?>>> getConstraints(){
+	protected List<Predicate<? super AbstractVertex<?>>> getConstraints(){
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
 			System.out.println(this.retrieveNodeLabels(it));

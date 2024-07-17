@@ -66,4 +66,10 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 		new DataFlowDiagramConverter().storeDFD(result, "interface");
 
 	}
+
+	@Override
+	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
