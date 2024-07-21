@@ -54,7 +54,10 @@ def aggregate_rankings_by_taking_top_n_of_each_ranking(rankings:list[list[(str,f
             if uncertainty_name in uncertainty_names:
                 continue
             if not element_name in aggregatedRanking:
-                aggregatedRanking[element_name] = n-i
+                if element [1] == 1:
+                    aggregatedRanking[element_name] = n
+                else:
+                    aggregatedRanking[element_name] = n-i
             else:
                 aggregatedRanking[element_name] = aggregatedRanking[element_name] + (n-i)
             if uncertainty_name not in uncertainty_names:
@@ -74,7 +77,7 @@ def normalize_rankings(rankings:list[list[(str,float)]]):
         # Find max value of ranking
         sum = 0
         for ranking_element in ranking:
-            sum = sum + ranking_element[1]
+            sum = sum + abs(ranking_element[1])
         
         # If every element has score 0 normalization is already done
         if (sum == 0):
@@ -82,7 +85,7 @@ def normalize_rankings(rankings:list[list[(str,float)]]):
         
         new_ranking = []
         for ranking_element in ranking:
-            new_ranking.append((ranking_element[0], ranking_element[1]/sum))
+            new_ranking.append((ranking_element[0], abs(ranking_element[1]/sum)))
         new_rankings.append(new_ranking)
     
     return new_rankings
@@ -108,7 +111,7 @@ for filename in filenames:
     X = X.drop(categorical_cols, axis=1)
     X = pd.concat([X, X_encoded], axis=1)
 
-    uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
+    uncertainty_ranker = LinearDiscriminantAnalysisRanker(X, y)
     uncertainty_ranker.evaluate()
     rating = uncertainty_ranker.show_ranking_with_correctness_score()
     allRatings.append(rating)

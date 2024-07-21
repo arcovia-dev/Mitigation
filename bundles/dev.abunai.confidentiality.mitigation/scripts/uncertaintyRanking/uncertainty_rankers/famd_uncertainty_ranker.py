@@ -49,9 +49,6 @@ class FAMDUncertaintyRanker(UncertaintyRanker):
         fa = FactorAnalysis(n_components=n_components, random_state=0)
         fa.fit(data_standardized)
 
-        print(data)
-        print(fa.components_.T)
-
         # Create ranking based on pca result
         #principal_components = fa.components_
         loadings = fa.components_.T

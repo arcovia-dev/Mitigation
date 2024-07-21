@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
@@ -16,21 +18,24 @@ import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "DFDInterfaceUncertaintyMitigation";
+		return "OnlineBankingModel";
 	}
 
 	protected String getFilesName() {
-		return "int";
+		return "online_banking_model";
 	}
 
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+
 		constraints.add(it -> {
-			return this.retrieveNodeLabels(it).contains("Develop")
-					&& this.retrieveDataLabels(it).contains("Personal");
+			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
+					&& this.retrieveDataLabels(it).contains("Encrypted");
+			return vio;
 		});
 		constraints.add(it -> {
-			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			boolean vio =  this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			return vio;
 		});
 		return constraints;
 	}
@@ -70,17 +75,24 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(2)
+	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
+		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName);
 		if (!success) {
 			System.out.println("mitigation failed");
 		}
+		var duration = System.currentTimeMillis()-startTime;
+		storeMeassurement(duration);
+		
 	}
 
-	// @Test
-	// @Order(2)
+	@Test
+	@Order(3)
+	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically2() {
+		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		var success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 				rankedUncertaintyEntityName.size() / 2);
@@ -91,11 +103,16 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 				System.out.println("mitigation failed");
 			}
 		}
+		var duration = System.currentTimeMillis()-startTime;
+
+		storeMeassurement(duration);
 	}
 
-	// @Test
-	// @Order(2)
+	@Test
+	@Order(4)
+	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically3() {
+		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		boolean success = false;
 		for (int i = 1; i <= 4 && !success; i++) {
@@ -105,7 +122,25 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		if (!success) {
 			System.out.println("mitigation failed");
 		}
+		var duration = System.currentTimeMillis()-startTime;
+
+		storeMeassurement(duration);
 	}
 
+	@Test
+	@RepeatedTest(30)
+	@Order(5)
+	public void createMitigationCandidatesAutomatically4() {
+		var startTime = System.currentTimeMillis();
+		var rankedUncertaintyEntityName = uncertaintySources.stream().map(u -> u.getEntityName()).toList();
+		boolean success = false;
+		success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size());
+		if (!success) {
+			System.out.println("mitigation failed");
+		}
+		var duration = System.currentTimeMillis()-startTime;
+
+		storeMeassurement(duration);
+	}
 
 }

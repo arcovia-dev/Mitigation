@@ -1,5 +1,9 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,18 +21,36 @@ import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialit
 import dev.abunai.confidentiality.analysis.testmodels.Activator;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 
-public class AnalysisTest {
+public class DebuggingHelperTests {
 	
 	public final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.analysis.testmodels";
+	protected final String pathToMeassurements = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/meassurements.txt";
+	
 	
 	@Test
-	public void convert() {
-		String path = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/tests/dev.abunai.confidentiality.mitigation.tests/int.json";
+	public void webToDfd() {
+		String path = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/tests/dev.abunai.confidentiality.mitigation.tests/beh.json";
 		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
 		var dd = conv.webToDfd(path);
-		conv.storeDFD(dd, "int");
+		conv.storeDFD(dd, "beh");
 	}
 	
+	@Test
+	public void seeAverageRuntime() {
+		Path filePath = Paths.get(pathToMeassurements);
+		try {
+			var contentLines = Files.readAllLines(filePath);
+			int sum = 0;
+			for(int i = contentLines.size()-20; i < contentLines.size();i++) {
+				sum += Integer.parseInt(contentLines.get(i));
+			}
+			System.out.println(sum/20);
+			Files.write(filePath, "".getBytes(StandardCharsets.UTF_8));			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+		
 	@Test
 	public void runUIA() {
 		final var dataFlowDiagramPath = Paths.get("models", "dfd/mitigation", "mitigation0" + ".dataflowdiagram")

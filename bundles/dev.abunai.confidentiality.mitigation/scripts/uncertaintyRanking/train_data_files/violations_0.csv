@@ -1,17 +1,9 @@
-show_system_state_uncertain;show_balance_response_uncertain;banking_account_creation_uncertain;aName;Constraint violated
-D;D;D;D;False
-D;D;D;I;False
-D;D;I;D;False
-D;D;I;I;False
-D;I;D;D;False
-D;I;D;I;False
-D;I;I;D;False
-D;I;I;I;False
-I;D;D;D;False
-I;D;D;I;False
-I;D;I;D;False
-I;D;I;I;False
-I;I;D;D;False
-I;I;D;I;False
-I;I;I;D;True
-I;I;I;I;False
+loan_req_uncertain;transfer_money_uncertain;create_account_uncertain;create_banking_account_uncertain;system_state_uncertain;balance_response_uncertain;Constraint violated
+I;D;AaHB4t4ERaEe-KU92kV8MYOA;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;AaHB4t4ERaEe-KU92kV8MYOA;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;D;AaHB4t4ERaEe-KU92kV8MYOA;D;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;AaHB4t4ERaEe-KU92kV8MYOA;D;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;D;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;D;D;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;D;D;I;I;True
+I;D;D;D;I;I;True

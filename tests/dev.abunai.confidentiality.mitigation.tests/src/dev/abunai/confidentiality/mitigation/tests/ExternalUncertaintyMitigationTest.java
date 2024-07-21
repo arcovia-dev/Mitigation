@@ -1,113 +1,146 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
-import java.nio.file.Paths;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+
 import org.dataflowanalysis.analysis.core.AbstractVertex;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
-import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
-import dev.abunai.confidentiality.mitigation.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-
-@TestMethodOrder(OrderAnnotation.class)
 public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "DFDExternalUncertainty";
+		return "DFDExternalUncertaintyMitigation";
 	}
 
 	protected String getFilesName() {
-		return "default";
+		return "ext";
 	}
-	
-	private final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
 
-	protected List<Predicate<? super AbstractVertex<?>>> getConstraints(){
+	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+
 		constraints.add(it -> {
-			System.out.println(this.retrieveNodeLabels(it));
-			System.out.println(this.retrieveDataLabels(it));
-			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
+					&& this.retrieveDataLabels(it).contains("Encrypted");
+			return vio;
+		});
+		constraints.add(it -> {
+			boolean vio =  this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			return vio;
 		});
 		return constraints;
 	}
-	
+
 	@Test
 	@Order(1)
 	public void createTrainData() {
-		
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
-		
+		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
+		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
+		uncertainFlowGraphs.evaluate();
 		// Generate train data for each constraint
 		for (var constraint : constraints) {
-			DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
-			DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-			uncertainFlowGraphs.evaluate();
-
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
 					constraint);
+
+			// If no violation occured no training data needs to be created
+			if (violations.size() == 0) {
+				continue;
+			}
+
 			trainDataGeneration.violationDataToCSV(violations, uncertaintySources,
 					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
 			count++;
 		}
-		
-		// Rank the uncertainties specified in the given model and store the result in the specified file
+
+		// Rank the uncertainties specified in the given model and store the result in
+		// the specified file
 		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
-				trainDataDirectory, 1);
-		Path filePath = Paths.get(pathToRelevantUncertainties);
-		var content = String.join(System.lineSeparator(), relevantUncertaintyIds);
-		try {
-			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+				trainDataDirectory, uncertaintySources.size());
+
+		// Store the result of the Ranking in a file
+		storeRankingResult(relevantUncertaintyIds);
 	}
 
 	@Test
 	@Order(2)
-	public void mitigateAutomatically() {
-		
-		// Load uncertainties that should be modified for the mitigation
-		Path filePath = Paths.get(pathToRelevantUncertainties);
-		final List<String> lines;
-		var relevantUncertainties = uncertaintySources;
-		try {
-			lines = Files.readAllLines(filePath);
-			relevantUncertainties = uncertaintySources.stream().filter(u -> lines.contains(u.getEntityName())).toList();
-		} catch (IOException e) {
-			e.printStackTrace();
+	@RepeatedTest(30)
+	public void createMitigationCandidatesAutomatically() {
+		var startTime = System.currentTimeMillis();
+		var rankedUncertaintyEntityName = loadRanking();
+		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName);
+		if (!success) {
+			System.out.println("mitigation failed");
 		}
-
-		// Specify data that is needed for mitigation
-		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
-		var pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
-		var pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
-		var pathToModelsUncertainty = pathToDfdTestModels + "/DFDExternalUncertainty/default.uncertainty";
-		var pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
-		var pathToMitigationModelUncertainty = pathToDfdTestModels + "/mitigation/mitigation.uncertainty";
-
-		// Execute mitigation
-		var result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
-				uncertaintySources, relevantUncertainties, constraints, pathToModelsUncertainty, pathToMitigationModel,
-				pathFromTestModelsToMitigationFolder, pathToMitigationModelUncertainty);
-		System.out.println(result);
+		var duration = System.currentTimeMillis()-startTime;
+		storeMeassurement(duration);
+		
 	}
-	
+
+	@Test
+	@Order(3)
+	@RepeatedTest(30)
+	public void createMitigationCandidatesAutomatically2() {
+		var startTime = System.currentTimeMillis();
+		var rankedUncertaintyEntityName = loadRanking();
+		var success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+				rankedUncertaintyEntityName.size() / 2);
+		if (!success) {
+			var success2 = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					rankedUncertaintyEntityName.size());
+			if (!success2) {
+				System.out.println("mitigation failed");
+			}
+		}
+		var duration = System.currentTimeMillis()-startTime;
+
+		storeMeassurement(duration);
+	}
+
+	@Test
+	@Order(4)
+	@RepeatedTest(30)
+	public void createMitigationCandidatesAutomatically3() {
+		var startTime = System.currentTimeMillis();
+		var rankedUncertaintyEntityName = loadRanking();
+		boolean success = false;
+		for (int i = 1; i <= 4 && !success; i++) {
+			success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					i * (rankedUncertaintyEntityName.size() / 4));
+		}
+		if (!success) {
+			System.out.println("mitigation failed");
+		}
+		var duration = System.currentTimeMillis()-startTime;
+
+		storeMeassurement(duration);
+	}
+
+	@Test
+	@RepeatedTest(30)
+	@Order(5)
+	public void createMitigationCandidatesAutomatically4() {
+		var startTime = System.currentTimeMillis();
+		var rankedUncertaintyEntityName = uncertaintySources.stream().map(u -> u.getEntityName()).toList();
+		boolean success = false;
+		success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size());
+		if (!success) {
+			System.out.println("mitigation failed");
+		}
+		var duration = System.currentTimeMillis()-startTime;
+
+		storeMeassurement(duration);
+	}
+
 }

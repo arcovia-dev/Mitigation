@@ -36,70 +36,53 @@ import dev.abunai.confidentiality.analysis.testmodels.Activator;
 
 public class MitigationModelCalculator {
 
-	public static List<String> findMitigatingModel(
-			DataFlowDiagramAndDictionary diagramAndDict,
-			List<UncertaintySource> uncertaintySources,
-			List<UncertaintySource> relevantUncertainties,
-			List<Predicate<? super AbstractVertex<?>>> constraintFunctions,
-			String uncertaintyFilePath,
-			String mitigationsPath,
-			String mitigationsPathFromProject,
-			String mitigationUncertaintyPath) 
-	{
-		
+	public static List<String> findMitigatingModel(DataFlowDiagramAndDictionary diagramAndDict,
+			List<UncertaintySource> uncertaintySources, List<UncertaintySource> relevantUncertainties,
+			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, String uncertaintyFilePath,
+			String mitigationsPath, String mitigationsPathFromProject, String mitigationUncertaintyPath) {
+
 		List<DataFlowDiagramAndDictionary> mitigationCandidates = new ArrayList<>();
 		createMitigationCandidates(0, relevantUncertainties, diagramAndDict, mitigationCandidates);
 
 		List<UncertaintySource> irrelevantUncertainties = uncertaintySources.stream()
 				.filter(s -> !(relevantUncertainties.contains(s))).toList();
-		storeMitigationCandidates(mitigationCandidates, uncertaintyFilePath, irrelevantUncertainties, mitigationsPath, mitigationUncertaintyPath);
-		
-		return getValidMitigationModels(mitigationsPathFromProject,mitigationCandidates.size(), constraintFunctions);
+		return storeMitigationCandidates(mitigationCandidates, uncertaintyFilePath, irrelevantUncertainties,
+				mitigationsPath, mitigationUncertaintyPath, constraintFunctions, mitigationsPathFromProject);
 	}
-	
-	private static List<String> getValidMitigationModels(String outputPath, int modelsAmount, List<Predicate<? super AbstractVertex<?>>> constraintFunctions) {
-		List<String> result = new ArrayList<>();
-		for (int i = 0; i < modelsAmount; i++) {
-			System.out.println(i);
-			final var dataFlowDiagramPath = Paths
-					.get(outputPath, "mitigation" + Integer.toString(i) + ".dataflowdiagram").toString();
-			final var dataDictionaryPath = Paths.get(outputPath, "mitigation" + Integer.toString(i) + ".datadictionary")
-					.toString();
-			final var uncertaintyPath = Paths.get(outputPath, "mitigation.uncertainty")
-					.toString();
-			var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
-					.modelProjectName("dev.abunai.confidentiality.analysis.testmodels")
-					.usePluginActivator(Activator.class).useDataDictionary(dataDictionaryPath)
-					.useDataFlowDiagram(dataFlowDiagramPath).useUncertaintyModel(uncertaintyPath);
 
-			DFDUncertaintyAwareConfidentialityAnalysis ana = builder.build();
-			ana.initializeAnalysis();
+	private static boolean isViolationfreeModel(String outputPath, int number,
+			List<Predicate<? super AbstractVertex<?>>> constraintFunctions) {
+		final var dataFlowDiagramPath = Paths
+				.get(outputPath, "mitigation" + Integer.toString(number) + ".dataflowdiagram").toString();
+		final var dataDictionaryPath = Paths
+				.get(outputPath, "mitigation" + Integer.toString(number) + ".datadictionary").toString();
+		final var uncertaintyPath = Paths.get(outputPath, "mitigation.uncertainty").toString();
+		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
+				.modelProjectName("dev.abunai.confidentiality.analysis.testmodels").usePluginActivator(Activator.class)
+				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
+				.useUncertaintyModel(uncertaintyPath);
 
-			DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) ana.findFlowGraph();
-			DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-			uncertainFlowGraphs.evaluate();
-			
-			boolean noConstraintViolated = true;
-			for(var constraint: constraintFunctions) {
-				List<UncertainConstraintViolation> violations = ana.queryUncertainDataFlow(uncertainFlowGraphs,constraint);
-				if(violations.size() > 0) {
-					noConstraintViolated = false;
-					break;
-				}
-			}
-			
-			if(noConstraintViolated) {
-				result.add(outputPath+"/mitigation" + Integer.toString(i));
+		DFDUncertaintyAwareConfidentialityAnalysis ana = builder.build();
+		ana.initializeAnalysis();
+
+		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) ana.findFlowGraph();
+		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
+		uncertainFlowGraphs.evaluate();
+
+		for (var constraint : constraintFunctions) {
+			List<UncertainConstraintViolation> violations = ana.queryUncertainDataFlow(uncertainFlowGraphs, constraint);
+			if (violations.size() > 0) {
+				return false;
 			}
 		}
 
-		return result;
+		return true;
 	}
 
-	
-
-	private static void storeMitigationCandidates(List<DataFlowDiagramAndDictionary> candidates, String uncertaintyFilePath,
-			List<UncertaintySource> uncertaintiesToKeep, String outputPath, String mitigationUncertaintyPath) {
+	private static List<String> storeMitigationCandidates(List<DataFlowDiagramAndDictionary> candidates,
+			String uncertaintyFilePath, List<UncertaintySource> uncertaintiesToKeep, String outputPath,
+			String mitigationUncertaintyPath, List<Predicate<? super AbstractVertex<?>>> constraintFunctions,
+			String mitigationsPathFromProject) {
 		System.out.println(mitigationUncertaintyPath);
 		// Store uncertainties
 		ResourceSet resSet = new ResourceSetImpl();
@@ -117,12 +100,12 @@ public class MitigationModelCalculator {
 				objectsToRemove.push(eObject);
 			}
 		}
-		
-		while(!objectsToRemove.isEmpty()) {
+
+		while (!objectsToRemove.isEmpty()) {
 			var object = objectsToRemove.pop();
 			EcoreUtil.delete(object);
 		}
-		
+
 		try {
 			newUncertaintyRes.save(Collections.EMPTY_MAP);
 		} catch (IOException e) {
@@ -133,13 +116,19 @@ public class MitigationModelCalculator {
 		var conv = new DataFlowDiagramConverter();
 		for (int i = 0; i < candidates.size(); i++) {
 			conv.storeDFD(candidates.get(i), outputPath + "/mitigation" + Integer.toString(i));
+			if (isViolationfreeModel(mitigationsPathFromProject, i, constraintFunctions)) {
+				var result = new ArrayList<String>();
+				result.add("mitigation" + Integer.toString(i));
+				return result;
+			}
 		}
-
+		return new ArrayList<String>();
 	}
 
 	private static void createMitigationCandidates(int index, List<UncertaintySource> relevantUncertainties,
 			DataFlowDiagramAndDictionary diagramAndDict, List<DataFlowDiagramAndDictionary> candidates) {
-		// Store possible mitigation in mitigations list when all uncertainties got considered
+		// Store possible mitigation in mitigations list when all uncertainties got
+		// considered
 		if (index == relevantUncertainties.size()) {
 			candidates.add(diagramAndDict);
 			return;
@@ -176,7 +165,7 @@ public class MitigationModelCalculator {
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDComponentUncertaintySource) actSource, castedScenario);
 						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
-					}else if (scenario instanceof DFDConnectorUncertaintyScenario castedScenario) {
+					} else if (scenario instanceof DFDConnectorUncertaintyScenario castedScenario) {
 						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseConnectorScenario(
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDConnectorUncertaintySource) actSource, castedScenario);
@@ -189,5 +178,5 @@ public class MitigationModelCalculator {
 			}
 		}
 	}
-	
+
 }

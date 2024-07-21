@@ -41,7 +41,7 @@ class LinearDiscriminantAnalysisRanker(UncertaintyRanker):
         self.ranking = {}
 
         for i in range(len(column_names)):
-            self.ranking[column_names[i]] = coefs[0][len(column_names)+i]
+            self.ranking[column_names[i]] = coefs[0][i]
 
         self.ranking = OrderedDict(sorted(self.ranking.items(), key=lambda item: item[1], reverse=True))
 
