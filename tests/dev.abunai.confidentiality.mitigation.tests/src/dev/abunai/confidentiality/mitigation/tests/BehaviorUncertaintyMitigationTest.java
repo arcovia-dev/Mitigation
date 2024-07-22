@@ -40,39 +40,7 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 		return constraints;
 	}
 
-	@Test
-	@Order(1)
-	public void createTrainData() {
-		// Get constraints and define count variable for constraint file differentiation
-		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
-		var count = 0;
-		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
-		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-		uncertainFlowGraphs.evaluate();
-		// Generate train data for each constraint
-		for (var constraint : constraints) {
-			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
-					constraint);
-
-			// If no violation occured no training data needs to be created
-			if (violations.size() == 0) {
-				continue;
-			}
-
-			trainDataGeneration.violationDataToCSV(violations, uncertaintySources,
-					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
-			count++;
-		}
-
-		// Rank the uncertainties specified in the given model and store the result in
-		// the specified file
-		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
-				trainDataDirectory, uncertaintySources.size());
-
-		// Store the result of the Ranking in a file
-		storeRankingResult(relevantUncertaintyIds);
-	}
-
+	
 	@Test
 	@Order(2)
 	@RepeatedTest(30)

@@ -11,18 +11,19 @@ import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.junit.jupiter.api.BeforeEach;
 
+import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
-import dev.abunai.confidentiality.analysis.tests.DFDTestBase;
 import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.TrainDataGenerationUnsupervised;
+import dev.abunai.confidentiality.mitigation.tests.Activator;
 
-public abstract class MitigationTestBase extends DFDTestBase {
+public abstract class MitigationTestBase extends TestBase {
 
 	protected abstract String getFolderName();
 	protected abstract String getFilesName();
@@ -35,6 +36,8 @@ public abstract class MitigationTestBase extends DFDTestBase {
 	protected final String scriptDirectory = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\Mitigation\\bundles\\dev.abunai.confidentiality.mitigation\\scripts\\uncertaintyRanking";
 	protected final String trainDataDirectory = scriptDirectory + "\\train_data_files";
 	protected final String pathToUncertaintyRankingScript = scriptDirectory + "\\uncertainty_ranking.py";
+	protected final TrainDataGenerationUnsupervised trainDataGeneration = new TrainDataGenerationUnsupervised();
+	
 	protected final String pathToRelevantUncertainties = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/relevantUncertainties.txt";
 	protected final String pathToMeassurements = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/meassurements.txt";
 	protected final String pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
@@ -44,21 +47,32 @@ public abstract class MitigationTestBase extends DFDTestBase {
 	protected final String pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
 	protected final String pathToMitigationModelUncertainty = pathToDfdTestModels
 			+ "/mitigation/mitigation.uncertainty";
-	protected final TrainDataGenerationUnsupervised trainDataGeneration = new TrainDataGenerationUnsupervised();
+	
 
 
 	@BeforeEach
 	public void before() {
+		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
+				.toString();
+		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
+				.toString();
+		final var uncertaintyPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".uncertainty")
+				.toString();
+
+		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
+				.modelProjectName(TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
+				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
+				.useUncertaintyModel(uncertaintyPath);
+
+		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
+		analysis.initializeAnalysis();
+
 		// Load datadictonary, dataflowdiagram and uncertainties
-		var resourceProvider = (DFDUncertaintyResourceProvider) this.analysis.getResourceProvider();
+		var resourceProvider = (DFDUncertaintyResourceProvider) analysis.getResourceProvider();
 		resourceProvider.loadRequiredResources();
 		dd = resourceProvider.getDataDictionary();
 		dfd = resourceProvider.getDataFlowDiagram();
 		uncertaintySources = resourceProvider.getUncertaintySourceCollection().getSources();
-
-		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		var web = conv.dfdToWeb(new DataFlowDiagramAndDictionary(dfd, dd));
-		conv.storeWeb(web, "testWeb.json");
 	}
 
 	public void storeRankingResult(List<String> relevantUncertaintyIds) {

@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -10,8 +11,11 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
+import dev.abunai.confidentiality.mitigation.tests.Activator;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
@@ -43,6 +47,21 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	@Test
 	@Order(1)
 	public void createTrainData() {
+		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
+				.toString();
+		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
+				.toString();
+		final var uncertaintyPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".uncertainty")
+				.toString();
+
+		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
+				.modelProjectName(TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
+				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
+				.useUncertaintyModel(uncertaintyPath);
+
+		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
+		analysis.initializeAnalysis();
+
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
