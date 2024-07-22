@@ -64,9 +64,13 @@ public class UncertaintySourceMitigationUtils {
 		var newDestinationPin = scenario.getTargetInPin();
 
 		// Set destination node and pin to the ones in the given scenario
-		var ddTargetFlow = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList().get(0);
-		ddTargetFlow.setDestinationNode(newDestinationNode);
-		ddTargetFlow.setDestinationPin(newDestinationPin);
+		var ddTargetFlows = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList();
+		if(ddTargetFlows.size() == 0) {
+			System.out.println("Flow "+targetFlow.getEntityName()+"not found");
+			return new DataFlowDiagramAndDictionary(newDia, dataDictionary);
+		}
+		ddTargetFlows.get(0).setDestinationNode(newDestinationNode);
+		ddTargetFlows.get(0).setDestinationPin(newDestinationPin);
 
 		return new DataFlowDiagramAndDictionary(newDia, dataDictionary);
 	}
@@ -83,9 +87,14 @@ public class UncertaintySourceMitigationUtils {
 		var targetNode = source.getTarget();
 
 		// Remove Labels from default scenario and add Labels of given scenario
-		var ddTargetNode = newDia.getNodes().stream().filter(n -> n.getId() == targetNode.getId()).toList().get(0);
-		ddTargetNode.getProperties().removeAll(oldNodeLabels);
-		ddTargetNode.getProperties().addAll(newNodeLabels);
+		var ddTargetNodes = newDia.getNodes().stream().filter(n -> n.getId() == targetNode.getId()).toList();
+		if (ddTargetNodes.size() == 0) {
+			System.out.println(targetNode.getEntityName());
+			return new DataFlowDiagramAndDictionary(newDia, dataDictionary);
+		}
+		
+		ddTargetNodes.get(0).getProperties().removeAll(oldNodeLabels);
+		ddTargetNodes.get(0).getProperties().addAll(newNodeLabels);
 
 		return new DataFlowDiagramAndDictionary(newDia, dataDictionary);
 	}

@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
+import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
-import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
+import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
 import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
@@ -25,30 +25,31 @@ import dev.abunai.confidentiality.mitigation.tests.Activator;
 
 public abstract class MitigationTestBase extends TestBase {
 
+	// Abstract variables
 	protected abstract String getFolderName();
+
 	protected abstract String getFilesName();
+
 	protected abstract List<Predicate<? super AbstractVertex<?>>> getConstraints();
 
-	public DataDictionary dd;
-	public DataFlowDiagram dfd;
-	public List<UncertaintySource> uncertaintySources;
-
-	protected final String scriptDirectory = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\Mitigation\\bundles\\dev.abunai.confidentiality.mitigation\\scripts\\uncertaintyRanking";
-	protected final String trainDataDirectory = scriptDirectory + "\\train_data_files";
-	protected final String pathToUncertaintyRankingScript = scriptDirectory + "\\uncertainty_ranking.py";
+	// Mitigation preparation variables
 	protected final TrainDataGenerationUnsupervised trainDataGeneration = new TrainDataGenerationUnsupervised();
-	
-	protected final String pathToRelevantUncertainties = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/relevantUncertainties.txt";
-	protected final String pathToMeassurements = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/meassurements.txt";
-	protected final String pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
-	protected final String pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
-	protected final String pathToModelsUncertainty = pathToDfdTestModels
-			+ String.format("/%s/%s.uncertainty", getFolderName(), getFilesName());
-	protected final String pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
-	protected final String pathToMitigationModelUncertainty = pathToDfdTestModels
-			+ "/mitigation/mitigation.uncertainty";
-	
+	protected final String scriptDirectory = Paths.get(PROJECT_ROOT_PATH, "scripts", "uncertaintyRanking").toString();
+	protected final String trainDataDirectory = Paths.get(scriptDirectory, "train_data_files").toString();
+	protected final String pathToUncertaintyRankingScript = Paths.get(scriptDirectory, "uncertainty_ranking.py")
+			.toString();
+	protected final String pathToRelevantUncertainties = Paths.get(PROJECT_ROOT_PATH, "relevantUncertainties.txt")
+			.toString();
 
+	// Evaluation variables
+	protected final String pathToMeassurements = Paths.get(PROJECT_ROOT_PATH, "meassurements.txt").toString();
+
+	// Paths and URIs for mitigation
+	protected final String pathToMitigationModel = Paths.get(PROJECT_ROOT_PATH, "models", "mitigation").toString();
+	protected final URI modelUncertaintyURI = ResourceUtils.createRelativePluginURI(
+			Paths.get("models", getFolderName(), getFilesName() + ".uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
+	protected final URI mitigationUncertaintyURI = ResourceUtils.createRelativePluginURI(
+			Paths.get("models", "mitigation", "mitigation.uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
 
 	@BeforeEach
 	public void before() {
@@ -72,7 +73,6 @@ public abstract class MitigationTestBase extends TestBase {
 		resourceProvider.loadRequiredResources();
 		dd = resourceProvider.getDataDictionary();
 		dfd = resourceProvider.getDataFlowDiagram();
-		uncertaintySources = resourceProvider.getUncertaintySourceCollection().getSources();
 	}
 
 	public void storeRankingResult(List<String> relevantUncertaintyIds) {
@@ -91,7 +91,7 @@ public abstract class MitigationTestBase extends TestBase {
 			var content = Files.readString(filePath);
 			content += Long.toString(meassurement) + "\n";
 			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,20 +107,39 @@ public abstract class MitigationTestBase extends TestBase {
 		}
 	}
 
-	public boolean mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName) {
+	public UncertaintyAwareConfidentialityAnalysis getAnalysis() {
+		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
+				.toString();
+		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
+				.toString();
+		final var uncertaintyPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".uncertainty")
+				.toString();
+
+		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
+				.modelProjectName(TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
+				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
+				.useUncertaintyModel(uncertaintyPath);
+
+		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
+		analysis.initializeAnalysis();
+		return analysis;
+	}
+
+	public boolean mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName,
+			List<UncertaintySource> sources) {
 		// Increase amount of uncertainties used if the current amount is not enough
 		for (int i = 1; i <= rankedUncertaintyEntityName.size(); i++) {
 
 			// Extract relevant uncertainties
 			var relevantUncertaintyEntityName = rankedUncertaintyEntityName.stream().limit(i).toList();
-			var relevantUncertainties = uncertaintySources.stream()
+			var relevantUncertainties = sources.stream()
 					.filter(u -> relevantUncertaintyEntityName.contains(u.getEntityName())).toList();
 
 			// Run mitigation with i+1 uncertainties
 			var result = MitigationModelCalculator.findMitigatingModel(
-					new DataFlowDiagramAndDictionary(this.dfd, this.dd), uncertaintySources, relevantUncertainties,
-					getConstraints(), pathToModelsUncertainty, pathToMitigationModel,
-					pathFromTestModelsToMitigationFolder, pathToMitigationModelUncertainty);
+					new DataFlowDiagramAndDictionary(this.dfd, this.dd), sources, relevantUncertainties,
+					pathToMitigationModel, TEST_MODEL_PROJECT_NAME, modelUncertaintyURI, mitigationUncertaintyURI,
+					getConstraints(), Activator.class);
 
 			// Print working mitigation if one was found
 			if (result.size() > 0) {
@@ -133,17 +152,18 @@ public abstract class MitigationTestBase extends TestBase {
 		return false;
 	}
 
-	public boolean mitigateWithFixAmountOfUncertainties(List<String> rankedUncertaintyEntityName, int n) {
+	public boolean mitigateWithFixAmountOfUncertainties(List<String> rankedUncertaintyEntityName, int n,
+			List<UncertaintySource> sources) {
 
 		// Extract relevant uncertainties
 		var relevantEntityNames = rankedUncertaintyEntityName.stream().limit(n).toList();
-		var relevantUncertainties = uncertaintySources.stream()
-				.filter(u -> relevantEntityNames.contains(u.getEntityName())).toList();
+		var relevantUncertainties = sources.stream().filter(u -> relevantEntityNames.contains(u.getEntityName()))
+				.toList();
 
 		// Execute mitigation
 		var result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
-				uncertaintySources, relevantUncertainties, getConstraints(), pathToModelsUncertainty,
-				pathToMitigationModel, pathFromTestModelsToMitigationFolder, pathToMitigationModelUncertainty);
+				sources, relevantUncertainties, pathToMitigationModel, TEST_MODEL_PROJECT_NAME, modelUncertaintyURI,
+				mitigationUncertaintyURI, getConstraints(), Activator.class);
 
 		// Return success of mitgation
 		if (result.size() > 0) {

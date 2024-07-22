@@ -42,12 +42,47 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 
 	
 	@Test
+	@Order(1)
+	public void createTrainData() {
+		var analysis = getAnalysis();
+		// Get constraints and define count variable for constraint file differentiation
+		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
+		var count = 0;
+		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
+		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
+		uncertainFlowGraphs.evaluate();
+		// Generate train data for each constraint
+		for (var constraint : constraints) {
+			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
+					constraint);
+
+			// If no violation occured no training data needs to be created
+			if (violations.size() == 0) {
+				continue;
+			}
+
+			trainDataGeneration.violationDataToCSV(violations, analysis.getUncertaintySources(),
+					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
+			count++;
+		}
+
+		// Rank the uncertainties specified in the given model and store the result in
+		// the specified file
+		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
+				trainDataDirectory, analysis.getUncertaintySources().size());
+
+		// Store the result of the Ranking in a file
+		storeRankingResult(relevantUncertaintyIds);
+	}
+
+	@Test
 	@Order(2)
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
-		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName);
+		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,analysis.getUncertaintySources());
 		if (!success) {
 			System.out.println("mitigation failed");
 		}
@@ -60,13 +95,14 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	@Order(3)
 	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically2() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		var success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-				rankedUncertaintyEntityName.size() / 2);
+				rankedUncertaintyEntityName.size() / 2, analysis.getUncertaintySources());
 		if (!success) {
 			var success2 = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					rankedUncertaintyEntityName.size());
+					rankedUncertaintyEntityName.size(), analysis.getUncertaintySources());
 			if (!success2) {
 				System.out.println("mitigation failed");
 			}
@@ -80,12 +116,13 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	@Order(4)
 	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically3() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		boolean success = false;
 		for (int i = 1; i <= 4 && !success; i++) {
 			success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					i * (rankedUncertaintyEntityName.size() / 4));
+					i * (rankedUncertaintyEntityName.size() / 4),analysis.getUncertaintySources());
 		}
 		if (!success) {
 			System.out.println("mitigation failed");
@@ -99,10 +136,11 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	@RepeatedTest(30)
 	@Order(5)
 	public void createMitigationCandidatesAutomatically4() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
-		var rankedUncertaintyEntityName = uncertaintySources.stream().map(u -> u.getEntityName()).toList();
+		var rankedUncertaintyEntityName = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
 		boolean success = false;
-		success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size());
+		success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size(),analysis.getUncertaintySources());
 		if (!success) {
 			System.out.println("mitigation failed");
 		}

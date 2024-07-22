@@ -5,6 +5,7 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.function.Predicate;
 
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,33 +33,34 @@ import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUnc
 import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.DFDInterfaceUncertaintySource;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
-import dev.abunai.confidentiality.analysis.testmodels.Activator;
 
 public class MitigationModelCalculator {
 
 	public static List<String> findMitigatingModel(DataFlowDiagramAndDictionary diagramAndDict,
 			List<UncertaintySource> uncertaintySources, List<UncertaintySource> relevantUncertainties,
-			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, String uncertaintyFilePath,
-			String mitigationsPath, String mitigationsPathFromProject, String mitigationUncertaintyPath) {
+			String mitigationsPath, String projectName, URI modelUncertaintyURI, URI mitigationUncertaintyURI,
+			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, Class<? extends Plugin> pluginActivator) {
 
 		List<DataFlowDiagramAndDictionary> mitigationCandidates = new ArrayList<>();
 		createMitigationCandidates(0, relevantUncertainties, diagramAndDict, mitigationCandidates);
 
 		List<UncertaintySource> irrelevantUncertainties = uncertaintySources.stream()
 				.filter(s -> !(relevantUncertainties.contains(s))).toList();
-		return storeMitigationCandidates(mitigationCandidates, uncertaintyFilePath, irrelevantUncertainties,
-				mitigationsPath, mitigationUncertaintyPath, constraintFunctions, mitigationsPathFromProject);
+		return storeMitigationCandidates(mitigationCandidates, irrelevantUncertainties, mitigationsPath, projectName,
+				modelUncertaintyURI, mitigationUncertaintyURI, constraintFunctions, pluginActivator);
 	}
 
 	private static boolean isViolationfreeModel(String outputPath, int number,
-			List<Predicate<? super AbstractVertex<?>>> constraintFunctions) {
+			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, Class<? extends Plugin> pluginActivator) {
+		
 		final var dataFlowDiagramPath = Paths
 				.get(outputPath, "mitigation" + Integer.toString(number) + ".dataflowdiagram").toString();
 		final var dataDictionaryPath = Paths
 				.get(outputPath, "mitigation" + Integer.toString(number) + ".datadictionary").toString();
 		final var uncertaintyPath = Paths.get(outputPath, "mitigation.uncertainty").toString();
+		
 		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
-				.modelProjectName("dev.abunai.confidentiality.analysis.testmodels").usePluginActivator(Activator.class)
+				.modelProjectName("dev.abunai.confidentiality.mitigation.tests").usePluginActivator(pluginActivator)
 				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
 				.useUncertaintyModel(uncertaintyPath);
 
@@ -80,14 +82,13 @@ public class MitigationModelCalculator {
 	}
 
 	private static List<String> storeMitigationCandidates(List<DataFlowDiagramAndDictionary> candidates,
-			String uncertaintyFilePath, List<UncertaintySource> uncertaintiesToKeep, String outputPath,
-			String mitigationUncertaintyPath, List<Predicate<? super AbstractVertex<?>>> constraintFunctions,
-			String mitigationsPathFromProject) {
-		System.out.println(mitigationUncertaintyPath);
+			List<UncertaintySource> uncertaintiesToKeep, String outputPath, String projectName, URI modelUncertaintyURI,
+			URI mitigationUncertaintyURI, List<Predicate<? super AbstractVertex<?>>> constraintFunctions,
+			Class<? extends Plugin> pluginActivator) {
 		// Store uncertainties
 		ResourceSet resSet = new ResourceSetImpl();
-		Resource oldUncertaintyRes = resSet.getResource(URI.createURI(uncertaintyFilePath), true);
-		Resource newUncertaintyRes = resSet.createResource(URI.createURI(mitigationUncertaintyPath));
+		Resource oldUncertaintyRes = resSet.getResource(modelUncertaintyURI, true);
+		Resource newUncertaintyRes = resSet.createResource(mitigationUncertaintyURI);
 		List<String> idsToKeep = uncertaintiesToKeep.stream().map(u -> u.getId()).toList();
 
 		var sourceCollection = oldUncertaintyRes.getContents().get(0);
@@ -115,8 +116,9 @@ public class MitigationModelCalculator {
 		// Store dataflowdigrams and datadictionarys
 		var conv = new DataFlowDiagramConverter();
 		for (int i = 0; i < candidates.size(); i++) {
-			conv.storeDFD(candidates.get(i), outputPath + "/mitigation" + Integer.toString(i));
-			if (isViolationfreeModel(mitigationsPathFromProject, i, constraintFunctions)) {
+			conv.storeDFD(candidates.get(i), Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
+			var mitigationsPathFromProject = outputPath.split(projectName)[1];
+			if (isViolationfreeModel(mitigationsPathFromProject, i, constraintFunctions, pluginActivator)) {
 				var result = new ArrayList<String>();
 				result.add("mitigation" + Integer.toString(i));
 				return result;

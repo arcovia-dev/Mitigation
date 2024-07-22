@@ -1,6 +1,5 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -11,11 +10,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
-import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
-import dev.abunai.confidentiality.mitigation.tests.Activator;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
@@ -47,21 +43,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	@Test
 	@Order(1)
 	public void createTrainData() {
-		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
-				.toString();
-		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
-				.toString();
-		final var uncertaintyPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".uncertainty")
-				.toString();
-
-		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
-				.modelProjectName(TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
-				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
-				.useUncertaintyModel(uncertaintyPath);
-
-		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
-		analysis.initializeAnalysis();
-
+		var analysis = getAnalysis();
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
@@ -78,7 +60,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 				continue;
 			}
 
-			trainDataGeneration.violationDataToCSV(violations, uncertaintySources,
+			trainDataGeneration.violationDataToCSV(violations, analysis.getUncertaintySources(),
 					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
 			count++;
 		}
@@ -86,7 +68,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		// Rank the uncertainties specified in the given model and store the result in
 		// the specified file
 		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
-				trainDataDirectory, uncertaintySources.size());
+				trainDataDirectory, analysis.getUncertaintySources().size());
 
 		// Store the result of the Ranking in a file
 		storeRankingResult(relevantUncertaintyIds);
@@ -94,11 +76,12 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(2)
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
-		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName);
+		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,analysis.getUncertaintySources());
 		if (!success) {
 			System.out.println("mitigation failed");
 		}
@@ -111,13 +94,14 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	@Order(3)
 	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically2() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		var success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-				rankedUncertaintyEntityName.size() / 2);
+				rankedUncertaintyEntityName.size() / 2, analysis.getUncertaintySources());
 		if (!success) {
 			var success2 = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					rankedUncertaintyEntityName.size());
+					rankedUncertaintyEntityName.size(), analysis.getUncertaintySources());
 			if (!success2) {
 				System.out.println("mitigation failed");
 			}
@@ -131,12 +115,13 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	@Order(4)
 	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically3() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		boolean success = false;
 		for (int i = 1; i <= 4 && !success; i++) {
 			success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					i * (rankedUncertaintyEntityName.size() / 4));
+					i * (rankedUncertaintyEntityName.size() / 4),analysis.getUncertaintySources());
 		}
 		if (!success) {
 			System.out.println("mitigation failed");
@@ -150,10 +135,11 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	@RepeatedTest(30)
 	@Order(5)
 	public void createMitigationCandidatesAutomatically4() {
+		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
-		var rankedUncertaintyEntityName = uncertaintySources.stream().map(u -> u.getEntityName()).toList();
+		var rankedUncertaintyEntityName = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
 		boolean success = false;
-		success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size());
+		success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size(),analysis.getUncertaintySources());
 		if (!success) {
 			System.out.println("mitigation failed");
 		}
