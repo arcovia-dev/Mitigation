@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dataflowdiagram:DataFlowDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" id="_UdnVMDzxEe-zu9ooA-6uGQ">
+  <flows id="qt97ws" entityName="" sourceNode="05a9o" destinationNode="5zljh9">
+    <destinationPin href="mitigation658.datadictionary#q3tps"/>
+    <sourcePin href="mitigation658.datadictionary#6da1pf"/>
+  </flows>
+  <flows id="gdqjrtn" entityName="" sourceNode="43ci5" destinationNode="5zljh9">
+    <destinationPin href="mitigation658.datadictionary#q3tps"/>
+    <sourcePin href="mitigation658.datadictionary#uxwmd"/>
+  </flows>
+  <flows id="oc4l7d" entityName="" sourceNode="cmhk09" destinationNode="pn43tc">
+    <destinationPin href="mitigation658.datadictionary#tn6k3l"/>
+    <sourcePin href="mitigation658.datadictionary#140xy3"/>
+  </flows>
+  <flows id="1pl99" entityName="" sourceNode="0mfzfc" destinationNode="x67p1">
+    <destinationPin href="mitigation658.datadictionary#p6k7id"/>
+    <sourcePin href="mitigation658.datadictionary#ohfd2"/>
+  </flows>
+  <flows id="2du38j" entityName="" sourceNode="e4v729" destinationNode="vt40j5">
+    <destinationPin href="mitigation658.datadictionary#f7khk5"/>
+    <sourcePin href="mitigation658.datadictionary#5b9s2i"/>
+  </flows>
+  <flows id="qpz52g" entityName="" sourceNode="vt40j5" destinationNode="jj1lqp">
+    <destinationPin href="mitigation658.datadictionary#0lar5h"/>
+    <sourcePin href="mitigation658.datadictionary#9tqdsm"/>
+  </flows>
+  <flows id="3hd7e" entityName="create_acc_req" sourceNode="joj9ok" destinationNode="05a9o">
+    <destinationPin href="mitigation658.datadictionary#4s3jxh"/>
+    <sourcePin href="mitigation658.datadictionary#3wpieg"/>
+  </flows>
+  <flows id="z7z79n" entityName="" sourceNode="joj9ok" destinationNode="yovwgk">
+    <destinationPin href="mitigation658.datadictionary#sj7raf"/>
+    <sourcePin href="mitigation658.datadictionary#y5xc95"/>
+  </flows>
+  <flows id="r6v4zl" entityName="fond_recommendation_req" sourceNode="joj9ok" destinationNode="dn5g4g">
+    <destinationPin href="mitigation658.datadictionary#9dco2k"/>
+    <sourcePin href="mitigation658.datadictionary#jeigr"/>
+  </flows>
+  <flows id="r1k1z" entityName="" sourceNode="xp2ahb" destinationNode="tax9n">
+    <destinationPin href="mitigation658.datadictionary#p2ic6"/>
+    <sourcePin href="mitigation658.datadictionary#ggh65"/>
+  </flows>
+  <flows id="ektf2" entityName="" sourceNode="mrt4j" destinationNode="x67p1">
+    <destinationPin href="mitigation658.datadictionary#96yfs"/>
+    <sourcePin href="mitigation658.datadictionary#tu2lm"/>
+  </flows>
+  <flows id="726gse" entityName="" sourceNode="05a9o" destinationNode="euaus4">
+    <destinationPin href="mitigation658.datadictionary#xnllu9"/>
+    <sourcePin href="mitigation658.datadictionary#k7tez"/>
+  </flows>
+  <flows id="xkyrao" entityName="" sourceNode="43ci5" destinationNode="euaus4">
+    <destinationPin href="mitigation658.datadictionary#xnllu9"/>
+    <sourcePin href="mitigation658.datadictionary#mmnpxk"/>
+  </flows>
+  <flows id="2guygi" entityName="" sourceNode="euaus4" destinationNode="xp2ahb">
+    <destinationPin href="mitigation658.datadictionary#i9as1c"/>
+    <sourcePin href="mitigation658.datadictionary#her67v"/>
+  </flows>
+  <flows id="hibrgm" entityName="" sourceNode="euaus4" destinationNode="0mfzfc">
+    <destinationPin href="mitigation658.datadictionary#fef13s"/>
+    <sourcePin href="mitigation658.datadictionary#sdornc"/>
+  </flows>
+  <flows id="ctizlm" entityName="" sourceNode="euaus4" destinationNode="mrt4j">
+    <destinationPin href="mitigation658.datadictionary#5fdcp6"/>
+    <sourcePin href="mitigation658.datadictionary#bka455"/>
+  </flows>
+  <flows id="g5owtl" entityName="" sourceNode="jwki0y" destinationNode="euaus4">
+    <destinationPin href="mitigation658.datadictionary#esldbj"/>
+    <sourcePin href="mitigation658.datadictionary#wmr2fk"/>
+  </flows>
+  <flows id="n3dimv" entityName="trans_money_req" sourceNode="joj9ok" destinationNode="jwki0y">
+    <destinationPin href="mitigation658.datadictionary#p1c5f7"/>
+    <sourcePin href="mitigation658.datadictionary#9j4z2r"/>
+  </flows>
+  <flows id="qkppfh" entityName="" sourceNode="vznzd" destinationNode="tax9n">
+    <destinationPin href="mitigation658.datadictionary#yoe03"/>
+    <sourcePin href="mitigation658.datadictionary#zveoyb"/>
+  </flows>
+  <flows id="fkx88e" entityName="" sourceNode="e4v729" destinationNode="vznzd">
+    <destinationPin href="mitigation658.datadictionary#3yubu8"/>
+    <sourcePin href="mitigation658.datadictionary#g2n3es"/>
+  </flows>
+  <flows id="7secm" entityName="" sourceNode="dn5g4g" destinationNode="bzwa3">
+    <destinationPin href="mitigation658.datadictionary#l9ozr"/>
+    <sourcePin href="mitigation658.datadictionary#zn62sq"/>
+  </flows>
+  <flows id="mbfdpe" entityName="" sourceNode="kylsiw" destinationNode="bzwa3">
+    <destinationPin href="mitigation658.datadictionary#l9ozr"/>
+    <sourcePin href="mitigation658.datadictionary#t633kr"/>
+  </flows>
+  <flows id="9qtagj" entityName="fond_raw_data" sourceNode="jj1lqp" destinationNode="39yys4">
+    <destinationPin href="mitigation658.datadictionary#6i2vfg"/>
+    <sourcePin href="mitigation658.datadictionary#fe3u7"/>
+  </flows>
+  <flows id="i6qx1b" entityName="fond_data" sourceNode="39yys4" destinationNode="1rkr0b">
+    <destinationPin href="mitigation658.datadictionary#qubc9"/>
+    <sourcePin href="mitigation658.datadictionary#x41oki"/>
+  </flows>
+  <flows id="lkjes3" entityName="" sourceNode="1rkr0b" destinationNode="bzwa3">
+    <destinationPin href="mitigation658.datadictionary#ybhpiw"/>
+    <sourcePin href="mitigation658.datadictionary#5zbky"/>
+  </flows>
+  <flows id="96atal" entityName="" sourceNode="z0ykp8" destinationNode="bzwa3">
+    <destinationPin href="mitigation658.datadictionary#ybhpiw"/>
+    <sourcePin href="mitigation658.datadictionary#1e2jyx"/>
+  </flows>
+  <flows id="nbmd" entityName="" sourceNode="jwki0y" destinationNode="axtpum">
+    <destinationPin href="mitigation658.datadictionary#pt22np"/>
+    <sourcePin href="mitigation658.datadictionary#wxjjbs"/>
+  </flows>
+  <flows id="mhskpk" entityName="" sourceNode="joj9ok" destinationNode="r5apdl">
+    <destinationPin href="mitigation658.datadictionary#q6bgce"/>
+    <sourcePin href="mitigation658.datadictionary#fdgaer"/>
+  </flows>
+  <flows id="ew6pk8" entityName="" sourceNode="r5apdl" destinationNode="euaus4">
+    <destinationPin href="mitigation658.datadictionary#esldbj"/>
+    <sourcePin href="mitigation658.datadictionary#uzzdt3"/>
+  </flows>
+  <flows id="vnlwpe" entityName="" sourceNode="yovwgk" destinationNode="a50umxs">
+    <destinationPin href="mitigation658.datadictionary#wv0zq"/>
+    <sourcePin href="mitigation658.datadictionary#cu7mp8"/>
+  </flows>
+  <flows id="vpqdwl" entityName="" sourceNode="a8df5t" destinationNode="cmhk09">
+    <destinationPin href="mitigation658.datadictionary#v62j8"/>
+    <sourcePin href="mitigation658.datadictionary#q0g82e"/>
+  </flows>
+  <flows id="cuy6o6" entityName="" sourceNode="s1icmf" destinationNode="a50umxs">
+    <destinationPin href="mitigation658.datadictionary#bmksro"/>
+    <sourcePin href="mitigation658.datadictionary#hkfqxo"/>
+  </flows>
+  <flows id="h7xnfs" entityName="" sourceNode="o1tz7k" destinationNode="a50umxs">
+    <destinationPin href="mitigation658.datadictionary#bmksro"/>
+    <sourcePin href="mitigation658.datadictionary#cd09qf"/>
+  </flows>
+  <flows id="7tykx" entityName="loan_offer_req" sourceNode="joj9ok" destinationNode="byrkz">
+    <destinationPin href="mitigation658.datadictionary#ads4x9"/>
+    <sourcePin href="mitigation658.datadictionary#8437n"/>
+  </flows>
+  <flows id="npencu" entityName="loan_offer_get" sourceNode="byrkz" destinationNode="s1icmf">
+    <destinationPin href="mitigation658.datadictionary#ukltp8"/>
+    <sourcePin href="mitigation658.datadictionary#o670jd"/>
+  </flows>
+  <flows id="yyndme" entityName="" sourceNode="2n21iq" destinationNode="tax9n">
+    <destinationPin href="mitigation658.datadictionary#287rit"/>
+    <sourcePin href="mitigation658.datadictionary#w17zn"/>
+  </flows>
+  <flows id="y7773c" entityName="" sourceNode="ixu9wp" destinationNode="tax9n">
+    <destinationPin href="mitigation658.datadictionary#287rit"/>
+    <sourcePin href="mitigation658.datadictionary#mvkqih"/>
+  </flows>
+  <flows id="2us0vg" entityName="loan_res" sourceNode="a8df5t" destinationNode="ixu9wp">
+    <destinationPin href="mitigation658.datadictionary#npuauj"/>
+    <sourcePin href="mitigation658.datadictionary#b63vq7"/>
+  </flows>
+  <flows id="pzvn" entityName="" sourceNode="hp8zdd" destinationNode="chyibm">
+    <destinationPin href="mitigation658.datadictionary#p9p0zb"/>
+    <sourcePin href="mitigation658.datadictionary#gwvy0i"/>
+  </flows>
+  <flows id="jrgem" entityName="" sourceNode="chyibm" destinationNode="euaus4">
+    <destinationPin href="mitigation658.datadictionary#unlaw"/>
+    <sourcePin href="mitigation658.datadictionary#dg0dib"/>
+  </flows>
+  <flows id="fs4me" entityName="" sourceNode="gqwneh" destinationNode="euaus4">
+    <destinationPin href="mitigation658.datadictionary#unlaw"/>
+    <sourcePin href="mitigation658.datadictionary#m2r9nh"/>
+  </flows>
+  <flows id="vprfb8" entityName="request_account_state_flow" sourceNode="hp8zdd">
+    <destinationNode xsi:type="dataflowdiagram:Process" href="mitigation0.dataflowdiagram#jceqzm"/>
+    <destinationPin href="mitigation126.datadictionary#1psw1h"/>
+    <sourcePin href="mitigation658.datadictionary#j4s8pl"/>
+  </flows>
+  <flows id="jp98eo" entityName="" sourceNode="jceqzm" destinationNode="euaus4">
+    <destinationPin href="mitigation658.datadictionary#unlaw"/>
+    <sourcePin href="mitigation658.datadictionary#3635pp"/>
+  </flows>
+  <nodes xsi:type="dataflowdiagram:Process" id="43ci5" entityName="create_account_enc">
+    <behaviour href="mitigation658.datadictionary#_UdojXzzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="05a9o" entityName="create_account">
+    <behaviour href="mitigation658.datadictionary#_UdpxcTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="axtpum" entityName="Customer_Transaction_Data">
+    <behaviour href="mitigation658.datadictionary#_UdpxdjzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="5zljh9" entityName="Customer_Personal_Data">
+    <behaviour href="mitigation658.datadictionary#_UdpxeTzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#g10hr"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="xp2ahb" entityName="show_balance">
+    <behaviour href="mitigation658.datadictionary#_UdqYgDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="yovwgk" entityName="change_cc_limit">
+    <behaviour href="mitigation658.datadictionary#_UdqYhDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="pn43tc" entityName="Customer_Settings_Data">
+    <behaviour href="mitigation658.datadictionary#_UdqYiDzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#5hnugm"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="m3qul" entityName="transfer_money_2">
+    <behaviour href="mitigation658.datadictionary#_UdqYizzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#t3spcs"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="jwki0y" entityName="transfer_money">
+    <behaviour href="mitigation658.datadictionary#_UdqYjzzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="x67p1" entityName="Developer_view">
+    <behaviour href="mitigation658.datadictionary#_UdqYlDzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#t3spcs"/>
+    <properties href="mitigation658.datadictionary#zqeft"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="cmhk09" entityName="internal_change_cc_limit">
+    <behaviour href="mitigation658.datadictionary#_UdqYmDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="0mfzfc" entityName="view_system_state">
+    <behaviour href="mitigation658.datadictionary#_UdqYnDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="jj1lqp" entityName="Fond_Data">
+    <behaviour href="mitigation658.datadictionary#_UdqYoDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="vt40j5" entityName="request_fond_data">
+    <behaviour href="mitigation658.datadictionary#_UdqYpDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="e4v729" entityName="Fond_manager">
+    <behaviour href="mitigation658.datadictionary#_UdqYqDzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#g10hr"/>
+    <properties href="mitigation126.datadictionary#5hnugm"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="mrt4j" entityName="view_account_state">
+    <behaviour href="mitigation658.datadictionary#_Udq_kTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="zbow0h" entityName="view_account_state2">
+    <behaviour href="mitigation658.datadictionary#_Udq_lTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="joj9ok" entityName="Customer">
+    <behaviour href="mitigation658.datadictionary#_Udq_mTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="dn5g4g" entityName="request_fond_recommendation">
+    <behaviour href="mitigation658.datadictionary#_Udq_oTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="kylsiw" entityName="request_fond_recommendation2">
+    <behaviour href="mitigation658.datadictionary#_Udq_pTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="vznzd" entityName="give_fond_recommendation">
+    <behaviour href="mitigation658.datadictionary#_Udq_qTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="tax9n" entityName="Customer_view">
+    <behaviour href="mitigation658.datadictionary#_UdrmojzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="euaus4" entityName="Customer_Banking_Data">
+    <behaviour href="mitigation658.datadictionary#_UdrmpzzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#5hnugm"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="chyibm" entityName="request_system_state">
+    <behaviour href="mitigation658.datadictionary#_UdrmrzzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="bzwa3" entityName="Fond_manager_view">
+    <behaviour href="mitigation658.datadictionary#_UdrmszzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#t3spcs"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="1rkr0b" entityName="show_fond_data_enc">
+    <behaviour href="mitigation658.datadictionary#_UdsNsDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="z0ykp8" entityName="show_fond_data">
+    <behaviour href="mitigation658.datadictionary#_UdsNtDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="39yys4" entityName="prepare_fond_data">
+    <behaviour href="mitigation658.datadictionary#_UdsNuDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="r5apdl" entityName="view_balance">
+    <behaviour href="mitigation658.datadictionary#_UdsNvDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="s1icmf" entityName="process_loan_offer">
+    <behaviour href="mitigation658.datadictionary#_UdsNwDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="byrkz" entityName="get_loan_offer">
+    <behaviour href="mitigation658.datadictionary#_UdsNxDzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="a50umxs" entityName="bank_clerk_view">
+    <behaviour href="mitigation658.datadictionary#_UdsNyDzxEe-zu9ooA-6uGQ"/>
+    <properties href="mitigation658.datadictionary#5hnugm"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="a8df5t" entityName="bank_clerk">
+    <behaviour href="mitigation658.datadictionary#_Uds0wTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="2n21iq" entityName="send_loan_offer_response2">
+    <behaviour href="mitigation658.datadictionary#_Uds0xTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="ixu9wp" entityName="send_loan_offer_response">
+    <behaviour href="mitigation658.datadictionary#_Uds0yTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="o1tz7k" entityName="process_loan_offer2">
+    <behaviour href="mitigation658.datadictionary#_Uds0zTzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="hp8zdd" entityName="Developer">
+    <behaviour href="mitigation658.datadictionary#_Uds00TzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="gqwneh" entityName="request_account_state">
+    <behaviour href="mitigation658.datadictionary#_Uds01TzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="jceqzm" entityName="request_account_state2">
+    <behaviour href="mitigation658.datadictionary#_Uds02TzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="nv1q4v" entityName="view_system_state2">
+    <behaviour href="mitigation658.datadictionary#_Uds03TzxEe-zu9ooA-6uGQ"/>
+  </nodes>
+</dataflowdiagram:DataFlowDiagram>

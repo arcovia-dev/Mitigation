@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_8tLTs0dVEe--1q9X0yjc0A" entityName="account_creation_uncertain">
+    <target href="beh.datadictionary#_gBCfYUdVEe-qxf0e6iQ7dw"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_gBImAEdVEe-qxf0e6iQ7dw"/>
+    <scenarios id="_gcyx0EdWEe--1q9X0yjc0A">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_QPcZckdWEe--1q9X0yjc0A"/>
+    </scenarios>
+  </sources>
+   <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_kSDEyEdZEe--1q9X0yjc0A" entityName="tranfer_money_enc_uncertain">
+    <target href="beh.datadictionary#_gBCfa0dVEe-qxf0e6iQ7dw"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_gBJ0I0dVEe-qxf0e6iQ7dw"/>
+    <scenarios id="_qb-3fUdZEe--1q9X0yjc0A">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_wMDgAkdWEe--1q9X0yjc0A"/>
+    </scenarios>
+  </sources>
+    <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_2pVlKUdZEe--1q9X0yjc0A" entityName="show_account_state_enc_uncertain">
+    <target href="beh.datadictionary#_gBDtgUdVEe-qxf0e6iQ7dw"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_gBKbNkdVEe-qxf0e6iQ7dw"/>
+    <scenarios id="_69KKwEdZEe--1q9X0yjc0A">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_INPyskdYEe--1q9X0yjc0A"/>
+    </scenarios>
+  </sources>
+   <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_A6iIKUdaEe--1q9X0yjc0A" entityName="Personal_DB_personalization_uncertain">
+    <target href="beh.datadictionary#_gBDGeEdVEe-qxf0e6iQ7dw"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_gBKbM0dVEe-qxf0e6iQ7dw"/>
+    <scenarios id="_IQ-xQEdaEe--1q9X0yjc0A">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_yJDtUkdYEe--1q9X0yjc0A"/>
+    </scenarios>
+  </sources>
+    <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_OG2YeUdaEe--1q9X0yjc0A" entityName="account_state_response_enc_uncertain">
+    <target href="beh.datadictionary#_gBDGfUdVEe-qxf0e6iQ7dw"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_gBKbNkdVEe-qxf0e6iQ7dw"/>
+    <scenarios id="_RtvmoEdaEe--1q9X0yjc0A">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_INPyskdYEe--1q9X0yjc0A"/>
+    </scenarios>
+  </sources>
+ </uncertainty:UncertaintySourceCollection>

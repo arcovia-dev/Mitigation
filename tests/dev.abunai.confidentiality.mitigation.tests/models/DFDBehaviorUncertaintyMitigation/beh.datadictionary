@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ASCII"?>
+<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_gA7KoEdVEe-qxf0e6iQ7dw">
+  <labelTypes id="4h3wzk" entityName="Sensitivity">
+    <label id="zzvphn" entityName="Personal"/>
+    <label id="veaan9" entityName="Public"/>
+  </labelTypes>
+  <labelTypes id="gvia09" entityName="Location">
+    <label id="g10hr" entityName="EU"/>
+    <label id="5hnugm" entityName="nonEU"/>
+  </labelTypes>
+  <labelTypes id="84rllz" entityName="Encryption">
+    <label id="2r6xe6" entityName="Encrypted"/>
+  </labelTypes>
+  <labelTypes id="lxmx8s" entityName="Developer">
+    <label id="itrwbp" entityName="Develop"/>
+    <label id="v2hrlm" entityName="nonDevelop"/>
+  </labelTypes>
+  <behaviour id="_gA9m4EdVEe-qxf0e6iQ7dw" entityName="User">
+    <outPin id="y3onni" entityName="User_out_user_create_accuser_trans_money"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBJ0IEdVEe-qxf0e6iQ7dw" outputPin="y3onni" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:TRUE" id="_gBJ0IUdVEe-qxf0e6iQ7dw"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_gBCfYUdVEe-qxf0e6iQ7dw" entityName="create_account">
+    <inPin id="2kkn69" entityName="create_account_in_"/>
+    <outPin id="26bl29" entityName="create_account_out_"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_gBGJwEdVEe-qxf0e6iQ7dw" inputPins="2kkn69" outputPin="26bl29"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBImAEdVEe-qxf0e6iQ7dw" entityName="create_account_depersonalize" inputPins="2kkn69" outputPin="26bl29" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:NOT" id="_gBJNEEdVEe-qxf0e6iQ7dw">
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_gBJNEUdVEe-qxf0e6iQ7dw"/>
+      </term>
+    </assignment>
+  </behaviour>
+  <behaviour id="_Dj7wJUdWEe--1q9X0yjc0A" entityName="create_account_alt">
+    <inPin id="_LL4Y8EdWEe--1q9X0yjc0A" entityName="create_account_in_"/>
+    <outPin id="_NDurYUdWEe--1q9X0yjc0A" entityName="create_account_out_"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_QPcZckdWEe--1q9X0yjc0A" entityName="create_account_personalize" inputPins="_LL4Y8EdWEe--1q9X0yjc0A" outputPin="_NDurYUdWEe--1q9X0yjc0A" outputLabels="v2hrlm">
+      <term xsi:type="datadictionary:TRUE" id="_VFh-oEdWEe--1q9X0yjc0A"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_gBCfZUdVEe-qxf0e6iQ7dw" entityName="validate_data">
+    <inPin id="7751o9" entityName="validate_data_in_c_v"/>
+    <inPin id="gixs19" entityName="validate_data_in_t_v"/>
+    <outPin id="svtdsl" entityName="validate_data_out_"/>
+    <outPin id="j3v45" entityName="validate_data_out_2"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_gBJ0JUdVEe-qxf0e6iQ7dw" inputPins="7751o9" outputPin="svtdsl"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_gBJ0JkdVEe-qxf0e6iQ7dw" inputPins="gixs19" outputPin="j3v45"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBKbMEdVEe-qxf0e6iQ7dw" entityName="validate_data_depersonalize" inputPins="7751o9 gixs19" outputPin="j3v45" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:NOT" id="_gBKbMUdVEe-qxf0e6iQ7dw">
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_gBKbMkdVEe-qxf0e6iQ7dw"/>
+      </term>
+    </assignment>
+  </behaviour>
+  <behaviour id="_WGR0hUdXEe--1q9X0yjc0A" entityName="validate_data_alt">
+    <inPin id="_Xprg8EdXEe--1q9X0yjc0A" entityName="validate_data_in_t_v"/>
+    <outPin id="_ZbAUoUdXEe--1q9X0yjc0A" entityName="validate_data_out2"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_bt7ZgkdXEe--1q9X0yjc0A" entityName="validate_data_personalize" inputPins="_Xprg8EdXEe--1q9X0yjc0A" outputPin="_ZbAUoUdXEe--1q9X0yjc0A" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:TRUE" id="_zlNXsEdXEe--1q9X0yjc0A"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_gBCfa0dVEe-qxf0e6iQ7dw" entityName="transfer_money">
+    <inPin id="cfqjxn" entityName="transfer_money_in_"/>
+    <outPin id="8jvhdi" entityName="transfer_money_out_"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_gBJ0IkdVEe-qxf0e6iQ7dw" inputPins="cfqjxn" outputPin="8jvhdi"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBJ0I0dVEe-qxf0e6iQ7dw" entityName="trans_money_enc" inputPins="cfqjxn" outputPin="8jvhdi" outputLabels="2r6xe6">
+      <term xsi:type="datadictionary:TRUE" id="_gBJ0JEdVEe-qxf0e6iQ7dw"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_mKetZUdWEe--1q9X0yjc0A" entityName="transfer_money_alt">
+    <inPin id="_sa90AEdWEe--1q9X0yjc0A" entityName="transfer_money_in_"/>
+    <outPin id="_ucjRQUdWEe--1q9X0yjc0A" entityName="transfer_money_out_"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_wMDgAkdWEe--1q9X0yjc0A" entityName="trans_money_not_enc" inputPins="_sa90AEdWEe--1q9X0yjc0A" outputPin="_ucjRQUdWEe--1q9X0yjc0A" outputLabels="v2hrlm">
+      <term xsi:type="datadictionary:TRUE" id="_H5CSuUdXEe--1q9X0yjc0A"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_gBCfb0dVEe-qxf0e6iQ7dw" entityName="Developer">
+    <inPin id="nz2ubx" entityName="Developer_in_"/>
+    <outPin id="zgq3ro" entityName="Developer_out_d_s"/>
+  </behaviour>
+  <behaviour id="_gBDGcUdVEe-qxf0e6iQ7dw" entityName="Banking_DB">
+    <inPin id="pw6l" entityName="Banking_DB_in_"/>
+    <inPin id="pus43" entityName="Banking_DB_in_"/>
+  </behaviour>
+  <behaviour id="_gBDGdUdVEe-qxf0e6iQ7dw" entityName="Transactions_DB">
+    <inPin id="ufc3ba" entityName="Transactions_DB_in_"/>
+  </behaviour>
+  <behaviour id="_gBDGeEdVEe-qxf0e6iQ7dw" entityName="Personal_DB">
+    <inPin id="nq2jhf" entityName="Personal_DB_in_"/>
+    <inPin id="y0wym" entityName="Personal_DB_in_2"/>
+    <outPin id="vd28ec" entityName="Personal_DB_out_p_a"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBKbM0dVEe-qxf0e6iQ7dw" entityName="personalize_db_response" outputPin="vd28ec" outputLabels="v2hrlm">
+      <term xsi:type="datadictionary:TRUE" id="_gBKbNEdVEe-qxf0e6iQ7dw"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_cds0JUdYEe--1q9X0yjc0A" entityName="Personal_DB_alt">
+    <outPin id="_ubGN0UdYEe--1q9X0yjc0A" entityName="Personal_DB_out_p_a"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_yJDtUkdYEe--1q9X0yjc0A" entityName="depersonalize" outputPin="_ubGN0UdYEe--1q9X0yjc0A" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:TRUE" id="_73zDgEdYEe--1q9X0yjc0A"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_gBDGfUdVEe-qxf0e6iQ7dw" entityName="account_state_response">
+    <inPin id="idnz6g" entityName="account_state_response_in_"/>
+    <outPin id="0xc5mg" entityName="account_state_response_out_"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_gBKbOEdVEe-qxf0e6iQ7dw" inputPins="idnz6g" outputPin="0xc5mg"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBKbOUdVEe-qxf0e6iQ7dw" entityName="account_state_response_enc" inputPins="idnz6g" outputPin="0xc5mg" outputLabels="2r6xe6">
+      <term xsi:type="datadictionary:TRUE" id="_gBKbOkdVEe-qxf0e6iQ7dw"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_FXTq5UdZEe--1q9X0yjc0A" entityName="account_state_response_alt">
+    <inPin id="_Pd-Y4EdZEe--1q9X0yjc0A" entityName="account_state_response_in_"/>
+    <outPin id="_SNdd8UdZEe--1q9X0yjc0A" entityName="account_state_response_out_"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_XwqAwkdZEe--1q9X0yjc0A" entityName="account_state_response_denc" inputPins="_Pd-Y4EdZEe--1q9X0yjc0A" outputPin="_SNdd8UdZEe--1q9X0yjc0A" outputLabels="v2hrlm">
+      <term xsi:type="datadictionary:TRUE" id="_bMoYYEdZEe--1q9X0yjc0A"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_gBDtgUdVEe-qxf0e6iQ7dw" entityName="show_account_state">
+    <inPin id="lvpc1" entityName="show_account_state_in_"/>
+    <outPin id="k9wufi" entityName="show_account_state_out_"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_gBKbNUdVEe-qxf0e6iQ7dw" inputPins="lvpc1" outputPin="k9wufi"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBKbNkdVEe-qxf0e6iQ7dw" entityName="enc_account_state" inputPins="lvpc1" outputPin="k9wufi" outputLabels="2r6xe6">
+      <term xsi:type="datadictionary:TRUE" id="_gBKbN0dVEe-qxf0e6iQ7dw"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_CpRz1UdYEe--1q9X0yjc0A" entityName="show_account_state_alt">
+    <inPin id="_EqEm4EdYEe--1q9X0yjc0A" entityName="show_account_state_in_"/>
+    <outPin id="_Gh_x0UdYEe--1q9X0yjc0A" entityName="show_account_state_out_"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_INPyskdYEe--1q9X0yjc0A" entityName="denc_account_state" inputPins="_EqEm4EdYEe--1q9X0yjc0A" outputPin="_Gh_x0UdYEe--1q9X0yjc0A" outputLabels="v2hrlm">
+      <term xsi:type="datadictionary:TRUE" id="_SwOCOUdYEe--1q9X0yjc0A"/>
+    </assignment>
+  </behaviour>
+</datadictionary:DataDictionary>

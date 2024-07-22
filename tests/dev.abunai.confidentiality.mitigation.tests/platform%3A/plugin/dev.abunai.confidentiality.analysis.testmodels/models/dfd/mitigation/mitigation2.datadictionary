@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<datadictionary:DataDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_yLg-EPvuEe6Tj7t8uRR9yQ">
+  <labelTypes id="__z_pIPvyEe6qEO2G6RwOIg" entityName="Sensitivity">
+    <label id="_BLK3cPvzEe6qEO2G6RwOIg" entityName="Personal"/>
+    <label id="_I8iiAPvzEe6qEO2G6RwOIg" entityName="Public"/>
+  </labelTypes>
+  <labelTypes id="_Fi3bAPv0Ee6qEO2G6RwOIg" entityName="Location">
+    <label id="_GyeowPv0Ee6qEO2G6RwOIg" entityName="EU"/>
+    <label id="_Hrkz8Pv0Ee6qEO2G6RwOIg" entityName="nonEU"/>
+  </labelTypes>
+  <labelTypes id="_fWdQsPv7Ee6qEO2G6RwOIg" entityName="Encrypted">
+    <label id="_g6IC4Pv7Ee6qEO2G6RwOIg" entityName="Encrypted"/>
+  </labelTypes>
+  <behaviour id="_Iu2BEfvvEe6Ie5mhRfc0tw" entityName="userBehavior">
+    <outPin id="_45pGIfvyEe6qEO2G6RwOIg" entityName="outUser"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_7HdokvvyEe6qEO2G6RwOIg" outputPin="_45pGIfvyEe6qEO2G6RwOIg" outputLabels="_BLK3cPvzEe6qEO2G6RwOIg">
+      <term xsi:type="datadictionary:TRUE" id="_EtLqwPylEe6riL8n0OLC8g"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_cEId8fvzEe6qEO2G6RwOIg" entityName="buyBehavior">
+    <inPin id="_jNu94PvzEe6qEO2G6RwOIg" entityName="inBuy"/>
+    <outPin id="_lHBawfvzEe6qEO2G6RwOIg" entityName="outBuy"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_ezj4o_vzEe6qEO2G6RwOIg" inputPins="_jNu94PvzEe6qEO2G6RwOIg" outputPin="_lHBawfvzEe6qEO2G6RwOIg"/>
+  </behaviour>
+  <behaviour id="_rWcxcfvzEe6qEO2G6RwOIg" entityName="databaseBehavior">
+    <inPin id="_udk6cPvzEe6qEO2G6RwOIg" entityName="inDatabase"/>
+  </behaviour>
+  <behaviour id="_Xl10Efv7Ee6qEO2G6RwOIg" entityName="encryptedBuyBehavior">
+    <inPin id="_ZlpvsPv7Ee6qEO2G6RwOIg" entityName="inEncyptedBuy"/>
+    <outPin id="_bVk1Mfv7Ee6qEO2G6RwOIg" entityName="outEncryptedBuy"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_c67pcvv7Ee6qEO2G6RwOIg" entityName="encryptedBuyAssignment" inputPins="_ZlpvsPv7Ee6qEO2G6RwOIg" outputPin="_bVk1Mfv7Ee6qEO2G6RwOIg" outputLabels="_g6IC4Pv7Ee6qEO2G6RwOIg">
+      <term xsi:type="datadictionary:TRUE" id="_QUlg0PynEe6-6ogH1rE9Xg"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_bkbdY_ynEe6-6ogH1rE9Xg" inputPins="_ZlpvsPv7Ee6qEO2G6RwOIg" outputPin="_bVk1Mfv7Ee6qEO2G6RwOIg"/>
+  </behaviour>
+</datadictionary:DataDictionary>
