@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
+import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
+import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
@@ -27,22 +29,27 @@ public abstract class MitigationTestBase extends DFDTestBase {
 	protected abstract String getFolderName();
 	protected abstract String getFilesName();
 	protected abstract List<Predicate<? super AbstractVertex<?>>> getConstraints();
+	
+	private final static String ABUNAI_TEST_MODELS = "dev.abunai.confidentiality.analysis.testmodels";
 
 	public DataDictionary dd;
 	public DataFlowDiagram dfd;
 	public List<UncertaintySource> uncertaintySources;
 
-	protected final String scriptDirectory = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\Mitigation\\bundles\\dev.abunai.confidentiality.mitigation\\scripts\\uncertaintyRanking";
-	protected final String trainDataDirectory = scriptDirectory + "\\train_data_files";
-	protected final String pathToUncertaintyRankingScript = scriptDirectory + "\\uncertainty_ranking.py";
-	protected final String pathToRelevantUncertainties = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/relevantUncertainties.txt";
-	protected final String pathToMeassurements = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/meassurements.txt";
-	protected final String pathToDfdTestModels = "platform:/plugin/dev.abunai.confidentiality.analysis.testmodels/models/dfd";
+	protected final String scriptDirectory = Paths.get("..","dev.abunai.confidentiality.mitigation","scripts","uncertaintyRanking").toString();
+	protected final String trainDataDirectory = Paths.get(scriptDirectory,"train_data_files").toString();
+	protected final String pathToUncertaintyRankingScript = Paths.get(scriptDirectory,"uncertainty_ranking.py").toString();
+	
+	protected final String pathToRelevantUncertainties = "relevantUncertainties.txt";
+	protected final String pathToMeassurements = "meassurements.txt";
+	
+	protected final URI testModels = ResourceUtils.createRelativePluginURI(Paths.get("models","dfd").toString(), ABUNAI_TEST_MODELS);
 	protected final String pathFromTestModelsToMitigationFolder = "models/dfd/mitigation";
-	protected final String pathToModelsUncertainty = pathToDfdTestModels
+	protected final String pathToModelsUncertainty = testModels
 			+ String.format("/%s/%s.uncertainty", getFolderName(), getFilesName());
+	//use relative plugin path
 	protected final String pathToMitigationModel = "C:\\Users\\Jonas\\Desktop\\Masterarbeit_Paper\\UncertaintyAwareConfidentialityAnalysis\\tests\\dev.abunai.confidentiality.analysis.testmodels\\models\\dfd\\mitigation";
-	protected final String pathToMitigationModelUncertainty = pathToDfdTestModels
+	protected final String pathToMitigationModelUncertainty = testModels
 			+ "/mitigation/mitigation.uncertainty";
 	protected final TrainDataGenerationUnsupervised trainDataGeneration = new TrainDataGenerationUnsupervised();
 
