@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -38,6 +39,9 @@ public class DebuggingHelperTests {
 	public void seeAverageRuntime() {
 		Path filePath = Paths.get(pathToMeassurements);
 		try {
+			if (!Files.isRegularFile(filePath)) {
+				System.out.println("run mitigation first !!!");
+			}
 			var contentLines = Files.readAllLines(filePath);
 			int sum = 0;
 			for(int i = contentLines.size()-20; i < contentLines.size();i++) {

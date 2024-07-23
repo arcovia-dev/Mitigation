@@ -3,6 +3,7 @@ package dev.abunai.confidentiality.mitigation.testBases;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.io.File;  
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -51,6 +52,9 @@ public abstract class MitigationTestBase extends TestBase {
 	
 	@BeforeEach
 	public void before() {
+		System.out.println(Paths.get(Paths.get("").toString(), "meassurements.txt").toString());
+		System.out.println(Paths.get("meassurements.txt").toAbsolutePath().toString());
+
 		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
 				.toString();
 		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
@@ -87,6 +91,10 @@ public abstract class MitigationTestBase extends TestBase {
 	public void storeMeassurement(long meassurement) {
 		Path filePath = Paths.get(pathToMeassurements);
 		try {
+			if (!Files.isRegularFile(filePath)) {
+				var file = new File(filePath.toString());
+				file.createNewFile();
+			}
 			var content = Files.readString(filePath);
 			content += Long.toString(meassurement) + "\n";
 			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
@@ -99,6 +107,10 @@ public abstract class MitigationTestBase extends TestBase {
 	public List<String> loadRanking() {
 		Path filePath = Paths.get(pathToRelevantUncertainties);
 		try {
+			if (!Files.isRegularFile(filePath)) {
+				System.out.println("ranking did not exist");
+				return new ArrayList<>();
+			}
 			return Files.readAllLines(filePath);
 		} catch (IOException e) {
 			e.printStackTrace();
