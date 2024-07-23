@@ -24,7 +24,7 @@ import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 public class DebuggingHelperTests {
 	
 	public final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.mitigation.tests";
-	protected final String pathToMeassurements = Paths.get(Paths.get("").toString(), "meassurements.txt").toString();
+	protected final String pathToMeassurements = Paths.get(Paths.get("").toAbsolutePath().toString(), "meassurements.txt").toString();
 	
 	@Test
 	public void webToDfd() {
