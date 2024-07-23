@@ -13,8 +13,7 @@ public class UncertaintyRanker {
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath, String pathToTrainDataFolder,
 			int rankingLength) {
 		// Command to run the Python script
-		String command = "python " + scriptPath + " " + pathToTrainDataFolder + " " + Integer.toString(rankingLength)
-				+ " " + getRankerTypeCommandParameter();
+		String[] command = {"python",scriptPath,pathToTrainDataFolder,Integer.toString(rankingLength),getRankerTypeCommandParameter()};
 		try {
 			// Execute the command
 			Process process = Runtime.getRuntime().exec(command);

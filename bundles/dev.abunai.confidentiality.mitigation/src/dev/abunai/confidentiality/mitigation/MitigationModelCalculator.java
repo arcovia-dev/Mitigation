@@ -113,12 +113,11 @@ public class MitigationModelCalculator {
 			e.printStackTrace();
 		}
 
-		// Store dataflowdigrams and datadictionarys
+		// Store dataflowdigrams and datadictionaries
 		var conv = new DataFlowDiagramConverter();
 		for (int i = 0; i < candidates.size(); i++) {
 			conv.storeDFD(candidates.get(i), Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
-			var mitigationsPathFromProject = outputPath.split(projectName)[1];
-			if (isViolationfreeModel(mitigationsPathFromProject, i, projectName, constraintFunctions, pluginActivator)) {
+			if (isViolationfreeModel(outputPath, i, projectName, constraintFunctions, pluginActivator)) {
 				var result = new ArrayList<String>();
 				result.add("mitigation" + Integer.toString(i));
 				return result;
