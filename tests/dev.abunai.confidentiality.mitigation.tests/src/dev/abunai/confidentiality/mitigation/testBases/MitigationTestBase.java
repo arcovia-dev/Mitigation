@@ -52,9 +52,6 @@ public abstract class MitigationTestBase extends TestBase {
 	
 	@BeforeEach
 	public void before() {
-		System.out.println(Paths.get(Paths.get("").toString(), "meassurements.txt").toString());
-		System.out.println(Paths.get("meassurements.txt").toAbsolutePath().toString());
-
 		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
 				.toString();
 		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
