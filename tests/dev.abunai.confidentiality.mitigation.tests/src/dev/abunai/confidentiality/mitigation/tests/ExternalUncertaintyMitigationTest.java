@@ -30,8 +30,8 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
-					&& this.retrieveDataLabels(it).contains("Encrypted");
+			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
+					&& this.retrieveDataLabels(it).contains("Personal");
 			return vio;
 		});
 		constraints.add(it -> {

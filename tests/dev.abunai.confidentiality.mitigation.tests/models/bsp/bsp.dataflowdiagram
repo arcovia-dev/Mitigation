@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dataflowdiagram:DataFlowDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" id="_CYOy4EjTEe-bjac9LpgtQA">
+  <flows id="phvsh4" entityName="data" sourceNode="5m8hj" destinationNode="aozac">
+    <destinationPin href="bsp.datadictionary#nx7vb"/>
+    <sourcePin href="bsp.datadictionary#dp6gtd"/>
+  </flows>
+  <flows id="4bvzy" entityName="" sourceNode="aozac" destinationNode="6dx67">
+    <destinationPin href="bsp.datadictionary#0a19h"/>
+    <sourcePin href="bsp.datadictionary#4swxh"/>
+  </flows>
+  <nodes xsi:type="dataflowdiagram:External" id="5m8hj" entityName="a">
+    <behaviour href="bsp.datadictionary#_CZrkYEjTEe-bjac9LpgtQA"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="aozac" entityName="b">
+    <behaviour href="bsp.datadictionary#_CZwc4UjTEe-bjac9LpgtQA"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="6dx67" entityName="c">
+    <behaviour href="bsp.datadictionary#_CZwc5UjTEe-bjac9LpgtQA"/>
+    <properties href="bsp.datadictionary#5hnugm"/>
+  </nodes>
+</dataflowdiagram:DataFlowDiagram>

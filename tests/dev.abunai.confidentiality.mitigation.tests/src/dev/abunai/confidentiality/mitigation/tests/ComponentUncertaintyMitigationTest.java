@@ -15,18 +15,19 @@ import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 
-public class OnlineBankingMitigationTest extends MitigationTestBase {
+public class ComponentUncertaintyMitigationTest  extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "OnlineBankingModel";
+		return "DFDComponentUncertaintyMitigation";
 	}
 
 	protected String getFilesName() {
-		return "online_banking_model";
+		return "comp";
 	}
 
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+
 		constraints.add(it -> {
 			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
 					&& this.retrieveDataLabels(it).contains("Personal");
@@ -39,6 +40,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		return constraints;
 	}
 
+	
 	@Test
 	@Order(1)
 	public void createTrainData() {
@@ -59,7 +61,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 			}
 
 			trainDataGeneration.violationDataToCSV(violations, analysis.getUncertaintySources(),
-				Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
+					Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
 			count++;
 		}
 
@@ -139,5 +141,4 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 		storeMeassurement(duration);
 	}
-
 }

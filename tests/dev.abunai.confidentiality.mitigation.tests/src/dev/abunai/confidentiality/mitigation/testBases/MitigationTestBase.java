@@ -3,7 +3,6 @@ package dev.abunai.confidentiality.mitigation.testBases;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.io.File;  
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -33,22 +33,21 @@ public abstract class MitigationTestBase extends TestBase {
 	
 	// Mitigation preparation variables
 	protected final TrainDataGenerationUnsupervised trainDataGeneration = new TrainDataGenerationUnsupervised();
-	protected final String scriptDirectory = Paths.get(PROJECT_ROOT_PATH, "scripts", "uncertaintyRanking").toString();
+	protected final String scriptDirectory = Paths.get("scripts", "uncertaintyRanking").toString();
 	protected final String trainDataDirectory = Paths.get(scriptDirectory, "train_data_files").toString();
 	protected final String pathToUncertaintyRankingScript = Paths.get(scriptDirectory, "uncertainty_ranking.py")
 			.toString();
-	protected final String pathToRelevantUncertainties = Paths.get(PROJECT_ROOT_PATH, "relevantUncertainties.txt")
-			.toString();
+	protected final String pathToRelevantUncertainties = "relevantUncertainties.txt";
 
 	// Paths and URIs for mitigation
-	protected final String pathToMitigationModel = Paths.get(PROJECT_ROOT_PATH, "models", "mitigation").toString();
+	protected final String pathToMitigationModel = Paths.get("models", "mitigation").toString();
 	protected final URI modelUncertaintyURI = ResourceUtils.createRelativePluginURI(
 			Paths.get("models", getFolderName(), getFilesName() + ".uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
 	protected final URI mitigationUncertaintyURI = ResourceUtils.createRelativePluginURI(
 			Paths.get("models", "mitigation", "mitigation.uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
 
 	// Evaluation variables
-	protected final String pathToMeassurements = Paths.get(PROJECT_ROOT_PATH, "meassurements.txt").toString();
+	protected final String pathToMeassurements = "meassurements.txt";
 	
 	@BeforeEach
 	public void before() {
@@ -72,12 +71,17 @@ public abstract class MitigationTestBase extends TestBase {
 		resourceProvider.loadRequiredResources();
 		dd = resourceProvider.getDataDictionary();
 		dfd = resourceProvider.getDataFlowDiagram();
+		
+		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
+		var web = conv.dfdToWeb(new DataFlowDiagramAndDictionary(dfd,dd));
+		conv.storeWeb(web, "test.json");
+		
 		this.analysis = analysis;
 	}
 
 	public void storeRankingResult(List<String> relevantUncertaintyIds) {
 		Path filePath = Paths.get(pathToRelevantUncertainties);
-		var content = String.join("\n", relevantUncertaintyIds);
+		var content = String.join(System.lineSeparator(), relevantUncertaintyIds);
 		try {
 			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
 		} catch (IOException e) {
@@ -88,12 +92,9 @@ public abstract class MitigationTestBase extends TestBase {
 	public void storeMeassurement(long meassurement) {
 		Path filePath = Paths.get(pathToMeassurements);
 		try {
-			if (!Files.isRegularFile(filePath)) {
-				var file = new File(filePath.toString());
-				file.createNewFile();
-			}
+			
 			var content = Files.readString(filePath);
-			content += Long.toString(meassurement) + "\n";
+			content += Long.toString(meassurement) + System.lineSeparator();
 			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
 
 		} catch (IOException e) {

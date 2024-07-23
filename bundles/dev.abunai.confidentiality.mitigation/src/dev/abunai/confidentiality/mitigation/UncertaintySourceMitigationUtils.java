@@ -32,10 +32,11 @@ public class UncertaintySourceMitigationUtils {
 
 		var targetBehaviorId = source.getTarget().getId();
 		var oldAssignmentsIds = source.getTargetAssignments().stream().map(a -> a.getId()).toList();
+		var newAssignmentsIds = scenario.getTargetAssignments().stream().map(a -> a.getId()).toList();
 
 		var allAssignments = newDD.getBehaviour().stream().map(b -> b.getAssignment()).flatMap(List::stream).toList();
 		var oldAssignments = allAssignments.stream().filter(a -> oldAssignmentsIds.contains(a.getId())).toList();
-		var newAssignments = allAssignments.stream().filter(b -> oldAssignmentsIds.contains(b.getId())).toList();
+		var newAssignments = allAssignments.stream().filter(b -> newAssignmentsIds.contains(b.getId())).toList();
 
 		correctNewAssignmentsPins(oldAssignments, newAssignments);
 
@@ -47,7 +48,6 @@ public class UncertaintySourceMitigationUtils {
 			targetBehavior.getAssignment().addAll(newAssignments);
 		}
 
-		replaceNodeBehaviors(newDia, newDD);
 		replaceOldDDReferencesWithTheOnesFromNewDD(newDD, newDia);
 
 		return new DataFlowDiagramAndDictionary(newDia, newDD);
@@ -165,11 +165,13 @@ public class UncertaintySourceMitigationUtils {
 			var newSrcPin = newDD.getBehaviour().stream()
 					.map(b -> b.getOutPin())
 					.flatMap(List::stream)
+					.filter(p ->  p.getId() != null)
 					.filter(p -> p.getId().equals(srcPinId))
 					.toList().get(0);
 			var newDstPin = newDD.getBehaviour().stream()
 					.map(b -> b.getInPin())
 					.flatMap(List::stream)
+					.filter(p ->  p.getId() != null)
 					.filter(p -> p.getId().equals(dstPinId))
 					.toList().get(0);
 			flow.setSourcePin(newSrcPin);
@@ -248,12 +250,4 @@ public class UncertaintySourceMitigationUtils {
 		}
 	}
 
-	private static void replaceNodeBehaviors(DataFlowDiagram newDia, DataDictionary newDD) {
-		for (var node : newDia.getNodes()) {
-			var nodeBehaviorId = node.getBehaviour().getId();
-			var newNodeBehavior = newDD.getBehaviour().stream().filter(b -> b.getId().equals(nodeBehaviorId)).toList()
-					.get(0);
-			node.setBehaviour(newNodeBehavior);
-		}
-	}
 }

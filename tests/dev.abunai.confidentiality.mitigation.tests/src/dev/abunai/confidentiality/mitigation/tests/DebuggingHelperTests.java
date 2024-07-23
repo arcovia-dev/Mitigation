@@ -1,6 +1,5 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,28 +18,30 @@ import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalys
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
+import dev.abunai.confidentiality.mitigation.testBases.*;
+
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 
 public class DebuggingHelperTests {
 	
-	public final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.mitigation.tests";
-	protected final String pathToMeassurements = Paths.get(Paths.get("").toAbsolutePath().toString(), "meassurements.txt").toString();
-	
+	protected final String pathToMeassurements = "meassurements.txt";
+		
 	@Test
 	public void webToDfd() {
-		String path = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/tests/dev.abunai.confidentiality.mitigation.tests/beh.json";
+		String path = "comp.json";
 		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
 		var dd = conv.webToDfd(path);
-		conv.storeDFD(dd, "beh");
+		conv.storeDFD(dd, "comp");
 	}
 	
 	@Test
 	public void seeAverageRuntime() {
 		Path filePath = Paths.get(pathToMeassurements);
+		if (!Files.isRegularFile(filePath)) {
+            System.out.println("run mitigation first !!!");
+            return;
+        }
 		try {
-			if (!Files.isRegularFile(filePath)) {
-				System.out.println("run mitigation first !!!");
-			}
 			var contentLines = Files.readAllLines(filePath);
 			int sum = 0;
 			for(int i = contentLines.size()-20; i < contentLines.size();i++) {
@@ -66,12 +67,12 @@ public class DebuggingHelperTests {
 		constraints.add(it -> {
 			System.out.println(this.retrieveNodeLabels(it));
 			System.out.println(this.retrieveDataLabels(it));
-			return this.retrieveNodeLabels(it).contains("Processable")
-					&& this.retrieveDataLabels(it).contains("Encrypted");
+			return this.retrieveNodeLabels(it).contains("Develop")
+					&& this.retrieveDataLabels(it).contains("Personal");
 		});
 		
 		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
-				.modelProjectName(TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
+				.modelProjectName(TestBase.TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
 				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
 				.useUncertaintyModel(uncertaintyPath);
 

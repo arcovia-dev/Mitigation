@@ -1,14 +1,9 @@
-show_balance_uncertain;change_cc_uncertain;banking_data_personal_uncertain;Banking_Data_Location_Uncertain;Customer_Settings_Location_Uncertain;Fond_Manager_Location_Uncertain;account_creation_uncertain;fond_data_presentation_uncertain;account_state_req_uncertain;loan_offer_process_uncertain;Constraint violated
-I;I;I;AaelkIaT7bEe-m-JpgVtQNVA;I;I;AadAiGAD71Ee-4uZpENwMb4g;I;AaJSweYD72Ee-4uZpENwMb4g;I;True
-I;I;I;AaelkIaT7bEe-m-JpgVtQNVA;I;I;AadAiGAD71Ee-4uZpENwMb4g;I;D;I;True
-I;I;AasDc40D3HEe-khNoznyvETA;D;I;I;AadAiGAD71Ee-4uZpENwMb4g;I;D;I;True
-I;I;I;D;I;I;D;I;D;I;True
-I;I;D;D;I;I;D;I;D;I;True
-I;I;I;AaelkIaT7bEe-m-JpgVtQNVA;I;I;D;I;D;I;True
-I;I;I;AaelkIaT7bEe-m-JpgVtQNVA;I;I;D;I;AaJSweYD72Ee-4uZpENwMb4g;I;True
-I;I;D;D;I;I;AadAiGAD71Ee-4uZpENwMb4g;I;D;I;True
-I;I;I;D;I;I;AadAiGAD71Ee-4uZpENwMb4g;I;D;I;True
-I;I;I;D;I;I;AadAiGAD71Ee-4uZpENwMb4g;I;AaJSweYD72Ee-4uZpENwMb4g;I;True
-I;I;I;D;I;I;D;I;AaJSweYD72Ee-4uZpENwMb4g;I;True
-I;I;D;D;I;I;D;I;AaJSweYD72Ee-4uZpENwMb4g;I;True
-I;I;D;D;I;I;AadAiGAD71Ee-4uZpENwMb4g;I;AaJSweYD72Ee-4uZpENwMb4g;I;True
+loan_req_uncertain;transfer_money_uncertain;create_account_uncertain;create_banking_account_uncertain;system_state_uncertain;balance_response_uncertain;Constraint violated
+I;D;AaHB4t4ERaEe-KU92kV8MYOA;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;AaHB4t4ERaEe-KU92kV8MYOA;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;D;AaHB4t4ERaEe-KU92kV8MYOA;D;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;AaHB4t4ERaEe-KU92kV8MYOA;D;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;D;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;D;D;AaVUxksERaEe-KU92kV8MYOA;I;I;True
+I;Aa6ayqgERZEe-KU92kV8MYOA;D;D;I;I;True
+I;D;D;D;I;I;True

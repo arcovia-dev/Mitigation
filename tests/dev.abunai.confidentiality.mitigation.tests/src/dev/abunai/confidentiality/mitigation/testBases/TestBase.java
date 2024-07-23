@@ -1,6 +1,5 @@
 package dev.abunai.confidentiality.mitigation.testBases;
 
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
@@ -14,7 +13,6 @@ import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalys
 public abstract class TestBase {
 	
 	public static final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.mitigation.tests";
-	public static final String PROJECT_ROOT_PATH = Paths.get("").toAbsolutePath().toString();
 	
 	public DataDictionary dd;
 	public DataFlowDiagram dfd;

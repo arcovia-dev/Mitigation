@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_EN10OEjUEe-pDsK0v1MN4g">
+    <target href="bsp.datadictionary#_CZrkYEjTEe-bjac9LpgtQA"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="bsp.datadictionary#_CZ0uUEjTEe-bjac9LpgtQA"/>
+    <scenarios id="_KTTWkEjUEe-pDsK0v1MN4g">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="bsp.datadictionary#_ZyAVskjTEe-pDsK0v1MN4g"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_MUGwuUjUEe-pDsK0v1MN4g">
+    <target href="bsp.datadictionary#_CZwc4UjTEe-bjac9LpgtQA"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="bsp.datadictionary#_CZ608EjTEe-bjac9LpgtQA"/>
+    <scenarios id="_OqNscEjUEe-pDsK0v1MN4g">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="bsp.datadictionary#_0PMmMkjTEe-pDsK0v1MN4g"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>

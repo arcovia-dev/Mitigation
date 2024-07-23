@@ -30,8 +30,11 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
-					&& this.retrieveDataLabels(it).contains("Encrypted");
+			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
+					&& this.retrieveDataLabels(it).contains("Personal");
+			if (vio) {
+				System.out.println("develop");
+			}
 			return vio;
 		});
 		constraints.add(it -> {
@@ -128,7 +131,7 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	}
 
 	@Test
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	@Order(5)
 	public void createMitigationCandidatesAutomatically4() {
 		var startTime = System.currentTimeMillis();

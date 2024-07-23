@@ -25,10 +25,8 @@
     <inPin id="2kkn69" entityName="create_account_in_"/>
     <outPin id="26bl29" entityName="create_account_out_"/>
     <assignment xsi:type="datadictionary:ForwardingAssignment" id="_gBGJwEdVEe-qxf0e6iQ7dw" inputPins="2kkn69" outputPin="26bl29"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_gBImAEdVEe-qxf0e6iQ7dw" entityName="create_account_depersonalize" inputPins="2kkn69" outputPin="26bl29" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:NOT" id="_gBJNEEdVEe-qxf0e6iQ7dw">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_gBJNEUdVEe-qxf0e6iQ7dw"/>
-      </term>
+    <assignment xsi:type="datadictionary:Assignment" id="_gBImAEdVEe-qxf0e6iQ7dw" entityName="create_account_depersonalize" inputPins="2kkn69" outputPin="26bl29" outputLabels="2r6xe6">
+      <term xsi:type="datadictionary:TRUE" id="_jTOUoEjQEe-NkYoniibrzQ"/>
     </assignment>
   </behaviour>
   <behaviour id="_Dj7wJUdWEe--1q9X0yjc0A" entityName="create_account_alt">
