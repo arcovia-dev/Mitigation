@@ -18,13 +18,12 @@ import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalys
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
-import dev.abunai.confidentiality.analysis.testmodels.Activator;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 
 public class DebuggingHelperTests {
 	
-	public final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.analysis.testmodels";
-	protected final String pathToMeassurements = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/bundles/dev.abunai.confidentiality.mitigation/meassurements.txt";
+	public final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.mitigation.tests";
+	protected final String pathToMeassurements = "C:/Users/Jonas/Desktop/Masterarbeit_Paper/Mitigation/tests/dev.abunai.confidentiality.mitigation.tests/meassurements.txt";
 	
 	
 	@Test
@@ -53,11 +52,11 @@ public class DebuggingHelperTests {
 		
 	@Test
 	public void runUIA() {
-		final var dataFlowDiagramPath = Paths.get("models", "dfd/mitigation", "mitigation0" + ".dataflowdiagram")
+		final var dataFlowDiagramPath = Paths.get("models", "mitigation", "mitigation0" + ".dataflowdiagram")
 				.toString();
-		final var dataDictionaryPath = Paths.get("models", "dfd/mitigation", "mitigation0" + ".datadictionary")
+		final var dataDictionaryPath = Paths.get("models", "mitigation", "mitigation0" + ".datadictionary")
 				.toString();
-		final var uncertaintyPath = Paths.get("models", "dfd/mitigation", "mitigation" + ".uncertainty")
+		final var uncertaintyPath = Paths.get("models", "mitigation", "mitigation" + ".uncertainty")
 				.toString();
 
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();

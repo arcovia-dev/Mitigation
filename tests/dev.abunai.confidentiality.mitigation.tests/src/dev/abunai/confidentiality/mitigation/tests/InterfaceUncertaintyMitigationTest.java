@@ -43,7 +43,6 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 	@Test
 	@Order(1)
 	public void createTrainData() {
-		var analysis = getAnalysis();
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
@@ -76,9 +75,8 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(2)
-	//@RepeatedTest(30)
+	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
-		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,analysis.getUncertaintySources());
@@ -87,14 +85,12 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 		}
 		var duration = System.currentTimeMillis()-startTime;
 		storeMeassurement(duration);
-		
 	}
 
 	@Test
 	@Order(3)
 	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically2() {
-		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		var success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
@@ -107,7 +103,6 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 			}
 		}
 		var duration = System.currentTimeMillis()-startTime;
-
 		storeMeassurement(duration);
 	}
 
@@ -115,7 +110,6 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 	@Order(4)
 	@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically3() {
-		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
 		boolean success = false;
@@ -135,7 +129,6 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 	@RepeatedTest(30)
 	@Order(5)
 	public void createMitigationCandidatesAutomatically4() {
-		var analysis = getAnalysis();
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
 		boolean success = false;
@@ -147,5 +140,4 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 
 		storeMeassurement(duration);
 	}
-
 }

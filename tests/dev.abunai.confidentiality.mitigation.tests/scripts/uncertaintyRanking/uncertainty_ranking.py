@@ -19,6 +19,7 @@ warnings.filterwarnings("ignore")
 # Constants
 TRAIN_FILES_DIR = sys.argv[1]
 RELEVANT_UNCERTAINTIES_LENGTH = int(sys.argv[2])
+RANKER_TYPE = sys.argv[3]
 SEPERATOR = ';'
 
 '''
@@ -111,7 +112,15 @@ for filename in filenames:
     X = X.drop(categorical_cols, axis=1)
     X = pd.concat([X, X_encoded], axis=1)
 
-    uncertainty_ranker = LinearDiscriminantAnalysisRanker(X, y)
+    if RANKER_TYPE == "L":
+        uncertainty_ranker = LinearDiscriminantAnalysisRanker(X, y)
+    elif RANKER_TYPE == "P":
+        uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
+    elif RANKER_TYPE == "F":
+        uncertainty_ranker = FAMDUncertaintyRanker(X, y)
+    else:
+        uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
+
     uncertainty_ranker.evaluate()
     rating = uncertainty_ranker.show_ranking_with_correctness_score()
     allRatings.append(rating)
