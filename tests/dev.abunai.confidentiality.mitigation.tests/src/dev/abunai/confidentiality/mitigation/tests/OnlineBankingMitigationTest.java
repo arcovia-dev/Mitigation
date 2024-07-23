@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -58,7 +59,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 			}
 
 			trainDataGeneration.violationDataToCSV(violations, analysis.getUncertaintySources(),
-					trainDataDirectory + "\\violations_" + Integer.toString(count) + ".csv");
+				Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
 			count++;
 		}
 

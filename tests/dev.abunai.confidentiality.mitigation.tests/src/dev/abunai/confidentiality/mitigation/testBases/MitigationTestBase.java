@@ -16,7 +16,6 @@ import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
 import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
-import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
@@ -30,7 +29,7 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract String getFolderName();
 	protected abstract String getFilesName();
 	protected abstract List<Predicate<? super AbstractVertex<?>>> getConstraints();
-
+	
 	// Mitigation preparation variables
 	protected final TrainDataGenerationUnsupervised trainDataGeneration = new TrainDataGenerationUnsupervised();
 	protected final String scriptDirectory = Paths.get(PROJECT_ROOT_PATH, "scripts", "uncertaintyRanking").toString();

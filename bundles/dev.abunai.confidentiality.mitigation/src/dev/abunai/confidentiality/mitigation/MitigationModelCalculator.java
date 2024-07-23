@@ -51,7 +51,7 @@ public class MitigationModelCalculator {
 	}
 
 	private static boolean isViolationfreeModel(String outputPath, int number,
-			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, Class<? extends Plugin> pluginActivator) {
+			String projectName, List<Predicate<? super AbstractVertex<?>>> constraintFunctions, Class<? extends Plugin> pluginActivator) {
 		
 		final var dataFlowDiagramPath = Paths
 				.get(outputPath, "mitigation" + Integer.toString(number) + ".dataflowdiagram").toString();
@@ -60,7 +60,7 @@ public class MitigationModelCalculator {
 		final var uncertaintyPath = Paths.get(outputPath, "mitigation.uncertainty").toString();
 		
 		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
-				.modelProjectName("dev.abunai.confidentiality.mitigation.tests").usePluginActivator(pluginActivator)
+				.modelProjectName(projectName).usePluginActivator(pluginActivator)
 				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
 				.useUncertaintyModel(uncertaintyPath);
 
@@ -118,7 +118,7 @@ public class MitigationModelCalculator {
 		for (int i = 0; i < candidates.size(); i++) {
 			conv.storeDFD(candidates.get(i), Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
 			var mitigationsPathFromProject = outputPath.split(projectName)[1];
-			if (isViolationfreeModel(mitigationsPathFromProject, i, constraintFunctions, pluginActivator)) {
+			if (isViolationfreeModel(mitigationsPathFromProject, i, projectName, constraintFunctions, pluginActivator)) {
 				var result = new ArrayList<String>();
 				result.add("mitigation" + Integer.toString(i));
 				return result;

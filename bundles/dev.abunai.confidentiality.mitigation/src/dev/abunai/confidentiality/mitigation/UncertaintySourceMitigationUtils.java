@@ -66,7 +66,7 @@ public class UncertaintySourceMitigationUtils {
 		// Set destination node and pin to the ones in the given scenario
 		var ddTargetFlows = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList();
 		if(ddTargetFlows.size() == 0) {
-			System.out.println("Flow "+targetFlow.getEntityName()+"not found");
+			System.out.println("Flow "+targetFlow.getEntityName()+" not found");
 			return new DataFlowDiagramAndDictionary(newDia, dataDictionary);
 		}
 		ddTargetFlows.get(0).setDestinationNode(newDestinationNode);
