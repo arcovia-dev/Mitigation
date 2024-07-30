@@ -1,5 +1,7 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.sat4j.core.VecInt;
 import org.sat4j.minisat.SolverFactory;
@@ -20,19 +22,15 @@ public class Sat {
 
         IProblem problem = solver;
         while (problem.isSatisfiable()) {
-            System.out.println("Satisfiable: Yes");
             int[] model = problem.model();
-            for (int i = 0; i < model.length; i++) {
-                System.out.println("x" + Math.abs(model[i]) + " = " + (model[i] > 0));
+            var negated = new VecInt();
+            System.out.println(Arrays.toString(model));
+            for (var literal:model) {
+                negated.push(-literal);
             }
-            for (int i = 0; i < model.length; i++) {
-                solver.addClause(clause(model[i]*-1));
-            }
-            //If you want fresh start
-            //solver.clearLearntClauses();
+            solver.addClause(negated);
         }
         System.out.println(solver.nextFreeVarId(false));
-         
     }
 
     private VecInt clause(int... literals ) {
