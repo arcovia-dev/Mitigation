@@ -19,14 +19,17 @@ public class Sat {
         solver.addClause(clause(-2,-3));
 
         IProblem problem = solver;
-        if (problem.isSatisfiable()) {
+        while (problem.isSatisfiable()) {
             System.out.println("Satisfiable: Yes");
             int[] model = problem.model();
             for (int i = 0; i < model.length; i++) {
-                System.out.println("x" + (i + 1) + " = " + (model[i] > 0));
+                System.out.println("x" + Math.abs(model[i]) + " = " + (model[i] > 0));
             }
-        } else {
-            System.out.println("Satisfiable: No");
+            for (int i = 0; i < model.length; i++) {
+                solver.addClause(clause(model[i]*-1));
+            }
+            //If you want fresh start
+            //solver.clearLearntClauses();
         }
         System.out.println(solver.nextFreeVarId(false));
          
