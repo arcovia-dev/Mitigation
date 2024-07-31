@@ -45,6 +45,6 @@ public abstract class AbstractChar {
 
     @Override
     public String toString() {
-        return "Characteristic{" + "what='" + what + '\'' + ", type='" + type + '\'' + ", value='" + value + '\'' + '}';
+        return "AbstractChar[" + "what=" + what + ", type=" + type + ", value=" + value + ']';
     }
 }
