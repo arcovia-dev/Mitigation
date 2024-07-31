@@ -23,14 +23,14 @@ public class Sat {
         BiMap<Edge, Integer> edgeToLit = new BiMap<>();
         ISolver solver = SolverFactory.newDefault();
 
-        var personal = new Characteristic("Data", "Sensitivity", "Personal");
-        var nonEu = new Characteristic("Node", "Location", "NonEu");
-        var encrypted = new Characteristic("Data", "Encryption", "Encrypted");
+        var personal = new DataChar("Sensitivity", "Personal");
+        var nonEu = new NodeChar("Location", "NonEu");
+        var encrypted = new DataChar("Encryption", "Encrypted");
 
         // (personal AND nonEU) => encrypted
         var constraints = List.of(new Constraint(false, personal), new Constraint(false, nonEu), new Constraint(true, encrypted));
 
-        Map<String, List<Characteristic>> nodes = ImmutableMap.<String, List<Characteristic>>builder()
+        Map<String, List<AbstractChar>> nodes = ImmutableMap.<String, List<AbstractChar>>builder()
                 .put("User", List.of(personal))
                 .put("Process", List.of(personal))
                 .put("DB", List.of(personal, nonEu))
@@ -58,6 +58,7 @@ public class Sat {
                 var literal = solver.nextFreeVarId(true);
                 var edge = new Edge(from, to);
                 edgeToLit.put(edge, literal);
+                //Prohibit new edges
                 var sign = edges.contains(edge) ? 1 : -1;
                 solver.addClause(clause(sign * literal));
             }

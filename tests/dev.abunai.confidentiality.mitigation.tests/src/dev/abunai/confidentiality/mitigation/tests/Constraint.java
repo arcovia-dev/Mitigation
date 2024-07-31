@@ -1,5 +1,5 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
-public record Constraint(boolean positive, Characteristic characteristic) {
+public record Constraint(boolean positive, AbstractChar characteristic) {
 
 }
