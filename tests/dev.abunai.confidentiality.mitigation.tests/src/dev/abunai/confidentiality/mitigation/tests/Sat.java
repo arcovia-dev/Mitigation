@@ -23,10 +23,10 @@ public class Sat {
         BiMap<Edge, Integer> edgeToLit = new BiMap<>();
         ISolver solver = SolverFactory.newDefault();
 
-        var personal = new DataChar("Sensitivity", "Personal");
+        var personal = new InDataChar("Sensitivity", "Personal");
         var nonEu = new NodeChar("Location", "NonEu");
-        var encrypted = new DataChar("Encryption", "Encrypted");
-
+        var encrypted = new InDataChar("Encryption", "Encrypted");
+        
         // (personal AND nonEU) => encrypted
         var constraints = List.of(new Constraint(false, personal), new Constraint(false, nonEu), new Constraint(true, encrypted));
 
