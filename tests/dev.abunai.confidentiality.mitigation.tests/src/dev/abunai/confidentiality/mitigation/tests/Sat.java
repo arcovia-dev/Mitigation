@@ -1,6 +1,7 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -11,33 +12,42 @@ import org.sat4j.specs.IProblem;
 import org.sat4j.specs.ISolver;
 import org.sat4j.specs.TimeoutException;
 
-public class Sat {
-    BiMap<List<String>, Integer> literalMap;
+import com.google.common.collect.ImmutableMap;
 
+public class Sat {
+    
     @Test
     public void test() throws ContradictionException, TimeoutException {
-        literalMap = new BiMap<>();
-        // if data is personal and node in non eu then data must be encrypted
-        var constraints = List.of(new Constraint(false, "Data", "Sensitivity", "Personal"), new Constraint(false, "Node", "Location", "NonEu"),
-                new Constraint(true, "Data", "Encryption", "Encrypted"));
+        BiMap<NodeXChar, Integer> literalMap = new BiMap<>();
         
-        var nodes = List.of("User", "Process", "DB");
+        var personal = new Characteristic("Data", "Sensitivity", "Personal");
+        var nonEu = new Characteristic("Node", "Location", "NonEu");
+        var encrypted = new Characteristic("Data", "Encryption", "Encrypted");
+        
+        // (personal AND nonEU) => encrypted
+        var constraints = List.of(new Constraint(false, personal), new Constraint(false,nonEu),
+                new Constraint(true, encrypted));
+                
+        Map<String, List<Characteristic>> nodes = ImmutableMap.<String, List<Characteristic>>builder()
+                .put("User", List.of(personal))
+                .put("Process", List.of(personal))
+                .put("DB", List.of(personal,nonEu))
+                .build();
 
         ISolver solver = SolverFactory.newDefault();
-        for (var node : nodes) {
+        for (var node : nodes.keySet()) {
             var clause = new VecInt();
             for(var constraint : constraints) {
                 var literal = solver.nextFreeVarId(true);
-                literalMap.put(List.of(node, constraint.what(), constraint.type(), constraint.value()), literal);
+                literalMap.put(new NodeXChar(node, constraint.characteristic()), literal);
                 clause.push((constraint.positive() ? 1 : -1) * literal);
             }
             solver.addClause(clause);
-            //solver.addClause(clause(literalMap.getValue(List.of(node, "Node", "Location", "NonEu"))));
-            //solver.addClause(clause(literalMap.getValue(List.of(node, "Data", "Sensitivity", "Personal"))));
+            for(var characteristic : nodes.get(node)) {
+                solver.addClause(clause(literalMap.getValue(new NodeXChar(node, characteristic))));
+            }           
         }
-
         
-
         IProblem problem = solver;
         while (problem.isSatisfiable()) {
             int[] model = problem.model();
@@ -45,6 +55,7 @@ public class Sat {
             var names = IntStream.of(model)
                     .filter(lit -> lit > 0)
                     .mapToObj(lit -> literalMap.getKey(lit))
+                    .filter(nxc -> !nodes.get(nxc.node()).contains(nxc.characteristic()))
                     .toList();
             System.out.println(names);
             for (var literal : model) {
