@@ -1,8 +1,10 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.IntStream;
 
@@ -17,14 +19,15 @@ import org.sat4j.specs.TimeoutException;
 import com.google.common.collect.ImmutableMap;
 
 public class Sat {
+    
+    BiMap<Delta, Integer> deltaToLit = new BiMap<>();
+    BiMap<Edge, Integer> edgeToLit = new BiMap<>();
+    BiMap<EdgeDataChar, Integer> edgeDataToLit = new BiMap<>();
+    ISolver solver = SolverFactory.newDefault();
+    Set<Label> labels;
 
     @Test
     public void test() throws ContradictionException, TimeoutException {
-        BiMap<Delta, Integer> deltaToLit = new BiMap<>();
-        BiMap<Edge, Integer> edgeToLit = new BiMap<>();
-        BiMap<EdgeDataChar, Integer> edgeDataToLit = new BiMap<>();
-        ISolver solver = SolverFactory.newDefault();
-
         var personal = new InDataChar("Sensitivity", "Personal");
         var nonEu = new NodeChar("Location", "NonEu");
         var encrypted = new InDataChar("Encryption", "Encrypted");
@@ -41,7 +44,7 @@ public class Sat {
         var edges = List.of(new Edge("User", "Process"), new Edge("Process", "DB"));
 
         // Extract unique labels from constraints
-        Set<Label> labels = new HashSet<>();
+        labels = new HashSet<>();
         for (var constraint : constraints) {
             labels.add(new Label(constraint.characteristic()
                     .type(),
@@ -80,35 +83,26 @@ public class Sat {
             }
         }
 
-        // Init edges map and prohibit creation of new edges
+        // Prohibit creation of new edges
         for (var from : nodes.keySet()) {
             for (var to : nodes.keySet()) {
-                if (!from.equals(to)) {
-                    var literal = solver.nextFreeVarId(true);
-                    var edge = new Edge(from, to);
-                    edgeToLit.put(edge, literal);
-                    // Prohibit new edges
-                    var sign = edges.contains(edge) ? 1 : -1;
-                    solver.addClause(clause(sign * literal));
-                }
+                var sign = edges.contains(new Edge(from, to)) ? 1 : -1;
+                solver.addClause(clause(sign * edge(from,to)));
             }
         }
 
         // Make clauses for label propagation
         for (var from : nodes.keySet()) {
             for (var to : nodes.keySet()) {
-                if (!from.equals(to)) {
-                    var edgeLit = edgeToLit.getValue(new Edge(from, to));
-                    for (var label : labels) {
-                        var inFromLit = solver.nextFreeVarId(true);
-                        edgeDataToLit.put(new EdgeDataChar(new Edge(from, to), new InDataChar(label.type(), label.value())), inFromLit);
-                        var outLit = deltaToLit.getValue(new Delta(from, new OutDataChar(label.type(), label.value())));
-                        // (From.Outgoing AND Edge(From,To)) <=> To.IngoingFrom
-                        // (¬A∨¬B∨C)∧(¬C∨A)∧(¬C∨B)
-                        solver.addClause(clause(-outLit, -edgeLit, inFromLit));
-                        solver.addClause(clause(-inFromLit, outLit));
-                        solver.addClause(clause(-inFromLit, edgeLit));
-                    }
+                for (var label : labels) {
+                    var inFromLit = solver.nextFreeVarId(true);
+                    edgeDataToLit.put(new EdgeDataChar(new Edge(from, to), new InDataChar(label.type(), label.value())), inFromLit);
+                    var outLit = deltaToLit.getValue(new Delta(from, new OutDataChar(label.type(), label.value())));
+                    // (From.Outgoing AND Edge(From,To)) <=> To.IngoingFrom
+                    // (¬A∨¬B∨C)∧(¬C∨A)∧(¬C∨B)
+                    solver.addClause(clause(-outLit, -edge(from,to), inFromLit));
+                    solver.addClause(clause(-inFromLit, outLit));
+                    solver.addClause(clause(-inFromLit, edge(from,to)));
                 }
             }
         }
@@ -131,7 +125,7 @@ public class Sat {
         }
 
         IProblem problem = solver;
-        Set<List<Delta>> solutions = new HashSet<>();
+        List<List<Delta>> solutions = new ArrayList<>();
         while (problem.isSatisfiable()) {
             int[] model = problem.model();
             var negated = new VecInt();
@@ -154,9 +148,21 @@ public class Sat {
             }
             solver.addClause(negated);
         }
+        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
+        System.out.println(solutions);
+        var solSize= solutions.stream().map(list -> list.size()).toList();
+        System.out.println(solSize);
     }
 
     private VecInt clause(int... literals) {
         return new VecInt(literals);
+    }
+    
+    private int edge(String from, String to) {
+        var edge = new Edge(from,to);
+        if(!edgeToLit.containsKey(edge)) {
+            edgeToLit.put(edge, solver.nextFreeVarId(true));
+        }
+        return edgeToLit.getValue(edge);
     }
 }
