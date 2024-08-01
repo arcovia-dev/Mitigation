@@ -23,9 +23,9 @@ import dev.abunai.confidentiality.mitigation.testBases.*;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 
 public class DebuggingHelperTests {
-	
+
 	protected final String pathToMeassurements = "meassurements.txt";
-		
+
 	@Test
 	public void webToDfd() {
 		String path = "comp.json";
@@ -33,44 +33,41 @@ public class DebuggingHelperTests {
 		var dd = conv.webToDfd(path);
 		conv.storeDFD(dd, "comp");
 	}
-	
+
 	@Test
 	public void seeAverageRuntime() {
 		Path filePath = Paths.get(pathToMeassurements);
 		if (!Files.isRegularFile(filePath)) {
-            System.out.println("run mitigation first !!!");
-            return;
-        }
+			System.out.println("run mitigation first !!!");
+			return;
+		}
 		try {
 			var contentLines = Files.readAllLines(filePath);
 			int sum = 0;
-			for(int i = contentLines.size()-20; i < contentLines.size();i++) {
+			for (int i = contentLines.size() - 20; i < contentLines.size() && i >= 0; i++) {
 				sum += Integer.parseInt(contentLines.get(i));
 			}
-			System.out.println(sum/20);
-			Files.write(filePath, "".getBytes(StandardCharsets.UTF_8));			
+			System.out.println(sum / 20);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-		
+
 	@Test
 	public void runUIA() {
 		final var dataFlowDiagramPath = Paths.get("models", "mitigation", "mitigation0" + ".dataflowdiagram")
 				.toString();
-		final var dataDictionaryPath = Paths.get("models", "mitigation", "mitigation0" + ".datadictionary")
-				.toString();
-		final var uncertaintyPath = Paths.get("models", "mitigation", "mitigation" + ".uncertainty")
-				.toString();
+		final var dataDictionaryPath = Paths.get("models", "mitigation", "mitigation0" + ".datadictionary").toString();
+		final var uncertaintyPath = Paths.get("models", "mitigation", "mitigation" + ".uncertainty").toString();
 
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
 			System.out.println(this.retrieveNodeLabels(it));
 			System.out.println(this.retrieveDataLabels(it));
-			return this.retrieveNodeLabels(it).contains("Develop")
-					&& this.retrieveDataLabels(it).contains("Personal");
+			return this.retrieveNodeLabels(it).contains("Develop") && this.retrieveDataLabels(it).contains("Personal");
 		});
-		
+
 		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
 				.modelProjectName(TestBase.TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
 				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
@@ -78,33 +75,33 @@ public class DebuggingHelperTests {
 
 		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
 		analysis.initializeAnalysis();
-		
+
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
 		uncertainFlowGraphs.evaluate();
-		
+
 		boolean noConstraintViolated = true;
-		for(var constraint: constraints) {
-			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,constraint);
-			if(violations.size() > 0) {
+		for (var constraint : constraints) {
+			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
+					constraint);
+			if (violations.size() > 0) {
 				noConstraintViolated = false;
 				break;
 			}
 		}
-		
-		if(noConstraintViolated) {
+
+		if (noConstraintViolated) {
 			System.out.println("Valid Model");
 		}
 	}
-	
+
 	protected List<String> retrieveNodeLabels(AbstractVertex<?> vertex) {
 		return vertex.getAllVertexCharacteristics().stream().map(DFDCharacteristicValue.class::cast)
 				.map(DFDCharacteristicValue::getValueName).toList();
 	}
 
 	protected List<String> retrieveDataLabels(AbstractVertex<?> vertex) {
-		return vertex.getAllIncomingDataCharacteristics().stream()
-				.map(DataCharacteristic::getAllCharacteristics)
+		return vertex.getAllIncomingDataCharacteristics().stream().map(DataCharacteristic::getAllCharacteristics)
 				.flatMap(List::stream).map(DFDCharacteristicValue.class::cast).map(DFDCharacteristicValue::getValueName)
 				.toList();
 	}

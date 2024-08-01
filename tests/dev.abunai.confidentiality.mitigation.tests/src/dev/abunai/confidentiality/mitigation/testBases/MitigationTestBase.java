@@ -89,10 +89,19 @@ public abstract class MitigationTestBase extends TestBase {
 		}
 	}
 
+	public void deleteOldMeassurement() {
+		Path filePath = Paths.get(pathToMeassurements);
+		try {
+			Files.write(filePath, "".getBytes(StandardCharsets.UTF_8));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void storeMeassurement(long meassurement) {
 		Path filePath = Paths.get(pathToMeassurements);
 		try {
-			
 			var content = Files.readString(filePath);
 			content += Long.toString(meassurement) + System.lineSeparator();
 			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));

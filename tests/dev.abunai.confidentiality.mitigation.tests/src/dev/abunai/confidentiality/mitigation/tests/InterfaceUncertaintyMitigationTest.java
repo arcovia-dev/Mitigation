@@ -72,6 +72,7 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 
 		// Store the result of the Ranking in a file
 		storeRankingResult(relevantUncertaintyIds);
+		deleteOldMeassurement();
 	}
 
 	@Test

@@ -18,7 +18,7 @@ import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
 public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "OnlineBankingModel";
+		return "OnlineBankingModelEval";
 	}
 
 	protected String getFilesName() {
@@ -30,6 +30,13 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		constraints.add(it -> {
 			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
 					&& this.retrieveDataLabels(it).contains("Personal");
+			return vio;
+		});
+		constraints.add(it -> {
+			boolean vio =  this.retrieveNodeLabels(it).contains("Processable") && this.retrieveDataLabels(it).contains("Encrypted");
+			System.out.println(it);
+			System.out.println(this.retrieveDataLabels(it));
+			System.out.println(this.retrieveNodeLabels(it));
 			return vio;
 		});
 		constraints.add(it -> {
@@ -70,11 +77,12 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 		// Store the result of the Ranking in a file
 		storeRankingResult(relevantUncertaintyIds);
+		deleteOldMeassurement();
 	}
 
 	@Test
 	@Order(2)
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();

@@ -1,7 +1,6 @@
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.datasets import load_iris
 import pandas as pd
 
 from collections import OrderedDict

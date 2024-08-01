@@ -39,6 +39,9 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 		});
 		constraints.add(it -> {
 			boolean vio =  this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			System.out.println(it);
+			System.out.println(this.retrieveDataLabels(it));
+			System.out.println(this.retrieveNodeLabels(it));
 			return vio;
 		});
 		return constraints;
@@ -76,6 +79,7 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 
 		// Store the result of the Ranking in a file
 		storeRankingResult(relevantUncertaintyIds);
+		deleteOldMeassurement();
 	}
 
 	@Test
