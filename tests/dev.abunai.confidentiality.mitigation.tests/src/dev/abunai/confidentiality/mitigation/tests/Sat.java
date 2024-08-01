@@ -22,8 +22,8 @@ public class Sat {
     public void test() throws ContradictionException, TimeoutException {
         BiMap<Delta, Integer> deltaToLit = new BiMap<>();
         BiMap<Edge, Integer> edgeToLit = new BiMap<>();
+        BiMap<EdgeDataChar, Integer> edgeDataToLit = new BiMap<>();
         ISolver solver = SolverFactory.newDefault();
-        //solver.setVerbose(true);
 
         var personal = new InDataChar("Sensitivity", "Personal");
         var nonEu = new NodeChar("Location", "NonEu");
@@ -83,7 +83,7 @@ public class Sat {
         // Init edges map and prohibit creation of new edges
         for (var from : nodes.keySet()) {
             for (var to : nodes.keySet()) {
-                if(!from.equals(to)) {
+                if (!from.equals(to)) {
                     var literal = solver.nextFreeVarId(true);
                     var edge = new Edge(from, to);
                     edgeToLit.put(edge, literal);
@@ -93,45 +93,43 @@ public class Sat {
                 }
             }
         }
-        
-        BiMap<InDataCharFrom, Integer> inDataFromToLit = new BiMap<>();
-        
-        //Make clauses for label propagation
+
+        // Make clauses for label propagation
         for (var from : nodes.keySet()) {
             for (var to : nodes.keySet()) {
-                if(!from.equals(to)) {
-                    var edgeLit = edgeToLit.getValue(new Edge(from,to));
+                if (!from.equals(to)) {
+                    var edgeLit = edgeToLit.getValue(new Edge(from, to));
                     for (var label : labels) {
                         var inFromLit = solver.nextFreeVarId(true);
-                        inDataFromToLit.put(new InDataCharFrom(from,to,new InDataChar(label.type(),label.value())), inFromLit);
-                        var outLit = deltaToLit.getValue(new Delta(from,new OutDataChar(label.type(),label.value())));
-                        //(From.Outgoing AND Edge(From,To)) <=> To.IngoingFrom
-                        //(¬A∨¬B∨C)∧(¬C∨A)∧(¬C∨B)
-                        solver.addClause(clause(-outLit,-edgeLit,inFromLit));
-                        solver.addClause(clause(-inFromLit,outLit));
-                        solver.addClause(clause(-inFromLit,edgeLit));
+                        edgeDataToLit.put(new EdgeDataChar(new Edge(from, to), new InDataChar(label.type(), label.value())), inFromLit);
+                        var outLit = deltaToLit.getValue(new Delta(from, new OutDataChar(label.type(), label.value())));
+                        // (From.Outgoing AND Edge(From,To)) <=> To.IngoingFrom
+                        // (¬A∨¬B∨C)∧(¬C∨A)∧(¬C∨B)
+                        solver.addClause(clause(-outLit, -edgeLit, inFromLit));
+                        solver.addClause(clause(-inFromLit, outLit));
+                        solver.addClause(clause(-inFromLit, edgeLit));
                     }
                 }
             }
         }
-        
-        //Node has data iff it recieves it at least once
+
+        // Node has incoming data iff it receives it at least once
         for (var label : labels) {
             for (var to : nodes.keySet()) {
-                var inLit = deltaToLit.getValue(new Delta(to,new InDataChar(label.type(),label.value()))); 
+                var inLit = deltaToLit.getValue(new Delta(to, new InDataChar(label.type(), label.value())));
                 var clause = new VecInt();
                 clause.push(-inLit);
                 for (var from : nodes.keySet()) {
-                    if(!from.equals(to)) {
-                            var inFromLit = inDataFromToLit.getValue(new InDataCharFrom(from,to,new InDataChar(label.type(),label.value())));
-                            solver.addClause(clause(-inFromLit,inLit));
-                            clause.push(inFromLit);
+                    if (!from.equals(to)) {
+                        var inFromLit = edgeDataToLit.getValue(new EdgeDataChar(new Edge(from, to), new InDataChar(label.type(), label.value())));
+                        solver.addClause(clause(-inFromLit, inLit));
+                        clause.push(inFromLit);
                     }
                 }
                 solver.addClause(clause);
             }
         }
-        
+
         IProblem problem = solver;
         Set<List<Delta>> solutions = new HashSet<>();
         while (problem.isSatisfiable()) {
@@ -143,11 +141,13 @@ public class Sat {
                     .mapToObj(lit -> deltaToLit.getKey(lit))
                     .filter(delta -> !nodes.get(delta.node())
                             .contains(delta.characteristic()))
-                    .filter(delta -> !delta.characteristic().what().equals("InData"))
+                    .filter(delta -> !delta.characteristic()
+                            .what()
+                            .equals("InData"))
                     .toList();
-            if(!solutions.contains(deltas)) {
-              System.out.println(deltas);
-              solutions.add(deltas);
+            if (!solutions.contains(deltas)) {
+                System.out.println(deltas);
+                solutions.add(deltas);
             }
             for (var literal : model) {
                 negated.push(-literal);
