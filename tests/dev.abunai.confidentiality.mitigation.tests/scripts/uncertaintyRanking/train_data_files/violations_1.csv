@@ -1,9 +1,0 @@
-loan_req_uncertain;transfer_money_uncertain;create_account_uncertain;create_banking_account_uncertain;system_state_uncertain;balance_response_uncertain;Constraint violated
-I;D;AaHB4t4ERaEe-KU92kV8MYOA;AaVUxksERaEe-KU92kV8MYOA;I;I;True
-I;Aa6ayqgERZEe-KU92kV8MYOA;AaHB4t4ERaEe-KU92kV8MYOA;AaVUxksERaEe-KU92kV8MYOA;I;I;True
-I;D;AaHB4t4ERaEe-KU92kV8MYOA;D;I;I;True
-I;Aa6ayqgERZEe-KU92kV8MYOA;AaHB4t4ERaEe-KU92kV8MYOA;D;I;I;True
-I;Aa6ayqgERZEe-KU92kV8MYOA;D;AaVUxksERaEe-KU92kV8MYOA;I;I;True
-I;D;D;AaVUxksERaEe-KU92kV8MYOA;I;I;True
-I;Aa6ayqgERZEe-KU92kV8MYOA;D;D;I;I;True
-I;D;D;D;I;I;True
