@@ -4,7 +4,7 @@ Bundle-Name: Mitigation
 Bundle-SymbolicName: dev.abunai.confidentiality.mitigation
 Bundle-Version: 1.0.0.qualifier
 Export-Package: 
- dev.abunai.confidentiality.mitigation
+ dev.abunai.confidentiality.mitigation.ranking
 Require-Bundle: org.dataflowanalysis.converter;bundle-version="2.0.0",
  org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
  org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",

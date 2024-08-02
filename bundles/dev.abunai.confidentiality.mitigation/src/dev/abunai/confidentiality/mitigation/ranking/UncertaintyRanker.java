@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation;
+package dev.abunai.confidentiality.mitigation.ranking;
 
 import java.util.Arrays;
 import java.util.List;

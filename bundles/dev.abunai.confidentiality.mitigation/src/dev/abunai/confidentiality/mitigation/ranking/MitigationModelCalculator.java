@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation;
+package dev.abunai.confidentiality.mitigation.ranking;
 
 import java.io.IOException;
 import java.nio.file.*;

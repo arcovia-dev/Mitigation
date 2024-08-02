@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests;
+package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +18,9 @@ import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalys
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
-import dev.abunai.confidentiality.mitigation.testBases.*;
+
+import dev.abunai.confidentiality.mitigation.tests.Activator;
+import dev.abunai.confidentiality.mitigation.tests.TestBase;
 
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 

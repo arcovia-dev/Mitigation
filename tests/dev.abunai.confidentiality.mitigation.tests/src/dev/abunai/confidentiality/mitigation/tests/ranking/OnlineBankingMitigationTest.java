@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests;
+package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
-import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
-import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
+import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
+import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
 public class OnlineBankingMitigationTest extends MitigationTestBase {
 

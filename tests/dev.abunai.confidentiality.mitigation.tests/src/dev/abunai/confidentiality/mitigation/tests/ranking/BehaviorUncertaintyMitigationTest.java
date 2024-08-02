@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests;
+package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,17 +13,17 @@ import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
-import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
-import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
+import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
+import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
-public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
+public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "DFDExternalUncertaintyMitigation";
+		return "DFDBehaviorUncertaintyMitigation";
 	}
 
 	protected String getFilesName() {
-		return "ext";
+		return "beh";
 	}
 
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
@@ -32,10 +32,16 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 		constraints.add(it -> {
 			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
 					&& this.retrieveDataLabels(it).contains("Personal");
+			if (vio) {
+				System.out.println("develop");
+			}
 			return vio;
 		});
 		constraints.add(it -> {
 			boolean vio =  this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			System.out.println(it);
+			System.out.println(this.retrieveDataLabels(it));
+			System.out.println(this.retrieveNodeLabels(it));
 			return vio;
 		});
 		return constraints;
@@ -129,7 +135,7 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 	}
 
 	@Test
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	@Order(5)
 	public void createMitigationCandidatesAutomatically4() {
 		var startTime = System.currentTimeMillis();
@@ -143,4 +149,5 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 
 		storeMeassurement(duration);
 	}
+
 }

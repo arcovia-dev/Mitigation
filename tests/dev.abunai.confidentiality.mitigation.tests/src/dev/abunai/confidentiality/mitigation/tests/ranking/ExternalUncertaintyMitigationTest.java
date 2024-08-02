@@ -1,9 +1,10 @@
-package dev.abunai.confidentiality.mitigation.tests;
+package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Order;
@@ -12,17 +13,17 @@ import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
-import dev.abunai.confidentiality.mitigation.UncertaintyRanker;
-import dev.abunai.confidentiality.mitigation.testBases.MitigationTestBase;
+import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
+import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
-public class ComponentUncertaintyMitigationTest  extends MitigationTestBase {
+public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "DFDComponentUncertaintyMitigation";
+		return "DFDExternalUncertaintyMitigation";
 	}
 
 	protected String getFilesName() {
-		return "comp";
+		return "ext";
 	}
 
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {

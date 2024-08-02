@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.testBases;
+package dev.abunai.confidentiality.mitigation.tests;
 
 import java.util.List;
 

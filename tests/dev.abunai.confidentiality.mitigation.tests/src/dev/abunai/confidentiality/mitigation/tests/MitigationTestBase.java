@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.testBases;
+package dev.abunai.confidentiality.mitigation.tests;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -20,9 +20,8 @@ import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalys
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
-import dev.abunai.confidentiality.mitigation.MitigationModelCalculator;
-import dev.abunai.confidentiality.mitigation.TrainDataGenerationUnsupervised;
-import dev.abunai.confidentiality.mitigation.tests.Activator;
+import dev.abunai.confidentiality.mitigation.ranking.MitigationModelCalculator;
+import dev.abunai.confidentiality.mitigation.ranking.TrainDataGenerationUnsupervised;
 
 public abstract class MitigationTestBase extends TestBase {
 
