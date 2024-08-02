@@ -25,13 +25,11 @@ public class Sat {
     private List<Edge> edges;
     private List<Constraint> constraints;
     
-    public Sat(Map<String, List<AbstractChar>> nodes,List<Edge> edges,List<Constraint> constraints) {
+    public List<List<Delta>> solve(Map<String, List<AbstractChar>> nodes,List<Edge> edges,List<Constraint> constraints) throws ContradictionException, TimeoutException {
         this.nodes=nodes;
         this.edges=edges;
         this.constraints=constraints;
-    }
-
-    public List<List<Delta>> solve() throws ContradictionException, TimeoutException {
+        
         deltaToLit = new BiMap<>();
         edgeToLit = new BiMap<>();
         edgeDataToLit = new BiMap<>();
@@ -47,6 +45,7 @@ public class Sat {
     private List<List<Delta>> solveClauses() throws TimeoutException, ContradictionException {
         IProblem problem = solver;
         List<List<Delta>> solutions = new ArrayList<>();
+        
         while (problem.isSatisfiable()) {
             int[] model = problem.model();
             
@@ -62,9 +61,8 @@ public class Sat {
                             .equals("InData"))
                     .toList();
             
-            //Add unique solution to list
+            //Store unique solutions
             if (!solutions.contains(deltas)) {
-                System.out.println(deltas);
                 solutions.add(deltas);
             }
             

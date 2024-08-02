@@ -28,13 +28,11 @@ public class SatTest {
 
         var edges = List.of(new Edge("User", "Process"), new Edge("Process", "DB"));
 
-        var sat=new Sat(nodes,edges,constraints);
-        var solutions = sat.solve();
+        var solutions = new Sat().solve(nodes,edges,constraints);
+        
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
-        System.out.println(solutions);
-        var solSize = solutions.stream()
-                .map(list -> list.size())
-                .toList();
-        System.out.println(solSize);
+        var min = solutions.get(0).size();
+        var minSol= solutions.stream().filter(delta -> delta.size()==min).toList();
+        System.out.println(minSol);
     }
 }
