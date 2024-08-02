@@ -9,6 +9,13 @@ import org.sat4j.specs.TimeoutException;
 
 import com.google.common.collect.ImmutableMap;
 
+import dev.abunai.confidentiality.mitigation.sat.AbstractChar;
+import dev.abunai.confidentiality.mitigation.sat.Constraint;
+import dev.abunai.confidentiality.mitigation.sat.Edge;
+import dev.abunai.confidentiality.mitigation.sat.InDataChar;
+import dev.abunai.confidentiality.mitigation.sat.NodeChar;
+import dev.abunai.confidentiality.mitigation.sat.Sat;
+
 public class SatTest {
     
     @Test

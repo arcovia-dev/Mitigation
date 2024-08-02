@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.sat;
+package dev.abunai.confidentiality.mitigation.sat;
 
 public abstract class AbstractChar {
     private final String what;
