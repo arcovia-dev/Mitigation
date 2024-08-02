@@ -2,6 +2,9 @@ package dev.abunai.confidentiality.mitigation.tests.sat;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +21,7 @@ import dev.abunai.confidentiality.mitigation.sat.NodeChar;
 import dev.abunai.confidentiality.mitigation.sat.Sat;
 
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.dfd.datadictionary.LabelType;
 
 public class SatTest {
     
@@ -54,12 +58,17 @@ public class SatTest {
         var dfd = converter.webToDfd(MIN_SAT);
         converter.storeDFD(dfd, MIN_SAT);
         
+        Map<String,List<AbstractChar>> nodes = new HashMap<>();
         for(var node :dfd.dataFlowDiagram().getNodes()) {
-            System.out.println(node.getEntityName());
+            List<AbstractChar> chars = new ArrayList<>();
             for (var property : node.getProperties()) {
-                System.out.println(property.getEntityName());
+                var type = ((LabelType)property.eContainer()).getEntityName();
+                var value = property.getEntityName();
+                chars.add(new NodeChar(type,value));
             }
+            nodes.put(node.getEntityName(), chars);
         }
+        System.out.println(nodes);
         
         for(var flow : dfd.dataFlowDiagram().getFlows()) {
             System.out.println(flow.getSourceNode().getEntityName()+"-"+flow.getDestinationNode().getEntityName());

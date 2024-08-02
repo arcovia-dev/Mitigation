@@ -3,14 +3,14 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Tests
 Bundle-SymbolicName: dev.abunai.confidentiality.mitigation.tests
 Bundle-Version: 1.0.0.qualifier
-Import-Package: org.junit;version="4.13.2",
- org.junit.jupiter.api;version="5.8.1",
+Import-Package: org.junit.jupiter.api;version="5.8.1",
  org.junit.jupiter.api.function;version="5.8.1",
  org.junit.jupiter.params;version="5.8.1",
  org.junit.jupiter.params.provider;version="5.8.1"
-Require-Bundle: dev.abunai.confidentiality.mitigation;bundle-version="1.0.0",
- dev.abunai.confidentiality.analysis;bundle-version="1.0.0",
+Require-Bundle: dev.abunai.confidentiality.mitigation,
+ dev.abunai.confidentiality.analysis,
  org.sat4j.core;bundle-version="2.3.6",
- org.dataflowanalysis.converter;bundle-version="2.0.0"
+ org.dataflowanalysis.converter,
+ org.dataflowanalysis.dfd.datadictionary
 Automatic-Module-Name: dev.abunai.confidentiality.mitigation.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17
