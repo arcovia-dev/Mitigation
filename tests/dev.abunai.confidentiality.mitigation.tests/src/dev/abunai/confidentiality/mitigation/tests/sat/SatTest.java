@@ -3,6 +3,7 @@ package dev.abunai.confidentiality.mitigation.tests.sat;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -16,10 +17,14 @@ import dev.abunai.confidentiality.mitigation.sat.InDataChar;
 import dev.abunai.confidentiality.mitigation.sat.NodeChar;
 import dev.abunai.confidentiality.mitigation.sat.Sat;
 
+import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+
 public class SatTest {
     
+    public final String MIN_SAT = "models/minsat.json";
+    
     @Test
-    public void test() throws ContradictionException, TimeoutException {
+    public void manuelTest() throws ContradictionException, TimeoutException {
         var personal = new InDataChar("Sensitivity", "Personal");
         var nonEu = new NodeChar("Location", "NonEu");
         var encrypted = new InDataChar("Encryption", "Encrypted");
@@ -41,5 +46,23 @@ public class SatTest {
         var min = solutions.get(0).size();
         var minSol= solutions.stream().filter(delta -> delta.size()==min).toList();
         System.out.println(minSol);
+    }
+    
+    @Test
+    public void automaticTest() {
+        var converter = new DataFlowDiagramConverter();
+        var dfd = converter.webToDfd(MIN_SAT);
+        converter.storeDFD(dfd, MIN_SAT);
+        
+        for(var node :dfd.dataFlowDiagram().getNodes()) {
+            System.out.println(node.getEntityName());
+            for (var property : node.getProperties()) {
+                System.out.println(property.getEntityName());
+            }
+        }
+        
+        for(var flow : dfd.dataFlowDiagram().getFlows()) {
+            System.out.println(flow.getSourceNode().getEntityName()+"-"+flow.getDestinationNode().getEntityName());
+        }
     }
 }

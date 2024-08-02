@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<datadictionary:DataDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_qCK60FDREe-i4sIuksgY5Q">
+  <labelTypes id="4h3wzk" entityName="Sensitivity">
+    <label id="zzvphn" entityName="Personal"/>
+    <label id="veaan9" entityName="Public"/>
+  </labelTypes>
+  <labelTypes id="gvia09" entityName="Location">
+    <label id="g10hr" entityName="EU"/>
+    <label id="5hnugm" entityName="nonEU"/>
+  </labelTypes>
+  <labelTypes id="84rllz" entityName="Encryption">
+    <label id="2r6xe6" entityName="Encrypted"/>
+  </labelTypes>
+  <behaviour id="_qCMwB1DREe-i4sIuksgY5Q" entityName="process">
+    <inPin id="xyepdb" entityName="process_in_user"/>
+    <outPin id="eedb56" entityName="process_out_process"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_qCWhAVDREe-i4sIuksgY5Q" inputPins="xyepdb" outputPin="eedb56" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:TRUE" id="_qCWhAlDREe-i4sIuksgY5Q"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_qCRBcVDREe-i4sIuksgY5Q" entityName="db">
+    <inPin id="scljwi" entityName="db_in_process"/>
+  </behaviour>
+  <behaviour id="_qCRoglDREe-i4sIuksgY5Q" entityName="user">
+    <outPin id="wksxi8" entityName="user_out_user"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_qCVS4FDREe-i4sIuksgY5Q" outputPin="wksxi8" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:TRUE" id="_qCWhAFDREe-i4sIuksgY5Q"/>
+    </assignment>
+  </behaviour>
+</datadictionary:DataDictionary>
