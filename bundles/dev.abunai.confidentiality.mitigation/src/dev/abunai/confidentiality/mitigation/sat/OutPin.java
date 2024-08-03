@@ -1,5 +1,5 @@
 package dev.abunai.confidentiality.mitigation.sat;
 
-public record Edge(OutPin from, InPin to) {
+public record OutPin(String id) {
 
 }

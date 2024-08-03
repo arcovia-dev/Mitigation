@@ -21,11 +21,11 @@ public class Sat {
     private BiMap<EdgeDataChar, Integer> edgeDataToLit;
     private ISolver solver;
     private Set<Label> labels;
-    private Map<String, List<AbstractChar>> nodes;
+    private List<Node> nodes;
     private List<Edge> edges;
     private List<Constraint> constraints;
     
-    public List<List<Delta>> solve(Map<String, List<AbstractChar>> nodes,List<Edge> edges,List<Constraint> constraints) throws ContradictionException, TimeoutException {
+    public List<List<Delta>> solve(List<Node> nodes,List<Edge> edges,List<Constraint> constraints) throws ContradictionException, TimeoutException {
         this.nodes=nodes;
         this.edges=edges;
         this.constraints=constraints;
@@ -54,11 +54,6 @@ public class Sat {
                     .filter(lit -> lit > 0)
                     .filter(lit -> deltaToLit.containsValue(lit))
                     .mapToObj(lit -> deltaToLit.getKey(lit))
-                    .filter(delta -> !nodes.get(delta.node())
-                            .contains(delta.characteristic()))
-                    .filter(delta -> !delta.characteristic()
-                            .what()
-                            .equals("InData"))
                     .toList();
             
             //Store unique solutions
@@ -78,61 +73,85 @@ public class Sat {
 
     private void buildClauses() throws ContradictionException {
         // Apply constraints
-        for (var node : nodes.keySet()) {
-            var clause = new VecInt();
-            for (var constraint : constraints) {
-                clause.push((constraint.positive() ? 1 : -1) * delta(node, constraint.characteristic()));
+        for (var node : nodes) {
+            for(var inPin : node.inPins()) {
+                var clause = new VecInt();
+                for (var constraint : constraints) {
+                    var type=constraint.label().type();
+                    var value =constraint.label().value();
+                    var sign = constraint.positive() ? 1 : -1;
+                    if(constraint.what().equals("Node")) {
+                        clause.push(sign * delta(node.name(), new NodeChar(type,value)));
+                    }
+                    else if(constraint.what().equals("Data")) {
+                        clause.push(sign * delta(inPin.id(), new InDataChar(type,value)));
+                    }
+                }
+                solver.addClause(clause);
             }
-            solver.addClause(clause);
+            
         }
 
         // Require node and outgoing data chars
-        for (var node : nodes.keySet()) {
-            for (var characteristic : nodes.get(node)) {
-                if (characteristic instanceof InDataChar cast) {
-                    solver.addClause(clause(delta(node, cast.toOut())));
-                } else {
-                    solver.addClause(clause(delta(node, characteristic)));
+        for (var node : nodes) {
+            for(var property: node.nodeChars()) {
+                solver.addClause(clause(delta(node.name(), new NodeChar(property.type(),property.value()))));
+            }
+            for(var outPin : node.outPins().keySet()) {
+                for(var outData : node.outPins().get(outPin)) {
+                    solver.addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(),outData.value()))));
                 }
             }
         }
 
         // Prohibit creation of new edges
-        for (var from : nodes.keySet()) {
-            for (var to : nodes.keySet()) {
-                var sign = edges.contains(new Edge(from, to)) ? 1 : -1;
-                solver.addClause(clause(sign * edge(from, to)));
+        for (var fromNode : nodes) {
+            for(var fromPin: fromNode.outPins().keySet()) {
+                for (var toNode : nodes) {
+                    for(var toPin : toNode.inPins()) {
+                        var sign = edges.contains(new Edge(fromPin, toPin)) ? 1 : -1;
+                        solver.addClause(clause(sign * edge(fromPin, toPin)));
+                    }  
+                }
             }
         }
-
+        
         // Make clauses for label propagation
-        for (var from : nodes.keySet()) {
-            for (var to : nodes.keySet()) {
-                for (var label : labels) {
-                    var edgeDataLit = edgeData(new Edge(from, to), new InDataChar(label.type(), label.value()));
-                    var outLit = delta(from, new OutDataChar(label.type(), label.value()));
-                    // (From.Outgoing AND Edge(From,To)) <=> To.EdgeIngoing
-                    solver.addClause(clause(-outLit, -edge(from, to), edgeDataLit));
-                    solver.addClause(clause(-edgeDataLit, outLit));
-                    solver.addClause(clause(-edgeDataLit, edge(from, to)));
+        for (var fromNode : nodes) {
+            for(var fromPin: fromNode.outPins().keySet()) {
+                for (var toNode : nodes) {
+                    for(var toPin : toNode.inPins()) {
+                        for (var label : labels) {
+                            var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
+                            var outLit = delta(fromPin.id(), new OutDataChar(label.type(), label.value()));
+                            // (From.Outgoing AND Edge(From,To)) <=> To.EdgeIngoing
+                            solver.addClause(clause(-outLit, -edge(fromPin, toPin), edgeDataLit));
+                            solver.addClause(clause(-edgeDataLit, outLit));
+                            solver.addClause(clause(-edgeDataLit, edge(fromPin, toPin)));
+                        }
+                    }  
                 }
             }
         }
 
+        
         // Node has incoming data iff it receives it at least once
         for (var label : labels) {
-            for (var to : nodes.keySet()) {
-                var inLit = delta(to, new InDataChar(label.type(), label.value()));
-                var clause = new VecInt();
-                clause.push(-inLit);
-                for (var from : nodes.keySet()) {
-                    if (!from.equals(to)) {
-                        var edgeDataLit = edgeData(new Edge(from, to), new InDataChar(label.type(), label.value()));
-                        solver.addClause(clause(-edgeDataLit, inLit));
-                        clause.push(edgeDataLit);
+            for (var toNode : nodes) {
+                for(var toPin : toNode.inPins()) {
+                    var inLit = delta(toPin.id(), new InDataChar(label.type(), label.value()));
+                    var clause = new VecInt();
+                    clause.push(-inLit);
+                    for (var fromNode : nodes) {
+                        for(var fromPin : fromNode.outPins().keySet()) {
+                            var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
+                            solver.addClause(clause(-edgeDataLit, inLit));
+                            clause.push(edgeDataLit);
+                            
+                        } 
                     }
-                }
-                solver.addClause(clause);
+                    solver.addClause(clause);
+                } 
             }
         }
     }
@@ -140,10 +159,7 @@ public class Sat {
     private void extractUniqueLabels() {
         labels = new HashSet<>();
         for (var constraint : constraints) {
-            labels.add(new Label(constraint.characteristic()
-                    .type(),
-                    constraint.characteristic()
-                            .value()));
+            labels.add(constraint.label());
         }
     }
 
@@ -151,7 +167,7 @@ public class Sat {
         return new VecInt(literals);
     }
 
-    private int edge(String from, String to) {
+    private int edge(OutPin from, InPin to) {
         var edge = new Edge(from, to);
         if (!edgeToLit.containsKey(edge)) {
             edgeToLit.put(edge, solver.nextFreeVarId(true));
@@ -167,8 +183,8 @@ public class Sat {
         return edgeDataToLit.getValue(edgeData);
     }
 
-    private int delta(String node, AbstractChar characteristic) {
-        var delta = new Delta(node, characteristic);
+    private int delta(String where, AbstractChar characteristic) {
+        var delta = new Delta(where, characteristic);
         if (!deltaToLit.containsKey(delta)) {
             deltaToLit.put(delta, solver.nextFreeVarId(true));
         }

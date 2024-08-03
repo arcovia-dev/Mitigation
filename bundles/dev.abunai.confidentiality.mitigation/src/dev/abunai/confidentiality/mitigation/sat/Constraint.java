@@ -1,13 +1,5 @@
 package dev.abunai.confidentiality.mitigation.sat;
 
-public record Constraint(boolean positive, AbstractChar characteristic) {
+public record Constraint(boolean positive, String what, Label label) {
 
-    public Constraint(boolean positive, AbstractChar characteristic) {
-        this.positive = positive;
-        if (characteristic instanceof OutDataChar cast) {
-            this.characteristic = cast.toIn();
-        } else {
-            this.characteristic = characteristic;
-        }
-    }
 }
