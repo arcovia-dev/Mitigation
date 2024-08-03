@@ -2,7 +2,6 @@ package dev.abunai.confidentiality.mitigation.sat;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.IntStream;
@@ -124,7 +123,7 @@ public class Sat {
                         for (var label : labels) {
                             var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
                             var outLit = delta(fromPin.id(), new OutDataChar(label.type(), label.value()));
-                            // (From.Outgoing AND Edge(From,To)) <=> To.EdgeIngoing
+                            // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
                             solver.addClause(clause(-outLit, -edge(fromPin, toPin), edgeDataLit));
                             solver.addClause(clause(-edgeDataLit, outLit));
                             solver.addClause(clause(-edgeDataLit, edge(fromPin, toPin)));
@@ -135,7 +134,7 @@ public class Sat {
         }
 
         
-        // Node has incoming data iff it receives it at least once
+        // Node has incoming data at inpin iff it receives it at least once
         for (var label : labels) {
             for (var toNode : nodes) {
                 for(var toPin : toNode.inPins()) {
@@ -146,8 +145,7 @@ public class Sat {
                         for(var fromPin : fromNode.outPins().keySet()) {
                             var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
                             solver.addClause(clause(-edgeDataLit, inLit));
-                            clause.push(edgeDataLit);
-                            
+                            clause.push(edgeDataLit);  
                         } 
                     }
                     solver.addClause(clause);
