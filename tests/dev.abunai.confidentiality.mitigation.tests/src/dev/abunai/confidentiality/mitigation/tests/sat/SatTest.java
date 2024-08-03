@@ -10,19 +10,19 @@ import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
-import com.google.common.collect.ImmutableMap;
-
-import dev.abunai.confidentiality.mitigation.sat.AbstractChar;
 import dev.abunai.confidentiality.mitigation.sat.Constraint;
 import dev.abunai.confidentiality.mitigation.sat.Edge;
-import dev.abunai.confidentiality.mitigation.sat.NodeChar;
+import dev.abunai.confidentiality.mitigation.sat.Delta;
 import dev.abunai.confidentiality.mitigation.sat.Sat;
 import dev.abunai.confidentiality.mitigation.sat.Label;
 import dev.abunai.confidentiality.mitigation.sat.Node;
+import dev.abunai.confidentiality.mitigation.sat.NodeChar;
+import dev.abunai.confidentiality.mitigation.sat.OutDataChar;
 import dev.abunai.confidentiality.mitigation.sat.OutPin;
 import dev.abunai.confidentiality.mitigation.sat.InPin;
 
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.LabelType;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 
@@ -31,45 +31,19 @@ public class SatTest {
     public final String MIN_SAT = "models/minsat.json";
 
     @Test
-    public void manuelTest() throws ContradictionException, TimeoutException {
-        var personal = new Label("Sensitivity", "Personal");
-        var nonEu = new Label("Location", "NonEu");
-        var encrypted = new Label("Encryption", "Encrypted");
-
-        // (personal AND nonEU) => encrypted
-        var constraints = List.of(new Constraint(false, "Data", personal), new Constraint(false, "Node", nonEu),
-                new Constraint(true, "Data", encrypted));
-
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(new Node("User", List.of(), ImmutableMap.<OutPin, List<Label>>builder()
-                .put(new OutPin("1"), List.of(personal))
-                .build(), List.of()));
-        nodes.add(new Node("Process", List.of(new InPin("2")), ImmutableMap.<OutPin, List<Label>>builder()
-                .put(new OutPin("3"), List.of(personal))
-                .build(), List.of()));
-        nodes.add(new Node("DB", List.of(new InPin("4")), ImmutableMap.<OutPin, List<Label>>builder()
-                .build(), List.of(nonEu)));
-                
-        var edges = List.of(new Edge(new OutPin("1"), new InPin("2")), new Edge(new OutPin("3"), new InPin("4")));
-
-        var solutions = new Sat().solve(nodes, edges, constraints);
-
-        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
-        var min = solutions.get(0)
-                .size();
-        var minSol = solutions.stream()
-                .filter(delta -> delta.size() == min)
-                .toList();
-        System.out.println(solutions.size());
-        System.out.println(minSol);
-    }
-
-    @Test
     public void automaticTest() throws ContradictionException, TimeoutException{
         var converter = new DataFlowDiagramConverter();
         var dfd = converter.webToDfd(MIN_SAT);
-        converter.storeDFD(dfd, MIN_SAT);
-
+        
+        // (personal AND nonEU) => encrypted
+        var constraints = List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")), new Constraint(false, "Node", new Label("Location", "nonEU")),
+                new Constraint(true, "Data", new Label("Encryption", "Encrypted")));
+        
+        var repairedDfd = repair(dfd,constraints);
+        converter.storeWeb(converter.dfdToWeb(repairedDfd), "repaired.json");
+    }
+    
+    private DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd,List<Constraint> constraints) throws ContradictionException, TimeoutException {
         List<Node> nodes = new ArrayList<>();
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {
@@ -102,33 +76,40 @@ public class SatTest {
             
             nodes.add(new Node(node.getEntityName(),inPins,outPins,nodeChars));
         }
-        System.out.println(nodes);
 
         List<Edge> edges = new ArrayList<>();
         for (var flow : dfd.dataFlowDiagram()
                 .getFlows()) {
             edges.add(new Edge(new OutPin(flow.getSourcePin().getId()),new InPin(flow.getDestinationPin().getId())));
         }
-        
-        System.out.println(edges);
-        
-        var personal = new Label("Sensitivity", "Personal");
-        var nonEu = new Label("Location", "nonEU");
-        var encrypted = new Label("Encryption", "Encrypted");
-
-        // (personal AND nonEU) => encrypted
-        var constraints = List.of(new Constraint(false, "Data", personal), new Constraint(false, "Node", nonEu),
-                new Constraint(true, "Data", encrypted));
-        
+                
         var solutions = new Sat().solve(nodes, edges, constraints);
-
+        
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
-        var min = solutions.get(0)
-                .size();
-        var minSol = solutions.stream()
-                .filter(delta -> delta.size() == min)
-                .toList();
-        System.out.println(solutions.size());
-        System.out.println(minSol);
+        var minSol = solutions.get(0);
+        
+        
+        List<Delta> flatNodes = new ArrayList<>();
+        for(var node : nodes) {
+            for(var outPin : node.outPins().keySet()) {
+                for(var label : node.outPins().get(outPin)) {
+                    flatNodes.add(new Delta(outPin.id(),new OutDataChar(label.type(),label.value())));
+                }
+            }
+            for(var property : node.nodeChars()) {
+                flatNodes.add(new Delta(node.name(),new NodeChar(property.type(),property.value())));
+            }
+        }
+        
+        List<Delta> action = new ArrayList<>();
+        for(var delta : minSol) {
+            if(delta.characteristic().what().equals("InData")) continue;
+            if(flatNodes.contains(delta)) continue;
+            action.add(delta);
+        }
+        
+        System.out.println(action);
+        
+        return dfd;
     }
 }
