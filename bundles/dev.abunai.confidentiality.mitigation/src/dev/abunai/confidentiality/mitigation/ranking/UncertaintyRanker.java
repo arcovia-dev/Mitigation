@@ -13,7 +13,8 @@ public class UncertaintyRanker {
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath, String pathToTrainDataFolder,
 			int rankingLength) {
 		// Command to run the Python script
-		String[] command = {"python",scriptPath,pathToTrainDataFolder,Integer.toString(rankingLength),getRankerTypeCommandParameter()};
+		String[] command = { "python", scriptPath, pathToTrainDataFolder, Integer.toString(rankingLength),
+				getRankerTypeCommandParameter() };
 		try {
 			// Execute the command
 			Process process = Runtime.getRuntime().exec(command);
@@ -43,7 +44,13 @@ public class UncertaintyRanker {
 			return "F";
 		}
 		if (rankerType.equals(RankerType.LDA)) {
-			return "L";
+			return "LDA";
+		}
+		if (rankerType.equals(RankerType.RANDOM_FOREST)) {
+			return "RF";
+		}
+		if (rankerType.equals(RankerType.LINEAR_REGRESSION)) {
+			return "LR";
 		} else {
 			return "P";
 		}

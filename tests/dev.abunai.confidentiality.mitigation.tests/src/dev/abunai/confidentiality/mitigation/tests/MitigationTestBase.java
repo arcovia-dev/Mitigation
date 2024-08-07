@@ -21,7 +21,9 @@ import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialit
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModelCalculator;
-import dev.abunai.confidentiality.mitigation.ranking.TrainDataGenerationUnsupervised;
+import dev.abunai.confidentiality.mitigation.ranking.TrainDataGeneration;
+import dev.abunai.confidentiality.mitigation.ranking.UncertaintySubset;
+import dev.abunai.confidentiality.mitigation.ranking.MitigationURIs;
 
 public abstract class MitigationTestBase extends TestBase {
 
@@ -31,15 +33,14 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract List<Predicate<? super AbstractVertex<?>>> getConstraints();
 	
 	// Mitigation preparation variables
-	protected final TrainDataGenerationUnsupervised trainDataGeneration = new TrainDataGenerationUnsupervised();
+	protected final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
 	protected final String scriptDirectory = Paths.get("scripts", "uncertaintyRanking").toString();
 	protected final String trainDataDirectory = Paths.get(scriptDirectory, "train_data_files").toString();
 	protected final String pathToUncertaintyRankingScript = Paths.get(scriptDirectory, "uncertainty_ranking.py")
 			.toString();
 	protected final String pathToRelevantUncertainties = "relevantUncertainties.txt";
 
-	// Paths and URIs for mitigation
-	protected final String pathToMitigationModel = Paths.get("models", "mitigation").toString();
+	// URIs for mitigation
 	protected final URI modelUncertaintyURI = ResourceUtils.createRelativePluginURI(
 			Paths.get("models", getFolderName(), getFilesName() + ".uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
 	protected final URI mitigationUncertaintyURI = ResourceUtils.createRelativePluginURI(
@@ -114,7 +115,7 @@ public abstract class MitigationTestBase extends TestBase {
 		Path filePath = Paths.get(pathToRelevantUncertainties);
 		try {
 			if (!Files.isRegularFile(filePath)) {
-				System.out.println("ranking did not exist");
+				System.out.println("ranking does not exist");
 				return new ArrayList<>();
 			}
 			return Files.readAllLines(filePath);
@@ -135,10 +136,9 @@ public abstract class MitigationTestBase extends TestBase {
 					.filter(u -> relevantUncertaintyEntityName.contains(u.getEntityName())).toList();
 
 			// Run mitigation with i+1 uncertainties
-			var result = MitigationModelCalculator.findMitigatingModel(
-					new DataFlowDiagramAndDictionary(this.dfd, this.dd), sources, relevantUncertainties,
-					pathToMitigationModel, TEST_MODEL_PROJECT_NAME, modelUncertaintyURI, mitigationUncertaintyURI,
-					getConstraints(), Activator.class);
+			var result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
+					new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
+							mitigationUncertaintyURI), getConstraints(), true, Activator.class);
 
 			// Print working mitigation if one was found
 			if (result.size() > 0) {
@@ -161,8 +161,8 @@ public abstract class MitigationTestBase extends TestBase {
 
 		// Execute mitigation
 		var result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
-				sources, relevantUncertainties, pathToMitigationModel, TEST_MODEL_PROJECT_NAME, modelUncertaintyURI,
-				mitigationUncertaintyURI, getConstraints(), Activator.class);
+				new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
+				mitigationUncertaintyURI), getConstraints(), true, Activator.class);
 
 		// Return success of mitgation
 		if (result.size() > 0) {

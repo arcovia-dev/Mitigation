@@ -12,13 +12,14 @@ import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertainTransposeFlowGraph;
 import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
 public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "OnlineBankingModelEval";
+		return "OnlineBankingModel";
 	}
 
 	protected String getFilesName() {
@@ -54,7 +55,11 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		var count = 0;
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
+		
 		uncertainFlowGraphs.evaluate();
+		
+		List<DFDUncertainTransposeFlowGraph> tfgs = uncertainFlowGraphs.getTransposeFlowGraphs().stream()
+				.map(DFDUncertainTransposeFlowGraph.class::cast).toList();
 		// Generate train data for each constraint
 		for (var constraint : constraints) {
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
@@ -65,7 +70,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 				continue;
 			}
 
-			trainDataGeneration.violationDataToCSV(violations, analysis.getUncertaintySources(),
+			trainDataGeneration.violationDataToCSV(violations, tfgs, analysis.getUncertaintySources(),
 				Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
 			count++;
 		}

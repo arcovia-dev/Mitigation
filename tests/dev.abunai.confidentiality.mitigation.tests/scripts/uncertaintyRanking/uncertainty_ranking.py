@@ -9,6 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'uncertainty_rankers'))
 from principal_component_uncertainty_ranker import PrincipalComponentUncertaintyRanker
 from famd_uncertainty_ranker import FAMDUncertaintyRanker
 from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker
+from linear_regression_uncertainty_ranker import LinearRegressionUncertaintyRanker
 from linear_discriminant_analysis import LinearDiscriminantAnalysisRanker
 
 import warnings
@@ -112,12 +113,16 @@ for filename in filenames:
     X = X.drop(categorical_cols, axis=1)
     X = pd.concat([X, X_encoded], axis=1)
 
-    if RANKER_TYPE == "L":
+    if RANKER_TYPE == "LDA":
         uncertainty_ranker = LinearDiscriminantAnalysisRanker(X, y)
     elif RANKER_TYPE == "P":
         uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
     elif RANKER_TYPE == "F":
         uncertainty_ranker = FAMDUncertaintyRanker(X, y)
+    elif RANKER_TYPE == "RF":
+        uncertainty_ranker = RandomForestUncertaintyRanker(X, y)
+    elif RANKER_TYPE == "LR":
+        uncertainty_ranker = LinearRegressionUncertaintyRanker(X, y)
     else:
         uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
 
