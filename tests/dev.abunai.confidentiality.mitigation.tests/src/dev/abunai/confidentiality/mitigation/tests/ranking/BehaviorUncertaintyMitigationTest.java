@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertainTransposeFlowGraph;
 import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
@@ -57,6 +58,8 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
 		uncertainFlowGraphs.evaluate();
+		List<DFDUncertainTransposeFlowGraph> allTFGs = uncertainFlowGraphs.getTransposeFlowGraphs().stream()
+				.map(DFDUncertainTransposeFlowGraph.class::cast).toList();
 		// Generate train data for each constraint
 		for (var constraint : constraints) {
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
@@ -67,7 +70,7 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 				continue;
 			}
 
-			trainDataGeneration.violationDataToCSV(violations, analysis.getUncertaintySources(),
+			trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
 					Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
 			count++;
 		}
@@ -88,8 +91,8 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	public void createMitigationCandidatesAutomatically() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
-		var success = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,analysis.getUncertaintySources());
-		if (!success) {
+		var result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,analysis.getUncertaintySources());
+		if (result.size() == 0) {
 			System.out.println("mitigation failed");
 		}
 		var duration = System.currentTimeMillis()-startTime;
@@ -102,12 +105,12 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	public void createMitigationCandidatesAutomatically2() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
-		var success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+		var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 				rankedUncertaintyEntityName.size() / 2, analysis.getUncertaintySources());
-		if (!success) {
-			var success2 = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+		if (result.size() == 0) {
+			var result2 = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 					rankedUncertaintyEntityName.size(), analysis.getUncertaintySources());
-			if (!success2) {
+			if (result2.size() == 0) {
 				System.out.println("mitigation failed");
 			}
 		}
@@ -123,8 +126,12 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 		var rankedUncertaintyEntityName = loadRanking();
 		boolean success = false;
 		for (int i = 1; i <= 4 && !success; i++) {
-			success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+			var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 					i * (rankedUncertaintyEntityName.size() / 4),analysis.getUncertaintySources());
+			if(result.size() > 0) {
+				success = true;
+				break;
+			}
 		}
 		if (!success) {
 			System.out.println("mitigation failed");
@@ -140,9 +147,8 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	public void createMitigationCandidatesAutomatically4() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
-		boolean success = false;
-		success = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size(),analysis.getUncertaintySources());
-		if (!success) {
+		var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size(),analysis.getUncertaintySources());
+		if (result.size() == 0) {
 			System.out.println("mitigation failed");
 		}
 		var duration = System.currentTimeMillis()-startTime;

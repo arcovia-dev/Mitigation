@@ -30,10 +30,10 @@ public class DebuggingHelperTests {
 
 	@Test
 	public void webToDfd() {
-		String path = "comp.json";
+		String path = "mitigation_example.json";
 		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
 		var dd = conv.webToDfd(path);
-		conv.storeDFD(dd, "comp");
+		conv.storeDFD(dd, "mitigation_example");
 	}
 
 	@Test

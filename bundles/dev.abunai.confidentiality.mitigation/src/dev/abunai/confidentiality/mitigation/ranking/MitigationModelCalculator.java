@@ -27,14 +27,14 @@ import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 
 public class MitigationModelCalculator {
 
-	public static List<String> findMitigatingModel(DataFlowDiagramAndDictionary diagramAndDict,
+	public static List<MitigationModel> findMitigatingModel(DataFlowDiagramAndDictionary diagramAndDict,
 			UncertaintySubset relevantUncertaintySubset, MitigationURIs mitigationURIs,
 			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, boolean findFirstModel,
 			Class<? extends Plugin> pluginActivator) {
 
-		List<DataFlowDiagramAndDictionary> mitigationCandidates = new ArrayList<>();
+		List<MitigationModel> mitigationCandidates = new ArrayList<>();
 		createMitigationCandidates(0, relevantUncertaintySubset.getSubsetSources(), diagramAndDict,
-				mitigationCandidates);
+				mitigationCandidates, new ArrayList<String>());
 
 		List<UncertaintySource> irrelevantUncertainties = relevantUncertaintySubset.getNotInSubsetSources();
 		return storeMitigationCandidates(mitigationCandidates, irrelevantUncertainties, mitigationURIs,
@@ -71,7 +71,7 @@ public class MitigationModelCalculator {
 		return true;
 	}
 
-	private static List<String> storeMitigationCandidates(List<DataFlowDiagramAndDictionary> candidates,
+	private static List<MitigationModel> storeMitigationCandidates(List<MitigationModel> candidates,
 			List<UncertaintySource> uncertaintiesToKeep, MitigationURIs mitigationURIs,
 			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, boolean findFirstModel,
 			Class<? extends Plugin> pluginActivator) {
@@ -103,16 +103,18 @@ public class MitigationModelCalculator {
 			e.printStackTrace();
 		}
 
-		var result = new ArrayList<String>();
+		var result = new ArrayList<MitigationModel>();
 		var conv = new DataFlowDiagramConverter();
 		String outputPath = getOutputPathFromURI(mitigationURIs.mitigationUncertaintyURI());
 		String projectName = getProjectNameFromURI(mitigationURIs.mitigationUncertaintyURI());
 
 		for (int i = 0; i < candidates.size(); i++) {
 			// Store dataflowdigrams and datadictionaries
-			conv.storeDFD(candidates.get(i), Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
+			conv.storeDFD(candidates.get(i).model(), Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
 			if (isViolationfreeModel(outputPath, i, projectName, constraintFunctions, pluginActivator)) {
-				result.add("mitigation" + Integer.toString(i));
+				result.add(candidates.get(i));
+				var web = conv.dfdToWeb(candidates.get(i).model());
+				conv.storeWeb(web, "mitigation.json");
 				if (findFirstModel) {
 					return result;
 				}
@@ -123,11 +125,12 @@ public class MitigationModelCalculator {
 	}
 
 	private static void createMitigationCandidates(int index, List<UncertaintySource> relevantUncertainties,
-			DataFlowDiagramAndDictionary diagramAndDict, List<DataFlowDiagramAndDictionary> candidates) {
+			DataFlowDiagramAndDictionary diagramAndDict, List<MitigationModel> candidates, List<String> chosenScenarios) {
 		// Store possible mitigation in mitigations list when all uncertainties got
 		// considered
 		if (index == relevantUncertainties.size()) {
-			candidates.add(diagramAndDict);
+			var mitigationModelName = "mitigation" + candidates.size();
+			candidates.add(new MitigationModel(diagramAndDict,mitigationModelName,chosenScenarios));
 			return;
 		}
 		// Consider all options for uncertainty source actSource
@@ -135,7 +138,9 @@ public class MitigationModelCalculator {
 			var actSource = relevantUncertainties.get(index);
 
 			// chose default scenario
-			createMitigationCandidates(index + 1, relevantUncertainties, diagramAndDict, candidates);
+			List<String> newChosenScenariosD = new ArrayList<String>(chosenScenarios);
+			newChosenScenariosD.add("D");
+			createMitigationCandidates(index + 1, relevantUncertainties, diagramAndDict, candidates, newChosenScenariosD);
 
 			for (var scenario : UncertaintyUtils.getUncertaintyScenarios(actSource)) {
 				if (UncertaintyUtils.isDefaultScenario(actSource, scenario)) {
@@ -146,27 +151,37 @@ public class MitigationModelCalculator {
 						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseExternalScenario(
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDExternalUncertaintySource) actSource, castedScenario);
-						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
+						var newChosenScenariosA = new ArrayList<String>(chosenScenarios);
+						newChosenScenariosA.add("A"+scenario.getId());
+						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates, newChosenScenariosA);
 					} else if (scenario instanceof DFDBehaviorUncertaintyScenario castedScenario) {
 						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseBehaviorScenario(
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDBehaviorUncertaintySource) actSource, castedScenario);
-						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
+						var newChosenScenariosA = new ArrayList<String>(chosenScenarios);
+						newChosenScenariosA.add("A"+scenario.getId());
+						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates, newChosenScenariosA);
 					} else if (scenario instanceof DFDInterfaceUncertaintyScenario castedScenario) {
 						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseInterfaceScenario(
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDInterfaceUncertaintySource) actSource, castedScenario);
-						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
+						var newChosenScenariosA = new ArrayList<String>(chosenScenarios);
+						newChosenScenariosA.add("A"+scenario.getId());
+						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates, newChosenScenariosA);
 					} else if (scenario instanceof DFDComponentUncertaintyScenario castedScenario) {
 						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseComponentScenario(
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDComponentUncertaintySource) actSource, castedScenario);
-						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
+						var newChosenScenariosA = new ArrayList<String>(chosenScenarios);
+						newChosenScenariosA.add("A"+scenario.getId());
+						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates, newChosenScenariosA);
 					} else if (scenario instanceof DFDConnectorUncertaintyScenario castedScenario) {
 						var newDiagramAndDict = UncertaintySourceMitigationUtils.chooseConnectorScenario(
 								diagramAndDict.dataFlowDiagram(), diagramAndDict.dataDictionary(),
 								(DFDConnectorUncertaintySource) actSource, castedScenario);
-						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates);
+						var newChosenScenariosA = new ArrayList<String>(chosenScenarios);
+						newChosenScenariosA.add("A"+scenario.getId());
+						createMitigationCandidates(index + 1, relevantUncertainties, newDiagramAndDict, candidates, newChosenScenariosA);
 					} else {
 						throw new IllegalArgumentException("Unexpected DFD uncertainty scenario: %s"
 								.formatted(UncertaintyUtils.getUncertaintyScenarioName(scenario)));

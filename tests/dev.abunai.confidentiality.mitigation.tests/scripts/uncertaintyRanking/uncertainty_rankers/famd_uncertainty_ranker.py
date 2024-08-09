@@ -26,7 +26,7 @@ class FAMDUncertaintyRanker(UncertaintyRanker):
         cols_to_drop = [col for col in data.columns if data[col].eq(0).all()]
         data = data.drop(cols_to_drop, axis=1)
 
-        # No PCA based ranking possible if just one data row exists so return all non irrelevant entries as ranking
+        # No FAMD based ranking possible if just one data row exists so return all non irrelevant entries as ranking
         if data.shape[0] == 1:
             self.ranking = {}
             for name in data.columns.tolist():
@@ -37,7 +37,7 @@ class FAMDUncertaintyRanker(UncertaintyRanker):
         scaler = StandardScaler()
         data_standardized = scaler.fit_transform(data)
 
-        # Additional PCA to determine amount of components
+        # Additional PCA to determine amount of factors
         pca_full = PCA()
         pca_full.fit(data_standardized)
         

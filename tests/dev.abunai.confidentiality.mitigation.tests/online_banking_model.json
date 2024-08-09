@@ -3,356 +3,590 @@
     "type" : "graph",
     "id" : "root",
     "children" : [ {
-      "text" : "",
-      "id" : "qt97ws",
+      "text" : "customer_change_cc_limit",
+      "id" : "_jtr8sE2qEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "6da1pf",
-      "targetId" : "q3tps",
+      "sourceId" : "_MlmRsU2oEe-LhJeQRtdsyQ",
+      "targetId" : "_XByHQE2pEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "gdqjrtn",
+      "text" : "change_cc_limit_bank_clerk",
+      "id" : "_46c1YE2qEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "uxwmd",
-      "targetId" : "q3tps",
+      "sourceId" : "_YinA0U2pEe-LhJeQRtdsyQ",
+      "targetId" : "_Mk7RYE2qEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "oc4l7d",
+      "text" : "customer_get_loan_offer",
+      "id" : "_qR5wQE2tEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "140xy3",
-      "targetId" : "tn6k3l",
+      "sourceId" : "_8-Ua0U2nEe-LhJeQRtdsyQ",
+      "targetId" : "_GslvkE2rEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "1pl99",
+      "text" : "get_loan_offer_process_loan_offer",
+      "id" : "_4-OawE2tEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "ohfd2",
-      "targetId" : "p6k7id",
+      "sourceId" : "_ijeW4U2rEe-LhJeQRtdsyQ",
+      "targetId" : "_47d3IE2sEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "2du38j",
+      "text" : "process_loan_offer_bank_clerk",
+      "id" : "_I6qCQE2uEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "5b9s2i",
-      "targetId" : "f7khk5",
+      "sourceId" : "_8TPrQU2sEe-LhJeQRtdsyQ",
+      "targetId" : "_PpbkME2qEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "qpz52g",
+      "text" : "process_loan_offer2_bank_clerk",
+      "id" : "_PU6I5E2uEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "9tqdsm",
-      "targetId" : "0lar5h",
+      "sourceId" : "_LI3bsU2tEe-LhJeQRtdsyQ",
+      "targetId" : "_XA91oE2uEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "create_acc_req",
-      "id" : "3hd7e",
+      "text" : "fond_recommendation_bank_clerk",
+      "id" : "_MoR4oE2wEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "3wpieg",
-      "targetId" : "4s3jxh",
+      "sourceId" : "_J86UAU2vEe-LhJeQRtdsyQ",
+      "targetId" : "_bkRMQE2vEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "z7z79n",
+      "text" : "fond_recommendation2_fond_manager",
+      "id" : "_VNc-sE2wEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "y5xc95",
-      "targetId" : "sj7raf",
+      "sourceId" : "_W0Y8wU2vEe-LhJeQRtdsyQ",
+      "targetId" : "_d46vcE2vEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "fond_recommendation_req",
-      "id" : "r6v4zl",
+      "text" : "customer_create_account",
+      "id" : "_MO_nME22Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "jeigr",
-      "targetId" : "9dco2k",
+      "sourceId" : "_zezzcU2nEe-LhJeQRtdsyQ",
+      "targetId" : "_w_6cME20Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "r1k1z",
+      "text" : "create_account_customer_banking_data",
+      "id" : "_RmwWEE22Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "ggh65",
-      "targetId" : "p2ic6",
+      "sourceId" : "_zdob0U20Ee-LhJeQRtdsyQ",
+      "targetId" : "_Xz05IE2yEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "ektf2",
+      "text" : "create_account_enc_customer_banking_data",
+      "id" : "_XdancE22Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "tu2lm",
-      "targetId" : "96yfs",
+      "sourceId" : "_hIolAU21Ee-LhJeQRtdsyQ",
+      "targetId" : "_avmGsE2yEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "726gse",
+      "text" : "create_account_customer_personal_data",
+      "id" : "_ql5UME22Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "k7tez",
-      "targetId" : "xnllu9",
+      "sourceId" : "_MESogU21Ee-LhJeQRtdsyQ",
+      "targetId" : "_Fbl2ME21Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "xkyrao",
+      "text" : "create_account_enc_customer_personal_data",
+      "id" : "_1oPnUE22Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "mmnpxk",
-      "targetId" : "xnllu9",
+      "sourceId" : "_lMxv4U21Ee-LhJeQRtdsyQ",
+      "targetId" : "_H2qKcE21Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "2guygi",
+      "text" : "transfer_money_customer_banking_data",
+      "id" : "_TUW1cE24Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "her67v",
-      "targetId" : "i9as1c",
+      "sourceId" : "_QP5qIU2xEe-LhJeQRtdsyQ",
+      "targetId" : "_BVxXsE2yEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "hibrgm",
+      "text" : "customer_transfer_money",
+      "id" : "_feZJYE24Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "sdornc",
-      "targetId" : "fef13s",
+      "sourceId" : "_IyhSkE2xEe-LhJeQRtdsyQ",
+      "targetId" : "_pIAXsU2nEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "ctizlm",
+      "text" : "customer_view_balance",
+      "id" : "_5nQIoE24Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "bka455",
-      "targetId" : "5fdcp6",
+      "sourceId" : "_u9UlQU2nEe-LhJeQRtdsyQ",
+      "targetId" : "_x8rpoE24Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "g5owtl",
+      "text" : "view_balance_customer_banking_data",
+      "id" : "_Bd8_IE25Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "wmr2fk",
-      "targetId" : "esldbj",
+      "sourceId" : "_zZDhAU24Ee-LhJeQRtdsyQ",
+      "targetId" : "_qKkVAE20Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "trans_money_req",
-      "id" : "n3dimv",
+      "text" : "developer_request_system_state",
+      "id" : "_LONGUE27Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "9j4z2r",
-      "targetId" : "p1c5f7",
+      "sourceId" : "_UX12QU25Ee-LhJeQRtdsyQ",
+      "targetId" : "_KInzwE26Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "qkppfh",
+      "text" : "developer_request_account_state",
+      "id" : "_UOFycE27Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "zveoyb",
-      "targetId" : "yoe03",
+      "sourceId" : "_dp4CUU25Ee-LhJeQRtdsyQ",
+      "targetId" : "_aKQrYE26Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "fkx88e",
+      "text" : "request_system_state_customer_banking_data",
+      "id" : "_d4aisE27Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "g2n3es",
-      "targetId" : "3yubu8",
+      "sourceId" : "_NeMocU26Ee-LhJeQRtdsyQ",
+      "targetId" : "_l3_-gE2yEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "7secm",
+      "text" : "request_account_state_customer_banking_data",
+      "id" : "_lUqR0E27Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "zn62sq",
-      "targetId" : "l9ozr",
+      "sourceId" : "_cSTV8U26Ee-LhJeQRtdsyQ",
+      "targetId" : "_fM_fEE2yEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "mbfdpe",
+      "text" : "request_account_state2_customer_banking_data",
+      "id" : "_trhPEE27Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "t633kr",
-      "targetId" : "l9ozr",
+      "sourceId" : "_mRoF0U26Ee-LhJeQRtdsyQ",
+      "targetId" : "_hx9WME2yEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "fond_raw_data",
-      "id" : "9qtagj",
+      "text" : "bank_clerk_internal_change_cc_limit",
+      "id" : "_LpSYcE2-Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "fe3u7",
-      "targetId" : "6i2vfg",
+      "sourceId" : "_pmyY4U28Ee-LhJeQRtdsyQ",
+      "targetId" : "_CgF0wE29Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "fond_data",
-      "id" : "i6qx1b",
+      "text" : "internal_change_cc_limit_customer_settings",
+      "id" : "_Sdw88E2-Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "x41oki",
-      "targetId" : "qubc9",
+      "sourceId" : "_DZ38cU29Ee-LhJeQRtdsyQ",
+      "targetId" : "_-6P6AE29Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "lkjes3",
+      "text" : "bank_clerk_send_loan_offer_response",
+      "id" : "_amy5kE2-Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "5zbky",
-      "targetId" : "ybhpiw",
+      "sourceId" : "_siNoNU28Ee-LhJeQRtdsyQ",
+      "targetId" : "_Qs8VAE29Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "96atal",
+      "text" : "send_loan_offer_response_customer",
+      "id" : "_s_yqIE2-Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "1e2jyx",
-      "targetId" : "ybhpiw",
+      "sourceId" : "_S-PpQU29Ee-LhJeQRtdsyQ",
+      "targetId" : "_XQCOkE29Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "nbmd",
+      "text" : "send_loan_offer_response2_customer",
+      "id" : "_z19QsE2-Ee-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "wxjjbs",
-      "targetId" : "pt22np",
+      "sourceId" : "_icbOgU29Ee-LhJeQRtdsyQ",
+      "targetId" : "_ZQ220E29Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "mhskpk",
+      "text" : "fond_manager_give_fond_recommendation",
+      "id" : "_cbn-IE3HEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "fdgaer",
-      "targetId" : "q6bgce",
+      "sourceId" : "_dM0ccU3FEe-LhJeQRtdsyQ",
+      "targetId" : "_wDIbJk3FEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "ew6pk8",
+      "text" : "give_fond_recommendation_customer",
+      "id" : "_pHGLNE3HEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "uzzdt3",
-      "targetId" : "esldbj",
+      "sourceId" : "_yfX0FU3FEe-LhJeQRtdsyQ",
+      "targetId" : "_0fDh8E3HEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "vnlwpe",
+      "text" : "request_fond_data_fond_data",
+      "id" : "_JcwD4E3IEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "cu7mp8",
-      "targetId" : "wv0zq",
+      "sourceId" : "_64lsUU3GEe-LhJeQRtdsyQ",
+      "targetId" : "_4sQ0Jk3FEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "vpqdwl",
+      "text" : "fond_data_show_fond_data",
+      "id" : "_S6kpNE3IEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "q0g82e",
-      "targetId" : "v62j8",
+      "sourceId" : "_9vJfMU3FEe-LhJeQRtdsyQ",
+      "targetId" : "_MPlCxk3GEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "cuy6o6",
+      "text" : "show_fond_data_fond_manager",
+      "id" : "_gJuLEE3IEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "hkfqxo",
-      "targetId" : "bmksro",
+      "sourceId" : "_OJ0h4U3GEe-LhJeQRtdsyQ",
+      "targetId" : "_lTTbZE3FEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "h7xnfs",
+      "text" : "show_fond_data_enc_fond_manager",
+      "id" : "_ttwX0E3IEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "cd09qf",
-      "targetId" : "bmksro",
+      "sourceId" : "_asnUEE3GEe-LhJeQRtdsyQ",
+      "targetId" : "_phUT8E3FEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "loan_offer_req",
-      "id" : "7tykx",
+      "text" : "customer_banking_data_show_balance",
+      "id" : "_zvALwE3MEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "8437n",
-      "targetId" : "ads4x9",
+      "sourceId" : "__-rNoU3MEe-LhJeQRtdsyQ",
+      "targetId" : "_YgFY1k3LEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "loan_offer_get",
-      "id" : "npencu",
+      "text" : "show_balance_customer",
+      "id" : "_LeSrkE3NEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "o670jd",
-      "targetId" : "ukltp8",
+      "sourceId" : "_a_ZT4U3LEe-LhJeQRtdsyQ",
+      "targetId" : "_Yw7mUE3NEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "yyndme",
+      "text" : "customer_banking_data_view_system_state",
+      "id" : "_-vqnYE3NEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "w17zn",
-      "targetId" : "287rit",
+      "sourceId" : "_tErnoU2yEe-LhJeQRtdsyQ",
+      "targetId" : "_lWBJcE3LEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "y7773c",
+      "text" : "customer_banking_data_view_account_state",
+      "id" : "_JaDGcE3OEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "mvkqih",
-      "targetId" : "287rit",
+      "sourceId" : "_pJqjkU2yEe-LhJeQRtdsyQ",
+      "targetId" : "_zGGOIE3LEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "loan_res",
-      "id" : "2us0vg",
+      "text" : "view_system_state_developer",
+      "id" : "_TuWAwE3OEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "b63vq7",
-      "targetId" : "npuauj",
+      "sourceId" : "_ol9QMU3LEe-LhJeQRtdsyQ",
+      "targetId" : "_hrgEsE25Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "pzvn",
+      "text" : "view_account_state_developer",
+      "id" : "_cyAZoE3OEe-LhJeQRtdsyQ",
       "type" : "edge:arrow",
-      "sourceId" : "gwvy0i",
-      "targetId" : "p9p0zb",
+      "sourceId" : "_2NOXIU3LEe-LhJeQRtdsyQ",
+      "targetId" : "_jlly0E25Ee-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "jrgem",
+      "text" : "fond_manager_request_fond_data",
+      "id" : "_oNUekE5LEe-HgctW8G3Iog",
       "type" : "edge:arrow",
-      "sourceId" : "dg0dib",
-      "targetId" : "unlaw",
+      "sourceId" : "_fz2JEU3FEe-LhJeQRtdsyQ",
+      "targetId" : "_5DOtME3GEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "fs4me",
+      "text" : "customer_request_fond_recommendation",
+      "id" : "_EPf6cE5NEe-HgctW8G3Iog",
       "type" : "edge:arrow",
-      "sourceId" : "m2r9nh",
-      "targetId" : "unlaw",
+      "sourceId" : "_5GyvoU2nEe-LhJeQRtdsyQ",
+      "targetId" : "_IAVSkE2vEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "request_account_state_flow",
-      "id" : "vprfb8",
+      "text" : "request_fond_recommendation_fond_manager",
+      "id" : "_akqloE5NEe-HgctW8G3Iog",
       "type" : "edge:arrow",
-      "sourceId" : "j4s8pl",
-      "targetId" : "q82enj",
+      "sourceId" : "_J86UAU2vEe-LhJeQRtdsyQ",
+      "targetId" : "_bkRMQE2vEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "",
-      "id" : "jp98eo",
+      "text" : "request_fond_recommendation2_fond_manager",
+      "id" : "_i0OoEE5NEe-HgctW8G3Iog",
       "type" : "edge:arrow",
-      "sourceId" : "3635pp",
-      "targetId" : "unlaw",
+      "sourceId" : "_W0Y8wU2vEe-LhJeQRtdsyQ",
+      "targetId" : "_d46vcE2vEe-LhJeQRtdsyQ",
       "children" : [ ]
     }, {
-      "text" : "create_account_enc",
+      "text" : "customer_give_fond_recommendation",
+      "id" : "_lzUdIE5SEe-_8IuGxYgcXQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_dM0ccU3FEe-LhJeQRtdsyQ",
+      "targetId" : "_wDIbJk3FEe-LhJeQRtdsyQ",
+      "children" : [ ]
+    }, {
+      "text" : "fond_manager_request_fond_data",
+      "id" : "_Hf4eYE5TEe-_8IuGxYgcXQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_fz2JEU3FEe-LhJeQRtdsyQ",
+      "targetId" : "_5DOtME3GEe-LhJeQRtdsyQ",
+      "children" : [ ]
+    }, {
+      "text" : "Customer",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_XQCOkE29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_ZQ220E29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_0fDh8E3HEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_Yw7mUE3NEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "_pIAXsU2nEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_u9UlQU2nEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "_zezzcU2nEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "_5GyvoU2nEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "_8-Ua0U2nEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_MlmRsU2oEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_K-etcU2pEe-LhJeQRtdsyQ",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Change_CC_Limit",
       "labels" : [ ],
       "ports" : [ {
-        "id" : "j0hutp",
+        "id" : "_XByHQE2pEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = FALSE",
+        "id" : "_YinA0U2pEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_XT_cI02qEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      }, {
+        "labelTypeId" : "pysp7",
+        "labelTypeValueId" : "t3spcs"
+      } ],
+      "ports" : [ {
+        "id" : "_Mk7RYE2qEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_PpbkME2qEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_XA91oE2uEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_pmyY4U28Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "_siNoNU28Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_cqMr0U2qEe-LhJeQRtdsyQ",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Get_Loan_Offer",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_GslvkE2rEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
         "behavior" : "set Encryption.Encrypted = TRUE",
-        "id" : "mmnpxk",
+        "id" : "_ijeW4U2rEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_uz7xA02tEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Process_Loan_Offer",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_47d3IE2sEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward get_loan_offer_process_loan_offer",
+        "id" : "_8TPrQU2sEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_AlCbI02uEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Process_Loan_Offer2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_H-aR4E2tEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward null",
+        "id" : "_LI3bsU2tEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_FGnv802uEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Request_Fond_Recommendation",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_IAVSkE2vEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_J86UAU2vEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_zhgog02vEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Request_Fond_Recommendation2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_UGP7gE2vEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_W0Y8wU2vEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_2l8p402vEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Create_Account",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_w_6cME20Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_zdob0U20Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_MESogU21Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_yaV9yU21Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Create_Account_Enc",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_esFqEE21Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_lMxv4U21Ee-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
         "behavior" : "set Encryption.Encrypted = TRUE",
-        "id" : "uxwmd",
+        "id" : "_hIolAU21Ee-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "43ci5",
+      "id" : "_2E1SI021Ee-LhJeQRtdsyQ",
       "type" : "node:function",
       "children" : [ ]
     }, {
-      "text" : "create_account",
-      "labels" : [ ],
+      "text" : "Customer_Banking_Data",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
       "ports" : [ {
-        "id" : "4s3jxh",
+        "id" : "_BVxXsE2yEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward create_acc_req",
-        "id" : "6da1pf",
+        "id" : "_Xz05IE2yEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_avmGsE2yEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_fM_fEE2yEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_hx9WME2yEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_l3_-gE2yEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_qKkVAE20Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "_pJqjkU2yEe-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "id" : "k7tez",
+        "id" : "_tErnoU2yEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "__-rNoU3MEe-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "05a9o",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "Customer_Transaction_Data",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "pt22np",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      } ],
-      "id" : "axtpum",
+      "id" : "_5nfglk21Ee-LhJeQRtdsyQ",
       "type" : "node:storage",
       "children" : [ ]
     }, {
@@ -362,43 +596,180 @@
         "labelTypeValueId" : "g10hr"
       } ],
       "ports" : [ {
-        "id" : "q3tps",
+        "id" : "_Fbl2ME21Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_H2qKcE21Ee-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       } ],
-      "id" : "5zljh9",
+      "id" : "_mFUsAk22Ee-LhJeQRtdsyQ",
       "type" : "node:storage",
       "children" : [ ]
     }, {
-      "text" : "show_balance",
+      "text" : "Transfer_Money",
       "labels" : [ ],
       "ports" : [ {
-        "id" : "i9as1c",
+        "id" : "_IyhSkE2xEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "set DummyType.DummyLabel = TRUE",
-        "id" : "ggh65",
+        "behavior" : "forward null",
+        "id" : "_QP5qIU2xEe-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "xp2ahb",
+      "id" : "_I_1Ro024Ee-LhJeQRtdsyQ",
       "type" : "node:function",
       "children" : [ ]
     }, {
-      "text" : "change_cc_limit",
+      "text" : "Transfer_Money2",
+      "labels" : [ {
+        "labelTypeId" : "pysp7",
+        "labelTypeValueId" : "t3spcs"
+      } ],
+      "ports" : [ {
+        "id" : "_vie8QE2xEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_L7ejY024Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "View_Balance",
       "labels" : [ ],
       "ports" : [ {
-        "id" : "sj7raf",
+        "id" : "_x8rpoE24Ee-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "set DummyType.DummyLabel = TRUE",
-        "id" : "cu7mp8",
+        "id" : "_zZDhAU24Ee-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "yovwgk",
+      "id" : "_27no0024Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Developer",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "zqeft"
+      }, {
+        "labelTypeId" : "pysp7",
+        "labelTypeValueId" : "t3spcs"
+      } ],
+      "ports" : [ {
+        "id" : "_hrgEsE25Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_jlly0E25Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_UX12QU25Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_dp4CUU25Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_LITkkU25Ee-LhJeQRtdsyQ",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Request_System_State",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_KInzwE26Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_NeMocU26Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_8ZulY026Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Request_Account_State",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_aKQrYE26Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_cSTV8U26Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "__Xev8026Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Request_Account_State2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_kHmeRk26Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_mRoF0U26Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_DJBu8027Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Internal_Change_CC_Limit",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_CgF0wE29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_DZ38cU29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_p_A2M029Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Send_Loan_Offer_Response",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_Qs8VAE29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_S-PpQU29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_tuxsg029Ee-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Send_Loan_Offer_Response2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_fDPsME29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_icbOgU29Ee-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_z0efc029Ee-LhJeQRtdsyQ",
       "type" : "node:function",
       "children" : [ ]
     }, {
@@ -408,585 +779,191 @@
         "labelTypeValueId" : "5hnugm"
       } ],
       "ports" : [ {
-        "id" : "tn6k3l",
+        "id" : "_-6P6AE29Ee-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       } ],
-      "id" : "pn43tc",
+      "id" : "_CenZKk2-Ee-LhJeQRtdsyQ",
       "type" : "node:storage",
       "children" : [ ]
     }, {
-      "text" : "transfer_money_2",
+      "text" : "Fond_Manager",
       "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      }, {
         "labelTypeId" : "pysp7",
         "labelTypeValueId" : "t3spcs"
       } ],
       "ports" : [ {
-        "id" : "78anrw",
+        "id" : "_bkRMQE2vEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "id" : "l9lus",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "m3qul",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "transfer_money",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "p1c5f7",
+        "id" : "_d46vcE2vEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward trans_money_req",
-        "id" : "wmr2fk",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "behavior" : "forward trans_money_req",
-        "id" : "wxjjbs",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "jwki0y",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "Developer_view",
-      "labels" : [ {
-        "labelTypeId" : "pysp7",
-        "labelTypeValueId" : "t3spcs"
-      }, {
-        "labelTypeId" : "4h3wzk",
-        "labelTypeValueId" : "zqeft"
-      } ],
-      "ports" : [ {
-        "id" : "96yfs",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "p6k7id",
+        "id" : "_9ZF4wE5LEe-HgctW8G3Iog",
         "type" : "port:dfd-input",
         "children" : [ ]
       } ],
-      "id" : "x67p1",
+      "id" : "_l_9QkU3GEe-LhJeQRtdsyQ",
       "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "internal_change_cc_limit",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "v62j8",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "140xy3",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "cmhk09",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "view_system_state",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "fef13s",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "ohfd2",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "0mfzfc",
-      "type" : "node:function",
       "children" : [ ]
     }, {
       "text" : "Fond_Data",
       "labels" : [ ],
       "ports" : [ {
-        "id" : "0lar5h",
+        "id" : "_4sQ0Jk3FEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "id" : "fe3u7",
+        "id" : "_9vJfMU3FEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_WKVbsU3GEe-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "jj1lqp",
+      "id" : "_Rm8Tkk3HEe-LhJeQRtdsyQ",
       "type" : "node:storage",
       "children" : [ ]
     }, {
-      "text" : "request_fond_data",
+      "text" : "Request_Fond_Data",
       "labels" : [ ],
       "ports" : [ {
-        "id" : "f7khk5",
+        "id" : "_5DOtME3GEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "id" : "9tqdsm",
+        "id" : "_64lsUU3GEe-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "vt40j5",
+      "id" : "_t0mRk03GEe-LhJeQRtdsyQ",
       "type" : "node:function",
       "children" : [ ]
     }, {
-      "text" : "Fond_manager",
+      "text" : "Show_Fond_Data",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_MPlCxk3GEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_OJ0h4U3GEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_Ki_Ip03HEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Show_Fond_Data_Enc",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_ToQggE3GEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_asnUEE3GEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_PEsZQ03HEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Give_Fond_Recommendation",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_wDIbJk3FEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_yfX0FU3FEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_XvHyw03HEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Show_Balance",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_YgFY1k3LEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_a_ZT4U3LEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_Hld1U03MEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "View_System_State",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_lWBJcE3LEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_ol9QMU3LEe-LhJeQRtdsyQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_Miyq803MEe-LhJeQRtdsyQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "View_System_State2",
       "labels" : [ {
         "labelTypeId" : "gvia09",
         "labelTypeValueId" : "g10hr"
       } ],
       "ports" : [ {
-        "id" : "5b9s2i",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "id" : "g2n3es",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "e4v729",
-      "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "view_account_state",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "5fdcp6",
+        "id" : "_8p0AEE3LEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = FALSE",
-        "id" : "tu2lm",
-        "type" : "port:dfd-output",
-        "children" : [ ]
       } ],
-      "id" : "mrt4j",
+      "id" : "_PvOxw03MEe-LhJeQRtdsyQ",
       "type" : "node:function",
       "children" : [ ]
     }, {
-      "text" : "view_account_state2",
+      "text" : "View_Account_State",
       "labels" : [ ],
       "ports" : [ {
-        "id" : "w7tsqa",
+        "id" : "_zGGOIE3LEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward null",
-        "id" : "glvq9q",
+        "behavior" : "forward customer_banking_data_view_account_state",
+        "id" : "_2NOXIU3LEe-LhJeQRtdsyQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "zbow0h",
+      "id" : "_SNm4s03MEe-LhJeQRtdsyQ",
       "type" : "node:function",
       "children" : [ ]
     }, {
-      "text" : "Customer",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "3wpieg",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "id" : "y5xc95",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = TRUE",
-        "id" : "jeigr",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "behavior" : "set DummyType.DummyLabel = TRUE",
-        "id" : "fdgaer",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = TRUE",
-        "id" : "9j4z2r",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = TRUE",
-        "id" : "8437n",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "joj9ok",
-      "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "request_fond_recommendation",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "9dco2k",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "zn62sq",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "dn5g4g",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "request_fond_recommendation2",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "s7mby",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = FALSE",
-        "id" : "t633kr",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "kylsiw",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "give_fond_recommendation",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "3yubu8",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "zveoyb",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "vznzd",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "Customer_view",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "p2ic6",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "yoe03",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "287rit",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      } ],
-      "id" : "tax9n",
-      "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "Customer_Banking_Data",
+      "text" : "View_Account_State2",
       "labels" : [ {
         "labelTypeId" : "gvia09",
         "labelTypeValueId" : "5hnugm"
       } ],
       "ports" : [ {
-        "id" : "xnllu9",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "esldbj",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "unlaw",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "her67v",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "id" : "sdornc",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = TRUE",
-        "id" : "bka455",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "euaus4",
-      "type" : "node:storage",
-      "children" : [ ]
-    }, {
-      "text" : "request_system_state",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "p9p0zb",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "dg0dib",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "chyibm",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "Fond_manager_view",
-      "labels" : [ {
-        "labelTypeId" : "pysp7",
-        "labelTypeValueId" : "t3spcs"
-      } ],
-      "ports" : [ {
-        "id" : "l9ozr",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "ybhpiw",
+        "id" : "_7FaOEE3LEe-LhJeQRtdsyQ",
         "type" : "port:dfd-input",
         "children" : [ ]
       } ],
-      "id" : "bzwa3",
-      "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "show_fond_data_enc",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "qubc9",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "forward fond_data",
-        "id" : "5zbky",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "1rkr0b",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "show_fond_data",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "s6lm5",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Encryption.Encrypted = FALSE",
-        "id" : "1e2jyx",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "z0ykp8",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "prepare_fond_data",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "6i2vfg",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Encryption.Encrypted = TRUE\nforward fond_raw_data",
-        "id" : "x41oki",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "39yys4",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "view_balance",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "q6bgce",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "uzzdt3",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "r5apdl",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "process_loan_offer",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "ukltp8",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "hkfqxo",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "s1icmf",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "get_loan_offer",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "ads4x9",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "forward loan_offer_req\nset Sensitivity.Personal = FALSE",
-        "id" : "o670jd",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "byrkz",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "bank_clerk_view",
-      "labels" : [ {
-        "labelTypeId" : "gvia09",
-        "labelTypeValueId" : "5hnugm"
-      } ],
-      "ports" : [ {
-        "id" : "wv0zq",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "bmksro",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      } ],
-      "id" : "a50umxs",
-      "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "bank_clerk",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "q0g82e",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = TRUE\nset Encryption.Encrypted = TRUE",
-        "id" : "b63vq7",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "a8df5t",
-      "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "send_loan_offer_response2",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "hd5qw7",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Encryption.Encrypted = FALSE",
-        "id" : "w17zn",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "2n21iq",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "send_loan_offer_response",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "npuauj",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Encryption.Encrypted = FALSE\nforward loan_res",
-        "id" : "mvkqih",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "ixu9wp",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "process_loan_offer2",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "jrpupm",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "cd09qf",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "o1tz7k",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "Developer",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "gwvy0i",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      }, {
-        "id" : "j4s8pl",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "hp8zdd",
-      "type" : "node:input-output",
-      "children" : [ ]
-    }, {
-      "text" : "request_account_state",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "q82enj",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "m2r9nh",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "gqwneh",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "request_account_state2",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "1psw1h",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "3635pp",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "jceqzm",
-      "type" : "node:function",
-      "children" : [ ]
-    }, {
-      "text" : "view_system_state2",
-      "labels" : [ ],
-      "ports" : [ {
-        "id" : "z6ax5",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "set Sensitivity.Personal = FALSE",
-        "id" : "37zm0fj",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "nv1q4v",
+      "id" : "_VMhg403MEe-LhJeQRtdsyQ",
       "type" : "node:function",
       "children" : [ ]
     } ]
@@ -1030,13 +1007,6 @@
     }, {
       "id" : "brx7m5",
       "text" : "Unprocessable"
-    } ]
-  }, {
-    "id" : "x9v1kd",
-    "name" : "",
-    "values" : [ {
-      "id" : "fol3ug",
-      "text" : "Value"
     } ]
   }, {
     "id" : "_iNuW0D04Ee-NGYlxkxrTpw",

@@ -20,6 +20,7 @@ import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalys
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
+import dev.abunai.confidentiality.mitigation.ranking.MitigationModel;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.ranking.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.ranking.UncertaintySubset;
@@ -125,8 +126,9 @@ public abstract class MitigationTestBase extends TestBase {
 		}
 	}
 
-	public boolean mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName,
+	public List<MitigationModel> mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName,
 			List<UncertaintySource> sources) {
+		List<MitigationModel> result = new ArrayList<MitigationModel>();
 		// Increase amount of uncertainties used if the current amount is not enough
 		for (int i = 1; i <= rankedUncertaintyEntityName.size(); i++) {
 
@@ -136,41 +138,40 @@ public abstract class MitigationTestBase extends TestBase {
 					.filter(u -> relevantUncertaintyEntityName.contains(u.getEntityName())).toList();
 
 			// Run mitigation with i+1 uncertainties
-			var result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
+			result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
 					new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
 							mitigationUncertaintyURI), getConstraints(), true, Activator.class);
 
 			// Print working mitigation if one was found
 			if (result.size() > 0) {
+				System.out.println(relevantUncertaintyEntityName);
 				System.out.println(result);
 				System.out.println(i);
-				return true;
+				break;
 			}
 		}
-		// Return false if no mitigation was found
-		return false;
+		return result;
 	}
 
-	public boolean mitigateWithFixAmountOfUncertainties(List<String> rankedUncertaintyEntityName, int n,
+	public List<MitigationModel> mitigateWithFixAmountOfUncertainties(List<String> rankedUncertaintyEntityName, int n,
 			List<UncertaintySource> sources) {
-
+		List<MitigationModel> result = new ArrayList<MitigationModel>();
 		// Extract relevant uncertainties
 		var relevantEntityNames = rankedUncertaintyEntityName.stream().limit(n).toList();
 		var relevantUncertainties = sources.stream().filter(u -> relevantEntityNames.contains(u.getEntityName()))
 				.toList();
 
 		// Execute mitigation
-		var result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
+		result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
 				new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
 				mitigationUncertaintyURI), getConstraints(), true, Activator.class);
 
 		// Return success of mitgation
 		if (result.size() > 0) {
 			System.out.println(result);
-			return true;
 		}
 		
-		return false;
+		return result;
 	}
 
 }

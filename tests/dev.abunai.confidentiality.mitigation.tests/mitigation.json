@@ -139,33 +139,6 @@
       "type" : "node:storage",
       "children" : [ ]
     }, {
-      "text" : "Banking_DB",
-      "labels" : [ {
-        "labelTypeId" : "gvia09",
-        "labelTypeValueId" : "5hnugm"
-      } ],
-      "ports" : [ {
-        "id" : "pw6l",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "qvivz",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "id" : "fh8kq",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      }, {
-        "behavior" : "forward pdb_to_bdb",
-        "id" : "gwxlxj",
-        "type" : "port:dfd-output",
-        "children" : [ ]
-      } ],
-      "id" : "tkduru",
-      "type" : "node:storage",
-      "children" : [ ]
-    }, {
       "text" : "Transactions_DB",
       "labels" : [ {
         "labelTypeId" : "gvia09",
@@ -327,6 +300,22 @@
       "ports" : [ {
         "id" : "044xlq",
         "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "pw6l",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "qvivz",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "fh8kq",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "gwxlxj",
+        "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "id" : "jxhcle",
