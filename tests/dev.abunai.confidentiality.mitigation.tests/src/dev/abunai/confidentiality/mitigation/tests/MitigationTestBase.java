@@ -20,6 +20,7 @@ import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalys
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
+import dev.abunai.confidentiality.mitigation.ranking.MitigationListSimplifier;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModel;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.ranking.TrainDataGeneration;
@@ -140,7 +141,7 @@ public abstract class MitigationTestBase extends TestBase {
 			// Run mitigation with i+1 uncertainties
 			result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
 					new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
-							mitigationUncertaintyURI), getConstraints(), true, Activator.class);
+							mitigationUncertaintyURI), getConstraints(), false, Activator.class);
 
 			// Print working mitigation if one was found
 			if (result.size() > 0) {
@@ -164,11 +165,17 @@ public abstract class MitigationTestBase extends TestBase {
 		// Execute mitigation
 		result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
 				new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
-				mitigationUncertaintyURI), getConstraints(), true, Activator.class);
+				mitigationUncertaintyURI), getConstraints(), false, Activator.class);
 
+		var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+				result.stream().map(m -> m.chosenScenarios()).toList());
 		// Return success of mitgation
 		if (result.size() > 0) {
 			System.out.println(result);
+			System.out.println(relevantEntityNames);
+			for(int i = 0; i < resultMinimal.size();i++) {
+				System.out.println(resultMinimal.get(i));
+			}
 		}
 		
 		return result;

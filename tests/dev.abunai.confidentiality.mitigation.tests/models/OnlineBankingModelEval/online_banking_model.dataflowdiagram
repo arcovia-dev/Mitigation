@@ -187,7 +187,7 @@
   <nodes xsi:type="dataflowdiagram:Process" id="_XT_cI02qEe-LhJeQRtdsyQ" entityName="Change_CC_Limit">
     <behaviour href="online_banking_model.datadictionary#_U1FmO02pEe-LhJeQRtdsyQ"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:External" id="_cqMr0U2qEe-LhJeQRtdsyQ" entityName="Bank_Clerk">
+  <nodes xsi:type="dataflowdiagram:Store" id="_cqMr0U2qEe-LhJeQRtdsyQ" entityName="Bank_Clerk">
     <behaviour href="online_banking_model.datadictionary#_KJd7lU2qEe-LhJeQRtdsyQ"/>
     <properties href="online_banking_model.datadictionary#5hnugm"/>
     <properties href="online_banking_model.datadictionary#t3spcs"/>
@@ -195,10 +195,10 @@
   <nodes xsi:type="dataflowdiagram:Process" id="_uz7xA02tEe-LhJeQRtdsyQ" entityName="Get_Loan_Offer">
     <behaviour href="online_banking_model.datadictionary#_FDd1pU2rEe-LhJeQRtdsyQ"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:Process" id="_AlCbI02uEe-LhJeQRtdsyQ" entityName="Process_Loan_Offer">
+  <nodes xsi:type="dataflowdiagram:External" id="_AlCbI02uEe-LhJeQRtdsyQ" entityName="Process_Loan_Offer">
     <behaviour href="online_banking_model.datadictionary#_cWLRtU2sEe-LhJeQRtdsyQ"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:Process" id="_FGnv802uEe-LhJeQRtdsyQ" entityName="Process_Loan_Offer2">
+  <nodes xsi:type="dataflowdiagram:External" id="_FGnv802uEe-LhJeQRtdsyQ" entityName="Process_Loan_Offer2">
     <behaviour href="online_banking_model.datadictionary#_F_sidU2tEe-LhJeQRtdsyQ"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="_zhgog02vEe-LhJeQRtdsyQ" entityName="Request_Fond_Recommendation">
@@ -213,7 +213,7 @@
   <nodes xsi:type="dataflowdiagram:Process" id="_2E1SI021Ee-LhJeQRtdsyQ" entityName="Create_Account_Enc">
     <behaviour href="online_banking_model.datadictionary#_c1oexU21Ee-LhJeQRtdsyQ"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:Store" id="_5nfglk21Ee-LhJeQRtdsyQ" entityName="Customer_Banking_Data">
+  <nodes xsi:type="dataflowdiagram:Process" id="_5nfglk21Ee-LhJeQRtdsyQ" entityName="Customer_Banking_Data">
     <behaviour href="online_banking_model.datadictionary#_6JNDVU2xEe-LhJeQRtdsyQ"/>
     <properties href="online_banking_model.datadictionary#5hnugm"/>
   </nodes>

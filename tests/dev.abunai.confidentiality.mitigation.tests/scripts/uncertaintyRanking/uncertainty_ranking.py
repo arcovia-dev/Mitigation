@@ -113,6 +113,11 @@ for filename in filenames:
     X = X.drop(categorical_cols, axis=1)
     X = pd.concat([X, X_encoded], axis=1)
 
+    cols_to_drop = [col for col in X.columns if col[-1] == 'I']
+    X = X.drop(cols_to_drop, axis=1)
+    cols_to_drop = [col for col in X.columns if X[col].eq(0).all()]
+    X = X.drop(cols_to_drop, axis=1)
+
     if RANKER_TYPE == "LDA":
         uncertainty_ranker = LinearDiscriminantAnalysisRanker(X, y)
     elif RANKER_TYPE == "P":
@@ -134,6 +139,7 @@ allRatings = normalize_rankings(allRatings)
 final_ranking = aggregate_rankings_by_taking_top_n_of_each_ranking(allRatings,int(RELEVANT_UNCERTAINTIES_LENGTH))
 relevant_uncertainties = []
 printedCount = 0
+print(final_ranking)
 
 while printedCount < RELEVANT_UNCERTAINTIES_LENGTH and bool(final_ranking):
     item = final_ranking.popitem(last=False)

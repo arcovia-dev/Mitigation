@@ -12,6 +12,7 @@ Import-Package: dev.abunai.confidentiality.analysis.testmodels,
 Require-Bundle: dev.abunai.confidentiality.mitigation;bundle-version="1.0.0",
  org.dataflowanalysis.converter;bundle-version="2.0.0",
  dev.abunai.confidentiality.analysis;bundle-version="1.0.0",
- dev.abunai.confidentiality.analysis.tests;bundle-version="1.0.0"
+ dev.abunai.confidentiality.analysis.tests;bundle-version="1.0.0",
+ org.dataflowanalysis.analysis.dfd
 Automatic-Module-Name: dev.abunai.confidentiality.mitigation.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17

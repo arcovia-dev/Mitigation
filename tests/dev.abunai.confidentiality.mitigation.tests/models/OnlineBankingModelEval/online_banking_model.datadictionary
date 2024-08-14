@@ -75,6 +75,7 @@
     <assignment xsi:type="datadictionary:Assignment" id="_7tXzgk2rEe-LhJeQRtdsyQ" entityName="get_loan_offer_enc" inputPins="_GslvkE2rEe-LhJeQRtdsyQ" outputPin="_ijeW4U2rEe-LhJeQRtdsyQ" outputLabels="2r6xe6">
       <term xsi:type="datadictionary:TRUE" id="_FMsNqU2sEe-LhJeQRtdsyQ"/>
     </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_NG5lY1cTEe-6_rbctN7FLw" inputPins="_GslvkE2rEe-LhJeQRtdsyQ" outputPin="_ijeW4U2rEe-LhJeQRtdsyQ"/>
   </behaviour>
   <behaviour id="_GI8ahU2sEe-LhJeQRtdsyQ" entityName="get_loan_offer_alt">
     <inPin id="_JypsIE2sEe-LhJeQRtdsyQ" entityName="get_loan_offer_in_customer"/>

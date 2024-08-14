@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.core.DataCharacteristic;
+import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.analysis.dfd.core.DFDCharacteristicValue;
 import org.junit.jupiter.api.Test;
 
@@ -30,10 +31,10 @@ public class DebuggingHelperTests {
 
 	@Test
 	public void webToDfd() {
-		String path = "mitigation_example.json";
+		String path = "OBM.json";
 		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
 		var dd = conv.webToDfd(path);
-		conv.storeDFD(dd, "mitigation_example");
+		conv.storeDFD(dd, "OBM");
 	}
 
 	@Test
@@ -58,9 +59,9 @@ public class DebuggingHelperTests {
 
 	@Test
 	public void runUIA() {
-		final var dataFlowDiagramPath = Paths.get("models", "mitigation", "mitigation0" + ".dataflowdiagram")
+		final var dataFlowDiagramPath = Paths.get("models", "mitigation", "mitigation9" + ".dataflowdiagram")
 				.toString();
-		final var dataDictionaryPath = Paths.get("models", "mitigation", "mitigation0" + ".datadictionary").toString();
+		final var dataDictionaryPath = Paths.get("models", "mitigation", "mitigation9" + ".datadictionary").toString();
 		final var uncertaintyPath = Paths.get("models", "mitigation", "mitigation" + ".uncertainty").toString();
 
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
@@ -75,15 +76,24 @@ public class DebuggingHelperTests {
 				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
 				.useUncertaintyModel(uncertaintyPath);
 
-		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
+		/*UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
 		analysis.initializeAnalysis();
 
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-		uncertainFlowGraphs.evaluate();
+		uncertainFlowGraphs.evaluate();*/
+		
+		var builder2 = new DFDDataFlowAnalysisBuilder().standalone()
+				.modelProjectName(TestBase.TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
+				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath);
+		
+		var ana2 = builder2.build();
+		ana2.initializeAnalysis();
+		var fg = ana2.findFlowGraphs();
+		fg.evaluate();
 
 		boolean noConstraintViolated = true;
-		for (var constraint : constraints) {
+		/*for (var constraint : constraints) {
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
 					constraint);
 			if (violations.size() > 0) {
@@ -94,7 +104,7 @@ public class DebuggingHelperTests {
 
 		if (noConstraintViolated) {
 			System.out.println("Valid Model");
-		}
+		}*/
 	}
 
 	protected List<String> retrieveNodeLabels(AbstractVertex<?> vertex) {

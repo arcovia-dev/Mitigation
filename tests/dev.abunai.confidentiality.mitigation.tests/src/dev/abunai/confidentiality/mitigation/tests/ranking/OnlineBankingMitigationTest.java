@@ -19,11 +19,11 @@ import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "OnlineBankingModelEval";
+		return "OBM";
 	}
 
 	protected String getFilesName() {
-		return "online_banking_model";
+		return "OBM";
 	}
 
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
@@ -31,14 +31,23 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		constraints.add(it -> {
 			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
 					&& this.retrieveDataLabels(it).contains("Personal");
+			if (vio) {
+				System.out.println("D");
+			}
 			return vio;
 		});
 		constraints.add(it -> {
 			boolean vio =  this.retrieveNodeLabels(it).contains("Processable") && this.retrieveDataLabels(it).contains("Encrypted");
+			System.out.println(it);
+			System.out.println(this.retrieveDataLabels(it));
+			System.out.println(this.retrieveNodeLabels(it));
 			return vio;
 		});
 		constraints.add(it -> {
 			boolean vio =  this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			if (vio) {
+				System.out.println("N");
+			}
 			return vio;
 		});
 		return constraints;
@@ -84,7 +93,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(2)
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
