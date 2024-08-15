@@ -8,13 +8,14 @@ import java.io.IOException;
 
 public class UncertaintyRanker {
 
-	private final static RankerType rankerType = RankerType.RANDOM_FOREST;
+	private final static RankerType rankerType = RankerType.PCA;
+	private final static RankingAggregationMethod aggregationMethod = RankingAggregationMethod.EXPONENTIAL_RANKS;
 
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath, String pathToTrainDataFolder,
 			int rankingLength) {
 		// Command to run the Python script
 		String[] command = { "python", scriptPath, pathToTrainDataFolder, Integer.toString(rankingLength),
-				getRankerTypeCommandParameter() };
+				getRankerTypeCommandParameter(), getAggregationMethodCommandParamter() };
 		try {
 			// Execute the command
 			Process process = Runtime.getRuntime().exec(command);
@@ -53,6 +54,17 @@ public class UncertaintyRanker {
 			return "LR";
 		} else {
 			return "P";
+		}
+	}
+	private static String getAggregationMethodCommandParamter() {
+		if (aggregationMethod.equals(RankingAggregationMethod.LINEAR_RANKS)) {
+			return "L";
+		}
+		else if (aggregationMethod.equals(RankingAggregationMethod.EXPONENTIAL_RANKS)) {
+			return "E";
+		}
+		else {
+			return "T";
 		}
 	}
 

@@ -50,6 +50,7 @@ public abstract class MitigationTestBase extends TestBase {
 
 	// Evaluation variables
 	protected final String pathToMeassurements = "meassurements.txt";
+	protected final boolean evalMode = true;
 	
 	@BeforeEach
 	public void before() {
@@ -134,20 +135,24 @@ public abstract class MitigationTestBase extends TestBase {
 		for (int i = 1; i <= rankedUncertaintyEntityName.size(); i++) {
 
 			// Extract relevant uncertainties
-			var relevantUncertaintyEntityName = rankedUncertaintyEntityName.stream().limit(i).toList();
+			var relevantUncertaintyEntityNames = rankedUncertaintyEntityName.stream().limit(i).toList();
 			var relevantUncertainties = sources.stream()
-					.filter(u -> relevantUncertaintyEntityName.contains(u.getEntityName())).toList();
+					.filter(u -> relevantUncertaintyEntityNames.contains(u.getEntityName())).toList();
 
 			// Run mitigation with i+1 uncertainties
 			result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
 					new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
-							mitigationUncertaintyURI), getConstraints(), false, Activator.class);
+							mitigationUncertaintyURI), getConstraints(), evalMode, Activator.class);
 
-			// Print working mitigation if one was found
-			if (result.size() > 0) {
-				System.out.println(relevantUncertaintyEntityName);
-				System.out.println(result);
+			if (result.size() > 0 && !evalMode) {
+				var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+						result.stream().map(m -> m.chosenScenarios()).toList());
 				System.out.println(i);
+				System.out.println(result);
+				System.out.println(relevantUncertaintyEntityNames);
+				for(int k = 0; k < resultMinimal.size();k++) {
+					System.out.println(resultMinimal.get(k));
+				}
 				break;
 			}
 		}
@@ -167,10 +172,11 @@ public abstract class MitigationTestBase extends TestBase {
 				new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
 				mitigationUncertaintyURI), getConstraints(), false, Activator.class);
 
-		var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-				result.stream().map(m -> m.chosenScenarios()).toList());
+		
 		// Return success of mitgation
-		if (result.size() > 0) {
+		if (result.size() > 0 && !evalMode) {
+			var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+					result.stream().map(m -> m.chosenScenarios()).toList());
 			System.out.println(result);
 			System.out.println(relevantEntityNames);
 			for(int i = 0; i < resultMinimal.size();i++) {

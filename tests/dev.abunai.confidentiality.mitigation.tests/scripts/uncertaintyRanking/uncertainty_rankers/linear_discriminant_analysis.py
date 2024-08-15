@@ -14,21 +14,10 @@ class LinearDiscriminantAnalysisRanker(UncertaintyRanker):
         self.y = y
 
     def evaluate(self):
-        allData = pd.concat([self.X, self.y], axis=1)
-        
-        # Just take violation data into account
-        data_violations = allData[allData['Constraint violated'] == True]
-        data = data_violations.drop(columns=['Constraint violated'])
-        
-        cols_to_drop = [col for col in data.columns if col[-1] == 'I']
-        data = data.drop(cols_to_drop, axis=1)
-        cols_to_drop = [col for col in data.columns if data[col].eq(0).all()]
-        data = data.drop(cols_to_drop, axis=1)
-
-        # No PCA based ranking possible if just one data row exists so return all non irrelevant entries as ranking
-        if data.shape[0] == 1:
+        # No LDA based ranking possible if just one data row exists so return all non irrelevant entries as ranking
+        if self.X.shape[0] == 1:
             self.ranking = {}
-            for name in data.columns.tolist():
+            for name in self.X.columns.tolist():
                 self.ranking[name] = 1
             return
         
@@ -36,7 +25,7 @@ class LinearDiscriminantAnalysisRanker(UncertaintyRanker):
         lda.fit(self.X, self.y)
 
         coefs = lda.coef_
-        column_names = data.columns.tolist()
+        column_names = self.X.columns.tolist()
         self.ranking = {}
 
         for i in range(len(column_names)):

@@ -41,10 +41,48 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 		});
 		return constraints;
 	}
+	
+	@Test
+	@Order(1)
+	public void createTrainData() {
+		// Get constraints and define count variable for constraint file differentiation
+		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
+		var count = 0;
+		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
+		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
+		
+		uncertainFlowGraphs.evaluate();
+		
+		List<DFDUncertainTransposeFlowGraph> allTFGs = uncertainFlowGraphs.getTransposeFlowGraphs().stream()
+				.map(DFDUncertainTransposeFlowGraph.class::cast).toList();
+		// Generate train data for each constraint
+		for (var constraint : constraints) {
+			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
+					constraint);
+
+			// If no violation occured no training data needs to be created
+			if (violations.size() == 0) {
+				continue;
+			}
+
+			trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
+				Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
+			count++;
+		}
+
+		// Rank the uncertainties specified in the given model and store the result in
+		// the specified file
+		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
+				trainDataDirectory, analysis.getUncertaintySources().size());
+
+		// Store the result of the Ranking in a file
+		storeRankingResult(relevantUncertaintyIds);
+		deleteOldMeassurement();
+	}
 
 	@Test
 	@Order(2)
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();

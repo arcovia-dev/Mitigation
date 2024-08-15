@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 
 from collections import OrderedDict
+import math
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'uncertainty_rankers'))
@@ -21,47 +22,30 @@ warnings.filterwarnings("ignore")
 TRAIN_FILES_DIR = sys.argv[1]
 RELEVANT_UNCERTAINTIES_LENGTH = int(sys.argv[2])
 RANKER_TYPE = sys.argv[3]
+AGGREGATION_TYPE = sys.argv[4]
 SEPERATOR = ';'
 
-'''
-    Aggregrations the results of previously computed uncertainty rankings
-    for different constraints
-'''
-def aggregate_rankings_by_sum_of_ratings(rankings:list[list[(str,float)]]):
-    aggregatedRanking = {}
-    for ranking in rankings:
-        for ranking_element in ranking:
-            if ranking_element[0] not in aggregatedRanking:
-                aggregatedRanking[ranking_element[0]] = ranking_element[1]
-            else:
-                aggregatedRanking[ranking_element[0]] = aggregatedRanking[ranking_element[0]] + ranking_element[1]
-
-    
-    return OrderedDict(sorted(aggregatedRanking.items(), key=lambda item: item[1], reverse=True))
 
 '''
     Aggregrations the results of previously computed uncertainty rankings
     for different constraints
 '''
-def aggregate_rankings_by_taking_top_n_of_each_ranking(rankings:list[list[(str,float)]],n:int):
+def aggregate_rankings_by_summing_up_linear(rankings:list[list[(str,float)]]):
     aggregatedRanking = {}
     for ranking in rankings:
         ranking_ordered = OrderedDict(sorted(dict(ranking).items(), key=lambda item: item[1], reverse=True))
         i = 0
         uncertainty_names = []
-        while i < n and bool(ranking_ordered):
+        while i < RELEVANT_UNCERTAINTIES_LENGTH and bool(ranking_ordered):
             element = ranking_ordered.popitem(last=False)
             element_name = element[0]
             uncertainty_name = '_'.join(element_name.split('_')[:-1])
             if uncertainty_name in uncertainty_names:
                 continue
             if not element_name in aggregatedRanking:
-                if element [1] == 1:
-                    aggregatedRanking[element_name] = n
-                else:
-                    aggregatedRanking[element_name] = n-i
+                aggregatedRanking[element_name] = RELEVANT_UNCERTAINTIES_LENGTH-i
             else:
-                aggregatedRanking[element_name] = aggregatedRanking[element_name] + (n-i)
+                aggregatedRanking[element_name] = aggregatedRanking[element_name] + (RELEVANT_UNCERTAINTIES_LENGTH-i)
             if uncertainty_name not in uncertainty_names:
                 i = i + 1
                 uncertainty_names.append(uncertainty_name)
@@ -69,6 +53,62 @@ def aggregate_rankings_by_taking_top_n_of_each_ranking(rankings:list[list[(str,f
 
     return OrderedDict(sorted(aggregatedRanking.items(), key=lambda item: item[1], reverse=True))
 
+'''
+    Aggregrations the results of previously computed uncertainty rankings
+    for different constraints
+'''
+def aggregate_rankings_by_summing_up_exponential(rankings:list[list[(str,float)]]):
+    aggregatedRanking = {}
+    for ranking in rankings:
+        ranking_ordered = OrderedDict(sorted(dict(ranking).items(), key=lambda item: item[1], reverse=True))
+        i = 0
+        uncertainty_names = []
+        
+        while i < RELEVANT_UNCERTAINTIES_LENGTH and bool(ranking_ordered):
+            element = ranking_ordered.popitem(last=False)
+            element_name = element[0]
+            uncertainty_name = '_'.join(element_name.split('_')[:-1])
+            if uncertainty_name in uncertainty_names:
+                continue
+            if not element_name in aggregatedRanking:
+                aggregatedRanking[element_name] = math.exp(-i)
+            else:
+                aggregatedRanking[element_name] = aggregatedRanking[element_name] + math.exp(-i)
+            if uncertainty_name not in uncertainty_names:
+                i = i + 1
+                uncertainty_names.append(uncertainty_name)
+
+
+
+    return OrderedDict(sorted(aggregatedRanking.items(), key=lambda item: item[1], reverse=True))
+
+
+'''
+    Aggregrations the results of previously computed uncertainty rankings
+    for different constraints
+'''
+def aggregate_rankings_by_taking_top_2(rankings:list[list[(str,float)]]):
+    aggregatedRanking = {}
+    for ranking in rankings:
+        ranking_ordered = OrderedDict(sorted(dict(ranking).items(), key=lambda item: item[1], reverse=True))
+        i = 0
+        uncertainty_names = []
+        while i < 2 and bool(ranking_ordered):
+            element = ranking_ordered.popitem(last=False)
+            element_name = element[0]
+            uncertainty_name = '_'.join(element_name.split('_')[:-1])
+            if uncertainty_name in uncertainty_names:
+                continue
+            if not element_name in aggregatedRanking:
+                aggregatedRanking[element_name] = 2-i
+            else:
+                aggregatedRanking[element_name] = aggregatedRanking[element_name] + 2-i
+            if uncertainty_name not in uncertainty_names:
+                i = i + 1
+                uncertainty_names.append(uncertainty_name)
+
+
+    return OrderedDict(sorted(aggregatedRanking.items(), key=lambda item: item[1], reverse=True))
 
 '''
     Normalized by diving each ranking entry by the sum of all ranking values of the rating
@@ -136,10 +176,15 @@ for filename in filenames:
     allRatings.append(rating)
 
 allRatings = normalize_rankings(allRatings)
-final_ranking = aggregate_rankings_by_taking_top_n_of_each_ranking(allRatings,int(RELEVANT_UNCERTAINTIES_LENGTH))
+if AGGREGATION_TYPE == "L":
+    final_ranking = aggregate_rankings_by_summing_up_linear(allRatings)
+elif AGGREGATION_TYPE == "E":
+    final_ranking = aggregate_rankings_by_summing_up_exponential(allRatings)
+else:
+    final_ranking = aggregate_rankings_by_taking_top_2(allRatings)
+
 relevant_uncertainties = []
 printedCount = 0
-print(final_ranking)
 
 while printedCount < RELEVANT_UNCERTAINTIES_LENGTH and bool(final_ranking):
     item = final_ranking.popitem(last=False)

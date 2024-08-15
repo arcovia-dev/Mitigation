@@ -19,11 +19,10 @@ class PrincipalComponentUncertaintyRanker(UncertaintyRanker):
         data_violations = allData[allData['Constraint violated'] == True]
         data = data_violations.drop(columns=['Constraint violated'])
         
-        cols_to_drop = [col for col in data.columns if col[-1] == 'I']
-        data = data.drop(cols_to_drop, axis=1)
+        # Remove cols for scenarios that just appear in not constraint violating rows
         cols_to_drop = [col for col in data.columns if data[col].eq(0).all()]
         data = data.drop(cols_to_drop, axis=1)
-
+        
         # No PCA based ranking possible if just one data row exists so return all non irrelevant entries as ranking
         if data.shape[0] == 1:
             self.ranking = {}

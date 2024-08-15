@@ -1,6 +1,7 @@
 package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.nio.file.Paths;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -37,14 +38,16 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 			return vio;
 		});
 		constraints.add(it -> {
-			boolean vio =  this.retrieveNodeLabels(it).contains("Processable") && this.retrieveDataLabels(it).contains("Encrypted");
+			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
+					&& this.retrieveDataLabels(it).contains("Encrypted");
 			System.out.println(it);
 			System.out.println(this.retrieveDataLabels(it));
 			System.out.println(this.retrieveNodeLabels(it));
 			return vio;
 		});
 		constraints.add(it -> {
-			boolean vio =  this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
+			boolean vio = this.retrieveNodeLabels(it).contains("nonEU")
+					&& this.retrieveDataLabels(it).contains("Personal");
 			if (vio) {
 				System.out.println("N");
 			}
@@ -56,14 +59,18 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	@Test
 	@Order(1)
 	public void createTrainData() {
+		var trainDir = new File(trainDataDirectory);
+		for (File file : trainDir.listFiles()) {
+			file.delete();
+		}
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-		
+
 		uncertainFlowGraphs.evaluate();
-		
+
 		List<DFDUncertainTransposeFlowGraph> allTFGs = uncertainFlowGraphs.getTransposeFlowGraphs().stream()
 				.map(DFDUncertainTransposeFlowGraph.class::cast).toList();
 		// Generate train data for each constraint
@@ -77,7 +84,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 			}
 
 			trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
-				Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
+					Paths.get(trainDataDirectory, "violations_" + Integer.toString(count) + ".csv").toString());
 			count++;
 		}
 
@@ -93,15 +100,16 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(2)
-	//@RepeatedTest(30)
+	// @RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();
-		var result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,analysis.getUncertaintySources());
+		var result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,
+				analysis.getUncertaintySources());
 		if (result.size() == 0) {
 			System.out.println("mitigation failed");
 		}
-		var duration = System.currentTimeMillis()-startTime;
+		var duration = System.currentTimeMillis() - startTime;
 		storeMeassurement(duration);
 	}
 
@@ -120,7 +128,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 				System.out.println("mitigation failed");
 			}
 		}
-		var duration = System.currentTimeMillis()-startTime;
+		var duration = System.currentTimeMillis() - startTime;
 		storeMeassurement(duration);
 	}
 
@@ -133,8 +141,8 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		boolean success = false;
 		for (int i = 1; i <= 4 && !success; i++) {
 			var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					i * (rankedUncertaintyEntityName.size() / 4),analysis.getUncertaintySources());
-			if(result.size() > 0) {
+					i * (rankedUncertaintyEntityName.size() / 4), analysis.getUncertaintySources());
+			if (result.size() > 0) {
 				success = true;
 				break;
 			}
@@ -142,22 +150,24 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		if (!success) {
 			System.out.println("mitigation failed");
 		}
-		var duration = System.currentTimeMillis()-startTime;
+		var duration = System.currentTimeMillis() - startTime;
 
 		storeMeassurement(duration);
 	}
 
 	@Test
-	//@RepeatedTest(30)
+	// @RepeatedTest(30)
 	@Order(5)
 	public void createMitigationCandidatesAutomatically4() {
 		var startTime = System.currentTimeMillis();
-		var rankedUncertaintyEntityName = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
-		var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size(),analysis.getUncertaintySources());
+		var rankedUncertaintyEntityName = analysis.getUncertaintySources().stream().map(u -> u.getEntityName())
+				.toList();
+		var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+				rankedUncertaintyEntityName.size(), analysis.getUncertaintySources());
 		if (result.size() == 0) {
 			System.out.println("mitigation failed");
 		}
-		var duration = System.currentTimeMillis()-startTime;
+		var duration = System.currentTimeMillis() - startTime;
 
 		storeMeassurement(duration);
 	}

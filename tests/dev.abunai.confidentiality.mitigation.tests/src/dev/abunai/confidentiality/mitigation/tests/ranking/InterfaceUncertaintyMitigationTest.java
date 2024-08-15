@@ -80,7 +80,7 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(2)
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();

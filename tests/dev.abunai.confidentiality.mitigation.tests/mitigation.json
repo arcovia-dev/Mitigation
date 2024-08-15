@@ -209,6 +209,20 @@
       "type" : "node:function",
       "children" : [ ]
     }, {
+      "text" : "Developer_View",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      } ],
+      "ports" : [ {
+        "id" : "4d824d",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "b9ernl",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
       "text" : "Developer",
       "labels" : [ ],
       "ports" : [ {
@@ -259,7 +273,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward Customer_Transfer_Money",
+        "behavior" : "forward Customer_Transfer_Money\nset Encryption.Encrypted = FALSE",
         "id" : "xqi29",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -391,11 +405,7 @@
         "labelTypeId" : "84rllz",
         "labelTypeValueId" : "d01uv5"
       } ],
-      "ports" : [ {
-        "id" : "4d824d",
-        "type" : "port:dfd-input",
-        "children" : [ ]
-      } ],
+      "ports" : [ ],
       "id" : "_MvXlUli3Ee-DsdRrhZRfUQ",
       "type" : "node:storage",
       "children" : [ ]
