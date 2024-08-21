@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.tests.ranking;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +46,18 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 	@Test
 	@Order(1)
 	public void createTrainData() {
+		var trainDir = new File(trainDataDirectory);
+		for (File file : trainDir.listFiles()) {
+			file.delete();
+		}
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-		
+
 		uncertainFlowGraphs.evaluate();
-		
+
 		List<DFDUncertainTransposeFlowGraph> allTFGs = uncertainFlowGraphs.getTransposeFlowGraphs().stream()
 				.map(DFDUncertainTransposeFlowGraph.class::cast).toList();
 		// Generate train data for each constraint
@@ -66,7 +71,7 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 			}
 
 			trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
-				Paths.get(trainDataDirectory,"violations_" + Integer.toString(count) + ".csv").toString());
+					Paths.get(trainDataDirectory, "violations_" + Integer.toString(count) + ".csv").toString());
 			count++;
 		}
 
@@ -79,6 +84,7 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 		storeRankingResult(relevantUncertaintyIds);
 		deleteOldMeassurement();
 	}
+
 
 	@Test
 	@Order(2)

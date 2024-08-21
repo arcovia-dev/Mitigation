@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class UncertaintyRanker {
 
-	private final static RankerType rankerType = RankerType.PCA;
+	private final static RankerType rankerType = RankerType.RANDOM_FOREST;
 	private final static RankingAggregationMethod aggregationMethod = RankingAggregationMethod.EXPONENTIAL_RANKS;
 
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath, String pathToTrainDataFolder,

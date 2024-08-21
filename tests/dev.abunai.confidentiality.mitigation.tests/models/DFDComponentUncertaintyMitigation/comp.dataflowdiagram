@@ -58,7 +58,7 @@
   </flows>
   <nodes xsi:type="dataflowdiagram:External" id="7oii5l" entityName="User">
     <behaviour href="comp.datadictionary#_Mse8AEj2Ee-hG70gk0zumA"/>
-    <properties href="comp.datadictionary#g10hr"/>
+    <properties href="comp.datadictionary#ic7t3uuf"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:Store" id="ksqmnm" entityName="Personal_DB">
     <behaviour href="comp.datadictionary#_MslCoEj2Ee-hG70gk0zumA"/>
@@ -88,18 +88,17 @@
   </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="2wtx8m" entityName="account_state_response">
     <behaviour href="comp.datadictionary#_MslpvUj2Ee-hG70gk0zumA"/>
-    <properties href="comp.datadictionary#g10hr"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="5jlzo" entityName="show_account_state">
     <behaviour href="comp.datadictionary#_Mslpwkj2Ee-hG70gk0zumA"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:External" id="iag34b" entityName="User2">
     <behaviour href="comp.datadictionary#_Mslpx0j2Ee-hG70gk0zumA"/>
-    <properties href="comp.datadictionary#5hnugm"/>
+    <properties href="comp.datadictionary#34uuc"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:Store" id="jxhcle" entityName="Banking_DB2">
+  <nodes xsi:type="dataflowdiagram:Store" id="jxhcle" entityName="Personal_DB2">
     <behaviour href="comp.datadictionary#_MsmQwEj2Ee-hG70gk0zumA"/>
-    <properties href="comp.datadictionary#g10hr"/>
+    <properties href="comp.datadictionary#5hnugm"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:Store" id="8b5xv4" entityName="Transactions_DB2">
     <behaviour href="comp.datadictionary#_MsmQw0j2Ee-hG70gk0zumA"/>
@@ -108,10 +107,6 @@
   <nodes xsi:type="dataflowdiagram:Store" id="33ow" entityName="Settings_DB2">
     <behaviour href="comp.datadictionary#_MsmQxkj2Ee-hG70gk0zumA"/>
     <properties href="comp.datadictionary#g10hr"/>
-  </nodes>
-  <nodes xsi:type="dataflowdiagram:Process" id="mvr6mn" entityName="account_state_response2">
-    <behaviour href="comp.datadictionary#_MsmQyUj2Ee-hG70gk0zumA"/>
-    <properties href="comp.datadictionary#5hnugm"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:External" id="8se5pf" entityName="Developer2">
     <behaviour href="comp.datadictionary#_MsmQzUj2Ee-hG70gk0zumA"/>

@@ -6,8 +6,8 @@
       <target xsi:type="dataflowdiagram:External" href="comp.dataflowdiagram#iag34b"/>
     </scenarios>
   </sources>
-  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_ysNbnEj2Ee-4DM8rfu3meA" entityName="Banking_Location_Uncertain">
-    <target xsi:type="dataflowdiagram:Store" href="comp.dataflowdiagram#tkduru"/>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_ysNbnEj2Ee-4DM8rfu3meA" entityName="Personal_Location_Uncertain">
+    <target xsi:type="dataflowdiagram:Store" href="comp.dataflowdiagram#ksqmnm"/>
     <scenarios id="_6BSywEj2Ee-4DM8rfu3meA">
       <target xsi:type="dataflowdiagram:Store" href="comp.dataflowdiagram#jxhcle"/>
     </scenarios>
@@ -28,12 +28,6 @@
     <target xsi:type="dataflowdiagram:External" href="comp.dataflowdiagram#rengin"/>
     <scenarios id="_UPDqsEj4Ee-4DM8rfu3meA">
       <target xsi:type="dataflowdiagram:External" href="comp.dataflowdiagram#8se5pf"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_W8gIa0j4Ee-4DM8rfu3meA" entityName="Account_State_Uncertain">
-    <target xsi:type="dataflowdiagram:Process" href="comp.dataflowdiagram#2wtx8m"/>
-    <scenarios id="_cjjQcEj4Ee-4DM8rfu3meA">
-      <target xsi:type="dataflowdiagram:Process" href="comp.dataflowdiagram#mvr6mn"/>
     </scenarios>
   </sources>
 </uncertainty:UncertaintySourceCollection>

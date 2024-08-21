@@ -122,13 +122,45 @@
       "targetId" : "_W2rV4FieEe-01fJ0Yo6HNg",
       "children" : [ ]
     }, {
+      "text" : "bank_clerk_get_fond_data",
+      "id" : "_glyEMFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_luCCUVsoEe-imMDNUFdrZA",
+      "targetId" : "__gBZsFsoEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data_fond_data",
+      "id" : "_pWOmIFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_BJG3YVspEe-imMDNUFdrZA",
+      "targetId" : "_cKUa8FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2_fond_data",
+      "id" : "_2-qKsFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_NE0bcVspEe-imMDNUFdrZA",
+      "targetId" : "_gbII0FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_fond_data_response",
+      "id" : "_hm_3UFsvEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_jF5F8VspEe-imMDNUFdrZA",
+      "targetId" : "_xpvJ4FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response_bank_clerk_view",
+      "id" : "_pCy6gFsvEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_0En38VspEe-imMDNUFdrZA",
+      "targetId" : "_9RsEcFspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
       "text" : "Customer",
       "labels" : [ {
         "labelTypeId" : "gvia09",
         "labelTypeValueId" : "g10hr"
-      }, {
-        "labelTypeId" : "gvia09",
-        "labelTypeValueId" : "5hnugm"
       } ],
       "ports" : [ {
         "behavior" : "set Encryption.Encrypted = TRUE",
@@ -171,6 +203,10 @@
         "children" : [ ]
       }, {
         "id" : "l43wk",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_9RsEcFspEe-imMDNUFdrZA",
         "type" : "port:dfd-input",
         "children" : [ ]
       } ],
@@ -273,7 +309,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward Customer_Transfer_Money\nset Encryption.Encrypted = FALSE",
+        "behavior" : "forward Customer_Transfer_Money",
         "id" : "xqi29",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -380,9 +416,6 @@
       "labels" : [ {
         "labelTypeId" : "gvia09",
         "labelTypeValueId" : "g10hr"
-      }, {
-        "labelTypeId" : "gvia09",
-        "labelTypeValueId" : "5hnugm"
       } ],
       "ports" : [ {
         "id" : "_W2rV4FieEe-01fJ0Yo6HNg",
@@ -422,17 +455,89 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
-      "id" : "_ST92U1i3Ee-DsdRrhZRfUQ",
+      "id" : "_UnKoA1i3Ee-DsdRrhZRfUQ",
       "type" : "node:function",
       "children" : [ ]
     }, {
-      "text" : "change_cc_limit2",
-      "labels" : [ {
-        "labelTypeId" : "84rllz",
-        "labelTypeValueId" : "d01uv5"
+      "text" : "Bank_Clerk",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_luCCUVsoEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
       } ],
-      "ports" : [ ],
-      "id" : "_UnKoA1i3Ee-DsdRrhZRfUQ",
+      "id" : "_CqeuEVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "__gBZsFsoEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward bank_clerk_get_fond_data",
+        "id" : "_BJG3YVspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_GSbFIVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_Ks1QYFspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_NE0bcVspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_JndHQVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ {
+        "id" : "_cKUa8FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_gbII0FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_jF5F8VspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_SYeQ8lsqEe-imMDNUFdrZA",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_xpvJ4FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward fond_data_fond_data_response",
+        "id" : "_0En38VspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_dEqG01sqEe-imMDNUFdrZA",
       "type" : "node:function",
       "children" : [ ]
     } ]

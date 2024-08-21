@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
 import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
+import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
@@ -31,10 +32,12 @@ public abstract class MitigationTestBase extends TestBase {
 
 	// Abstract variables for concrete test classes
 	protected abstract String getFolderName();
+
 	protected abstract String getFilesName();
+
 	protected abstract List<Predicate<? super AbstractVertex<?>>> getConstraints();
-	
-	// Mitigation preparation variables
+
+	// Mitigation ranking variables
 	protected final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
 	protected final String scriptDirectory = Paths.get("scripts", "uncertaintyRanking").toString();
 	protected final String trainDataDirectory = Paths.get(scriptDirectory, "train_data_files").toString();
@@ -51,7 +54,7 @@ public abstract class MitigationTestBase extends TestBase {
 	// Evaluation variables
 	protected final String pathToMeassurements = "meassurements.txt";
 	protected final boolean evalMode = true;
-	
+
 	@BeforeEach
 	public void before() {
 		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
@@ -74,11 +77,11 @@ public abstract class MitigationTestBase extends TestBase {
 		resourceProvider.loadRequiredResources();
 		dd = resourceProvider.getDataDictionary();
 		dfd = resourceProvider.getDataFlowDiagram();
-		
+
 		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		var web = conv.dfdToWeb(new DataFlowDiagramAndDictionary(dfd,dd));
+		var web = conv.dfdToWeb(new DataFlowDiagramAndDictionary(dfd, dd));
 		conv.storeWeb(web, "test.json");
-		
+
 		this.analysis = analysis;
 	}
 
@@ -101,7 +104,7 @@ public abstract class MitigationTestBase extends TestBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void storeMeassurement(long meassurement) {
 		Path filePath = Paths.get(pathToMeassurements);
 		try {
@@ -141,19 +144,27 @@ public abstract class MitigationTestBase extends TestBase {
 
 			// Run mitigation with i+1 uncertainties
 			result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
-					new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
-							mitigationUncertaintyURI), getConstraints(), evalMode, Activator.class);
+					new UncertaintySubset(sources, relevantUncertainties),
+					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode,
+					Activator.class);
 
-			if (result.size() > 0 && !evalMode) {
-				var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-						result.stream().map(m -> m.chosenScenarios()).toList());
-				System.out.println(i);
-				System.out.println(result);
-				System.out.println(relevantUncertaintyEntityNames);
-				for(int k = 0; k < resultMinimal.size();k++) {
-					System.out.println(resultMinimal.get(k));
+			if (result.size() > 0) {
+				if (evalMode)
+					break;
+				else {
+					var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+							result.stream().map(m -> m.chosenScenarios()).toList(),
+							this.analysis.getUncertaintySources().stream()
+									.map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
+					System.out.println(i);
+					System.out.println(result);
+					System.out.println(relevantUncertaintyEntityNames);
+					System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
+					for (int k = 0; k < resultMinimal.size(); k++) {
+						System.out.println(resultMinimal.get(k));
+					}
+					break;
 				}
-				break;
 			}
 		}
 		return result;
@@ -169,21 +180,22 @@ public abstract class MitigationTestBase extends TestBase {
 
 		// Execute mitigation
 		result = MitigationModelCalculator.findMitigatingModel(new DataFlowDiagramAndDictionary(this.dfd, this.dd),
-				new UncertaintySubset(sources, relevantUncertainties), new MitigationURIs(modelUncertaintyURI,
-				mitigationUncertaintyURI), getConstraints(), false, Activator.class);
+				new UncertaintySubset(sources, relevantUncertainties),
+				new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), false,
+				Activator.class);
 
-		
-		// Return success of mitgation
 		if (result.size() > 0 && !evalMode) {
 			var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-					result.stream().map(m -> m.chosenScenarios()).toList());
+					result.stream().map(m -> m.chosenScenarios()).toList(), this.analysis.getUncertaintySources()
+							.stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
 			System.out.println(result);
-			System.out.println(relevantEntityNames);
-			for(int i = 0; i < resultMinimal.size();i++) {
-				System.out.println(resultMinimal.get(i));
+			System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
+			for (int k = 0; k < resultMinimal.size(); k++) {
+				System.out.println(resultMinimal.get(k));
 			}
+
 		}
-		
+
 		return result;
 	}
 

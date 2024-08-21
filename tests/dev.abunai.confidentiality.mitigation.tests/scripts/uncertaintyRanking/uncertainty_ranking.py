@@ -43,9 +43,9 @@ def aggregate_rankings_by_summing_up_linear(rankings:list[list[(str,float)]]):
             if uncertainty_name in uncertainty_names:
                 continue
             if not element_name in aggregatedRanking:
-                aggregatedRanking[element_name] = RELEVANT_UNCERTAINTIES_LENGTH-i
+                aggregatedRanking[element_name] = element[1]
             else:
-                aggregatedRanking[element_name] = aggregatedRanking[element_name] + (RELEVANT_UNCERTAINTIES_LENGTH-i)
+                aggregatedRanking[element_name] = aggregatedRanking[element_name] + element[1]
             if uncertainty_name not in uncertainty_names:
                 i = i + 1
                 uncertainty_names.append(uncertainty_name)
@@ -78,8 +78,6 @@ def aggregate_rankings_by_summing_up_exponential(rankings:list[list[(str,float)]
                 i = i + 1
                 uncertainty_names.append(uncertainty_name)
 
-
-
     return OrderedDict(sorted(aggregatedRanking.items(), key=lambda item: item[1], reverse=True))
 
 
@@ -87,22 +85,22 @@ def aggregate_rankings_by_summing_up_exponential(rankings:list[list[(str,float)]
     Aggregrations the results of previously computed uncertainty rankings
     for different constraints
 '''
-def aggregate_rankings_by_taking_top_2(rankings:list[list[(str,float)]]):
+def aggregate_rankings_by_taking_top_3(rankings:list[list[(str,float)]]):
     aggregatedRanking = {}
     for ranking in rankings:
         ranking_ordered = OrderedDict(sorted(dict(ranking).items(), key=lambda item: item[1], reverse=True))
         i = 0
         uncertainty_names = []
-        while i < 2 and bool(ranking_ordered):
+        while i < 3 and bool(ranking_ordered):
             element = ranking_ordered.popitem(last=False)
             element_name = element[0]
             uncertainty_name = '_'.join(element_name.split('_')[:-1])
             if uncertainty_name in uncertainty_names:
                 continue
             if not element_name in aggregatedRanking:
-                aggregatedRanking[element_name] = 2-i
+                aggregatedRanking[element_name] = 3-i
             else:
-                aggregatedRanking[element_name] = aggregatedRanking[element_name] + 2-i
+                aggregatedRanking[element_name] = aggregatedRanking[element_name] + 3-i
             if uncertainty_name not in uncertainty_names:
                 i = i + 1
                 uncertainty_names.append(uncertainty_name)
@@ -181,7 +179,7 @@ if AGGREGATION_TYPE == "L":
 elif AGGREGATION_TYPE == "E":
     final_ranking = aggregate_rankings_by_summing_up_exponential(allRatings)
 else:
-    final_ranking = aggregate_rankings_by_taking_top_2(allRatings)
+    final_ranking = aggregate_rankings_by_taking_top_3(allRatings)
 
 relevant_uncertainties = []
 printedCount = 0

@@ -50,13 +50,11 @@
   <behaviour id="_zx56RU6GEe-xVr8qC-aDqQ" entityName="create_account_alt">
     <inPin id="_2JRaQE6GEe-xVr8qC-aDqQ" entityName="create_account_in_user"/>
     <outPin id="_3009IU6GEe-xVr8qC-aDqQ" entityName="create_account_out_validate"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_5hWJUk6GEe-xVr8qC-aDqQ" entityName="create_account_personal_a" inputPins="_2JRaQE6GEe-xVr8qC-aDqQ" outputPin="_3009IU6GEe-xVr8qC-aDqQ" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="___SdIE6GEe-xVr8qC-aDqQ"/>
-    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_1Fe981urEe-TNvJXn-SZMg" inputPins="_2JRaQE6GEe-xVr8qC-aDqQ" outputPin="_3009IU6GEe-xVr8qC-aDqQ"/>
   </behaviour>
   <behaviour id="_C8EXVU6HEe-xVr8qC-aDqQ" entityName="validate">
     <inPin id="_EcKREE6HEe-xVr8qC-aDqQ" entityName="validate_in_create_account"/>
-    <outPin id="_GIIqsU6HEe-xVr8qC-aDqQ" entityName="validate_in_transfer_money"/>
+    <inPin id="_GIIqsU6HEe-xVr8qC-aDqQ" entityName="validate_in_transfer_money"/>
     <outPin id="_K7DnIU6HEe-xVr8qC-aDqQ" entityName="validate_out_transactions_db"/>
     <outPin id="_P3mZpU6HEe-xVr8qC-aDqQ" entityName="validate_out_personal_db"/>
     <outPin id="_RjkMMU6HEe-xVr8qC-aDqQ" entityName="validate_out_banking_db"/>
@@ -111,9 +109,6 @@
     <inPin id="_wH3fME6LEe-VjPsTSZajSg" entityName="account_state_response_in_personal_db"/>
     <outPin id="_zUOtgU6LEe-VjPsTSZajSg" entityName="account_state_response_out_developer"/>
     <assignment xsi:type="datadictionary:ForwardingAssignment" id="_4baCs06LEe-VjPsTSZajSg" inputPins="_wH3fME6LEe-VjPsTSZajSg" outputPin="_zUOtgU6LEe-VjPsTSZajSg"/>
-    <!--<assignment xsi:type="datadictionary:Assignment" id="_97dx8k6LEe-VjPsTSZajSg" entityName="account_state_response_enc_d" inputPins="_wH3fME6LEe-VjPsTSZajSg" outputPin="_zUOtgU6LEe-VjPsTSZajSg" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="__rVNEE6LEe-VjPsTSZajSg"/>
-    </assignment>-->
   </behaviour>
   <behaviour id="_8ccPNU6LEe-VjPsTSZajSg" entityName="account_state_response_alt">
     <inPin id="_FjodME6MEe-VjPsTSZajSg" entityName="account_state_response_in_personal_db"/>

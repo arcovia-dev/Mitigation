@@ -32,25 +32,16 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		constraints.add(it -> {
 			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
 					&& this.retrieveDataLabels(it).contains("Personal");
-			if (vio) {
-				System.out.println("D");
-			}
 			return vio;
 		});
 		constraints.add(it -> {
 			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
 					&& this.retrieveDataLabels(it).contains("Encrypted");
-			System.out.println(it);
-			System.out.println(this.retrieveDataLabels(it));
-			System.out.println(this.retrieveNodeLabels(it));
 			return vio;
 		});
 		constraints.add(it -> {
 			boolean vio = this.retrieveNodeLabels(it).contains("nonEU")
 					&& this.retrieveDataLabels(it).contains("Personal");
-			if (vio) {
-				System.out.println("N");
-			}
 			return vio;
 		});
 		return constraints;
@@ -115,7 +106,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 
 	@Test
 	@Order(3)
-	@RepeatedTest(30)
+	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically2() {
 		var startTime = System.currentTimeMillis();
 		var rankedUncertaintyEntityName = loadRanking();

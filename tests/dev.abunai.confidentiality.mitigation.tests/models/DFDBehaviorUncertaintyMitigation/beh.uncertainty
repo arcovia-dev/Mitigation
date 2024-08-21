@@ -4,7 +4,7 @@
     <target href="beh.datadictionary#_iEYIlU6GEe-xVr8qC-aDqQ"/>
     <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_pQaRck6GEe-xVr8qC-aDqQ"/>
     <scenarios id="_ngnAYE6JEe-xVr8qC-aDqQ">
-      <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_5hWJUk6GEe-xVr8qC-aDqQ"/>
+      <targetAssignments xsi:type="datadictionary:Assignment" href="beh.datadictionary#_1Fe981urEe-TNvJXn-SZMg"/>
     </scenarios>
   </sources>
   <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_pJlJWE6JEe-xVr8qC-aDqQ" entityName="transfer_money_uncertain">

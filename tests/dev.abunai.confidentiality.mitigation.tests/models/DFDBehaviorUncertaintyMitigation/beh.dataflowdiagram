@@ -47,10 +47,10 @@
   <nodes xsi:type="dataflowdiagram:External" id="_WOS18U6HEe-xVr8qC-aDqQ" entityName="User">
     <behaviour href="beh.datadictionary#_wAU7gE6FEe-xVr8qC-aDqQ"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:Process" id="_aTg-406HEe-xVr8qC-aDqQ" entityName="transfer_money">
+  <nodes xsi:type="dataflowdiagram:External" id="_aTg-406HEe-xVr8qC-aDqQ" entityName="transfer_money">
     <behaviour href="beh.datadictionary#_80cHNU6FEe-xVr8qC-aDqQ"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:Process" id="_db0Mk06HEe-xVr8qC-aDqQ" entityName="create_account">
+  <nodes xsi:type="dataflowdiagram:External" id="_db0Mk06HEe-xVr8qC-aDqQ" entityName="create_account">
     <behaviour href="beh.datadictionary#_iEYIlU6GEe-xVr8qC-aDqQ"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="_91CWo06HEe-xVr8qC-aDqQ" entityName="validate">
@@ -78,7 +78,7 @@
   <nodes xsi:type="dataflowdiagram:Process" id="_a4Ui006MEe-VjPsTSZajSg" entityName="account_state_response">
     <behaviour href="beh.datadictionary#_rSkkNU6LEe-VjPsTSZajSg"/>
   </nodes>
-  <nodes xsi:type="dataflowdiagram:Process" id="_CN9I606REe-eiI2swZ8zwQ" entityName="personal_db2">
+  <nodes xsi:type="dataflowdiagram:Store" id="_CN9I606REe-eiI2swZ8zwQ" entityName="personal_db2">
     <behaviour href="beh.datadictionary#_W1axRU6QEe-eiI2swZ8zwQ"/>
     <properties href="beh.datadictionary#5hnugm"/>
   </nodes>

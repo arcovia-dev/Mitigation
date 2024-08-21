@@ -22,7 +22,7 @@ class LinearRegressionUncertaintyRanker(UncertaintyRanker):
         coefficients = self.model.coef_
 
         # Pair feature names with their corresponding coefficients
-        feature_importance_tuples = list(zip(self.X.columns, [abs(c) for c in coefficients]))
+        feature_importance_tuples = list(zip(self.X.columns, [c for c in coefficients]))
 
         # Optionally, sort the list of tuples by the absolute value of importance
         feature_importance_tuples_sorted = sorted(feature_importance_tuples, key=lambda x: abs(x[1]), reverse=True)

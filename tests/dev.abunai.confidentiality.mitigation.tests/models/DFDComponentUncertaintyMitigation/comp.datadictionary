@@ -38,7 +38,9 @@
     <inPin id="qvivz" entityName="Banking_DB_in_pdb_to_bdb"/>
     <inPin id="fh8kq" entityName="Banking_DB_in_"/>
     <outPin id="gwxlxj" entityName="Banking_DB_out_db_to_response"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Msx29kj2Ee-hG70gk0zumA" inputPins="qvivz" outputPin="gwxlxj"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_BiRuklyYEe-W3tZYogekcQ" outputPin="gwxlxj" outputLabels="zzvphn">
+      <term xsi:type="datadictionary:TRUE" id="_HGWbIFyYEe-W3tZYogekcQ"/>
+    </assignment>
   </behaviour>
   <behaviour id="_MslCq0j2Ee-hG70gk0zumA" entityName="Transactions_DB">
     <inPin id="ufc3ba" entityName="Transactions_DB_in_trans_to_transac"/>
@@ -88,23 +90,9 @@
     <outPin id="k9wufi" entityName="show_account_state_out_"/>
     <outPin id="befuo" entityName="show_account_state_out_"/>
   </behaviour>
-  <behaviour id="_Mslpx0j2Ee-hG70gk0zumA" entityName="User2">
-    <outPin id="t2a3i" entityName="User2_out_"/>
-  </behaviour>
-  <behaviour id="_MsmQwEj2Ee-hG70gk0zumA" entityName="Banking_DB2">
-    <inPin id="044xlq" entityName="Banking_DB2_in_"/>
-  </behaviour>
-  <behaviour id="_MsmQw0j2Ee-hG70gk0zumA" entityName="Transactions_DB2">
-    <inPin id="nr69s" entityName="Transactions_DB2_in_"/>
-  </behaviour>
-  <behaviour id="_MsmQxkj2Ee-hG70gk0zumA" entityName="Settings_DB2">
-    <inPin id="du49vk" entityName="Settings_DB2_in_"/>
-  </behaviour>
-  <behaviour id="_MsmQyUj2Ee-hG70gk0zumA" entityName="account_state_response2">
-    <inPin id="22yfrmr" entityName="account_state_response2_in_"/>
-    <outPin id="l3u3p" entityName="account_state_response2_out_"/>
-  </behaviour>
-  <behaviour id="_MsmQzUj2Ee-hG70gk0zumA" entityName="Developer2">
-    <inPin id="35bv5" entityName="Developer2_in_"/>
-  </behaviour>
+  <behaviour id="_Mslpx0j2Ee-hG70gk0zumA" entityName="User2"/>
+  <behaviour id="_MsmQwEj2Ee-hG70gk0zumA" entityName="Banking_DB2"/>
+  <behaviour id="_MsmQw0j2Ee-hG70gk0zumA" entityName="Transactions_DB2"/>
+  <behaviour id="_MsmQxkj2Ee-hG70gk0zumA" entityName="Settings_DB2"/>
+  <behaviour id="_MsmQzUj2Ee-hG70gk0zumA" entityName="Developer2"/>
 </datadictionary:DataDictionary>

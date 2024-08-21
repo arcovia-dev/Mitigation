@@ -25,6 +25,7 @@ class LinearDiscriminantAnalysisRanker(UncertaintyRanker):
         lda.fit(self.X, self.y)
 
         coefs = lda.coef_
+
         column_names = self.X.columns.tolist()
         self.ranking = {}
 
