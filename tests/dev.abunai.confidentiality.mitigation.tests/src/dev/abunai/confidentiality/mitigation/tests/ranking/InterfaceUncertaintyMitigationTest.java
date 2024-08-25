@@ -7,14 +7,16 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.RepeatedTest;
+import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainTransposeFlowGraph;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
+import dev.abunai.confidentiality.mitigation.ranking.MitigationModel;
 import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
+import dev.abunai.confidentiality.mitigation.tests.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
 public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
@@ -44,12 +46,39 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 	}
 
 	@Test
-	@Order(1)
+	public void executeMitigation() {
+		// For meassuring at least 30 runs are required
+		deleteOldMeassurement();
+		for (int i = 0; i < MITIGATION_RUNS; i++) {
+			var startTime = System.currentTimeMillis();
+			createTrainData();
+			createMitigationCandidatesAutomatically();
+			var duration = System.currentTimeMillis() - startTime;
+			storeMeassurement(duration);
+		}
+	}
+	
+	@Test
+	public void executeBruteForce() throws Exception {
+		// For meassuring at least 30 runs are required
+		deleteOldMeassurement();
+		for (int i = 0; i < MITIGATION_RUNS; i++) {
+			var startTime = System.currentTimeMillis();
+			if (!mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE)) {
+				throw new Exception();
+			}
+			createMitigationCandidatesAutomatically();
+			var duration = System.currentTimeMillis() - startTime;
+			storeMeassurement(duration);
+		}
+	}
+
 	public void createTrainData() {
 		var trainDir = new File(trainDataDirectory);
 		for (File file : trainDir.listFiles()) {
 			file.delete();
 		}
+		var analysis = getAnalysis();
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
@@ -82,78 +111,42 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 
 		// Store the result of the Ranking in a file
 		storeRankingResult(relevantUncertaintyIds);
-		deleteOldMeassurement();
 	}
 
-
-	@Test
-	@Order(2)
-	//@RepeatedTest(30)
 	public void createMitigationCandidatesAutomatically() {
-		var startTime = System.currentTimeMillis();
-		var rankedUncertaintyEntityName = loadRanking();
-		var result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName,analysis.getUncertaintySources());
-		if (result.size() == 0) {
-			System.out.println("mitigation failed");
-		}
-		var duration = System.currentTimeMillis()-startTime;
-		storeMeassurement(duration);
-	}
-
-	@Test
-	@Order(3)
-	@RepeatedTest(30)
-	public void createMitigationCandidatesAutomatically2() {
-		var startTime = System.currentTimeMillis();
-		var rankedUncertaintyEntityName = loadRanking();
-		var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-				rankedUncertaintyEntityName.size() / 2, analysis.getUncertaintySources());
-		if (result.size() == 0) {
-			var result2 = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					rankedUncertaintyEntityName.size(), analysis.getUncertaintySources());
-			if (result2.size() == 0) {
-				System.out.println("mitigation failed");
+		var analysis = getAnalysis();
+		var rankedUncertaintyEntityName = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE) ?
+				analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList() : loadRanking();
+		var resourceProvider = (DFDUncertaintyResourceProvider) analysis.getResourceProvider();
+		resourceProvider.loadRequiredResources();
+		var dd = resourceProvider.getDataDictionary();
+		var dfd = resourceProvider.getDataFlowDiagram();
+		var ddAndDfd = new DataFlowDiagramAndDictionary(dfd, dd);
+		List<MitigationModel> result = new ArrayList<>();
+		if (mitigationStrategy.equals(MitigationStrategy.INCREASING)) {
+			result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName, analysis, ddAndDfd);
+		} else if (mitigationStrategy.equals(MitigationStrategy.QUATER)) {
+			for (int i = 1; i <= 4; i++) {
+				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+						i * rankedUncertaintyEntityName.size() / 4, analysis, ddAndDfd);
+				if (result.size() != 0) {
+					break;
+				}
+			}
+		} else if (mitigationStrategy.equals(MitigationStrategy.HALF)){
+			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					rankedUncertaintyEntityName.size() / 2, analysis, ddAndDfd);
+			if (result.size() == 0) {
+				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+						rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
 			}
 		}
-		var duration = System.currentTimeMillis()-startTime;
-		storeMeassurement(duration);
-	}
-
-	@Test
-	@Order(4)
-	@RepeatedTest(30)
-	public void createMitigationCandidatesAutomatically3() {
-		var startTime = System.currentTimeMillis();
-		var rankedUncertaintyEntityName = loadRanking();
-		boolean success = false;
-		for (int i = 1; i <= 4 && !success; i++) {
-			var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					i * (rankedUncertaintyEntityName.size() / 4),analysis.getUncertaintySources());
-			if(result.size() > 0) {
-				success = true;
-				break;
-			}
+		else {
+			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
 		}
-		if (!success) {
-			System.out.println("mitigation failed");
-		}
-		var duration = System.currentTimeMillis()-startTime;
-
-		storeMeassurement(duration);
-	}
-
-	@Test
-	//@RepeatedTest(30)
-	@Order(5)
-	public void createMitigationCandidatesAutomatically4() {
-		var startTime = System.currentTimeMillis();
-		var rankedUncertaintyEntityName = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
-		var result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, rankedUncertaintyEntityName.size(),analysis.getUncertaintySources());
 		if (result.size() == 0) {
 			System.out.println("mitigation failed");
 		}
-		var duration = System.currentTimeMillis()-startTime;
-
-		storeMeassurement(duration);
 	}
 }

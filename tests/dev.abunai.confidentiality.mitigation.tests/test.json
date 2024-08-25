@@ -310,7 +310,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward Customer_Transfer_Money\nset Encryption.Encrypted = FALSE",
+        "behavior" : "forward Customer_Transfer_Money",
         "id" : "xqi29",
         "type" : "port:dfd-output",
         "children" : [ ]

@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
+import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Test;
 
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
 public class MitigationCalculationTest extends MitigationTestBase{
@@ -34,8 +36,14 @@ public class MitigationCalculationTest extends MitigationTestBase{
 	
 	@Test
 	public void testMitigationModel() {
-		var allEntityNames = this.analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
-		var mitigationModels = mitigateWithIncreasingAmountOfUncertainties(allEntityNames,this.analysis.getUncertaintySources());
+		var analysis = getAnalysis();
+		var resourceProvider = (DFDUncertaintyResourceProvider) analysis.getResourceProvider();
+		resourceProvider.loadRequiredResources();
+		var dd = resourceProvider.getDataDictionary();
+		var dfd = resourceProvider.getDataFlowDiagram();
+		var ddAndDfd = new DataFlowDiagramAndDictionary(dfd, dd);
+		var allEntityNames = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
+		var mitigationModels =  mitigateWithIncreasingAmountOfUncertainties(allEntityNames, analysis, ddAndDfd);
 		
 		assertTrue(mitigationModels.size() > 0);
 		var bcFlow = mitigationModels.get(0).model().dataFlowDiagram().getFlows().stream()

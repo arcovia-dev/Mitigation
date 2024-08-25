@@ -42,7 +42,7 @@ public class UncertaintySourceMitigationUtils {
 		correctNewAssignmentsPins(oldAssignments, newAssignments);
 
 		// Add assignments from given scenario, remove assignments from default scenario
-		var ddTargetBehaviors = newDD.getBehaviour().stream().filter(b -> b.getId() == targetBehaviorId).toList();
+		var ddTargetBehaviors = newDD.getBehaviour().stream().filter(b -> b.getId().equals(targetBehaviorId)).toList();
 
 		for (var targetBehavior : ddTargetBehaviors) {
 			targetBehavior.getAssignment().removeIf(a -> oldAssignmentsIds.contains(a.getId()));
@@ -65,7 +65,7 @@ public class UncertaintySourceMitigationUtils {
 		var newDestinationPin = scenario.getTargetInPin();
 
 		// Set destination node and pin to the ones in the given scenario
-		var ddTargetFlows = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList();
+		var ddTargetFlows = newDia.getFlows().stream().filter(f -> f.getId().equals(targetFlow.getId())).toList();
 		if (ddTargetFlows.size() == 0) {
 			System.out.println("Flow " + targetFlow.getEntityName() + " not found");
 			return new DataFlowDiagramAndDictionary(newDia, dataDictionary);
@@ -88,7 +88,7 @@ public class UncertaintySourceMitigationUtils {
 		var targetNode = source.getTarget();
 
 		// Remove Labels from default scenario and add Labels of given scenario
-		var ddTargetNodes = newDia.getNodes().stream().filter(n -> n.getId() == targetNode.getId()).toList();
+		var ddTargetNodes = newDia.getNodes().stream().filter(n -> n.getId().equals(targetNode.getId())).toList();
 		if (ddTargetNodes.size() == 0) {
 			System.out.println(targetNode.getEntityName());
 			return new DataFlowDiagramAndDictionary(newDia, dataDictionary);
@@ -107,22 +107,22 @@ public class UncertaintySourceMitigationUtils {
 		var newDD = (DataDictionary) EcoreUtil.copy(dataDictionary);
 
 		// Extract Node from default and given scenario
-		var oldNode = newDia.getNodes().stream().filter(n -> n.getId() == source.getTarget().getId()).toList().get(0);
+		var oldNode = newDia.getNodes().stream().filter(n -> n.getId().equals(source.getTarget().getId())).toList().get(0);
 		var oldNodeBehaviorId = oldNode.getBehaviour().getId();
-		var newNode = newDia.getNodes().stream().filter(n -> n.getId() == scenario.getTarget().getId()).toList().get(0);
+		var newNode = newDia.getNodes().stream().filter(n -> n.getId().equals(scenario.getTarget().getId())).toList().get(0);
 		var newNodeBehaviorId = newNode.getBehaviour().getId();
 
 		// Replace oldNode with newNode in all Flows
 		for (var flow : newDia.getFlows()) {
-			if (flow.getDestinationNode().getId() == oldNode.getId()) {
+			if (flow.getDestinationNode().getId().equals(oldNode.getId())) {
 				flow.setDestinationNode(newNode);
 			}
-			if (flow.getSourceNode().getId() == oldNode.getId()) {
+			if (flow.getSourceNode().getId().equals(oldNode.getId())) {
 				flow.setSourceNode(newNode);
 			}
 		}
 		// Remove old Node
-		newDia.getNodes().removeIf(n -> n.getId() == oldNode.getId());
+		newDia.getNodes().removeIf(n -> n.getId().equals(oldNode.getId()));
 
 		Behaviour newNodeNewBehavior = newDD.getBehaviour().stream().filter(b -> b.getId().equals(newNodeBehaviorId))
 				.toList().get(0);
@@ -190,7 +190,7 @@ public class UncertaintySourceMitigationUtils {
 				.filter(a -> newAssignmentsIds.contains(a.getId())).toList();
 
 		// Set destination node and pin to the ones in the given scenario
-		var ddTargetFlow = newDia.getFlows().stream().filter(f -> f.getId() == targetFlow.getId()).toList().get(0);
+		var ddTargetFlow = newDia.getFlows().stream().filter(f -> f.getId().equals(targetFlow.getId())).toList().get(0);
 		ddTargetFlow.setDestinationNode(newDestinationNode);
 		ddTargetFlow.setDestinationPin(newDestinationPin);
 

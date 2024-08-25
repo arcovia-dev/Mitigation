@@ -5,17 +5,10 @@ import java.util.List;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.core.DataCharacteristic;
 import org.dataflowanalysis.analysis.dfd.core.DFDCharacteristicValue;
-import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
-import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
-
-import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
 
 public abstract class TestBase {
 	
 	public static final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.mitigation.tests";
-	
-	public DataDictionary dd;
-	public DataFlowDiagram dfd;
 	
 	protected abstract String getFolderName();
 
@@ -24,8 +17,6 @@ public abstract class TestBase {
 	protected String getBaseFolder() {
 		return "models";
 	}
-	
-	protected UncertaintyAwareConfidentialityAnalysis analysis;
 	
 	protected List<String> retrieveNodeLabels(AbstractVertex<?> vertex) {
 		return vertex.getAllVertexCharacteristics().stream().map(DFDCharacteristicValue.class::cast)
