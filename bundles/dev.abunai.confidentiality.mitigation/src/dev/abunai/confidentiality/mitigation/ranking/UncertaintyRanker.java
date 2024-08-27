@@ -8,8 +8,8 @@ import java.io.IOException;
 
 public class UncertaintyRanker {
 
-	private final static RankerType rankerType = RankerType.RANDOM_FOREST;
-	private final static RankingAggregationMethod aggregationMethod = RankingAggregationMethod.EXPONENTIAL_RANKS;
+	private final static RankerType rankerType = RankerType.LINEAR_REGRESSION;
+	private final static RankingAggregationMethod aggregationMethod = RankingAggregationMethod.TOP_3;
 
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath, String pathToTrainDataFolder,
 			int rankingLength) {

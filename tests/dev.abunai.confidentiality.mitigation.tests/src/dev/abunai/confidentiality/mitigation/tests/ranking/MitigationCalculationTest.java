@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
@@ -45,16 +46,22 @@ public class MitigationCalculationTest extends MitigationTestBase{
 		var allEntityNames = analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList();
 		var mitigationModels =  mitigateWithIncreasingAmountOfUncertainties(allEntityNames, analysis, ddAndDfd);
 		
-		assertTrue(mitigationModels.size() > 0);
+		assertTrue(mitigationModels.size() == 1);
 		var bcFlow = mitigationModels.get(0).model().dataFlowDiagram().getFlows().stream()
 		.filter(f -> f.getSourceNode().getEntityName().equals("b") 
 				&& f.getDestinationNode().getEntityName().equals("c")).findAny();
 		var ceFlow = mitigationModels.get(0).model().dataFlowDiagram().getFlows().stream()
 				.filter(f -> f.getSourceNode().getEntityName().equals("c") 
 						&& f.getDestinationNode().getEntityName().equals("e")).findAny();
+		var iNode = mitigationModels.get(0).model().dataFlowDiagram().getNodes().stream()
+				.filter(n -> n.getEntityName().equals("i")).findAny();
+		var kProp =  mitigationModels.get(0).model().dataFlowDiagram().getNodes().stream()
+				.filter(n -> n.getEntityName().equals("k")).findAny().get().getProperties().get(0);
 		
 		assertTrue(bcFlow.isPresent());
 		assertTrue(ceFlow.isPresent());
+		assertFalse(iNode.isPresent());
+		assertTrue(kProp.getEntityName().equals("EU"));
 	}
 
 }

@@ -4,6 +4,10 @@
     <destinationPin href="mitigation_example.datadictionary#i39hra"/>
     <sourcePin href="mitigation_example.datadictionary#mrodef"/>
   </flows>
+  <flows id="_YhXVUGQ_Ee-FUaEuwf1uIg" entityName="ej" sourceNode="83m5j" destinationNode="_bjBIcmQ_Ee-FUaEuwf1uIg">
+    <destinationPin href="mitigation_example.datadictionary#_kuq1IGQ-Ee-FUaEuwf1uIg"/>
+    <sourcePin href="mitigation_example.datadictionary#_Zy8ucWQ-Ee-FUaEuwf1uIg"/>
+  </flows>
   <flows id="hzisri" entityName="" sourceNode="1uj6bt" destinationNode="8k105e">
     <destinationPin href="mitigation_example.datadictionary#mt254o"/>
     <sourcePin href="mitigation_example.datadictionary#xy50nr"/>
@@ -19,6 +23,14 @@
   <flows id="p85ob" entityName="bc" sourceNode="k6a8c9" destinationNode="a4tj4b">
     <destinationPin href="mitigation_example.datadictionary#s3v30e"/>
     <sourcePin href="mitigation_example.datadictionary#eodokp"/>
+  </flows>
+  <flows id="_uYpxsGQ_Ee-FUaEuwf1uIg" entityName="gi" sourceNode="1uj6bt" destinationNode="_eUPS4mQ_Ee-FUaEuwf1uIg">
+    <destinationPin href="mitigation_example.datadictionary#_xp1rEGQ-Ee-FUaEuwf1uIg"/>
+    <sourcePin href="mitigation_example.datadictionary#xy50nr"/>
+  </flows>
+  <flows id="_2o3UYGQ_Ee-FUaEuwf1uIg" entityName="gk" sourceNode="1uj6bt" destinationNode="_o1K7AmQ_Ee-FUaEuwf1uIg">
+    <destinationPin href="mitigation_example.datadictionary#_pr6yQGQ-Ee-FUaEuwf1uIg"/>
+    <sourcePin href="mitigation_example.datadictionary#xy50nr"/>
   </flows>
   <nodes xsi:type="dataflowdiagram:Process" id="k6a8c9" entityName="b">
     <behaviour href="mitigation_example.datadictionary#_f7sSiFWREe-ZrNdnTZogqw"/>
@@ -47,5 +59,21 @@
   </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="q72wv" entityName="c">
     <behaviour href="mitigation_example.datadictionary#_f7xLDlWREe-ZrNdnTZogqw"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="_bjBIcmQ_Ee-FUaEuwf1uIg" entityName="j">
+    <behaviour href="mitigation_example.datadictionary#_jM3rNWQ-Ee-FUaEuwf1uIg"/>
+    <properties href="mitigation_example.datadictionary#5hnugm"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="_eUPS4mQ_Ee-FUaEuwf1uIg" entityName="i">
+    <behaviour href="mitigation_example.datadictionary#_uvn8tWQ-Ee-FUaEuwf1uIg"/>
+    <properties href="mitigation_example.datadictionary#5hnugm"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="_hn74QmQ_Ee-FUaEuwf1uIg" entityName="i2">
+    <behaviour href="mitigation_example.datadictionary#_squFtWQ-Ee-FUaEuwf1uIg"/>
+    <properties href="mitigation_example.datadictionary#g10hr"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="_o1K7AmQ_Ee-FUaEuwf1uIg" entityName="k">
+    <behaviour href="mitigation_example.datadictionary#_ofolUWQ-Ee-FUaEuwf1uIg"/>
+    <properties href="mitigation_example.datadictionary#5hnugm"/>
   </nodes>
 </dataflowdiagram:DataFlowDiagram>
