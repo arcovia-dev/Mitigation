@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.tests;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -17,15 +18,21 @@ import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
 import dev.abunai.confidentiality.analysis.UncertaintyAwareConfidentialityAnalysis;
+import dev.abunai.confidentiality.analysis.core.UncertainConstraintViolation;
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
+import dev.abunai.confidentiality.analysis.dfd.DFDUncertainTransposeFlowGraph;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationListSimplifier;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModel;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModelCalculator;
 import dev.abunai.confidentiality.mitigation.ranking.TrainDataGeneration;
+import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.ranking.UncertaintySubset;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationURIs;
+import dev.abunai.confidentiality.mitigation.ranking.RankerType;
+import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 
 public abstract class MitigationTestBase extends TestBase {
 
@@ -35,6 +42,10 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract String getFilesName();
 
 	protected abstract List<Predicate<? super AbstractVertex<?>>> getConstraints();
+	
+	protected abstract RankerType getRankerType();
+	
+	protected abstract RankingAggregationMethod getAggregationMethod();
 
 	// Mitigation ranking variables
 	protected final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
@@ -55,8 +66,8 @@ public abstract class MitigationTestBase extends TestBase {
 	protected final boolean evalMode = false;
 	
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 30;
-	protected final MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
+	protected final int MITIGATION_RUNS = 1;
+	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
 	@BeforeEach
 	public void before() {
@@ -215,6 +226,87 @@ public abstract class MitigationTestBase extends TestBase {
 		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
 		analysis.initializeAnalysis();
 		return analysis;
+	}
+	
+	public void createTrainData() {
+		var trainDir = new File(trainDataDirectory);
+		for (File file : trainDir.listFiles()) {
+			file.delete();
+		}
+		var analysis = this.getAnalysis();
+		// Get constraints and define count variable for constraint file differentiation
+		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
+		var count = 0;
+		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
+		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
+
+		uncertainFlowGraphs.evaluate();
+
+		List<DFDUncertainTransposeFlowGraph> allTFGs = uncertainFlowGraphs.getTransposeFlowGraphs().stream()
+				.map(DFDUncertainTransposeFlowGraph.class::cast).toList();
+		// Generate train data for each constraint
+		for (var constraint : constraints) {
+			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
+					constraint);
+
+			// If no violation occured no training data needs to be created
+			if (violations.size() == 0) {
+				continue;
+			}
+
+			trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
+					Paths.get(trainDataDirectory, "violations_" + Integer.toString(count) + ".csv").toString());
+			count++;
+		}
+
+		// Rank the uncertainties specified in the given model and store the result in
+		// the specified file
+		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
+				trainDataDirectory, analysis.getUncertaintySources().size(), getRankerType(),getAggregationMethod());
+
+		// Store the result of the Ranking in a file
+		storeRankingResult(relevantUncertaintyIds);
+	}
+
+	public void createMitigationCandidatesAutomatically() {
+		var analysis = getAnalysis();
+		var rankedUncertaintyEntityName = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE) ?
+				analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList() : loadRanking();
+		var ddAndDfd = getDDAndDfd(analysis);
+		List<MitigationModel> result = new ArrayList<>();
+		if (mitigationStrategy.equals(MitigationStrategy.INCREASING)) {
+			result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName, analysis, ddAndDfd);
+		} else if (mitigationStrategy.equals(MitigationStrategy.QUATER)) {
+			for (int i = 1; i <= 4; i++) {
+				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+						i * rankedUncertaintyEntityName.size() / 4, analysis, ddAndDfd);
+				if (result.size() != 0) {
+					break;
+				}
+			}
+		} else if (mitigationStrategy.equals(MitigationStrategy.HALF)){
+			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					rankedUncertaintyEntityName.size() / 2, analysis, ddAndDfd);
+			if (result.size() == 0) {
+				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+						rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
+			}
+		}
+		else {
+			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
+		}
+		if (result.size() == 0) {
+			System.out.println("mitigation failed");
+		}
+	}
+
+	public DataFlowDiagramAndDictionary getDDAndDfd(UncertaintyAwareConfidentialityAnalysis analysis) {
+		var resourceProvider = (DFDUncertaintyResourceProvider) analysis.getResourceProvider();
+		resourceProvider.loadRequiredResources();
+		var dd = resourceProvider.getDataDictionary();
+		var dfd = resourceProvider.getDataFlowDiagram();
+		return new DataFlowDiagramAndDictionary(dfd, dd);
 	}
 
 }

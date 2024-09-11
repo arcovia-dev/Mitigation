@@ -8,14 +8,12 @@ import java.io.IOException;
 
 public class UncertaintyRanker {
 
-	private final static RankerType rankerType = RankerType.LINEAR_REGRESSION;
-	private final static RankingAggregationMethod aggregationMethod = RankingAggregationMethod.TOP_3;
 
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath, String pathToTrainDataFolder,
-			int rankingLength) {
+			int rankingLength, RankerType rankerType,  RankingAggregationMethod aggregationMethod) {
 		// Command to run the Python script
 		String[] command = { "python", scriptPath, pathToTrainDataFolder, Integer.toString(rankingLength),
-				getRankerTypeCommandParameter(), getAggregationMethodCommandParamter() };
+				getRankerTypeCommandParameter(rankerType), getAggregationMethodCommandParamter(aggregationMethod) };
 		try {
 			// Execute the command
 			Process process = Runtime.getRuntime().exec(command);
@@ -40,23 +38,29 @@ public class UncertaintyRanker {
 		return null;
 	}
 
-	private static String getRankerTypeCommandParameter() {
+	private static String getRankerTypeCommandParameter(RankerType rankerType) {
 		if (rankerType.equals(RankerType.FAMD)) {
 			return "F";
 		}
-		if (rankerType.equals(RankerType.LDA)) {
+		else if (rankerType.equals(RankerType.INVERSE_FAMD)) {
+			return "IF";
+		}
+		else if (rankerType.equals(RankerType.INVERSE_PCA)) {
+			return "IP";
+		}
+		else if (rankerType.equals(RankerType.LDA)) {
 			return "LDA";
 		}
-		if (rankerType.equals(RankerType.RANDOM_FOREST)) {
+		else if (rankerType.equals(RankerType.RANDOM_FOREST)) {
 			return "RF";
 		}
-		if (rankerType.equals(RankerType.LINEAR_REGRESSION)) {
+		else if (rankerType.equals(RankerType.LINEAR_REGRESSION)) {
 			return "LR";
 		} else {
 			return "P";
 		}
 	}
-	private static String getAggregationMethodCommandParamter() {
+	private static String getAggregationMethodCommandParamter(RankingAggregationMethod aggregationMethod) {
 		if (aggregationMethod.equals(RankingAggregationMethod.LINEAR_RANKS)) {
 			return "L";
 		}

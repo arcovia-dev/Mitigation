@@ -8,7 +8,9 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'uncertainty_rankers'))
 
 from principal_component_uncertainty_ranker import PrincipalComponentUncertaintyRanker
+from inverse_principal_component_uncertainty_ranker import InversePrincipalComponentUncertaintyRanker
 from famd_uncertainty_ranker import FAMDUncertaintyRanker
+from inverse_famd_uncertainty_ranker import InverseFAMDUncertaintyRanker
 from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker
 from linear_regression_uncertainty_ranker import LinearRegressionUncertaintyRanker
 from linear_discriminant_analysis import LinearDiscriminantAnalysisRanker
@@ -91,20 +93,19 @@ def aggregate_rankings_by_taking_top_3(rankings:list[list[(str,float)]]):
         ranking_ordered = OrderedDict(sorted(dict(ranking).items(), key=lambda item: item[1], reverse=True))
         i = 0
         uncertainty_names = []
-        while i < 3 and bool(ranking_ordered):
+        while bool(ranking_ordered):
             element = ranking_ordered.popitem(last=False)
             element_name = element[0]
             uncertainty_name = '_'.join(element_name.split('_')[:-1])
             if uncertainty_name in uncertainty_names:
                 continue
             if not element_name in aggregatedRanking:
-                aggregatedRanking[element_name] = 3-i
-            else:
-                aggregatedRanking[element_name] = aggregatedRanking[element_name] + 3-i
+                aggregatedRanking[element_name] = 3-i if i < 3 else 0
+            elif i < 3 :
+                aggregatedRanking[element_name] = aggregatedRanking[element_name] + 3-i 
             if uncertainty_name not in uncertainty_names:
                 i = i + 1
                 uncertainty_names.append(uncertainty_name)
-
 
     return OrderedDict(sorted(aggregatedRanking.items(), key=lambda item: item[1], reverse=True))
 
@@ -125,7 +126,7 @@ def normalize_rankings(rankings:list[list[(str,float)]]):
         
         new_ranking = []
         for ranking_element in ranking:
-            new_ranking.append((ranking_element[0], abs(ranking_element[1]/sum)))
+            new_ranking.append((ranking_element[0], (sum + ranking_element[1])/(2*sum)))
         new_rankings.append(new_ranking)
     
     return new_rankings
@@ -160,8 +161,12 @@ for filename in filenames:
         uncertainty_ranker = LinearDiscriminantAnalysisRanker(X, y)
     elif RANKER_TYPE == "P":
         uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
+    elif RANKER_TYPE == "IP":
+        uncertainty_ranker = InversePrincipalComponentUncertaintyRanker(X, y)
     elif RANKER_TYPE == "F":
         uncertainty_ranker = FAMDUncertaintyRanker(X, y)
+    elif RANKER_TYPE == "IF":
+        uncertainty_ranker = InverseFAMDUncertaintyRanker(X, y)
     elif RANKER_TYPE == "RF":
         uncertainty_ranker = RandomForestUncertaintyRanker(X, y)
     elif RANKER_TYPE == "LR":

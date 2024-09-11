@@ -9,7 +9,7 @@ from collections import OrderedDict
 
 from uncertainty_ranker import UncertaintyRanker
 
-class FAMDUncertaintyRanker(UncertaintyRanker):
+class InverseFAMDUncertaintyRanker(UncertaintyRanker):
 
     def __init__(self, X, y):
         self.X = X
@@ -48,16 +48,15 @@ class FAMDUncertaintyRanker(UncertaintyRanker):
 
         fa = FactorAnalysis(n_components=n_factors, random_state=0)
         fa.fit(data_standardized)
-
+        
         loadings = fa.components_.T
         column_names = data.columns.tolist()
         ranking = {}
 
         for i in range(len(loadings)):
-            ranking[column_names[i]] = sum(abs(loadings[i]))
+            ranking[column_names[i]] = 1 / sum(abs(loadings[i]))
 
         self.ranking = OrderedDict(sorted(ranking.items(), key=lambda item: item[1], reverse=True))
-
 
     def show_ranking_with_correctness_score(self)-> list[(str,float)]:
         result = []

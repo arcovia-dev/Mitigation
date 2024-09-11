@@ -1,1144 +1,591 @@
 {
-    "model": {
-        "canvasBounds": {
-            "x": 0,
-            "y": 0,
-            "width": 1280,
-            "height": 587.3333129882812
-        },
-        "scroll": {
-            "x": -183.02977748564035,
-            "y": -55.257721956951286
-        },
-        "zoom": 0.9271056866536632,
-        "position": {
-            "x": 0,
-            "y": 0
-        },
-        "size": {
-            "width": -1,
-            "height": -1
-        },
-        "features": {},
-        "type": "graph",
-        "id": "root",
-        "children": [
-            {
-                "position": {
-                    "x": 420.76127480457006,
-                    "y": 89.13650030066145
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "xccftn",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 294.655497998694,
-                    "y": 144.89311901183436
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "f9p8ea",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 529.2090893436775,
-                    "y": 161.528125490202
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "7vlyw",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 790.3786910540492,
-                    "y": 131.58511382914025
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "7zdlqq",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": -3.5,
-                    "y": 124
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "Customer",
-                "labels": [
-                    {
-                        "labelTypeId": "gvia09",
-                        "labelTypeValueId": "g10hr"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 73.5,
-                            "y": 10.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "set Sensitivity.Personal = TRUE",
-                        "features": {},
-                        "id": "qro6sa",
-                        "type": "port:dfd-output",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 73.5,
-                            "y": 25.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "set Sensitivity.Personal = TRUE",
-                        "features": {},
-                        "id": "q70tfa",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "dxnng9",
-                "type": "node:input-output",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 834.1772970429931,
-                    "y": 122.45287569094828
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "25hqz",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 773.5,
-                    "y": 104
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "Bank_Clerk_View",
-                "labels": [
-                    {
-                        "labelTypeId": "84rllz",
-                        "labelTypeValueId": "d01uv5"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 8
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "ey45c6",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 20.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "l43wk",
-                        "type": "port:dfd-input",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "bfppo",
-                "type": "node:storage",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 771.5539476928323,
-                    "y": 118.40101222805899
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "zbx9m",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 769.3966963364967,
-                    "y": 130.2658946879044
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "cz5r3i",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 241,
-                    "y": 332
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "request_account_state",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "dvpfqm",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 157.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward Developer_Request_Account_State",
-                        "features": {},
-                        "id": "gv76y",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "1cnvoj",
-                "type": "node:function",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 244.10599106879468,
-                    "y": 348.14828167779325
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "8ltnba",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 648.5906203817069,
-                    "y": 403.15819126434934
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "58peik",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 281,
-                    "y": 467
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "show_account_state",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 143.5,
-                            "y": 10.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "7dlio",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward Customer_Banking_Data_Show_Account_State",
-                        "features": {},
-                        "id": "wsw6q4",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "dhglk8",
-                "type": "node:function",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 3.5,
-                    "y": 444
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "Developer_View",
-                "labels": [
-                    {
-                        "labelTypeId": "4h3wzk",
-                        "labelTypeValueId": "j62tp6"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 123.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "4d824d",
-                        "type": "port:dfd-input",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "b9ernl",
-                "type": "node:storage",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 428.55098203548266,
-                    "y": 481.89786577059624
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "b2hn4m",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 129.77166918301143,
-                    "y": 459.24672652907316
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "t5era",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": -94,
-                    "y": 264
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "Developer",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 74.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "set Sensitivity.Public = TRUE",
-                        "features": {},
-                        "id": "495yo3",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "uyd5o",
-                "type": "node:input-output",
-                "children": []
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "5xh1kr",
-                "type": "edge:arrow",
-                "sourceId": "495yo3",
-                "targetId": "dvpfqm",
-                "children": [],
-                "text": "Developer_Request_Account_State"
-            },
-            {
-                "position": {
-                    "x": 648.5,
-                    "y": 389
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "Customer_Banking_Data",
-                "labels": [
-                    {
-                        "labelTypeId": "gvia09",
-                        "labelTypeValueId": "5hnugm"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 10.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "rab6wn",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 60.5,
-                            "y": 38.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "set Sensitivity.Personal = TRUE",
-                        "features": {},
-                        "id": "0p5bqf",
-                        "type": "port:dfd-output",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 50.5,
-                            "y": -3.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "2vr30b",
-                        "type": "port:dfd-input",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "9zxnz",
-                "type": "node:storage",
-                "children": []
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "kjooxa",
-                "type": "edge:arrow",
-                "sourceId": "gv76y",
-                "targetId": "rab6wn",
-                "children": [],
-                "text": ""
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "4zxykf",
-                "type": "edge:arrow",
-                "sourceId": "0p5bqf",
-                "targetId": "7dlio",
-                "children": [],
-                "text": "Customer_Banking_Data_Show_Account_State"
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "09zks",
-                "type": "edge:arrow",
-                "sourceId": "wsw6q4",
-                "targetId": "4d824d",
-                "children": [],
-                "text": ""
-            },
-            {
-                "position": {
-                    "x": 321,
-                    "y": 242
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "transfer_money",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "dyh2k6",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 110.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": true,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward Customer_Transfer_Money",
-                        "features": {},
-                        "id": "xqi29",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "q9xse",
-                "type": "node:function",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 541,
-                    "y": 19
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "process_loan_offer",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 133.5,
-                            "y": 10.5
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward Get_Loan_Offer_Process_Loan_Offer",
-                        "features": {},
-                        "id": "xtg9lq",
-                        "type": "port:dfd-output",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "e6jni4",
-                        "type": "port:dfd-input",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "sxf4g",
-                "type": "node:input-output",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 542.8853039212663,
-                    "y": 37.50408636547661
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "5qastu",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 772.6325733710005,
-                    "y": 116.24376087172354
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "votpfm",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 773.7111990491683,
-                    "y": 131.34452036607226
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "0vxvph",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 546,
-                    "y": 99
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "process_loan_offer2",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "42dbbn",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 141.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "set Encryption.Encrypted = TRUE",
-                        "features": {},
-                        "id": "fj3z0l",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "i0jwe",
-                "type": "node:input-output",
-                "children": []
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "jicost",
-                "type": "edge:arrow",
-                "sourceId": "fj3z0l",
-                "targetId": "l43wk",
-                "children": [],
-                "text": ""
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "zayl1r",
-                "type": "edge:arrow",
-                "sourceId": "xtg9lq",
-                "targetId": "ey45c6",
-                "children": [],
-                "text": ""
-            },
-            {
-                "position": {
-                    "x": 262,
-                    "y": -3
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "get_loan_offer",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "id": "sg1e4i",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 100.5,
-                            "y": 13
-                        },
-                        "size": {
-                            "width": -1,
-                            "height": -1
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward Customer_Get_Loan_Offer\nset Encryption.Encrypted = TRUE",
-                        "features": {},
-                        "id": "sigr8p",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "features": {},
-                "id": "jpl3am",
-                "type": "node:function",
-                "children": []
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "oo8xya",
-                "type": "edge:arrow",
-                "sourceId": "qro6sa",
-                "targetId": "sg1e4i",
-                "children": [],
-                "text": "Customer_Get_Loan_Offer"
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "fmfdo",
-                "type": "edge:arrow",
-                "sourceId": "sigr8p",
-                "targetId": "e6jni4",
-                "children": [],
-                "text": "Get_Loan_Offer_Process_Loan_Offer"
-            },
-            {
-                "position": {
-                    "x": 320.68841421870644,
-                    "y": 258.62235038986864
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "mhixvm",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 700.3646529337601,
-                    "y": 388.0574317700006
-                },
-                "size": {
-                    "width": -1,
-                    "height": -1
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "ssxwiu",
-                "type": "empty-node",
-                "children": []
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "nru6a",
-                "type": "edge:arrow",
-                "sourceId": "q70tfa",
-                "targetId": "dyh2k6",
-                "children": [],
-                "text": "Customer_Transfer_Money"
-            },
-            {
-                "routingPoints": [],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "features": {},
-                "id": "w20by",
-                "type": "edge:arrow",
-                "sourceId": "xqi29",
-                "targetId": "2vr30b",
-                "children": [],
-                "text": ""
-            }
-        ]
-    },
-    "labelTypes": [
-        {
-            "id": "4h3wzk",
-            "name": "Sensitivity",
-            "values": [
-                {
-                    "id": "zzvphn",
-                    "text": "Personal"
-                },
-                {
-                    "id": "veaan9",
-                    "text": "Public"
-                },
-                {
-                    "id": "j62tp6",
-                    "text": "Develop"
-                }
-            ]
-        },
-        {
-            "id": "gvia09",
-            "name": "Location",
-            "values": [
-                {
-                    "id": "g10hr",
-                    "text": "EU"
-                },
-                {
-                    "id": "5hnugm",
-                    "text": "nonEU"
-                }
-            ]
-        },
-        {
-            "id": "84rllz",
-            "name": "Encryption",
-            "values": [
-                {
-                    "id": "2r6xe6",
-                    "text": "Encrypted"
-                },
-                {
-                    "id": "d01uv5",
-                    "text": "Processable"
-                }
-            ]
-        }
-    ]
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "Developer_Request_Account_State",
+      "id" : "5xh1kr",
+      "type" : "edge:arrow",
+      "sourceId" : "495yo3",
+      "targetId" : "dvpfqm",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_cc_limit",
+      "id" : "_9jRZIFi3Ee-DsdRrhZRfUQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_i5uHoVi3Ee-DsdRrhZRfUQ",
+      "targetId" : "_8kjjkFi2Ee-DsdRrhZRfUQ",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit_csd",
+      "id" : "_DDuJ8Fi4Ee-DsdRrhZRfUQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_-_iYQVi2Ee-DsdRrhZRfUQ",
+      "targetId" : "_6qz-QFi3Ee-DsdRrhZRfUQ",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "kjooxa",
+      "type" : "edge:arrow",
+      "sourceId" : "gv76y",
+      "targetId" : "rab6wn",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data_Show_Account_State",
+      "id" : "4zxykf",
+      "type" : "edge:arrow",
+      "sourceId" : "0p5bqf",
+      "targetId" : "7dlio",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "09zks",
+      "type" : "edge:arrow",
+      "sourceId" : "wsw6q4",
+      "targetId" : "4d824d",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "jicost",
+      "type" : "edge:arrow",
+      "sourceId" : "fj3z0l",
+      "targetId" : "l43wk",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "zayl1r",
+      "type" : "edge:arrow",
+      "sourceId" : "xtg9lq",
+      "targetId" : "ey45c6",
+      "children" : [ ]
+    }, {
+      "text" : "Get_Loan_Offer_Process_Loan_Offer",
+      "id" : "fmfdo",
+      "type" : "edge:arrow",
+      "sourceId" : "sigr8p",
+      "targetId" : "e6jni4",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Transfer_Money",
+      "id" : "nru6a",
+      "type" : "edge:arrow",
+      "sourceId" : "q70tfa",
+      "targetId" : "dyh2k6",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "w20by",
+      "type" : "edge:arrow",
+      "sourceId" : "xqi29",
+      "targetId" : "2vr30b",
+      "children" : [ ]
+    }, {
+      "text" : "customer_show_balance",
+      "id" : "_ISm0AFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_XoS2gViSEe-5ZvwoYHO9Vg",
+      "targetId" : "_mASPwFiSEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance_customer_banking_data",
+      "id" : "_a7xukFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_n28PYViSEe-5ZvwoYHO9Vg",
+      "targetId" : "_KasXUFiTEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "customer_banking_data_balance_response",
+      "id" : "_kVQmcFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_TR8r4ViTEe-5ZvwoYHO9Vg",
+      "targetId" : "_dXHlEFiTEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response_customer_view",
+      "id" : "_sg-qsFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_erGVcViTEe-5ZvwoYHO9Vg",
+      "targetId" : "_tK5m4FiTEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_settings",
+      "id" : "_vOX5gFieEe-01fJ0Yo6HNg",
+      "type" : "edge:arrow",
+      "sourceId" : "_8UhF0VidEe-01fJ0Yo6HNg",
+      "targetId" : "_MBc4wFieEe-01fJ0Yo6HNg",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings_customer_settings_db",
+      "id" : "_2uYHRFieEe-01fJ0Yo6HNg",
+      "type" : "edge:arrow",
+      "sourceId" : "_NjWJUVieEe-01fJ0Yo6HNg",
+      "targetId" : "_W2rV4FieEe-01fJ0Yo6HNg",
+      "children" : [ ]
+    }, {
+      "text" : "bank_clerk_get_fond_data",
+      "id" : "_glyEMFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_luCCUVsoEe-imMDNUFdrZA",
+      "targetId" : "__gBZsFsoEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data_fond_data",
+      "id" : "_pWOmIFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_BJG3YVspEe-imMDNUFdrZA",
+      "targetId" : "_cKUa8FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2_fond_data",
+      "id" : "_2-qKsFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_NE0bcVspEe-imMDNUFdrZA",
+      "targetId" : "_gbII0FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_fond_data_response",
+      "id" : "_hm_3UFsvEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_jF5F8VspEe-imMDNUFdrZA",
+      "targetId" : "_xpvJ4FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response_bank_clerk_view",
+      "id" : "_pCy6gFsvEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_0En38VspEe-imMDNUFdrZA",
+      "targetId" : "_9RsEcFspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "Customer",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "sigr8p",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "q70tfa",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_XoS2gViSEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_8UhF0VidEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_i5uHoVi3Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dxnng9",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_View",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "ey45c6",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "l43wk",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_9RsEcFspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "bfppo",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "request_account_state",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dvpfqm",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Developer_Request_Account_State",
+        "id" : "gv76y",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "1cnvoj",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_account_state",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "7dlio",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Banking_Data_Show_Account_State",
+        "id" : "wsw6q4",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dhglk8",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      } ],
+      "ports" : [ {
+        "id" : "4d824d",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "b9ernl",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "495yo3",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "uyd5o",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ {
+        "id" : "rab6wn",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "2vr30b",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_KasXUFiTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "0p5bqf",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_TR8r4ViTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "9zxnz",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "transfer_money",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dyh2k6",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Transfer_Money",
+        "id" : "xqi29",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "q9xse",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "e6jni4",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Get_Loan_Offer_Process_Loan_Offer",
+        "id" : "xtg9lq",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "sxf4g",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "42dbbn",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = FALSE",
+        "id" : "fj3z0l",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "i0jwe",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_View",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "_tK5m4FiTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_xY54YViTEe-5ZvwoYHO9Vg",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_dXHlEFiTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_banking_data_balance_response",
+        "id" : "_erGVcViTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_7AoAk1iTEe-5ZvwoYHO9Vg",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_mASPwFiSEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_n28PYViSEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_AoaIcViUEe-5ZvwoYHO9Vg",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_MBc4wFieEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_settings",
+        "id" : "_NjWJUVieEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_cMBC41ieEe-01fJ0Yo6HNg",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Settings_Data",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_W2rV4FieEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_6qz-QFi3Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_e1yhglieEe-01fJ0Yo6HNg",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View2",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      }, {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ ],
+      "id" : "_MvXlUli3Ee-DsdRrhZRfUQ",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_8kjjkFi2Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_cc_limit",
+        "id" : "_-_iYQVi2Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_UnKoA1i3Ee-DsdRrhZRfUQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_luCCUVsoEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_CqeuEVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "__gBZsFsoEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward bank_clerk_get_fond_data",
+        "id" : "_BJG3YVspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_GSbFIVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_Ks1QYFspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_NE0bcVspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_JndHQVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_cKUa8FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_gbII0FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_jF5F8VspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_OCehElsqEe-imMDNUFdrZA",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ ],
+      "id" : "_SYeQ8lsqEe-imMDNUFdrZA",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_xpvJ4FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward fond_data_fond_data_response",
+        "id" : "_0En38VspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_dEqG01sqEe-imMDNUFdrZA",
+      "type" : "node:function",
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "4h3wzk",
+    "name" : "Sensitivity",
+    "values" : [ {
+      "id" : "zzvphn",
+      "text" : "Personal"
+    }, {
+      "id" : "veaan9",
+      "text" : "Public"
+    }, {
+      "id" : "j62tp6",
+      "text" : "Develop"
+    } ]
+  }, {
+    "id" : "gvia09",
+    "name" : "Location",
+    "values" : [ {
+      "id" : "g10hr",
+      "text" : "EU"
+    }, {
+      "id" : "5hnugm",
+      "text" : "nonEU"
+    } ]
+  }, {
+    "id" : "84rllz",
+    "name" : "Encryption",
+    "values" : [ {
+      "id" : "2r6xe6",
+      "text" : "Encrypted"
+    }, {
+      "id" : "d01uv5",
+      "text" : "Processable"
+    } ]
+  } ]
 }

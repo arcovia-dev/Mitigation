@@ -7,6 +7,7 @@ import org.dataflowanalysis.dfd.datadictionary.AbstractAssignment;
 import org.dataflowanalysis.dfd.datadictionary.Behaviour;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
+import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -32,6 +33,10 @@ public class UncertaintySourceMitigationUtils {
 		var newDia = (DataFlowDiagram) EcoreUtil.copy(dataFlowDiagram);
 
 		var targetBehaviorId = source.getTarget().getId();
+		var targetBehaviorInpinEName = source.getTarget()
+				.getInPin().stream().map(p -> p.getEntityName()).toList();
+		var targetBehaviorOnpinEName = source.getTarget()
+				.getOutPin().stream().map(p -> p.getEntityName()).toList();
 		var oldAssignmentsIds = source.getTargetAssignments().stream().map(a -> a.getId()).toList();
 		var newAssignmentsIds = scenario.getTargetAssignments().stream().map(a -> a.getId()).toList();
 
@@ -40,16 +45,28 @@ public class UncertaintySourceMitigationUtils {
 		var newAssignments = allAssignments.stream().filter(b -> newAssignmentsIds.contains(b.getId())).toList();
 
 		correctNewAssignmentsPins(oldAssignments, newAssignments);
-
+		
 		// Add assignments from given scenario, remove assignments from default scenario
 		var ddTargetBehaviors = newDD.getBehaviour().stream().filter(b -> b.getId().equals(targetBehaviorId)).toList();
 
-		for (var targetBehavior : ddTargetBehaviors) {
-			targetBehavior.getAssignment().removeIf(a -> oldAssignmentsIds.contains(a.getId()));
-			targetBehavior.getAssignment().addAll(newAssignments);
-		}
+		var targetBehavior = ddTargetBehaviors.get(0);
+		targetBehavior.getAssignment().removeIf(a -> oldAssignmentsIds.contains(a.getId()));
+		targetBehavior.getAssignment().addAll(newAssignments);
 
 		replaceOldDDReferencesWithTheOnesFromNewDD(newDD, newDia);
+		
+		// Remove pins from alternative behavior so they do not occur twice in the dd
+		for (var behavior : newDD.getBehaviour()) {
+			if (behavior.getId().equals(targetBehaviorId)) {
+				continue;
+			}
+			var inpinsToRemove = behavior.getInPin().stream()
+					.filter(p -> targetBehaviorInpinEName.contains(p.getEntityName())).toList();
+			var outpinsToRemove = behavior.getOutPin().stream()
+					.filter(p -> targetBehaviorOnpinEName.contains(p.getEntityName())).toList();
+			behavior.getInPin().removeAll(inpinsToRemove);
+			behavior.getOutPin().removeAll(outpinsToRemove);
+		}
 
 		return new DataFlowDiagramAndDictionary(newDia, newDD);
 	}

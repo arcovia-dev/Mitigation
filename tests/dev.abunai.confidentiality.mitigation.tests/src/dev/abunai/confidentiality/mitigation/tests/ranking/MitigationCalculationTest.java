@@ -8,10 +8,11 @@ import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.junit.jupiter.api.Test;
 
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
+import dev.abunai.confidentiality.mitigation.ranking.RankerType;
+import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
 public class MitigationCalculationTest extends MitigationTestBase{
@@ -24,6 +25,16 @@ public class MitigationCalculationTest extends MitigationTestBase{
 	@Override
 	protected String getFilesName() {
 		return "mitigation_example";
+	}
+	
+	@Override
+	protected RankerType getRankerType() {
+		return RankerType.RANDOM_FOREST;
+	}
+
+	@Override
+	protected RankingAggregationMethod getAggregationMethod() {
+		return RankingAggregationMethod.EXPONENTIAL_RANKS;
 	}
 
 	@Override

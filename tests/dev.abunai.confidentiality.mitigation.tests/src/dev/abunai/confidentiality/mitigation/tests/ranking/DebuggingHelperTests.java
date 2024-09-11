@@ -7,19 +7,9 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
-
 public class DebuggingHelperTests {
 
 	protected final String pathToMeassurements = "meassurements.txt";
-
-	@Test
-	public void webToDfd() {
-		String path = "OBM.json";
-		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		var dd = conv.webToDfd(path);
-		conv.storeDFD(dd, "OBM");
-	}
 
 	@Test
 	public void seeAverageRuntime() {

@@ -39,7 +39,7 @@ class PrincipalComponentUncertaintyRanker(UncertaintyRanker):
         pca_full.fit(data_standardized)
         
         # Choose number of components
-        explained_variance = 0.9
+        explained_variance = 1
         n_components = next(i for i, cumulative_variance in enumerate(pca_full.explained_variance_ratio_.cumsum(), 1) if cumulative_variance >= explained_variance)
 
         # PCA with chosen number of components
