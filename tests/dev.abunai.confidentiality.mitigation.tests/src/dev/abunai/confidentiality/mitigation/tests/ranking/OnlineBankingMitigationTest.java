@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Test;
 
+import dev.abunai.confidentiality.mitigation.tests.MetricCalculator;
 import dev.abunai.confidentiality.mitigation.tests.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 import dev.abunai.confidentiality.mitigation.ranking.RankerType;
@@ -64,6 +65,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
+		printMetricies();
 	}
 	
 	@Test

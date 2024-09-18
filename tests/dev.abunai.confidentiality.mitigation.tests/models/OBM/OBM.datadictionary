@@ -176,4 +176,5 @@
     <outPin id="_-_iYQVi2Ee-DsdRrhZRfUQ" entityName="change_cc_limit_out_customer_settings_db"/>
     <assignment xsi:type="datadictionary:ForwardingAssignment" id="_CC2_U1i3Ee-DsdRrhZRfUQ" inputPins="_8kjjkFi2Ee-DsdRrhZRfUQ" outputPin="_-_iYQVi2Ee-DsdRrhZRfUQ"/>
   </behaviour>
+  <behaviour id="_SHR2BXQSEe-hMp-vXVNX6A" entityName="bank_clerk_view2"/>
 </datadictionary:DataDictionary>

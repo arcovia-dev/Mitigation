@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="ASCII"?>
 <uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+    <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_haiktnQSEe-hMp-vXVNX6A" entityName="Bank_Clerk_View_uncertain">
+    <target xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#_CqeuEVsqEe-imMDNUFdrZA"/>
+    <scenarios id="_mBN04HQSEe-hMp-vXVNX6A">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_W3GbInQSEe-hMp-vXVNX6A"/>
+    </scenarios>
+  </sources>
   <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_RWfdZ1c2Ee-m2-jCTo323w" entityName="CBD_Uncertain">
     <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#9zxnz"/>
     <targetProperties href="OBM.datadictionary#5hnugm"/>
@@ -41,13 +47,6 @@
       <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_MvXlUli3Ee-DsdRrhZRfUQ"/>
     </scenarios>
   </sources>
-  <!--<sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_KWai-FlREe-DJ5rTukmJ0Q" entityName="trans_money_uncertain">
-    <target href="OBM.datadictionary#__SzOh1c1Ee-aJpuBt44G8A"/>
-    <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_4SN9sllQEe-DJ5rTukmJ0Q"/>
-    <scenarios id="_NdPxAFlREe-DJ5rTukmJ0Q">
-      <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_HWacEliVEe-5ZvwoYHO9Vg"/>
-    </scenarios>
-  </sources>-->
   <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_x-556FsvEe-imMDNUFdrZA" entityName="Fond_Data_Uncertain">
     <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_OCehElsqEe-imMDNUFdrZA"/>
     <scenarios id="_5-x6gFsvEe-imMDNUFdrZA">

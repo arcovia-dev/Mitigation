@@ -12,11 +12,11 @@ public class DebuggingHelperTests {
 	protected final String pathToMeassurements = "meassurements.txt";
 
 	@Test
-	public void seeAverageRuntime() {
+	public float seeAverageRuntime() {
 		Path filePath = Paths.get(pathToMeassurements);
 		if (!Files.isRegularFile(filePath)) {
 			System.out.println("run mitigation first !!!");
-			return;
+			
 		}
 		try {
 			var contentLines = Files.readAllLines(filePath);
@@ -24,10 +24,11 @@ public class DebuggingHelperTests {
 			for (int i = contentLines.size() - 20; i < contentLines.size() && i >= 0; i++) {
 				sum += Integer.parseInt(contentLines.get(i));
 			}
-			System.out.println(sum / 20);
+			return (float)sum / (float)20;
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return 0.0f;
 	}
 }

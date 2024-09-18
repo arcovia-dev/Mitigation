@@ -63,10 +63,11 @@ public abstract class MitigationTestBase extends TestBase {
 
 	// Evaluation variables
 	protected final String pathToMeassurements = "meassurements.txt";
-	protected final boolean evalMode = false;
+	protected final boolean evalMode = true;
+	protected final String pathToRankingSolution = Paths.get("models", getFolderName(),getFilesName() + "_solution.txt").toString();
 	
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 1;
+	protected final int MITIGATION_RUNS = 30;
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
 	@BeforeEach
@@ -141,6 +142,55 @@ public abstract class MitigationTestBase extends TestBase {
 			e.printStackTrace();
 			return new ArrayList<>();
 		}
+	}
+	
+	public List<String> loadSolutionRanking() {
+		Path filePath = Paths.get(pathToRankingSolution);
+		try {
+			if (!Files.isRegularFile(filePath)) {
+				System.out.println("solution does not exist");
+				return new ArrayList<>();
+			}
+			return Files.readAllLines(filePath);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+	}
+	
+	public float seeAverageRuntime() {
+		Path filePath = Paths.get(pathToMeassurements);
+		if (!Files.isRegularFile(filePath)) {
+			System.out.println("run mitigation first !!!");
+			
+		}
+		try {
+			var contentLines = Files.readAllLines(filePath);
+			int sum = 0;
+			for (int i = contentLines.size() - 20; i < contentLines.size() && i >= 0; i++) {
+				sum += Integer.parseInt(contentLines.get(i));
+			}
+			return (float)sum / (float)20;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return 0.0f;
+	}
+	
+	public void printMetricies() {
+		var solutionRanking = loadSolutionRanking();
+		var programRanking = loadRanking();
+		var k = solutionRanking.size();
+		var r = MetricCalculator.determineR(solutionRanking, programRanking);
+		System.out.println("P@K");
+		System.out.println(MetricCalculator.calculatePAtK(k, solutionRanking, programRanking));
+		System.out.println("MAP@K");
+		System.out.println(MetricCalculator.calculateMAPAtK(k, solutionRanking, programRanking));
+		System.out.println("P@R");
+		System.out.println(MetricCalculator.calculatePAtK(r, solutionRanking, programRanking));
+		System.out.println("MAP@R");
+		System.out.println(MetricCalculator.calculateMAPAtK(r, solutionRanking, programRanking));
 	}
 
 	public List<MitigationModel> mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName,

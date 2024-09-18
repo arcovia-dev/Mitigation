@@ -164,6 +164,11 @@
     <behaviour href="OBM.datadictionary#_sSEhpVspEe-imMDNUFdrZA"/>
     <properties href="OBM.datadictionary#5hnugm"/>
   </nodes>
+  <nodes xsi:type="dataflowdiagram:Store" id="_W3GbInQSEe-hMp-vXVNX6A" entityName="Bank_Clerk_View2">
+    <behaviour href="OBM.datadictionary#_SHR2BXQSEe-hMp-vXVNX6A"/>
+    <properties href="OBM.datadictionary#5hnugm"/>
+    <properties href="OBM.datadictionary#d01uv5"/>
+  </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="_dEqG01sqEe-imMDNUFdrZA" entityName="fond_data_response">
     <behaviour href="OBM.datadictionary#_vNDFBVspEe-imMDNUFdrZA"/>
   </nodes>
