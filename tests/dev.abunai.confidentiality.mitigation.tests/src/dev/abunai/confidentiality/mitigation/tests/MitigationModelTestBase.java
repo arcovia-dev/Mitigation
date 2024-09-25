@@ -7,6 +7,9 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Test;
 
+/*
+ * Abstract class for executing each mitigation strategy
+ * */
 public abstract class MitigationModelTestBase extends MitigationTestBase{
 
 	protected String getFolderName() {
@@ -20,20 +23,18 @@ public abstract class MitigationModelTestBase extends MitigationTestBase{
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
+			return this.retrieveNodeLabels(it).contains("Develop")
 					&& this.retrieveDataLabels(it).contains("Personal");
-			return vio;
 		});
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
+			return this.retrieveNodeLabels(it).contains("Processable")
 					&& this.retrieveDataLabels(it).contains("Encrypted");
-			return vio;
 		});
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("nonEU")
+			return this.retrieveNodeLabels(it).contains("nonEU")
 					&& this.retrieveDataLabels(it).contains("Personal");
-			return vio;
 		});
+		
 		return constraints;
 	}
 	
@@ -42,6 +43,15 @@ public abstract class MitigationModelTestBase extends MitigationTestBase{
 		List<Float> meassurements = new ArrayList<>();
 		// For meassuring at least 30 runs are required
 		deleteOldMeassurement();
+		for (int i = 0; i < 1; i++) {
+			var startTime = System.currentTimeMillis();
+			mitigationStrategy = MitigationStrategy.INCREASING;
+			createTrainData();
+			//createMitigationCandidatesAutomatically();
+			var duration = System.currentTimeMillis() - startTime;
+			storeMeassurement(duration);
+		}
+		meassurements.add(seeAverageRuntime());
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.INCREASING;
@@ -51,7 +61,6 @@ public abstract class MitigationModelTestBase extends MitigationTestBase{
 			storeMeassurement(duration);
 		}
 		meassurements.add(seeAverageRuntime());
-		
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.QUATER;
@@ -70,38 +79,9 @@ public abstract class MitigationModelTestBase extends MitigationTestBase{
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
-		printMetricies();
 		meassurements.add(seeAverageRuntime());
+	
+		printMetricies();
 		System.out.println(meassurements);
 	}
-	
-	/*@Test
-	public void executeMitigation2() {
-		// For meassuring at least 30 runs are required
-		deleteOldMeassurement();
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.QUATER;
-			createTrainData();
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-		printMetricies();
-	}
-	
-	@Test
-	public void executeMitigation3() {
-		// For meassuring at least 30 runs are required
-		deleteOldMeassurement();
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.HALF;
-			createTrainData();
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-		printMetricies();
-	}*/
 }

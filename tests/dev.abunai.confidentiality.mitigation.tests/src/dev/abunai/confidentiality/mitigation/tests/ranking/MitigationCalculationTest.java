@@ -41,6 +41,8 @@ public class MitigationCalculationTest extends MitigationTestBase{
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
+			System.out.println(this.retrieveDataLabels(it));
+			System.out.println(it);
 			return this.retrieveNodeLabels(it).contains("nonEU") && this.retrieveDataLabels(it).contains("Personal");
 		});
 		return constraints;
@@ -69,6 +71,7 @@ public class MitigationCalculationTest extends MitigationTestBase{
 		var kProp =  mitigationModels.get(0).model().dataFlowDiagram().getNodes().stream()
 				.filter(n -> n.getEntityName().equals("k")).findAny().get().getProperties().get(0);
 		
+		System.out.println(allEntityNames);
 		assertTrue(bcFlow.isPresent());
 		assertTrue(ceFlow.isPresent());
 		assertFalse(iNode.isPresent());

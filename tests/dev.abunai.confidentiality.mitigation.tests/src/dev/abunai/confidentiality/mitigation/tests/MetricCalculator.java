@@ -2,6 +2,9 @@ package dev.abunai.confidentiality.mitigation.tests;
 
 import java.util.List;
 
+/*
+ * Class for the Calculation of P@K and MAP@K for a correct and a given ranking.
+ * */
 public class MetricCalculator {
 
 	public static float calculatePAtK(int k, List<String> correctRanking,

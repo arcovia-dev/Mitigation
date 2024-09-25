@@ -2,6 +2,10 @@ package dev.abunai.confidentiality.mitigation.ranking;
 
 import java.util.*;
 
+/*
+ * Class for simplification of a list of mitigation models.
+ * Marks which uncertainties got removed "wrongly".
+ * */
 public class MitigationListSimplifier {
 
 	public static List<List<String>> simplifyMitigationList(List<List<String>> models, List<Integer> scenarioAmounts) {

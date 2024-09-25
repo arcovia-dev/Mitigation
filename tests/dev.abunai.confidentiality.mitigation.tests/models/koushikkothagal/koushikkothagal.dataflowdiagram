@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dataflowdiagram:DataFlowDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" id="0">
+  <flows id="44" entityName="ratings_data_service" sourceNode="4" destinationNode="3">
+    <destinationPin href="koushikkothagal.datadictionary#42"/>
+    <sourcePin href="koushikkothagal.datadictionary#43"/>
+  </flows>
+  <flows id="47" entityName="movie_info_service" sourceNode="5" destinationNode="3">
+    <destinationPin href="koushikkothagal.datadictionary#42"/>
+    <sourcePin href="koushikkothagal.datadictionary#46"/>
+  </flows>
+  <flows id="50" entityName="external_website" sourceNode="2" destinationNode="5">
+    <destinationPin href="koushikkothagal.datadictionary#48"/>
+    <sourcePin href="koushikkothagal.datadictionary#49"/>
+  </flows>
+  <flows id="52" entityName="movie_catalog_service" sourceNode="6" destinationNode="3">
+    <destinationPin href="koushikkothagal.datadictionary#42"/>
+    <sourcePin href="koushikkothagal.datadictionary#51"/>
+  </flows>
+  <flows id="56" entityName="movie_catalog_service" sourceNode="6" destinationNode="4">
+    <destinationPin href="koushikkothagal.datadictionary#54"/>
+    <sourcePin href="koushikkothagal.datadictionary#55"/>
+  </flows>
+  <flows id="58" entityName="movie_catalog_service" sourceNode="6" destinationNode="5">
+    <destinationPin href="koushikkothagal.datadictionary#48"/>
+    <sourcePin href="koushikkothagal.datadictionary#57"/>
+  </flows>
+  <flows id="_-cw1MHZsEe-pmpCa7vPvig" entityName="authorization_server" sourceNode="_DoP4E3ZsEe-pmpCa7vPvig" destinationNode="3">
+    <destinationPin href="koushikkothagal.datadictionary#42"/>
+    <sourcePin href="koushikkothagal.datadictionary#_ccxhoXZsEe-pmpCa7vPvig"/>
+  </flows>
+  <flows id="_FqrNYHZtEe-pmpCa7vPvig" entityName="authorization_server" sourceNode="_DoP4E3ZsEe-pmpCa7vPvig" destinationNode="6">
+    <destinationPin href="koushikkothagal.datadictionary#_1guHQHZsEe-pmpCa7vPvig"/>
+    <sourcePin href="koushikkothagal.datadictionary#_beiXwXZsEe-pmpCa7vPvig"/>
+  </flows>
+  <flows id="_LjUbwHZtEe-pmpCa7vPvig" entityName="authorization_server" sourceNode="_DoP4E3ZsEe-pmpCa7vPvig" destinationNode="5">
+    <destinationPin href="koushikkothagal.datadictionary#48"/>
+    <sourcePin href="koushikkothagal.datadictionary#_YLq40XZsEe-pmpCa7vPvig"/>
+  </flows>
+  <flows id="_P2PpgHZtEe-pmpCa7vPvig" entityName="authorization_server" sourceNode="_DoP4E3ZsEe-pmpCa7vPvig" destinationNode="4">
+    <destinationPin href="koushikkothagal.datadictionary#54"/>
+    <sourcePin href="koushikkothagal.datadictionary#_cCxGMXZsEe-pmpCa7vPvig"/>
+  </flows>
+  <nodes xsi:type="dataflowdiagram:External" id="2" entityName="external_website">
+    <behaviour href="koushikkothagal.datadictionary#24"/>
+    <properties href="koushikkothagal.datadictionary#26"/>
+    <properties href="koushikkothagal.datadictionary#28"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="3" entityName="discovery_server">
+    <behaviour href="koushikkothagal.datadictionary#29"/>
+    <properties href="koushikkothagal.datadictionary#31"/>
+    <properties href="koushikkothagal.datadictionary#32"/>
+    <properties href="koushikkothagal.datadictionary#33"/>
+    <properties href="koushikkothagal.datadictionary#35"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="4" entityName="ratings_data_service">
+    <behaviour href="koushikkothagal.datadictionary#36"/>
+    <properties href="koushikkothagal.datadictionary#10"/>
+    <properties href="koushikkothagal.datadictionary#38"/>
+    <properties href="koushikkothagal.datadictionary#39"/>
+    <properties href="koushikkothagal.datadictionary#40"/>
+    <properties href="koushikkothagal.datadictionary#41"/>
+    <properties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="5" entityName="movie_info_service">
+    <behaviour href="koushikkothagal.datadictionary#8"/>
+    <properties href="koushikkothagal.datadictionary#10"/>
+    <properties href="koushikkothagal.datadictionary#12"/>
+    <properties href="koushikkothagal.datadictionary#13"/>
+    <properties href="koushikkothagal.datadictionary#15"/>
+    <properties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="6" entityName="movie_catalog_service">
+    <behaviour href="koushikkothagal.datadictionary#16"/>
+    <properties href="koushikkothagal.datadictionary#10"/>
+    <properties href="koushikkothagal.datadictionary#18"/>
+    <properties href="koushikkothagal.datadictionary#19"/>
+    <properties href="koushikkothagal.datadictionary#20"/>
+    <properties href="koushikkothagal.datadictionary#21"/>
+    <properties href="koushikkothagal.datadictionary#23"/>
+    <properties href="koushikkothagal.datadictionary#_j2m5IHZwEe-pmpCa7vPvig"/>
+    <properties href="koushikkothagal.datadictionary#_odrK4HZwEe-pmpCa7vPvig"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="_DoP4E3ZsEe-pmpCa7vPvig" entityName="auth_Server">
+    <behaviour href="koushikkothagal.datadictionary#_WbAzhXZsEe-pmpCa7vPvig"/>
+    <properties href="koushikkothagal.datadictionary#31"/>
+    <properties href="koushikkothagal.datadictionary#_LsNugHZsEe-pmpCa7vPvig"/>
+    <properties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
+  </nodes>
+</dataflowdiagram:DataFlowDiagram>

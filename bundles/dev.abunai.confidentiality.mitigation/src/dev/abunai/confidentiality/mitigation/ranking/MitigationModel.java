@@ -9,6 +9,5 @@ public record MitigationModel(DataFlowDiagramAndDictionary model, String modelNa
 		this.model = model;
 		this.modelName = modelName;
 		this.chosenScenarios = chosenScenarios;
-
 	}
 }

@@ -63,7 +63,7 @@ public abstract class MitigationTestBase extends TestBase {
 
 	// Evaluation variables
 	protected final String pathToMeassurements = "meassurements.txt";
-	protected final boolean evalMode = true;
+	protected final boolean evalMode = false;
 	protected final String pathToRankingSolution = Paths.get("models", getFolderName(),getFilesName() + "_solution.txt").toString();
 	
 	// Mitigation execution variables
@@ -321,7 +321,7 @@ public abstract class MitigationTestBase extends TestBase {
 	public void createMitigationCandidatesAutomatically() {
 		var analysis = getAnalysis();
 		var rankedUncertaintyEntityName = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE) ?
-				analysis.getUncertaintySources().stream().map(u -> u.getEntityName()).toList() : loadRanking();
+				BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis()) : loadRanking();
 		var ddAndDfd = getDDAndDfd(analysis);
 		List<MitigationModel> result = new ArrayList<>();
 		if (mitigationStrategy.equals(MitigationStrategy.INCREASING)) {
