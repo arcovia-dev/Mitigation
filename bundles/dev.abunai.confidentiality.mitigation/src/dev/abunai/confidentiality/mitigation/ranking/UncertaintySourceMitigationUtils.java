@@ -52,7 +52,8 @@ public class UncertaintySourceMitigationUtils {
 		replaceOldDDReferencesWithTheOnesFromNewDD(newDD, newDia);
 		
 		// Remove pins from not main behavior
-		List<Behaviour> behaviorsToRemove = new ArrayList<>();
+		// TODO: Use behavior ids of default scenario for alternative scenario
+		/*List<Behaviour> behaviorsToRemove = new ArrayList<>();
 		for (var behavior : newDD.getBehaviour()) {
 			if (behavior.getId().equals(targetBehaviorId)) {
 				continue;
@@ -64,7 +65,7 @@ public class UncertaintySourceMitigationUtils {
 				}
 			}
 		}
-		newDD.getBehaviour().removeAll(behaviorsToRemove);
+		newDD.getBehaviour().removeAll(behaviorsToRemove);*/
 
 		return new DataFlowDiagramAndDictionary(newDia, newDD);
 	}

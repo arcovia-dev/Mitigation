@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests;
+package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,13 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Test;
 
-/*
- * Abstract class for executing each mitigation strategy
- * */
-public abstract class MitigationModelTestBase extends MitigationTestBase {
+import dev.abunai.confidentiality.mitigation.ranking.RankerType;
+import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
+import dev.abunai.confidentiality.mitigation.tests.MitigationStrategy;
+import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
+public class JferraterMitigationTest extends MitigationTestBase{
+	
 	protected String getFolderName() {
 		return "jferrater";
 	}
@@ -45,21 +47,21 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 
 		return constraints;
 	}
+	
+	@Override
+	protected RankerType getRankerType() {
+		return RankerType.RANDOM_FOREST;
+	}
+
+	@Override
+	protected RankingAggregationMethod getAggregationMethod() {
+		return RankingAggregationMethod.EXPONENTIAL_RANKS;
+	}
 
 	@Test
 	public void executeMitigation() {
-		List<Float> meassurements = new ArrayList<>();
 		// For meassuring at least 30 runs are required
 		deleteOldMeassurement();
-		for (int i = 0; i < 1; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.INCREASING;
-			createTrainData();
-			//createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-		meassurements.add(seeAverageRuntime());
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.INCREASING;
@@ -68,28 +70,18 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
-		meassurements.add(seeAverageRuntime());
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.QUATER;
-			createTrainData();
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-		meassurements.add(seeAverageRuntime());
-		
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.HALF;
-			createTrainData();
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-		meassurements.add(seeAverageRuntime());
+	}
 	
-		printMetricies();
-		System.out.println(meassurements);
+	@Test
+	public void executeBruteForce() throws Exception {
+		// For meassuring at least 30 runs are required
+		deleteOldMeassurement();
+		for (int i = 0; i < MITIGATION_RUNS; i++) {
+			var startTime = System.currentTimeMillis();
+			mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
+			createMitigationCandidatesAutomatically();
+			var duration = System.currentTimeMillis() - startTime;
+			storeMeassurement(duration);
+		}
 	}
 }

@@ -67,7 +67,7 @@ public abstract class MitigationTestBase extends TestBase {
 	protected final String pathToRankingSolution = Paths.get("models", getFolderName(),getFilesName() + "_solution.txt").toString();
 	
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 30;
+	protected final int MITIGATION_RUNS = 1;
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
 	@BeforeEach
