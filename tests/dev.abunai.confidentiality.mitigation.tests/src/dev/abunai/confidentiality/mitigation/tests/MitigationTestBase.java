@@ -134,7 +134,7 @@ public abstract class MitigationTestBase extends TestBase {
 		Path filePath = Paths.get(pathToRelevantUncertainties);
 		try {
 			if (!Files.isRegularFile(filePath)) {
-				System.out.println("ranking does not exist");
+				System.out.println("Ranking does not exist");
 				return new ArrayList<>();
 			}
 			return Files.readAllLines(filePath);
@@ -148,7 +148,7 @@ public abstract class MitigationTestBase extends TestBase {
 		Path filePath = Paths.get(pathToRankingSolution);
 		try {
 			if (!Files.isRegularFile(filePath)) {
-				System.out.println("solution does not exist");
+				System.out.println("Metric Calcuation Solution does not exist");
 				return new ArrayList<>();
 			}
 			return Files.readAllLines(filePath);

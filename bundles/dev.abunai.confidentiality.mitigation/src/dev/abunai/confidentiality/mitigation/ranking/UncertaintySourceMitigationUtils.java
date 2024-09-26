@@ -5,6 +5,7 @@ import java.util.*;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.AbstractAssignment;
 import org.dataflowanalysis.dfd.datadictionary.Behaviour;
+import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
@@ -37,7 +38,6 @@ public class UncertaintySourceMitigationUtils {
 
 		var allAssignments = newDD.getBehaviour().stream().map(b -> b.getAssignment()).flatMap(List::stream).toList();
 		var oldAssignments = allAssignments.stream().filter(a -> oldAssignmentsIds.contains(a.getId())).toList();
-		var replacedOutpinsEname = oldAssignments.stream().map(a -> a.getOutputPin().getEntityName()).toList();
 		var newAssignments = allAssignments.stream().filter(b -> newAssignmentsIds.contains(b.getId())).toList();
 
 		correctNewAssignmentsPins(oldAssignments, newAssignments);
@@ -50,22 +50,29 @@ public class UncertaintySourceMitigationUtils {
 		targetBehavior.getAssignment().addAll(newAssignments);
 
 		replaceOldDDReferencesWithTheOnesFromNewDD(newDD, newDia);
-		
-		// Remove pins from not main behavior
-		// TODO: Use behavior ids of default scenario for alternative scenario
-		/*List<Behaviour> behaviorsToRemove = new ArrayList<>();
+
+		// Make sure pins do not occur twice
+		var targetBehaviorInpinsIds = targetBehavior.getInPin().stream().map(p -> p.getId()).toList();
+		var targetBehaviorOutpinsIds = targetBehavior.getInPin().stream().map(p -> p.getId()).toList();
 		for (var behavior : newDD.getBehaviour()) {
-			if (behavior.getId().equals(targetBehaviorId)) {
+			if(behavior.getId().equals(targetBehavior.getId())) {
 				continue;
 			}
-			var outPinEName = behavior.getOutPin().stream().map(p -> p.getEntityName()).toList();
-			for (var eName : outPinEName){
-				if (replacedOutpinsEname.contains(eName)) {
-					behaviorsToRemove.add(behavior);
+			var inPinsToRemove = new ArrayList<Pin>();
+			var outPinsToRemove = new ArrayList<Pin>();
+			for (var inPin : behavior.getInPin()) {
+				if (targetBehaviorInpinsIds.contains(inPin.getId())) {
+					inPinsToRemove.add(inPin);
 				}
 			}
+			behavior.getInPin().removeAll(inPinsToRemove);
+			for (var outPin : behavior.getInPin()) {
+				if (targetBehaviorOutpinsIds.contains(outPin.getId())) {
+					outPinsToRemove.add(outPin);
+				}
+			}
+			behavior.getOutPin().removeAll(outPinsToRemove);
 		}
-		newDD.getBehaviour().removeAll(behaviorsToRemove);*/
 
 		return new DataFlowDiagramAndDictionary(newDia, newDD);
 	}
