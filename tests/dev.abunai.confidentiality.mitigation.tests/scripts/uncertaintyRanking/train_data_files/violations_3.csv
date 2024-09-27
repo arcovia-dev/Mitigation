@@ -1,5 +1,12 @@
 conf_Server;conf_Server2;conf_Server3;conf_Server4;conf_Server5;conf_Server6;conf_Server7;auth Server8;github repo9;customer Service10;customer Service11;item service12;item Service13;price Service14;price Service15;store Service16;store Service17;Logging Server18;Secret manager19;Customer Service21;Item Service22;Constraint violated
-Aa6y7oMG6fEe-oNftVav3f1w;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;True
+I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;D;I;I;True
+I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;True
+I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;True
+I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;True
+I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;D;I;I;True
+I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;D;I;I;True
+I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;D;I;I;True
+I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;True
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AaG8vXwG9SEe-0mtX7J5aVww;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;AaqBphUHW7Ee-pUNsaj26y1w;False
 I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;I;D;I;D;False
@@ -13,9 +20,7 @@ I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQ
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AaKEIOgHBaEe-JbaZjPWQrog;D;I;AaqBphUHW7Ee-pUNsaj26y1w;False
 I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;D;D;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;D;I;D;False
-I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;D;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;AafmX1QHW7Ee-pUNsaj26y1w;I;False
-I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;D;I;I;False
 I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;D;I;AaqBphUHW7Ee-pUNsaj26y1w;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AaKEIOgHBaEe-JbaZjPWQrog;AapH5EsHBeEe-JbaZjPWQrog;I;D;False
@@ -26,22 +31,18 @@ I;I;I;I;I;I;I;I;I;Aa1XDTcG9REe-0mtX7J5aVww;I;I;I;I;I;I;I;I;D;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AaKEIOgHBaEe-JbaZjPWQrog;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;AapH5EsHBeEe-JbaZjPWQrog;I;D;False
 I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
-I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;D;I;I;False
 I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;D;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;Aa75P1IG9REe-0mtX7J5aVww;I;I;I;I;I;I;D;I;I;False
 Aa6y7oMG6fEe-oNftVav3f1w;I;I;I;I;I;I;I;AaDkvNEG9FEe-oNftVav3f1w;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;D;I;D;False
 I;I;I;I;I;I;I;I;I;I;I;Aa75P1IG9REe-0mtX7J5aVww;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;I;D;AafmX1QHW7Ee-pUNsaj26y1w;I;False
-I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
-I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;D;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;D;False
 D;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;AapH5EsHBeEe-JbaZjPWQrog;I;AaqBphUHW7Ee-pUNsaj26y1w;False
 D;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;D;I;I;False
 I;I;I;I;I;I;I;I;I;Aa1XDTcG9REe-0mtX7J5aVww;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
-I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 Aa6y7oMG6fEe-oNftVav3f1w;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;D;I;I;False
 I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;D;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;AaCjBlgG9SEe-0mtX7J5aVww;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
@@ -50,8 +51,6 @@ I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQ
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;D;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;AaqBphUHW7Ee-pUNsaj26y1w;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;D;I;False
-I;I;I;I;I;I;I;I;I;I;I;D;I;I;I;I;I;I;D;I;I;False
-I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;AaqBphUHW7Ee-pUNsaj26y1w;False
 I;I;I;I;I;I;I;Aaq2hf0HBVEe-JbaZjPWQrog;I;I;I;I;I;I;I;I;I;I;D;AafmX1QHW7Ee-pUNsaj26y1w;I;False
 I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;AafmX1QHW7Ee-pUNsaj26y1w;I;False
@@ -60,5 +59,6 @@ I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AaKEIOgHBaEe-JbaZjPWQrog;AapH5EsHBeEe-JbaZjPWQ
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;D;I;False
 I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;I;D;D;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;I;I;False
+Aa6y7oMG6fEe-oNftVav3f1w;I;I;I;I;I;I;I;D;I;I;I;I;I;I;I;I;I;AapH5EsHBeEe-JbaZjPWQrog;I;I;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;AaKEIOgHBaEe-JbaZjPWQrog;D;I;D;False
 I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;I;D;D;I;AaqBphUHW7Ee-pUNsaj26y1w;False

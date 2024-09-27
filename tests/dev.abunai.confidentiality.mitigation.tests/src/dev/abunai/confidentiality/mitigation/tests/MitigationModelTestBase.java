@@ -32,8 +32,16 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 		});
 		constraints.add(it -> {
 			return this.retrieveDataLabels(it).contains("entrypoint")
-					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");});
-
+					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
+		});
+		/*constraints.add(it -> {
+			return this.retrieveDataLabels(it).contains("internal")
+					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
+		});*/
+		constraints.add(it -> {
+			 return this.retrieveNodeLabels(it).contains("internal") &&
+					!this.retrieveNodeLabels(it).contains("local_logging");
+		});
 		return constraints;
 	}
 
