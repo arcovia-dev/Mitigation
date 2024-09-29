@@ -1,0 +1,3 @@
+pip install Pandas
+pip install sklearn
+pip install numpy

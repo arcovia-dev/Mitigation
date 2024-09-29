@@ -11,7 +11,7 @@
 heapdump.*
 Snap.*
 *.txt
-!bundles/dev.abunai.confidentiality.mitigation/scripts
+!tests/dev.abunai.confidentiality.mitigation.tests/scripts/uncertaintyRanking/requirements.txt
 
 # MAC
 __MACOSX/
