@@ -35,7 +35,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
 		});
 		/*constraints.add(it -> {
-			return this.retrieveDataLabels(it).contains("internal")
+			return this.retrieveNodeLabels(it).contains("internal")
 					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
 		});*/
 		constraints.add(it -> {
@@ -44,6 +44,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 		});
 		return constraints;
 	}
+
 
 	@Test
 	public void executeMitigation() {
@@ -60,7 +61,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 			storeMeassurement(duration);
 		}
 		meassurements.add(seeAverageRuntime());
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
+		/*for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.QUATER;
 			createTrainData();
@@ -79,7 +80,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 			storeMeassurement(duration);
 		}
 		meassurements.add(seeAverageRuntime());
-	
+	*/
 		printMetricies();
 		System.out.println(meassurements);
 	}

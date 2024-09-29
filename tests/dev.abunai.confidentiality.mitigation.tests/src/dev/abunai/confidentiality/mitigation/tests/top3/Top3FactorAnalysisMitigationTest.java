@@ -5,7 +5,6 @@ import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 import dev.abunai.confidentiality.mitigation.tests.MitigationModelTestBase;
 
 public class Top3FactorAnalysisMitigationTest extends MitigationModelTestBase {
-
 	
 	protected RankerType getRankerType() {
 		return RankerType.FAMD;

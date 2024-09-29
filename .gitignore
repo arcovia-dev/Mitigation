@@ -11,6 +11,7 @@
 heapdump.*
 Snap.*
 *.txt
+!bundles/dev.abunai.confidentiality.mitigation/scripts
 
 # MAC
 __MACOSX/

@@ -37,7 +37,7 @@ public class JferraterMitigationTest extends MitigationTestBase{
 					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
 		});
 		/*constraints.add(it -> {
-			return this.retrieveDataLabels(it).contains("internal")
+			return this.retrieveNodeLabels(it).contains("internal")
 					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
 		});*/
 		constraints.add(it -> {

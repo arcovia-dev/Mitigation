@@ -401,7 +401,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward authorization_server\nset Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nset Stereotype.encrypted_connection = TRUE",
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nforward authorization_server",
         "id" : "82",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -437,7 +437,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward authorization_server\nset Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nset Stereotype.encrypted_connection = TRUE",
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nforward authorization_server",
         "id" : "87",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -473,7 +473,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward authorization_server\nset Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nset Stereotype.encrypted_connection = TRUE",
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nforward authorization_server",
         "id" : "92",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -509,7 +509,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward authorization_server\nset Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nset Stereotype.encrypted_connection = TRUE",
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nforward authorization_server",
         "id" : "97",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -671,9 +671,6 @@
       }, {
         "labelTypeId" : "11",
         "labelTypeValueId" : "1116"
-      }, {
-        "labelTypeId" : "11",
-        "labelTypeValueId" : "1169"
       } ],
       "ports" : [ {
         "id" : "6116",
