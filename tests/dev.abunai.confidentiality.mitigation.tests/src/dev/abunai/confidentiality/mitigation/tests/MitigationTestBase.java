@@ -57,7 +57,7 @@ public abstract class MitigationTestBase extends TestBase {
 	protected final URI modelUncertaintyURI = ResourceUtils.createRelativePluginURI(
 			Paths.get("models", getFolderName(), getFilesName() + ".uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
 	protected final URI mitigationUncertaintyURI = ResourceUtils.createRelativePluginURI(
-			Paths.get("models", "mitigation", "mitigation.uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
+			Paths.get("mitigation", "mitigation.uncertainty").toString(), TEST_MODEL_PROJECT_NAME);
 
 	// Evaluation variables
 	protected final String pathToMeassurements = "meassurements.txt";

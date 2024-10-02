@@ -12,6 +12,7 @@ heapdump.*
 Snap.*
 *.txt
 __pycache__
+mitigation
 
 # MAC
 __MACOSX/

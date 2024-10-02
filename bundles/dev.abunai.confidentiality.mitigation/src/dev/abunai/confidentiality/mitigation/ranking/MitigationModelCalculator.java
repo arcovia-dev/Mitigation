@@ -1,6 +1,7 @@
 package dev.abunai.confidentiality.mitigation.ranking;
 
 import java.io.IOException;
+import java.io.File;
 import java.nio.file.*;
 import java.util.*;
 import java.util.function.Predicate;
@@ -31,6 +32,8 @@ public class MitigationModelCalculator {
 			UncertaintySubset relevantUncertaintySubset, MitigationURIs mitigationURIs,
 			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, boolean findFirstModel,
 			Class<? extends Plugin> pluginActivator) {
+	    
+	    cleanOutputPath(mitigationURIs);
 
 		List<MitigationModel> mitigationCandidates = new ArrayList<>();
 		createMitigationCandidates(0, relevantUncertaintySubset.getSubsetSources(), diagramAndDict,
@@ -40,6 +43,13 @@ public class MitigationModelCalculator {
 		return storeMitigationCandidates(mitigationCandidates, irrelevantUncertainties, mitigationURIs,
 				constraintFunctions, findFirstModel, pluginActivator);
 	}
+
+    private static void cleanOutputPath(MitigationURIs mitigationURIs) {
+        var outputPath = new File(getOutputPathFromURI(mitigationURIs.mitigationUncertaintyURI()));
+	    for (var file : outputPath.listFiles()) {
+            file.delete();
+        }
+    }
 
 	private static boolean isViolationfreeModel(String outputPath, int number, String projectName,
 			List<Predicate<? super AbstractVertex<?>>> constraintFunctions, Class<? extends Plugin> pluginActivator) {
@@ -196,7 +206,7 @@ public class MitigationModelCalculator {
 
 	private static String getOutputPathFromURI(URI mitigationUncertaintyURI) {
 		var segments = mitigationUncertaintyURI.segmentsList();
-		return Paths.get(segments.get(2), segments.get(3)).toString();
+		return Paths.get(segments.get(2)).toString();
 	}
 
 }
