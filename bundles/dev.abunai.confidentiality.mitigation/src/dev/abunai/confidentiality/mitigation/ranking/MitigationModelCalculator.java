@@ -113,8 +113,7 @@ public class MitigationModelCalculator {
 			conv.storeDFD(candidates.get(i).model(), Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
 			if (isViolationfreeModel(outputPath, i, projectName, constraintFunctions, pluginActivator)) {
 				result.add(candidates.get(i));
-				var web = conv.dfdToWeb(candidates.get(i).model());
-				conv.storeWeb(web, "mitigation.json");
+
 				if (findFirstModel) {
 					return result;
 				}

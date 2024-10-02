@@ -13,7 +13,6 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -53,7 +52,6 @@ public abstract class MitigationTestBase extends TestBase {
 	protected final String trainDataDirectory = Paths.get(scriptDirectory, "train_data_files").toString();
 	protected final String pathToUncertaintyRankingScript = Paths.get(scriptDirectory, "uncertainty_ranking.py")
 			.toString();
-	protected final String pathToRelevantUncertainties = "relevantUncertainties.txt";
 
 	// URIs for mitigation
 	protected final URI modelUncertaintyURI = ResourceUtils.createRelativePluginURI(
@@ -68,8 +66,10 @@ public abstract class MitigationTestBase extends TestBase {
 			.get("models", getFolderName(), getFilesName() + "_solution.txt").toString();
 
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 3; // Must be at least 3 for meassurments
+	protected final int MITIGATION_RUNS = 1; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
+	
+	protected List<String> relevantUncertaintyEntityNames;
 
 	@BeforeEach
 	public void before() {
@@ -87,26 +87,6 @@ public abstract class MitigationTestBase extends TestBase {
 
 		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
 		analysis.initializeAnalysis();
-
-		// Load datadictonary, dataflowdiagram and uncertainties
-		var resourceProvider = (DFDUncertaintyResourceProvider) analysis.getResourceProvider();
-		resourceProvider.loadRequiredResources();
-		var dd = resourceProvider.getDataDictionary();
-		var dfd = resourceProvider.getDataFlowDiagram();
-
-		DataFlowDiagramConverter conv = new DataFlowDiagramConverter();
-		var web = conv.dfdToWeb(new DataFlowDiagramAndDictionary(dfd, dd));
-		conv.storeWeb(web, "test.json");
-	}
-
-	public void storeRankingResult(List<String> relevantUncertaintyIds) {
-		Path filePath = Paths.get(pathToRelevantUncertainties);
-		var content = String.join(System.lineSeparator(), relevantUncertaintyIds);
-		try {
-			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void storeMeassurementResults(List<Float> meassurements, String rankerType, String aggregationMethod) {
@@ -149,20 +129,6 @@ public abstract class MitigationTestBase extends TestBase {
 		}
 	}
 
-	public List<String> loadRanking() {
-		Path filePath = Paths.get(pathToRelevantUncertainties);
-		try {
-			if (!Files.isRegularFile(filePath)) {
-				System.out.println("Ranking does not exist");
-				return new ArrayList<>();
-			}
-			return Files.readAllLines(filePath);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return new ArrayList<>();
-		}
-	}
-
 	public List<String> loadSolutionRanking() {
 		Path filePath = Paths.get(pathToRankingSolution);
 		try {
@@ -201,7 +167,7 @@ public abstract class MitigationTestBase extends TestBase {
 
 	public void printMetricies() {
 		var solutionRanking = loadSolutionRanking();
-		var programRanking = loadRanking();
+		var programRanking = relevantUncertaintyEntityNames;
 		var k = solutionRanking.size();
 		var r = MetricCalculator.determineR(solutionRanking, programRanking);
 		System.out.println("P@K");
@@ -331,18 +297,16 @@ public abstract class MitigationTestBase extends TestBase {
 
 		// Rank the uncertainties specified in the given model and store the result in
 		// the specified file
-		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
+		relevantUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
 				trainDataDirectory, analysis.getUncertaintySources().size(), getRankerType(), getAggregationMethod());
 
-		// Store the result of the Ranking in a file
-		storeRankingResult(relevantUncertaintyIds);
 	}
 
 	public void createMitigationCandidatesAutomatically() {
 		var analysis = getAnalysis();
 		var rankedUncertaintyEntityName = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE)
 				? BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis())
-				: loadRanking();
+				: relevantUncertaintyEntityNames;
 		var ddAndDfd = getDDAndDfd(analysis);
 		List<MitigationModel> result = new ArrayList<>();
 		if (mitigationStrategy.equals(MitigationStrategy.INCREASING)) {

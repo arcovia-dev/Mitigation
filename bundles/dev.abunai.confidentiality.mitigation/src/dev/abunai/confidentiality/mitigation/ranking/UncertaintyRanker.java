@@ -12,7 +12,7 @@ public class UncertaintyRanker {
 	public static List<String> rankUncertaintiesBasedOnTrainData(String scriptPath, String pathToTrainDataFolder,
 			int rankingLength, RankerType rankerType,  RankingAggregationMethod aggregationMethod) {
 		// Command to run the Python script
-		String[] command = { "python", scriptPath, pathToTrainDataFolder, Integer.toString(rankingLength),
+		String[] command = { "/Users/nniehues/miniconda3/bin/python", scriptPath, pathToTrainDataFolder, Integer.toString(rankingLength),
 				getRankerTypeCommandParameter(rankerType), getAggregationMethodCommandParamter(aggregationMethod) };
 		try {
 			// Execute the command
@@ -29,6 +29,16 @@ public class UncertaintyRanker {
 
 			// Get the output as a String
 			String result = output.toString();
+			
+			reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+			output = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append(System.lineSeparator());
+            }
+            
+            System.out.println(output.toString());
+			
 
 			return Arrays.asList(result.split(System.lineSeparator()));
 

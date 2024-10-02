@@ -11,7 +11,7 @@
 heapdump.*
 Snap.*
 *.txt
-!tests/dev.abunai.confidentiality.mitigation.tests/scripts/uncertaintyRanking/requirements.txt
+__pycache__
 
 # MAC
 __MACOSX/
