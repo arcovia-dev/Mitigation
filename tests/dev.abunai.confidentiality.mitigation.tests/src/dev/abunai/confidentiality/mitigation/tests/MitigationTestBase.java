@@ -42,9 +42,9 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract String getFilesName();
 
 	protected abstract List<Predicate<? super AbstractVertex<?>>> getConstraints();
-	
+
 	protected abstract RankerType getRankerType();
-	
+
 	protected abstract RankingAggregationMethod getAggregationMethod();
 
 	// Mitigation ranking variables
@@ -63,11 +63,12 @@ public abstract class MitigationTestBase extends TestBase {
 
 	// Evaluation variables
 	protected final String pathToMeassurements = "meassurements.txt";
-	protected final boolean evalMode = false;
-	protected final String pathToRankingSolution = Paths.get("models", getFolderName(),getFilesName() + "_solution.txt").toString();
-	
+	protected final boolean evalMode = true;
+	protected final String pathToRankingSolution = Paths
+			.get("models", getFolderName(), getFilesName() + "_solution.txt").toString();
+
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 1;
+	protected final int MITIGATION_RUNS = 3; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
 	@BeforeEach
@@ -108,6 +109,24 @@ public abstract class MitigationTestBase extends TestBase {
 		}
 	}
 
+	public void storeMeassurementResults(List<Float> meassurements, String rankerType, String aggregationMethod) {
+		Path filePath = Paths.get("meassurement_results.txt");
+		try {
+			var content = Files.exists(filePath) ? Files.readString(filePath) : "";
+			content += rankerType + " " + aggregationMethod + System.lineSeparator();
+			if (rankerType.equals("BRUTE FORCE")) {
+				content += "Runtime: " + Float.toString(meassurements.get(0)) + System.lineSeparator();
+			} else {
+				content += "Increasing: " + Float.toString(meassurements.get(0)) + System.lineSeparator();
+				content += "Quater: " + Float.toString(meassurements.get(1)) + System.lineSeparator();
+				content += "Half: " + Float.toString(meassurements.get(2)) + System.lineSeparator();
+				Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void deleteOldMeassurement() {
 		Path filePath = Paths.get(pathToMeassurements);
 		try {
@@ -121,7 +140,7 @@ public abstract class MitigationTestBase extends TestBase {
 	public void storeMeassurement(long meassurement) {
 		Path filePath = Paths.get(pathToMeassurements);
 		try {
-			var content = Files.readString(filePath);
+			var content = Files.exists(filePath) ? Files.readString(filePath) : "";
 			content += Long.toString(meassurement) + System.lineSeparator();
 			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
 
@@ -143,7 +162,7 @@ public abstract class MitigationTestBase extends TestBase {
 			return new ArrayList<>();
 		}
 	}
-	
+
 	public List<String> loadSolutionRanking() {
 		Path filePath = Paths.get(pathToRankingSolution);
 		try {
@@ -157,27 +176,29 @@ public abstract class MitigationTestBase extends TestBase {
 			return new ArrayList<>();
 		}
 	}
-	
+
 	public float seeAverageRuntime() {
 		Path filePath = Paths.get(pathToMeassurements);
 		if (!Files.isRegularFile(filePath)) {
 			System.out.println("run mitigation first !!!");
-			
+
 		}
 		try {
 			var contentLines = Files.readAllLines(filePath);
 			int sum = 0;
-			for (int i = contentLines.size() - 20; i < contentLines.size() && i >= 0; i++) {
+			var warmupEnd = MITIGATION_RUNS / 3;
+			for (int i = contentLines.size() - 2 * warmupEnd; i < contentLines.size() && i >= 0; i++) {
 				sum += Integer.parseInt(contentLines.get(i));
 			}
-			return (float)sum / (float)20;
+			System.out.println((float) sum / ((float) 2 * warmupEnd));
+			return (float) sum / ((float) 2 * warmupEnd);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return 0.0f;
 	}
-	
+
 	public void printMetricies() {
 		var solutionRanking = loadSolutionRanking();
 		var programRanking = loadRanking();
@@ -215,9 +236,8 @@ public abstract class MitigationTestBase extends TestBase {
 					break;
 				else {
 					var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-							result.stream().map(m -> m.chosenScenarios()).toList(),
-							analysis.getUncertaintySources().stream()
-									.map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
+							result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
+									.stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
 					System.out.println(i);
 					System.out.println(result);
 					System.out.println(relevantUncertaintyEntityNames);
@@ -237,8 +257,8 @@ public abstract class MitigationTestBase extends TestBase {
 		List<MitigationModel> result = new ArrayList<MitigationModel>();
 		// Extract relevant uncertainties
 		var relevantEntityNames = rankedUncertaintyEntityName.stream().limit(n).toList();
-		var relevantUncertainties = analysis.getUncertaintySources().stream().filter(u -> relevantEntityNames.contains(u.getEntityName()))
-				.toList();
+		var relevantUncertainties = analysis.getUncertaintySources().stream()
+				.filter(u -> relevantEntityNames.contains(u.getEntityName())).toList();
 
 		// Execute mitigation
 		result = MitigationModelCalculator.findMitigatingModel(dfdAnddd,
@@ -248,8 +268,8 @@ public abstract class MitigationTestBase extends TestBase {
 
 		if (result.size() > 0 && !evalMode) {
 			var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-					result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
-							.stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
+					result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources().stream()
+							.map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
 			System.out.println(result);
 			System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
 			for (int k = 0; k < resultMinimal.size(); k++) {
@@ -260,7 +280,7 @@ public abstract class MitigationTestBase extends TestBase {
 
 		return result;
 	}
-	
+
 	protected UncertaintyAwareConfidentialityAnalysis getAnalysis() {
 		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
 				.toString();
@@ -277,7 +297,7 @@ public abstract class MitigationTestBase extends TestBase {
 		analysis.initializeAnalysis();
 		return analysis;
 	}
-	
+
 	public void createTrainData() {
 		var trainDir = new File(trainDataDirectory);
 		for (File file : trainDir.listFiles()) {
@@ -312,7 +332,7 @@ public abstract class MitigationTestBase extends TestBase {
 		// Rank the uncertainties specified in the given model and store the result in
 		// the specified file
 		var relevantUncertaintyIds = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
-				trainDataDirectory, analysis.getUncertaintySources().size(), getRankerType(),getAggregationMethod());
+				trainDataDirectory, analysis.getUncertaintySources().size(), getRankerType(), getAggregationMethod());
 
 		// Store the result of the Ranking in a file
 		storeRankingResult(relevantUncertaintyIds);
@@ -320,8 +340,9 @@ public abstract class MitigationTestBase extends TestBase {
 
 	public void createMitigationCandidatesAutomatically() {
 		var analysis = getAnalysis();
-		var rankedUncertaintyEntityName = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE) ?
-				BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis()) : loadRanking();
+		var rankedUncertaintyEntityName = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE)
+				? BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis())
+				: loadRanking();
 		var ddAndDfd = getDDAndDfd(analysis);
 		List<MitigationModel> result = new ArrayList<>();
 		if (mitigationStrategy.equals(MitigationStrategy.INCREASING)) {
@@ -334,15 +355,14 @@ public abstract class MitigationTestBase extends TestBase {
 					break;
 				}
 			}
-		} else if (mitigationStrategy.equals(MitigationStrategy.HALF)){
+		} else if (mitigationStrategy.equals(MitigationStrategy.HALF)) {
 			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 					rankedUncertaintyEntityName.size() / 2, analysis, ddAndDfd);
 			if (result.size() == 0) {
 				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 						rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
 			}
-		}
-		else {
+		} else {
 			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 					rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
 		}

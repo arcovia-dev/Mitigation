@@ -243,7 +243,7 @@
         "labelTypeValueId" : "55"
       } ],
       "ports" : [ {
-        "behavior" : "set Stereotype.github_repository = TRUE\nset Stereotype.entrypoint = TRUE\nset Stereotype.restful_http = TRUE\nset Protocol.HTTPS = TRUE\nset Stereotype.encrypted_connection = TRUE",
+        "behavior" : "set Stereotype.github_repository = TRUE\nset Stereotype.entrypoint = TRUE\nset Stereotype.restful_http = TRUE\nset Protocol.HTTPS = TRUE",
         "id" : "66",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -650,9 +650,6 @@
       }, {
         "labelTypeId" : "11",
         "labelTypeValueId" : "1116"
-      }, {
-        "labelTypeId" : "11",
-        "labelTypeValueId" : "3116"
       } ],
       "ports" : [ {
         "behavior" : "set Stereotype.infrastructural = TRUE\nset Stereotype.dummy_1 = TRUE\nset Stereotype.authenticated_request = TRUE",
