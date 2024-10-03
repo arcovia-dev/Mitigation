@@ -45,8 +45,13 @@ public class MitigationModelCalculator {
 	}
 
     private static void cleanOutputPath(MitigationURIs mitigationURIs) {
-        var outputPath = new File(getOutputPathFromURI(mitigationURIs.mitigationUncertaintyURI()));
-	    for (var file : outputPath.listFiles()) {
+        var outputDirectoryPathString = getOutputPathFromURI(mitigationURIs.mitigationUncertaintyURI());
+        var outputDirectoryPath = Paths.get(outputDirectoryPathString);
+        var outputDirectory = new File(outputDirectoryPathString);
+        if (!Files.exists(outputDirectoryPath)) {
+            return;
+        }
+        for (var file : outputDirectory.listFiles()) {
             file.delete();
         }
     }
