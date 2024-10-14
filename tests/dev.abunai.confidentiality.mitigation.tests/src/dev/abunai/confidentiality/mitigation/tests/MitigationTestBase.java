@@ -47,7 +47,9 @@ public abstract class MitigationTestBase extends TestBase {
 
 	protected abstract RankingAggregationMethod getAggregationMethod();
 	
-	protected abstract Optional<String> customPythonPath();
+	protected String customPythonPath() {
+	    return "python3";
+	}
 
 	// Mitigation ranking variables
 	protected final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();

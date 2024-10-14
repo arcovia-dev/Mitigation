@@ -23,10 +23,6 @@ public class JferraterMitigationTest extends MitigationTestBase{
 		return "jferrater";
 	}
 	
-	protected Optional<String> customPythonPath() {
-		return Optional.empty();
-	}
-
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {

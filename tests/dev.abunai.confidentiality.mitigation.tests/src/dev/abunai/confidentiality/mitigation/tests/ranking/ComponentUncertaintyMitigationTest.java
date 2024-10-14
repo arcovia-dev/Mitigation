@@ -23,10 +23,6 @@ public class ComponentUncertaintyMitigationTest extends MitigationTestBase {
 		return "comp";
 	}
 	
-	protected Optional<String> customPythonPath() {
-		return Optional.empty();
-	}
-
 	@Override
 	protected RankerType getRankerType() {
 		return RankerType.RANDOM_FOREST;

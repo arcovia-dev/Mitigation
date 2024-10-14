@@ -23,9 +23,6 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 		return "int";
 	}
 	
-	protected Optional<String> customPythonPath() {
-		return Optional.empty();
-	}
 	
 	@Override
 	protected RankerType getRankerType() {

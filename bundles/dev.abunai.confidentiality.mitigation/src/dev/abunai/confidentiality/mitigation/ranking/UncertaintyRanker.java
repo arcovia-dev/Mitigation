@@ -10,10 +10,9 @@ import java.io.IOException;
 public class UncertaintyRanker {
 
 
-	public static List<String> rankUncertaintiesBasedOnTrainData(Optional<String> customPythonPath, String scriptPath, String pathToTrainDataFolder,
+	public static List<String> rankUncertaintiesBasedOnTrainData(String pythonPath, String scriptPath, String pathToTrainDataFolder,
 			int rankingLength, RankerType rankerType,  RankingAggregationMethod aggregationMethod) {
 		// Command to run the Python script
-		var pythonPath = customPythonPath.isPresent() ? customPythonPath.get() : "python3"; 
 		String[] command = { pythonPath, scriptPath, pathToTrainDataFolder, Integer.toString(rankingLength),
 				getRankerTypeCommandParameter(rankerType), getAggregationMethodCommandParamter(aggregationMethod) };
 		try {

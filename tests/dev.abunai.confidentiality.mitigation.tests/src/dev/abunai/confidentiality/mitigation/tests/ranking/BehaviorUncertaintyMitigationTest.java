@@ -23,8 +23,8 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 		return "beh";
 	}
 	
-	protected Optional<String> customPythonPath() {
-		return Optional.empty();
+	protected String customPythonPath() {
+		return "python";
 	}
 	
 	@Override

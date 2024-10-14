@@ -23,9 +23,6 @@ public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 		return "ext";
 	}
 	
-	protected Optional<String> customPythonPath() {
-		return Optional.empty();
-	}
 	
 	@Override
 	protected RankerType getRankerType() {

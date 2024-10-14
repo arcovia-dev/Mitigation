@@ -22,11 +22,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 	protected String getFilesName() {
 		return "OBM";
 	}
-	
-	protected Optional<String> customPythonPath() {
-		return Optional.empty();
-	}
-	
+		
 	@Override
 	protected RankerType getRankerType() {
 		return RankerType.RANDOM_FOREST;

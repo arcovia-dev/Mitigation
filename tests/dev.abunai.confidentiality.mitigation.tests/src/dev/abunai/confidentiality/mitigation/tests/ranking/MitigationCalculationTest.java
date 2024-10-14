@@ -27,11 +27,7 @@ public class MitigationCalculationTest extends MitigationTestBase{
 	protected String getFilesName() {
 		return "mitigation_example";
 	}
-	
-	protected Optional<String> customPythonPath() {
-		return Optional.empty();
-	}
-	
+		
 	@Override
 	protected RankerType getRankerType() {
 		return RankerType.RANDOM_FOREST;
