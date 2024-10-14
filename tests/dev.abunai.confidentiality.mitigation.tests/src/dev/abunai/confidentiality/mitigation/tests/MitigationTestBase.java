@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
@@ -45,6 +46,8 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract RankerType getRankerType();
 
 	protected abstract RankingAggregationMethod getAggregationMethod();
+	
+	protected abstract Optional<String> customPythonPath();
 
 	// Mitigation ranking variables
 	protected final TrainDataGeneration trainDataGeneration = new TrainDataGeneration();
@@ -66,7 +69,7 @@ public abstract class MitigationTestBase extends TestBase {
 			.get("models", getFolderName(), getFilesName() + "_solution.txt").toString();
 
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 1; // Must be at least 3 for meassurments
+	protected final int MITIGATION_RUNS = 9; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 	
 	protected List<String> relevantUncertaintyEntityNames;
@@ -297,7 +300,7 @@ public abstract class MitigationTestBase extends TestBase {
 
 		// Rank the uncertainties specified in the given model and store the result in
 		// the specified file
-		relevantUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(pathToUncertaintyRankingScript,
+		relevantUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(customPythonPath(), pathToUncertaintyRankingScript,
 				trainDataDirectory, analysis.getUncertaintySources().size(), getRankerType(), getAggregationMethod());
 
 	}

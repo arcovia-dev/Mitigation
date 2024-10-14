@@ -2,6 +2,7 @@ package dev.abunai.confidentiality.mitigation.tests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
@@ -18,6 +19,10 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 
 	protected String getFilesName() {
 		return "jferrater";
+	}
+	
+	protected Optional<String> customPythonPath(){
+		return Optional.empty();
 	}
 
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
