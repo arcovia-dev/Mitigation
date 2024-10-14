@@ -22,11 +22,7 @@ public class BehaviorUncertaintyMitigationTest extends MitigationTestBase {
 	protected String getFilesName() {
 		return "beh";
 	}
-	
-	protected String customPythonPath() {
-		return "python";
-	}
-	
+		
 	@Override
 	protected RankerType getRankerType() {
 		return RankerType.RANDOM_FOREST;
