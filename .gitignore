@@ -12,7 +12,7 @@ heapdump.*
 Snap.*
 *.txt
 __pycache__
-mitigation
+tests/dev.abunai.confidentiality.mitigation.tests/mitigation
 
 # MAC
 __MACOSX/
