@@ -25,7 +25,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		
 	@Override
 	protected RankerType getRankerType() {
-		return RankerType.RANDOM_FOREST;
+		return RankerType.LOGISTIC_REGRESSION;
 	}
 
 	@Override

@@ -67,6 +67,8 @@ public class UncertaintyRanker {
 		}
 		else if (rankerType.equals(RankerType.LINEAR_REGRESSION)) {
 			return "LR";
+		}else if (rankerType.equals(RankerType.LOGISTIC_REGRESSION)) {
+			return "LGR";
 		} else {
 			return "P";
 		}

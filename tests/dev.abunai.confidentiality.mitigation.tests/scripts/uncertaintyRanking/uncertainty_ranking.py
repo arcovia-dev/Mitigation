@@ -13,6 +13,7 @@ from famd_uncertainty_ranker import FAMDUncertaintyRanker
 from inverse_famd_uncertainty_ranker import InverseFAMDUncertaintyRanker
 from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker
 from linear_regression_uncertainty_ranker import LinearRegressionUncertaintyRanker
+from logistic_regression_uncertainty_ranker import LogisticRegressionUncertaintyRanker
 from linear_discriminant_analysis import LinearDiscriminantAnalysisRanker
 
 import warnings
@@ -171,6 +172,8 @@ for filename in filenames:
         uncertainty_ranker = RandomForestUncertaintyRanker(X, y)
     elif RANKER_TYPE == "LR":
         uncertainty_ranker = LinearRegressionUncertaintyRanker(X, y)
+    elif RANKER_TYPE == "LGR":
+        uncertainty_ranker = LogisticRegressionUncertaintyRanker(X,y)
     else:
         uncertainty_ranker = PrincipalComponentUncertaintyRanker(X, y)
 
