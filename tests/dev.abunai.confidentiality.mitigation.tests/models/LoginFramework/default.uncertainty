@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_E6LNcI7rEe-JJbe6mLv2Lg">
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_qT0kcI7rEe-JJbe6mLv2Lg" entityName="bank change">
+    <target xsi:type="dataflowdiagram:External" href="default.dataflowdiagram#_XGNYwY4qEe--__rPTWj_sg"/>
+    <scenarios id="_uBBO8I7rEe-JJbe6mLv2Lg">
+      <target xsi:type="dataflowdiagram:External" href="default.dataflowdiagram#_ZfchAY4qEe--__rPTWj_sg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_CpCFmpB9Ee-emtzpVHzKjw">
+    <targetFlow href="default.dataflowdiagram#_NyEQoI7qEe-JJbe6mLv2Lg"/>
+    <scenarios id="_EkcpYJB9Ee-emtzpVHzKjw">
+      <targetInPin href="default.datadictionary#_mF8xsI4uEe--__rPTWj_sg"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_kdQSY44qEe--__rPTWj_sg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_icjC-I-rEe-ftKOFDXzzKg">
+    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_PHEX844qEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_wHZpYI-rEe-ftKOFDXzzKg">
+      <targetProperties href="default.datadictionary#_S9ghUI8XEe-JJbe6mLv2Lg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_3wvi6I-3Ee-ftKOFDXzzKg">
+    <target xsi:type="dataflowdiagram:External" href="default.dataflowdiagram#_XGNYwY4qEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_4cWrsI-3Ee-ftKOFDXzzKg">
+      <targetProperties href="default.datadictionary#_4SflUI8YEe-JJbe6mLv2Lg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_8tKZmY-3Ee-ftKOFDXzzKg">
+    <target href="default.datadictionary#_xC-ARY4rEe--__rPTWj_sg"/>
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="default.datadictionary#_bU-JQ48cEe-JJbe6mLv2Lg"/>
+    <scenarios id="_9fhqoI-3Ee-ftKOFDXzzKg">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="default.datadictionary#_kWhwco-4Ee-ftKOFDXzzKg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_1FBHCI-4Ee-ftKOFDXzzKg">
+    <target xsi:type="dataflowdiagram:External" href="default.dataflowdiagram#_yuYrIY4pEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_3vl24I-4Ee-ftKOFDXzzKg">
+      <targetProperties href="default.datadictionary#_4SflUI8YEe-JJbe6mLv2Lg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_OMGgOI-5Ee-ftKOFDXzzKg">
+    <target xsi:type="dataflowdiagram:External" href="default.dataflowdiagram#_5ZHdwY4pEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_O19VgI-5Ee-ftKOFDXzzKg">
+      <targetProperties href="default.datadictionary#_4SflUI8YEe-JJbe6mLv2Lg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_Vy7ASY-8Ee-ftKOFDXzzKg">
+    <target href="default.datadictionary#_3K8rJY4rEe--__rPTWj_sg"/>
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="default.datadictionary#_KjfTo48dEe-JJbe6mLv2Lg"/>
+    <scenarios id="_ZiUDII-8Ee-ftKOFDXzzKg">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="default.datadictionary#_42z2Ro-7Ee-ftKOFDXzzKg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_saLhCY-8Ee-ftKOFDXzzKg">
+    <target href="default.datadictionary#_3K8rJY4rEe--__rPTWj_sg"/>
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="default.datadictionary#_wOqUs4-7Ee-ftKOFDXzzKg"/>
+    <scenarios id="_vTG18I-8Ee-ftKOFDXzzKg">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="default.datadictionary#_Gh2p94-8Ee-ftKOFDXzzKg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_IDS_2Y_CEe-ftKOFDXzzKg">
+    <target href="default.datadictionary#_msqTxY4rEe--__rPTWj_sg"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="default.datadictionary#_7gjVYo8bEe-JJbe6mLv2Lg"/>
+    <scenarios id="_LouOYI_CEe-ftKOFDXzzKg">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="default.datadictionary#_GxCjMo_BEe-ftKOFDXzzKg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_4_OvOJB7Ee-emtzpVHzKjw">
+    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_Ewnhg44qEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_BEXDQJB8Ee-emtzpVHzKjw">
+      <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_6Ay56JB7Ee-emtzpVHzKjw">
+    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#__Lvjt44pEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_Dj5AwJB8Ee-emtzpVHzKjw">
+      <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_6xdh2JB7Ee-emtzpVHzKjw">
+    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_BsHOs44qEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_KN2XUJB8Ee-emtzpVHzKjw">
+      <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_7wFtSJB7Ee-emtzpVHzKjw">
+    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_Dh_yQ44qEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_L00VIJB8Ee-emtzpVHzKjw">
+      <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_6hRUSJB8Ee-emtzpVHzKjw">
+    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_kdQSY44qEe--__rPTWj_sg"/>
+    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
+    <scenarios id="_7Ap-8JB8Ee-emtzpVHzKjw">
+      <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>
