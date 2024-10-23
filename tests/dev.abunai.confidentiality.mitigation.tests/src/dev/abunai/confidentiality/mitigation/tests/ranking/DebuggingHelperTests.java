@@ -21,10 +21,10 @@ public class DebuggingHelperTests {
 		try {
 			var contentLines = Files.readAllLines(filePath);
 			int sum = 0;
-			for (int i = contentLines.size() - 20; i < contentLines.size() && i >= 0; i++) {
+			for (int i = contentLines.size() - 6; i < contentLines.size() && i >= 0; i++) {
 				sum += Integer.parseInt(contentLines.get(i));
 			}
-			System.out.println((float)sum / (float)20);
+			System.out.println((float)sum / (float)6);
 
 		} catch (IOException e) {
 			e.printStackTrace();

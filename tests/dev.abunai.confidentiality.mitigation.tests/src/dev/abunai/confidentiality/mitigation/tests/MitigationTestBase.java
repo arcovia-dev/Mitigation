@@ -46,9 +46,9 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract RankerType getRankerType();
 
 	protected abstract RankingAggregationMethod getAggregationMethod();
-	
+
 	protected String customPythonPath() {
-	    return "python3";
+		return "python3";
 	}
 
 	// Mitigation ranking variables
@@ -73,7 +73,7 @@ public abstract class MitigationTestBase extends TestBase {
 	// Mitigation execution variables
 	protected final int MITIGATION_RUNS = 9; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
-	
+
 	protected List<String> relevantUncertaintyEntityNames;
 
 	@BeforeEach
@@ -107,6 +107,49 @@ public abstract class MitigationTestBase extends TestBase {
 				content += "Half: " + Float.toString(meassurements.get(2)) + System.lineSeparator();
 				Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void storeTrainingDataResults(List<Float> meassurements,String rankerType, String aggregationMethod) {
+		Path filePath = Paths.get("meassurement_results.txt");
+		try {
+			var content = Files.exists(filePath) ? Files.readString(filePath) : "";
+			content += "TRAIN_DATA " + rankerType + " " + aggregationMethod + System.lineSeparator();
+
+			float increasing_training_duration = 0;
+			float quarter_training_duration = 0;
+			float half_training_duration = 0;
+			
+			var skip_amount = MITIGATION_RUNS/3;
+			var average_amount = 2 * skip_amount;
+			
+			for (int i = skip_amount-1; i < meassurements.size();i++) {
+				if (i == MITIGATION_RUNS || i == 2*MITIGATION_RUNS) {
+					i += skip_amount-1;
+					continue;
+				}
+				if (i < MITIGATION_RUNS) {
+					increasing_training_duration += meassurements.get(i);
+				}
+				else if (i < 2*MITIGATION_RUNS) {
+					quarter_training_duration += meassurements.get(i);
+				}
+				else {
+					half_training_duration += meassurements.get(i);
+				}
+			}
+			
+			increasing_training_duration /= average_amount;
+			quarter_training_duration /= average_amount;
+			half_training_duration /= average_amount;
+			
+			content += "Increasing: " + Float.toString(increasing_training_duration) + System.lineSeparator();
+			content += "Quater: " + Float.toString(quarter_training_duration) + System.lineSeparator();
+			content += "Half: " + Float.toString(half_training_duration) + System.lineSeparator();
+			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -302,8 +345,9 @@ public abstract class MitigationTestBase extends TestBase {
 
 		// Rank the uncertainties specified in the given model and store the result in
 		// the specified file
-		relevantUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(customPythonPath(), pathToUncertaintyRankingScript,
-				trainDataDirectory, analysis.getUncertaintySources().size(), getRankerType(), getAggregationMethod());
+		relevantUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(customPythonPath(),
+				pathToUncertaintyRankingScript, trainDataDirectory, analysis.getUncertaintySources().size(),
+				getRankerType(), getAggregationMethod());
 
 	}
 
