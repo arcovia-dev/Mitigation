@@ -15,7 +15,6 @@ public class BruteForceUncertaintyFinder {
 	
 	public static List<String> getBruteForceUncertaintyEntityNames(UncertaintyAwareConfidentialityAnalysis analysis){
 		List<String> result = new ArrayList<>();
-		
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
 		uncertainFlowGraphs.evaluate();

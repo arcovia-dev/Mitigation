@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -112,7 +113,19 @@ public abstract class MitigationTestBase extends TestBase {
 		}
 	}
 
-	public void storeTrainingDataResults(List<Float> meassurements,String rankerType, String aggregationMethod) {
+	public void storeMeassurementResult(float meassurement, String tag) {
+		Path filePath = Paths.get("meassurement_results.txt");
+		try {
+			var content = Files.exists(filePath) ? Files.readString(filePath) : "";
+			content += tag + ": " + Float.toString(meassurement) + System.lineSeparator();
+			Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void storeTrainingDataResults(List<Float> meassurements, String rankerType, String aggregationMethod) {
 		Path filePath = Paths.get("meassurement_results.txt");
 		try {
 			var content = Files.exists(filePath) ? Files.readString(filePath) : "";
@@ -121,30 +134,28 @@ public abstract class MitigationTestBase extends TestBase {
 			float increasing_training_duration = 0;
 			float quarter_training_duration = 0;
 			float half_training_duration = 0;
-			
-			var skip_amount = MITIGATION_RUNS/3;
+
+			var skip_amount = MITIGATION_RUNS / 3;
 			var average_amount = 2 * skip_amount;
-			
-			for (int i = skip_amount-1; i < meassurements.size();i++) {
-				if (i == MITIGATION_RUNS || i == 2*MITIGATION_RUNS) {
-					i += skip_amount-1;
+
+			for (int i = skip_amount - 1; i < meassurements.size(); i++) {
+				if (i == MITIGATION_RUNS || i == 2 * MITIGATION_RUNS) {
+					i += skip_amount - 1;
 					continue;
 				}
 				if (i < MITIGATION_RUNS) {
 					increasing_training_duration += meassurements.get(i);
-				}
-				else if (i < 2*MITIGATION_RUNS) {
+				} else if (i < 2 * MITIGATION_RUNS) {
 					quarter_training_duration += meassurements.get(i);
-				}
-				else {
+				} else {
 					half_training_duration += meassurements.get(i);
 				}
 			}
-			
+
 			increasing_training_duration /= average_amount;
 			quarter_training_duration /= average_amount;
 			half_training_duration /= average_amount;
-			
+
 			content += "Increasing: " + Float.toString(increasing_training_duration) + System.lineSeparator();
 			content += "Quater: " + Float.toString(quarter_training_duration) + System.lineSeparator();
 			content += "Half: " + Float.toString(half_training_duration) + System.lineSeparator();

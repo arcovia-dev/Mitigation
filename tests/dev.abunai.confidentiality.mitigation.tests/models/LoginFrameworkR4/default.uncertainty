@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_E6LNcI7rEe-JJbe6mLv2Lg">
-  
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_qT0kcI7rEe-JJbe6mLv2Lg" entityName="U1">
+    <target xsi:type="dataflowdiagram:External" href="default.dataflowdiagram#_XGNYwY4qEe--__rPTWj_sg"/>
+    <scenarios id="_uBBO8I7rEe-JJbe6mLv2Lg">
+      <target xsi:type="dataflowdiagram:External" href="default.dataflowdiagram#_ZfchAY4qEe--__rPTWj_sg"/>
+    </scenarios>
+  </sources>
   <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_CpCFmpB9Ee-emtzpVHzKjw" entityName="U2">
     <targetFlow href="default.dataflowdiagram#_NyEQoI7qEe-JJbe6mLv2Lg"/>
     <scenarios id="_EkcpYJB9Ee-emtzpVHzKjw">
@@ -71,13 +76,6 @@
       <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
     </scenarios>
   </sources>
-  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_6Ay56JB7Ee-emtzpVHzKjw" entityName="U12">
-    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#__Lvjt44pEe--__rPTWj_sg"/>
-    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
-    <scenarios id="_Dj5AwJB8Ee-emtzpVHzKjw">
-      <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
-    </scenarios>
-  </sources>
   <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_6xdh2JB7Ee-emtzpVHzKjw" entityName="U13">
     <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_BsHOs44qEe--__rPTWj_sg"/>
     <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
@@ -89,13 +87,6 @@
     <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_Dh_yQ44qEe--__rPTWj_sg"/>
     <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
     <scenarios id="_L00VIJB8Ee-emtzpVHzKjw">
-      <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_6hRUSJB8Ee-emtzpVHzKjw" entityName="U15">
-    <target xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_kdQSY44qEe--__rPTWj_sg"/>
-    <targetProperties href="default.datadictionary#_xdVEUI8YEe-JJbe6mLv2Lg"/>
-    <scenarios id="_7Ap-8JB8Ee-emtzpVHzKjw">
       <targetProperties href="default.datadictionary#_uYFKUJB7Ee-emtzpVHzKjw"/>
     </scenarios>
   </sources>
