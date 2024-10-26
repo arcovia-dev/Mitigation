@@ -11,6 +11,6 @@ public class SumLogisticRegressionMitigationTest extends MitigationModelTestBase
 	}
 
 	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.LINEAR_RANKS;
+		return RankingAggregationMethod.SUM;
 	}
 }

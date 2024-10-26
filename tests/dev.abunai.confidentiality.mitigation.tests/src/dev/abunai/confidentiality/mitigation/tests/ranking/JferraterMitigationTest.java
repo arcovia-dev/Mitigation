@@ -2,7 +2,6 @@ package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
@@ -16,7 +15,7 @@ import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 public class JferraterMitigationTest extends MitigationTestBase{
 	
 	protected String getFolderName() {
-		return "jferrater";
+		return "jferrater10";
 	}
 
 	protected String getFilesName() {
@@ -50,31 +49,32 @@ public class JferraterMitigationTest extends MitigationTestBase{
 	
 	@Override
 	protected RankerType getRankerType() {
-		return RankerType.RANDOM_FOREST;
+		return RankerType.LOGISTIC_REGRESSION;
 	}
 
 	@Override
 	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.EXPONENTIAL_RANKS;
+		return RankingAggregationMethod.TOP_3;
 	}
 
 	@Test
 	public void executeMitigation() {
-		// For meassuring at least 30 runs are required
 		deleteOldMeassurement();
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.INCREASING;
 			createTrainData();
+			printMetricies();
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
+		printMetricies();
+		seeAverageRuntime();
 	}
 	
 	@Test
 	public void executeBruteForce() throws Exception {
-		// For meassuring at least 30 runs are required
 		deleteOldMeassurement();
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
@@ -83,5 +83,6 @@ public class JferraterMitigationTest extends MitigationTestBase{
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
+		seeAverageRuntime();
 	}
 }

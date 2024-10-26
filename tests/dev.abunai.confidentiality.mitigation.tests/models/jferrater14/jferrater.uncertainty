@@ -49,13 +49,6 @@
       <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#2135"/>
     </scenarios>
   </sources>
-  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_nmX9t3BVEe-JbaZjPWQrog" entityName="auth Server8">
-    <target xsi:type="dataflowdiagram:Process" href="jferrater.dataflowdiagram#11"/>
-    <targetProperties href="jferrater.datadictionary#1117"/>
-    <scenarios id="_q2hf0HBVEe-JbaZjPWQrog">
-      <targetProperties href="jferrater.datadictionary#2117"/>
-    </scenarios>
-  </sources>
   <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_ISl4yG9EEe-oNftV_v3f1w" entityName="github repo9">
     <target href="jferrater.datadictionary#51"/>
     <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#127"/>
@@ -89,48 +82,6 @@
     <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#7115"/>
     <scenarios id="_pHs9EHclEe-Kt-99qYhbTg">
       <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#72115"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_-K1dSW9REe-0mtX7J5_Vww" entityName="price Service14">
-    <target href="jferrater.datadictionary#34"/>
-    <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#119"/>
-    <scenarios id="_CjBlgG9SEe-0mtX7J5_Vww">
-      <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#2119"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_zu_E2XclEe-Kt-99qYhbTg" entityName="price Service15">
-    <target href="jferrater.datadictionary#34"/>
-    <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#7119"/>
-    <scenarios id="_30e6kHclEe-Kt-99qYhbTg">
-      <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#72119"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_E9KsuW9SEe-0mtX7J5_Vww" entityName="store Service16">
-    <target href="jferrater.datadictionary#61"/>
-    <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#143"/>
-    <scenarios id="_G8vXwG9SEe-0mtX7J5_Vww">
-      <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#2143"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_8UCPGXclEe-Kt-99qYhbTg" entityName="store Service17">
-    <target href="jferrater.datadictionary#61"/>
-    <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#7143"/>
-    <scenarios id="_Fr1r8HcmEe-Kt-99qYhbTg">
-      <targetAssignments xsi:type="datadictionary:Assignment" href="jferrater.datadictionary#72143"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_HbeKN3BaEe-JbaZjPWQrog" entityName="Logging Server18">
-    <target xsi:type="dataflowdiagram:Process" href="jferrater.dataflowdiagram#12"/>
-    <targetProperties href="jferrater.datadictionary#1116"/>
-    <scenarios id="_KEIOgHBaEe-JbaZjPWQrog">
-      <targetProperties href="jferrater.datadictionary#3116"/>
-    </scenarios>
-  </sources>
-  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_ocLON3BeEe-JbaZjPWQrog" entityName="Secret manager19">
-    <target xsi:type="dataflowdiagram:Process" href="jferrater.dataflowdiagram#13"/>
-    <targetProperties href="jferrater.datadictionary#1116"/>
-    <scenarios id="_pH5EsHBeEe-JbaZjPWQrog">
-      <targetProperties href="jferrater.datadictionary#1169"/>
     </scenarios>
   </sources>
   <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_ZBbhl3W7Ee-pUNsaj26y1w" entityName="Customer Service21">

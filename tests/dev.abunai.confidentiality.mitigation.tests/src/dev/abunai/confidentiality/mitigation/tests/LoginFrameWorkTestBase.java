@@ -11,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import dev.abunai.confidentiality.mitigation.ranking.RankerType;
 import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 
+/*
+ * Class for the evaluation of the scaleability of the mitigation approach
+ * Was not used in thesis because the model was too small.
+ * */
 public abstract class LoginFrameWorkTestBase extends MitigationTestBase {
 
 	private boolean chooseBest = true;
@@ -53,13 +57,13 @@ public abstract class LoginFrameWorkTestBase extends MitigationTestBase {
 		if (!chooseBest) {
 			return RankerType.FAMD;
 		}
-		return RankerType.RANDOM_FOREST;
+		return RankerType.LOGISTIC_REGRESSION;
 	}
 
 	@Override
 	protected RankingAggregationMethod getAggregationMethod() {
 		if (!chooseBest) {
-			return RankingAggregationMethod.LINEAR_RANKS;
+			return RankingAggregationMethod.SUM;
 		}
 		return RankingAggregationMethod.EXPONENTIAL_RANKS;
 	}
@@ -139,21 +143,22 @@ public abstract class LoginFrameWorkTestBase extends MitigationTestBase {
 
 	private void executeMitigationRuns(MitigationStrategy strategy, String id) {
 		deleteOldMeassurement();
-		List<Float> training_durations = new ArrayList<>();
+		List<Long> training_durations = new ArrayList<>();
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = strategy;
 			if (!mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE)) {
 				createTrainData();
 			}
-			training_durations.add((float)System.currentTimeMillis());
-			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;
+			training_durations.add(duration);
+			createMitigationCandidatesAutomatically();
+			duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
 		var avg_amount = 2 * MITIGATION_RUNS / 3;
 		storeMeassurementResult(
-				training_durations.stream().sorted(Comparator.reverseOrder()).limit(avg_amount).reduce(0.0f, Float::sum)
+				training_durations.stream().sorted(Comparator.reverseOrder()).limit(avg_amount).reduce(0L, Long::sum)
 					/ avg_amount,
 				"T"+id);
 	}

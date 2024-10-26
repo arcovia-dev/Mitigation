@@ -2,7 +2,6 @@ package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;

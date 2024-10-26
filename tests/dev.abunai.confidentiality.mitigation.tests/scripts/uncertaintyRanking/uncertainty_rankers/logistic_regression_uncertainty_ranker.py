@@ -16,12 +16,18 @@ class LogisticRegressionUncertaintyRanker(UncertaintyRanker):
     def evaluate(self):
         self.model = LogisticRegression()
         self.y = self.y.astype(int)
-        self.model.fit(self.X, self.y)
-
-        # Determine feature importance
-        coefficients = self.model.coef_
-        column_names = self.X.columns.tolist()
         
+        column_names = self.X.columns.tolist()
+        if self.y.nunique() == 1:
+            coefficients1 = []
+            for i in range(len(column_names)):
+                coefficients1.append(1)
+            coefficients = [coefficients1]
+        else:
+            self.model.fit(self.X, self.y)
+            # Determine feature importance
+            coefficients = self.model.coef_
+    
         ranking_unsorted = {}
 
         for coefficient_element in coefficients:

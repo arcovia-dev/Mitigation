@@ -12,6 +12,6 @@ public class SumLinearDiscriminantAnalysisMitigationTest extends MitigationModel
 	}
 
 	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.LINEAR_RANKS;
+		return RankingAggregationMethod.SUM;
 	}
 }

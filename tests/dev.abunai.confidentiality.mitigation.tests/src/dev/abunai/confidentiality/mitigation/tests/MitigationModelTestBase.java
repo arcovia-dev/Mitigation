@@ -7,42 +7,44 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Test;
 
-import dev.abunai.confidentiality.mitigation.ranking.RankerType;
-import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
-
 /*
  * Abstract class for executing each mitigation strategy
  * */
 public abstract class MitigationModelTestBase extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "OBM";
+		return "jferrater";
 	}
 
 	protected String getFilesName() {
-		return "OBM";
+		return "jferrater";
 	}
-
+	
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
 		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
-					&& this.retrieveDataLabels(it).contains("Personal");
-			return vio;
+			return this.retrieveNodeLabels(it).contains("internal")
+					&& !this.retrieveAllDataLabels(it).contains("authenticated_request");
 		});
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("Processable")
-					&& this.retrieveDataLabels(it).contains("Encrypted");
-			return vio;
+			return this.retrieveNodeLabels(it).contains("authorization_server")
+					&& !this.retrieveNodeLabels(it).contains("login_attempts_regulation");
 		});
 		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("nonEU")
-					&& this.retrieveDataLabels(it).contains("Personal");
-			return vio;
+			return this.retrieveDataLabels(it).contains("entrypoint")
+					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
+		});
+		/*constraints.add(it -> {
+			return this.retrieveNodeLabels(it).contains("internal")
+					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
+		});*/
+		constraints.add(it -> {
+			 return this.retrieveNodeLabels(it).contains("internal") &&
+					!this.retrieveNodeLabels(it).contains("local_logging");
 		});
 		return constraints;
 	}
-
+	
 	@Test
 	public void executeMitigation() {
 		List<Float> meassurements = new ArrayList<>();

@@ -2,7 +2,6 @@ package dev.abunai.confidentiality.mitigation.ranking;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -53,12 +52,6 @@ public class UncertaintyRanker {
 		if (rankerType.equals(RankerType.FAMD)) {
 			return "F";
 		}
-		else if (rankerType.equals(RankerType.INVERSE_FAMD)) {
-			return "IF";
-		}
-		else if (rankerType.equals(RankerType.INVERSE_PCA)) {
-			return "IP";
-		}
 		else if (rankerType.equals(RankerType.LDA)) {
 			return "LDA";
 		}
@@ -74,7 +67,7 @@ public class UncertaintyRanker {
 		}
 	}
 	private static String getAggregationMethodCommandParamter(RankingAggregationMethod aggregationMethod) {
-		if (aggregationMethod.equals(RankingAggregationMethod.LINEAR_RANKS)) {
+		if (aggregationMethod.equals(RankingAggregationMethod.SUM)) {
 			return "L";
 		}
 		else if (aggregationMethod.equals(RankingAggregationMethod.EXPONENTIAL_RANKS)) {

@@ -2,7 +2,6 @@ package dev.abunai.confidentiality.mitigation.tests.ranking;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
@@ -64,7 +63,6 @@ public class KoushikkothagalMitigationtest extends MitigationTestBase{
 
     @Test
     public void executeMitigation() {
-        // For meassuring at least 30 runs are required
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
@@ -79,7 +77,6 @@ public class KoushikkothagalMitigationtest extends MitigationTestBase{
     
     @Test
     public void executeBruteForce() throws Exception {
-        // For meassuring at least 30 runs are required
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
