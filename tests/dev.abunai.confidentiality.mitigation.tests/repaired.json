@@ -24,13 +24,18 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "set Sensitivity.Personal = TRUE\nset Encryption.Encrypted = TRUE",
+        "behavior" : "Assignment({};TRUE;{Sensitivity.Personal,Encryption.Encrypted})",
         "id" : "eedb56",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "id" : "js61f",
       "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nEncryption.Encrypted\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
       "children" : [ ]
     }, {
       "text" : "db",
@@ -50,13 +55,18 @@
       "text" : "user",
       "labels" : [ ],
       "ports" : [ {
-        "behavior" : "set Sensitivity.Personal = TRUE",
+        "behavior" : "Assignment({};TRUE;{Sensitivity.Personal})",
         "id" : "wksxi8",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "id" : "7oii5l",
       "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
       "children" : [ ]
     } ]
   },
@@ -87,5 +97,6 @@
       "id" : "2r6xe6",
       "text" : "Encrypted"
     } ]
-  } ]
+  } ],
+  "editorMode" : "edit"
 }

@@ -3,6 +3,7 @@ package dev.abunai.confidentiality.mitigation.tests.sat;
 import java.util.List;
 
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.WebEditorConverter;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -17,14 +18,15 @@ public class SatTest {
 
     @Test
     public void automaticTest() throws ContradictionException, TimeoutException {
-        var converter = new DataFlowDiagramConverter();
-        var dfd = converter.webToDfd(MIN_SAT);
-
+        var webConverter = new WebEditorConverter();
+        var dfdConverter = new DataFlowDiagramConverter();
+        var dfd = webConverter.webToDfd(MIN_SAT);
+        
         // (personal AND nonEU) => encrypted
         var constraints = List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
                 new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted")));
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
-        converter.storeWeb(converter.dfdToWeb(repairedDfd), "repaired.json");
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "repaired.json");
     }
 }

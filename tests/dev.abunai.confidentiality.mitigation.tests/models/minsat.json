@@ -10,7 +10,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "set Sensitivity.Personal = TRUE",
+        "behavior" : "Assignment({};TRUE;{Sensitivity.Personal})",
         "id" : "eedb56",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -40,7 +40,7 @@
       "text" : "user",
       "labels" : [ ],
       "ports" : [ {
-        "behavior" : "set Sensitivity.Personal = TRUE",
+        "behavior" : "Assignment({};TRUE;{Sensitivity.Personal})",
         "id" : "wksxi8",
         "type" : "port:dfd-output",
         "children" : [ ]

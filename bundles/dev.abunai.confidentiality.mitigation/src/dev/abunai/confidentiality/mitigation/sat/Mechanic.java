@@ -61,6 +61,9 @@ public class Mechanic {
                             .getId())));
         }
 
+        System.out.println(nodes);
+        System.out.println(edges);
+        System.out.println(constraints);;
         var solutions = new Sat().solve(nodes, edges, constraints);
 
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
