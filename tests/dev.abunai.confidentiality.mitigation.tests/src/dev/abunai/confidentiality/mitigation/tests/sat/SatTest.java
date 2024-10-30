@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.tests.sat;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
@@ -17,7 +18,7 @@ public class SatTest {
     public final String MIN_SAT = "models/minsat.json";
 
     @Test
-    public void automaticTest() throws ContradictionException, TimeoutException {
+    public void automaticTest() throws ContradictionException, TimeoutException, IOException {
         var webConverter = new WebEditorConverter();
         var dfdConverter = new DataFlowDiagramConverter();
         var dfd = webConverter.webToDfd(MIN_SAT);

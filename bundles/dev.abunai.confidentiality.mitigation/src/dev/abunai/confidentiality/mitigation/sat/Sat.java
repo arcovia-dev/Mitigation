@@ -1,10 +1,14 @@
 package dev.abunai.confidentiality.mitigation.sat;
 
 import java.util.List;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.IntStream;
+import java.util.StringJoiner;
 
 import org.sat4j.core.VecInt;
 import org.sat4j.minisat.SolverFactory;
@@ -23,8 +27,9 @@ public class Sat {
     private List<Node> nodes;
     private List<Edge> edges;
     private List<Constraint> constraints;
+    private List<VecInt> dimacsClauses;
     
-    public List<List<Delta>> solve(List<Node> nodes,List<Edge> edges,List<Constraint> constraints) throws ContradictionException, TimeoutException {
+    public List<List<Delta>> solve(List<Node> nodes,List<Edge> edges,List<Constraint> constraints) throws ContradictionException, TimeoutException, IOException {
         this.nodes=nodes;
         this.edges=edges;
         this.constraints=constraints;
@@ -33,16 +38,20 @@ public class Sat {
         edgeToLit = new BiMap<>();
         edgeDataToLit = new BiMap<>();
         solver = SolverFactory.newDefault();
+        dimacsClauses = new ArrayList<>();
         
         extractUniqueLabels();
 
         buildClauses();
-
+        
+        writeDimacsFile("dimacs.cnf", dimacsClauses);
+                
         return solveClauses();
     }
 
     private List<List<Delta>> solveClauses() throws TimeoutException, ContradictionException {
         IProblem problem = solver;
+        
         List<List<Delta>> solutions = new ArrayList<>();
         
         while (problem.isSatisfiable()) {
@@ -65,7 +74,7 @@ public class Sat {
             for (var literal : model) {
                 negated.push(-literal);
             }
-            solver.addClause(negated);
+            addClause(negated);
         }
         return solutions;
     }
@@ -86,7 +95,7 @@ public class Sat {
                         clause.push(sign * delta(inPin.id(), new InDataChar(type,value)));
                     }
                 }
-                solver.addClause(clause);
+                addClause(clause);
             }
             
         }
@@ -94,11 +103,11 @@ public class Sat {
         // Require node and outgoing data chars
         for (var node : nodes) {
             for(var property: node.nodeChars()) {
-                solver.addClause(clause(delta(node.name(), new NodeChar(property.type(),property.value()))));
+                addClause(clause(delta(node.name(), new NodeChar(property.type(),property.value()))));
             }
             for(var outPin : node.outPins().keySet()) {
                 for(var outData : node.outPins().get(outPin)) {
-                    solver.addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(),outData.value()))));
+                    addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(),outData.value()))));
                 }
             }
         }
@@ -109,7 +118,7 @@ public class Sat {
                 for (var toNode : nodes) {
                     for(var toPin : toNode.inPins()) {
                         var sign = edges.contains(new Edge(fromPin, toPin)) ? 1 : -1;
-                        solver.addClause(clause(sign * edge(fromPin, toPin)));
+                        addClause(clause(sign * edge(fromPin, toPin)));
                     }  
                 }
             }
@@ -124,9 +133,9 @@ public class Sat {
                             var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
                             var outLit = delta(fromPin.id(), new OutDataChar(label.type(), label.value()));
                             // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
-                            solver.addClause(clause(-outLit, -edge(fromPin, toPin), edgeDataLit));
-                            solver.addClause(clause(-edgeDataLit, outLit));
-                            solver.addClause(clause(-edgeDataLit, edge(fromPin, toPin)));
+                            addClause(clause(-outLit, -edge(fromPin, toPin), edgeDataLit));
+                            addClause(clause(-edgeDataLit, outLit));
+                            addClause(clause(-edgeDataLit, edge(fromPin, toPin)));
                         }
                     }  
                 }
@@ -144,11 +153,11 @@ public class Sat {
                     for (var fromNode : nodes) {
                         for(var fromPin : fromNode.outPins().keySet()) {
                             var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
-                            solver.addClause(clause(-edgeDataLit, inLit));
+                            addClause(clause(-edgeDataLit, inLit));
                             clause.push(edgeDataLit);  
                         } 
                     }
-                    solver.addClause(clause);
+                    addClause(clause);
                 } 
             }
         }
@@ -163,6 +172,11 @@ public class Sat {
 
     private VecInt clause(int... literals) {
         return new VecInt(literals);
+    }
+    
+    private void addClause(VecInt clause) throws ContradictionException {
+        solver.addClause(clause);
+        dimacsClauses.add(clause);
     }
 
     private int edge(OutPin from, InPin to) {
@@ -187,5 +201,43 @@ public class Sat {
             deltaToLit.put(delta, solver.nextFreeVarId(true));
         }
         return deltaToLit.getValue(delta);
+    }
+    
+    public void writeDimacsFile(String filePath, List<VecInt> clauses) throws IOException {
+
+        int maxVar = 0;   
+        for(var literals : clauses) {
+            for(var lit: literals.toArray()) {
+                int var = Math.abs(lit);
+                if(var>maxVar) {
+                    maxVar=var;
+                }
+            }
+        }
+        
+        int numClauses = clauses.size();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("p cnf " + maxVar + " " + numClauses);
+            writer.newLine();
+
+            for (var literals : clauses) {
+                writer.write(formatClauseLine(literals));
+                writer.newLine();
+            }
+        }
+    }
+    
+    public static String formatClauseLine(VecInt literals) {
+        StringJoiner joiner = new StringJoiner(" ");
+        
+        for (int i = 0; i < literals.size(); i++) {
+            int literal = literals.get(i);
+            if (literal != 0) {
+                joiner.add(Integer.toString(literal));
+            }
+        }
+
+        return joiner.toString() + " 0";
     }
 }

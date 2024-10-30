@@ -1,5 +1,6 @@
 package dev.abunai.confidentiality.mitigation.sat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import org.sat4j.specs.TimeoutException;
 public class Mechanic {
     
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
-            throws ContradictionException, TimeoutException {
+            throws ContradictionException, TimeoutException, IOException {
         List<Node> nodes = new ArrayList<>();
         Map<String, String> outPinToAss = new HashMap<>();
         for (var node : dfd.dataFlowDiagram()
@@ -61,9 +62,6 @@ public class Mechanic {
                             .getId())));
         }
 
-        System.out.println(nodes);
-        System.out.println(edges);
-        System.out.println(constraints);;
         var solutions = new Sat().solve(nodes, edges, constraints);
 
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
