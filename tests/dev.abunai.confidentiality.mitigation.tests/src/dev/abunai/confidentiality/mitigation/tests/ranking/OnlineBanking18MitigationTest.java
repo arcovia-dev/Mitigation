@@ -12,10 +12,10 @@ import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 import dev.abunai.confidentiality.mitigation.ranking.RankerType;
 import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 
-public class OnlineBankingMitigationTest extends MitigationTestBase {
+public class OnlineBanking18MitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "OBM";
+		return "OBM_18";
 	}
 
 	protected String getFilesName() {
@@ -57,7 +57,7 @@ public class OnlineBankingMitigationTest extends MitigationTestBase {
 		deleteOldMeassurement();
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.INCREASING;
+			mitigationStrategy = MitigationStrategy.HALF;
 			createTrainData();
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;

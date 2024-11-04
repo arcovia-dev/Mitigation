@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+    <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_haiktnQSEe-hMp-vXVNX6A" entityName="Bank_Clerk_View_uncertain">
+    <target xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#_CqeuEVsqEe-imMDNUFdrZA"/>
+    <scenarios id="_mBN04HQSEe-hMp-vXVNX6A">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_W3GbInQSEe-hMp-vXVNX6A"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_RWfdZ1c2Ee-m2-jCTo323w" entityName="CBD_Uncertain">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#9zxnz"/>
+    <targetProperties href="OBM.datadictionary#5hnugm"/>
+    <scenarios id="_WuPIsFc3Ee-ljYOj8Tf2YQ">
+      <targetProperties href="OBM.datadictionary#g10hr"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_WFOdaVc2Ee-m2-jCTo323w" entityName="plo_Uncertain">
+    <targetFlow href="OBM.dataflowdiagram#fmfdo"/>
+    <scenarios id="_aHx3YFc3Ee-ljYOj8Tf2YQ">
+      <targetInPin href="OBM.datadictionary#42dbbn"/>
+      <targetNode xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#i0jwe"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_yKdCuFc2Ee-m2-jCTo323w" entityName="show_account_state_uncertain">
+    <target href="OBM.datadictionary#__SzOeFc1Ee-aJpuBt44G8A"/>
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="OBM.datadictionary#__S6jMVc1Ee-aJpuBt44G8A"/>
+    <scenarios id="_DDuF4Fc3Ee-m2-jCTo323w">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_k6awAlc2Ee-m2-jCTo323w"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_i_u88VifEe-01fJ0Yo6HNg" entityName="Customer_Location_Uncertain">
+    <target xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#dxnng9"/>
+    <targetProperties href="OBM.datadictionary#g10hr"/>
+    <scenarios id="_mCfjUFifEe-01fJ0Yo6HNg">
+      <targetProperties href="OBM.datadictionary#5hnugm"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_p2OTqFifEe-01fJ0Yo6HNg" entityName="Customer_Settings_Data_Location">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_e1yhglieEe-01fJ0Yo6HNg"/>
+    <targetProperties href="OBM.datadictionary#g10hr"/>
+    <scenarios id="_v6mQ4FifEe-01fJ0Yo6HNg">
+      <targetProperties href="OBM.datadictionary#5hnugm"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_K_npgVi4Ee-DsdRrhZRfUQ" entityName="Developer_View_Uncertain">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#b9ernl"/>
+    <scenarios id="_O5dB0Fi4Ee-DsdRrhZRfUQ">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_MvXlUli3Ee-DsdRrhZRfUQ"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_x-556FsvEe-imMDNUFdrZA" entityName="Fond_Data_Uncertain">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_OCehElsqEe-imMDNUFdrZA"/>
+    <scenarios id="_5-x6gFsvEe-imMDNUFdrZA">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_SYeQ8lsqEe-imMDNUFdrZA"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDConnectorUncertaintySource" id="_7VOwG1svEe-imMDNUFdrZA" entityName="get_fond_data_uncertain">
+    <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_n2ZdAlsoEe-imMDNUFdrZA"/>
+    <targetFlow href="OBM.dataflowdiagram#_glyEMFsqEe-imMDNUFdrZA"/>
+    <scenarios id="_D2CTgFswEe-imMDNUFdrZA">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_yWbtQlsoEe-imMDNUFdrZA"/>
+      <targetPin href="OBM.datadictionary#_Ks1QYFspEe-imMDNUFdrZA"/>
+      <targetNode xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#_JndHQVsqEe-imMDNUFdrZA"/>
+    </scenarios>
+  </sources>
+   <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_haiktnQSEe-hMp-vXVNX6A_1" entityName="Bank_Clerk_View_uncertain_1">
+    <target xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#_CqeuEVsqEe-imMDNUFdrZA_1"/>
+    <scenarios id="_mBN04HQSEe-hMp-vXVNX6A_1">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_W3GbInQSEe-hMp-vXVNX6A_1"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_RWfdZ1c2Ee-m2-jCTo323w_1" entityName="CBD_Uncertain_1">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#9zxnz_1"/>
+    <targetProperties href="OBM.datadictionary#5hnugm"/>
+    <scenarios id="_WuPIsFc3Ee-ljYOj8Tf2YQ_1">
+      <targetProperties href="OBM.datadictionary#g10hr"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_WFOdaVc2Ee-m2-jCTo323w_1" entityName="plo_Uncertain_1">
+    <targetFlow href="OBM.dataflowdiagram#fmfdo_1"/>
+    <scenarios id="_aHx3YFc3Ee-ljYOj8Tf2YQ_1">
+      <targetInPin href="OBM.datadictionary#42dbbn_1"/>
+      <targetNode xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#i0jwe_1"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_yKdCuFc2Ee-m2-jCTo323w_1" entityName="show_account_state_uncertain_1">
+    <target href="OBM.datadictionary#__SzOeFc1Ee-aJpuBt44G8A_1"/>
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="OBM.datadictionary#__S6jMVc1Ee-aJpuBt44G8A_1"/>
+    <scenarios id="_DDuF4Fc3Ee-m2-jCTo323w_1">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_k6awAlc2Ee-m2-jCTo323w_1"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_i_u88VifEe-01fJ0Yo6HNg_1" entityName="Customer_Location_Uncertain_1">
+    <target xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#dxnng9_1"/>
+    <targetProperties href="OBM.datadictionary#g10hr"/>
+    <scenarios id="_mCfjUFifEe-01fJ0Yo6HNg_1">
+      <targetProperties href="OBM.datadictionary#5hnugm"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_p2OTqFifEe-01fJ0Yo6HNg_1" entityName="Customer_Settings_Data_Location_1">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_e1yhglieEe-01fJ0Yo6HNg_1"/>
+    <targetProperties href="OBM.datadictionary#g10hr"/>
+    <scenarios id="_v6mQ4FifEe-01fJ0Yo6HNg_1">
+      <targetProperties href="OBM.datadictionary#5hnugm"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_K_npgVi4Ee-DsdRrhZRfUQ_1" entityName="Developer_View_Uncertain_1">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#b9ernl_1"/>
+    <scenarios id="_O5dB0Fi4Ee-DsdRrhZRfUQ_1">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_MvXlUli3Ee-DsdRrhZRfUQ_1"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_x-556FsvEe-imMDNUFdrZA_1" entityName="Fond_Data_Uncertain_1">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_OCehElsqEe-imMDNUFdrZA_1"/>
+    <scenarios id="_5-x6gFsvEe-imMDNUFdrZA_1">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_SYeQ8lsqEe-imMDNUFdrZA_1"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDConnectorUncertaintySource" id="_7VOwG1svEe-imMDNUFdrZA_1" entityName="get_fond_data_uncertain_1">
+    <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_n2ZdAlsoEe-imMDNUFdrZA_1"/>
+    <targetFlow href="OBM.dataflowdiagram#_glyEMFsqEe-imMDNUFdrZA_1"/>
+    <scenarios id="_D2CTgFswEe-imMDNUFdrZA_1">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_yWbtQlsoEe-imMDNUFdrZA_1"/>
+      <targetPin href="OBM.datadictionary#_Ks1QYFspEe-imMDNUFdrZA"/>
+      <targetNode xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#_JndHQVsqEe-imMDNUFdrZA_1"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_haiktnQSEe-hMp-vXVNX6A_2" entityName="Bank_Clerk_View_uncertain_2">
+    <target xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#_CqeuEVsqEe-imMDNUFdrZA_2"/>
+    <scenarios id="_mBN04HQSEe-hMp-vXVNX6A_2">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_W3GbInQSEe-hMp-vXVNX6A_2"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_RWfdZ1c2Ee-m2-jCTo323w_2" entityName="CBD_Uncertain_2">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#9zxnz_2"/>
+    <targetProperties href="OBM.datadictionary#5hnugm"/>
+    <scenarios id="_WuPIsFc3Ee-ljYOj8Tf2YQ_2">
+      <targetProperties href="OBM.datadictionary#g10hr"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_WFOdaVc2Ee-m2-jCTo323w_2" entityName="plo_Uncertain_2">
+    <targetFlow href="OBM.dataflowdiagram#fmfdo_2"/>
+    <scenarios id="_aHx3YFc3Ee-ljYOj8Tf2YQ_2">
+      <targetInPin href="OBM.datadictionary#42dbbn_2"/>
+      <targetNode xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#i0jwe_2"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_yKdCuFc2Ee-m2-jCTo323w_2" entityName="show_account_state_uncertain_2">
+    <target href="OBM.datadictionary#__SzOeFc1Ee-aJpuBt44G8A_2"/>
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="OBM.datadictionary#__S6jMVc1Ee-aJpuBt44G8A_2"/>
+    <scenarios id="_DDuF4Fc3Ee-m2-jCTo323w_2">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_k6awAlc2Ee-m2-jCTo323w_2"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_i_u88VifEe-01fJ0Yo6HNg_2" entityName="Customer_Location_Uncertain_2">
+    <target xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#dxnng9_2"/>
+    <targetProperties href="OBM.datadictionary#g10hr"/>
+    <scenarios id="_mCfjUFifEe-01fJ0Yo6HNg_2">
+      <targetProperties href="OBM.datadictionary#5hnugm"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_p2OTqFifEe-01fJ0Yo6HNg_2" entityName="Customer_Settings_Data_Location_2">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_e1yhglieEe-01fJ0Yo6HNg_2"/>
+    <targetProperties href="OBM.datadictionary#g10hr"/>
+    <scenarios id="_v6mQ4FifEe-01fJ0Yo6HNg_2">
+      <targetProperties href="OBM.datadictionary#5hnugm"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_K_npgVi4Ee-DsdRrhZRfUQ_2" entityName="Developer_View_Uncertain_2">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#b9ernl_2"/>
+    <scenarios id="_O5dB0Fi4Ee-DsdRrhZRfUQ_2">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_MvXlUli3Ee-DsdRrhZRfUQ_2"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_x-556FsvEe-imMDNUFdrZA_2" entityName="Fond_Data_Uncertain_2">
+    <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_OCehElsqEe-imMDNUFdrZA_2"/>
+    <scenarios id="_5-x6gFsvEe-imMDNUFdrZA_2">
+      <target xsi:type="dataflowdiagram:Store" href="OBM.dataflowdiagram#_SYeQ8lsqEe-imMDNUFdrZA_2"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDConnectorUncertaintySource" id="_7VOwG1svEe-imMDNUFdrZA_2" entityName="get_fond_data_uncertain_2">
+    <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_n2ZdAlsoEe-imMDNUFdrZA_2"/>
+    <targetFlow href="OBM.dataflowdiagram#_glyEMFsqEe-imMDNUFdrZA_2"/>
+    <scenarios id="_D2CTgFswEe-imMDNUFdrZA_2">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="OBM.datadictionary#_yWbtQlsoEe-imMDNUFdrZA_2"/>
+      <targetPin href="OBM.datadictionary#_Ks1QYFspEe-imMDNUFdrZA"/>
+      <targetNode xsi:type="dataflowdiagram:External" href="OBM.dataflowdiagram#_JndHQVsqEe-imMDNUFdrZA_2"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>
