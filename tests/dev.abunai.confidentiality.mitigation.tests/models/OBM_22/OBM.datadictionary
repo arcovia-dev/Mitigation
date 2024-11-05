@@ -353,7 +353,9 @@
     <assignment xsi:type="datadictionary:Assignment" id="_C4gx8prDEe-XoJKjkS98pA" outputPin="_2OA1QZrCEe-XoJKjkS98pA" outputLabels="veaan9">
       <term xsi:type="datadictionary:TRUE" id="_vFpf4JrMEe-XppFr_tE9WA"/>
     </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="_iTozsprREe-bvduSLZuOCg" outputPin="_g0EeYZrREe-bvduSLZuOCg" outputLabels="veaan9"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_iTozsprREe-bvduSLZuOCg" outputPin="_g0EeYZrREe-bvduSLZuOCg" outputLabels="veaan9">
+      <term xsi:type="datadictionary:TRUE" id="_jDla8Jt2Ee-17veCnWANBw"/>
+    </assignment>
   </behaviour>
   <behaviour id="__SwLIFc1Ee-aJpuBt44G8A_2" entityName="Customer_2">
     <inPin id="_1Q_AwJrMEe-XppFr_tE9WA_2" entityName="customer_in_2"/>

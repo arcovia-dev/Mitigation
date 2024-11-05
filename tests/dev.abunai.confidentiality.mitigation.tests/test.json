@@ -1,0 +1,1792 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "Developer_Request_Account_State_2",
+      "id" : "5xh1kr_2",
+      "type" : "edge:arrow",
+      "sourceId" : "495yo3_2",
+      "targetId" : "dvpfqm_2",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_cc_limit_2",
+      "id" : "_9jRZIFi3Ee-DsdRrhZRfUQ_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_i5uHoVi3Ee-DsdRrhZRfUQ_2",
+      "targetId" : "_8kjjkFi2Ee-DsdRrhZRfUQ_2",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit_csd_2",
+      "id" : "_DDuJ8Fi4Ee-DsdRrhZRfUQ_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_-_iYQVi2Ee-DsdRrhZRfUQ_2",
+      "targetId" : "_6qz-QFi3Ee-DsdRrhZRfUQ_2",
+      "children" : [ ]
+    }, {
+      "text" : "_2",
+      "id" : "kjooxa_2",
+      "type" : "edge:arrow",
+      "sourceId" : "gv76y_2",
+      "targetId" : "rab6wn_2",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data_Show_Account_State_2",
+      "id" : "4zxykf_2",
+      "type" : "edge:arrow",
+      "sourceId" : "0p5bqf_2",
+      "targetId" : "7dlio_2",
+      "children" : [ ]
+    }, {
+      "text" : "_2",
+      "id" : "09zks_2",
+      "type" : "edge:arrow",
+      "sourceId" : "wsw6q4_2",
+      "targetId" : "4d824d_2",
+      "children" : [ ]
+    }, {
+      "text" : "_2",
+      "id" : "jicost_2",
+      "type" : "edge:arrow",
+      "sourceId" : "fj3z0l_2",
+      "targetId" : "l43wk_2",
+      "children" : [ ]
+    }, {
+      "text" : "_2",
+      "id" : "zayl1r_2",
+      "type" : "edge:arrow",
+      "sourceId" : "xtg9lq_2",
+      "targetId" : "ey45c6_2",
+      "children" : [ ]
+    }, {
+      "text" : "Get_Loan_Offer_Process_Loan_Offer_2",
+      "id" : "fmfdo_2",
+      "type" : "edge:arrow",
+      "sourceId" : "sigr8p_2",
+      "targetId" : "e6jni4_2",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Transfer_Money_2",
+      "id" : "nru6a_2",
+      "type" : "edge:arrow",
+      "sourceId" : "q70tfa_2",
+      "targetId" : "dyh2k6_2",
+      "children" : [ ]
+    }, {
+      "text" : "_2",
+      "id" : "w20by_2",
+      "type" : "edge:arrow",
+      "sourceId" : "xqi29_2",
+      "targetId" : "2vr30b_2",
+      "children" : [ ]
+    }, {
+      "text" : "customer_show_balance_2",
+      "id" : "_ISm0AFiUEe-5ZvwoYHO9Vg_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_XoS2gViSEe-5ZvwoYHO9Vg_2",
+      "targetId" : "_mASPwFiSEe-5ZvwoYHO9Vg_2",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance_customer_banking_data_2",
+      "id" : "_a7xukFiUEe-5ZvwoYHO9Vg_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_n28PYViSEe-5ZvwoYHO9Vg_2",
+      "targetId" : "_KasXUFiTEe-5ZvwoYHO9Vg_2",
+      "children" : [ ]
+    }, {
+      "text" : "customer_banking_data_balance_response_2",
+      "id" : "_kVQmcFiUEe-5ZvwoYHO9Vg_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_TR8r4ViTEe-5ZvwoYHO9Vg_2",
+      "targetId" : "_dXHlEFiTEe-5ZvwoYHO9Vg_2",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response_customer_view_2",
+      "id" : "_sg-qsFiUEe-5ZvwoYHO9Vg_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_erGVcViTEe-5ZvwoYHO9Vg_2",
+      "targetId" : "_tK5m4FiTEe-5ZvwoYHO9Vg_2",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_settings_2",
+      "id" : "_vOX5gFieEe-01fJ0Yo6HNg_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_8UhF0VidEe-01fJ0Yo6HNg_2",
+      "targetId" : "_MBc4wFieEe-01fJ0Yo6HNg_2",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings_customer_settings_db_2",
+      "id" : "_2uYHRFieEe-01fJ0Yo6HNg_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_NjWJUVieEe-01fJ0Yo6HNg_2",
+      "targetId" : "_W2rV4FieEe-01fJ0Yo6HNg_2",
+      "children" : [ ]
+    }, {
+      "text" : "bank_clerk_get_fond_data_2",
+      "id" : "_glyEMFsqEe-imMDNUFdrZA_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_luCCUVsoEe-imMDNUFdrZA_2",
+      "targetId" : "__gBZsFsoEe-imMDNUFdrZA_2",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data_fond_data_2",
+      "id" : "_pWOmIFsqEe-imMDNUFdrZA_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_BJG3YVspEe-imMDNUFdrZA_2",
+      "targetId" : "_cKUa8FspEe-imMDNUFdrZA_2",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2_fond_data_2",
+      "id" : "_2-qKsFsqEe-imMDNUFdrZA_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_NE0bcVspEe-imMDNUFdrZA_2",
+      "targetId" : "_gbII0FspEe-imMDNUFdrZA_2",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_fond_data_response_2",
+      "id" : "_hm_3UFsvEe-imMDNUFdrZA_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_jF5F8VspEe-imMDNUFdrZA_2",
+      "targetId" : "_xpvJ4FspEe-imMDNUFdrZA_2",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response_bank_clerk_view_2",
+      "id" : "_pCy6gFsvEe-imMDNUFdrZA_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_0En38VspEe-imMDNUFdrZA_2",
+      "targetId" : "_9RsEcFspEe-imMDNUFdrZA_2",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_Request_Account_State",
+      "id" : "5xh1kr",
+      "type" : "edge:arrow",
+      "sourceId" : "495yo3",
+      "targetId" : "dvpfqm",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_cc_limit",
+      "id" : "_9jRZIFi3Ee-DsdRrhZRfUQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_i5uHoVi3Ee-DsdRrhZRfUQ",
+      "targetId" : "_8kjjkFi2Ee-DsdRrhZRfUQ",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit_csd",
+      "id" : "_DDuJ8Fi4Ee-DsdRrhZRfUQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_-_iYQVi2Ee-DsdRrhZRfUQ",
+      "targetId" : "_6qz-QFi3Ee-DsdRrhZRfUQ",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "kjooxa",
+      "type" : "edge:arrow",
+      "sourceId" : "gv76y",
+      "targetId" : "rab6wn",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data_Show_Account_State",
+      "id" : "4zxykf",
+      "type" : "edge:arrow",
+      "sourceId" : "0p5bqf",
+      "targetId" : "7dlio",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "09zks",
+      "type" : "edge:arrow",
+      "sourceId" : "wsw6q4",
+      "targetId" : "4d824d",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "jicost",
+      "type" : "edge:arrow",
+      "sourceId" : "fj3z0l",
+      "targetId" : "l43wk",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "zayl1r",
+      "type" : "edge:arrow",
+      "sourceId" : "xtg9lq",
+      "targetId" : "ey45c6",
+      "children" : [ ]
+    }, {
+      "text" : "Get_Loan_Offer_Process_Loan_Offer",
+      "id" : "fmfdo",
+      "type" : "edge:arrow",
+      "sourceId" : "sigr8p",
+      "targetId" : "e6jni4",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Transfer_Money",
+      "id" : "nru6a",
+      "type" : "edge:arrow",
+      "sourceId" : "q70tfa",
+      "targetId" : "dyh2k6",
+      "children" : [ ]
+    }, {
+      "text" : "",
+      "id" : "w20by",
+      "type" : "edge:arrow",
+      "sourceId" : "xqi29",
+      "targetId" : "2vr30b",
+      "children" : [ ]
+    }, {
+      "text" : "customer_show_balance",
+      "id" : "_ISm0AFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_XoS2gViSEe-5ZvwoYHO9Vg",
+      "targetId" : "_mASPwFiSEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance_customer_banking_data",
+      "id" : "_a7xukFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_n28PYViSEe-5ZvwoYHO9Vg",
+      "targetId" : "_KasXUFiTEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "customer_banking_data_balance_response",
+      "id" : "_kVQmcFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_TR8r4ViTEe-5ZvwoYHO9Vg",
+      "targetId" : "_dXHlEFiTEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response_customer_view",
+      "id" : "_sg-qsFiUEe-5ZvwoYHO9Vg",
+      "type" : "edge:arrow",
+      "sourceId" : "_erGVcViTEe-5ZvwoYHO9Vg",
+      "targetId" : "_tK5m4FiTEe-5ZvwoYHO9Vg",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_settings",
+      "id" : "_vOX5gFieEe-01fJ0Yo6HNg",
+      "type" : "edge:arrow",
+      "sourceId" : "_8UhF0VidEe-01fJ0Yo6HNg",
+      "targetId" : "_MBc4wFieEe-01fJ0Yo6HNg",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings_customer_settings_db",
+      "id" : "_2uYHRFieEe-01fJ0Yo6HNg",
+      "type" : "edge:arrow",
+      "sourceId" : "_NjWJUVieEe-01fJ0Yo6HNg",
+      "targetId" : "_W2rV4FieEe-01fJ0Yo6HNg",
+      "children" : [ ]
+    }, {
+      "text" : "bank_clerk_get_fond_data",
+      "id" : "_glyEMFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_luCCUVsoEe-imMDNUFdrZA",
+      "targetId" : "__gBZsFsoEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data_fond_data",
+      "id" : "_pWOmIFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_BJG3YVspEe-imMDNUFdrZA",
+      "targetId" : "_cKUa8FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2_fond_data",
+      "id" : "_2-qKsFsqEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_NE0bcVspEe-imMDNUFdrZA",
+      "targetId" : "_gbII0FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_fond_data_response",
+      "id" : "_hm_3UFsvEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_jF5F8VspEe-imMDNUFdrZA",
+      "targetId" : "_xpvJ4FspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response_bank_clerk_view",
+      "id" : "_pCy6gFsvEe-imMDNUFdrZA",
+      "type" : "edge:arrow",
+      "sourceId" : "_0En38VspEe-imMDNUFdrZA",
+      "targetId" : "_9RsEcFspEe-imMDNUFdrZA",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_Request_Account_State_1",
+      "id" : "5xh1kr_1",
+      "type" : "edge:arrow",
+      "sourceId" : "495yo3_1",
+      "targetId" : "dvpfqm_1",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_cc_limit_1",
+      "id" : "_9jRZIFi3Ee-DsdRrhZRfUQ_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_i5uHoVi3Ee-DsdRrhZRfUQ_1",
+      "targetId" : "_8kjjkFi2Ee-DsdRrhZRfUQ_1",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit_csd_1",
+      "id" : "_DDuJ8Fi4Ee-DsdRrhZRfUQ_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_-_iYQVi2Ee-DsdRrhZRfUQ_1",
+      "targetId" : "_6qz-QFi3Ee-DsdRrhZRfUQ_1",
+      "children" : [ ]
+    }, {
+      "text" : "_1",
+      "id" : "kjooxa_1",
+      "type" : "edge:arrow",
+      "sourceId" : "gv76y_1",
+      "targetId" : "rab6wn_1",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data_Show_Account_State_1",
+      "id" : "4zxykf_1",
+      "type" : "edge:arrow",
+      "sourceId" : "0p5bqf_1",
+      "targetId" : "7dlio_1",
+      "children" : [ ]
+    }, {
+      "text" : "_1",
+      "id" : "09zks_1",
+      "type" : "edge:arrow",
+      "sourceId" : "wsw6q4_1",
+      "targetId" : "4d824d_1",
+      "children" : [ ]
+    }, {
+      "text" : "_1",
+      "id" : "jicost_1",
+      "type" : "edge:arrow",
+      "sourceId" : "fj3z0l_1",
+      "targetId" : "l43wk_1",
+      "children" : [ ]
+    }, {
+      "text" : "_1",
+      "id" : "zayl1r_1",
+      "type" : "edge:arrow",
+      "sourceId" : "xtg9lq_1",
+      "targetId" : "ey45c6_1",
+      "children" : [ ]
+    }, {
+      "text" : "Get_Loan_Offer_Process_Loan_Offer_1",
+      "id" : "fmfdo_1",
+      "type" : "edge:arrow",
+      "sourceId" : "sigr8p_1",
+      "targetId" : "e6jni4_1",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Transfer_Money_1",
+      "id" : "nru6a_1",
+      "type" : "edge:arrow",
+      "sourceId" : "q70tfa_1",
+      "targetId" : "dyh2k6_1",
+      "children" : [ ]
+    }, {
+      "text" : "_1",
+      "id" : "w20by_1",
+      "type" : "edge:arrow",
+      "sourceId" : "xqi29_1",
+      "targetId" : "2vr30b_1",
+      "children" : [ ]
+    }, {
+      "text" : "customer_show_balance_1",
+      "id" : "_ISm0AFiUEe-5ZvwoYHO9Vg_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_XoS2gViSEe-5ZvwoYHO9Vg_1",
+      "targetId" : "_mASPwFiSEe-5ZvwoYHO9Vg_1",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance_customer_banking_data_1",
+      "id" : "_a7xukFiUEe-5ZvwoYHO9Vg_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_n28PYViSEe-5ZvwoYHO9Vg_1",
+      "targetId" : "_KasXUFiTEe-5ZvwoYHO9Vg_1",
+      "children" : [ ]
+    }, {
+      "text" : "customer_banking_data_balance_response_1",
+      "id" : "_kVQmcFiUEe-5ZvwoYHO9Vg_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_TR8r4ViTEe-5ZvwoYHO9Vg_1",
+      "targetId" : "_dXHlEFiTEe-5ZvwoYHO9Vg_1",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response_customer_view_1",
+      "id" : "_sg-qsFiUEe-5ZvwoYHO9Vg_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_erGVcViTEe-5ZvwoYHO9Vg_1",
+      "targetId" : "_tK5m4FiTEe-5ZvwoYHO9Vg_1",
+      "children" : [ ]
+    }, {
+      "text" : "customer_change_settings_1",
+      "id" : "_vOX5gFieEe-01fJ0Yo6HNg_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_8UhF0VidEe-01fJ0Yo6HNg_1",
+      "targetId" : "_MBc4wFieEe-01fJ0Yo6HNg_1",
+      "children" : [ ]
+    }, {
+      "text" : "root2",
+      "id" : "_WH3-QJrNEe-XppFr_tE9WA",
+      "type" : "edge:arrow",
+      "sourceId" : "_2OA1QZrCEe-XoJKjkS98pA",
+      "targetId" : "_4W_vcJrMEe-XppFr_tE9WA",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings_customer_settings_db_1",
+      "id" : "_2uYHRFieEe-01fJ0Yo6HNg_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_NjWJUVieEe-01fJ0Yo6HNg_1",
+      "targetId" : "_W2rV4FieEe-01fJ0Yo6HNg_1",
+      "children" : [ ]
+    }, {
+      "text" : "bank_clerk_get_fond_data_1",
+      "id" : "_glyEMFsqEe-imMDNUFdrZA_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_luCCUVsoEe-imMDNUFdrZA_1",
+      "targetId" : "__gBZsFsoEe-imMDNUFdrZA_1",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data_fond_data_1",
+      "id" : "_pWOmIFsqEe-imMDNUFdrZA_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_BJG3YVspEe-imMDNUFdrZA_1",
+      "targetId" : "_cKUa8FspEe-imMDNUFdrZA_1",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2_fond_data_1",
+      "id" : "_2-qKsFsqEe-imMDNUFdrZA_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_NE0bcVspEe-imMDNUFdrZA_1",
+      "targetId" : "_gbII0FspEe-imMDNUFdrZA_1",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_fond_data_response_1",
+      "id" : "_hm_3UFsvEe-imMDNUFdrZA_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_jF5F8VspEe-imMDNUFdrZA_1",
+      "targetId" : "_xpvJ4FspEe-imMDNUFdrZA_1",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response_bank_clerk_view_1",
+      "id" : "_pCy6gFsvEe-imMDNUFdrZA_1",
+      "type" : "edge:arrow",
+      "sourceId" : "_0En38VspEe-imMDNUFdrZA_1",
+      "targetId" : "_9RsEcFspEe-imMDNUFdrZA_1",
+      "children" : [ ]
+    }, {
+      "text" : "root1",
+      "id" : "_QGx-gJrNEe-XppFr_tE9WA",
+      "type" : "edge:arrow",
+      "sourceId" : "_0lafx5rCEe-XoJKjkS98pA",
+      "targetId" : "_1Q_AwJrMEe-XppFr_tE9WA",
+      "children" : [ ]
+    }, {
+      "text" : "root2",
+      "id" : "_90uxMJrREe-bvduSLZuOCg",
+      "type" : "edge:arrow",
+      "sourceId" : "_2OA1QZrCEe-XoJKjkS98pA",
+      "targetId" : "_4W_vcJrMEe-XppFr_tE9WA",
+      "children" : [ ]
+    }, {
+      "text" : "root3",
+      "id" : "_xZrlwJrREe-bvduSLZuOCg",
+      "type" : "edge:arrow",
+      "sourceId" : "_g0EeYZrREe-bvduSLZuOCg",
+      "targetId" : "_1Q_AwJrMEe-XppFr_tE9WA_2",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_1",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_4W_vcJrMEe-XppFr_tE9WA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "sigr8p_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "q70tfa_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_XoS2gViSEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_8UhF0VidEe-01fJ0Yo6HNg_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_i5uHoVi3Ee-DsdRrhZRfUQ_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dxnng9_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_View_1",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "ey45c6_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "l43wk_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_9RsEcFspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "bfppo_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "request_account_state_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dvpfqm_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Developer_Request_Account_State_1",
+        "id" : "gv76y_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "1cnvoj_1",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_account_state_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "7dlio_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Banking_Data_Show_Account_State_1",
+        "id" : "wsw6q4_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dhglk8_1",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View_1",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      } ],
+      "ports" : [ {
+        "id" : "4d824d_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "b9ernl_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "495yo3_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "uyd5o_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data_1",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ {
+        "id" : "rab6wn_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "2vr30b_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_KasXUFiTEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "0p5bqf_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_TR8r4ViTEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "9zxnz_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "transfer_money_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dyh2k6_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Transfer_Money_1",
+        "id" : "xqi29_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "q9xse_1",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "e6jni4_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Get_Loan_Offer_Process_Loan_Offer_1",
+        "id" : "xtg9lq_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "sxf4g_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer2_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "42dbbn_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = FALSE",
+        "id" : "fj3z0l_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "i0jwe_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_View_1",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "_tK5m4FiTEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_xY54YViTEe-5ZvwoYHO9Vg_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_dXHlEFiTEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_banking_data_balance_response_1",
+        "id" : "_erGVcViTEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_7AoAk1iTEe-5ZvwoYHO9Vg_1",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_mASPwFiSEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_n28PYViSEe-5ZvwoYHO9Vg_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_AoaIcViUEe-5ZvwoYHO9Vg_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_MBc4wFieEe-01fJ0Yo6HNg_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_settings_1",
+        "id" : "_NjWJUVieEe-01fJ0Yo6HNg_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_cMBC41ieEe-01fJ0Yo6HNg_1",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Settings_Data_1",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_W2rV4FieEe-01fJ0Yo6HNg_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_6qz-QFi3Ee-DsdRrhZRfUQ_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_e1yhglieEe-01fJ0Yo6HNg_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View2_1",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      }, {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ ],
+      "id" : "_MvXlUli3Ee-DsdRrhZRfUQ_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_8kjjkFi2Ee-DsdRrhZRfUQ_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_cc_limit_1",
+        "id" : "_-_iYQVi2Ee-DsdRrhZRfUQ_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_UnKoA1i3Ee-DsdRrhZRfUQ_1",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_luCCUVsoEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_CqeuEVsqEe-imMDNUFdrZA_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "__gBZsFsoEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward bank_clerk_get_fond_data_1",
+        "id" : "_BJG3YVspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_GSbFIVsqEe-imMDNUFdrZA_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_Ks1QYFspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_NE0bcVspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_JndHQVsqEe-imMDNUFdrZA_1",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data_1",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_cKUa8FspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_gbII0FspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_jF5F8VspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_OCehElsqEe-imMDNUFdrZA_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data2_1",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ ],
+      "id" : "_SYeQ8lsqEe-imMDNUFdrZA_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_View2_1",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      }, {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ ],
+      "id" : "_W3GbInQSEe-hMp-vXVNX6A_1",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response_1",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_xpvJ4FspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward fond_data_fond_data_response_1",
+        "id" : "_0En38VspEe-imMDNUFdrZA_1",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_dEqG01sqEe-imMDNUFdrZA_1",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Customer",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_1Q_AwJrMEe-XppFr_tE9WA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "sigr8p",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "q70tfa",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_XoS2gViSEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_8UhF0VidEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_i5uHoVi3Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dxnng9",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_View",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "ey45c6",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "l43wk",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_9RsEcFspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "bfppo",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "request_account_state",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dvpfqm",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Developer_Request_Account_State",
+        "id" : "gv76y",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "1cnvoj",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_account_state",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "7dlio",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Banking_Data_Show_Account_State",
+        "id" : "wsw6q4",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dhglk8",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      } ],
+      "ports" : [ {
+        "id" : "4d824d",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "b9ernl",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "495yo3",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "uyd5o",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ {
+        "id" : "rab6wn",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "2vr30b",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_KasXUFiTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "0p5bqf",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_TR8r4ViTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "9zxnz",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "transfer_money",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dyh2k6",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Transfer_Money",
+        "id" : "xqi29",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "q9xse",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "e6jni4",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Get_Loan_Offer_Process_Loan_Offer",
+        "id" : "xtg9lq",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "sxf4g",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "42dbbn",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = FALSE",
+        "id" : "fj3z0l",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "i0jwe",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_View",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "_tK5m4FiTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_xY54YViTEe-5ZvwoYHO9Vg",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_dXHlEFiTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_banking_data_balance_response",
+        "id" : "_erGVcViTEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_7AoAk1iTEe-5ZvwoYHO9Vg",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_mASPwFiSEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_n28PYViSEe-5ZvwoYHO9Vg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_AoaIcViUEe-5ZvwoYHO9Vg",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_MBc4wFieEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_settings",
+        "id" : "_NjWJUVieEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_cMBC41ieEe-01fJ0Yo6HNg",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Settings_Data",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_W2rV4FieEe-01fJ0Yo6HNg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_6qz-QFi3Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_e1yhglieEe-01fJ0Yo6HNg",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View2",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      }, {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ ],
+      "id" : "_MvXlUli3Ee-DsdRrhZRfUQ",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_8kjjkFi2Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_cc_limit",
+        "id" : "_-_iYQVi2Ee-DsdRrhZRfUQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_UnKoA1i3Ee-DsdRrhZRfUQ",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_luCCUVsoEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_CqeuEVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "__gBZsFsoEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward bank_clerk_get_fond_data",
+        "id" : "_BJG3YVspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_GSbFIVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_Ks1QYFspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_NE0bcVspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_JndHQVsqEe-imMDNUFdrZA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_cKUa8FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_gbII0FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_jF5F8VspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_OCehElsqEe-imMDNUFdrZA",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ ],
+      "id" : "_SYeQ8lsqEe-imMDNUFdrZA",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_View2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      }, {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ ],
+      "id" : "_W3GbInQSEe-hMp-vXVNX6A",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_xpvJ4FspEe-imMDNUFdrZA",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward fond_data_fond_data_response",
+        "id" : "_0En38VspEe-imMDNUFdrZA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_dEqG01sqEe-imMDNUFdrZA",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "root",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_0lafx5rCEe-XoJKjkS98pA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_2OA1QZrCEe-XoJKjkS98pA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_g0EeYZrREe-bvduSLZuOCg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_8iEowZrMEe-XppFr_tE9WA",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_1Q_AwJrMEe-XppFr_tE9WA_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "sigr8p_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "q70tfa_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_XoS2gViSEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_8UhF0VidEe-01fJ0Yo6HNg_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_i5uHoVi3Ee-DsdRrhZRfUQ_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dxnng9_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_View_2",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "ey45c6_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "l43wk_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_9RsEcFspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "bfppo_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "request_account_state_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dvpfqm_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Developer_Request_Account_State_2",
+        "id" : "gv76y_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "1cnvoj_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_account_state_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "7dlio_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Banking_Data_Show_Account_State_2",
+        "id" : "wsw6q4_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "dhglk8_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View_2",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      } ],
+      "ports" : [ {
+        "id" : "4d824d_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "b9ernl_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "495yo3_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "uyd5o_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Banking_Data_2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "rab6wn_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "2vr30b_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_KasXUFiTEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Personal = TRUE",
+        "id" : "0p5bqf_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "id" : "_TR8r4ViTEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "9zxnz_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "transfer_money_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "dyh2k6_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Customer_Transfer_Money_2",
+        "id" : "xqi29_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "q9xse_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "e6jni4_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward Get_Loan_Offer_Process_Loan_Offer_2",
+        "id" : "xtg9lq_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "sxf4g_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "process_loan_offer2_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "42dbbn_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = FALSE",
+        "id" : "fj3z0l_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "i0jwe_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_View_2",
+      "labels" : [ {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ {
+        "id" : "_tK5m4FiTEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_xY54YViTEe-5ZvwoYHO9Vg_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "balance_response_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_dXHlEFiTEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_banking_data_balance_response_2",
+        "id" : "_erGVcViTEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_7AoAk1iTEe-5ZvwoYHO9Vg_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "show_balance_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_mASPwFiSEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_n28PYViSEe-5ZvwoYHO9Vg_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_AoaIcViUEe-5ZvwoYHO9Vg_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "change_settings_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_MBc4wFieEe-01fJ0Yo6HNg_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_settings_2",
+        "id" : "_NjWJUVieEe-01fJ0Yo6HNg_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_cMBC41ieEe-01fJ0Yo6HNg_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Customer_Settings_Data_2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_W2rV4FieEe-01fJ0Yo6HNg_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_6qz-QFi3Ee-DsdRrhZRfUQ_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_e1yhglieEe-01fJ0Yo6HNg_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Developer_View2_2",
+      "labels" : [ {
+        "labelTypeId" : "4h3wzk",
+        "labelTypeValueId" : "j62tp6"
+      }, {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ ],
+      "id" : "_MvXlUli3Ee-DsdRrhZRfUQ_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "change_cc_limit_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_8kjjkFi2Ee-DsdRrhZRfUQ_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward customer_change_cc_limit_2",
+        "id" : "_-_iYQVi2Ee-DsdRrhZRfUQ_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_UnKoA1i3Ee-DsdRrhZRfUQ_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_luCCUVsoEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_CqeuEVsqEe-imMDNUFdrZA_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "__gBZsFsoEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward bank_clerk_get_fond_data_2",
+        "id" : "_BJG3YVspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_GSbFIVsqEe-imMDNUFdrZA_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "get_fond_data2_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_Ks1QYFspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Encryption.Encrypted = TRUE",
+        "id" : "_NE0bcVspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_JndHQVsqEe-imMDNUFdrZA_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data_2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "g10hr"
+      } ],
+      "ports" : [ {
+        "id" : "_cKUa8FspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "id" : "_gbII0FspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Sensitivity.Public = TRUE",
+        "id" : "_jF5F8VspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_OCehElsqEe-imMDNUFdrZA_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Fond_Data2_2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ ],
+      "id" : "_SYeQ8lsqEe-imMDNUFdrZA_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Bank_Clerk_View2_2",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      }, {
+        "labelTypeId" : "84rllz",
+        "labelTypeValueId" : "d01uv5"
+      } ],
+      "ports" : [ ],
+      "id" : "_W3GbInQSEe-hMp-vXVNX6A_2",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "fond_data_response_2",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_xpvJ4FspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward fond_data_fond_data_response_2",
+        "id" : "_0En38VspEe-imMDNUFdrZA_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_dEqG01sqEe-imMDNUFdrZA_2",
+      "type" : "node:function",
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "4h3wzk",
+    "name" : "Sensitivity",
+    "values" : [ {
+      "id" : "zzvphn",
+      "text" : "Personal"
+    }, {
+      "id" : "veaan9",
+      "text" : "Public"
+    }, {
+      "id" : "j62tp6",
+      "text" : "Develop"
+    } ]
+  }, {
+    "id" : "gvia09",
+    "name" : "Location",
+    "values" : [ {
+      "id" : "g10hr",
+      "text" : "EU"
+    }, {
+      "id" : "5hnugm",
+      "text" : "nonEU"
+    } ]
+  }, {
+    "id" : "84rllz",
+    "name" : "Encryption",
+    "values" : [ {
+      "id" : "2r6xe6",
+      "text" : "Encrypted"
+    }, {
+      "id" : "d01uv5",
+      "text" : "Processable"
+    } ]
+  } ]
+}

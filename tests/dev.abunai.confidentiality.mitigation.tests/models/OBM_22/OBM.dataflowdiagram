@@ -240,10 +240,6 @@
     <destinationPin href="OBM.datadictionary#_MBc4wFieEe-01fJ0Yo6HNg_1"/>
     <sourcePin href="OBM.datadictionary#_8UhF0VidEe-01fJ0Yo6HNg_1"/>
   </flows>
-  <flows id="_WH3-QJrNEe-XppFr_tE9WA" entityName="root2" sourceNode="_8iEowZrMEe-XppFr_tE9WA" destinationNode="dxnng9_1">
-    <destinationPin href="OBM.datadictionary#_4W_vcJrMEe-XppFr_tE9WA"/>
-    <sourcePin href="OBM.datadictionary#_2OA1QZrCEe-XoJKjkS98pA"/>
-  </flows>
   <flows id="_2uYHRFieEe-01fJ0Yo6HNg_1" entityName="change_settings_customer_settings_db_1" sourceNode="_cMBC41ieEe-01fJ0Yo6HNg_1" destinationNode="_e1yhglieEe-01fJ0Yo6HNg_1">
     <destinationPin href="OBM.datadictionary#_W2rV4FieEe-01fJ0Yo6HNg_1"/>
     <sourcePin href="OBM.datadictionary#_NjWJUVieEe-01fJ0Yo6HNg_1"/>
