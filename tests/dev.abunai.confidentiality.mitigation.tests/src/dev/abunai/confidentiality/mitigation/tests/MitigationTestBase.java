@@ -67,12 +67,12 @@ public abstract class MitigationTestBase extends TestBase {
 
 	// Evaluation variables
 	protected final String pathToMeassurements = "meassurements.txt";
-	protected final boolean evalMode = false;
+	protected final boolean evalMode = true;
 	protected final String pathToRankingSolution = Paths
 			.get("models", getFolderName(), getFilesName() + "_solution.txt").toString();
 
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 1; // Must be at least 3 for meassurments
+	protected final int MITIGATION_RUNS = 9; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
 	protected List<String> relevantUncertaintyEntityNames;

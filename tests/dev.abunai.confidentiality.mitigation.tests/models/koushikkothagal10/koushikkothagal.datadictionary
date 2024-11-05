@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="ASCII"?>
+<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="1">
+  <labelTypes id="7" entityName="Stereotype">
+    <label id="10" entityName="internal"/>
+    <label id="18" entityName="load_balancer"/>
+    <label id="26" entityName="external_website"/>
+    <label id="31" entityName="infrastructural"/>
+    <label id="32" entityName="service_discovery"/>
+    <label id="45" entityName="restful_http"/>
+    <label id="53" entityName="load_balanced_link"/>
+    <label id="_bIucoHZoEe-pmpCa7vPvig" entityName="authenticated_request"/>
+    <label id="_LsNugHZsEe-pmpCa7vPvig" entityName="authorization_server"/>
+    <label id="_QDFBEHZsEe-pmpCa7vPvig" entityName="dummy_1"/>
+    <label id="_flhl0HZtEe-pmpCa7vPvig" entityName="login_attempts_regulation"/>
+    <label id="_Dl7nEHZwEe-pmpCa7vPvig" entityName="encrypted_connection"/>
+    <label id="_j2m5IHZwEe-pmpCa7vPvig" entityName="dummy_2"/>
+    <label id="_odrK4HZwEe-pmpCa7vPvig" entityName="local_logging"/>
+    <label id="_qiKLIHZwEe-pmpCa7vPvig" entityName="log_sanitization"/>
+  </labelTypes>
+  <labelTypes id="11" entityName="Endpoints">
+    <label id="12" entityName="movies"/>
+    <label id="13" entityName="moviesmovieId"/>
+    <label id="19" entityName="catalog"/>
+    <label id="20" entityName="cataloguserId"/>
+    <label id="38" entityName="ratingsdata"/>
+    <label id="39" entityName="ratingsdatamoviesmovieId"/>
+    <label id="40" entityName="ratingsdatauseruserId"/>
+  </labelTypes>
+  <labelTypes id="14" entityName="Port">
+    <label id="15" entityName="8082"/>
+    <label id="21" entityName="8081"/>
+    <label id="33" entityName="8761"/>
+    <label id="41" entityName="8083"/>
+  </labelTypes>
+  <labelTypes id="22" entityName="LoadBalancer">
+    <label id="23" entityName="SpringCloud"/>
+  </labelTypes>
+  <labelTypes id="27" entityName="URL">
+    <label id="28" entityName="httpsapithemoviedborg"/>
+  </labelTypes>
+  <labelTypes id="34" entityName="ServiceDiscovery">
+    <label id="35" entityName="Eureka"/>
+  </labelTypes>
+  <behaviour id="8" entityName="movie_info">
+    <inPin id="48" entityName="movie_info_in"/>
+    <outPin id="46" entityName="movie_info_out"/>
+    <assignment xsi:type="datadictionary:Assignment" id="59" entityName="movie_info" inputPins="48" outputPin="46" outputLabels="10 45">
+      <term xsi:type="datadictionary:TRUE" id="60"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="71" inputPins="48" outputPin="46"/>
+  </behaviour>
+  <behaviour id="_kpwuBXZoEe-pmpCa7vPvig" entityName="fixed_movie_info">
+    <inPin id="48" entityName="movie_info_in"/>
+    <outPin id="46" entityName="movie_info_out"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_8j-ZgnZqEe-pmpCa7vPvig" entityName="fixed_movie_info" inputPins="48" outputPin="46" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_DgccYHZrEe-pmpCa7vPvig"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_JiFOs3ZrEe-pmpCa7vPvig" inputPins="48" outputPin="46"/>
+  </behaviour>
+  <behaviour id="16" entityName="movie_catalog">
+    <inPin id="_1guHQHZsEe-pmpCa7vPvig" entityName="MovieIn"/>
+    <outPin id="51" entityName="MovieOut1"/>
+    <outPin id="55" entityName="MovieOut2"/>
+    <outPin id="57" entityName="MovieOut3"/>
+    <assignment xsi:type="datadictionary:Assignment" id="61" entityName="movie_catalog1" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="51" outputLabels="10 18 45 53">
+      <term xsi:type="datadictionary:TRUE" id="62"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="63" entityName="movie_catalog2" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="55" outputLabels="10 18 45 53">
+      <term xsi:type="datadictionary:TRUE" id="64"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="65" entityName="movie_catalog3" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="57" outputLabels="10 18 45 53">
+      <term xsi:type="datadictionary:TRUE" id="66"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_atU143ZvEe-pmpCa7vPvig" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="51"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_e9TdWHZvEe-pmpCa7vPvig" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="55"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_h3n5Y3ZvEe-pmpCa7vPvig" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="57"/>
+  </behaviour>
+  <behaviour id="_1YgjRXZoEe-pmpCa7vPvig" entityName="fixed_movie_catalog">
+    <inPin id="_1guHQHZsEe-pmpCa7vPvig" entityName="MovieIn"/>
+    <outPin id="51" entityName="MovieOut1"/>
+    <outPin id="55" entityName="MovieOut2"/>
+    <outPin id="57" entityName="MovieOut3"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_opm80nZqEe-pmpCa7vPvig" entityName="fixed_movie_catalog1" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="51" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 53 18 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_EkO0oHZrEe-pmpCa7vPvig"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_sWh6gnZqEe-pmpCa7vPvig" entityName="fixed_movie_catalog2" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="55" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 53 18 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_FXQ0EHZrEe-pmpCa7vPvig"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_vkx_MnZqEe-pmpCa7vPvig" entityName="fixed_movie_catalog3" inputPins="_1guHQHZsEe-pmpCa7vPvig" outputPin="57" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 53 18 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_F1oLEHZrEe-pmpCa7vPvig"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="24" entityName="ExternalWeb">
+    <outPin id="49"/>
+    <assignment xsi:type="datadictionary:Assignment" id="67" entityName="ExternalWeb" outputPin="49" outputLabels="26 45">
+      <term xsi:type="datadictionary:TRUE" id="68"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="29" entityName="Discovery_server">
+    <inPin id="42" entityName="DiscoveryIN"/>
+  </behaviour>
+  <behaviour id="36" entityName="ratings">
+    <inPin id="54" entityName="ratings_in"/>
+    <outPin id="43" entityName="ratingsout"/>
+    <assignment xsi:type="datadictionary:Assignment" id="69" entityName="ratings" inputPins="54" outputPin="43" outputLabels="10 45">
+      <term xsi:type="datadictionary:TRUE" id="70"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="72" entityName="ratings" inputPins="54" outputPin="43"/>
+  </behaviour>
+  <behaviour id="_4w-69XZoEe-pmpCa7vPvig" entityName="fixed_ratings">
+    <inPin id="54" entityName="ratings_in"/>
+    <outPin id="43" entityName="ratingsout"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_CtHz8nZpEe-pmpCa7vPvig" entityName="fixed_raitings" inputPins="54" outputPin="43" outputLabels="10 45 _bIucoHZoEe-pmpCa7vPvig _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_H1WAEHZrEe-pmpCa7vPvig"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_PauH83ZpEe-pmpCa7vPvig" inputPins="54" outputPin="43"/>
+  </behaviour>
+  <behaviour id="_WbAzhXZsEe-pmpCa7vPvig" entityName="authorization_server">
+    <inPin id="_WhxQgJrDEe-XoJKjkS98pA" entityName="auth_in"/>
+    <outPin id="_YLq40XZsEe-pmpCa7vPvig" entityName="authorization_server1"/>
+    <outPin id="_beiXwXZsEe-pmpCa7vPvig" entityName="authorization_server2"/>
+    <outPin id="_cCxGMXZsEe-pmpCa7vPvig" entityName="authorization_server3"/>
+    <outPin id="_ccxhoXZsEe-pmpCa7vPvig" entityName="authorization_server4"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gWXpYnZsEe-pmpCa7vPvig" entityName="authorization_server1" outputPin="_YLq40XZsEe-pmpCa7vPvig" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_LDpnwHZuEe-pmpCa7vPvig"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_mbM5onZsEe-pmpCa7vPvig" entityName="authorization_server2" outputPin="_beiXwXZsEe-pmpCa7vPvig" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_LxGjoHZuEe-pmpCa7vPvig"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_o4UcV3ZsEe-pmpCa7vPvig" entityName="authorization_server3" outputPin="_cCxGMXZsEe-pmpCa7vPvig" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_MQpmYHZuEe-pmpCa7vPvig"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_sV4IV3ZsEe-pmpCa7vPvig" entityName="authorization_server4" outputPin="_ccxhoXZsEe-pmpCa7vPvig" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_MtGR0HZuEe-pmpCa7vPvig"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="8_1" entityName="movie_info_1">
+    <inPin id="48_1" entityName="movie_info_in_1"/>
+    <outPin id="46_1" entityName="movie_info_out_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="59_1" entityName="movie_info_1" inputPins="48_1" outputPin="46_1" outputLabels="10 45">
+      <term xsi:type="datadictionary:TRUE" id="60_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="71_1" inputPins="48_1" outputPin="46_1"/>
+  </behaviour>
+  <behaviour id="_kpwuBXZoEe-pmpCa7vPvig_1" entityName="fixed_movie_info_1">
+    <inPin id="48_1" entityName="movie_info_in_1"/>
+    <outPin id="46_1" entityName="movie_info_out_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_8j-ZgnZqEe-pmpCa7vPvig_1" entityName="fixed_movie_info_1" inputPins="48_1" outputPin="46_1" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_DgccYHZrEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_JiFOs3ZrEe-pmpCa7vPvig_1" inputPins="48_1" outputPin="46_1"/>
+  </behaviour>
+  <behaviour id="16_1" entityName="movie_catalog_1">
+    <inPin id="_1guHQHZsEe-pmpCa7vPvig_1" entityName="MovieIn_1"/>
+    <outPin id="51_1" entityName="MovieOut1_1"/>
+    <outPin id="55_1" entityName="MovieOut2_1"/>
+    <outPin id="57_1" entityName="MovieOut3_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="61_1" entityName="movie_catalog1_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="51_1" outputLabels="10 18 45 53">
+      <term xsi:type="datadictionary:TRUE" id="62_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="63_1" entityName="movie_catalog2_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="55_1" outputLabels="10 18 45 53">
+      <term xsi:type="datadictionary:TRUE" id="64_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="65_1" entityName="movie_catalog3_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="57_1" outputLabels="10 18 45 53">
+      <term xsi:type="datadictionary:TRUE" id="66_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_atU143ZvEe-pmpCa7vPvig_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="51_1"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_e9TdWHZvEe-pmpCa7vPvig_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="55_1"/>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_h3n5Y3ZvEe-pmpCa7vPvig_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="57_1"/>
+  </behaviour>
+  <behaviour id="_1YgjRXZoEe-pmpCa7vPvig_1" entityName="fixed_movie_catalog_1">
+    <inPin id="_1guHQHZsEe-pmpCa7vPvig_1" entityName="MovieIn_1"/>
+    <outPin id="51_1" entityName="MovieOut1_1"/>
+    <outPin id="55_1" entityName="MovieOut2_1"/>
+    <outPin id="57_1" entityName="MovieOut3_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_opm80nZqEe-pmpCa7vPvig_1" entityName="fixed_movie_catalog1_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="51_1" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 53 18 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_EkO0oHZrEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_sWh6gnZqEe-pmpCa7vPvig_1" entityName="fixed_movie_catalog2_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="55_1" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 53 18 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_FXQ0EHZrEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_vkx_MnZqEe-pmpCa7vPvig_1" entityName="fixed_movie_catalog3_1" inputPins="_1guHQHZsEe-pmpCa7vPvig_1" outputPin="57_1" outputLabels="_bIucoHZoEe-pmpCa7vPvig 10 53 18 45 _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_F1oLEHZrEe-pmpCa7vPvig_1"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="24_1" entityName="ExternalWeb_1">
+    <outPin id="49_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="67_1" entityName="ExternalWeb_1" outputPin="49_1" outputLabels="26 45">
+      <term xsi:type="datadictionary:TRUE" id="68_1"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="29_1" entityName="Discovery_server_1">
+    <inPin id="42_1" entityName="DiscoveryIN_1"/>
+  </behaviour>
+  <behaviour id="36_1" entityName="ratings_1">
+    <inPin id="54_1" entityName="ratings_in_1"/>
+    <outPin id="43_1" entityName="ratingsout_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="69_1" entityName="ratings_1" inputPins="54_1" outputPin="43_1" outputLabels="10 45">
+      <term xsi:type="datadictionary:TRUE" id="70_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="72_1" entityName="ratings_1" inputPins="54_1" outputPin="43_1"/>
+  </behaviour>
+  <behaviour id="_4w-69XZoEe-pmpCa7vPvig_1" entityName="fixed_ratings_1">
+    <inPin id="54_1" entityName="ratings_in_1"/>
+    <outPin id="43_1" entityName="ratingsout_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_CtHz8nZpEe-pmpCa7vPvig_1" entityName="fixed_raitings_1" inputPins="54_1" outputPin="43_1" outputLabels="10 45 _bIucoHZoEe-pmpCa7vPvig _Dl7nEHZwEe-pmpCa7vPvig">
+      <term xsi:type="datadictionary:TRUE" id="_H1WAEHZrEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_PauH83ZpEe-pmpCa7vPvig_1" inputPins="54_1" outputPin="43_1"/>
+  </behaviour>
+  <behaviour id="_WbAzhXZsEe-pmpCa7vPvig_1" entityName="authorization_server_1">
+    <inPin id="_ZrVCcJrDEe-XoJKjkS98pA" entityName="auth1_in"/>
+    <outPin id="_YLq40XZsEe-pmpCa7vPvig_1" entityName="authorization_server1_1"/>
+    <outPin id="_beiXwXZsEe-pmpCa7vPvig_1" entityName="authorization_server2_1"/>
+    <outPin id="_cCxGMXZsEe-pmpCa7vPvig_1" entityName="authorization_server3_1"/>
+    <outPin id="_ccxhoXZsEe-pmpCa7vPvig_1" entityName="authorization_server4_1"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_gWXpYnZsEe-pmpCa7vPvig_1" entityName="authorization_server1_1" outputPin="_YLq40XZsEe-pmpCa7vPvig_1" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_LDpnwHZuEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_mbM5onZsEe-pmpCa7vPvig_1" entityName="authorization_server2_1" outputPin="_beiXwXZsEe-pmpCa7vPvig_1" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_LxGjoHZuEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_o4UcV3ZsEe-pmpCa7vPvig_1" entityName="authorization_server3_1" outputPin="_cCxGMXZsEe-pmpCa7vPvig_1" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_MQpmYHZuEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_sV4IV3ZsEe-pmpCa7vPvig_1" entityName="authorization_server4_1" outputPin="_ccxhoXZsEe-pmpCa7vPvig_1" outputLabels="_LsNugHZsEe-pmpCa7vPvig 31 45">
+      <term xsi:type="datadictionary:TRUE" id="_MtGR0HZuEe-pmpCa7vPvig_1"/>
+    </assignment>
+  </behaviour>
+  <behaviour id="_yqrRYZrCEe-XoJKjkS98pA" entityName="root">
+    <outPin id="_0lafx5rCEe-XoJKjkS98pA" entityName="root_out1"/>
+    <outPin id="_2OA1QZrCEe-XoJKjkS98pA" entityName="root_out2"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_9NrWEprCEe-XoJKjkS98pA" outputPin="_0lafx5rCEe-XoJKjkS98pA" outputLabels="_QDFBEHZsEe-pmpCa7vPvig"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_C4gx8prDEe-XoJKjkS98pA" outputPin="_2OA1QZrCEe-XoJKjkS98pA" outputLabels="_j2m5IHZwEe-pmpCa7vPvig"/>
+  </behaviour>
+</datadictionary:DataDictionary>

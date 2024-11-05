@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.ranking;
+package dev.abunai.confidentiality.mitigation.tests.upscaling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class OnlineBanking27MitigationTest extends MitigationTestBase {
 			storeMeassurement(duration);
 		}
 		printMetricies();
-        storeMeassurementResult(seeAverageRuntime(),"OBM_Best");
+        storeMeassurementResult(seeAverageRuntime(),"OBM27_Best");
 	}
 	
 	@Test
@@ -77,6 +77,6 @@ public class OnlineBanking27MitigationTest extends MitigationTestBase {
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
-        storeMeassurementResult(seeAverageRuntime(),"OBM_Brute_Force");
+        storeMeassurementResult(seeAverageRuntime(),"OBM27_Brute_Force");
 	}
 }

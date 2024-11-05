@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.ranking;
+package dev.abunai.confidentiality.mitigation.tests.upscaling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 import dev.abunai.confidentiality.mitigation.ranking.RankerType;
 import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 
-public class OnlineBanking18MitigationTest extends MitigationTestBase {
+public class OnlineBanking22MitigationTest extends MitigationTestBase {
 
 	protected String getFolderName() {
-		return "OBM_18";
+		return "OBM_22";
 	}
 
 	protected String getFilesName() {
@@ -64,7 +64,7 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
 			storeMeassurement(duration);
 		}
 		printMetricies();
-        storeMeassurementResult(seeAverageRuntime(),"OBM_Best");
+        storeMeassurementResult(seeAverageRuntime(),"OBM22_Best");
 	}
 	
 	@Test
@@ -77,6 +77,6 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
 		}
-        storeMeassurementResult(seeAverageRuntime(),"OBM_Brute_Force");
+        storeMeassurementResult(seeAverageRuntime(),"OBM22_Brute_Force");
 	}
 }

@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.ranking;
+package dev.abunai.confidentiality.mitigation.tests.upscaling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 import dev.abunai.confidentiality.mitigation.tests.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
-public class Koushikkothagal21MitigationTest extends MitigationTestBase{
+public class Koushikkothagal10MitigationTest extends MitigationTestBase{
     
     protected String getFolderName() {
-        return "koushikkothagal21";
+        return "koushikkothagal10";
     }
 
     protected String getFilesName() {
@@ -72,7 +72,7 @@ public class Koushikkothagal21MitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal21_Best");
+        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal10_Best");
     }
     
     @Test
@@ -85,6 +85,6 @@ public class Koushikkothagal21MitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal21_Brute_Force");
+        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal10_Brute_Force");
     }
 }
