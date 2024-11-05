@@ -231,9 +231,15 @@
     <outPin id="_0lafx5rCEe-XoJKjkS98pA" entityName="root_out1"/>
     <outPin id="_2OA1QZrCEe-XoJKjkS98pA" entityName="root_out2"/>
     <outPin id="_3HDOsZrFEe-W3LiycdOnNQ" entityName="root_out3"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_9NrWEprCEe-XoJKjkS98pA" outputPin="_0lafx5rCEe-XoJKjkS98pA" outputLabels="_QDFBEHZsEe-pmpCa7vPvig"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_C4gx8prDEe-XoJKjkS98pA" outputPin="_2OA1QZrCEe-XoJKjkS98pA" outputLabels="_j2m5IHZwEe-pmpCa7vPvig"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_6_h8IprFEe-W3LiycdOnNQ" outputPin="_3HDOsZrFEe-W3LiycdOnNQ" outputLabels="_QDFBEHZsEe-pmpCa7vPvig"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_9NrWEprCEe-XoJKjkS98pA" outputPin="_0lafx5rCEe-XoJKjkS98pA" outputLabels="_QDFBEHZsEe-pmpCa7vPvig">
+          <term xsi:type="datadictionary:TRUE" id="_MQpmYHZuEe-pmpCa7vPvig_1"/>
+    </assignment>
+    <assignment xsi:type="datadictionary:Assignment" id="_C4gx8prDEe-XoJKjkS98pA" outputPin="_2OA1QZrCEe-XoJKjkS98pA" outputLabels="_j2m5IHZwEe-pmpCa7vPvig">
+          <term xsi:type="datadictionary:TRUE" id="_MQpmYHZuEe-pmpCa7vPvig_1"/>
+    </assignment>    
+    <assignment xsi:type="datadictionary:Assignment" id="_6_h8IprFEe-W3LiycdOnNQ" outputPin="_3HDOsZrFEe-W3LiycdOnNQ" outputLabels="_QDFBEHZsEe-pmpCa7vPvig">
+          <term xsi:type="datadictionary:TRUE" id="_MQpmYHZuEe-pmpCa7vPvig_1"/>
+    </assignment>
   </behaviour>
   <behaviour id="8_2" entityName="movie_info_2">
     <inPin id="48_2" entityName="movie_info_in_2"/>
