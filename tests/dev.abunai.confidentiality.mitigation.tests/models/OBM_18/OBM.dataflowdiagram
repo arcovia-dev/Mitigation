@@ -207,7 +207,7 @@
   </nodes>
   <nodes xsi:type="dataflowdiagram:Store" id="9zxnz_1" entityName="Customer_Banking_Data_1">
     <behaviour href="OBM.datadictionary#__SzOglc1Ee-aJpuBt44G8A_1"/>
-    <properties href="OBM.datadictionary#5hnugm"/>
+    <properties href="OBM.datadictionary#g10hr"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="q9xse_1" entityName="transfer_money_1">
     <behaviour href="OBM.datadictionary#__SzOh1c1Ee-aJpuBt44G8A_1"/>

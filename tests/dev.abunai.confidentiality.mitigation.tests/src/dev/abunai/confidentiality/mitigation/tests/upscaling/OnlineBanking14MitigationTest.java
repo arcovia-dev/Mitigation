@@ -57,7 +57,7 @@ public class OnlineBanking14MitigationTest extends MitigationTestBase {
 		deleteOldMeassurement();
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.INCREASING;
+			mitigationStrategy = MitigationStrategy.HALF;
 			createTrainData();
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;

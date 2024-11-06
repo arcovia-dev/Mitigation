@@ -346,19 +346,19 @@
   <behaviour id="_yqrRYZrCEe-XoJKjkS98pA" entityName="root">
     <outPin id="_0lafx5rCEe-XoJKjkS98pA" entityName="root_out1"/>
     <outPin id="_2OA1QZrCEe-XoJKjkS98pA" entityName="root_out2"/>
-    <outPin id="_g0EeYZrREe-bvduSLZuOCg" entityName="root_out3"/>
+    <outPin id="_2xiqEZx4Ee-cS5x_9mvJhw" entityName="root_out3"/>
     <assignment xsi:type="datadictionary:Assignment" id="_9NrWEprCEe-XoJKjkS98pA" outputPin="_0lafx5rCEe-XoJKjkS98pA" outputLabels="veaan9">
       <term xsi:type="datadictionary:TRUE" id="_uRMkIJrMEe-XppFr_tE9WA"/>
     </assignment>
     <assignment xsi:type="datadictionary:Assignment" id="_C4gx8prDEe-XoJKjkS98pA" outputPin="_2OA1QZrCEe-XoJKjkS98pA" outputLabels="veaan9">
       <term xsi:type="datadictionary:TRUE" id="_vFpf4JrMEe-XppFr_tE9WA"/>
     </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="_iTozsprREe-bvduSLZuOCg" outputPin="_g0EeYZrREe-bvduSLZuOCg" outputLabels="veaan9">
-          <term xsi:type="datadictionary:TRUE" id="_vFpf4JrMEe-XppFr_tE9WA"/>
+    <assignment xsi:type="datadictionary:Assignment" id="_4uuvgpx4Ee-cS5x_9mvJhw" outputPin="_2xiqEZx4Ee-cS5x_9mvJhw" outputLabels="veaan9">
+      <term xsi:type="datadictionary:TRUE" id="_8TM70Jx4Ee-cS5x_9mvJhw"/>
     </assignment>
   </behaviour>
   <behaviour id="__SwLIFc1Ee-aJpuBt44G8A_2" entityName="Customer_2">
-    <inPin id="_1Q_AwJrMEe-XppFr_tE9WA_2" entityName="customer_in_2"/>
+    <inPin id="__AdMQJx4Ee-cS5x_9mvJhw" entityName="customer2_in"/>
     <outPin id="sigr8p_2" entityName="customer_out_Get_Loan_Offer_Process_Loan_Offer_2"/>
     <outPin id="q70tfa_2" entityName="Customer_out_Customer_Transfer_Money_2"/>
     <outPin id="_XoS2gViSEe-5ZvwoYHO9Vg_2" entityName="customer_out_show_balance_2"/>
