@@ -29,7 +29,7 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
 
 	@Override
 	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.TOP_3;
+		return RankingAggregationMethod.EXPONENTIAL_RANKS;
 	}
 
 	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {

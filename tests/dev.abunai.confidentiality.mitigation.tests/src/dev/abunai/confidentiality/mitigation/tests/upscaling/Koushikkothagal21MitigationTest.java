@@ -58,7 +58,7 @@ public class Koushikkothagal21MitigationTest extends MitigationTestBase{
 
     @Override
     protected RankingAggregationMethod getAggregationMethod() {
-        return RankingAggregationMethod.TOP_3;
+        return RankingAggregationMethod.EXPONENTIAL_RANKS;
     }
 
     @Test
