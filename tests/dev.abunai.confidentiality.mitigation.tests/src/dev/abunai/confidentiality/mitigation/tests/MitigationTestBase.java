@@ -379,21 +379,21 @@ public abstract class MitigationTestBase extends TestBase {
 		} else if (mitigationStrategy.equals(MitigationStrategy.QUATER)) {
 			for (int i = 1; i <= 4; i++) {
 				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-						i * rankedUncertaintyEntityName.size() / 4, analysis, ddAndDfd);
+						i * analysis.getUncertaintySources().size() / 4, analysis, ddAndDfd);
 				if (result.size() != 0) {
 					break;
 				}
 			}
 		} else if (mitigationStrategy.equals(MitigationStrategy.HALF)) {
 			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					rankedUncertaintyEntityName.size() / 2, analysis, ddAndDfd);
+					analysis.getUncertaintySources().size() / 2, analysis, ddAndDfd);
 			if (result.size() == 0) {
 				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-						rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
+						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
 		} else {
 			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
+					analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 		}
 		if (result.size() == 0) {
 			System.out.println("mitigation failed");
