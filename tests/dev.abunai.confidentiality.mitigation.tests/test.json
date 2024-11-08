@@ -3,6 +3,76 @@
     "type" : "graph",
     "id" : "root",
     "children" : [ {
+      "text" : "ratings_data_service_2",
+      "id" : "44_2",
+      "type" : "edge:arrow",
+      "sourceId" : "43_2",
+      "targetId" : "42_2",
+      "children" : [ ]
+    }, {
+      "text" : "movie_info_service_2",
+      "id" : "47_2",
+      "type" : "edge:arrow",
+      "sourceId" : "46_2",
+      "targetId" : "42_2",
+      "children" : [ ]
+    }, {
+      "text" : "external_website_2",
+      "id" : "50_2",
+      "type" : "edge:arrow",
+      "sourceId" : "49_2",
+      "targetId" : "48_2",
+      "children" : [ ]
+    }, {
+      "text" : "movie_catalog_service_2",
+      "id" : "52_2",
+      "type" : "edge:arrow",
+      "sourceId" : "51_2",
+      "targetId" : "42_2",
+      "children" : [ ]
+    }, {
+      "text" : "movie_catalog_service_2",
+      "id" : "56_2",
+      "type" : "edge:arrow",
+      "sourceId" : "55_2",
+      "targetId" : "54_2",
+      "children" : [ ]
+    }, {
+      "text" : "movie_catalog_service_2",
+      "id" : "58_2",
+      "type" : "edge:arrow",
+      "sourceId" : "57_2",
+      "targetId" : "48_2",
+      "children" : [ ]
+    }, {
+      "text" : "authorization_server_2",
+      "id" : "_-cw1MHZsEe-pmpCa7vPvig_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_ccxhoXZsEe-pmpCa7vPvig_2",
+      "targetId" : "42_2",
+      "children" : [ ]
+    }, {
+      "text" : "authorization_server_2",
+      "id" : "_FqrNYHZtEe-pmpCa7vPvig_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_beiXwXZsEe-pmpCa7vPvig_2",
+      "targetId" : "_1guHQHZsEe-pmpCa7vPvig_2",
+      "children" : [ ]
+    }, {
+      "text" : "authorization_server_2",
+      "id" : "_LjUbwHZtEe-pmpCa7vPvig_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_YLq40XZsEe-pmpCa7vPvig_2",
+      "targetId" : "48_2",
+      "children" : [ ]
+    }, {
+      "text" : "authorization_server_2",
+      "id" : "_P2PpgHZtEe-pmpCa7vPvig_2",
+      "type" : "edge:arrow",
+      "sourceId" : "_cCxGMXZsEe-pmpCa7vPvig_2",
+      "targetId" : "54_2",
+      "children" : [ ]
+    }, {
       "text" : "ratings_data_service",
       "id" : "44",
       "type" : "edge:arrow",
@@ -155,6 +225,209 @@
       "type" : "edge:arrow",
       "sourceId" : "_2OA1QZrCEe-XoJKjkS98pA",
       "targetId" : "_ZrVCcJrDEe-XoJKjkS98pA",
+      "children" : [ ]
+    }, {
+      "text" : "root3",
+      "id" : "_BxsMcJrGEe-W3LiycdOnNQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_3HDOsZrFEe-W3LiycdOnNQ",
+      "targetId" : "_xNVpUJrFEe-W3LiycdOnNQ",
+      "children" : [ ]
+    }, {
+      "text" : "external_website_2",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "26"
+      }, {
+        "labelTypeId" : "27",
+        "labelTypeValueId" : "28"
+      } ],
+      "ports" : [ {
+        "behavior" : "set Stereotype.external_website = TRUE\nset Stereotype.restful_http = TRUE",
+        "id" : "49_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "2_2",
+      "type" : "node:input-output",
+      "children" : [ ]
+    }, {
+      "text" : "discovery_server_2",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "31"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "32"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "33"
+      }, {
+        "labelTypeId" : "34",
+        "labelTypeValueId" : "35"
+      } ],
+      "ports" : [ {
+        "id" : "42_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "3_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "ratings_data_service_2",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "38"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "39"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "40"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "41"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "_odrK4HZwEe-pmpCa7vPvig"
+      } ],
+      "ports" : [ {
+        "id" : "54_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nforward authorization_server_2",
+        "id" : "43_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "4_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "movie_info_service_2",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "12"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "13"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "15"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "_QDFBEHZsEe-pmpCa7vPvig"
+      } ],
+      "ports" : [ {
+        "id" : "48_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.restful_http = TRUE\nforward authorization_server_2",
+        "id" : "46_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "5_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "movie_catalog_service_2",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "18"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "19"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "21"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "_j2m5IHZwEe-pmpCa7vPvig"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "_odrK4HZwEe-pmpCa7vPvig"
+      } ],
+      "ports" : [ {
+        "id" : "_1guHQHZsEe-pmpCa7vPvig_2",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.load_balancer = TRUE\nset Stereotype.restful_http = TRUE\nset Stereotype.load_balanced_link = TRUE\nforward authorization_server_2",
+        "id" : "51_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.load_balancer = TRUE\nset Stereotype.restful_http = TRUE\nset Stereotype.load_balanced_link = TRUE\nforward authorization_server_2",
+        "id" : "55_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.internal = TRUE\nset Stereotype.load_balancer = TRUE\nset Stereotype.restful_http = TRUE\nset Stereotype.load_balanced_link = TRUE\nforward authorization_server_2",
+        "id" : "57_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "6_2",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "auth_Server_2",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "31"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "_LsNugHZsEe-pmpCa7vPvig"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "_QDFBEHZsEe-pmpCa7vPvig"
+      } ],
+      "ports" : [ {
+        "id" : "_xNVpUJrFEe-W3LiycdOnNQ",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.authorization_server = TRUE\nset Stereotype.infrastructural = TRUE\nset Stereotype.restful_http = TRUE",
+        "id" : "_YLq40XZsEe-pmpCa7vPvig_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.authorization_server = TRUE\nset Stereotype.infrastructural = TRUE\nset Stereotype.restful_http = TRUE",
+        "id" : "_beiXwXZsEe-pmpCa7vPvig_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.authorization_server = TRUE\nset Stereotype.infrastructural = TRUE\nset Stereotype.restful_http = TRUE",
+        "id" : "_cCxGMXZsEe-pmpCa7vPvig_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.authorization_server = TRUE\nset Stereotype.infrastructural = TRUE\nset Stereotype.restful_http = TRUE",
+        "id" : "_ccxhoXZsEe-pmpCa7vPvig_2",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_DoP4E3ZsEe-pmpCa7vPvig_2",
+      "type" : "node:function",
       "children" : [ ]
     }, {
       "text" : "external_website_1",
@@ -559,6 +832,11 @@
       }, {
         "behavior" : "set Stereotype.dummy_2 = TRUE",
         "id" : "_2OA1QZrCEe-XoJKjkS98pA",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Stereotype.dummy_1 = TRUE",
+        "id" : "_3HDOsZrFEe-W3LiycdOnNQ",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],

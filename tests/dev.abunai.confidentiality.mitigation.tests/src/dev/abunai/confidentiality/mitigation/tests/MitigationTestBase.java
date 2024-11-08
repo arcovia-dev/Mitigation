@@ -95,10 +95,10 @@ public abstract class MitigationTestBase extends TestBase {
 		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
 		analysis.initializeAnalysis();
 		
-		/*var dfd = getDDAndDfd(analysis);
+		var dfd = getDDAndDfd(analysis);
 		var conv = new DataFlowDiagramConverter();
 		var web = conv.dfdToWeb(dfd);
-		conv.storeWeb(web, "test.json");*/
+		conv.storeWeb(web, "test.json");
 	}
 
 	public void storeMeassurementResults(List<Float> meassurements, String rankerType, String aggregationMethod) {

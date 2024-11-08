@@ -151,7 +151,7 @@
     <properties href="koushikkothagal.datadictionary#39"/>
     <properties href="koushikkothagal.datadictionary#40"/>
     <properties href="koushikkothagal.datadictionary#41"/>
-    <properties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
+    <properties href="koushikkothagal.datadictionary#_odrK4HZwEe-pmpCa7vPvig"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:Process" id="5_2" entityName="movie_info_service_2">
     <behaviour href="koushikkothagal.datadictionary#8_2"/>
@@ -176,7 +176,7 @@
     <behaviour href="koushikkothagal.datadictionary#_WbAzhXZsEe-pmpCa7vPvig_2"/>
     <properties href="koushikkothagal.datadictionary#31"/>
     <properties href="koushikkothagal.datadictionary#_LsNugHZsEe-pmpCa7vPvig"/>
-    <properties href="koushikkothagal.datadictionary#_flhl0HZtEe-pmpCa7vPvig"/>
+    <properties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
   </nodes>
   <nodes xsi:type="dataflowdiagram:External" id="2_1" entityName="external_website_1">
     <behaviour href="koushikkothagal.datadictionary#24_1"/>
