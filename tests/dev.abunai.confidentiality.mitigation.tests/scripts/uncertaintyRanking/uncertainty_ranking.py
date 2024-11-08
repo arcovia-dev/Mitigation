@@ -15,6 +15,7 @@ from random_forest_uncertainty_ranker import RandomForestUncertaintyRanker
 from linear_regression_uncertainty_ranker import LinearRegressionUncertaintyRanker
 from logistic_regression_uncertainty_ranker import LogisticRegressionUncertaintyRanker
 from linear_discriminant_analysis import LinearDiscriminantAnalysisRanker
+import batch_size_identifier
 
 import warnings
 
@@ -26,6 +27,7 @@ TRAIN_FILES_DIR = sys.argv[1]
 RELEVANT_UNCERTAINTIES_LENGTH = int(sys.argv[2])
 RANKER_TYPE = sys.argv[3]
 AGGREGATION_TYPE = sys.argv[4]
+BATCH_SIZE_OPTIMIZATION = sys.argv[5] # Y or N
 SEPERATOR = ';'
 
 
@@ -191,6 +193,9 @@ else:
 
 relevant_uncertainties = []
 printedCount = 0
+
+if BATCH_SIZE_OPTIMIZATION == 'Y':
+    final_ranking = batch_size_identifier.show_clusters(final_ranking)
 
 while printedCount < RELEVANT_UNCERTAINTIES_LENGTH and bool(final_ranking):
     item = final_ranking.popitem(last=False)

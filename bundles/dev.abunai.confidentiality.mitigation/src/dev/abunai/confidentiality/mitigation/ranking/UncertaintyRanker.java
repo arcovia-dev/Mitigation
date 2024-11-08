@@ -2,6 +2,7 @@ package dev.abunai.confidentiality.mitigation.ranking;
 
 import java.util.Arrays;
 import java.util.List;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -10,10 +11,11 @@ public class UncertaintyRanker {
 
 
 	public static List<String> rankUncertaintiesBasedOnTrainData(String pythonPath, String scriptPath, String pathToTrainDataFolder,
-			int rankingLength, RankerType rankerType,  RankingAggregationMethod aggregationMethod) {
+			int rankingLength, RankerType rankerType,  RankingAggregationMethod aggregationMethod, MitigationStrategy mitigationStrategy) {
 		// Command to run the Python script
 		String[] command = { pythonPath, scriptPath, pathToTrainDataFolder, Integer.toString(rankingLength),
-				getRankerTypeCommandParameter(rankerType), getAggregationMethodCommandParamter(aggregationMethod) };
+				getRankerTypeCommandParameter(rankerType), getAggregationMethodCommandParamter(aggregationMethod),
+				getBatchSizeOptimizationParameter(mitigationStrategy)};
 		try {
 			// Execute the command
 			Process process = Runtime.getRuntime().exec(command);
@@ -46,6 +48,10 @@ public class UncertaintyRanker {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private static String getBatchSizeOptimizationParameter(MitigationStrategy mitigationStrategy) {
+		return mitigationStrategy.equals(MitigationStrategy.BATCH_SIZE_OPTIMAL) ? "Y" : "N";
 	}
 
 	private static String getRankerTypeCommandParameter(RankerType rankerType) {

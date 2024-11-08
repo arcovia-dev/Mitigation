@@ -7,9 +7,9 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Test;
 
+import dev.abunai.confidentiality.mitigation.ranking.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.ranking.RankerType;
 import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
-import dev.abunai.confidentiality.mitigation.tests.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
 public class JferraterMitigationTest extends MitigationTestBase{

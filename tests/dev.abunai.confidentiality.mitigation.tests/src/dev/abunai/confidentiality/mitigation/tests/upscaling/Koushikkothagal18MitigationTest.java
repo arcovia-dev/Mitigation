@@ -7,9 +7,9 @@ import java.util.function.Predicate;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.junit.jupiter.api.Test;
 
+import dev.abunai.confidentiality.mitigation.ranking.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.ranking.RankerType;
 import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
-import dev.abunai.confidentiality.mitigation.tests.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
 public class Koushikkothagal18MitigationTest extends MitigationTestBase{
@@ -66,7 +66,7 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.HALF;
+            mitigationStrategy = MitigationStrategy.BATCH_SIZE_OPTIMAL;
             createTrainData();
             createMitigationCandidatesAutomatically();
             var duration = System.currentTimeMillis() - startTime;

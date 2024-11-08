@@ -28,6 +28,7 @@ import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationListSimplifier;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModel;
 import dev.abunai.confidentiality.mitigation.ranking.MitigationModelCalculator;
+import dev.abunai.confidentiality.mitigation.ranking.MitigationStrategy;
 import dev.abunai.confidentiality.mitigation.ranking.TrainDataGeneration;
 import dev.abunai.confidentiality.mitigation.ranking.UncertaintyRanker;
 import dev.abunai.confidentiality.mitigation.ranking.UncertaintySubset;
@@ -363,7 +364,7 @@ public abstract class MitigationTestBase extends TestBase {
 		// the specified file
 		relevantUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(customPythonPath(),
 				pathToUncertaintyRankingScript, trainDataDirectory, analysis.getUncertaintySources().size(),
-				getRankerType(), getAggregationMethod());
+				getRankerType(), getAggregationMethod(),mitigationStrategy);
 
 	}
 
@@ -391,7 +392,16 @@ public abstract class MitigationTestBase extends TestBase {
 				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
-		} else {
+		} 
+		else if (mitigationStrategy.equals(MitigationStrategy.BATCH_SIZE_OPTIMAL)) {
+			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
+			if (result.size() == 0) {
+				result = mitigateWithFixAmountOfUncertainties(BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis()),
+						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
+			}
+		} 
+		else {
 			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 					analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 		}
