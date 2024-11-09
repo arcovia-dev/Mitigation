@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.ranking;
+package dev.abunai.confidentiality.mitigation.tests.upscaling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import dev.abunai.confidentiality.mitigation.ranking.RankerType;
 import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
-public class JferraterMitigationTest extends MitigationTestBase{
+public class Jferrater7aMitigationTest extends MitigationTestBase{
 	
 	protected String getFolderName() {
-		return "jferrater";
+		return "jferrater7a";
 	}
 
 	protected String getFilesName() {
@@ -57,32 +57,30 @@ public class JferraterMitigationTest extends MitigationTestBase{
 		return RankingAggregationMethod.EXPONENTIAL_RANKS;
 	}
 
-	@Test
-	public void executeMitigation() {
-		deleteOldMeassurement();
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.HALF;
-			createTrainData();
-			printMetricies();
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-		printMetricies();
-		seeAverageRuntime();
-	}
-	
-	@Test
-	public void executeBruteForce() throws Exception {
-		deleteOldMeassurement();
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-		seeAverageRuntime();
-	}
+    @Test
+    public void executeMitigation() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.HALF;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf7a_Best");
+    }
+    
+    @Test
+    public void executeBruteForce() throws Exception {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf7a_Brute_Force");
+    }
 }
