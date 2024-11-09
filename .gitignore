@@ -10,10 +10,12 @@
 *~
 heapdump.*
 Snap.*
-*.txt
+
 __pycache__
 tests/dev.abunai.confidentiality.mitigation.tests/mitigation
-
+tests/dev.abunai.confidentiality.mitigation.tests/meassurement_results.txt
+tests/dev.abunai.confidentiality.mitigation.tests/meassurements.txt
+tests/dev.abunai.confidentiality.mitigation.tests/scripts/uncertaintyRanking/train_data_files
 # MAC
 __MACOSX/
 
