@@ -8,13 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -94,11 +92,6 @@ public abstract class MitigationTestBase extends TestBase {
 
 		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
 		analysis.initializeAnalysis();
-		
-		var dfd = getDDAndDfd(analysis);
-		var conv = new DataFlowDiagramConverter();
-		var web = conv.dfdToWeb(dfd);
-		conv.storeWeb(web, "test.json");
 	}
 
 	public void storeMeassurementResults(List<Float> meassurements, String rankerType, String aggregationMethod) {
@@ -306,7 +299,6 @@ public abstract class MitigationTestBase extends TestBase {
 			for (int k = 0; k < resultMinimal.size(); k++) {
 				System.out.println(resultMinimal.get(k));
 			}
-
 		}
 
 		return result;

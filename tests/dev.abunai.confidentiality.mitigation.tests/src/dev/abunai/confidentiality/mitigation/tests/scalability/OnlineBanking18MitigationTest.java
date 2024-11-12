@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.upscaling;
+package dev.abunai.confidentiality.mitigation.tests.scalability;
 
 import java.util.ArrayList;
 import java.util.List;

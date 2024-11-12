@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.upscaling;
+package dev.abunai.confidentiality.mitigation.tests.scalability;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import dev.abunai.confidentiality.mitigation.ranking.RankerType;
 import dev.abunai.confidentiality.mitigation.ranking.RankingAggregationMethod;
 import dev.abunai.confidentiality.mitigation.tests.MitigationTestBase;
 
-public class Jferrater7aMitigationTest extends MitigationTestBase{
+public class Jferrater14MitigationTest extends MitigationTestBase{
 	
 	protected String getFolderName() {
-		return "jferrater7a";
+		return "jferrater14";
 	}
 
 	protected String getFilesName() {
@@ -68,19 +68,7 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf7a_Best");
+        storeMeassurementResult(seeAverageRuntime(),"jf14_Best");
     }
     
-    @Test
-    public void executeBruteForce() throws Exception {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"jf7a_Brute_Force");
-    }
 }

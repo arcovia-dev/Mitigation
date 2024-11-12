@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.tests.uncertaintyScalability;
+package dev.abunai.confidentiality.mitigation.tests.scalability;
 
 import dev.abunai.confidentiality.mitigation.tests.LoginFrameWorkTestBase;
 
