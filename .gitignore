@@ -17,6 +17,7 @@ tests/dev.abunai.confidentiality.mitigation.tests/meassurement_results.txt
 tests/dev.abunai.confidentiality.mitigation.tests/meassurements.txt
 # MAC
 __MACOSX/
+*.csv
 
 # Package Files
 *.ear
