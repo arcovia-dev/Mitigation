@@ -63,7 +63,7 @@ public class Mechanic {
         }
 
         var solutions = new Sat().solve(nodes, edges, constraints);
-
+        //System.out.println(solutions);
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
         var minSol = solutions.get(0);
 
@@ -92,7 +92,7 @@ public class Mechanic {
             actions.add(delta);
         }
 
-        System.out.println(actions);
+        //System.out.println(actions);
 
         var dd = dfd.dataDictionary();
         for (var action : actions) {
