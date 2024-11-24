@@ -26,10 +26,10 @@ public class Sat {
     private Set<Label> labels;
     private List<Node> nodes;
     private List<Edge> edges;
-    private List<Constraint> constraints;
+    private List<List<Constraint>> constraints;
     private List<VecInt> dimacsClauses;
 
-    public List<List<Delta>> solve(List<Node> nodes, List<Edge> edges, List<Constraint> constraints)
+    public List<List<Delta>> solve(List<Node> nodes, List<Edge> edges, List<List<Constraint>> constraints)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.edges = edges;
@@ -86,20 +86,23 @@ public class Sat {
             for (var inPin : node.inPins()) {
                 var clause = new VecInt();
                 for (var constraint : constraints) {
-                    var type = constraint.label()
-                            .type();
-                    var value = constraint.label()
-                            .value();
-                    var sign = constraint.positive() ? 1 : -1;
-                    if (constraint.what()
-                            .equals("Node")) {
-                        clause.push(sign * delta(node.name(), new NodeChar(type, value)));
-                    } else if (constraint.what()
-                            .equals("Data")) {
-                        clause.push(sign * delta(inPin.id(), new InDataChar(type, value)));
+                    for (var variable : constraint) {
+                        var type = variable.label()
+                                .type();
+                        var value = variable.label()
+                                .value();
+                        var sign = variable.positive() ? 1 : -1;
+                        if (variable.what()
+                                .equals("Node")) {
+                            clause.push(sign * delta(node.name(), new NodeChar(type, value)));
+                        } else if (variable.what()
+                                .equals("Data")) {
+                            clause.push(sign * delta(inPin.id(), new InDataChar(type, value)));
+                        }
                     }
+                    addClause(clause);
                 }
-                addClause(clause);
+
             }
 
         }
@@ -174,7 +177,9 @@ public class Sat {
     private void extractUniqueLabels() {
         labels = new HashSet<>();
         for (var constraint : constraints) {
-            labels.add(constraint.label());
+            for (var variable : constraint) {
+                labels.add(variable.label());
+            }
         }
     }
 
