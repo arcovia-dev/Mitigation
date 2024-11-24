@@ -31,7 +31,9 @@ public class SatTest {
 
         // (personal AND nonEU) => encrypted
         var constraints = List.of(List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
-                new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))));
+                new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))),
+                List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
+                        new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))));
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 
