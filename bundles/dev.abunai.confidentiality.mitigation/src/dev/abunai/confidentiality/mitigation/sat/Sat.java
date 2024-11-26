@@ -26,50 +26,51 @@ public class Sat {
     private Set<Label> labels;
     private List<Node> nodes;
     private List<Edge> edges;
-    private List<Constraint> constraints;
+    private List<List<Constraint>> constraints;
     private List<VecInt> dimacsClauses;
-    
-    public List<List<Delta>> solve(List<Node> nodes,List<Edge> edges,List<Constraint> constraints) throws ContradictionException, TimeoutException, IOException {
-        this.nodes=nodes;
-        this.edges=edges;
-        this.constraints=constraints;
-        
+
+    public List<List<Delta>> solve(List<Node> nodes, List<Edge> edges, List<List<Constraint>> constraints)
+            throws ContradictionException, TimeoutException, IOException {
+        this.nodes = nodes;
+        this.edges = edges;
+        this.constraints = constraints;
+
         deltaToLit = new BiMap<>();
         edgeToLit = new BiMap<>();
         edgeDataToLit = new BiMap<>();
         solver = SolverFactory.newDefault();
         dimacsClauses = new ArrayList<>();
-        
+
         extractUniqueLabels();
 
         buildClauses();
-        
+
         writeDimacsFile("dimacs.cnf", dimacsClauses);
-                
+
         return solveClauses();
     }
 
     private List<List<Delta>> solveClauses() throws TimeoutException, ContradictionException {
         IProblem problem = solver;
-        
+
         List<List<Delta>> solutions = new ArrayList<>();
-        
+
         while (problem.isSatisfiable()) {
             int[] model = problem.model();
-            
-            //Map literals to relevant Deltas
+
+            // Map literals to relevant Deltas
             var deltas = IntStream.of(model)
                     .filter(lit -> lit > 0)
                     .filter(lit -> deltaToLit.containsValue(lit))
                     .mapToObj(lit -> deltaToLit.getKey(lit))
                     .toList();
-            
-            //Store unique solutions
+
+            // Store unique solutions
             if (!solutions.contains(deltas)) {
                 solutions.add(deltas);
             }
-            
-            //Prohibit current solution
+
+            // Prohibit current solution
             var negated = new VecInt();
             for (var literal : model) {
                 negated.push(-literal);
@@ -82,53 +83,64 @@ public class Sat {
     private void buildClauses() throws ContradictionException {
         // Apply constraints
         for (var node : nodes) {
-            for(var inPin : node.inPins()) {
-                var clause = new VecInt();
+            for (var inPin : node.inPins()) {
+                
                 for (var constraint : constraints) {
-                    var type=constraint.label().type();
-                    var value =constraint.label().value();
-                    var sign = constraint.positive() ? 1 : -1;
-                    if(constraint.what().equals("Node")) {
-                        clause.push(sign * delta(node.name(), new NodeChar(type,value)));
+                    var clause = new VecInt();
+                    for (var variable : constraint) {
+                        var type = variable.label()
+                                .type();
+                        var value = variable.label()
+                                .value();
+                        var sign = variable.positive() ? 1 : -1;
+                        if (variable.what()
+                                .equals("Node")) {
+                            clause.push(sign * delta(node.name(), new NodeChar(type, value)));
+                        } else if (variable.what()
+                                .equals("Data")) {
+                            clause.push(sign * delta(inPin.id(), new InDataChar(type, value)));
+                        }
                     }
-                    else if(constraint.what().equals("Data")) {
-                        clause.push(sign * delta(inPin.id(), new InDataChar(type,value)));
-                    }
+                    addClause(clause);
                 }
-                addClause(clause);
+
             }
-            
+
         }
 
         // Require node and outgoing data chars
         for (var node : nodes) {
-            for(var property: node.nodeChars()) {
-                addClause(clause(delta(node.name(), new NodeChar(property.type(),property.value()))));
+            for (var property : node.nodeChars()) {
+                addClause(clause(delta(node.name(), new NodeChar(property.type(), property.value()))));
             }
-            for(var outPin : node.outPins().keySet()) {
-                for(var outData : node.outPins().get(outPin)) {
-                    addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(),outData.value()))));
+            for (var outPin : node.outPins()
+                    .keySet()) {
+                for (var outData : node.outPins()
+                        .get(outPin)) {
+                    addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(), outData.value()))));
                 }
             }
         }
 
         // Prohibit creation of new edges
         for (var fromNode : nodes) {
-            for(var fromPin: fromNode.outPins().keySet()) {
+            for (var fromPin : fromNode.outPins()
+                    .keySet()) {
                 for (var toNode : nodes) {
-                    for(var toPin : toNode.inPins()) {
+                    for (var toPin : toNode.inPins()) {
                         var sign = edges.contains(new Edge(fromPin, toPin)) ? 1 : -1;
                         addClause(clause(sign * edge(fromPin, toPin)));
-                    }  
+                    }
                 }
             }
         }
-        
+
         // Make clauses for label propagation
         for (var fromNode : nodes) {
-            for(var fromPin: fromNode.outPins().keySet()) {
+            for (var fromPin : fromNode.outPins()
+                    .keySet()) {
                 for (var toNode : nodes) {
-                    for(var toPin : toNode.inPins()) {
+                    for (var toPin : toNode.inPins()) {
                         for (var label : labels) {
                             var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
                             var outLit = delta(fromPin.id(), new OutDataChar(label.type(), label.value()));
@@ -137,28 +149,28 @@ public class Sat {
                             addClause(clause(-edgeDataLit, outLit));
                             addClause(clause(-edgeDataLit, edge(fromPin, toPin)));
                         }
-                    }  
+                    }
                 }
             }
         }
 
-        
         // Node has incoming data at inpin iff it receives it at least once
         for (var label : labels) {
             for (var toNode : nodes) {
-                for(var toPin : toNode.inPins()) {
+                for (var toPin : toNode.inPins()) {
                     var inLit = delta(toPin.id(), new InDataChar(label.type(), label.value()));
                     var clause = new VecInt();
                     clause.push(-inLit);
                     for (var fromNode : nodes) {
-                        for(var fromPin : fromNode.outPins().keySet()) {
+                        for (var fromPin : fromNode.outPins()
+                                .keySet()) {
                             var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
                             addClause(clause(-edgeDataLit, inLit));
-                            clause.push(edgeDataLit);  
-                        } 
+                            clause.push(edgeDataLit);
+                        }
                     }
                     addClause(clause);
-                } 
+                }
             }
         }
     }
@@ -166,14 +178,16 @@ public class Sat {
     private void extractUniqueLabels() {
         labels = new HashSet<>();
         for (var constraint : constraints) {
-            labels.add(constraint.label());
+            for (var variable : constraint) {
+                labels.add(variable.label());
+            }
         }
     }
 
     private VecInt clause(int... literals) {
         return new VecInt(literals);
     }
-    
+
     private void addClause(VecInt clause) throws ContradictionException {
         solver.addClause(clause);
         dimacsClauses.add(clause);
@@ -202,19 +216,19 @@ public class Sat {
         }
         return deltaToLit.getValue(delta);
     }
-    
+
     public void writeDimacsFile(String filePath, List<VecInt> clauses) throws IOException {
 
-        int maxVar = 0;   
-        for(var literals : clauses) {
-            for(var lit: literals.toArray()) {
+        int maxVar = 0;
+        for (var literals : clauses) {
+            for (var lit : literals.toArray()) {
                 int var = Math.abs(lit);
-                if(var>maxVar) {
-                    maxVar=var;
+                if (var > maxVar) {
+                    maxVar = var;
                 }
             }
         }
-        
+
         int numClauses = clauses.size();
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -227,10 +241,10 @@ public class Sat {
             }
         }
     }
-    
+
     public static String formatClauseLine(VecInt literals) {
         StringJoiner joiner = new StringJoiner(" ");
-        
+
         for (int i = 0; i < literals.size(); i++) {
             int literal = literals.get(i);
             if (literal != 0) {

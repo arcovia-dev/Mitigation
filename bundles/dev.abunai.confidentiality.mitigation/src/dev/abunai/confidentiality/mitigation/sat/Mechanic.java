@@ -14,11 +14,30 @@ import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
 public class Mechanic {
-    
-    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
+    Map<String, String> outPinToAss = new HashMap<>();
+
+    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints)
             throws ContradictionException, TimeoutException, IOException {
+        List<Node> nodes = getNodes(dfd);
+
+        List<Edge> edges = getEdges(dfd);
+
+        var solutions = new Sat().solve(nodes, edges, constraints);
+
+        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
+        var minimalSolution = solutions.get(0);
+
+        List<Delta> flatNodes = getFlatNodes(nodes);
+
+        List<Delta> actions = getActions(minimalSolution, flatNodes);
+
+        applyActions(dfd, actions);
+
+        return dfd;
+    }
+
+    private List<Node> getNodes(DataFlowDiagramAndDictionary dfd) {
         List<Node> nodes = new ArrayList<>();
-        Map<String, String> outPinToAss = new HashMap<>();
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {
 
@@ -53,20 +72,22 @@ public class Mechanic {
 
             nodes.add(new Node(node.getEntityName(), inPins, outPins, nodeChars));
         }
+        return nodes;
+    }
 
+    private List<Edge> getEdges(DataFlowDiagramAndDictionary dfd) {
         List<Edge> edges = new ArrayList<>();
+
         for (var flow : dfd.dataFlowDiagram()
                 .getFlows()) {
             edges.add(new Edge(new OutPin(outPinToAss.get(flow.getSourcePin()
                     .getId())), new InPin(flow.getDestinationPin()
                             .getId())));
         }
+        return edges;
+    }
 
-        var solutions = new Sat().solve(nodes, edges, constraints);
-
-        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
-        var minSol = solutions.get(0);
-
+    private List<Delta> getFlatNodes(List<Node> nodes) {
         List<Delta> flatNodes = new ArrayList<>();
         for (var node : nodes) {
             for (var outPin : node.outPins()
@@ -80,9 +101,12 @@ public class Mechanic {
                 flatNodes.add(new Delta(node.name(), new NodeChar(property.type(), property.value())));
             }
         }
+        return flatNodes;
+    }
 
+    private List<Delta> getActions(List<Delta> minimalSolution, List<Delta> flatNodes) {
         List<Delta> actions = new ArrayList<>();
-        for (var delta : minSol) {
+        for (var delta : minimalSolution) {
             if (delta.characteristic()
                     .what()
                     .equals("InData"))
@@ -91,9 +115,10 @@ public class Mechanic {
                 continue;
             actions.add(delta);
         }
+        return actions;
+    }
 
-        System.out.println(actions);
-
+    private void applyActions(DataFlowDiagramAndDictionary dfd, List<Delta> actions) {
         var dd = dfd.dataDictionary();
         for (var action : actions) {
             if (action.characteristic()
@@ -126,7 +151,5 @@ public class Mechanic {
                 }
             }
         }
-
-        return dfd;
     }
 }
