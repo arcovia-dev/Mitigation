@@ -14,6 +14,7 @@ import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
 public class Mechanic {
+    Map<String, String> outPinToAss = new HashMap<>();
 
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints)
             throws ContradictionException, TimeoutException, IOException {
@@ -37,7 +38,6 @@ public class Mechanic {
 
     private List<Node> getNodes(DataFlowDiagramAndDictionary dfd) {
         List<Node> nodes = new ArrayList<>();
-        Map<String, String> outPinToAss = new HashMap<>();
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {
 
@@ -76,15 +76,6 @@ public class Mechanic {
     }
 
     private List<Edge> getEdges(DataFlowDiagramAndDictionary dfd) {
-        Map<String, String> outPinToAss = new HashMap<>();
-        for (var node : dfd.dataFlowDiagram()
-                .getNodes()) {
-            for (var assignment : node.getBehaviour()
-                    .getAssignment()) {
-                var outPin = assignment.getOutputPin();
-                outPinToAss.put(outPin.getId(), assignment.getId());
-            }
-        }
         List<Edge> edges = new ArrayList<>();
 
         for (var flow : dfd.dataFlowDiagram()
