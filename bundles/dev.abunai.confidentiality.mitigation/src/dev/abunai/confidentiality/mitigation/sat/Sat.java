@@ -84,8 +84,9 @@ public class Sat {
         // Apply constraints
         for (var node : nodes) {
             for (var inPin : node.inPins()) {
-                var clause = new VecInt();
+                
                 for (var constraint : constraints) {
+                    var clause = new VecInt();
                     for (var variable : constraint) {
                         var type = variable.label()
                                 .type();
