@@ -6,20 +6,33 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
+import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
-import org.dataflowanalysis.dfd.datadictionary.LabelType;
+import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
+import java.util.HashSet;
+import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 
 public class Mechanic {
+    public static final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
+
+    Map<String, String> outPinToAss = new HashMap<>();
+
+    private List<Node> nodes = new ArrayList<>();
+    private List<Edge> edges = new ArrayList<>();
 
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints)
             throws ContradictionException, TimeoutException, IOException {
-        List<Node> nodes = getNodes(dfd);
+        List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
 
-        List<Edge> edges = getEdges(dfd);
+        mapOutPinsToAssignments(dfd);
+
+        getNodesAndEdges(violatingTFGs);
 
         var solutions = new Sat().solve(nodes, edges, constraints);
 
@@ -35,48 +48,114 @@ public class Mechanic {
         return dfd;
     }
 
-    private List<Node> getNodes(DataFlowDiagramAndDictionary dfd) {
-        List<Node> nodes = new ArrayList<>();
-        Map<String, String> outPinToAss = new HashMap<>();
-        for (var node : dfd.dataFlowDiagram()
-                .getNodes()) {
+    private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints) {
+        var ressourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(ressourceProvider)
+                .modelProjectName(PROJECT_NAME)
+                .build();
 
-            List<InPin> inPins = new ArrayList<>();
-            for (var inPin : node.getBehaviour()
-                    .getInPin()) {
-                inPins.add(new InPin(inPin.getId()));
-            }
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        Set<AbstractTransposeFlowGraph> violatingTransposeFlowGraphs = new HashSet<>();
 
-            Map<OutPin, List<Label>> outPins = new HashMap<>();
-            for (var assignment : node.getBehaviour()
-                    .getAssignment()) {
-                var outPin = assignment.getOutputPin();
-                outPinToAss.put(outPin.getId(), assignment.getId());
-                List<Label> outLabels = new ArrayList<>();
-                if (assignment instanceof Assignment cast) {
-                    for (var label : cast.getOutputLabels()) {
-                        var type = ((LabelType) label.eContainer()).getEntityName();
-                        var value = label.getEntityName();
-                        outLabels.add(new Label(type, value));
+        for (var TFG : flowGraph.getTransposeFlowGraphs()) {
+            for (var constraint : constraints) {
+                for (var literal : constraint) {
+                    // skip since prequisit not fullfilled
+                    if (checkliteral(TFG, literal) != !literal.positive() && !literal.positive()) {
+                        break;
+                    }
+                    // add violating tfg
+                    if (checkliteral(TFG, literal) == !literal.positive() && literal.positive()) {
+                        violatingTransposeFlowGraphs.add(TFG);
+                        break;
                     }
                 }
-                outPins.put(new OutPin(assignment.getId()), outLabels);
             }
-
-            List<Label> nodeChars = new ArrayList<>();
-            for (var property : node.getProperties()) {
-                var type = ((LabelType) property.eContainer()).getEntityName();
-                var value = property.getEntityName();
-                nodeChars.add(new Label(type, value));
-            }
-
-            nodes.add(new Node(node.getEntityName(), inPins, outPins, nodeChars));
         }
-        return nodes;
+        return new ArrayList<AbstractTransposeFlowGraph>(violatingTransposeFlowGraphs);
     }
 
-    private List<Edge> getEdges(DataFlowDiagramAndDictionary dfd) {
-        Map<String, String> outPinToAss = new HashMap<>();
+    private boolean checkliteral(AbstractTransposeFlowGraph tfg, Constraint literal) {
+        for (var node : tfg.getVertices()) {
+            if (literal.what()
+                    .equals("Data")) {
+                var labels = node.getDataCharacteristicNamesMap(literal.label()
+                        .type())
+                        .values();
+                for (var label : labels) {
+                    if (label.contains(literal.label()
+                            .value()))
+                        return true;
+                }
+            } else if (literal.what()
+                    .equals("Node")) {
+                if (node.getAllVertexCharacteristics()
+                        .stream()
+                        .anyMatch(n -> n.getTypeName()
+                                .equals(literal.label()
+                                        .type())
+                                && n.getValueName()
+                                        .equals(literal.label()
+                                                .value())))
+                    return true;
+            }
+
+        }
+        return false;
+    }
+
+    private void getNodesAndEdges(List<AbstractTransposeFlowGraph> violatingTFGs) {
+        for (var tfg : violatingTFGs) {
+            for (var vertex : tfg.getVertices()) {
+
+                DFDVertex node = (DFDVertex) vertex;
+
+                Map<InPin, List<Label>> inPins = new HashMap<>();
+                for (var inPin : node.getAllIncomingDataCharacteristics()) {
+                    List<Label> pinChars = new ArrayList<>();
+                    for (var property : inPin.getAllCharacteristics()) {
+                        var type = property.getTypeName();
+                        var value = property.getValueName();
+                        pinChars.add(new Label(type, value));
+                    }
+                    inPins.put(new InPin(inPin.getVariableName()), pinChars);
+                }
+
+                List<Label> nodeChars = new ArrayList<>();
+                for (var property : node.getAllVertexCharacteristics()) {
+                    var type = property.getTypeName();
+                    var value = property.getValueName();
+                    nodeChars.add(new Label(type, value));
+                }
+
+                Map<OutPin, List<Label>> outPins = new HashMap<>();
+                for (var outPin : node.getAllOutgoingDataCharacteristics()) {
+                    List<Label> pinChars = new ArrayList<>();
+                    for (var property : outPin.getAllCharacteristics()) {
+                        var type = property.getTypeName();
+                        var value = property.getValueName();
+                        pinChars.add(new Label(type, value));
+                    }
+                    outPins.put(new OutPin(outPin.getVariableName()), pinChars);
+                }
+
+                nodes.add(new Node(node.getName(), inPins, outPins, nodeChars));
+
+                for (var pin : node.getPinFlowMap()
+                        .keySet()) {
+                    var flow = node.getPinFlowMap()
+                            .get(pin);
+                    edges.add(new Edge(new OutPin(flow.getSourcePin()
+                            .getId()), new InPin(pin.getId())));
+                }
+            }
+        }
+    }
+
+    private void mapOutPinsToAssignments(DataFlowDiagramAndDictionary dfd) {
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {
             for (var assignment : node.getBehaviour()
@@ -85,15 +164,6 @@ public class Mechanic {
                 outPinToAss.put(outPin.getId(), assignment.getId());
             }
         }
-        List<Edge> edges = new ArrayList<>();
-
-        for (var flow : dfd.dataFlowDiagram()
-                .getFlows()) {
-            edges.add(new Edge(new OutPin(outPinToAss.get(flow.getSourcePin()
-                    .getId())), new InPin(flow.getDestinationPin()
-                            .getId())));
-        }
-        return edges;
     }
 
     private List<Delta> getFlatNodes(List<Node> nodes) {
@@ -136,7 +206,7 @@ public class Mechanic {
                 for (var behavior : dd.getBehaviour()) {
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
-                                .equals(action.where())) {
+                                .equals(outPinToAss.get(action.where()))) {
                             var type = action.characteristic()
                                     .type();
                             var value = action.characteristic()

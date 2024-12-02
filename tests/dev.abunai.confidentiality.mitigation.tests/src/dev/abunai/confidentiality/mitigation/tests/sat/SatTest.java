@@ -33,7 +33,8 @@ public class SatTest {
         var constraints = List.of(List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
                 new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))),
                 List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
-                        new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))));
+                        new Constraint(false, "Node", new Label("Location", "nonEU")),
+                        new Constraint(true, "Data", new Label("Encryption", "Encrypted"))));
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 
@@ -79,8 +80,8 @@ public class SatTest {
 
         Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of(), "user", List.of(), "db", List.of("nonEU"));
 
-        assertEquals(nodeBehavior, expectedNodeBehavior);
-        assertEquals(nodeProperties, expectedNodeProperties);
+        assertEquals(expectedNodeBehavior, nodeBehavior);
+        assertEquals(expectedNodeProperties, nodeProperties);
 
     }
 

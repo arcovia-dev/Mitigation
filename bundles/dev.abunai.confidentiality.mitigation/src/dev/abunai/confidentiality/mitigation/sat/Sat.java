@@ -83,8 +83,8 @@ public class Sat {
     private void buildClauses() throws ContradictionException {
         // Apply constraints
         for (var node : nodes) {
-            for (var inPin : node.inPins()) {
-                
+            for (var inPin : node.inPins()
+                    .keySet()) {
                 for (var constraint : constraints) {
                     var clause = new VecInt();
                     for (var variable : constraint) {
@@ -105,7 +105,6 @@ public class Sat {
                 }
 
             }
-
         }
 
         // Require node and outgoing data chars
@@ -120,6 +119,13 @@ public class Sat {
                     addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(), outData.value()))));
                 }
             }
+            for (var inPin : node.inPins()
+                    .keySet()) {
+                for (var inData : node.inPins()
+                        .get(inPin)) {
+                    addClause(clause(delta(inPin.id(), new InDataChar(inData.type(), inData.value()))));
+                }
+            }
         }
 
         // Prohibit creation of new edges
@@ -127,7 +133,8 @@ public class Sat {
             for (var fromPin : fromNode.outPins()
                     .keySet()) {
                 for (var toNode : nodes) {
-                    for (var toPin : toNode.inPins()) {
+                    for (var toPin : toNode.inPins()
+                            .keySet()) {
                         var sign = edges.contains(new Edge(fromPin, toPin)) ? 1 : -1;
                         addClause(clause(sign * edge(fromPin, toPin)));
                     }
@@ -135,12 +142,15 @@ public class Sat {
             }
         }
 
+        // I am confused why i still need those two blocks below
+
         // Make clauses for label propagation
         for (var fromNode : nodes) {
             for (var fromPin : fromNode.outPins()
                     .keySet()) {
                 for (var toNode : nodes) {
-                    for (var toPin : toNode.inPins()) {
+                    for (var toPin : toNode.inPins()
+                            .keySet()) {
                         for (var label : labels) {
                             var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
                             var outLit = delta(fromPin.id(), new OutDataChar(label.type(), label.value()));
@@ -157,7 +167,8 @@ public class Sat {
         // Node has incoming data at inpin iff it receives it at least once
         for (var label : labels) {
             for (var toNode : nodes) {
-                for (var toPin : toNode.inPins()) {
+                for (var toPin : toNode.inPins()
+                        .keySet()) {
                     var inLit = delta(toPin.id(), new InDataChar(label.type(), label.value()));
                     var clause = new VecInt();
                     clause.push(-inLit);
