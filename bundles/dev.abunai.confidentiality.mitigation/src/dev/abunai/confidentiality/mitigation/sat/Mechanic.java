@@ -30,7 +30,7 @@ public class Mechanic {
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints)
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
-        System.out.println(violatingTFGs);
+        
         mapOutPinsToAssignments(dfd);
 
         getNodesAndEdges(violatingTFGs);
