@@ -142,8 +142,6 @@ public class Sat {
             }
         }
 
-        // I am confused why i still need those two blocks below
-
         // Make clauses for label propagation
         for (var fromNode : nodes) {
             for (var fromPin : fromNode.outPins()
