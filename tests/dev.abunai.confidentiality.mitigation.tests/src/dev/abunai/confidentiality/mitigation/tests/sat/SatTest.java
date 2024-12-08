@@ -10,6 +10,7 @@ import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
+import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -33,12 +34,12 @@ public class SatTest {
         var constraints = List.of(List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
                 new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))),
                 List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
-                        new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))));
+                        new Constraint(false, "Node", new Label("Location", "nonEU")),
+                        new Constraint(true, "Data", new Label("Encryption", "Encrypted"))));
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 
         checkIfConsistent(repairedDfd);
-
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "repaired.json");
     }
 
@@ -59,6 +60,10 @@ public class SatTest {
                         nodeBehStr.add(label.getEntityName());
                     }
                 }
+                else if (assignment instanceof ForwardingAssignment cast) {
+                    for (var pin : cast.getInputPins())
+                        nodeBehStr.add("Forwarding: " + pin.getEntityName());
+                }
             }
             nodeBehavior.put(behavior.getEntityName(), nodeBehStr);
 
@@ -73,14 +78,13 @@ public class SatTest {
             }
             nodeProperties.put(node.getEntityName(), nodePropStr);
         }
-
-        Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Personal", "Encrypted"), "user", List.of("Personal"), "db",
+        Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Forwarding: process_in_user" ,"Encrypted"), "user", List.of("Personal"), "db",
                 List.of());
 
         Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of(), "user", List.of(), "db", List.of("nonEU"));
 
-        assertEquals(nodeBehavior, expectedNodeBehavior);
-        assertEquals(nodeProperties, expectedNodeProperties);
+        assertEquals(expectedNodeBehavior, nodeBehavior);
+        assertEquals(expectedNodeProperties, nodeProperties);
 
     }
 
