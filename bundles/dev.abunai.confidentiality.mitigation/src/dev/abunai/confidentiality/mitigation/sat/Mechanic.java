@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
-import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
@@ -22,8 +21,6 @@ import java.util.HashSet;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 
 public class Mechanic {
-    Map<String, String> outPinToAss = new HashMap<>();
-
     Map<String, String> outPinToAss = new HashMap<>();
 
     private List<Node> nodes = new ArrayList<>();
@@ -76,83 +73,36 @@ public class Mechanic {
     }
 
     private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Constraint> constraint) {
-        List<Constraint> prequisits = new ArrayList<>();
-        List<Constraint> required = new ArrayList<>();
+        List<String> negativeLiterals = new ArrayList<>();
+        List<String> positveLiterals = new ArrayList<>();
         for (var literal : constraint) {
             if (literal.positive())
-                required.add(literal);
+                positveLiterals.add(literal.what() + literal.label()
+                        .toString());
             else
-                prequisits.add(literal);
+                negativeLiterals.add(literal.what() + literal.label()
+                        .toString());
         }
+
         for (var node : tfg.getVertices()) {
-            if (checkPrequisits(node, prequisits)) {
-                if (!checkRequired(node, required))
-                    return true;
-
+            Set<String> nodeLiterals = new HashSet<>();
+            for (var nodeChar : node.getAllVertexCharacteristics()) {
+                nodeLiterals.add("Node" + new Label(nodeChar.getTypeName(), nodeChar.getValueName()).toString());
             }
-        }
-        return false;
-    }
-
-    private boolean checkRequired(AbstractVertex<?> node, List<Constraint> required) {
-        for (var req : required) {
-            if (req.what()
-                    .equals("Data")) {
-                if (checkDataChar(node, req.label()))
-                    return true;
-            } else if (req.what()
-                    .equals("Node")) {
-                if (node.getAllVertexCharacteristics()
-                        .stream()
-                        .anyMatch(n -> n.getTypeName()
-                                .equals(req.label()
-                                        .type())
-                                && n.getValueName()
-                                        .equals(req.label()
-                                                .value())))
-                    return true;
+            for (var variables : node.getAllIncomingDataCharacteristics()) {
+                for (var dataChar : variables.getAllCharacteristics()) {
+                    nodeLiterals.add("Data" + new Label(dataChar.getTypeName(), dataChar.getValueName()).toString());
+                }
             }
-
-        }
-
-        return false;
-    }
-
-    private boolean checkPrequisits(AbstractVertex<?> node, List<Constraint> prequisits) {
-        for (var prequisit : prequisits) {
-            if (prequisit.what()
-                    .equals("Data")) {
-                if (!checkDataChar(node, prequisit.label()))
-                    return false;
-            } else if (prequisit.what()
-                    .equals("Node")) {
-                if (!checkNodeChar(node, prequisit.label()))
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean checkDataChar(AbstractVertex<?> node, Label prequisit) {
-        var labels = node.getDataCharacteristicNamesMap(prequisit.type())
-                .values();
-
-        for (var label : labels) {
-            if (label.contains(prequisit.value()))
+            if (nodeLiterals.stream()
+                    .anyMatch(positveLiterals::contains)) {
+                continue;
+            } else if (!nodeLiterals.containsAll(negativeLiterals)) {
+                continue;
+            } else {
                 return true;
+            }
         }
-        return false;
-    }
-
-
-    private boolean checkNodeChar(AbstractVertex<?> node, Label prequisit) {
-        if (node.getAllVertexCharacteristics()
-                .stream()
-                .anyMatch(n -> n.getTypeName()
-                        .equals(prequisit.type())
-                        && n.getValueName()
-                                .equals(prequisit.value())))
-            return true;
         return false;
     }
 

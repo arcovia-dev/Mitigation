@@ -130,13 +130,6 @@ public class Sat {
                     addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(), outData.value()))));
                 }
             }
-            for (var inPin : node.inPins()
-                    .keySet()) {
-                for (var inData : node.inPins()
-                        .get(inPin)) {
-                    addClause(clause(delta(inPin.id(), new InDataChar(inData.type(), inData.value()))));
-                }
-            }
         }
 
         // Prohibit creation of new edges
