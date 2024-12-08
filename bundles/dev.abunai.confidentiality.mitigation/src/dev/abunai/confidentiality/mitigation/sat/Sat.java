@@ -1,8 +1,11 @@
 package dev.abunai.confidentiality.mitigation.sat;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.io.IOException;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Set;
@@ -17,6 +20,10 @@ import org.sat4j.specs.IProblem;
 import org.sat4j.specs.ISolver;
 import org.sat4j.specs.TimeoutException;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 public class Sat {
 
     private BiMap<Delta, Integer> deltaToLit;
@@ -28,6 +35,7 @@ public class Sat {
     private List<Edge> edges;
     private List<List<Constraint>> constraints;
     private List<VecInt> dimacsClauses;
+    private int maxLiteral;
 
     public List<List<Delta>> solve(List<Node> nodes, List<Edge> edges, List<List<Constraint>> constraints)
             throws ContradictionException, TimeoutException, IOException {
@@ -46,6 +54,8 @@ public class Sat {
         buildClauses();
 
         writeDimacsFile("dimacs.cnf", dimacsClauses);
+        
+        writeLiteralMapping("literalMapping.json");
 
         return solveClauses();
     }
@@ -217,14 +227,14 @@ public class Sat {
         return deltaToLit.getValue(delta);
     }
 
-    public void writeDimacsFile(String filePath, List<VecInt> clauses) throws IOException {
+    private void writeDimacsFile(String filePath, List<VecInt> clauses) throws IOException {
 
-        int maxVar = 0;
+        maxLiteral = 0;
         for (var literals : clauses) {
             for (var lit : literals.toArray()) {
                 int var = Math.abs(lit);
-                if (var > maxVar) {
-                    maxVar = var;
+                if (var > maxLiteral) {
+                    maxLiteral = var;
                 }
             }
         }
@@ -232,7 +242,7 @@ public class Sat {
         int numClauses = clauses.size();
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("p cnf " + maxVar + " " + numClauses);
+            writer.write("p cnf " + maxLiteral + " " + numClauses);
             writer.newLine();
 
             for (var literals : clauses) {
@@ -242,7 +252,7 @@ public class Sat {
         }
     }
 
-    public static String formatClauseLine(VecInt literals) {
+    private static String formatClauseLine(VecInt literals) {
         StringJoiner joiner = new StringJoiner(" ");
 
         for (int i = 0; i < literals.size(); i++) {
@@ -253,5 +263,34 @@ public class Sat {
         }
 
         return joiner.toString() + " 0";
+    }
+    
+    private void writeLiteralMapping(String outputFile) {
+        Map<Integer, String> literalMap = new HashMap<>();
+        
+        for(int literal = 1; literal<=maxLiteral;literal++) {
+            if (deltaToLit.containsValue(literal)) {
+                literalMap.put(literal, deltaToLit.getKey(literal).toString());
+            }
+            else if (edgeToLit.containsValue(literal)) {
+                literalMap.put(literal, edgeToLit.getKey(literal).toString());
+            }
+            else if (edgeDataToLit.containsValue(literal)) {
+                literalMap.put(literal, edgeDataToLit.getKey(literal).toString());
+            }
+            else {
+                System.out.println("Unidentified literal");
+            }
+        }
+       
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        try {
+            objectMapper.writeValue(new File(outputFile), literalMap);
+        } catch (IOException e) {
+            System.out.println("Could not store literal mapping:"+ e);
+        } 
     }
 }
