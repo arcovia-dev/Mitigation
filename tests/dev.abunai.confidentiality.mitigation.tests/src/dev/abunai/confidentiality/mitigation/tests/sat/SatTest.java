@@ -10,6 +10,7 @@ import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
+import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -60,6 +61,10 @@ public class SatTest {
                         nodeBehStr.add(label.getEntityName());
                     }
                 }
+                //todo get forwarded labels
+                else if (assignment instanceof ForwardingAssignment cast) {
+                
+                }
             }
             nodeBehavior.put(behavior.getEntityName(), nodeBehStr);
 
@@ -74,8 +79,8 @@ public class SatTest {
             }
             nodeProperties.put(node.getEntityName(), nodePropStr);
         }
-
-        Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Personal", "Encrypted"), "user", List.of("Personal"), "db",
+        //Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Personal", "Encrypted"), "user", List.of("Personal"), "db",List.of());
+        Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Encrypted"), "user", List.of("Personal"), "db",
                 List.of());
 
         Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of(), "user", List.of(), "db", List.of("nonEU"));

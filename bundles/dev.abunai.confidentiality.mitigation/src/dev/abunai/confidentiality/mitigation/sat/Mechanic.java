@@ -14,11 +14,14 @@ import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
+import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
+import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 import java.util.HashSet;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
+import org.dataflowanalysis.dfd.datadictionary.Behaviour;
 
 public class Mechanic {
 
@@ -30,20 +33,18 @@ public class Mechanic {
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints)
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
-        
+
         mapOutPinsToAssignments(dfd);
 
         getNodesAndEdges(violatingTFGs);
 
         var solutions = new Sat().solve(nodes, edges, constraints);
-
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
         var minimalSolution = solutions.get(0);
 
         List<Delta> flatNodes = getFlatNodes(nodes);
 
         List<Delta> actions = getActions(minimalSolution, flatNodes);
-
         applyActions(dfd, actions);
 
         return dfd;
@@ -247,11 +248,13 @@ public class Mechanic {
 
     private void applyActions(DataFlowDiagramAndDictionary dfd, List<Delta> actions) {
         var dd = dfd.dataDictionary();
+
         for (var action : actions) {
             if (action.characteristic()
                     .what()
                     .equals("OutData")) {
                 for (var behavior : dd.getBehaviour()) {
+                    List<Assignment> newAssignments = new ArrayList<>();
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
                                 .equals(outPinToAss.get(action.where()))) {
@@ -273,8 +276,17 @@ public class Mechanic {
                                 cast.getOutputLabels()
                                         .add(label);
                             }
+                            if (assignment instanceof ForwardingAssignment cast) {
+                                var ddFactory = datadictionaryFactory.eINSTANCE;
+                                var assign = ddFactory.createAssignment();
+                                assign.getOutputLabels()
+                                        .add(label);
+                                newAssignments.add(assign);
+                            }
                         }
                     }
+                    behavior.getAssignment()
+                            .addAll(newAssignments);
                 }
             }
         }
