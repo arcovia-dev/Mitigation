@@ -24,8 +24,6 @@ import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
-    Map<String, String> outPinToAss = new HashMap<>();
-
     private List<Node> nodes = new ArrayList<>();
     private List<Edge> edges = new ArrayList<>();
 

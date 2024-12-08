@@ -12,9 +12,8 @@ Require-Bundle:
  com.fasterxml.jackson.core.jackson-annotations;bundle-version="2.13.2";visibility:=reexport,
  com.fasterxml.jackson.core.jackson-core;bundle-version="2.13.2";visibility:=reexport,
  com.fasterxml.jackson.core.jackson-databind;bundle-version="2.13.2";visibility:=reexport,
- org.dataflowanalysis.dfd.dataflowdiagram
  org.dataflowanalysis.dfd.dataflowdiagram,
  org.dataflowanalysis.analysis.dfd,
- org.dataflowanalysis.analysis;bundle-version="3.0.0"
+ org.dataflowanalysis.analysis
 Automatic-Module-Name: dev.abunai.confidentiality.mitigation
 Bundle-RequiredExecutionEnvironment: JavaSE-17
