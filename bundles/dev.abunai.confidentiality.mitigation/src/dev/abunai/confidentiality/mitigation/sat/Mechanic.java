@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
-import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
@@ -78,28 +77,29 @@ public class Mechanic {
         List<String> positveLiterals = new ArrayList<>();
         for (var literal : constraint) {
             if (literal.positive())
-                positveLiterals.add(literal.what()+literal.label().toString());
+                positveLiterals.add(literal.what() + literal.label()
+                        .toString());
             else
-                negativeLiterals.add(literal.what()+literal.label().toString());
+                negativeLiterals.add(literal.what() + literal.label()
+                        .toString());
         }
 
         for (var node : tfg.getVertices()) {
             Set<String> nodeLiterals = new HashSet<>();
-            for (var nodeChar:node.getAllVertexCharacteristics()) {
-                nodeLiterals.add("Node"+new Label(nodeChar.getTypeName(),nodeChar.getValueName()).toString());
+            for (var nodeChar : node.getAllVertexCharacteristics()) {
+                nodeLiterals.add("Node" + new Label(nodeChar.getTypeName(), nodeChar.getValueName()).toString());
             }
-            for (var variables:node.getAllIncomingDataCharacteristics()) {
-                for(var dataChar:variables.getAllCharacteristics()) {
-                    nodeLiterals.add("Data"+new Label(dataChar.getTypeName(),dataChar.getValueName()).toString());
-                }    
+            for (var variables : node.getAllIncomingDataCharacteristics()) {
+                for (var dataChar : variables.getAllCharacteristics()) {
+                    nodeLiterals.add("Data" + new Label(dataChar.getTypeName(), dataChar.getValueName()).toString());
+                }
             }
-            if(nodeLiterals.stream().anyMatch(positveLiterals::contains)) {
+            if (nodeLiterals.stream()
+                    .anyMatch(positveLiterals::contains)) {
                 continue;
-            }
-            else if(!nodeLiterals.containsAll(negativeLiterals)) {
+            } else if (!nodeLiterals.containsAll(negativeLiterals)) {
                 continue;
-            }
-            else {
+            } else {
                 return true;
             }
         }
