@@ -24,7 +24,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "Assignment({};TRUE;{Sensitivity.Personal,Encryption.Encrypted})",
+        "behavior" : "Forwarding({user})\nAssignment({};TRUE;{Encryption.Encrypted})",
         "id" : "eedb56",
         "type" : "port:dfd-output",
         "children" : [ ]

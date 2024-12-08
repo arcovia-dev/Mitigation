@@ -40,7 +40,6 @@ public class SatTest {
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 
         checkIfConsistent(repairedDfd);
-
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "repaired.json");
     }
 

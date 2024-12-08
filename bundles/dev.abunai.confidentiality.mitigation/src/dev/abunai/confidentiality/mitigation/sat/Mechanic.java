@@ -2,7 +2,6 @@ package dev.abunai.confidentiality.mitigation.sat;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,6 @@ import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 import java.util.HashSet;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
-import org.dataflowanalysis.dfd.datadictionary.Behaviour;
 
 public class Mechanic {
 
@@ -281,12 +279,16 @@ public class Mechanic {
                                 var assign = ddFactory.createAssignment();
                                 assign.getOutputLabels()
                                         .add(label);
+                                assign.setOutputPin(assignment.getOutputPin());
+                                var ddTrue = ddFactory.createTRUE();
+                                assign.setTerm(ddTrue);
                                 newAssignments.add(assign);
                             }
                         }
                     }
-                    behavior.getAssignment()
-                            .addAll(newAssignments);
+                    if (!newAssignments.isEmpty())
+                        behavior.getAssignment()
+                                .addAll(newAssignments);
                 }
             }
         }
