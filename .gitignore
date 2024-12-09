@@ -12,9 +12,9 @@ heapdump.*
 Snap.*
 
 __pycache__
-tests/dev.abunai.confidentiality.mitigation.tests/mitigation
-tests/dev.abunai.confidentiality.mitigation.tests/meassurement_results.txt
-tests/dev.abunai.confidentiality.mitigation.tests/meassurements.txt
+tests/dev.arcovia.mitigation.ranking.tests/mitigation
+tests/dev.arcovia.mitigation.ranking.tests/meassurement_results.txt
+tests/dev.arcovia.mitigation.ranking.tests/meassurements.txt
 # MAC
 __MACOSX/
 *.csv

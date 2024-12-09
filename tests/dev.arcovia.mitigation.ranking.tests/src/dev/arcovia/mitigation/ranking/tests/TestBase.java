@@ -8,7 +8,7 @@ import org.dataflowanalysis.analysis.dfd.core.DFDCharacteristicValue;
 
 public abstract class TestBase {
 	
-	public static final String TEST_MODEL_PROJECT_NAME = "dev.abunai.confidentiality.mitigation.tests";
+	public static final String TEST_MODEL_PROJECT_NAME = "dev.arcovia.mitigation.ranking.tests";
 	
 	protected abstract String getFolderName();
 
