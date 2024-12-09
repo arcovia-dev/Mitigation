@@ -8,9 +8,9 @@ Export-Package:
 Require-Bundle: org.dataflowanalysis.converter;bundle-version="2.0.0",
  org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
  org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",
- dev.abunai.confidentiality.analysis;bundle-version="1.0.0",
+ dev.abunai.confidentiality.analysis,
  dev.abunai.confidentiality.analysis.model,
+ dev.abunai.confidentiality.analysis.testmodels,
  org.eclipse.emf.ecore
 Automatic-Module-Name: dev.arcovia.mitigation.ranking
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Import-Package: dev.abunai.confidentiality.analysis.testmodels
