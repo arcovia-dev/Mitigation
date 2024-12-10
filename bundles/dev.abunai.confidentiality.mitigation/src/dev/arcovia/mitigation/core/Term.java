@@ -2,7 +2,7 @@ package dev.arcovia.mitigation.core;
 
 import java.util.List;
 
-public record Delta(String where, AbstractChar characteristic) {
+public record Term(String where, AbstractChar characteristic) {
 
     @Override
     public String toString() {

@@ -29,7 +29,7 @@ import dev.arcovia.mitigation.core.AbstractChar;
 import dev.arcovia.mitigation.core.BiMap;
 import dev.arcovia.mitigation.core.Constraint;
 import dev.arcovia.mitigation.core.Literal;
-import dev.arcovia.mitigation.core.Delta;
+import dev.arcovia.mitigation.core.Term;
 import dev.arcovia.mitigation.core.Edge;
 import dev.arcovia.mitigation.core.EdgeDataChar;
 import dev.arcovia.mitigation.core.InDataChar;
@@ -42,7 +42,7 @@ import dev.arcovia.mitigation.core.OutPin;
 
 public class Sat {
 
-    private BiMap<Delta, Integer> deltaToLit;
+    private BiMap<Term, Integer> deltaToLit;
     private BiMap<Edge, Integer> edgeToLit;
     private BiMap<EdgeDataChar, Integer> edgeDataToLit;
     private ISolver solver;
@@ -53,7 +53,7 @@ public class Sat {
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
 
-    public List<List<Delta>> solve(List<Node> nodes, List<Edge> edges, List<Constraint> constraints)
+    public List<List<Term>> solve(List<Node> nodes, List<Edge> edges, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.edges = edges;
@@ -76,10 +76,10 @@ public class Sat {
         return solveClauses();
     }
 
-    private List<List<Delta>> solveClauses() throws TimeoutException, ContradictionException {
+    private List<List<Term>> solveClauses() throws TimeoutException, ContradictionException {
         IProblem problem = solver;
 
-        List<List<Delta>> solutions = new ArrayList<>();
+        List<List<Term>> solutions = new ArrayList<>();
 
         while (problem.isSatisfiable()) {
             int[] model = problem.model();
@@ -239,7 +239,7 @@ public class Sat {
     }
 
     private int delta(String where, AbstractChar characteristic) {
-        var delta = new Delta(where, characteristic);
+        var delta = new Term(where, characteristic);
         if (!deltaToLit.containsKey(delta)) {
             deltaToLit.put(delta, solver.nextFreeVarId(true));
         }

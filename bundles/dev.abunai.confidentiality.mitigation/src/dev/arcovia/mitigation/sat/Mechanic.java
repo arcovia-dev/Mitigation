@@ -20,7 +20,7 @@ import org.sat4j.specs.TimeoutException;
 
 import dev.arcovia.mitigation.core.Literal;
 import dev.arcovia.mitigation.core.Constraint;
-import dev.arcovia.mitigation.core.Delta;
+import dev.arcovia.mitigation.core.Term;
 import dev.arcovia.mitigation.core.Edge;
 import dev.arcovia.mitigation.core.InPin;
 import dev.arcovia.mitigation.core.Label;
@@ -50,9 +50,9 @@ public class Mechanic {
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
         var minimalSolution = solutions.get(0);
 
-        List<Delta> flatNodes = getFlatNodes(nodes);
+        List<Term> flatNodes = getFlatNodes(nodes);
 
-        List<Delta> actions = getActions(minimalSolution, flatNodes);
+        List<Term> actions = getActions(minimalSolution, flatNodes);
         applyActions(dfd, actions);
 
         return dfd;
@@ -177,25 +177,25 @@ public class Mechanic {
         }
     }
 
-    private List<Delta> getFlatNodes(List<Node> nodes) {
-        List<Delta> flatNodes = new ArrayList<>();
+    private List<Term> getFlatNodes(List<Node> nodes) {
+        List<Term> flatNodes = new ArrayList<>();
         for (var node : nodes) {
             for (var outPin : node.outPins()
                     .keySet()) {
                 for (var label : node.outPins()
                         .get(outPin)) {
-                    flatNodes.add(new Delta(outPin.id(), new OutDataChar(label.type(), label.value())));
+                    flatNodes.add(new Term(outPin.id(), new OutDataChar(label.type(), label.value())));
                 }
             }
             for (var property : node.nodeChars()) {
-                flatNodes.add(new Delta(node.name(), new NodeChar(property.type(), property.value())));
+                flatNodes.add(new Term(node.name(), new NodeChar(property.type(), property.value())));
             }
         }
         return flatNodes;
     }
 
-    private List<Delta> getActions(List<Delta> minimalSolution, List<Delta> flatNodes) {
-        List<Delta> actions = new ArrayList<>();
+    private List<Term> getActions(List<Term> minimalSolution, List<Term> flatNodes) {
+        List<Term> actions = new ArrayList<>();
         for (var delta : minimalSolution) {
             if (delta.characteristic()
                     .what()
@@ -208,7 +208,7 @@ public class Mechanic {
         return actions;
     }
 
-    private void applyActions(DataFlowDiagramAndDictionary dfd, List<Delta> actions) {
+    private void applyActions(DataFlowDiagramAndDictionary dfd, List<Term> actions) {
         var dd = dfd.dataDictionary();
 
         for (var action : actions) {
