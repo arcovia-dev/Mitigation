@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.sat;
+package dev.arcovia.mitigation.sat;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +23,20 @@ import org.sat4j.specs.TimeoutException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import dev.arcovia.mitigation.core.AbstractChar;
+import dev.arcovia.mitigation.core.BiMap;
+import dev.arcovia.mitigation.core.Constraint;
+import dev.arcovia.mitigation.core.Delta;
+import dev.arcovia.mitigation.core.Edge;
+import dev.arcovia.mitigation.core.EdgeDataChar;
+import dev.arcovia.mitigation.core.InDataChar;
+import dev.arcovia.mitigation.core.InPin;
+import dev.arcovia.mitigation.core.Label;
+import dev.arcovia.mitigation.core.Node;
+import dev.arcovia.mitigation.core.NodeChar;
+import dev.arcovia.mitigation.core.OutDataChar;
+import dev.arcovia.mitigation.core.OutPin;
 
 public class Sat {
 

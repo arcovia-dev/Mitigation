@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.sat;
+package dev.arcovia.mitigation.core;
 
 import java.util.List;
 import java.util.Map;

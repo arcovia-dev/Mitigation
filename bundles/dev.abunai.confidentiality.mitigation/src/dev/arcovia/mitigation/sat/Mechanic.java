@@ -1,4 +1,4 @@
-package dev.abunai.confidentiality.mitigation.sat;
+package dev.arcovia.mitigation.sat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +17,17 @@ import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
+
+import dev.arcovia.mitigation.core.Constraint;
+import dev.arcovia.mitigation.core.Delta;
+import dev.arcovia.mitigation.core.Edge;
+import dev.arcovia.mitigation.core.InPin;
+import dev.arcovia.mitigation.core.Label;
+import dev.arcovia.mitigation.core.Node;
+import dev.arcovia.mitigation.core.NodeChar;
+import dev.arcovia.mitigation.core.OutDataChar;
+import dev.arcovia.mitigation.core.OutPin;
+
 import java.util.HashSet;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 

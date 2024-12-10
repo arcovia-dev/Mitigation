@@ -15,9 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
-import dev.abunai.confidentiality.mitigation.sat.Constraint;
-import dev.abunai.confidentiality.mitigation.sat.Label;
-import dev.abunai.confidentiality.mitigation.sat.Mechanic;
+import dev.arcovia.mitigation.core.Constraint;
+import dev.arcovia.mitigation.core.Label;
+import dev.arcovia.mitigation.sat.Mechanic;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SatTest {
