@@ -323,9 +323,13 @@ public abstract class MitigationTestBase extends TestBase {
 
 	public void createTrainData() {
 		var trainDir = new File(trainDataDirectory);
-		for (File file : trainDir.listFiles()) {
-			file.delete();
+		if (!trainDir.exists()) {
+		    trainDir.mkdirs();
 		}
+		for (File file : trainDir.listFiles()) {
+	        file.delete();
+		}
+		
 		var analysis = this.getAnalysis();
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
