@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.IntStream;
+
 import java.util.StringJoiner;
 
 import org.sat4j.core.VecInt;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import dev.arcovia.mitigation.core.AbstractChar;
 import dev.arcovia.mitigation.core.BiMap;
 import dev.arcovia.mitigation.core.Constraint;
+import dev.arcovia.mitigation.core.Literal;
 import dev.arcovia.mitigation.core.Delta;
 import dev.arcovia.mitigation.core.Edge;
 import dev.arcovia.mitigation.core.EdgeDataChar;
@@ -47,11 +49,11 @@ public class Sat {
     private Set<Label> labels;
     private List<Node> nodes;
     private List<Edge> edges;
-    private List<List<Constraint>> constraints;
+    private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
 
-    public List<List<Delta>> solve(List<Node> nodes, List<Edge> edges, List<List<Constraint>> constraints)
+    public List<List<Delta>> solve(List<Node> nodes, List<Edge> edges, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.edges = edges;
@@ -110,9 +112,9 @@ public class Sat {
 
             for (var inPin : node.inPins()
                     .keySet()) {
-                for (var constraint : constraints) {
+                for (Constraint constraint : constraints) {
                     var clause = new VecInt();
-                    for (var variable : constraint) {
+                    for (var variable : constraint.literals()) {
                         var type = variable.label()
                                 .type();
                         var value = variable.label()
@@ -205,7 +207,7 @@ public class Sat {
     private void extractUniqueLabels() {
         labels = new HashSet<>();
         for (var constraint : constraints) {
-            for (var variable : constraint) {
+            for (var variable : constraint.literals()) {
                 labels.add(variable.label());
             }
         }

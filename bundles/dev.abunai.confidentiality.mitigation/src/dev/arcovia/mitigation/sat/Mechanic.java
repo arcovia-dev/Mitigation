@@ -18,6 +18,7 @@ import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
+import dev.arcovia.mitigation.core.Literal;
 import dev.arcovia.mitigation.core.Constraint;
 import dev.arcovia.mitigation.core.Delta;
 import dev.arcovia.mitigation.core.Edge;
@@ -37,7 +38,7 @@ public class Mechanic {
     private List<Node> nodes = new ArrayList<>();
     private List<Edge> edges = new ArrayList<>();
 
-    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints)
+    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
 
@@ -57,7 +58,7 @@ public class Mechanic {
         return dfd;
     }
 
-    private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<List<Constraint>> constraints) {
+    private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
         var ressourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
                 .useCustomResourceProvider(ressourceProvider)
@@ -75,15 +76,15 @@ public class Mechanic {
         return new ArrayList<AbstractTransposeFlowGraph>(violatingTransposeFlowGraphs);
     }
 
-    private boolean checkConstraints(AbstractTransposeFlowGraph tfg, List<List<Constraint>> constraints) {
+    private boolean checkConstraints(AbstractTransposeFlowGraph tfg, List<Constraint> constraints) {
         for (var constraint : constraints) {
-            if (checkConstraint(tfg, constraint))
+            if (checkConstraint(tfg, constraint.literals()))
                 return true;
         }
         return false;
     }
 
-    private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Constraint> constraint) {
+    private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Literal> constraint) {
         List<String> negativeLiterals = new ArrayList<>();
         List<String> positveLiterals = new ArrayList<>();
         for (var literal : constraint) {

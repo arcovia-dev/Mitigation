@@ -1,5 +1,7 @@
 package dev.arcovia.mitigation.core;
 
-public record Constraint(boolean positive, String what, Label label) {
+import java.util.List;
+
+public record Constraint(List<Literal> literals) {
 
 }

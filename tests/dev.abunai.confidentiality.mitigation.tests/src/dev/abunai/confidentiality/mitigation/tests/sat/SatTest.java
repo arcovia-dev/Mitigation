@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
+import dev.arcovia.mitigation.core.Literal;
 import dev.arcovia.mitigation.core.Constraint;
 import dev.arcovia.mitigation.core.Label;
 import dev.arcovia.mitigation.sat.Mechanic;
@@ -32,11 +33,11 @@ public class SatTest {
         var dfd = webConverter.webToDfd(MIN_SAT);
 
         // (personal AND nonEU) => encrypted
-        var constraints = List.of(List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
-                new Constraint(false, "Node", new Label("Location", "nonEU")), new Constraint(true, "Data", new Label("Encryption", "Encrypted"))),
-                List.of(new Constraint(false, "Data", new Label("Sensitivity", "Personal")),
-                        new Constraint(false, "Node", new Label("Location", "nonEU")),
-                        new Constraint(true, "Data", new Label("Encryption", "Encrypted"))));
+        var constraints = List.of(new Constraint(List.of(new Literal(false, "Data", new Label("Sensitivity", "Personal")),
+                new Literal(false, "Node", new Label("Location", "nonEU")), new Literal(true, "Data", new Label("Encryption", "Encrypted")))),
+                new Constraint(List.of(new Literal(false, "Data", new Label("Sensitivity", "Personal")),
+                        new Literal(false, "Node", new Label("Location", "nonEU")),
+                        new Literal(true, "Data", new Label("Encryption", "Encrypted")))));
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 
