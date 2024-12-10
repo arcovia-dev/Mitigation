@@ -28,13 +28,13 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import dev.arcovia.mitigation.core.AbstractChar;
 import dev.arcovia.mitigation.core.BiMap;
 import dev.arcovia.mitigation.core.Constraint;
-import dev.arcovia.mitigation.core.Literal;
 import dev.arcovia.mitigation.core.Term;
 import dev.arcovia.mitigation.core.Edge;
 import dev.arcovia.mitigation.core.EdgeDataChar;
 import dev.arcovia.mitigation.core.InDataChar;
 import dev.arcovia.mitigation.core.InPin;
 import dev.arcovia.mitigation.core.Label;
+import dev.arcovia.mitigation.core.LabelCategory;
 import dev.arcovia.mitigation.core.Node;
 import dev.arcovia.mitigation.core.NodeChar;
 import dev.arcovia.mitigation.core.OutDataChar;
@@ -121,10 +121,10 @@ public class Sat {
                                 .value();
                         var sign = variable.positive() ? 1 : -1;
                         if (variable.category()
-                                .equals("Node")) {
+                                .equals(LabelCategory.Node)) {
                             clause.push(sign * delta(node.name(), new NodeChar(type, value)));
                         } else if (variable.category()
-                                .equals("Data")) {
+                                .equals(LabelCategory.Data)) {
                             clause.push(sign * delta(inPin.id(), new InDataChar(type, value)));
                         }
                     }
