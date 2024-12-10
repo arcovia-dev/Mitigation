@@ -89,10 +89,10 @@ public class Mechanic {
         List<String> positveLiterals = new ArrayList<>();
         for (var literal : constraint) {
             if (literal.positive())
-                positveLiterals.add(literal.what() + literal.label()
+                positveLiterals.add(literal.category() + literal.label()
                         .toString());
             else
-                negativeLiterals.add(literal.what() + literal.label()
+                negativeLiterals.add(literal.category() + literal.label()
                         .toString());
         }
 

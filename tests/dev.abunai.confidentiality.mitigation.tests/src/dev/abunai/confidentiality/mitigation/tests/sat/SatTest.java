@@ -18,6 +18,7 @@ import org.sat4j.specs.TimeoutException;
 import dev.arcovia.mitigation.core.Literal;
 import dev.arcovia.mitigation.core.Constraint;
 import dev.arcovia.mitigation.core.Label;
+import dev.arcovia.mitigation.core.LabelCategory;
 import dev.arcovia.mitigation.sat.Mechanic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,11 +34,11 @@ public class SatTest {
         var dfd = webConverter.webToDfd(MIN_SAT);
 
         // (personal AND nonEU) => encrypted
-        var constraints = List.of(new Constraint(List.of(new Literal(false, "Data", new Label("Sensitivity", "Personal")),
-                new Literal(false, "Node", new Label("Location", "nonEU")), new Literal(true, "Data", new Label("Encryption", "Encrypted")))),
-                new Constraint(List.of(new Literal(false, "Data", new Label("Sensitivity", "Personal")),
-                        new Literal(false, "Node", new Label("Location", "nonEU")),
-                        new Literal(true, "Data", new Label("Encryption", "Encrypted")))));
+        var constraints = List.of(new Constraint(List.of(new Literal(false, LabelCategory.Data, new Label("Sensitivity", "Personal")),
+                new Literal(false, LabelCategory.Node, new Label("Location", "nonEU")), new Literal(true, LabelCategory.Data, new Label("Encryption", "Encrypted")))),
+                new Constraint(List.of(new Literal(false, LabelCategory.Data, new Label("Sensitivity", "Personal")),
+                        new Literal(false, LabelCategory.Node, new Label("Location", "nonEU")),
+                        new Literal(true, LabelCategory.Data, new Label("Encryption", "Encrypted")))));
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 

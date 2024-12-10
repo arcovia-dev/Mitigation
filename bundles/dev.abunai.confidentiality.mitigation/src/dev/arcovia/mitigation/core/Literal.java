@@ -1,5 +1,5 @@
 package dev.arcovia.mitigation.core;
 
-public record Literal(boolean positive, String what, Label label) {
+public record Literal(boolean positive, LabelCategory category, Label label) {
 
 }

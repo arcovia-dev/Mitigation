@@ -120,10 +120,10 @@ public class Sat {
                         var value = variable.label()
                                 .value();
                         var sign = variable.positive() ? 1 : -1;
-                        if (variable.what()
+                        if (variable.category()
                                 .equals("Node")) {
                             clause.push(sign * delta(node.name(), new NodeChar(type, value)));
-                        } else if (variable.what()
+                        } else if (variable.category()
                                 .equals("Data")) {
                             clause.push(sign * delta(inPin.id(), new InDataChar(type, value)));
                         }
