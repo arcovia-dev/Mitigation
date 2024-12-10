@@ -42,7 +42,7 @@ public class Mechanic {
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
 
-        mapOutPinsToAssignments(dfd);
+        deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndEdges(violatingTFGs);
 
@@ -50,9 +50,9 @@ public class Mechanic {
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
         var minimalSolution = solutions.get(0);
 
-        List<Term> flatNodes = getFlatNodes(nodes);
+        List<Term> flatendNodes = getFlatNodes(nodes);
 
-        List<Term> actions = getActions(minimalSolution, flatNodes);
+        List<Term> actions = getActions(minimalSolution, flatendNodes);
         applyActions(dfd, actions);
 
         return dfd;
@@ -166,7 +166,7 @@ public class Mechanic {
         }
     }
 
-    private void mapOutPinsToAssignments(DataFlowDiagramAndDictionary dfd) {
+    private void deriveOutPinsToAssignmentsMap(DataFlowDiagramAndDictionary dfd) {
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {
             for (var assignment : node.getBehaviour()
@@ -178,30 +178,30 @@ public class Mechanic {
     }
 
     private List<Term> getFlatNodes(List<Node> nodes) {
-        List<Term> flatNodes = new ArrayList<>();
+        List<Term> flatendNodes = new ArrayList<>();
         for (var node : nodes) {
             for (var outPin : node.outPins()
                     .keySet()) {
                 for (var label : node.outPins()
                         .get(outPin)) {
-                    flatNodes.add(new Term(outPin.id(), new OutDataChar(label.type(), label.value())));
+                    flatendNodes.add(new Term(outPin.id(), new OutDataChar(label.type(), label.value())));
                 }
             }
             for (var property : node.nodeChars()) {
-                flatNodes.add(new Term(node.name(), new NodeChar(property.type(), property.value())));
+                flatendNodes.add(new Term(node.name(), new NodeChar(property.type(), property.value())));
             }
         }
-        return flatNodes;
+        return flatendNodes;
     }
 
-    private List<Term> getActions(List<Term> minimalSolution, List<Term> flatNodes) {
+    private List<Term> getActions(List<Term> minimalSolution, List<Term> flatendNodes) {
         List<Term> actions = new ArrayList<>();
         for (var delta : minimalSolution) {
             if (delta.characteristic()
                     .what()
                     .equals("InData"))
                 continue;
-            if (flatNodes.contains(delta))
+            if (flatendNodes.contains(delta))
                 continue;
             actions.add(delta);
         }
@@ -219,7 +219,7 @@ public class Mechanic {
                     List<Assignment> newAssignments = new ArrayList<>();
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
-                                .equals(outPinToAss.get(action.where()))) {
+                                .equals(outPinToAss.get(action.domain()))) {
                             var type = action.characteristic()
                                     .type();
                             var value = action.characteristic()

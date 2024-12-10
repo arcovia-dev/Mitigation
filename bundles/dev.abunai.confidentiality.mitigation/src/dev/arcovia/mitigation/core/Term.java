@@ -2,11 +2,11 @@ package dev.arcovia.mitigation.core;
 
 import java.util.List;
 
-public record Term(String where, AbstractChar characteristic) {
+public record Term(String domain, AbstractChar characteristic) {
 
     @Override
     public String toString() {
-        return List.of(where, characteristic.what(), characteristic.type(), characteristic.value())
+        return List.of(domain, characteristic.what(), characteristic.type(), characteristic.value())
                 .toString();
     }
 }

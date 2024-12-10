@@ -70,7 +70,7 @@ public class Sat {
         buildClauses();
 
         writeDimacsFile("dimacs.cnf", dimacsClauses);
-        
+
         writeLiteralMapping("literalMapping.json");
 
         return solveClauses();
@@ -283,25 +283,25 @@ public class Sat {
 
         return joiner.toString() + " 0";
     }
-    
+
     private void writeLiteralMapping(String outputFile) {
         Map<Integer, String> literalMap = new HashMap<>();
-        
-        for(int literal = 1; literal<=maxLiteral;literal++) {
+
+        for (int literal = 1; literal <= maxLiteral; literal++) {
             if (deltaToLit.containsValue(literal)) {
-                literalMap.put(literal, deltaToLit.getKey(literal).toString());
-            }
-            else if (edgeToLit.containsValue(literal)) {
-                literalMap.put(literal, edgeToLit.getKey(literal).toString());
-            }
-            else if (edgeDataToLit.containsValue(literal)) {
-                literalMap.put(literal, edgeDataToLit.getKey(literal).toString());
-            }
-            else {
+                literalMap.put(literal, deltaToLit.getKey(literal)
+                        .toString());
+            } else if (edgeToLit.containsValue(literal)) {
+                literalMap.put(literal, edgeToLit.getKey(literal)
+                        .toString());
+            } else if (edgeDataToLit.containsValue(literal)) {
+                literalMap.put(literal, edgeDataToLit.getKey(literal)
+                        .toString());
+            } else {
                 System.out.println("Unidentified literal");
             }
         }
-       
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -309,7 +309,7 @@ public class Sat {
         try {
             objectMapper.writeValue(new File(outputFile), literalMap);
         } catch (IOException e) {
-            System.out.println("Could not store literal mapping:"+ e);
-        } 
+            System.out.println("Could not store literal mapping:" + e);
+        }
     }
 }
