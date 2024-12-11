@@ -27,7 +27,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class Sat {
 
-    private BiMap<Term, Integer> deltaToLit;
+    private BiMap<Term, Integer> termToLiteral;
     private BiMap<Edge, Integer> edgeToLit;
     private BiMap<EdgeDataChar, Integer> edgeDataToLit;
     private ISolver solver;
@@ -44,7 +44,7 @@ public class Sat {
         this.edges = edges;
         this.constraints = constraints;
 
-        deltaToLit = new BiMap<>();
+        termToLiteral = new BiMap<>();
         edgeToLit = new BiMap<>();
         edgeDataToLit = new BiMap<>();
         solver = SolverFactory.newDefault();
@@ -70,15 +70,15 @@ public class Sat {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
-            var deltas = IntStream.of(model)
+            var deltaTerms = IntStream.of(model)
                     .filter(lit -> lit > 0)
-                    .filter(lit -> deltaToLit.containsValue(lit))
-                    .mapToObj(lit -> deltaToLit.getKey(lit))
+                    .filter(lit -> termToLiteral.containsValue(lit))
+                    .mapToObj(lit -> termToLiteral.getKey(lit))
                     .toList();
 
             // Store unique solutions
-            if (!solutions.contains(deltas)) {
-                solutions.add(deltas);
+            if (!solutions.contains(deltaTerms)) {
+                solutions.add(deltaTerms);
             }
 
             // Prohibit current solution
@@ -93,24 +93,23 @@ public class Sat {
 
     private void buildClauses() throws ContradictionException {
         // Apply constraints
-        for (var node : nodes) {
-
-            for (var inPin : node.inPins()
+        for (Node node : nodes) {
+            for (InPin inPin : node.inPins()
                     .keySet()) {
                 for (Constraint constraint : constraints) {
                     var clause = new VecInt();
-                    for (var variable : constraint.literals()) {
-                        var type = variable.label()
+                    for (Literal literal : constraint.literals()) {
+                        var type = literal.label()
                                 .type();
-                        var value = variable.label()
+                        var value = literal.label()
                                 .value();
-                        var sign = variable.positive() ? 1 : -1;
-                        if (variable.category()
+                        var sign = literal.positive() ? 1 : -1;
+                        if (literal.category()
                                 .equals(LabelCategory.Node)) {
-                            clause.push(sign * delta(node.name(), new NodeChar(type, value)));
-                        } else if (variable.category()
+                            clause.push(sign * term(node.name(), new NodeChar(type, value)));
+                        } else if (literal.category()
                                 .equals(LabelCategory.Data)) {
-                            clause.push(sign * delta(inPin.id(), new InDataChar(type, value)));
+                            clause.push(sign * term(inPin.id(), new InDataChar(type, value)));
                         }
                     }
                     addClause(clause);
@@ -120,47 +119,47 @@ public class Sat {
         }
 
         // Require node and outgoing data chars
-        for (var node : nodes) {
-            for (var property : node.nodeChars()) {
-                addClause(clause(delta(node.name(), new NodeChar(property.type(), property.value()))));
+        for (Node node : nodes) {
+            for (Label characteristic : node.nodeChars()) {
+                addClause(clause(term(node.name(), new NodeChar(characteristic.type(), characteristic.value()))));
             }
-            for (var outPin : node.outPins()
+            for (OutPin outPin : node.outPins()
                     .keySet()) {
-                for (var outData : node.outPins()
+                for (Label outgoingCharacteristic : node.outPins()
                         .get(outPin)) {
-                    addClause(clause(delta(outPin.id(), new OutDataChar(outData.type(), outData.value()))));
+                    addClause(clause(term(outPin.id(), new OutDataChar(outgoingCharacteristic.type(), outgoingCharacteristic.value()))));
                 }
             }
         }
 
         // Prohibit creation of new edges
-        for (var fromNode : nodes) {
-            for (var fromPin : fromNode.outPins()
+        for (Node sourceNode : nodes) {
+            for (OutPin sourcePin : sourceNode.outPins()
                     .keySet()) {
-                for (var toNode : nodes) {
-                    for (var toPin : toNode.inPins()
+                for (Node sinkNode : nodes) {
+                    for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
-                        var sign = edges.contains(new Edge(fromPin, toPin)) ? 1 : -1;
-                        addClause(clause(sign * edge(fromPin, toPin)));
+                        var sign = edges.contains(new Edge(sourcePin, sinkPin)) ? 1 : -1;
+                        addClause(clause(sign * edge(sourcePin, sinkPin)));
                     }
                 }
             }
         }
 
         // Make clauses for label propagation
-        for (var fromNode : nodes) {
-            for (var fromPin : fromNode.outPins()
+        for (Node sourceNode : nodes) {
+            for (OutPin sourcePin : sourceNode.outPins()
                     .keySet()) {
-                for (var toNode : nodes) {
-                    for (var toPin : toNode.inPins()
+                for (Node sinkNode : nodes) {
+                    for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
-                        for (var label : labels) {
-                            var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
-                            var outLit = delta(fromPin.id(), new OutDataChar(label.type(), label.value()));
+                        for (Label label : labels) {
+                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new InDataChar(label.type(), label.value()));
+                            var outLit = term(sourcePin.id(), new OutDataChar(label.type(), label.value()));
                             // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
-                            addClause(clause(-outLit, -edge(fromPin, toPin), edgeDataLit));
+                            addClause(clause(-outLit, -edge(sourcePin, sinkPin), edgeDataLit));
                             addClause(clause(-edgeDataLit, outLit));
-                            addClause(clause(-edgeDataLit, edge(fromPin, toPin)));
+                            addClause(clause(-edgeDataLit, edge(sourcePin, sinkPin)));
                         }
                     }
                 }
@@ -168,18 +167,18 @@ public class Sat {
         }
 
         // Node has incoming data at inpin iff it receives it at least once
-        for (var label : labels) {
-            for (var toNode : nodes) {
-                for (var toPin : toNode.inPins()
+        for (Label label : labels) {
+            for (Node sinkNode : nodes) {
+                for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
-                    var inLit = delta(toPin.id(), new InDataChar(label.type(), label.value()));
+                    int incomingDataTerm = term(sinkPin.id(), new InDataChar(label.type(), label.value()));
                     var clause = new VecInt();
-                    clause.push(-inLit);
-                    for (var fromNode : nodes) {
-                        for (var fromPin : fromNode.outPins()
+                    clause.push(-incomingDataTerm);
+                    for (Node sourceNode : nodes) {
+                        for (OutPin sourcePin : sourceNode.outPins()
                                 .keySet()) {
-                            var edgeDataLit = edgeData(new Edge(fromPin, toPin), new InDataChar(label.type(), label.value()));
-                            addClause(clause(-edgeDataLit, inLit));
+                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new InDataChar(label.type(), label.value()));
+                            addClause(clause(-edgeDataLit, incomingDataTerm));
                             clause.push(edgeDataLit);
                         }
                     }
@@ -191,9 +190,9 @@ public class Sat {
 
     private void extractUniqueLabels() {
         labels = new HashSet<>();
-        for (var constraint : constraints) {
-            for (var variable : constraint.literals()) {
-                labels.add(variable.label());
+        for (Constraint constraint : constraints) {
+            for (Literal literal : constraint.literals()) {
+                labels.add(literal.label());
             }
         }
     }
@@ -223,12 +222,12 @@ public class Sat {
         return edgeDataToLit.getValue(edgeData);
     }
 
-    private int delta(String where, AbstractChar characteristic) {
-        var delta = new Term(where, characteristic);
-        if (!deltaToLit.containsKey(delta)) {
-            deltaToLit.put(delta, solver.nextFreeVarId(true));
+    private int term(String where, AbstractChar characteristic) {
+        var term = new Term(where, characteristic);
+        if (!termToLiteral.containsKey(term)) {
+            termToLiteral.put(term, solver.nextFreeVarId(true));
         }
-        return deltaToLit.getValue(delta);
+        return termToLiteral.getValue(term);
     }
 
     private void writeDimacsFile(String filePath, List<VecInt> clauses) throws IOException {
@@ -273,8 +272,8 @@ public class Sat {
         Map<Integer, String> literalMap = new HashMap<>();
 
         for (int literal = 1; literal <= maxLiteral; literal++) {
-            if (deltaToLit.containsValue(literal)) {
-                literalMap.put(literal, deltaToLit.getKey(literal)
+            if (termToLiteral.containsValue(literal)) {
+                literalMap.put(literal, termToLiteral.getKey(literal)
                         .toString());
             } else if (edgeToLit.containsValue(literal)) {
                 literalMap.put(literal, edgeToLit.getKey(literal)
