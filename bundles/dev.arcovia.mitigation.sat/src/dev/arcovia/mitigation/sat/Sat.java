@@ -28,8 +28,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class Sat {
 
     private BiMap<Term, Integer> termToLiteral;
-    private BiMap<Flow, Integer> edgeToLit;
-    private BiMap<FlowDataLabel, Integer> edgeDataToLit;
+    private BiMap<Flow, Integer> flowToLit;
+    private BiMap<FlowDataLabel, Integer> flowDataToLit;
     private ISolver solver;
     private Set<Label> labels;
     private List<Node> nodes;
@@ -45,8 +45,8 @@ public class Sat {
         this.constraints = constraints;
 
         termToLiteral = new BiMap<>();
-        edgeToLit = new BiMap<>();
-        edgeDataToLit = new BiMap<>();
+        flowToLit = new BiMap<>();
+        flowDataToLit = new BiMap<>();
         solver = SolverFactory.newDefault();
         dimacsClauses = new ArrayList<>();
 
@@ -211,18 +211,18 @@ public class Sat {
 
     private int flow(OutPin source, InPin sink) {
         var edge = new Flow(source, sink);
-        if (!edgeToLit.containsKey(edge)) {
-            edgeToLit.put(edge, solver.nextFreeVarId(true));
+        if (!flowToLit.containsKey(edge)) {
+            flowToLit.put(edge, solver.nextFreeVarId(true));
         }
-        return edgeToLit.getValue(edge);
+        return flowToLit.getValue(edge);
     }
 
     private int flowData(Flow edge, IncomingDataLabel incomingDataLabel) {
         var flowDataLabel = new FlowDataLabel(edge, incomingDataLabel);
-        if (!edgeDataToLit.containsKey(flowDataLabel)) {
-            edgeDataToLit.put(flowDataLabel, solver.nextFreeVarId(true));
+        if (!flowDataToLit.containsKey(flowDataLabel)) {
+            flowDataToLit.put(flowDataLabel, solver.nextFreeVarId(true));
         }
-        return edgeDataToLit.getValue(flowDataLabel);
+        return flowDataToLit.getValue(flowDataLabel);
     }
 
     private int term(String domain, AbstractLabel label) {
@@ -278,11 +278,11 @@ public class Sat {
             if (termToLiteral.containsValue(literal)) {
                 literalMap.put(literal, termToLiteral.getKey(literal)
                         .toString());
-            } else if (edgeToLit.containsValue(literal)) {
-                literalMap.put(literal, edgeToLit.getKey(literal)
+            } else if (flowToLit.containsValue(literal)) {
+                literalMap.put(literal, flowToLit.getKey(literal)
                         .toString());
-            } else if (edgeDataToLit.containsValue(literal)) {
-                literalMap.put(literal, edgeDataToLit.getKey(literal)
+            } else if (flowDataToLit.containsValue(literal)) {
+                literalMap.put(literal, flowDataToLit.getKey(literal)
                         .toString());
             } else {
                 System.out.println("Unidentified literal");
