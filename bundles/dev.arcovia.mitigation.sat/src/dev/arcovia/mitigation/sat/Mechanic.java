@@ -177,7 +177,7 @@ public class Mechanic {
                 }
             }
             for (var property : node.nodeChars()) {
-                flatendNodes.add(new Term(node.name(), new NodeChar(property.type(), property.value())));
+                flatendNodes.add(new Term(node.name(), new NodeCharacteristic(property.type(), property.value())));
             }
         }
         return flatendNodes;
