@@ -1,11 +1,11 @@
 package dev.arcovia.mitigation.sat;
 
-public abstract class AbstractCharacteristic {
+public abstract class AbstractLabel {
     private final LabelCategory category;
     private final String type;
     private final String value;
 
-    public AbstractCharacteristic(LabelCategory category, String type, String value) {
+    public AbstractLabel(LabelCategory category, String type, String value) {
         this.category = category;
         this.type = type;
         this.value = value;
@@ -30,7 +30,7 @@ public abstract class AbstractCharacteristic {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        AbstractCharacteristic that = (AbstractCharacteristic) o;
+        AbstractLabel that = (AbstractLabel) o;
 
         return category.equals(that.category()) && type.equals(that.type()) && value.equals(that.value());
     }

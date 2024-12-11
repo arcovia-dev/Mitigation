@@ -222,7 +222,7 @@ public class Sat {
         return edgeDataToLit.getValue(edgeData);
     }
 
-    private int term(String domain, AbstractCharacteristic characteristic) {
+    private int term(String domain, AbstractLabel characteristic) {
         var term = new Term(domain, characteristic);
         if (!termToLiteral.containsKey(term)) {
             termToLiteral.put(term, solver.nextFreeVarId(true));
