@@ -33,7 +33,7 @@ public class Sat {
     private ISolver solver;
     private Set<Label> labels;
     private List<Node> nodes;
-    private List<Flow> edges;
+    private List<Flow> flows;
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
@@ -41,7 +41,7 @@ public class Sat {
     public List<List<Term>> solve(List<Node> nodes, List<Flow> edges, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
-        this.edges = edges;
+        this.flows = edges;
         this.constraints = constraints;
 
         termToLiteral = new BiMap<>();
@@ -139,8 +139,8 @@ public class Sat {
                 for (Node sinkNode : nodes) {
                     for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
-                        var sign = edges.contains(new Flow(sourcePin, sinkPin)) ? 1 : -1;
-                        addClause(clause(sign * edge(sourcePin, sinkPin)));
+                        var sign = flows.contains(new Flow(sourcePin, sinkPin)) ? 1 : -1;
+                        addClause(clause(sign * flow(sourcePin, sinkPin)));
                     }
                 }
             }
@@ -154,12 +154,15 @@ public class Sat {
                     for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
                         for (Label label : labels) {
-                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
-                            var outLit = term(sourcePin.id(), new OutgoingDataLabel(label.type(), label.value()));
-                            // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
-                            addClause(clause(-outLit, -edge(sourcePin, sinkPin), edgeDataLit));
-                            addClause(clause(-edgeDataLit, outLit));
-                            addClause(clause(-edgeDataLit, edge(sourcePin, sinkPin)));
+                            var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
+                            var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label.type(), label.value()));
+                            
+                            // (Source.outData AND Flow(Source,Sink)) <=> Sink.incomingData 
+                            // --> ((¬Source.outData ∨ ¬Flow(Source,Sink) ∨ Sink.incomingData) ∧ (¬To.incomingData ∨ Source.outData) ∧ (¬Sink.incomingData ∨ Flow(Source,Sink))
+                            // <--> (A ∧ B ↔ C --> (¬C ∨ A) ∧ (¬C ∨ B) ∧ (¬A ∨ ¬B ∨ C)) 
+                            addClause(clause(-outgoingDataTerm, -flow(sourcePin, sinkPin), incomingFlowData));
+                            addClause(clause(-incomingFlowData, outgoingDataTerm));
+                            addClause(clause(-incomingFlowData, flow(sourcePin, sinkPin)));
                         }
                     }
                 }
@@ -177,9 +180,9 @@ public class Sat {
                     for (Node sourceNode : nodes) {
                         for (OutPin sourcePin : sourceNode.outPins()
                                 .keySet()) {
-                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
-                            addClause(clause(-edgeDataLit, incomingDataTerm));
-                            clause.push(edgeDataLit);
+                            var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
+                            addClause(clause(-flowData, incomingDataTerm));
+                            clause.push(flowData);
                         }
                     }
                     addClause(clause);
@@ -206,24 +209,24 @@ public class Sat {
         dimacsClauses.add(clause);
     }
 
-    private int edge(OutPin from, InPin to) {
-        var edge = new Flow(from, to);
+    private int flow(OutPin source, InPin sink) {
+        var edge = new Flow(source, sink);
         if (!edgeToLit.containsKey(edge)) {
             edgeToLit.put(edge, solver.nextFreeVarId(true));
         }
         return edgeToLit.getValue(edge);
     }
 
-    private int edgeData(Flow edge, IncomingDataLabel inDataChar) {
-        var edgeData = new FlowDataLabel(edge, inDataChar);
-        if (!edgeDataToLit.containsKey(edgeData)) {
-            edgeDataToLit.put(edgeData, solver.nextFreeVarId(true));
+    private int flowData(Flow edge, IncomingDataLabel incomingDataLabel) {
+        var flowDataLabel = new FlowDataLabel(edge, incomingDataLabel);
+        if (!edgeDataToLit.containsKey(flowDataLabel)) {
+            edgeDataToLit.put(flowDataLabel, solver.nextFreeVarId(true));
         }
-        return edgeDataToLit.getValue(edgeData);
+        return edgeDataToLit.getValue(flowDataLabel);
     }
 
-    private int term(String domain, AbstractLabel characteristic) {
-        var term = new Term(domain, characteristic);
+    private int term(String domain, AbstractLabel label) {
+        var term = new Term(domain, label);
         if (!termToLiteral.containsKey(term)) {
             termToLiteral.put(term, solver.nextFreeVarId(true));
         }
@@ -233,9 +236,9 @@ public class Sat {
     private void writeDimacsFile(String filePath, List<VecInt> clauses) throws IOException {
 
         maxLiteral = 0;
-        for (var literals : clauses) {
-            for (var lit : literals.toArray()) {
-                int var = Math.abs(lit);
+        for (var terms : clauses) {
+            for (var literal : terms.toArray()) {
+                int var = Math.abs(literal);
                 if (var > maxLiteral) {
                     maxLiteral = var;
                 }

@@ -25,7 +25,7 @@ public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
     private List<Node> nodes = new ArrayList<>();
-    private List<Flow> edges = new ArrayList<>();
+    private List<Flow> flows = new ArrayList<>();
 
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
@@ -33,10 +33,10 @@ public class Mechanic {
         
         deriveOutPinsToAssignmentsMap(dfd);
 
-        getNodesAndEdges(violatingTFGs);
+        getNodesAndFlows(violatingTFGs);
         
         
-        var solutions = new Sat().solve(nodes, edges, constraints);
+        var solutions = new Sat().solve(nodes, flows, constraints);
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
         var minimalSolution = solutions.get(0);
 
@@ -108,7 +108,7 @@ public class Mechanic {
         return false;
     }
 
-    private void getNodesAndEdges(List<AbstractTransposeFlowGraph> violatingTFGs) {
+    private void getNodesAndFlows(List<AbstractTransposeFlowGraph> violatingTFGs) {
         for (var tfg : violatingTFGs) {
             for (var vertex : tfg.getVertices()) {
 
@@ -125,31 +125,31 @@ public class Mechanic {
                     inPins.put(new InPin(inPin.getVariableName()), pinChars);
                 }
 
-                List<Label> nodeChars = new ArrayList<>();
+                List<Label> nodeLabels = new ArrayList<>();
                 for (var property : node.getAllVertexCharacteristics()) {
                     var type = property.getTypeName();
                     var value = property.getValueName();
-                    nodeChars.add(new Label(type, value));
+                    nodeLabels.add(new Label(type, value));
                 }
 
-                Map<OutPin, List<Label>> outPins = new HashMap<>();
+                Map<OutPin, List<Label>> outPinLabelMap = new HashMap<>();
                 for (var outPin : node.getAllOutgoingDataCharacteristics()) {
-                    List<Label> pinChars = new ArrayList<>();
+                    List<Label> pinLabel = new ArrayList<>();
                     for (var property : outPin.getAllCharacteristics()) {
                         var type = property.getTypeName();
                         var value = property.getValueName();
-                        pinChars.add(new Label(type, value));
+                        pinLabel.add(new Label(type, value));
                     }
-                    outPins.put(new OutPin(outPin.getVariableName()), pinChars);
+                    outPinLabelMap.put(new OutPin(outPin.getVariableName()), pinLabel);
                 }
 
-                nodes.add(new Node(node.getName(), inPins, outPins, nodeChars));
+                nodes.add(new Node(node.getName(), inPins, outPinLabelMap, nodeLabels));
 
                 for (var pin : node.getPinFlowMap()
                         .keySet()) {
                     var flow = node.getPinFlowMap()
                             .get(pin);
-                    edges.add(new Flow(new OutPin(flow.getSourcePin()
+                    flows.add(new Flow(new OutPin(flow.getSourcePin()
                             .getId()), new InPin(pin.getId())));
                 }
             }
