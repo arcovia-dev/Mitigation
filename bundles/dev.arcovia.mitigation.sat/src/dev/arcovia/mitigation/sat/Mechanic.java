@@ -25,7 +25,7 @@ public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
     private List<Node> nodes = new ArrayList<>();
-    private List<Edge> edges = new ArrayList<>();
+    private List<Flow> edges = new ArrayList<>();
 
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
@@ -148,7 +148,7 @@ public class Mechanic {
                         .keySet()) {
                     var flow = node.getPinFlowMap()
                             .get(pin);
-                    edges.add(new Edge(new OutPin(flow.getSourcePin()
+                    edges.add(new Flow(new OutPin(flow.getSourcePin()
                             .getId()), new InPin(pin.getId())));
                 }
             }

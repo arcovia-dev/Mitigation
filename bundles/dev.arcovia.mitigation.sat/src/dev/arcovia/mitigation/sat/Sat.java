@@ -28,17 +28,17 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class Sat {
 
     private BiMap<Term, Integer> termToLiteral;
-    private BiMap<Edge, Integer> edgeToLit;
+    private BiMap<Flow, Integer> edgeToLit;
     private BiMap<EdgeDataCharacteristic, Integer> edgeDataToLit;
     private ISolver solver;
     private Set<Label> labels;
     private List<Node> nodes;
-    private List<Edge> edges;
+    private List<Flow> edges;
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
 
-    public List<List<Term>> solve(List<Node> nodes, List<Edge> edges, List<Constraint> constraints)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> edges, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.edges = edges;
@@ -139,7 +139,7 @@ public class Sat {
                 for (Node sinkNode : nodes) {
                     for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
-                        var sign = edges.contains(new Edge(sourcePin, sinkPin)) ? 1 : -1;
+                        var sign = edges.contains(new Flow(sourcePin, sinkPin)) ? 1 : -1;
                         addClause(clause(sign * edge(sourcePin, sinkPin)));
                     }
                 }
@@ -154,7 +154,7 @@ public class Sat {
                     for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
                         for (Label label : labels) {
-                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
+                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
                             var outLit = term(sourcePin.id(), new OutgoingDataCharacteristic(label.type(), label.value()));
                             // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
                             addClause(clause(-outLit, -edge(sourcePin, sinkPin), edgeDataLit));
@@ -177,7 +177,7 @@ public class Sat {
                     for (Node sourceNode : nodes) {
                         for (OutPin sourcePin : sourceNode.outPins()
                                 .keySet()) {
-                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
+                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
                             addClause(clause(-edgeDataLit, incomingDataTerm));
                             clause.push(edgeDataLit);
                         }
@@ -207,14 +207,14 @@ public class Sat {
     }
 
     private int edge(OutPin from, InPin to) {
-        var edge = new Edge(from, to);
+        var edge = new Flow(from, to);
         if (!edgeToLit.containsKey(edge)) {
             edgeToLit.put(edge, solver.nextFreeVarId(true));
         }
         return edgeToLit.getValue(edge);
     }
 
-    private int edgeData(Edge edge, IncomingDataCharacteristics inDataChar) {
+    private int edgeData(Flow edge, IncomingDataCharacteristics inDataChar) {
         var edgeData = new EdgeDataCharacteristic(edge, inDataChar);
         if (!edgeDataToLit.containsKey(edgeData)) {
             edgeDataToLit.put(edgeData, solver.nextFreeVarId(true));

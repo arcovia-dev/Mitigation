@@ -1,5 +1,5 @@
 package dev.arcovia.mitigation.sat;
 
-public record EdgeDataCharacteristic(Edge edge, IncomingDataCharacteristics inDataChar) {
+public record EdgeDataCharacteristic(Flow edge, IncomingDataCharacteristics inDataChar) {
 
 }
