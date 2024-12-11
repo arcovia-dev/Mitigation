@@ -169,7 +169,8 @@ public class Sat {
             }
         }
 
-        // Node has only incoming data labels that are received via at least one flow --> (Not Node x has Label L or Flow A with Label L or Flow B with Label L or ... Flow Z)
+        // Node has only incoming data labels that are received via at least one flow 
+        //--> (Not Node x has Label L or Flow A with Label L or Flow B with Label L or ... Flow Z)
         for (Label label : labels) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
