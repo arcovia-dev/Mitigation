@@ -29,7 +29,7 @@ public class Sat {
 
     private BiMap<Term, Integer> termToLiteral;
     private BiMap<Flow, Integer> edgeToLit;
-    private BiMap<EdgeDataCharacteristic, Integer> edgeDataToLit;
+    private BiMap<FlowDataLabel, Integer> edgeDataToLit;
     private ISolver solver;
     private Set<Label> labels;
     private List<Node> nodes;
@@ -215,7 +215,7 @@ public class Sat {
     }
 
     private int edgeData(Flow edge, IncomingDataCharacteristics inDataChar) {
-        var edgeData = new EdgeDataCharacteristic(edge, inDataChar);
+        var edgeData = new FlowDataLabel(edge, inDataChar);
         if (!edgeDataToLit.containsKey(edgeData)) {
             edgeDataToLit.put(edgeData, solver.nextFreeVarId(true));
         }
