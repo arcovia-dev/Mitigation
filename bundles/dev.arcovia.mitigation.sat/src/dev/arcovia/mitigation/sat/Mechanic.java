@@ -173,7 +173,7 @@ public class Mechanic {
                     .keySet()) {
                 for (var label : node.outPins()
                         .get(outPin)) {
-                    flatendNodes.add(new Term(outPin.id(), new OutgoingDataCharacteristic(label.type(), label.value())));
+                    flatendNodes.add(new Term(outPin.id(), new OutgoingDataLabel(label.type(), label.value())));
                 }
             }
             for (var property : node.nodeChars()) {
