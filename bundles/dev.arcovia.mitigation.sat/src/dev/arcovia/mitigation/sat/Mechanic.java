@@ -173,7 +173,7 @@ public class Mechanic {
                     .keySet()) {
                 for (var label : node.outPins()
                         .get(outPin)) {
-                    flatendNodes.add(new Term(outPin.id(), new OutDataChar(label.type(), label.value())));
+                    flatendNodes.add(new Term(outPin.id(), new OutgoingDataCharacteristic(label.type(), label.value())));
                 }
             }
             for (var property : node.nodeChars()) {
@@ -203,7 +203,7 @@ public class Mechanic {
         for (var action : actions) {
             if (action.characteristic()
                     .what()
-                    .equals("OutData")) {
+                    .equals("OutgoingData")) {
                 for (var behavior : dd.getBehaviour()) {
                     List<Assignment> newAssignments = new ArrayList<>();
                     for (var assignment : behavior.getAssignment()) {

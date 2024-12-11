@@ -127,7 +127,7 @@ public class Sat {
                     .keySet()) {
                 for (Label outgoingCharacteristic : node.outPins()
                         .get(outPin)) {
-                    addClause(clause(term(outPin.id(), new OutDataChar(outgoingCharacteristic.type(), outgoingCharacteristic.value()))));
+                    addClause(clause(term(outPin.id(), new OutgoingDataCharacteristic(outgoingCharacteristic.type(), outgoingCharacteristic.value()))));
                 }
             }
         }
@@ -155,7 +155,7 @@ public class Sat {
                             .keySet()) {
                         for (Label label : labels) {
                             var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
-                            var outLit = term(sourcePin.id(), new OutDataChar(label.type(), label.value()));
+                            var outLit = term(sourcePin.id(), new OutgoingDataCharacteristic(label.type(), label.value()));
                             // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
                             addClause(clause(-outLit, -edge(sourcePin, sinkPin), edgeDataLit));
                             addClause(clause(-edgeDataLit, outLit));
