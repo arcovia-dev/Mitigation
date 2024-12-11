@@ -188,7 +188,7 @@ public class Mechanic {
         for (var delta : minimalSolution) {
             if (delta.characteristic()
                     .what()
-                    .equals("InData"))
+                    .equals("IncomingData"))
                 continue;
             if (flatendNodes.contains(delta))
                 continue;

@@ -109,7 +109,7 @@ public class Sat {
                             clause.push(sign * term(node.name(), new NodeChar(type, value)));
                         } else if (literal.category()
                                 .equals(LabelCategory.Data)) {
-                            clause.push(sign * term(inPin.id(), new InDataChar(type, value)));
+                            clause.push(sign * term(inPin.id(), new IncomingDataCharacteristics(type, value)));
                         }
                     }
                     addClause(clause);
@@ -154,7 +154,7 @@ public class Sat {
                     for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
                         for (Label label : labels) {
-                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new InDataChar(label.type(), label.value()));
+                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
                             var outLit = term(sourcePin.id(), new OutDataChar(label.type(), label.value()));
                             // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
                             addClause(clause(-outLit, -edge(sourcePin, sinkPin), edgeDataLit));
@@ -171,13 +171,13 @@ public class Sat {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
-                    int incomingDataTerm = term(sinkPin.id(), new InDataChar(label.type(), label.value()));
+                    int incomingDataTerm = term(sinkPin.id(), new IncomingDataCharacteristics(label.type(), label.value()));
                     var clause = new VecInt();
                     clause.push(-incomingDataTerm);
                     for (Node sourceNode : nodes) {
                         for (OutPin sourcePin : sourceNode.outPins()
                                 .keySet()) {
-                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new InDataChar(label.type(), label.value()));
+                            var edgeDataLit = edgeData(new Edge(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
                             addClause(clause(-edgeDataLit, incomingDataTerm));
                             clause.push(edgeDataLit);
                         }
@@ -214,7 +214,7 @@ public class Sat {
         return edgeToLit.getValue(edge);
     }
 
-    private int edgeData(Edge edge, InDataChar inDataChar) {
+    private int edgeData(Edge edge, IncomingDataCharacteristics inDataChar) {
         var edgeData = new EdgeDataCharacteristic(edge, inDataChar);
         if (!edgeDataToLit.containsKey(edgeData)) {
             edgeDataToLit.put(edgeData, solver.nextFreeVarId(true));
@@ -222,8 +222,8 @@ public class Sat {
         return edgeDataToLit.getValue(edgeData);
     }
 
-    private int term(String where, AbstractCharacteristic characteristic) {
-        var term = new Term(where, characteristic);
+    private int term(String domain, AbstractCharacteristic characteristic) {
+        var term = new Term(domain, characteristic);
         if (!termToLiteral.containsKey(term)) {
             termToLiteral.put(term, solver.nextFreeVarId(true));
         }
