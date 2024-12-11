@@ -29,7 +29,7 @@ public class Sat {
 
     private BiMap<Term, Integer> termToLiteral;
     private BiMap<Edge, Integer> edgeToLit;
-    private BiMap<EdgeDataChar, Integer> edgeDataToLit;
+    private BiMap<EdgeDataCharacteristic, Integer> edgeDataToLit;
     private ISolver solver;
     private Set<Label> labels;
     private List<Node> nodes;
@@ -215,14 +215,14 @@ public class Sat {
     }
 
     private int edgeData(Edge edge, InDataChar inDataChar) {
-        var edgeData = new EdgeDataChar(edge, inDataChar);
+        var edgeData = new EdgeDataCharacteristic(edge, inDataChar);
         if (!edgeDataToLit.containsKey(edgeData)) {
             edgeDataToLit.put(edgeData, solver.nextFreeVarId(true));
         }
         return edgeDataToLit.getValue(edgeData);
     }
 
-    private int term(String where, AbstractChar characteristic) {
+    private int term(String where, AbstractCharacteristic characteristic) {
         var term = new Term(where, characteristic);
         if (!termToLiteral.containsKey(term)) {
             termToLiteral.put(term, solver.nextFreeVarId(true));

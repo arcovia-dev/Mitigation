@@ -1,11 +1,11 @@
 package dev.arcovia.mitigation.sat;
 
-public abstract class AbstractChar {
+public abstract class AbstractCharacteristic {
     private final String what;
     private final String type;
     private final String value;
 
-    public AbstractChar(String what, String type, String value) {
+    public AbstractCharacteristic(String what, String type, String value) {
         this.what = what;
         this.type = type;
         this.value = value;
@@ -30,7 +30,7 @@ public abstract class AbstractChar {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        AbstractChar that = (AbstractChar) o;
+        AbstractCharacteristic that = (AbstractCharacteristic) o;
 
         return what.equals(that.what()) && type.equals(that.type()) && value.equals(that.value());
     }

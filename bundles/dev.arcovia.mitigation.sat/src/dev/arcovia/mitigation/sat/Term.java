@@ -2,7 +2,7 @@ package dev.arcovia.mitigation.sat;
 
 import java.util.List;
 
-public record Term(String domain, AbstractChar characteristic) {
+public record Term(String domain, AbstractCharacteristic characteristic) {
 
     @Override
     public String toString() {
