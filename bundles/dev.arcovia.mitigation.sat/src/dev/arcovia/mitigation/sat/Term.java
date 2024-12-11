@@ -6,7 +6,7 @@ public record Term(String domain, AbstractCharacteristic characteristic) {
 
     @Override
     public String toString() {
-        return List.of(domain, characteristic.what(), characteristic.type(), characteristic.value())
+        return List.of(domain, characteristic.category(), characteristic.type(), characteristic.value())
                 .toString();
     }
 }

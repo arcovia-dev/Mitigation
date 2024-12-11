@@ -1,18 +1,18 @@
 package dev.arcovia.mitigation.sat;
 
 public abstract class AbstractCharacteristic {
-    private final String what;
+    private final CharacteristicCategory category;
     private final String type;
     private final String value;
 
-    public AbstractCharacteristic(String what, String type, String value) {
-        this.what = what;
+    public AbstractCharacteristic(CharacteristicCategory category, String type, String value) {
+        this.category = category;
         this.type = type;
         this.value = value;
     }
 
-    public String what() {
-        return what;
+    public CharacteristicCategory category() {
+        return category;
     }
 
     public String type() {
@@ -32,12 +32,12 @@ public abstract class AbstractCharacteristic {
 
         AbstractCharacteristic that = (AbstractCharacteristic) o;
 
-        return what.equals(that.what()) && type.equals(that.type()) && value.equals(that.value());
+        return category.equals(that.category()) && type.equals(that.type()) && value.equals(that.value());
     }
 
     @Override
     public int hashCode() {
-        int result = what.hashCode();
+        int result = category.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + value.hashCode();
         return result;
@@ -45,6 +45,6 @@ public abstract class AbstractCharacteristic {
 
     @Override
     public String toString() {
-        return "AbstractChar[" + "what=" + what + ", type=" + type + ", value=" + value + ']';
+        return "AbstractChar[" + "what=" + category + ", type=" + type + ", value=" + value + ']';
     }
 }

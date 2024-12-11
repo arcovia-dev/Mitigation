@@ -187,8 +187,8 @@ public class Mechanic {
         List<Term> actions = new ArrayList<>();
         for (var delta : minimalSolution) {
             if (delta.characteristic()
-                    .what()
-                    .equals("IncomingData"))
+                    .category()
+                    .equals(CharacteristicCategory.IncomingData))
                 continue;
             if (flatendNodes.contains(delta))
                 continue;
@@ -202,8 +202,8 @@ public class Mechanic {
 
         for (var action : actions) {
             if (action.characteristic()
-                    .what()
-                    .equals("OutgoingData")) {
+                    .category()
+                    .equals(CharacteristicCategory.OutgoingData)) {
                 for (var behavior : dd.getBehaviour()) {
                     List<Assignment> newAssignments = new ArrayList<>();
                     for (var assignment : behavior.getAssignment()) {
