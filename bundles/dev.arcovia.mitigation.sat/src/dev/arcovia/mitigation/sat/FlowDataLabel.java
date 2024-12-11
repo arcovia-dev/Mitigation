@@ -1,5 +1,5 @@
 package dev.arcovia.mitigation.sat;
 
-public record FlowDataLabel(Flow edge, IncomingDataCharacteristics inDataChar) {
+public record FlowDataLabel(Flow edge, IncomingDataLabel inDataChar) {
 
 }

@@ -109,7 +109,7 @@ public class Sat {
                             clause.push(sign * term(node.name(), new NodeCharacteristic(type, value)));
                         } else if (literal.category()
                                 .equals(LabelCategory.IncomingData)) {
-                            clause.push(sign * term(inPin.id(), new IncomingDataCharacteristics(type, value)));
+                            clause.push(sign * term(inPin.id(), new IncomingDataLabel(type, value)));
                         }
                     }
                     addClause(clause);
@@ -154,7 +154,7 @@ public class Sat {
                     for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
                         for (Label label : labels) {
-                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
+                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
                             var outLit = term(sourcePin.id(), new OutgoingDataCharacteristic(label.type(), label.value()));
                             // (From.OutIn AND Edge(From,To)) <=> To.EdgeInPin
                             addClause(clause(-outLit, -edge(sourcePin, sinkPin), edgeDataLit));
@@ -171,13 +171,13 @@ public class Sat {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
-                    int incomingDataTerm = term(sinkPin.id(), new IncomingDataCharacteristics(label.type(), label.value()));
+                    int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label.type(), label.value()));
                     var clause = new VecInt();
                     clause.push(-incomingDataTerm);
                     for (Node sourceNode : nodes) {
                         for (OutPin sourcePin : sourceNode.outPins()
                                 .keySet()) {
-                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataCharacteristics(label.type(), label.value()));
+                            var edgeDataLit = edgeData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
                             addClause(clause(-edgeDataLit, incomingDataTerm));
                             clause.push(edgeDataLit);
                         }
@@ -214,7 +214,7 @@ public class Sat {
         return edgeToLit.getValue(edge);
     }
 
-    private int edgeData(Flow edge, IncomingDataCharacteristics inDataChar) {
+    private int edgeData(Flow edge, IncomingDataLabel inDataChar) {
         var edgeData = new FlowDataLabel(edge, inDataChar);
         if (!edgeDataToLit.containsKey(edgeData)) {
             edgeDataToLit.put(edgeData, solver.nextFreeVarId(true));
