@@ -34,11 +34,11 @@ public class SatTest {
         var dfd = webConverter.webToDfd(MIN_SAT);
 
         // (personal AND nonEU) => encrypted
-        var constraints = List.of(new Constraint(List.of(new Literal(false, LabelCategory.Data, new Label("Sensitivity", "Personal")),
-                new Literal(false, LabelCategory.Node, new Label("Location", "nonEU")), new Literal(true, LabelCategory.Data, new Label("Encryption", "Encrypted")))),
-                new Constraint(List.of(new Literal(false, LabelCategory.Data, new Label("Sensitivity", "Personal")),
+        var constraints = List.of(new Constraint(List.of(new Literal(false, LabelCategory.IncomingData, new Label("Sensitivity", "Personal")),
+                new Literal(false, LabelCategory.Node, new Label("Location", "nonEU")), new Literal(true, LabelCategory.IncomingData, new Label("Encryption", "Encrypted")))),
+                new Constraint(List.of(new Literal(false, LabelCategory.IncomingData, new Label("Sensitivity", "Personal")),
                         new Literal(false, LabelCategory.Node, new Label("Location", "nonEU")),
-                        new Literal(true, LabelCategory.Data, new Label("Encryption", "Encrypted")))));
+                        new Literal(true, LabelCategory.IncomingData, new Label("Encryption", "Encrypted")))));
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 

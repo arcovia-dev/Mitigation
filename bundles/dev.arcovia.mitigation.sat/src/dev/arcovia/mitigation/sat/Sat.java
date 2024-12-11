@@ -108,7 +108,7 @@ public class Sat {
                                 .equals(LabelCategory.Node)) {
                             clause.push(sign * term(node.name(), new NodeCharacteristic(type, value)));
                         } else if (literal.category()
-                                .equals(LabelCategory.Data)) {
+                                .equals(LabelCategory.IncomingData)) {
                             clause.push(sign * term(inPin.id(), new IncomingDataCharacteristics(type, value)));
                         }
                     }

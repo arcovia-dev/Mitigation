@@ -188,7 +188,7 @@ public class Mechanic {
         for (var delta : minimalSolution) {
             if (delta.characteristic()
                     .category()
-                    .equals(CharacteristicCategory.IncomingData))
+                    .equals(LabelCategory.IncomingData))
                 continue;
             if (flatendNodes.contains(delta))
                 continue;
@@ -203,7 +203,7 @@ public class Mechanic {
         for (var action : actions) {
             if (action.characteristic()
                     .category()
-                    .equals(CharacteristicCategory.OutgoingData)) {
+                    .equals(LabelCategory.OutgoingData)) {
                 for (var behavior : dd.getBehaviour()) {
                     List<Assignment> newAssignments = new ArrayList<>();
                     for (var assignment : behavior.getAssignment()) {

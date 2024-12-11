@@ -1,17 +1,17 @@
 package dev.arcovia.mitigation.sat;
 
 public abstract class AbstractCharacteristic {
-    private final CharacteristicCategory category;
+    private final LabelCategory category;
     private final String type;
     private final String value;
 
-    public AbstractCharacteristic(CharacteristicCategory category, String type, String value) {
+    public AbstractCharacteristic(LabelCategory category, String type, String value) {
         this.category = category;
         this.type = type;
         this.value = value;
     }
 
-    public CharacteristicCategory category() {
+    public LabelCategory category() {
         return category;
     }
 
