@@ -30,11 +30,12 @@ public class Mechanic {
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
-
+        
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndEdges(violatingTFGs);
-
+        
+        
         var solutions = new Sat().solve(nodes, edges, constraints);
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
         var minimalSolution = solutions.get(0);
@@ -88,11 +89,11 @@ public class Mechanic {
         for (var node : tfg.getVertices()) {
             Set<String> nodeLiterals = new HashSet<>();
             for (var nodeChar : node.getAllVertexCharacteristics()) {
-                nodeLiterals.add("Node" + new Label(nodeChar.getTypeName(), nodeChar.getValueName()).toString());
+                nodeLiterals.add(LabelCategory.Node + new Label(nodeChar.getTypeName(), nodeChar.getValueName()).toString());
             }
             for (var variables : node.getAllIncomingDataCharacteristics()) {
                 for (var dataChar : variables.getAllCharacteristics()) {
-                    nodeLiterals.add("Data" + new Label(dataChar.getTypeName(), dataChar.getValueName()).toString());
+                    nodeLiterals.add(LabelCategory.IncomingData + new Label(dataChar.getTypeName(), dataChar.getValueName()).toString());
                 }
             }
             if (nodeLiterals.stream()
