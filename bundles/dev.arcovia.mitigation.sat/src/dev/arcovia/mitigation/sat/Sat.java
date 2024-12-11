@@ -106,7 +106,7 @@ public class Sat {
                         var sign = literal.positive() ? 1 : -1;
                         if (literal.category()
                                 .equals(LabelCategory.Node)) {
-                            clause.push(sign * term(node.name(), new NodeCharacteristic(type, value)));
+                            clause.push(sign * term(node.name(), new NodeLabel(type, value)));
                         } else if (literal.category()
                                 .equals(LabelCategory.IncomingData)) {
                             clause.push(sign * term(inPin.id(), new IncomingDataLabel(type, value)));
@@ -121,7 +121,7 @@ public class Sat {
         // Require node and outgoing data chars
         for (Node node : nodes) {
             for (Label characteristic : node.nodeChars()) {
-                addClause(clause(term(node.name(), new NodeCharacteristic(characteristic.type(), characteristic.value()))));
+                addClause(clause(term(node.name(), new NodeLabel(characteristic.type(), characteristic.value()))));
             }
             for (OutPin outPin : node.outPins()
                     .keySet()) {
