@@ -30,7 +30,6 @@ public class Mechanic {
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
-        
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndFlows(violatingTFGs);
@@ -79,23 +78,25 @@ public class Mechanic {
         List<String> positveLiterals = new ArrayList<>();
         for (var literal : constraint) {
             if (literal.positive())
-                positveLiterals.add(literal.category() + literal.label()
+                positveLiterals.add( literal.label()
                         .toString());
             else
-                negativeLiterals.add(literal.category() + literal.label()
+                negativeLiterals.add(literal.label()
                         .toString());
         }
 
         for (var node : tfg.getVertices()) {
             Set<String> nodeLiterals = new HashSet<>();
             for (var nodeChar : node.getAllVertexCharacteristics()) {
-                nodeLiterals.add(LabelCategory.Node + new Label(nodeChar.getTypeName(), nodeChar.getValueName()).toString());
+                nodeLiterals.add(new NodeLabel(nodeChar.getTypeName(), nodeChar.getValueName()).toString());
             }
             for (var variables : node.getAllIncomingDataCharacteristics()) {
                 for (var dataChar : variables.getAllCharacteristics()) {
-                    nodeLiterals.add(LabelCategory.IncomingData + new Label(dataChar.getTypeName(), dataChar.getValueName()).toString());
+                    nodeLiterals.add(new IncomingDataLabel(dataChar.getTypeName(), dataChar.getValueName()).toString());
                 }
             }
+            
+            
             if (nodeLiterals.stream()
                     .anyMatch(positveLiterals::contains)) {
                 continue;
@@ -187,7 +188,7 @@ public class Mechanic {
     private List<Term> getActions(List<Term> minimalSolution, List<Term> flatendNodes) {
         List<Term> actions = new ArrayList<>();
         for (var delta : minimalSolution) {
-            if (delta.characteristic()
+            if (delta.label()
                     .category()
                     .equals(LabelCategory.IncomingData))
                 continue;
@@ -202,7 +203,7 @@ public class Mechanic {
         var dd = dfd.dataDictionary();
 
         for (var action : actions) {
-            if (action.characteristic()
+            if (action.label()
                     .category()
                     .equals(LabelCategory.OutgoingData)) {
                 for (var behavior : dd.getBehaviour()) {
@@ -210,9 +211,9 @@ public class Mechanic {
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
                                 .equals(outPinToAss.get(action.domain()))) {
-                            var type = action.characteristic()
+                            var type = action.label()
                                     .type();
-                            var value = action.characteristic()
+                            var value = action.label()
                                     .value();
                             var label = dd.getLabelTypes()
                                     .stream()

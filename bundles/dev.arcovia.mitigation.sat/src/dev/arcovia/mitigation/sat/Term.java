@@ -1,13 +1,13 @@
 package dev.arcovia.mitigation.sat;
 
 
-public record Term(String domain, AbstractLabel characteristic) {
+public record Term(String domain, AbstractLabel label) {
 
     @Override
     public String toString() {
-        if (characteristic.category().equals(LabelCategory.Node))
-            return (characteristic.category() + " " + domain + " has Label (" + characteristic.type() + (", ") +characteristic.value() + ")");
+        if (label.category().equals(LabelCategory.Node))
+            return (label.category() + " " + domain + " has Property (" + label.type() + (", ") +label.value() + ")");
         else 
-            return (characteristic.category() + " at " + domain + " has Label (" + characteristic.type() + (", ") +characteristic.value() + ")");
+            return (label.category() + " at Pin " + domain + " has Property (" + label.type() + (", ") +label.value() + ")");
     }
 }

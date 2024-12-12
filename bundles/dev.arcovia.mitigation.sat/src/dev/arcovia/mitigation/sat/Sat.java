@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class Sat {
 
     private BiMap<Term, Integer> termToLiteral;
-    private BiMap<Flow, Integer> flowToLit;
+    private BiMap<Flow, Integer> flowToLiteral;
     private BiMap<FlowDataLabel, Integer> flowDataToLit;
     private ISolver solver;
     private Set<Label> labels;
@@ -38,14 +38,14 @@ public class Sat {
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
 
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> edges, List<Constraint> constraints)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
-        this.flows = edges;
+        this.flows = flows;
         this.constraints = constraints;
 
         termToLiteral = new BiMap<>();
-        flowToLit = new BiMap<>();
+        flowToLiteral = new BiMap<>();
         flowDataToLit = new BiMap<>();
         solver = SolverFactory.newDefault();
         dimacsClauses = new ArrayList<>();
@@ -104,10 +104,10 @@ public class Sat {
                         var value = literal.label()
                                 .value();
                         var sign = literal.positive() ? 1 : -1;
-                        if (literal.category()
+                        if (literal.label().category()
                                 .equals(LabelCategory.Node)) {
                             clause.push(sign * term(node.name(), new NodeLabel(type, value)));
-                        } else if (literal.category()
+                        } else if (literal.label().category()
                                 .equals(LabelCategory.IncomingData)) {
                             clause.push(sign * term(inPin.id(), new IncomingDataLabel(type, value)));
                         }
@@ -196,7 +196,7 @@ public class Sat {
         labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
-                labels.add(literal.label());
+                labels.add(literal.label().label());
             }
         }
     }
@@ -212,10 +212,10 @@ public class Sat {
 
     private int flow(OutPin source, InPin sink) {
         var edge = new Flow(source, sink);
-        if (!flowToLit.containsKey(edge)) {
-            flowToLit.put(edge, solver.nextFreeVarId(true));
+        if (!flowToLiteral.containsKey(edge)) {
+            flowToLiteral.put(edge, solver.nextFreeVarId(true));
         }
-        return flowToLit.getValue(edge);
+        return flowToLiteral.getValue(edge);
     }
 
     private int flowData(Flow edge, IncomingDataLabel incomingDataLabel) {
@@ -279,8 +279,8 @@ public class Sat {
             if (termToLiteral.containsValue(literal)) {
                 literalMap.put(literal, termToLiteral.getKey(literal)
                         .toString());
-            } else if (flowToLit.containsValue(literal)) {
-                literalMap.put(literal, flowToLit.getKey(literal)
+            } else if (flowToLiteral.containsValue(literal)) {
+                literalMap.put(literal, flowToLiteral.getKey(literal)
                         .toString());
             } else if (flowDataToLit.containsValue(literal)) {
                 literalMap.put(literal, flowDataToLit.getKey(literal)

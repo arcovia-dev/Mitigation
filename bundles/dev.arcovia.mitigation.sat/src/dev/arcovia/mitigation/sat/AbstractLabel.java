@@ -2,13 +2,11 @@ package dev.arcovia.mitigation.sat;
 
 public abstract class AbstractLabel {
     private final LabelCategory category;
-    private final String type;
-    private final String value;
+    private final Label label;
 
-    public AbstractLabel(LabelCategory category, String type, String value) {
+    public AbstractLabel(LabelCategory category, Label label) {
         this.category = category;
-        this.type = type;
-        this.value = value;
+        this.label = label;
     }
 
     public LabelCategory category() {
@@ -16,11 +14,14 @@ public abstract class AbstractLabel {
     }
 
     public String type() {
-        return type;
+        return label.type();
     }
 
     public String value() {
-        return value;
+        return label.value();
+    }
+    public Label label() {
+        return label;
     }
 
     @Override
@@ -32,19 +33,19 @@ public abstract class AbstractLabel {
 
         AbstractLabel that = (AbstractLabel) o;
 
-        return category.equals(that.category()) && type.equals(that.type()) && value.equals(that.value());
+        return category.equals(that.category()) && label.type().equals(that.type()) && label.value().equals(that.value());
     }
 
     @Override
     public int hashCode() {
         int result = category.hashCode();
-        result = 31 * result + type.hashCode();
-        result = 31 * result + value.hashCode();
+        result = 31 * result + label.type().hashCode();
+        result = 31 * result + label.value().hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "AbstractChar[" + "what=" + category + ", type=" + type + ", value=" + value + ']';
+        return "AbstractChar[" + "what=" + category + ", type=" + label.type() + ", value=" + label.value() + ']';
     }
 }
