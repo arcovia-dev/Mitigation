@@ -1,10 +1,10 @@
 package dev.arcovia.mitigation.sat;
 
-public abstract class AbstractLabel {
+public abstract class CompositeLabel {
     private final LabelCategory category;
     private final Label label;
 
-    public AbstractLabel(LabelCategory category, Label label) {
+    public CompositeLabel(LabelCategory category, Label label) {
         this.category = category;
         this.label = label;
     }
@@ -24,7 +24,7 @@ public abstract class AbstractLabel {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        AbstractLabel that = (AbstractLabel) o;
+        CompositeLabel that = (CompositeLabel) o;
 
         return category.equals(that.category()) && label.equals(that.label());
     }

@@ -100,13 +100,13 @@ public class Sat {
                     var clause = new VecInt();
                     for (Literal literal : constraint.literals()) {
                         
-                        var label = literal.label();
+                        var label = literal.compositeLabel();
                         var sign = literal.positive() ? 1 : -1;
-                        if (literal.label()
+                        if (literal.compositeLabel()
                                 .category()
                                 .equals(LabelCategory.Node)) {
                             clause.push(sign * term(node.name(), label));
-                        } else if (literal.label()
+                        } else if (literal.compositeLabel()
                                 .category()
                                 .equals(LabelCategory.IncomingData)) {
                             clause.push(sign * term(inPin.id(), label));
@@ -197,7 +197,7 @@ public class Sat {
         labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
-                labels.add(literal.label()
+                labels.add(literal.compositeLabel()
                         .label());
             }
         }
@@ -228,7 +228,7 @@ public class Sat {
         return flowDataToLit.getValue(flowDataLabel);
     }
 
-    private int term(String domain, AbstractLabel label) {
+    private int term(String domain, CompositeLabel label) {
         var term = new Term(domain, label);
         if (!termToLiteral.containsKey(term)) {
             termToLiteral.put(term, solver.nextFreeVarId(true));

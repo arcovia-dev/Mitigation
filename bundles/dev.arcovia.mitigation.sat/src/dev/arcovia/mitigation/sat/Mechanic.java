@@ -77,10 +77,10 @@ public class Mechanic {
         List<String> positveLiterals = new ArrayList<>();
         for (var literal : constraint) {
             if (literal.positive())
-                positveLiterals.add(literal.label()
+                positveLiterals.add(literal.compositeLabel()
                         .toString());
             else
-                negativeLiterals.add(literal.label()
+                negativeLiterals.add(literal.compositeLabel()
                         .toString());
         }
 
@@ -186,7 +186,7 @@ public class Mechanic {
     private List<Term> getActions(List<Term> minimalSolution, List<Term> flatendNodes) {
         List<Term> actions = new ArrayList<>();
         for (var delta : minimalSolution) {
-            if (delta.label()
+            if (delta.compositeLabel()
                     .category()
                     .equals(LabelCategory.IncomingData))
                 continue;
@@ -201,7 +201,7 @@ public class Mechanic {
         var dd = dfd.dataDictionary();
 
         for (var action : actions) {
-            if (action.label()
+            if (action.compositeLabel()
                     .category()
                     .equals(LabelCategory.OutgoingData)) {
                 for (var behavior : dd.getBehaviour()) {
@@ -209,9 +209,9 @@ public class Mechanic {
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
                                 .equals(outPinToAss.get(action.domain()))) {
-                            var type = action.label().label()
+                            var type = action.compositeLabel().label()
                                     .type();
-                            var value = action.label().label()
+                            var value = action.compositeLabel().label()
                                     .value();
                             var label = dd.getLabelTypes()
                                     .stream()
