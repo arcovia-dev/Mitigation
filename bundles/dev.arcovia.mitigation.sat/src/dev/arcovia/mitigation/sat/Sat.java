@@ -104,10 +104,12 @@ public class Sat {
                         var value = literal.label()
                                 .value();
                         var sign = literal.positive() ? 1 : -1;
-                        if (literal.label().category()
+                        if (literal.label()
+                                .category()
                                 .equals(LabelCategory.Node)) {
                             clause.push(sign * term(node.name(), new NodeLabel(type, value)));
-                        } else if (literal.label().category()
+                        } else if (literal.label()
+                                .category()
                                 .equals(LabelCategory.IncomingData)) {
                             clause.push(sign * term(inPin.id(), new IncomingDataLabel(type, value)));
                         }
@@ -156,10 +158,11 @@ public class Sat {
                         for (Label label : labels) {
                             var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
                             var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label.type(), label.value()));
-                            
-                            // (Source.outData AND Flow(Source,Sink)) <=> Sink.incomingData 
-                            // --> ((¬Source.outData ∨ ¬Flow(Source,Sink) ∨ Sink.incomingData) ∧ (¬To.incomingData ∨ Source.outData) ∧ (¬Sink.incomingData ∨ Flow(Source,Sink))
-                            // <--> (A ∧ B ↔ C --> (¬C ∨ A) ∧ (¬C ∨ B) ∧ (¬A ∨ ¬B ∨ C)) 
+
+                            // (Source.outData AND Flow(Source,Sink)) <=> Sink.incomingData
+                            // --> ((¬Source.outData ∨ ¬Flow(Source,Sink) ∨ Sink.incomingData) ∧ (¬To.incomingData ∨ Source.outData) ∧
+                            // (¬Sink.incomingData ∨ Flow(Source,Sink))
+                            // <--> (A ∧ B ↔ C --> (¬C ∨ A) ∧ (¬C ∨ B) ∧ (¬A ∨ ¬B ∨ C))
                             addClause(clause(-outgoingDataTerm, -flow(sourcePin, sinkPin), incomingFlowData));
                             addClause(clause(-incomingFlowData, outgoingDataTerm));
                             addClause(clause(-incomingFlowData, flow(sourcePin, sinkPin)));
@@ -169,8 +172,8 @@ public class Sat {
             }
         }
 
-        // Node has only incoming data labels that are received via at least one flow 
-        //--> (Not Node x has Label L or Flow A with Label L or Flow B with Label L or ... Flow Z)
+        // Node has only incoming data labels that are received via at least one flow
+        // --> (Not Node x has Label L or Flow A with Label L or Flow B with Label L or ... Flow Z)
         for (Label label : labels) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
@@ -196,7 +199,8 @@ public class Sat {
         labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
-                labels.add(literal.label().label());
+                labels.add(literal.label()
+                        .label());
             }
         }
     }

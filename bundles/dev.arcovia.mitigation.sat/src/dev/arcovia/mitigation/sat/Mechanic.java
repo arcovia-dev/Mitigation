@@ -33,8 +33,7 @@ public class Mechanic {
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndFlows(violatingTFGs);
-        
-        
+
         var solutions = new Sat().solve(nodes, flows, constraints);
         Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
         var minimalSolution = solutions.get(0);
@@ -78,7 +77,7 @@ public class Mechanic {
         List<String> positveLiterals = new ArrayList<>();
         for (var literal : constraint) {
             if (literal.positive())
-                positveLiterals.add( literal.label()
+                positveLiterals.add(literal.label()
                         .toString());
             else
                 negativeLiterals.add(literal.label()
@@ -95,8 +94,7 @@ public class Mechanic {
                     nodeLiterals.add(new IncomingDataLabel(dataChar.getTypeName(), dataChar.getValueName()).toString());
                 }
             }
-            
-            
+
             if (nodeLiterals.stream()
                     .anyMatch(positveLiterals::contains)) {
                 continue;

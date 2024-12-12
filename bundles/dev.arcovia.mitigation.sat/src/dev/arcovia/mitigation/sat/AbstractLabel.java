@@ -20,6 +20,7 @@ public abstract class AbstractLabel {
     public String value() {
         return label.value();
     }
+
     public Label label() {
         return label;
     }
@@ -33,14 +34,19 @@ public abstract class AbstractLabel {
 
         AbstractLabel that = (AbstractLabel) o;
 
-        return category.equals(that.category()) && label.type().equals(that.type()) && label.value().equals(that.value());
+        return category.equals(that.category()) && label.type()
+                .equals(that.type())
+                && label.value()
+                        .equals(that.value());
     }
 
     @Override
     public int hashCode() {
         int result = category.hashCode();
-        result = 31 * result + label.type().hashCode();
-        result = 31 * result + label.value().hashCode();
+        result = 31 * result + label.type()
+                .hashCode();
+        result = 31 * result + label.value()
+                .hashCode();
         return result;
     }
 
