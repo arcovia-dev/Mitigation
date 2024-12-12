@@ -2,8 +2,8 @@ package dev.arcovia.mitigation.sat;
 
 public class OutgoingDataLabel extends AbstractLabel {
 
-    public OutgoingDataLabel(String type, String value) {
-        super(LabelCategory.OutgoingData, new Label(type, value));
+    public OutgoingDataLabel(Label label) {
+        super(LabelCategory.OutgoingData, label);
     }
 
 }

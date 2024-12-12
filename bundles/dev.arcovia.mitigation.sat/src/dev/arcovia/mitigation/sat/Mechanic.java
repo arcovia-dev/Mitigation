@@ -87,11 +87,11 @@ public class Mechanic {
         for (var node : tfg.getVertices()) {
             Set<String> nodeLiterals = new HashSet<>();
             for (var nodeChar : node.getAllVertexCharacteristics()) {
-                nodeLiterals.add(new NodeLabel(nodeChar.getTypeName(), nodeChar.getValueName()).toString());
+                nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
             }
             for (var variables : node.getAllIncomingDataCharacteristics()) {
                 for (var dataChar : variables.getAllCharacteristics()) {
-                    nodeLiterals.add(new IncomingDataLabel(dataChar.getTypeName(), dataChar.getValueName()).toString());
+                    nodeLiterals.add(new IncomingDataLabel(new Label(dataChar.getTypeName(), dataChar.getValueName())).toString());
                 }
             }
 
@@ -173,11 +173,11 @@ public class Mechanic {
                     .keySet()) {
                 for (var label : node.outPins()
                         .get(outPin)) {
-                    flatendNodes.add(new Term(outPin.id(), new OutgoingDataLabel(label.type(), label.value())));
+                    flatendNodes.add(new Term(outPin.id(), new OutgoingDataLabel(label)));
                 }
             }
             for (var property : node.nodeChars()) {
-                flatendNodes.add(new Term(node.name(), new NodeLabel(property.type(), property.value())));
+                flatendNodes.add(new Term(node.name(), new NodeLabel(new Label(property.type(), property.value()))));
             }
         }
         return flatendNodes;

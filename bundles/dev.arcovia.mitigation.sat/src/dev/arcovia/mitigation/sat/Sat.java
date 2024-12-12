@@ -121,13 +121,13 @@ public class Sat {
         // Require node and outgoing data chars
         for (Node node : nodes) {
             for (Label characteristic : node.nodeChars()) {
-                addClause(clause(term(node.name(), new NodeLabel(characteristic.type(), characteristic.value()))));
+                addClause(clause(term(node.name(), new NodeLabel(new Label(characteristic.type(), characteristic.value())))));
             }
             for (OutPin outPin : node.outPins()
                     .keySet()) {
                 for (Label outgoingCharacteristic : node.outPins()
                         .get(outPin)) {
-                    addClause(clause(term(outPin.id(), new OutgoingDataLabel(outgoingCharacteristic.type(), outgoingCharacteristic.value()))));
+                    addClause(clause(term(outPin.id(), new OutgoingDataLabel(new Label(outgoingCharacteristic.type(), outgoingCharacteristic.value())))));
                 }
             }
         }
@@ -154,8 +154,8 @@ public class Sat {
                     for (InPin sinkPin : sinkNode.inPins()
                             .keySet()) {
                         for (Label label : labels) {
-                            var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
-                            var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label.type(), label.value()));
+                            var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
+                            var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label));
 
                             // (Source.outData AND Flow(Source,Sink)) <=> Sink.incomingData
                             // --> ((¬Source.outData ∨ ¬Flow(Source,Sink) ∨ Sink.incomingData) ∧ (¬To.incomingData ∨ Source.outData) ∧
@@ -176,13 +176,13 @@ public class Sat {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
-                    int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label.type(), label.value()));
+                    int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label));
                     var clause = new VecInt();
                     clause.push(-incomingDataTerm);
                     for (Node sourceNode : nodes) {
                         for (OutPin sourcePin : sourceNode.outPins()
                                 .keySet()) {
-                            var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label.type(), label.value()));
+                            var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
                             addClause(clause(-flowData, incomingDataTerm));
                             clause.push(flowData);
                         }
