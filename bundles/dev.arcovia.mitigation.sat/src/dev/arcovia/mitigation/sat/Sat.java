@@ -99,19 +99,17 @@ public class Sat {
                 for (Constraint constraint : constraints) {
                     var clause = new VecInt();
                     for (Literal literal : constraint.literals()) {
-                        var type = literal.label()
-                                .type();
-                        var value = literal.label()
-                                .value();
+                        
+                        var label = literal.label();
                         var sign = literal.positive() ? 1 : -1;
                         if (literal.label()
                                 .category()
                                 .equals(LabelCategory.Node)) {
-                            clause.push(sign * term(node.name(), new NodeLabel(type, value)));
+                            clause.push(sign * term(node.name(), label));
                         } else if (literal.label()
                                 .category()
                                 .equals(LabelCategory.IncomingData)) {
-                            clause.push(sign * term(inPin.id(), new IncomingDataLabel(type, value)));
+                            clause.push(sign * term(inPin.id(), label));
                         }
                     }
                     addClause(clause);

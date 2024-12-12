@@ -13,14 +13,6 @@ public abstract class AbstractLabel {
         return category;
     }
 
-    public String type() {
-        return label.type();
-    }
-
-    public String value() {
-        return label.value();
-    }
-
     public Label label() {
         return label;
     }
@@ -34,10 +26,7 @@ public abstract class AbstractLabel {
 
         AbstractLabel that = (AbstractLabel) o;
 
-        return category.equals(that.category()) && label.type()
-                .equals(that.type())
-                && label.value()
-                        .equals(that.value());
+        return category.equals(that.category()) && label.equals(that.label());
     }
 
     @Override

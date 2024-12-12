@@ -209,9 +209,9 @@ public class Mechanic {
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
                                 .equals(outPinToAss.get(action.domain()))) {
-                            var type = action.label()
+                            var type = action.label().label()
                                     .type();
-                            var value = action.label()
+                            var value = action.label().label()
                                     .value();
                             var label = dd.getLabelTypes()
                                     .stream()
