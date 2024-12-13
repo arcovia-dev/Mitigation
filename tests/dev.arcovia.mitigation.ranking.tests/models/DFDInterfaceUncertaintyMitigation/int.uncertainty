@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_g6oqAERZEe-KU92kV8MYOA" entityName="loan_req_uncertain">
+    <targetFlow href="int.dataflowdiagram#zkqnrd"/>
+    <scenarios id="_urHXXURZEe-KU92kV8MYOA">
+      <targetInPin href="int.datadictionary#8hxwob"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="int.dataflowdiagram#49utjc"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_0YJLmkRZEe-KU92kV8MYOA" entityName="transfer_money_uncertain">
+    <targetFlow href="int.dataflowdiagram#n4rhe"/>
+    <scenarios id="_6ayqgERZEe-KU92kV8MYOA">
+      <targetInPin href="int.datadictionary#jhxocg"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="int.dataflowdiagram#qk673n"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_4ms2ukRZEe-KU92kV8MYOA" entityName="create_account_uncertain">
+    <targetFlow href="int.dataflowdiagram#9258co"/>
+    <scenarios id="_HB4t4ERaEe-KU92kV8MYOA">
+      <targetInPin href="int.datadictionary#dsesz6"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="int.dataflowdiagram#2t0xcg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_KSqiKkRaEe-KU92kV8MYOA" entityName="create_banking_account_uncertain">
+    <targetFlow href="int.dataflowdiagram#da1qtfc"/>
+    <scenarios id="_VUxksERaEe-KU92kV8MYOA">
+      <targetInPin href="int.datadictionary#791pd5"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="int.dataflowdiagram#lxj2c"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_fEM3d0RaEe-KU92kV8MYOA" entityName="system_state_uncertain">
+    <targetFlow href="int.dataflowdiagram#vfdv8q"/>
+    <scenarios id="_mwktMERaEe-KU92kV8MYOA">
+      <targetInPin href="int.datadictionary#azxdyf"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="int.dataflowdiagram#qh2jk"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_qCg_GURaEe-KU92kV8MYOA" entityName="balance_response_uncertain">
+    <targetFlow href="int.dataflowdiagram#s96gbj"/>
+    <scenarios id="_wEPQ8ERaEe-KU92kV8MYOA">
+      <targetInPin href="int.datadictionary#fo3p7v"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="int.dataflowdiagram#gty2lb"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>

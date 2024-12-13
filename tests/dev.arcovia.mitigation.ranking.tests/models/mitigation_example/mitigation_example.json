@@ -1,0 +1,708 @@
+{
+    "model": {
+        "canvasBounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 587.3333129882812
+        },
+        "scroll": {
+            "x": 21.44207545548948,
+            "y": -187.4286608914913
+        },
+        "zoom": 1.2114768616215594,
+        "position": {
+            "x": 0,
+            "y": 0
+        },
+        "size": {
+            "width": -1,
+            "height": -1
+        },
+        "features": {},
+        "type": "graph",
+        "id": "root",
+        "children": [
+            {
+                "position": {
+                    "x": 420.76127480457006,
+                    "y": 89.13650030066145
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "xccftn",
+                "type": "empty-node",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 166,
+                    "y": 102
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "b",
+                "labels": [],
+                "ports": [
+                    {
+                        "position": {
+                            "x": -3.5,
+                            "y": 13
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "features": {},
+                        "id": "i39hra",
+                        "type": "port:dfd-input",
+                        "children": []
+                    },
+                    {
+                        "position": {
+                            "x": 58.5,
+                            "y": 13
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": true,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "behavior": "set Sensitivity.Personal = TRUE",
+                        "features": {},
+                        "id": "eodokp",
+                        "type": "port:dfd-output",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "k6a8c9",
+                "type": "node:function",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 296,
+                    "y": 137
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "d",
+                "labels": [
+                    {
+                        "labelTypeId": "gvia09",
+                        "labelTypeValueId": "5hnugm"
+                    }
+                ],
+                "ports": [
+                    {
+                        "position": {
+                            "x": -3.5,
+                            "y": 20.5
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "features": {},
+                        "id": "s3v30e",
+                        "type": "port:dfd-input",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "a4tj4b",
+                "type": "node:function",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 163.48779337534373,
+                    "y": 119.15948382961463
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "0oxs6bs",
+                "type": "empty-node",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 294.1103858682894,
+                    "y": 57.94722291241831
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "hf4hqa",
+                "type": "empty-node",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 471,
+                    "y": -23
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "e",
+                "labels": [],
+                "ports": [
+                    {
+                        "position": {
+                            "x": -3.5,
+                            "y": 10.5
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "features": {},
+                        "id": "oz8pf",
+                        "type": "port:dfd-input",
+                        "children": []
+                    },
+                    {
+                        "position": {
+                            "x": 58.5,
+                            "y": 13
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "behavior": "forward ce",
+                        "features": {},
+                        "id": "251qn",
+                        "type": "port:dfd-output",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "83m5j",
+                "type": "node:function",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 466,
+                    "y": 87
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "f",
+                "labels": [
+                    {
+                        "labelTypeId": "gvia09",
+                        "labelTypeValueId": "5hnugm"
+                    }
+                ],
+                "ports": [
+                    {
+                        "position": {
+                            "x": -3.5,
+                            "y": 10.5
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "features": {},
+                        "id": "1szvhm",
+                        "type": "port:dfd-input",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "2buxk8",
+                "type": "node:function",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 29,
+                    "y": 104
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "a",
+                "labels": [],
+                "ports": [
+                    {
+                        "position": {
+                            "x": 58.5,
+                            "y": 13
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "behavior": "set Sensitivity.Personal = TRUE",
+                        "features": {},
+                        "id": "mrodef",
+                        "type": "port:dfd-output",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "szs9tb",
+                "type": "node:input-output",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 468.25310893916924,
+                    "y": -8.614928463125267
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "agrzua",
+                "type": "empty-node",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 609,
+                    "y": -93
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "g2",
+                "labels": [
+                    {
+                        "labelTypeId": "4h3wzk",
+                        "labelTypeValueId": "ygymnk"
+                    }
+                ],
+                "ports": [
+                    {
+                        "position": {
+                            "x": 76.5,
+                            "y": 18
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "behavior": "",
+                        "features": {},
+                        "id": "qbdiob",
+                        "type": "port:dfd-output",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "9s1mvo",
+                "type": "node:function",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 614,
+                    "y": -13
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "g",
+                "labels": [
+                    {
+                        "labelTypeId": "gvia09",
+                        "labelTypeValueId": "g10hr"
+                    }
+                ],
+                "ports": [
+                    {
+                        "position": {
+                            "x": -3.5,
+                            "y": 15.5
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "features": {},
+                        "id": "542ls6",
+                        "type": "port:dfd-input",
+                        "children": []
+                    },
+                    {
+                        "position": {
+                            "x": 58.5,
+                            "y": 18
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "behavior": "forward eg",
+                        "features": {},
+                        "id": "xy50nr",
+                        "type": "port:dfd-output",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "1uj6bt",
+                "type": "node:function",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 614.6141762334112,
+                    "y": 7.575455087122805
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "9tvmye",
+                "type": "empty-node",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 803.5,
+                    "y": 34
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "h",
+                "labels": [
+                    {
+                        "labelTypeId": "gvia09",
+                        "labelTypeValueId": "5hnugm"
+                    }
+                ],
+                "ports": [
+                    {
+                        "position": {
+                            "x": -3.5,
+                            "y": 13
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "features": {},
+                        "id": "mt254o",
+                        "type": "port:dfd-input",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "8k105e",
+                "type": "node:storage",
+                "children": []
+            },
+            {
+                "position": {
+                    "x": 804.3654714423176,
+                    "y": 50.9656830017874
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "fvzalp",
+                "type": "empty-node",
+                "children": []
+            },
+            {
+                "routingPoints": [],
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "lf02c",
+                "type": "edge:arrow",
+                "sourceId": "mrodef",
+                "targetId": "i39hra",
+                "children": [],
+                "text": ""
+            },
+            {
+                "routingPoints": [],
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "hzisri",
+                "type": "edge:arrow",
+                "sourceId": "xy50nr",
+                "targetId": "mt254o",
+                "children": [],
+                "text": ""
+            },
+            {
+                "routingPoints": [],
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "d300hj",
+                "type": "edge:arrow",
+                "sourceId": "251qn",
+                "targetId": "542ls6",
+                "children": [],
+                "text": "eg"
+            },
+            {
+                "position": {
+                    "x": 296,
+                    "y": 42
+                },
+                "size": {
+                    "width": -1,
+                    "height": -1
+                },
+                "strokeWidth": 0,
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "text": "c",
+                "labels": [],
+                "ports": [
+                    {
+                        "position": {
+                            "x": -3.5,
+                            "y": 13
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "features": {},
+                        "id": "4b0hk",
+                        "type": "port:dfd-input",
+                        "children": []
+                    },
+                    {
+                        "position": {
+                            "x": 58.5,
+                            "y": 13
+                        },
+                        "size": {
+                            "width": -1,
+                            "height": -1
+                        },
+                        "strokeWidth": 0,
+                        "selected": false,
+                        "hoverFeedback": false,
+                        "opacity": 1,
+                        "behavior": "forward bc",
+                        "features": {},
+                        "id": "hmzzdfg",
+                        "type": "port:dfd-output",
+                        "children": []
+                    }
+                ],
+                "features": {},
+                "id": "q72wv",
+                "type": "node:function",
+                "children": []
+            },
+            {
+                "routingPoints": [],
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "gmqio",
+                "type": "edge:arrow",
+                "sourceId": "hmzzdfg",
+                "targetId": "oz8pf",
+                "children": [],
+                "text": "ce"
+            },
+            {
+                "routingPoints": [],
+                "selected": false,
+                "hoverFeedback": false,
+                "opacity": 1,
+                "features": {},
+                "id": "p85ob",
+                "type": "edge:arrow",
+                "sourceId": "eodokp",
+                "targetId": "4b0hk",
+                "children": [],
+                "text": "bc"
+            }
+        ]
+    },
+    "labelTypes": [
+        {
+            "id": "4h3wzk",
+            "name": "Sensitivity",
+            "values": [
+                {
+                    "id": "zzvphn",
+                    "text": "Personal"
+                },
+                {
+                    "id": "veaan9",
+                    "text": "Public"
+                },
+                {
+                    "id": "ygymnk",
+                    "text": "dummy"
+                }
+            ]
+        },
+        {
+            "id": "gvia09",
+            "name": "Location",
+            "values": [
+                {
+                    "id": "g10hr",
+                    "text": "EU"
+                },
+                {
+                    "id": "5hnugm",
+                    "text": "nonEU"
+                }
+            ]
+        },
+        {
+            "id": "84rllz",
+            "name": "Encryption",
+            "values": [
+                {
+                    "id": "2r6xe6",
+                    "text": "Encrypted"
+                }
+            ]
+        }
+    ]
+}

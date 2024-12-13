@@ -10,10 +10,14 @@
 *~
 heapdump.*
 Snap.*
-*.txt
 
+__pycache__
+tests/dev.arcovia.mitigation.ranking.tests/mitigation
+tests/dev.arcovia.mitigation.ranking.tests/meassurement_results.txt
+tests/dev.arcovia.mitigation.ranking.tests/meassurements.txt
 # MAC
 __MACOSX/
+*.csv
 
 # Package Files
 *.ear

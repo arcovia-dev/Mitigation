@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_UDv-ulWSEe-76ITJEz2D_A" entityName="b_outgoing_uncertain">
+    <targetFlow href="mitigation_example.dataflowdiagram#p85ob"/>
+    <scenarios id="_bZkVsFWSEe-76ITJEz2D_A">
+      <targetInPin href="mitigation_example.datadictionary#4b0hk"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="mitigation_example.dataflowdiagram#q72wv"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDConnectorUncertaintySource" id="_8-H1C1WTEe-76ITJEz2D_A" entityName="c_connecting_uncertain">
+    <targetAssignments xsi:type="datadictionary:Assignment" href="mitigation_example.datadictionary#_Yecy8lWTEe-76ITJEz2D_A"/>
+    <targetFlow href="mitigation_example.dataflowdiagram#gmqio"/>
+    <scenarios id="_EnjrkFWUEe-76ITJEz2D_A">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="mitigation_example.datadictionary#_lNFBslWTEe-76ITJEz2D_A"/>
+      <targetPin href="mitigation_example.datadictionary#1szvhm"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="mitigation_example.dataflowdiagram#2buxk8"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_FtUyEGRAEe-FUaEuwf1uIg" entityName="k_loc_un">
+    <target xsi:type="dataflowdiagram:Store" href="mitigation_example.dataflowdiagram#_o1K7AmQ_Ee-FUaEuwf1uIg"/>
+    <targetProperties href="mitigation_example.datadictionary#5hnugm"/>
+    <scenarios id="_KcOKIGRAEe-FUaEuwf1uIg">
+      <targetProperties href="mitigation_example.datadictionary#g10hr"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDComponentUncertaintySource" id="_M8oReWRAEe-FUaEuwf1uIg" entityName="i_uncertain">
+    <target xsi:type="dataflowdiagram:Store" href="mitigation_example.dataflowdiagram#_eUPS4mQ_Ee-FUaEuwf1uIg"/>
+    <scenarios id="_OrVO7WRAEe-FUaEuwf1uIg">
+      <target xsi:type="dataflowdiagram:Store" href="mitigation_example.dataflowdiagram#_hn74QmQ_Ee-FUaEuwf1uIg"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_QaCzeWRAEe-FUaEuwf1uIg" entityName="beh_uncertain">
+    <target href="mitigation_example.datadictionary#_f7wj9FWREe-ZrNdnTZogqw"/>
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="mitigation_example.datadictionary#_Ay3YU2RCEe-Wl5qwCrgTyA"/>
+    <scenarios id="_VNVjUGRAEe-FUaEuwf1uIg">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="mitigation_example.datadictionary#_Fmp3cmRCEe-Wl5qwCrgTyA"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>

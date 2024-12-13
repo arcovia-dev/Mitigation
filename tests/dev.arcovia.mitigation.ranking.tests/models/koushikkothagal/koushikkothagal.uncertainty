@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_Vcs4gHZpEe-pmpCa7vPvig">
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_VzvfgnZpEe-pmpCa7vPvig" entityName="ratings1">
+    <target href="koushikkothagal.datadictionary#36"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#69"/>
+    <scenarios id="_c271cHZpEe-pmpCa7vPvig">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#_CtHz8nZpEe-pmpCa7vPvig"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="__poYWXZpEe-pmpCa7vPvig" entityName="movie_catalog2">
+    <target href="koushikkothagal.datadictionary#16"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#61"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#63"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#65"/>
+    <scenarios id="_H_kIgHZqEe-pmpCa7vPvig">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#_opm80nZqEe-pmpCa7vPvig"/>
+      <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#_sWh6gnZqEe-pmpCa7vPvig"/>
+      <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#_vkx_MnZqEe-pmpCa7vPvig"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDBehaviorUncertaintySource" id="_MqPSeXZrEe-pmpCa7vPvig" entityName="Movie_info3">
+    <target href="koushikkothagal.datadictionary#8"/>
+    <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#59"/>
+    <scenarios id="_TclwAHZrEe-pmpCa7vPvig">
+      <targetAssignments xsi:type="datadictionary:Assignment" href="koushikkothagal.datadictionary#_8j-ZgnZqEe-pmpCa7vPvig"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_iRdAl3ZtEe-pmpCa7vPvig" entityName="AuthServer4">
+    <target xsi:type="dataflowdiagram:Process" href="koushikkothagal.dataflowdiagram#_DoP4E3ZsEe-pmpCa7vPvig"/>
+    <targetProperties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
+    <scenarios id="_ltj7EHZtEe-pmpCa7vPvig">
+      <targetProperties href="koushikkothagal.datadictionary#_flhl0HZtEe-pmpCa7vPvig"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_4X39yHZwEe-pmpCa7vPvig" entityName="movie_catalog5">
+    <target xsi:type="dataflowdiagram:Process" href="koushikkothagal.dataflowdiagram#6"/>
+    <targetProperties href="koushikkothagal.datadictionary#_j2m5IHZwEe-pmpCa7vPvig"/>
+    <scenarios id="_84TcAHZwEe-pmpCa7vPvig">
+      <targetProperties href="koushikkothagal.datadictionary#_qiKLIHZwEe-pmpCa7vPvig"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_-9tpWHZwEe-pmpCa7vPvig" entityName="Info6">
+    <target xsi:type="dataflowdiagram:Process" href="koushikkothagal.dataflowdiagram#5"/>
+    <targetProperties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
+    <scenarios id="_Be0UIHZxEe-pmpCa7vPvig">
+      <targetProperties href="koushikkothagal.datadictionary#_odrK4HZwEe-pmpCa7vPvig"/>
+    </scenarios>
+  </sources>
+  <sources xsi:type="dfd:DFDExternalUncertaintySource" id="_GmR9OHZxEe-pmpCa7vPvig" entityName="ratings7">
+    <target xsi:type="dataflowdiagram:Process" href="koushikkothagal.dataflowdiagram#4"/>
+    <targetProperties href="koushikkothagal.datadictionary#_QDFBEHZsEe-pmpCa7vPvig"/>
+    <scenarios id="_KGFr8HZxEe-pmpCa7vPvig">
+      <targetProperties href="koushikkothagal.datadictionary#_odrK4HZwEe-pmpCa7vPvig"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>
