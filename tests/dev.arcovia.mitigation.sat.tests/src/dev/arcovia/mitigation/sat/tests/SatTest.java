@@ -37,8 +37,9 @@ public class SatTest {
 
         // (personal AND nonEU) => encrypted
         var constraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
-                new Literal(false, new NodeLabel(new Label("Location", "nonEU"))), new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
-        var constraints = List.of(constraint,constraint);
+                new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
+                new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
+        var constraints = List.of(constraint, constraint);
 
         var repairedDfd = new Mechanic().repair(dfd, constraints);
 
@@ -62,14 +63,12 @@ public class SatTest {
                     for (var label : labels) {
                         nodeBehStr.add(label.getEntityName());
                     }
-                }
-                else if (assignment instanceof SetAssignment cast) {
+                } else if (assignment instanceof SetAssignment cast) {
                     var labels = cast.getOutputLabels();
                     for (var label : labels) {
                         nodeBehStr.add(label.getEntityName());
                     }
-                }
-                else if (assignment instanceof ForwardingAssignment cast) {
+                } else if (assignment instanceof ForwardingAssignment cast) {
                     for (var pin : cast.getInputPins())
                         nodeBehStr.add("Forwarding: " + pin.getEntityName());
                 }
@@ -87,8 +86,8 @@ public class SatTest {
             }
             nodeProperties.put(node.getEntityName(), nodePropStr);
         }
-        Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Forwarding: process_in_user" ,"Encrypted"), "user", List.of("Personal"), "db",
-                List.of());
+        Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Forwarding: process_in_user", "Encrypted"), "user",
+                List.of("Personal"), "db", List.of());
 
         Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of(), "user", List.of(), "db", List.of("nonEU"));
 
