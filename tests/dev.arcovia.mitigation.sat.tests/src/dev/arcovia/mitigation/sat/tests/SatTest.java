@@ -11,6 +11,7 @@ import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
+import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -51,7 +52,7 @@ public class SatTest {
         var nodes = repairedDfd.dataFlowDiagram()
                 .getNodes();
         var behaviors = repairedDfd.dataDictionary()
-                .getBehaviour();
+                .getBehavior();
 
         Map<String, List<String>> nodeBehavior = new HashMap<>();
         for (var behavior : behaviors) {
@@ -59,6 +60,12 @@ public class SatTest {
             var assignments = behavior.getAssignment();
             for (var assignment : assignments) {
                 if (assignment instanceof Assignment cast) {
+                    var labels = cast.getOutputLabels();
+                    for (var label : labels) {
+                        nodeBehStr.add(label.getEntityName());
+                    }
+                }
+                else if (assignment instanceof SetAssignment cast) {
                     var labels = cast.getOutputLabels();
                     for (var label : labels) {
                         nodeBehStr.add(label.getEntityName());

@@ -24,7 +24,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "Forwarding({user})\nAssignment({};TRUE;{Encryption.Encrypted})",
+        "behavior" : "forward user\nassign Encryption.Encrypted if TRUE",
         "id" : "eedb56",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -55,7 +55,7 @@
       "text" : "user",
       "labels" : [ ],
       "ports" : [ {
-        "behavior" : "Assignment({};TRUE;{Sensitivity.Personal})",
+        "behavior" : "set Sensitivity.Personal",
         "id" : "wksxi8",
         "type" : "port:dfd-output",
         "children" : [ ]

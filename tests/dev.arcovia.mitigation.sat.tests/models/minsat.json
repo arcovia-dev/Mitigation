@@ -10,7 +10,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "Forwarding({user})",
+        "behavior" : "forward user",
         "id" : "eedb56",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -40,7 +40,7 @@
       "text" : "user",
       "labels" : [ ],
       "ports" : [ {
-        "behavior" : "Assignment({};TRUE;{Sensitivity.Personal})",
+        "behavior" : "set Sensitivity.Personal",
         "id" : "wksxi8",
         "type" : "port:dfd-output",
         "children" : [ ]
