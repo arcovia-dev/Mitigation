@@ -44,27 +44,6 @@ public class Mechanic {
 
         return dfd;
     }
-
-    private List<Term> getMinimalSolution(List<List<Term>> solutions) {
-        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
-        return solutions.get(0);
-    }
-    
-    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs) {
-        int minCost = Integer.MAX_VALUE;
-        List<Term> cheapestSolution = null;
-        for(var solution : solutions) {
-            int cost = 0;
-            for(var term : solution) {
-                cost += costs.get(term.compositeLabel().label());
-            }
-            if (cost < minCost) {
-                minCost = cost;
-                cheapestSolution = solution;
-            }
-        }
-        return cheapestSolution;
-    }
     
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
             throws ContradictionException, TimeoutException, IOException {
@@ -189,6 +168,27 @@ public class Mechanic {
                 outPinToAss.put(outPin.getId(), assignment.getId());
             }
         }
+    }
+    
+    private List<Term> getMinimalSolution(List<List<Term>> solutions) {
+        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
+        return solutions.get(0);
+    }
+    
+    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs) {
+        int minCost = Integer.MAX_VALUE;
+        List<Term> cheapestSolution = null;
+        for(var solution : solutions) {
+            int cost = 0;
+            for(var term : solution) {
+                cost += costs.get(term.compositeLabel().label());
+            }
+            if (cost < minCost) {
+                minCost = cost;
+                cheapestSolution = solution;
+            }
+        }
+        return cheapestSolution;
     }
 
     private List<Term> getFlatNodes(List<Node> nodes) {
