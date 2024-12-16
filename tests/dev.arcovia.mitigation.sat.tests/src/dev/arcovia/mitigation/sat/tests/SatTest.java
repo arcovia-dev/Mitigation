@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
+import com.google.common.collect.ImmutableMap;
+
 import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;
@@ -40,8 +42,14 @@ public class SatTest {
                 new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
                 new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
         var constraints = List.of(constraint, constraint);
+        
+        Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
+                .put(new Label("Sensitivity", "Personal"), 10)
+                .put(new Label("Location", "nonEU"), 5)
+                .put(new Label("Encryption", "Encrypted"), 1)
+                .build();
 
-        var repairedDfd = new Mechanic().repair(dfd, constraints);
+        var repairedDfd = new Mechanic().repair(dfd, constraints, costs);
 
         checkIfConsistent(repairedDfd);
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "repaired.json");

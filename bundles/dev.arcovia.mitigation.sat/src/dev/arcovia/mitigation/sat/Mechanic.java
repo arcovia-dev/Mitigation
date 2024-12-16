@@ -27,7 +27,7 @@ public class Mechanic {
     private List<Node> nodes = new ArrayList<>();
     private List<Flow> flows = new ArrayList<>();
 
-    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
+    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs)
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
         deriveOutPinsToAssignmentsMap(dfd);
@@ -35,15 +35,40 @@ public class Mechanic {
         getNodesAndFlows(violatingTFGs);
 
         var solutions = new Sat().solve(nodes, flows, constraints);
-        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
-        var minimalSolution = solutions.get(0);
+        var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions,costs);
 
         List<Term> flatendNodes = getFlatNodes(nodes);
 
-        List<Term> actions = getActions(minimalSolution, flatendNodes);
+        List<Term> actions = getActions(chosenSolution, flatendNodes);
         applyActions(dfd, actions);
 
         return dfd;
+    }
+
+    private List<Term> getMinimalSolution(List<List<Term>> solutions) {
+        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
+        return solutions.get(0);
+    }
+    
+    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs) {
+        int minCost = Integer.MAX_VALUE;
+        List<Term> cheapestSolution = null;
+        for(var solution : solutions) {
+            int cost = 0;
+            for(var term : solution) {
+                cost += costs.get(term.compositeLabel().label());
+            }
+            if (cost < minCost) {
+                minCost = cost;
+                cheapestSolution = solution;
+            }
+        }
+        return cheapestSolution;
+    }
+    
+    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
+            throws ContradictionException, TimeoutException, IOException {
+        return repair(dfd,constraints,null);
     }
 
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
