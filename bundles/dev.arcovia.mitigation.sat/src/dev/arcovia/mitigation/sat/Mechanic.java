@@ -158,7 +158,7 @@ public class Mechanic {
     private void deriveOutPinsToAssignmentsMap(DataFlowDiagramAndDictionary dfd) {
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {
-            for (var assignment : node.getBehaviour()
+            for (var assignment : node.getBehavior()
                     .getAssignment()) {
                 var outPin = assignment.getOutputPin();
                 outPinToAss.put(outPin.getId(), assignment.getId());
@@ -204,7 +204,7 @@ public class Mechanic {
             if (action.compositeLabel()
                     .category()
                     .equals(LabelCategory.OutgoingData)) {
-                for (var behavior : dd.getBehaviour()) {
+                for (var behavior : dd.getBehavior()) {
                     List<Assignment> newAssignments = new ArrayList<>();
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
