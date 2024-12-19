@@ -35,7 +35,6 @@ public class SatTest {
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
         var webConverter = new WebEditorConverter();
         var dfdConverter = new DataFlowDiagramConverter();
-        var dfd = webConverter.webToDfd(MIN_SAT);
 
         // (personal AND nonEU) => encrypted
         var constraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
@@ -49,10 +48,12 @@ public class SatTest {
                 .put(new Label("Encryption", "Encrypted"), 1)
                 .build();
 
-        var repairedDfd = new Mechanic().repair(dfd, constraints, costs);
-
-        checkIfConsistent(repairedDfd);
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "repaired.json");
+        var repairedDfdCosts = new Mechanic().repair(webConverter.webToDfd(MIN_SAT), constraints, costs);
+        checkIfConsistent(repairedDfdCosts);
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "repaired.json");
+        
+        var repairedDfdMinimal = new Mechanic().repair(webConverter.webToDfd(MIN_SAT), constraints);
+        checkIfConsistent(repairedDfdMinimal);
     }
 
     private void checkIfConsistent(DataFlowDiagramAndDictionary repairedDfd) {
