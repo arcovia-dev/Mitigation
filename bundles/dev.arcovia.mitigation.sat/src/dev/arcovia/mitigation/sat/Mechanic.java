@@ -12,7 +12,6 @@ import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
-import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
@@ -21,8 +20,6 @@ import org.sat4j.specs.TimeoutException;
 
 import java.util.HashSet;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
-
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
@@ -43,9 +40,9 @@ public class Mechanic {
         List<Term> flatendNodes = getFlatNodes(nodes);
 
         List<Term> actions = getActions(chosenSolution, flatendNodes);
-        var repairedDataDictionary = applyActions(dfd, actions);
+        applyActions(dfd, actions);
 
-        return new DataFlowDiagramAndDictionary(dfd.dataFlowDiagram(), repairedDataDictionary);
+        return dfd;
     }
 
     public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
@@ -226,8 +223,8 @@ public class Mechanic {
         return actions;
     }
 
-    private DataDictionary applyActions(DataFlowDiagramAndDictionary dfd, List<Term> actions) {
-        var dd = EcoreUtil.copy(dfd.dataDictionary());
+    private void applyActions(DataFlowDiagramAndDictionary dfd, List<Term> actions) {
+        var dd = dfd.dataDictionary();
 
         for (var action : actions) {
             if (action.compositeLabel()
@@ -276,6 +273,5 @@ public class Mechanic {
                 }
             }
         }
-        return dd;
     }
 }

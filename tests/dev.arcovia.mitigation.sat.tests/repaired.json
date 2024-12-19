@@ -24,7 +24,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward user",
+        "behavior" : "forward user\nassign Encryption.Encrypted if TRUE",
         "id" : "eedb56",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -32,7 +32,7 @@
       "id" : "js61f",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nSensitivity.Personal\n",
+        "message" : "PropagatedLabels:\nEncryption.Encrypted\nSensitivity.Personal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },

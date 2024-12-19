@@ -49,13 +49,10 @@ public class SatTest {
                 .put(new Label("Encryption", "Encrypted"), 1)
                 .build();
 
-        var repairedDfdCosts = new Mechanic().repair(dfd, constraints, costs);
-        checkIfConsistent(repairedDfdCosts);
-        
-        var repairedDfdMinimal = new Mechanic().repair(dfd, constraints, costs);
-        checkIfConsistent(repairedDfdMinimal);
-        
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdMinimal), "repaired.json");
+        var repairedDfd = new Mechanic().repair(dfd, constraints, costs);
+
+        checkIfConsistent(repairedDfd);
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "repaired.json");
     }
 
     private void checkIfConsistent(DataFlowDiagramAndDictionary repairedDfd) {
