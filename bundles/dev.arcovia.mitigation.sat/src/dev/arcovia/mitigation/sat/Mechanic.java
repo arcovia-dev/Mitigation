@@ -37,12 +37,10 @@ public class Mechanic {
         this.costs = costs;
         this.nodes = new ArrayList<>();
         this.flows = new ArrayList<>();
-        
     }
     
     public Mechanic(String dfdLocation, List<Constraint> constraints) {
         this(dfdLocation,constraints,null);
-        
     }
 
     public DataFlowDiagramAndDictionary repair()
