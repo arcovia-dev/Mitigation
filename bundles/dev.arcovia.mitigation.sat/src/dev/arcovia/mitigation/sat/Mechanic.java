@@ -116,7 +116,12 @@ public class Mechanic {
             for (var vertex : tfg.getVertices()) {
 
                 DFDVertex node = (DFDVertex) vertex;
-
+                
+                //skips any nodes that occur twice over TFGS
+                if(nodes.stream().anyMatch(n -> n.id().equals(node.getUniqueIdentifier()))) {
+                    continue;
+                }
+                
                 Map<InPin, List<Label>> inPins = new HashMap<>();
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
@@ -146,7 +151,7 @@ public class Mechanic {
                     outPinLabelMap.put(new OutPin(outPin.getVariableName()), pinLabel);
                 }
 
-                nodes.add(new Node(node.getName(), inPins, outPinLabelMap, nodeLabels));
+                nodes.add(new Node(node.getUniqueIdentifier(), node.getName(), inPins, outPinLabelMap, nodeLabels));
 
                 for (var pin : node.getPinFlowMap()
                         .keySet()) {

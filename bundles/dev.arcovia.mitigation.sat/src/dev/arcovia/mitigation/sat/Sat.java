@@ -105,7 +105,7 @@ public class Sat {
                         if (literal.compositeLabel()
                                 .category()
                                 .equals(LabelCategory.Node)) {
-                            clause.push(sign * term(node.name(), label));
+                            clause.push(sign * term(node.id().toString(), label));
                         } else if (literal.compositeLabel()
                                 .category()
                                 .equals(LabelCategory.IncomingData)) {
@@ -121,7 +121,7 @@ public class Sat {
         // Require node and outgoing data chars
         for (Node node : nodes) {
             for (Label characteristic : node.nodeChars()) {
-                addClause(clause(term(node.name(), new NodeLabel(new Label(characteristic.type(), characteristic.value())))));
+                addClause(clause(term(node.id().toString(), new NodeLabel(new Label(characteristic.type(), characteristic.value())))));
             }
             for (OutPin outPin : node.outPins()
                     .keySet()) {

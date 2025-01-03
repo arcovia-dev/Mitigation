@@ -1,9 +1,9 @@
 {
   "1" : "IncomingData at Pin xyepdb has Label (Sensitivity, Personal)",
-  "2" : "Node process has Property (Location, nonEU)",
+  "2" : "Node 00705f0b-9917-32fa-b9d0-782c5eb256f1 has Property (Location, nonEU)",
   "3" : "IncomingData at Pin xyepdb has Label (Encryption, Encrypted)",
   "4" : "IncomingData at Pin scljwi has Label (Sensitivity, Personal)",
-  "5" : "Node db has Property (Location, nonEU)",
+  "5" : "Node f54625c6-bb08-3c59-87d9-8d8cdb149564 has Property (Location, nonEU)",
   "6" : "IncomingData at Pin scljwi has Label (Encryption, Encrypted)",
   "7" : "OutgoingData at Pin wksxi8 has Label (Sensitivity, Personal)",
   "8" : "OutgoingData at Pin eedb56 has Label (Sensitivity, Personal)",
