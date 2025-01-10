@@ -11,6 +11,7 @@ import java.util.Set;
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
@@ -24,10 +25,25 @@ import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
-    private List<Node> nodes = new ArrayList<>();
-    private List<Flow> flows = new ArrayList<>();
+    private DataFlowDiagramAndDictionary dfd;
+    private List<Constraint> constraints;
+    private Map<Label, Integer> costs;
+    private List<Node> nodes;
+    private List<Flow> flows;
+    
+    public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
+        this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
+        this.constraints = constraints;
+        this.costs = costs;
+        this.nodes = new ArrayList<>();
+        this.flows = new ArrayList<>();
+    }
+    
+    public Mechanic(String dfdLocation, List<Constraint> constraints) {
+        this(dfdLocation,constraints,null);
+    }
 
-    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs)
+    public DataFlowDiagramAndDictionary repair()
             throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
         deriveOutPinsToAssignmentsMap(dfd);
@@ -43,11 +59,6 @@ public class Mechanic {
         applyActions(dfd, actions);
 
         return dfd;
-    }
-
-    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
-            throws ContradictionException, TimeoutException, IOException {
-        return repair(dfd, constraints, null);
     }
 
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {

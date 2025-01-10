@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
-import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
@@ -33,7 +32,6 @@ public class SatTest {
 
     @Test
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
-        var webConverter = new WebEditorConverter();
         var dfdConverter = new DataFlowDiagramConverter();
 
         // (personal AND nonEU) => encrypted
@@ -48,11 +46,11 @@ public class SatTest {
                 .put(new Label("Encryption", "Encrypted"), 1)
                 .build();
 
-        var repairedDfdCosts = new Mechanic().repair(webConverter.webToDfd(MIN_SAT), constraints, costs);
+        var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts);
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "repaired.json");
         
-        var repairedDfdMinimal = new Mechanic().repair(webConverter.webToDfd(MIN_SAT), constraints);
+        var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
         checkIfConsistent(repairedDfdMinimal);
     }
 
