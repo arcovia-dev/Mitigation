@@ -39,7 +39,7 @@ public class SatTest {
                 new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
         var nodeConstraint = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
                 new Literal(true, new NodeLabel(new Label("Stereotype", "local_logging")))));
-        var constraints = List.of(constraint, constraint, nodeConstraint);
+        var constraints = List.of(constraint, nodeConstraint);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)
