@@ -13,8 +13,10 @@ import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
+import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
+import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -30,7 +32,7 @@ public class Mechanic {
     private Map<Label, Integer> costs;
     private List<Node> nodes;
     private List<Flow> flows;
-    
+
     public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
         this.constraints = constraints;
@@ -38,18 +40,24 @@ public class Mechanic {
         this.nodes = new ArrayList<>();
         this.flows = new ArrayList<>();
     }
-    
+
     public Mechanic(String dfdLocation, List<Constraint> constraints) {
-        this(dfdLocation,constraints,null);
+        this(dfdLocation, constraints, null);
     }
 
-    public DataFlowDiagramAndDictionary repair()
-            throws ContradictionException, TimeoutException, IOException {
+    public Mechanic(DataDictionary ddLocation, DataFlowDiagram dfLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
+        this.dfd = new DataFlowDiagramAndDictionary(dfLocation, ddLocation);
+        this.constraints = constraints;
+        this.costs = costs;
+        this.nodes = new ArrayList<>();
+        this.flows = new ArrayList<>();
+    }
+
+    public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndFlows(violatingTFGs);
-
         var solutions = new Sat().solve(nodes, flows, constraints);
         var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs);
 
@@ -281,6 +289,34 @@ public class Mechanic {
                     if (!newAssignments.isEmpty())
                         behavior.getAssignment()
                                 .addAll(newAssignments);
+                }
+            } else if (action.compositeLabel()
+                    .category()
+                    .equals(LabelCategory.Node)) {
+                for (var node : dfd.dataFlowDiagram()
+                        .getNodes()) {
+                    if (node.getEntityName()
+                            .equals(action.domain())) {
+                        var type = action.compositeLabel()
+                                .label()
+                                .type();
+                        var value = action.compositeLabel()
+                                .label()
+                                .value();
+                        var label = dd.getLabelTypes()
+                                .stream()
+                                .filter(labelType -> labelType.getEntityName()
+                                        .equals(type))
+                                .flatMap(labelType -> labelType.getLabel()
+                                        .stream())
+                                .filter(labelValue -> labelValue.getEntityName()
+                                        .equals(value))
+                                .findAny()
+                                .get();
+
+                        node.getProperties()
+                                .add(label);
+                    }
                 }
             }
         }
