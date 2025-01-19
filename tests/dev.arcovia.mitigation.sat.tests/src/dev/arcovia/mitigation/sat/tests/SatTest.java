@@ -101,7 +101,7 @@ public class SatTest {
         }
         Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Forwarding: process_in_user", "Encrypted"), "user",
                 List.of("Personal"), "db", List.of());
-        
+
         Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of("internal", "local_logging"), "user", List.of(), "db",
                 List.of("nonEU"));
 
@@ -109,7 +109,7 @@ public class SatTest {
         assertEquals(expectedNodeProperties, nodeProperties);
 
     }
-    
+
     @Test
     public void tuhhTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
@@ -117,22 +117,23 @@ public class SatTest {
         final String location = Paths.get("casestudies", "TUHH-Models")
                 .toString();
 
-        // (personal AND nonEU) => encrypted
-        var constraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
-                new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
-                new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
-        var constraints = List.of(constraint, constraint);
+       
+        var nodeConstraint = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
+                new Literal(true, new NodeLabel(new Label("Stereotype", "local_logging")))));
+        var constraints = List.of(nodeConstraint);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)
                 .put(new Label("Location", "nonEU"), 5)
                 .put(new Label("Encryption", "Encrypted"), 1)
                 .build();
-        // Still complicated
-       
-        var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater","jferrater_0.datadictionary").toString(), Paths.get(location, "jferrater","jferrater_0.dataflowdiagram")
-                .toString(),Activator.class);
 
+        var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater", "jferrater_0.dataflowdiagram")
+                .toString(),
+                Paths.get(location, "jferrater", "jferrater_0.datadictionary")
+                        .toString(),
+                Activator.class);
+        
         var repairedDfdCosts = new Mechanic(dfd, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts);
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "tuhhrepaired.json");
@@ -140,6 +141,5 @@ public class SatTest {
         var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
         checkIfConsistent(repairedDfdMinimal);
     }
-    
 
 }

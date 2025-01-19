@@ -66,7 +66,7 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        while (problem.isSatisfiable()) {
+        if (problem.isSatisfiable()) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
@@ -79,6 +79,7 @@ public class Sat {
             // Store unique solutions
             if (!solutions.contains(deltaTerms)) {
                 solutions.add(deltaTerms);
+
             }
 
             // Prohibit current solution

@@ -58,6 +58,9 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         var solutions = new Sat().solve(nodes, flows, constraints);
+        
+        System.out.println(solutions);
+        
         var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs);
 
         List<Term> flatendNodes = getFlatNodes(nodes);
