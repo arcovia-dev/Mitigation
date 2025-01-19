@@ -18,13 +18,7 @@
       "children" : [ ]
     }, {
       "text" : "process",
-      "labels" : [ {
-        "labelTypeId" : "76rllz",
-        "labelTypeValueId" : "456xe6"
-      }, {
-        "labelTypeId" : "76rllz",
-        "labelTypeValueId" : "456xe9"
-      } ],
+      "labels" : [ ],
       "ports" : [ {
         "id" : "xyepdb",
         "type" : "port:dfd-input",
@@ -102,16 +96,6 @@
     "values" : [ {
       "id" : "2r6xe6",
       "text" : "Encrypted"
-    } ]
-  }, {
-    "id" : "76rllz",
-    "name" : "Stereotype",
-    "values" : [ {
-      "id" : "456xe6",
-      "text" : "internal"
-    }, {
-      "id" : "456xe9",
-      "text" : "local_logging"
     } ]
   } ],
   "editorMode" : "edit"

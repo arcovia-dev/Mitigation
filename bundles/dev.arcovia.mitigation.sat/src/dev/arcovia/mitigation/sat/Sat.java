@@ -96,25 +96,41 @@ public class Sat {
         for (Node node : nodes) {
 
             for (Constraint constraint : constraints) {
-                var clause = new VecInt();
-                for (Literal literal : constraint.literals()) {
+                if (constraint.literals().stream().allMatch(literal -> literal.compositeLabel()
+                        .category()
+                        .equals(LabelCategory.Node))) {
 
-                    var label = literal.compositeLabel();
-                    var sign = literal.positive() ? 1 : -1;
-                    if (literal.compositeLabel()
-                            .category()
-                            .equals(LabelCategory.Node)) {
+                    var clause = new VecInt();
+                    for (Literal literal : constraint.literals()) {
+
+                        var label = literal.compositeLabel();
+                        var sign = literal.positive() ? 1 : -1;
                         clause.push(sign * term(node.name(), label));
-                    } else if (literal.compositeLabel()
-                            .category()
-                            .equals(LabelCategory.IncomingData)) {
-                        for (InPin inPin : node.inPins()
-                                .keySet()) {
-                            clause.push(sign * term(inPin.id(), label));
+                    }
+
+                    addClause(clause);
+                }
+                else {
+                    for (InPin inPin : node.inPins()
+                            .keySet()) {
+                        var clause = new VecInt();
+                        for (Literal literal : constraint.literals()) {
+
+                            var label = literal.compositeLabel();
+                            var sign = literal.positive() ? 1 : -1;
+                            if (literal.compositeLabel()
+                                    .category()
+                                    .equals(LabelCategory.Node)) {
+                                clause.push(sign * term(node.name(), label));
+                            } else if (literal.compositeLabel()
+                                    .category()
+                                    .equals(LabelCategory.IncomingData)) {
+                                    clause.push(sign * term(inPin.id(), label));
+                            }
                         }
+                        addClause(clause);
                     }
                 }
-                addClause(clause);
             }
 
         }
