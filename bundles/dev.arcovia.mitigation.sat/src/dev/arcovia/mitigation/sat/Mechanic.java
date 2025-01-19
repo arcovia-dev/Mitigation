@@ -128,7 +128,7 @@ public class Mechanic {
                 DFDVertex node = (DFDVertex) vertex;
                 
                 //skips any nodes that occur twice over TFGS
-                if(nodes.stream().anyMatch(n -> n.id().equals(node.getUniqueIdentifier()))) {
+                if(nodes.stream().anyMatch(n -> n.id().equals(node.getReferencedElement().getId()))) {
                     continue;
                 }
                 
@@ -161,7 +161,7 @@ public class Mechanic {
                     outPinLabelMap.put(new OutPin(outPin.getVariableName()), pinLabel);
                 }
 
-                nodes.add(new Node(node.getUniqueIdentifier(), node.getName(), inPins, outPinLabelMap, nodeLabels));
+                nodes.add(new Node(node.getReferencedElement().getId(), node.getName(), inPins, outPinLabelMap, nodeLabels));
 
                 for (var pin : node.getPinFlowMap()
                         .keySet()) {
@@ -218,7 +218,7 @@ public class Mechanic {
                 }
             }
             for (var property : node.nodeChars()) {
-                flatendNodes.add(new Term(node.name(), new NodeLabel(new Label(property.type(), property.value()))));
+                flatendNodes.add(new Term(node.id(), new NodeLabel(new Label(property.type(), property.value()))));
             }
         }
         return flatendNodes;
@@ -291,7 +291,7 @@ public class Mechanic {
                     .equals(LabelCategory.Node)) {
                 for (var node : dfd.dataFlowDiagram()
                         .getNodes()) {
-                    if (node.getEntityName()
+                    if (node.getId()
                             .equals(action.domain())) {
                         var type = action.compositeLabel()
                                 .label()
