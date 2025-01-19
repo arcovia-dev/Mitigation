@@ -24,6 +24,7 @@ import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.Literal;
 import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.NodeLabel;
+import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -110,7 +111,7 @@ public class SatTest {
     }
     
     @Test
-    public void tuhhTest() throws ContradictionException, TimeoutException, IOException {
+    public void tuhhTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
         final String location = Paths.get("casestudies", "TUHH-Models")
@@ -129,7 +130,7 @@ public class SatTest {
                 .build();
         // Still complicated
        
-        var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater/jferrater_0.datadictionary").toString(), Paths.get(location, "jferrater/jferrater_0.dataflowdiagram")
+        var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater","jferrater_0.datadictionary").toString(), Paths.get(location, "jferrater","jferrater_0.dataflowdiagram")
                 .toString(),Activator.class);
 
         var repairedDfdCosts = new Mechanic(dfd, constraints, costs).repair();
