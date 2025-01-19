@@ -95,9 +95,11 @@ public class Sat {
         // Apply constraints
         for (Node node : nodes) {
             for (Constraint constraint : constraints) {
-                if (constraint.literals().stream().allMatch(literal -> literal.compositeLabel()
-                        .category()
-                        .equals(LabelCategory.Node))) {
+                if (constraint.literals()
+                        .stream()
+                        .allMatch(literal -> literal.compositeLabel()
+                                .category()
+                                .equals(LabelCategory.Node))) {
                     var clause = new VecInt();
                     for (Literal literal : constraint.literals()) {
                         var label = literal.compositeLabel();
@@ -105,8 +107,7 @@ public class Sat {
                         clause.push(sign * term(node.name(), label));
                     }
                     addClause(clause);
-                }
-                else {
+                } else {
                     for (InPin inPin : node.inPins()
                             .keySet()) {
                         var clause = new VecInt();
@@ -120,7 +121,7 @@ public class Sat {
                             } else if (literal.compositeLabel()
                                     .category()
                                     .equals(LabelCategory.IncomingData)) {
-                                    clause.push(sign * term(inPin.id(), label));
+                                clause.push(sign * term(inPin.id(), label));
                             }
                         }
                         addClause(clause);

@@ -7,13 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
+import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
+import org.dataflowanalysis.dfd.datadictionary.LabelType;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
@@ -31,6 +35,8 @@ public class Mechanic {
     private List<Node> nodes;
     private List<Flow> flows;
 
+    private final Logger logger = Logger.getLogger(Mechanic.class);
+
     public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
         this.constraints = constraints;
@@ -42,7 +48,6 @@ public class Mechanic {
     public Mechanic(String dfdLocation, List<Constraint> constraints) {
         this(dfdLocation, constraints, null);
     }
-
 
     public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
@@ -251,16 +256,8 @@ public class Mechanic {
                             var value = action.compositeLabel()
                                     .label()
                                     .value();
-                            var label = dd.getLabelTypes()
-                                    .stream()
-                                    .filter(labelType -> labelType.getEntityName()
-                                            .equals(type))
-                                    .flatMap(labelType -> labelType.getLabel()
-                                            .stream())
-                                    .filter(labelValue -> labelValue.getEntityName()
-                                            .equals(value))
-                                    .findAny()
-                                    .get();
+                            var label = getOrCreateLabel(dd, type, value);
+                               
                             if (assignment instanceof Assignment cast) {
                                 cast.getOutputLabels()
                                         .add(label);
@@ -294,16 +291,7 @@ public class Mechanic {
                         var value = action.compositeLabel()
                                 .label()
                                 .value();
-                        var label = dd.getLabelTypes()
-                                .stream()
-                                .filter(labelType -> labelType.getEntityName()
-                                        .equals(type))
-                                .flatMap(labelType -> labelType.getLabel()
-                                        .stream())
-                                .filter(labelValue -> labelValue.getEntityName()
-                                        .equals(value))
-                                .findAny()
-                                .get();
+                        var label = getOrCreateLabel(dd, type, value);
 
                         node.getProperties()
                                 .add(label);
@@ -311,5 +299,51 @@ public class Mechanic {
                 }
             }
         }
+    }
+
+    private org.dataflowanalysis.dfd.datadictionary.Label getOrCreateLabel(DataDictionary dd, String type, String value) {
+        var optionalLabel = dd.getLabelTypes()
+                .stream()
+                .filter(labelType -> labelType.getEntityName()
+                        .equals(type))
+                .flatMap(labelType -> labelType.getLabel()
+                        .stream())
+                .filter(labelValue -> labelValue.getEntityName()
+                        .equals(value))
+                .findAny();
+        
+        org.dataflowanalysis.dfd.datadictionary.Label label;
+        
+        if(!optionalLabel.isEmpty()) {
+            label = optionalLabel.get();
+        }                 
+        else {
+            logger.warn("Couldn´t find label " + type + "." + value + " in Dictionary. Therefore creating this label.");
+            var ddFactory = datadictionaryFactory.eINSTANCE;
+            label = ddFactory.createLabel();
+            label.setEntityName(value);
+            label.setId(UUID.nameUUIDFromBytes(value.getBytes()).toString());
+
+            var optionalLabelType = dd.getLabelTypes()
+                    .stream()
+                    .filter(lt -> lt.getEntityName()
+                            .equals(type))
+                    .findFirst();
+
+            LabelType labelType; 
+
+            if (!optionalLabelType.isEmpty()) {
+                labelType = optionalLabelType.get();
+            }
+            else {
+                labelType = ddFactory.createLabelType(); 
+                labelType.setEntityName(type);
+                labelType.setId(UUID.nameUUIDFromBytes(type.getBytes()).toString());
+                dd.getLabelTypes().add(labelType);
+            }
+            
+            labelType.getLabel().add(label);   
+        }
+        return label;
     }
 }
