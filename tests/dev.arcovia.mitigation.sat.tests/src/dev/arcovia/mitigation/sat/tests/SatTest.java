@@ -34,18 +34,18 @@ public class SatTest {
         var dfdConverter = new DataFlowDiagramConverter();
 
         // (personal AND nonEU) => encrypted
-        var constraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
+        var dataConstraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
                 new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
                 new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
         var nodeConstraint = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
                 new Literal(true, new NodeLabel(new Label("Stereotype", "local_logging")))));
-        var constraints = List.of(constraint, nodeConstraint);
+        var constraints = List.of(dataConstraint, nodeConstraint);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)
                 .put(new Label("Location", "nonEU"), 5)
                 .put(new Label("Encryption", "Encrypted"), 1)
-                .put(new Label("Stereotype", "internal"), 1)
+                .put(new Label("Stereotype", "internal"), 3)
                 .put(new Label("Stereotype", "local_logging"), 1)
                 .build();
 
