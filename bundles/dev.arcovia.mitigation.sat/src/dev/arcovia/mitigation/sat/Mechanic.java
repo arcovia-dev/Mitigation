@@ -15,6 +15,7 @@ import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
+import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.LabelType;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
@@ -255,52 +256,7 @@ public class Mechanic {
                             var value = action.compositeLabel()
                                     .label()
                                     .value();
-                            var optionalLabel = dd.getLabelTypes()
-                                    .stream()
-                                    .filter(labelType -> labelType.getEntityName()
-                                            .equals(type))
-                                    .flatMap(labelType -> labelType.getLabel()
-                                            .stream())
-                                    .filter(labelValue -> labelValue.getEntityName()
-                                            .equals(value))
-                                    .findAny();
-                            
-                            //Getting the right Type of Label
-                            var label = dd.getLabelTypes().stream().filter(labelType -> labelType.getEntityName()
-                                    .equals(type))
-                                    .flatMap(labelType -> labelType.getLabel()
-                                    .stream()).findAny().get();
-                            
-                            if (optionalLabel.isEmpty()) {
-                                logger.warn("Couldn´t find label " + type + " " + value + ". Therfore creating this label");
-                                var ddFactory = datadictionaryFactory.eINSTANCE;
-                                label = ddFactory.createLabel();
-                                label.setEntityName(value);
-                                label.setId(UUID.randomUUID()
-                                        .toString());
-
-                                var labelTypeOptional = dd.getLabelTypes()
-                                        .stream()
-                                        .filter(lt -> lt.getEntityName()
-                                                .equals(type))
-                                        .findFirst();
-
-                                LabelType labelType; 
-
-                                if (labelTypeOptional.isEmpty()) {
-                                    labelType = ddFactory.createLabelType(); 
-                                    labelType.setEntityName(type);
-                                    labelType.setId(UUID.randomUUID().toString());
-                                    dd.getLabelTypes().add(labelType);
-                                } else {
-                                    labelType = labelTypeOptional.get();
-                                }
-                                
-                                labelType.getLabel().add(label);
-                                
-                            } else {
-                                label = optionalLabel.get();
-                            }
+                            var label = getOrCreateLabel(dd, type, value);
                                
                             if (assignment instanceof Assignment cast) {
                                 cast.getOutputLabels()
@@ -335,52 +291,7 @@ public class Mechanic {
                         var value = action.compositeLabel()
                                 .label()
                                 .value();
-                        var optionalLabel = dd.getLabelTypes()
-                                .stream()
-                                .filter(labelType -> labelType.getEntityName()
-                                        .equals(type))
-                                .flatMap(labelType -> labelType.getLabel()
-                                        .stream())
-                                .filter(labelValue -> labelValue.getEntityName()
-                                        .equals(value))
-                                .findAny();
-                        
-                      //Getting the right Type of Label
-                        var label = dd.getLabelTypes().stream().filter(labelType -> labelType.getEntityName()
-                                .equals(type))
-                                .flatMap(labelType -> labelType.getLabel()
-                                .stream()).findAny().get();
-                        
-                        if (optionalLabel.isEmpty()) {
-                            logger.warn("Couldn´t find label " + type + " " + value + ". Therfore creating this label");
-                            var ddFactory = datadictionaryFactory.eINSTANCE;
-                            label = ddFactory.createLabel();
-                            label.setEntityName(value);
-                            label.setId(UUID.randomUUID()
-                                    .toString());
-
-                            var labelTypeOptional = dd.getLabelTypes()
-                                    .stream()
-                                    .filter(lt -> lt.getEntityName()
-                                            .equals(type))
-                                    .findFirst();
-
-                            LabelType labelType; 
-
-                            if (labelTypeOptional.isEmpty()) {
-                                labelType = ddFactory.createLabelType(); 
-                                labelType.setEntityName(type);
-                                labelType.setId(UUID.randomUUID().toString());
-                                dd.getLabelTypes().add(labelType);
-                            } else {
-                                labelType = labelTypeOptional.get();
-                            }
-                            
-                            labelType.getLabel().add(label);
-                            
-                        } else {
-                            label = optionalLabel.get();
-                        }
+                        var label = getOrCreateLabel(dd, type, value);
 
                         node.getProperties()
                                 .add(label);
@@ -388,5 +299,51 @@ public class Mechanic {
                 }
             }
         }
+    }
+
+    private org.dataflowanalysis.dfd.datadictionary.Label getOrCreateLabel(DataDictionary dd, String type, String value) {
+        var optionalLabel = dd.getLabelTypes()
+                .stream()
+                .filter(labelType -> labelType.getEntityName()
+                        .equals(type))
+                .flatMap(labelType -> labelType.getLabel()
+                        .stream())
+                .filter(labelValue -> labelValue.getEntityName()
+                        .equals(value))
+                .findAny();
+        
+        org.dataflowanalysis.dfd.datadictionary.Label label;
+        
+        if(!optionalLabel.isEmpty()) {
+            label = optionalLabel.get();
+        }                 
+        else {
+            logger.warn("Couldn´t find label " + type + "." + value + " in Dictionary. Therefore creating this label.");
+            var ddFactory = datadictionaryFactory.eINSTANCE;
+            label = ddFactory.createLabel();
+            label.setEntityName(value);
+            label.setId(UUID.nameUUIDFromBytes(value.getBytes()).toString());
+
+            var optionalLabelType = dd.getLabelTypes()
+                    .stream()
+                    .filter(lt -> lt.getEntityName()
+                            .equals(type))
+                    .findFirst();
+
+            LabelType labelType; 
+
+            if (!optionalLabelType.isEmpty()) {
+                labelType = optionalLabelType.get();
+            }
+            else {
+                labelType = ddFactory.createLabelType(); 
+                labelType.setEntityName(type);
+                labelType.setId(UUID.nameUUIDFromBytes(type.getBytes()).toString());
+                dd.getLabelTypes().add(labelType);
+            }
+            
+            labelType.getLabel().add(label);   
+        }
+        return label;
     }
 }
