@@ -23,7 +23,7 @@
         "labelTypeValueId" : "456xe6"
       }, {
         "labelTypeId" : "76rllz",
-        "labelTypeValueId" : "456xe9"
+        "labelTypeValueId" : "6cdbac3d-6652-4e2d-a7ec-9c6a12a7f5ad"
       } ],
       "ports" : [ {
         "id" : "xyepdb",
@@ -110,7 +110,7 @@
       "id" : "456xe6",
       "text" : "internal"
     }, {
-      "id" : "456xe9",
+      "id" : "6cdbac3d-6652-4e2d-a7ec-9c6a12a7f5ad",
       "text" : "local_logging"
     } ]
   } ],
