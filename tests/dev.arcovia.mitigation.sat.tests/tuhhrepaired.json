@@ -1,0 +1,601 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "github_repository",
+      "id" : "67",
+      "type" : "edge:arrow",
+      "sourceId" : "66",
+      "targetId" : "65",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "id" : "73",
+      "type" : "edge:arrow",
+      "sourceId" : "72",
+      "targetId" : "71",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "id" : "76",
+      "type" : "edge:arrow",
+      "sourceId" : "75",
+      "targetId" : "74",
+      "children" : [ ]
+    }, {
+      "text" : "account_service",
+      "id" : "78",
+      "type" : "edge:arrow",
+      "sourceId" : "77",
+      "targetId" : "71",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "id" : "81",
+      "type" : "edge:arrow",
+      "sourceId" : "80",
+      "targetId" : "79",
+      "children" : [ ]
+    }, {
+      "text" : "customer_service",
+      "id" : "83",
+      "type" : "edge:arrow",
+      "sourceId" : "82",
+      "targetId" : "71",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "id" : "86",
+      "type" : "edge:arrow",
+      "sourceId" : "85",
+      "targetId" : "84",
+      "children" : [ ]
+    }, {
+      "text" : "store_service",
+      "id" : "88",
+      "type" : "edge:arrow",
+      "sourceId" : "87",
+      "targetId" : "71",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "id" : "91",
+      "type" : "edge:arrow",
+      "sourceId" : "90",
+      "targetId" : "89",
+      "children" : [ ]
+    }, {
+      "text" : "item_service",
+      "id" : "93",
+      "type" : "edge:arrow",
+      "sourceId" : "92",
+      "targetId" : "71",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "id" : "96",
+      "type" : "edge:arrow",
+      "sourceId" : "95",
+      "targetId" : "94",
+      "children" : [ ]
+    }, {
+      "text" : "price_service",
+      "id" : "98",
+      "type" : "edge:arrow",
+      "sourceId" : "97",
+      "targetId" : "71",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "id" : "101",
+      "type" : "edge:arrow",
+      "sourceId" : "100",
+      "targetId" : "99",
+      "children" : [ ]
+    }, {
+      "text" : "foodtray_service",
+      "id" : "104",
+      "type" : "edge:arrow",
+      "sourceId" : "103",
+      "targetId" : "71",
+      "children" : [ ]
+    }, {
+      "text" : "foodtray_service",
+      "id" : "106",
+      "type" : "edge:arrow",
+      "sourceId" : "105",
+      "targetId" : "89",
+      "children" : [ ]
+    }, {
+      "text" : "foodtray_service",
+      "id" : "112",
+      "type" : "edge:arrow",
+      "sourceId" : "111",
+      "targetId" : "94",
+      "children" : [ ]
+    }, {
+      "text" : "github_repository",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "53"
+      }, {
+        "labelTypeId" : "54",
+        "labelTypeValueId" : "55"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.github_repository,Stereotype.restful_http,Protocol.HTTPS if TRUE",
+        "id" : "66",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "2",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "discovery_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "14"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "15"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "17"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "19"
+      } ],
+      "ports" : [ {
+        "id" : "71",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "3",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "config_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "58"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "15"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "17"
+      }, {
+        "labelTypeId" : "59",
+        "labelTypeValueId" : "60"
+      } ],
+      "ports" : [ {
+        "id" : "65",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "id" : "72",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "id" : "75",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "id" : "80",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "id" : "85",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "id" : "90",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "id" : "95",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http,Stereotype.circuit_breaker_link,CircuitBreaker.Hystrix if TRUE from github_repository\nforward github_repository",
+        "id" : "100",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "4",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nStereotype.circuit_breaker_link\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "account_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "22"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "24"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "25"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      } ],
+      "ports" : [ {
+        "id" : "74",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service",
+        "id" : "77",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "5",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "customer_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "22"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "32"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "33"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      } ],
+      "ports" : [ {
+        "id" : "79",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service",
+        "id" : "82",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "6",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "store_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "22"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "63"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "64"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      } ],
+      "ports" : [ {
+        "id" : "84",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service",
+        "id" : "87",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "7",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "item_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "22"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "28"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      } ],
+      "ports" : [ {
+        "id" : "89",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service",
+        "id" : "92",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "8",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.circuit_breaker\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "price_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "22"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "36"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "37"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      } ],
+      "ports" : [ {
+        "id" : "94",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service",
+        "id" : "97",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "9",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.circuit_breaker\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "foodtray_service",
+      "labels" : [ {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "15"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "40"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "41"
+      }, {
+        "labelTypeId" : "42",
+        "labelTypeValueId" : "43"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "44"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "45"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "46"
+      }, {
+        "labelTypeId" : "23",
+        "labelTypeValueId" : "47"
+      }, {
+        "labelTypeId" : "48",
+        "labelTypeValueId" : "49"
+      }, {
+        "labelTypeId" : "16",
+        "labelTypeValueId" : "50"
+      } ],
+      "ports" : [ {
+        "id" : "99",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.monitoring_dashboard,Stereotype.circuit_breaker,Stereotype.restful_http,Stereotype.circuit_breaker_link,CircuitBreaker.Hystrix if TRUE from config_service\nforward config_service",
+        "id" : "103",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.monitoring_dashboard,Stereotype.circuit_breaker,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.load_balanced_link,Stereotype.circuit_breaker_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config_service\nforward config_service",
+        "id" : "105",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.monitoring_dashboard,Stereotype.circuit_breaker,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.load_balanced_link,Stereotype.circuit_breaker_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config_service\nforward config_service",
+        "id" : "111",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "10",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.circuit_breaker\nStereotype.infrastructural\nStereotype.circuit_breaker_link\nStereotype.configuration_server\nStereotype.github_repository\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "11",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "14",
+      "text" : "service_discovery"
+    }, {
+      "id" : "15",
+      "text" : "infrastructural"
+    }, {
+      "id" : "22",
+      "text" : "internal"
+    }, {
+      "id" : "40",
+      "text" : "monitoring_dashboard"
+    }, {
+      "id" : "41",
+      "text" : "circuit_breaker"
+    }, {
+      "id" : "53",
+      "text" : "github_repository"
+    }, {
+      "id" : "58",
+      "text" : "configuration_server"
+    }, {
+      "id" : "68",
+      "text" : "restful_http"
+    }, {
+      "id" : "102",
+      "text" : "circuit_breaker_link"
+    }, {
+      "id" : "107",
+      "text" : "feign_connection"
+    }, {
+      "id" : "108",
+      "text" : "load_balanced_link"
+    }, {
+      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
+      "text" : "local_logging"
+    } ]
+  }, {
+    "id" : "16",
+    "name" : "Port",
+    "values" : [ {
+      "id" : "17",
+      "text" : "8888"
+    }, {
+      "id" : "25",
+      "text" : "8000"
+    }, {
+      "id" : "29",
+      "text" : "8004"
+    }, {
+      "id" : "33",
+      "text" : "8002"
+    }, {
+      "id" : "37",
+      "text" : "8001"
+    }, {
+      "id" : "50",
+      "text" : "8005"
+    }, {
+      "id" : "64",
+      "text" : "8003"
+    } ]
+  }, {
+    "id" : "18",
+    "name" : "ServiceDiscovery",
+    "values" : [ {
+      "id" : "19",
+      "text" : "Eureka"
+    } ]
+  }, {
+    "id" : "23",
+    "name" : "Endpoints",
+    "values" : [ {
+      "id" : "24",
+      "text" : "accounts"
+    }, {
+      "id" : "28",
+      "text" : "items"
+    }, {
+      "id" : "32",
+      "text" : "customers"
+    }, {
+      "id" : "36",
+      "text" : "prices"
+    }, {
+      "id" : "44",
+      "text" : "foodtrays"
+    }, {
+      "id" : "45",
+      "text" : "foodtraysitemCode"
+    }, {
+      "id" : "46",
+      "text" : "foodtrayspriceitemCode"
+    }, {
+      "id" : "47",
+      "text" : "foodtraysitemitemCode"
+    }, {
+      "id" : "63",
+      "text" : "stores"
+    } ]
+  }, {
+    "id" : "42",
+    "name" : "MonitoringDashboard",
+    "values" : [ {
+      "id" : "43",
+      "text" : "Hystrix"
+    } ]
+  }, {
+    "id" : "48",
+    "name" : "CircuitBreaker",
+    "values" : [ {
+      "id" : "49",
+      "text" : "Hystrix"
+    } ]
+  }, {
+    "id" : "54",
+    "name" : "URL",
+    "values" : [ {
+      "id" : "55",
+      "text" : "httpsgithubcomjferraterConfigData"
+    } ]
+  }, {
+    "id" : "59",
+    "name" : "ConfigurationServer",
+    "values" : [ {
+      "id" : "60",
+      "text" : "SpringCloudConfig"
+    } ]
+  }, {
+    "id" : "69",
+    "name" : "Protocol",
+    "values" : [ {
+      "id" : "70",
+      "text" : "HTTPS"
+    } ]
+  }, {
+    "id" : "109",
+    "name" : "LoadBalancer",
+    "values" : [ {
+      "id" : "110",
+      "text" : "Ribbon"
+    } ]
+  } ],
+  "editorMode" : "edit"
+}

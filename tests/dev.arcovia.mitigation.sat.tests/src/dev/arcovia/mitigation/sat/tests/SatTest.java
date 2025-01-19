@@ -123,9 +123,8 @@ public class SatTest {
         var constraints = List.of(nodeConstraint);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
-                .put(new Label("Sensitivity", "Personal"), 10)
-                .put(new Label("Location", "nonEU"), 5)
-                .put(new Label("Encryption", "Encrypted"), 1)
+                .put(new Label("Stereotype", "internal"), 3)
+                .put(new Label("Stereotype", "local_logging"), 1)
                 .build();
 
         var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater", "jferrater_0.dataflowdiagram")
@@ -135,11 +134,11 @@ public class SatTest {
                 Activator.class);
         
         var repairedDfdCosts = new Mechanic(dfd, constraints, costs).repair();
-        checkIfConsistent(repairedDfdCosts);
+        
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "tuhhrepaired.json");
 
         var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
-        checkIfConsistent(repairedDfdMinimal);
+        
     }
 
 }

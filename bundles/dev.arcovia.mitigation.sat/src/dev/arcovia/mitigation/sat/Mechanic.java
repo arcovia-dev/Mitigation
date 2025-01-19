@@ -66,9 +66,10 @@ public class Mechanic {
         
         System.out.println(solutions);
         
-        var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs);
-
         List<Term> flatendNodes = getFlatNodes(nodes);
+        
+        var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs, flatendNodes);
+
 
         List<Term> actions = getActions(chosenSolution, flatendNodes);
         applyActions(dfd, actions);
@@ -201,12 +202,15 @@ public class Mechanic {
         return solutions.get(0);
     }
 
-    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs) {
+    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs, List<Term> flatendNodes) {
         int minCost = Integer.MAX_VALUE;
         List<Term> cheapestSolution = null;
         for (var solution : solutions) {
             int cost = 0;
             for (var term : solution) {
+                if (flatendNodes.contains(term))
+                    continue;
+                
                 cost += costs.get(term.compositeLabel()
                         .label());
             }
