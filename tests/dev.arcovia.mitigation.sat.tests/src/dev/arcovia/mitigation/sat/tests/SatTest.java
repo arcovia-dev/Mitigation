@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
-
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
-import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
@@ -33,26 +31,29 @@ public class SatTest {
 
     @Test
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
-        var webConverter = new WebEditorConverter();
         var dfdConverter = new DataFlowDiagramConverter();
 
         // (personal AND nonEU) => encrypted
-        var constraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
+        var dataConstraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
                 new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
                 new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
-        var constraints = List.of(constraint, constraint);
-        
+        var nodeConstraint = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
+                new Literal(true, new NodeLabel(new Label("Stereotype", "local_logging")))));
+        var constraints = List.of(dataConstraint, nodeConstraint);
+
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)
                 .put(new Label("Location", "nonEU"), 5)
                 .put(new Label("Encryption", "Encrypted"), 1)
+                .put(new Label("Stereotype", "internal"), 3)
+                .put(new Label("Stereotype", "local_logging"), 1)
                 .build();
 
-        var repairedDfdCosts = new Mechanic().repair(webConverter.webToDfd(MIN_SAT), constraints, costs);
+        var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts);
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "repaired.json");
-        
-        var repairedDfdMinimal = new Mechanic().repair(webConverter.webToDfd(MIN_SAT), constraints);
+
+        var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
         checkIfConsistent(repairedDfdMinimal);
     }
 
@@ -97,8 +98,9 @@ public class SatTest {
         }
         Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Forwarding: process_in_user", "Encrypted"), "user",
                 List.of("Personal"), "db", List.of());
-
-        Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of(), "user", List.of(), "db", List.of("nonEU"));
+        
+        Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of("internal", "local_logging"), "user", List.of(), "db",
+                List.of("nonEU"));
 
         assertEquals(expectedNodeBehavior, nodeBehavior);
         assertEquals(expectedNodeProperties, nodeProperties);

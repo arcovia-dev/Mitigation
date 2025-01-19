@@ -94,40 +94,53 @@ public class Sat {
     private void buildClauses() throws ContradictionException {
         // Apply constraints
         for (Node node : nodes) {
-            for (InPin inPin : node.inPins()
-                    .keySet()) {
-                for (Constraint constraint : constraints) {
+            for (Constraint constraint : constraints) {
+                if (constraint.literals().stream().allMatch(literal -> literal.compositeLabel()
+                        .category()
+                        .equals(LabelCategory.Node))) {
                     var clause = new VecInt();
                     for (Literal literal : constraint.literals()) {
-                        
                         var label = literal.compositeLabel();
                         var sign = literal.positive() ? 1 : -1;
-                        if (literal.compositeLabel()
-                                .category()
-                                .equals(LabelCategory.Node)) {
-                            clause.push(sign * term(node.id().toString(), label));
-                        } else if (literal.compositeLabel()
-                                .category()
-                                .equals(LabelCategory.IncomingData)) {
-                            clause.push(sign * term(inPin.id(), label));
-                        }
+                        clause.push(sign * term(node.name(), label));
                     }
                     addClause(clause);
                 }
-
+                else {
+                    for (InPin inPin : node.inPins()
+                            .keySet()) {
+                        var clause = new VecInt();
+                        for (Literal literal : constraint.literals()) {
+                            var label = literal.compositeLabel();
+                            var sign = literal.positive() ? 1 : -1;
+                            if (literal.compositeLabel()
+                                    .category()
+                                    .equals(LabelCategory.Node)) {
+                                clause.push(sign * term(node.name(), label));
+                            } else if (literal.compositeLabel()
+                                    .category()
+                                    .equals(LabelCategory.IncomingData)) {
+                                    clause.push(sign * term(inPin.id(), label));
+                            }
+                        }
+                        addClause(clause);
+                    }
+                }
             }
+
         }
 
         // Require node and outgoing data chars
         for (Node node : nodes) {
             for (Label characteristic : node.nodeChars()) {
-                addClause(clause(term(node.id().toString(), new NodeLabel(new Label(characteristic.type(), characteristic.value())))));
+                addClause(clause(term(node.name(), new NodeLabel(new Label(characteristic.type(), characteristic.value())))));
             }
             for (OutPin outPin : node.outPins()
                     .keySet()) {
                 for (Label outgoingCharacteristic : node.outPins()
                         .get(outPin)) {
-                    addClause(clause(term(outPin.id(), new OutgoingDataLabel(new Label(outgoingCharacteristic.type(), outgoingCharacteristic.value())))));
+                    addClause(clause(
+                            term(outPin.id(), new OutgoingDataLabel(new Label(outgoingCharacteristic.type(), outgoingCharacteristic.value())))));
                 }
             }
         }

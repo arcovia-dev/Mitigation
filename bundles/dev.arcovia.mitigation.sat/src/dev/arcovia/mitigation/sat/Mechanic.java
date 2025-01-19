@@ -11,6 +11,7 @@ import java.util.Set;
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.WebEditorConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
@@ -24,16 +25,30 @@ import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
-    private List<Node> nodes = new ArrayList<>();
-    private List<Flow> flows = new ArrayList<>();
+    private DataFlowDiagramAndDictionary dfd;
+    private List<Constraint> constraints;
+    private Map<Label, Integer> costs;
+    private List<Node> nodes;
+    private List<Flow> flows;
 
-    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs)
-            throws ContradictionException, TimeoutException, IOException {
+    public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
+        this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
+        this.constraints = constraints;
+        this.costs = costs;
+        this.nodes = new ArrayList<>();
+        this.flows = new ArrayList<>();
+    }
+
+    public Mechanic(String dfdLocation, List<Constraint> constraints) {
+        this(dfdLocation, constraints, null);
+    }
+
+
+    public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndFlows(violatingTFGs);
-
         var solutions = new Sat().solve(nodes, flows, constraints);
         var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs);
 
@@ -43,11 +58,6 @@ public class Mechanic {
         applyActions(dfd, actions);
 
         return dfd;
-    }
-
-    public DataFlowDiagramAndDictionary repair(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints)
-            throws ContradictionException, TimeoutException, IOException {
-        return repair(dfd, constraints, null);
     }
 
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
@@ -275,6 +285,34 @@ public class Mechanic {
                     if (!newAssignments.isEmpty())
                         behavior.getAssignment()
                                 .addAll(newAssignments);
+                }
+            } else if (action.compositeLabel()
+                    .category()
+                    .equals(LabelCategory.Node)) {
+                for (var node : dfd.dataFlowDiagram()
+                        .getNodes()) {
+                    if (node.getEntityName()
+                            .equals(action.domain())) {
+                        var type = action.compositeLabel()
+                                .label()
+                                .type();
+                        var value = action.compositeLabel()
+                                .label()
+                                .value();
+                        var label = dd.getLabelTypes()
+                                .stream()
+                                .filter(labelType -> labelType.getEntityName()
+                                        .equals(type))
+                                .flatMap(labelType -> labelType.getLabel()
+                                        .stream())
+                                .filter(labelValue -> labelValue.getEntityName()
+                                        .equals(value))
+                                .findAny()
+                                .get();
+
+                        node.getProperties()
+                                .add(label);
+                    }
                 }
             }
         }
