@@ -196,6 +196,11 @@ public class Mechanic {
         for (var solution : solutions) {
             int cost = 0;
             for (var term : solution) {
+                if(!costs.keySet().contains(term.compositeLabel().label())) {
+                    logger.warn("Not abl to get cost of " + term.compositeLabel().label().toString());
+                    return getMinimalSolution(solutions);
+                }
+                
                 cost += costs.get(term.compositeLabel()
                         .label());
             }
