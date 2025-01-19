@@ -131,12 +131,7 @@ public class Mechanic {
             for (var vertex : tfg.getVertices()) {
 
                 DFDVertex node = (DFDVertex) vertex;
-                
-                //skips any nodes that occur twice over TFGS
-                if(nodes.stream().anyMatch(n -> n.id().equals(node.getReferencedElement().getId()))) {
-                    continue;
-                }
-                
+
                 Map<InPin, List<Label>> inPins = new HashMap<>();
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
@@ -146,13 +141,6 @@ public class Mechanic {
                         pinChars.add(new Label(type, value));
                     }
                     inPins.put(new InPin(inPin.getVariableName()), pinChars);
-                }
-
-                List<Label> nodeLabels = new ArrayList<>();
-                for (var property : node.getAllVertexCharacteristics()) {
-                    var type = property.getTypeName();
-                    var value = property.getValueName();
-                    nodeLabels.add(new Label(type, value));
                 }
 
                 Map<OutPin, List<Label>> outPinLabelMap = new HashMap<>();
@@ -165,8 +153,33 @@ public class Mechanic {
                     }
                     outPinLabelMap.put(new OutPin(outPin.getVariableName()), pinLabel);
                 }
+                // if not in list add otherwise add missing pins
+                if (nodes.stream()
+                        .noneMatch(n -> n.id()
+                                .equals(node.getReferencedElement()
+                                        .getId()))) {
+                    List<Label> nodeLabels = new ArrayList<>();
+                    for (var property : node.getAllVertexCharacteristics()) {
+                        var type = property.getTypeName();
+                        var value = property.getValueName();
+                        nodeLabels.add(new Label(type, value));
+                    }
+                    nodes.add(new Node(node.getReferencedElement()
+                            .getId(), inPins, outPinLabelMap, nodeLabels));
 
-                nodes.add(new Node(node.getReferencedElement().getId(), node.getName(), inPins, outPinLabelMap, nodeLabels));
+                } else {
+                    var satNode = nodes.stream()
+                            .filter(n -> n.id()
+                                    .equals(node.getReferencedElement()
+                                            .getId()))
+                            .findFirst()
+                            .get();
+
+                    satNode.inPins()
+                            .putAll(inPins);
+                    satNode.outPins()
+                            .putAll(outPinLabelMap);
+                }
 
                 for (var pin : node.getPinFlowMap()
                         .keySet()) {
@@ -262,7 +275,7 @@ public class Mechanic {
                                     .label()
                                     .value();
                             var label = getOrCreateLabel(dd, type, value);
-                               
+
                             if (assignment instanceof Assignment cast) {
                                 cast.getOutputLabels()
                                         .add(label);
@@ -316,18 +329,18 @@ public class Mechanic {
                 .filter(labelValue -> labelValue.getEntityName()
                         .equals(value))
                 .findAny();
-        
+
         org.dataflowanalysis.dfd.datadictionary.Label label;
-        
-        if(!optionalLabel.isEmpty()) {
+
+        if (!optionalLabel.isEmpty()) {
             label = optionalLabel.get();
-        }                 
-        else {
+        } else {
             logger.warn("Couldn´t find label " + type + "." + value + " in Dictionary. Therefore creating this label.");
             var ddFactory = datadictionaryFactory.eINSTANCE;
             label = ddFactory.createLabel();
             label.setEntityName(value);
-            label.setId(UUID.nameUUIDFromBytes(value.getBytes()).toString());
+            label.setId(UUID.nameUUIDFromBytes(value.getBytes())
+                    .toString());
 
             var optionalLabelType = dd.getLabelTypes()
                     .stream()
@@ -335,19 +348,21 @@ public class Mechanic {
                             .equals(type))
                     .findFirst();
 
-            LabelType labelType; 
+            LabelType labelType;
 
             if (!optionalLabelType.isEmpty()) {
                 labelType = optionalLabelType.get();
-            }
-            else {
-                labelType = ddFactory.createLabelType(); 
+            } else {
+                labelType = ddFactory.createLabelType();
                 labelType.setEntityName(type);
-                labelType.setId(UUID.nameUUIDFromBytes(type.getBytes()).toString());
-                dd.getLabelTypes().add(labelType);
+                labelType.setId(UUID.nameUUIDFromBytes(type.getBytes())
+                        .toString());
+                dd.getLabelTypes()
+                        .add(labelType);
             }
-            
-            labelType.getLabel().add(label);   
+
+            labelType.getLabel()
+                    .add(label);
         }
         return label;
     }
