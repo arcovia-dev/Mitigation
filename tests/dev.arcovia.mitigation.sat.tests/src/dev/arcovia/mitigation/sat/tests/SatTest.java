@@ -1,6 +1,7 @@
 package dev.arcovia.mitigation.sat.tests;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
+import org.dataflowanalysis.examplemodels.Activator;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -106,5 +108,37 @@ public class SatTest {
         assertEquals(expectedNodeProperties, nodeProperties);
 
     }
+    
+    @Test
+    public void tuhhTest() throws ContradictionException, TimeoutException, IOException {
+        var dfdConverter = new DataFlowDiagramConverter();
+        final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
+        final String location = Paths.get("casestudies", "TUHH-Models")
+                .toString();
+
+        // (personal AND nonEU) => encrypted
+        var constraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
+                new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
+                new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
+        var constraints = List.of(constraint, constraint);
+
+        Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
+                .put(new Label("Sensitivity", "Personal"), 10)
+                .put(new Label("Location", "nonEU"), 5)
+                .put(new Label("Encryption", "Encrypted"), 1)
+                .build();
+        // Still complicated
+       
+        var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater/jferrater_0.datadictionary").toString(), Paths.get(location, "jferrater/jferrater_0.dataflowdiagram")
+                .toString(),Activator.class);
+
+        var repairedDfdCosts = new Mechanic(dfd, constraints, costs).repair();
+        checkIfConsistent(repairedDfdCosts);
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "tuhhrepaired.json");
+
+        var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
+        checkIfConsistent(repairedDfdMinimal);
+    }
+    
 
 }

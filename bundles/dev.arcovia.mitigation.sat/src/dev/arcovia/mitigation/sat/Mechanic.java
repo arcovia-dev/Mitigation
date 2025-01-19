@@ -38,6 +38,14 @@ public class Mechanic {
         this.nodes = new ArrayList<>();
         this.flows = new ArrayList<>();
     }
+    
+    public Mechanic(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs) {
+        this.dfd = dfd;
+        this.constraints = constraints;
+        this.costs = costs;
+        this.nodes = new ArrayList<>();
+        this.flows = new ArrayList<>();
+    }
 
     public Mechanic(String dfdLocation, List<Constraint> constraints) {
         this(dfdLocation, constraints, null);
