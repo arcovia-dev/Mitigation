@@ -94,20 +94,16 @@ public class Sat {
     private void buildClauses() throws ContradictionException {
         // Apply constraints
         for (Node node : nodes) {
-
             for (Constraint constraint : constraints) {
                 if (constraint.literals().stream().allMatch(literal -> literal.compositeLabel()
                         .category()
                         .equals(LabelCategory.Node))) {
-
                     var clause = new VecInt();
                     for (Literal literal : constraint.literals()) {
-
                         var label = literal.compositeLabel();
                         var sign = literal.positive() ? 1 : -1;
                         clause.push(sign * term(node.name(), label));
                     }
-
                     addClause(clause);
                 }
                 else {
@@ -115,7 +111,6 @@ public class Sat {
                             .keySet()) {
                         var clause = new VecInt();
                         for (Literal literal : constraint.literals()) {
-
                             var label = literal.compositeLabel();
                             var sign = literal.positive() ? 1 : -1;
                             if (literal.compositeLabel()
