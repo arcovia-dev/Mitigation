@@ -39,7 +39,7 @@ public class SatTest {
                 new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
         var nodeConstraint = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
                 new Literal(true, new NodeLabel(new Label("Stereotype", "local_logging")))));
-        var constraints = List.of(constraint, constraint);
+        var constraints = List.of(constraint, nodeConstraint);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)
@@ -98,8 +98,8 @@ public class SatTest {
         }
         Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Forwarding: process_in_user", "Encrypted"), "user",
                 List.of("Personal"), "db", List.of());
-        //"internal", "local_logging"
-        Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of(), "user", List.of(), "db",
+        
+        Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of("internal", "local_logging"), "user", List.of(), "db",
                 List.of("nonEU"));
 
         assertEquals(expectedNodeBehavior, nodeBehavior);
