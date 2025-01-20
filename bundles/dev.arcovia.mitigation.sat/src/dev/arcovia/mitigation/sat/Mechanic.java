@@ -55,7 +55,22 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         var solutions = new Sat().solve(nodes, flows, constraints);
-        var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs);
+
+        List<Term> chosenSolution;
+        if(costs != null) {
+            for(var constraint : constraints) {
+                for(var term : constraint.literals()) {
+                    if(!costs.keySet().contains(term.compositeLabel().label())) {
+                        logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
+                        chosenSolution = getMinimalSolution(solutions);
+                    }
+                }
+            }
+            chosenSolution = getCheapestSolution(solutions, costs);
+        }
+        else {
+            chosenSolution = getMinimalSolution(solutions);
+        }
 
         List<Term> flatendNodes = getFlatNodes(nodes);
 
@@ -195,12 +210,7 @@ public class Mechanic {
         List<Term> cheapestSolution = null;
         for (var solution : solutions) {
             int cost = 0;
-            for (var term : solution) {
-                if(!costs.keySet().contains(term.compositeLabel().label())) {
-                    logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
-                    return getMinimalSolution(solutions);
-                }
-                
+            for (var term : solution) {                
                 cost += costs.get(term.compositeLabel()
                         .label());
             }
