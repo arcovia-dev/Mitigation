@@ -56,21 +56,7 @@ public class Mechanic {
         getNodesAndFlows(violatingTFGs);
         var solutions = new Sat().solve(nodes, flows, constraints);
 
-        List<Term> chosenSolution;
-        if(costs != null) {
-            for(var constraint : constraints) {
-                for(var term : constraint.literals()) {
-                    if(!costs.keySet().contains(term.compositeLabel().label())) {
-                        logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
-                        chosenSolution = getMinimalSolution(solutions);
-                    }
-                }
-            }
-            chosenSolution = getCheapestSolution(solutions, costs);
-        }
-        else {
-            chosenSolution = getMinimalSolution(solutions);
-        }
+        List<Term> chosenSolution = getChosenSolution(solutions);
 
         List<Term> flatendNodes = getFlatNodes(nodes);
 
@@ -78,6 +64,23 @@ public class Mechanic {
         applyActions(dfd, actions);
 
         return dfd;
+    }
+
+    private List<Term> getChosenSolution(List<List<Term>> solutions) {
+        if(costs != null) {
+            for(var constraint : constraints) {
+                for(var term : constraint.literals()) {
+                    if(!costs.keySet().contains(term.compositeLabel().label())) {
+                        logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
+                        return getMinimalSolution(solutions);
+                    }
+                }
+            }
+            return getCheapestSolution(solutions, costs);
+        }
+        else {
+            return getMinimalSolution(solutions);
+        }
     }
 
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
