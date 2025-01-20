@@ -174,11 +174,24 @@ public class Mechanic {
                                             .getId()))
                             .findFirst()
                             .get();
-
-                    satNode.inPins()
-                            .putAll(inPins);
-                    satNode.outPins()
-                            .putAll(outPinLabelMap);
+                    for(var inPin : inPins.keySet()) {
+                        if (satNode.inPins().keySet().contains(inPin)) {
+                            Set<Label> inPinLabel = new HashSet<>(inPins.get(inPin));
+                            inPinLabel.addAll(satNode.inPins().get(inPin));
+                            satNode.inPins().put(inPin, new ArrayList<Label>(inPinLabel));
+                        }
+                        else 
+                            satNode.inPins().put(inPin, inPins.get(inPin));
+                    }
+                    for(var outPin : outPinLabelMap.keySet()) {
+                        if (satNode.outPins().keySet().contains(outPin)) {
+                            Set<Label> inPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
+                            inPinLabel.addAll(satNode.outPins().get(outPin));
+                            satNode.outPins().put(outPin, new ArrayList<Label>(inPinLabel));
+                        }
+                        else 
+                            satNode.outPins().put(outPin, outPinLabelMap.get(outPin));
+                    }
                 }
 
                 for (var pin : node.getPinFlowMap()
