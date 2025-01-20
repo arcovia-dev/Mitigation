@@ -197,7 +197,7 @@ public class Mechanic {
             int cost = 0;
             for (var term : solution) {
                 if(!costs.keySet().contains(term.compositeLabel().label())) {
-                    logger.warn("Not abl to get cost of " + term.compositeLabel().label().toString());
+                    logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
                     return getMinimalSolution(solutions);
                 }
                 
