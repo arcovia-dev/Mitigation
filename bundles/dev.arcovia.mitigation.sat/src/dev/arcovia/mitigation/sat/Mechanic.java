@@ -196,6 +196,11 @@ public class Mechanic {
         for (var solution : solutions) {
             int cost = 0;
             for (var term : solution) {
+                if(!costs.keySet().contains(term.compositeLabel().label())) {
+                    logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
+                    return getMinimalSolution(solutions);
+                }
+                
                 cost += costs.get(term.compositeLabel()
                         .label());
             }
