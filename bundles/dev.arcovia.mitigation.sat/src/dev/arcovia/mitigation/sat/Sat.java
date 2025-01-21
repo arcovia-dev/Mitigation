@@ -38,7 +38,7 @@ public class Sat {
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
 
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
@@ -54,9 +54,9 @@ public class Sat {
 
         buildClauses();
 
-        writeDimacsFile("dimacs.cnf", dimacsClauses);
+        writeDimacsFile(("testresults/"+dfdName+ ".cnf"), dimacsClauses);
 
-        writeLiteralMapping("literalMapping.json");
+        writeLiteralMapping("testresults/"+ dfdName+ "-literalMapping.json");
 
         return solveClauses();
     }

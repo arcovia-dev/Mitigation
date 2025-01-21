@@ -51,7 +51,7 @@ public class SatTest {
 
         var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts);
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "repaired.json");
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/minsat-repaired.json");
 
         var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
         checkIfConsistent(repairedDfdMinimal);

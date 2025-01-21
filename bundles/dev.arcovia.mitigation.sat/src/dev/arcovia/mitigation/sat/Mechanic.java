@@ -1,6 +1,7 @@
 package dev.arcovia.mitigation.sat;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,11 +35,23 @@ public class Mechanic {
     private Map<Label, Integer> costs;
     private List<Node> nodes;
     private List<Flow> flows;
+    private final String dfdName;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
     public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
+        var name = Paths.get(dfdLocation).getFileName().toString();
+        this.dfdName = name.substring(0, name.lastIndexOf('.'));
+        this.constraints = constraints;
+        this.costs = costs;
+        this.nodes = new ArrayList<>();
+        this.flows = new ArrayList<>();
+    }
+
+    public Mechanic(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs, String dfdName) {
+        this.dfd = dfd;
+        this.dfdName = dfdName;
         this.constraints = constraints;
         this.costs = costs;
         this.nodes = new ArrayList<>();
@@ -54,7 +67,7 @@ public class Mechanic {
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndFlows(violatingTFGs);
-        var solutions = new Sat().solve(nodes, flows, constraints);
+        var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
         
         List<Term> flatendNodes = getFlatNodes(nodes);
 

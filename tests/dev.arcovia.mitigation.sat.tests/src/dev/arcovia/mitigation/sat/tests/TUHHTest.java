@@ -44,9 +44,9 @@ public class TUHHTest {
                         .toString(),
                 Activator.class);
         
-        var repairedDfdCosts = new Mechanic(dfd, constraints, costs).repair();
+        var repairedDfdCosts = new Mechanic(dfd, constraints, costs, "jferrater").repair();
         
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "tuhhrepaired.json");
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/jferrater-repaired.json");
         
     }
 }
