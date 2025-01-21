@@ -84,8 +84,8 @@ public class Sat {
 
             // Prohibit current solution
             var negated = new VecInt();
-            for (var literal : model) {
-                negated.push(-literal);
+            for (var literal : deltaTerms) {
+                negated.push(-termToLiteral.getValue(literal));
             }
             addClause(negated);
         }
