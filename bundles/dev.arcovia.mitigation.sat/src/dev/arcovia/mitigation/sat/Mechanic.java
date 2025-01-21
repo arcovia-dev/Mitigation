@@ -44,14 +44,6 @@ public class Mechanic {
         this.nodes = new ArrayList<>();
         this.flows = new ArrayList<>();
     }
-    
-    public Mechanic(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs) {
-        this.dfd = dfd;
-        this.constraints = constraints;
-        this.costs = costs;
-        this.nodes = new ArrayList<>();
-        this.flows = new ArrayList<>();
-    }
 
     public Mechanic(String dfdLocation, List<Constraint> constraints) {
         this(dfdLocation, constraints, null);
@@ -64,17 +56,31 @@ public class Mechanic {
         getNodesAndFlows(violatingTFGs);
         var solutions = new Sat().solve(nodes, flows, constraints);
         
-        System.out.println(solutions);
-        
         List<Term> flatendNodes = getFlatNodes(nodes);
-        
-        var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs, flatendNodes);
 
+        List<Term> chosenSolution = getChosenSolution(solutions,flatendNodes);
 
         List<Term> actions = getActions(chosenSolution, flatendNodes);
         applyActions(dfd, actions);
 
         return dfd;
+    }
+
+    private List<Term> getChosenSolution(List<List<Term>> solutions, List<Term> flatendNodes) {
+        if(costs != null) {
+            for(var constraint : constraints) {
+                for(var term : constraint.literals()) {
+                    if(term.positive() && !costs.keySet().contains(term.compositeLabel().label())) {
+                        logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
+                        return getMinimalSolution(solutions);
+                    }
+                }
+            }
+            return getCheapestSolution(solutions, costs, flatendNodes);
+        }
+        else {
+            return getMinimalSolution(solutions);
+        }
     }
 
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
@@ -210,7 +216,6 @@ public class Mechanic {
             for (var term : solution) {
                 if (flatendNodes.contains(term))
                     continue;
-                
                 cost += costs.get(term.compositeLabel()
                         .label());
             }
