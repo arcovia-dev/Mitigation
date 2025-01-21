@@ -12,10 +12,10 @@ import dev.arcovia.mitigation.ranking.RankerType;
 import dev.arcovia.mitigation.ranking.RankingAggregationMethod;
 import dev.arcovia.mitigation.ranking.tests.MitigationTestBase;
 
-public class Jferrater10aMitigationTest extends MitigationTestBase{
+public class Jferrater21MitigationTest extends MitigationTestBase{
 	
 	protected String getFolderName() {
-		return "jferrater10a";
+		return "jferrater";
 	}
 
 	protected String getFilesName() {
@@ -68,7 +68,7 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf10a_Half");
+        storeMeassurementResult(seeAverageRuntime(),"jf21_Half");
     }
     
     @Test
@@ -82,7 +82,7 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf10a_Quarter");
+        storeMeassurementResult(seeAverageRuntime(),"jf21_Quarter");
     }
     
     @Test
@@ -96,7 +96,7 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf10a_Increasing");
+        storeMeassurementResult(seeAverageRuntime(),"jf21_Increasing");
     }
     
     @Test
@@ -110,7 +110,7 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf10a_Cluster");
+        storeMeassurementResult(seeAverageRuntime(),"jf21_Cluster");
     }
     
     @Test
@@ -123,6 +123,6 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf10a_Brute_Force");
+        storeMeassurementResult(seeAverageRuntime(),"jf21_Brute_Force");
     }
 }

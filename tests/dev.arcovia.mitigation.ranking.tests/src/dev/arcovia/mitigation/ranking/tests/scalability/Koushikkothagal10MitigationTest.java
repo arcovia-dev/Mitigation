@@ -62,7 +62,7 @@ public class Koushikkothagal10MitigationTest extends MitigationTestBase{
     }
 
     @Test
-    public void executeMitigation() {
+    public void executeHalf() {
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
@@ -72,7 +72,49 @@ public class Koushikkothagal10MitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal10_Best");
+        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal10_Half");
+    }
+    
+    @Test
+    public void executeQuarter() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.QUATER;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal10_Quarter");
+    }
+    
+    @Test
+    public void executeIncreasing() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.INCREASING;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal10_Increasing");
+    }
+    
+    @Test
+    public void executeCluster() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.BATCH_SIZE_OPTIMAL;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal10_Cluster");
     }
     
     @Test

@@ -56,9 +56,9 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
 	protected RankingAggregationMethod getAggregationMethod() {
 		return RankingAggregationMethod.EXPONENTIAL_RANKS;
 	}
-
+    
     @Test
-    public void executeMitigation() {
+    public void executeHalf() {
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
@@ -68,7 +68,49 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf7a_Best");
+        storeMeassurementResult(seeAverageRuntime(),"jf7a_Half");
+    }
+    
+    @Test
+    public void executeQuarter() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.QUATER;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf7a_Quarter");
+    }
+    
+    @Test
+    public void executeIncreasing() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.INCREASING;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf7a_Increasing");
+    }
+    
+    @Test
+    public void executeCluster() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.BATCH_SIZE_OPTIMAL;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf7a_Cluster");
     }
     
     @Test

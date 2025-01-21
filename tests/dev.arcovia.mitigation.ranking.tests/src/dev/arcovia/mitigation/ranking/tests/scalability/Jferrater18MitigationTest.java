@@ -58,7 +58,7 @@ public class Jferrater18MitigationTest extends MitigationTestBase{
 	}
 
     @Test
-    public void executeMitigation() {
+    public void executeHalf() {
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
@@ -68,6 +68,61 @@ public class Jferrater18MitigationTest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"jf18_Best");
+        storeMeassurementResult(seeAverageRuntime(),"jf18_Half");
+    }
+    
+    @Test
+    public void executeQuarter() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.QUATER;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf18_Quarter");
+    }
+    
+    @Test
+    public void executeIncreasing() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.INCREASING;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf18_Increasing");
+    }
+    
+    @Test
+    public void executeCluster() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.BATCH_SIZE_OPTIMAL;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf18_Cluster");
+    }
+    
+    @Test
+    public void executeBruteForce() throws Exception {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf18_Brute_Force");
     }
 }
