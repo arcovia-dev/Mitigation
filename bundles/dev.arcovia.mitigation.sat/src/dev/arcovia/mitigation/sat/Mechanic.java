@@ -2,12 +2,13 @@ package dev.arcovia.mitigation.sat;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.HashSet;
+import java.util.Comparator;
 
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
@@ -23,17 +24,16 @@ import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
-import java.util.HashSet;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
-    private DataFlowDiagramAndDictionary dfd;
-    private List<Constraint> constraints;
-    private Map<Label, Integer> costs;
-    private List<Node> nodes;
-    private List<Flow> flows;
+    private final DataFlowDiagramAndDictionary dfd;
+    private final List<Constraint> constraints;
+    private final Map<Label, Integer> costs;
+    private final List<Node> nodes;
+    private final List<Flow> flows;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
@@ -55,9 +55,10 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         var solutions = new Sat().solve(nodes, flows, constraints);
-        var chosenSolution = costs == null ? getMinimalSolution(solutions) : getCheapestSolution(solutions, costs);
-
+        
         List<Term> flatendNodes = getFlatNodes(nodes);
+
+        List<Term> chosenSolution = getChosenSolution(solutions,flatendNodes);
 
         List<Term> actions = getActions(chosenSolution, flatendNodes);
         applyActions(dfd, actions);
@@ -65,10 +66,27 @@ public class Mechanic {
         return dfd;
     }
 
+    private List<Term> getChosenSolution(List<List<Term>> solutions, List<Term> flatendNodes) {
+        if(costs != null) {
+            for(var constraint : constraints) {
+                for(var term : constraint.literals()) {
+                    if(term.positive() && !costs.containsKey(term.compositeLabel().label())) {
+                        logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
+                        return getMinimalSolution(solutions);
+                    }
+                }
+            }
+            return getCheapestSolution(solutions, costs, flatendNodes);
+        }
+        else {
+            return getMinimalSolution(solutions);
+        }
+    }
+
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
-        var ressourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
-                .useCustomResourceProvider(ressourceProvider)
+                .useCustomResourceProvider(resourceProvider)
                 .build();
 
         analysis.initializeAnalysis();
@@ -80,7 +98,7 @@ public class Mechanic {
             if (checkConstraints(tfg, constraints))
                 violatingTransposeFlowGraphs.add(tfg);
         }
-        return new ArrayList<AbstractTransposeFlowGraph>(violatingTransposeFlowGraphs);
+        return new ArrayList<>(violatingTransposeFlowGraphs);
     }
 
     private boolean checkConstraints(AbstractTransposeFlowGraph tfg, List<Constraint> constraints) {
@@ -93,10 +111,10 @@ public class Mechanic {
 
     private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Literal> constraint) {
         List<String> negativeLiterals = new ArrayList<>();
-        List<String> positveLiterals = new ArrayList<>();
+        List<String> positiveLiterals = new ArrayList<>();
         for (var literal : constraint) {
             if (literal.positive())
-                positveLiterals.add(literal.compositeLabel()
+                positiveLiterals.add(literal.compositeLabel()
                         .toString());
             else
                 negativeLiterals.add(literal.compositeLabel()
@@ -115,7 +133,7 @@ public class Mechanic {
             }
 
             if (nodeLiterals.stream()
-                    .anyMatch(positveLiterals::contains)) {
+                    .anyMatch(positiveLiterals::contains)) {
                 continue;
             } else if (!nodeLiterals.containsAll(negativeLiterals)) {
                 continue;
@@ -217,16 +235,18 @@ public class Mechanic {
     }
 
     private List<Term> getMinimalSolution(List<List<Term>> solutions) {
-        Collections.sort(solutions, (list1, list2) -> Integer.compare(list1.size(), list2.size()));
+        solutions.sort(Comparator.comparingInt(List::size));
         return solutions.get(0);
     }
 
-    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs) {
+    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs, List<Term> flatendNodes) {
         int minCost = Integer.MAX_VALUE;
         List<Term> cheapestSolution = null;
         for (var solution : solutions) {
             int cost = 0;
             for (var term : solution) {
+                if (flatendNodes.contains(term))
+                    continue;
                 cost += costs.get(term.compositeLabel()
                         .label());
             }
@@ -293,7 +313,7 @@ public class Mechanic {
                                 cast.getOutputLabels()
                                         .add(label);
                             }
-                            if (assignment instanceof ForwardingAssignment cast) {
+                            if (assignment instanceof ForwardingAssignment) {
                                 var ddFactory = datadictionaryFactory.eINSTANCE;
                                 var assign = ddFactory.createAssignment();
                                 assign.getOutputLabels()
@@ -344,11 +364,12 @@ public class Mechanic {
                 .findAny();
 
         org.dataflowanalysis.dfd.datadictionary.Label label;
-
-        if (!optionalLabel.isEmpty()) {
+        
+        if(optionalLabel.isPresent()) {
             label = optionalLabel.get();
-        } else {
-            logger.warn("Couldn´t find label " + type + "." + value + " in Dictionary. Therefore creating this label.");
+        }                 
+        else {
+            logger.warn("Could not find label " + type + "." + value + " in Dictionary. Therefore creating this label.");
             var ddFactory = datadictionaryFactory.eINSTANCE;
             label = ddFactory.createLabel();
             label.setEntityName(value);
@@ -363,7 +384,7 @@ public class Mechanic {
 
             LabelType labelType;
 
-            if (!optionalLabelType.isEmpty()) {
+            if (optionalLabelType.isPresent()) {
                 labelType = optionalLabelType.get();
             } else {
                 labelType = ddFactory.createLabelType();
