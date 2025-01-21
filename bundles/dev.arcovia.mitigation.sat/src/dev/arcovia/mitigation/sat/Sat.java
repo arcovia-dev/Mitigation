@@ -66,7 +66,7 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        if (problem.isSatisfiable()) {
+        while (problem.isSatisfiable()) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
