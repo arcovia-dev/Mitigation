@@ -185,6 +185,8 @@ public abstract class MitigationTestBase extends TestBase {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//preserve individual meassurements for statistical tests
+		storeMeassurementResult(meassurement,"RAW");
 	}
 
 	public List<String> loadSolutionRanking() {
