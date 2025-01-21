@@ -150,7 +150,7 @@ public class Mechanic {
 
                 DFDVertex node = (DFDVertex) vertex;
 
-                Map<InPin, List<Label>> inPins = new HashMap<>();
+                Map<InPin, List<Label>> inPinLabelMap = new HashMap<>();
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
                     for (var property : inPin.getAllCharacteristics()) {
@@ -158,7 +158,7 @@ public class Mechanic {
                         var value = property.getValueName();
                         pinChars.add(new Label(type, value));
                     }
-                    inPins.put(new InPin(inPin.getVariableName()), pinChars);
+                    inPinLabelMap.put(new InPin(inPin.getVariableName()), pinChars);
                 }
 
                 Map<OutPin, List<Label>> outPinLabelMap = new HashMap<>();
@@ -183,7 +183,7 @@ public class Mechanic {
                         nodeLabels.add(new Label(type, value));
                     }
                     nodes.add(new Node(node.getReferencedElement()
-                            .getId(), inPins, outPinLabelMap, nodeLabels));
+                            .getId(), inPinLabelMap, outPinLabelMap, nodeLabels));
 
                 } else {
                     var satNode = nodes.stream()
@@ -192,17 +192,17 @@ public class Mechanic {
                                             .getId()))
                             .findFirst()
                             .get();
-                    for(var inPin : inPins.keySet()) {
-                        if (satNode.inPins().keySet().contains(inPin)) {
-                            Set<Label> inPinLabel = new HashSet<>(inPins.get(inPin));
+                    for(var inPin : inPinLabelMap.keySet()) {
+                        if (satNode.inPins().containsKey(inPin)) {
+                            Set<Label> inPinLabel = new HashSet<>(inPinLabelMap.get(inPin));
                             inPinLabel.addAll(satNode.inPins().get(inPin));
                             satNode.inPins().put(inPin, new ArrayList<Label>(inPinLabel));
                         }
                         else 
-                            satNode.inPins().put(inPin, inPins.get(inPin));
+                            satNode.inPins().put(inPin, inPinLabelMap.get(inPin));
                     }
                     for(var outPin : outPinLabelMap.keySet()) {
-                        if (satNode.outPins().keySet().contains(outPin)) {
+                        if (satNode.outPins().containsKey(outPin)) {
                             Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
                             outPinLabel.addAll(satNode.outPins().get(outPin));
                             satNode.outPins().put(outPin, new ArrayList<Label>(outPinLabel));
