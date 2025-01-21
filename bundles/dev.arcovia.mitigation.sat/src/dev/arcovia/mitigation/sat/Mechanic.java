@@ -163,7 +163,7 @@ public class Mechanic {
 
                 DFDVertex node = (DFDVertex) vertex;
 
-                Map<InPin, List<Label>> inPins = new HashMap<>();
+                Map<InPin, List<Label>> inPinLabelMap = new HashMap<>();
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
                     for (var property : inPin.getAllCharacteristics()) {
@@ -171,14 +171,7 @@ public class Mechanic {
                         var value = property.getValueName();
                         pinChars.add(new Label(type, value));
                     }
-                    inPins.put(new InPin(inPin.getVariableName()), pinChars);
-                }
-
-                List<Label> nodeLabels = new ArrayList<>();
-                for (var property : node.getAllVertexCharacteristics()) {
-                    var type = property.getTypeName();
-                    var value = property.getValueName();
-                    nodeLabels.add(new Label(type, value));
+                    inPinLabelMap.put(new InPin(inPin.getVariableName()), pinChars);
                 }
 
                 Map<OutPin, List<Label>> outPinLabelMap = new HashMap<>();
@@ -191,8 +184,46 @@ public class Mechanic {
                     }
                     outPinLabelMap.put(new OutPin(outPin.getVariableName()), pinLabel);
                 }
+                // if not in list add otherwise add missing pins
+                if (nodes.stream()
+                        .noneMatch(n -> n.id()
+                                .equals(node.getReferencedElement()
+                                        .getId()))) {
+                    List<Label> nodeLabels = new ArrayList<>();
+                    for (var property : node.getAllVertexCharacteristics()) {
+                        var type = property.getTypeName();
+                        var value = property.getValueName();
+                        nodeLabels.add(new Label(type, value));
+                    }
+                    nodes.add(new Node(node.getReferencedElement()
+                            .getId(), inPinLabelMap, outPinLabelMap, nodeLabels));
 
-                nodes.add(new Node(node.getName(), inPins, outPinLabelMap, nodeLabels));
+                } else {
+                    var satNode = nodes.stream()
+                            .filter(n -> n.id()
+                                    .equals(node.getReferencedElement()
+                                            .getId()))
+                            .findFirst()
+                            .get();
+                    for(var inPin : inPinLabelMap.keySet()) {
+                        if (satNode.inPins().containsKey(inPin)) {
+                            Set<Label> inPinLabel = new HashSet<>(inPinLabelMap.get(inPin));
+                            inPinLabel.addAll(satNode.inPins().get(inPin));
+                            satNode.inPins().put(inPin, new ArrayList<Label>(inPinLabel));
+                        }
+                        else 
+                            satNode.inPins().put(inPin, inPinLabelMap.get(inPin));
+                    }
+                    for(var outPin : outPinLabelMap.keySet()) {
+                        if (satNode.outPins().containsKey(outPin)) {
+                            Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
+                            outPinLabel.addAll(satNode.outPins().get(outPin));
+                            satNode.outPins().put(outPin, new ArrayList<Label>(outPinLabel));
+                        }
+                        else 
+                            satNode.outPins().put(outPin, outPinLabelMap.get(outPin));
+                    }
+                }
 
                 for (var pin : node.getPinFlowMap()
                         .keySet()) {
@@ -251,7 +282,7 @@ public class Mechanic {
                 }
             }
             for (var property : node.nodeChars()) {
-                flatendNodes.add(new Term(node.name(), new NodeLabel(new Label(property.type(), property.value()))));
+                flatendNodes.add(new Term(node.id(), new NodeLabel(new Label(property.type(), property.value()))));
             }
         }
         return flatendNodes;
@@ -290,7 +321,7 @@ public class Mechanic {
                                     .label()
                                     .value();
                             var label = getOrCreateLabel(dd, type, value);
-                               
+
                             if (assignment instanceof Assignment cast) {
                                 cast.getOutputLabels()
                                         .add(label);
@@ -316,7 +347,7 @@ public class Mechanic {
                     .equals(LabelCategory.Node)) {
                 for (var node : dfd.dataFlowDiagram()
                         .getNodes()) {
-                    if (node.getEntityName()
+                    if (node.getId()
                             .equals(action.domain())) {
                         var type = action.compositeLabel()
                                 .label()
@@ -344,7 +375,7 @@ public class Mechanic {
                 .filter(labelValue -> labelValue.getEntityName()
                         .equals(value))
                 .findAny();
-        
+
         org.dataflowanalysis.dfd.datadictionary.Label label;
         
         if(optionalLabel.isPresent()) {
@@ -355,7 +386,8 @@ public class Mechanic {
             var ddFactory = datadictionaryFactory.eINSTANCE;
             label = ddFactory.createLabel();
             label.setEntityName(value);
-            label.setId(UUID.nameUUIDFromBytes(value.getBytes()).toString());
+            label.setId(UUID.nameUUIDFromBytes(value.getBytes())
+                    .toString());
 
             var optionalLabelType = dd.getLabelTypes()
                     .stream()
@@ -363,19 +395,21 @@ public class Mechanic {
                             .equals(type))
                     .findFirst();
 
-            LabelType labelType; 
+            LabelType labelType;
 
             if (optionalLabelType.isPresent()) {
                 labelType = optionalLabelType.get();
-            }
-            else {
-                labelType = ddFactory.createLabelType(); 
+            } else {
+                labelType = ddFactory.createLabelType();
                 labelType.setEntityName(type);
-                labelType.setId(UUID.nameUUIDFromBytes(type.getBytes()).toString());
-                dd.getLabelTypes().add(labelType);
+                labelType.setId(UUID.nameUUIDFromBytes(type.getBytes())
+                        .toString());
+                dd.getLabelTypes()
+                        .add(labelType);
             }
-            
-            labelType.getLabel().add(label);   
+
+            labelType.getLabel()
+                    .add(label);
         }
         return label;
     }
