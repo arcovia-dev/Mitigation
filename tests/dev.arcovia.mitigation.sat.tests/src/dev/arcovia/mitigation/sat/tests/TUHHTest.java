@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
+import dev.arcovia.mitigation.sat.*;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,6 @@ import org.sat4j.specs.TimeoutException;
 
 import com.google.common.collect.ImmutableMap;
 
-import dev.arcovia.mitigation.sat.Constraint;
-import dev.arcovia.mitigation.sat.Label;
-import dev.arcovia.mitigation.sat.Literal;
-import dev.arcovia.mitigation.sat.Mechanic;
-import dev.arcovia.mitigation.sat.NodeLabel;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 public class TUHHTest {
@@ -28,10 +24,43 @@ public class TUHHTest {
         final String location = Paths.get("casestudies", "TUHH-Models")
                 .toString();
 
-       
-        var nodeConstraint = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
+        var gatewayConstraint = new Constraint(List.of(
+                new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
+                new Literal(false, new IncomingDataLabel(new Label("Stereotype" , "entrypoint"))),
+                new Literal(true, new IncomingDataLabel(new Label("Stereotype" , "gateway")))));
+        var gatewayConstraintInternal = new Constraint(List.of(
+                new Literal(false, new NodeLabel(new Label("Stereotype", "gateway"))),
+                new Literal(false, new NodeLabel(new Label("Stereotype", "internal")))));
+        var authenticatedRequest = new Constraint(List.of(
+                new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
+                new Literal(true, new IncomingDataLabel(new Label("Stereotype" , "authenticated_request")))));
+        var transformedEntry = new Constraint(List.of(
+                new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
+                new Literal(false, new IncomingDataLabel(new Label("Stereotype" , "entrypoint"))),
+                new Literal(true, new IncomingDataLabel(new Label("Stereotype" , "transform_identity_representation")))));
+        var tokenValidation = new Constraint(List.of(
+                new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
+                new Literal(false, new IncomingDataLabel(new Label("Stereotype" , "entrypoint"))),
+                new Literal(true, new IncomingDataLabel(new Label("Stereotype" , "token_validation")))));
+        var loginAttempts = new Constraint(List.of(
+                new Literal(false, new NodeLabel(new Label("Stereotype", "authorization_server" ))),
+                new Literal(true, new NodeLabel(new Label("Stereotype" , "login_attempts_regulation")))));
+        var encryptedEntry = new Constraint(List.of(
+                new Literal(false, new IncomingDataLabel(new Label("Stereotype" , "entrypoint"))),
+                new Literal(true, new IncomingDataLabel(new Label("Stereotype" , "encrypted_connection")))
+        ));
+        var encryptedInternals = new Constraint(List.of(
+                new Literal(false, new IncomingDataLabel(new Label("Stereotype" , "internal"))),
+                new Literal(true, new IncomingDataLabel(new Label("Stereotype" , "encrypted_connection")))
+        ));
+        var localLogging = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
                 new Literal(true, new NodeLabel(new Label("Stereotype", "local_logging")))));
-        var constraints = List.of(nodeConstraint);
+        var logSanitization = new Constraint(List.of(
+                new Literal(false, new NodeLabel(new Label("Stereotype", "local_logging"))),
+                new Literal(true, new NodeLabel(new Label("Stereotype", "log_sanitization")))
+        ));
+        var constraints = List.of(gatewayConstraint,gatewayConstraintInternal,authenticatedRequest,transformedEntry,
+                tokenValidation,loginAttempts,encryptedEntry,encryptedInternals,localLogging);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Stereotype", "internal"), 3)

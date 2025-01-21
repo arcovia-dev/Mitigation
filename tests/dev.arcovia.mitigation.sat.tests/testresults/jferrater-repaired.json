@@ -185,27 +185,27 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "75",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "80",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "85",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "90",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "95",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -218,7 +218,7 @@
       "id" : "4",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nStereotype.circuit_breaker_link\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nStereotype.circuit_breaker_link\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -251,7 +251,7 @@
       "id" : "5",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -284,7 +284,7 @@
       "id" : "6",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -309,7 +309,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "87",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -317,7 +317,7 @@
       "id" : "7",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -350,7 +350,7 @@
       "id" : "8",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.circuit_breaker\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -383,7 +383,7 @@
       "id" : "9",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.circuit_breaker\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -444,7 +444,7 @@
       "id" : "10",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.circuit_breaker\nStereotype.infrastructural\nStereotype.circuit_breaker_link\nStereotype.configuration_server\nStereotype.github_repository\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.circuit_breaker\nStereotype.infrastructural\nStereotype.circuit_breaker_link\nStereotype.configuration_server\nStereotype.github_repository\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -490,6 +490,12 @@
     }, {
       "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
       "text" : "local_logging"
+    }, {
+      "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
+      "text" : "authenticated_request"
+    }, {
+      "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
+      "text" : "encrypted_connection"
     } ]
   }, {
     "id" : "16",
