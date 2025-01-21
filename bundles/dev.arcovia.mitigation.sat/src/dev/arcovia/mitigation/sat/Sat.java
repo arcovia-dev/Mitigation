@@ -285,7 +285,7 @@ public class Sat {
             }
         }
 
-        return joiner.toString() + " 0";
+        return joiner + " 0";
     }
 
     private void writeLiteralMapping(String outputFile) {
