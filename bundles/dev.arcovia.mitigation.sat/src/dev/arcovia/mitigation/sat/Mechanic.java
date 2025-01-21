@@ -55,10 +55,10 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         var solutions = new Sat().solve(nodes, flows, constraints);
-
-        List<Term> chosenSolution = getChosenSolution(solutions);
-
+        
         List<Term> flatendNodes = getFlatNodes(nodes);
+
+        List<Term> chosenSolution = getChosenSolution(solutions,flatendNodes);
 
         List<Term> actions = getActions(chosenSolution, flatendNodes);
         applyActions(dfd, actions);
@@ -66,17 +66,17 @@ public class Mechanic {
         return dfd;
     }
 
-    private List<Term> getChosenSolution(List<List<Term>> solutions) {
+    private List<Term> getChosenSolution(List<List<Term>> solutions, List<Term> flatendNodes) {
         if(costs != null) {
             for(var constraint : constraints) {
                 for(var term : constraint.literals()) {
-                    if(!costs.keySet().contains(term.compositeLabel().label())) {
+                    if(term.positive() && !costs.keySet().contains(term.compositeLabel().label())) {
                         logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
                         return getMinimalSolution(solutions);
                     }
                 }
             }
-            return getCheapestSolution(solutions, costs);
+            return getCheapestSolution(solutions, costs, flatendNodes);
         }
         else {
             return getMinimalSolution(solutions);
@@ -208,12 +208,14 @@ public class Mechanic {
         return solutions.get(0);
     }
 
-    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs) {
+    private List<Term> getCheapestSolution(List<List<Term>> solutions, Map<Label, Integer> costs, List<Term> flatendNodes) {
         int minCost = Integer.MAX_VALUE;
         List<Term> cheapestSolution = null;
         for (var solution : solutions) {
             int cost = 0;
-            for (var term : solution) {                
+            for (var term : solution) {
+                if (flatendNodes.contains(term))
+                    continue;
                 cost += costs.get(term.compositeLabel()
                         .label());
             }
