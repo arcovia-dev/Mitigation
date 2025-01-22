@@ -64,8 +64,15 @@ public class TUHHTest {
                 tokenValidation,loginAttempts,encryptedEntry,encryptedInternals,localLogging);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()
-                .put(new Label("Stereotype", "internal"), 3)
-                .put(new Label("Stereotype", "local_logging"), 1)
+                .put(new Label("Stereotype", "internal"), 10)
+                .put(new Label("Stereotype", "local_logging"), 2)
+                .put(new Label("Stereotype", "gateway"), 5)
+                .put(new Label("Stereotype", "authenticated_request"), 4)
+                .put(new Label("Stereotype", "transform_identity_representation"), 3)
+                .put(new Label("Stereotype", "token_validation"), 1)
+                .put(new Label("Stereotype", "login_attempts_regulation"), 2)
+                .put(new Label("Stereotype", "encrypted_connection"), 3)
+                .put(new Label("Stereotype", "log_sanitization"), 2)
                 .build();
 
         var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater", "jferrater_0.dataflowdiagram")
