@@ -237,6 +237,9 @@
       }, {
         "labelTypeId" : "11",
         "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "74",
@@ -270,13 +273,16 @@
       }, {
         "labelTypeId" : "11",
         "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "79",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service",
         "id" : "82",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -284,7 +290,7 @@
       "id" : "6",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -303,6 +309,9 @@
       }, {
         "labelTypeId" : "11",
         "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "84",
@@ -336,13 +345,16 @@
       }, {
         "labelTypeId" : "11",
         "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "89",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "92",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -350,7 +362,7 @@
       "id" : "8",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -369,6 +381,9 @@
       }, {
         "labelTypeId" : "11",
         "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "94",
@@ -490,6 +505,9 @@
     }, {
       "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
       "text" : "local_logging"
+    }, {
+      "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
+      "text" : "log_sanitization"
     }, {
       "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
       "text" : "authenticated_request"
