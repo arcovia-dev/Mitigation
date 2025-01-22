@@ -59,6 +59,7 @@ public class TUHHTest {
                 new Literal(false, new NodeLabel(new Label("Stereotype", "local_logging"))),
                 new Literal(true, new NodeLabel(new Label("Stereotype", "log_sanitization")))
         ));
+        // List of TUHH constraints without existence checks like auth-,logging-,secrets-server
         var constraints = List.of(entryViaGatewayOnly,nonInternalGateway,authenticatedRequest,transformedEntry,
                 tokenValidation,loginAttempts,encryptedEntry,encryptedInternals,localLogging);
 

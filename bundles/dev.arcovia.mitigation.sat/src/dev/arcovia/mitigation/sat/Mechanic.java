@@ -209,7 +209,7 @@ public class Mechanic {
                         if (satNode.inPins().containsKey(inPin)) {
                             Set<Label> inPinLabel = new HashSet<>(inPinLabelMap.get(inPin));
                             inPinLabel.addAll(satNode.inPins().get(inPin));
-                            satNode.inPins().put(inPin, new ArrayList<Label>(inPinLabel));
+                            satNode.inPins().put(inPin, new ArrayList<>(inPinLabel));
                         }
                         else 
                             satNode.inPins().put(inPin, inPinLabelMap.get(inPin));
@@ -218,7 +218,7 @@ public class Mechanic {
                         if (satNode.outPins().containsKey(outPin)) {
                             Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
                             outPinLabel.addAll(satNode.outPins().get(outPin));
-                            satNode.outPins().put(outPin, new ArrayList<Label>(outPinLabel));
+                            satNode.outPins().put(outPin, new ArrayList<>(outPinLabel));
                         }
                         else 
                             satNode.outPins().put(outPin, outPinLabelMap.get(outPin));
