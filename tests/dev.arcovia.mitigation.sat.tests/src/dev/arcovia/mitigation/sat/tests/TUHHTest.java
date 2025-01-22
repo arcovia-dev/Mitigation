@@ -24,11 +24,11 @@ public class TUHHTest {
         final String location = Paths.get("casestudies", "TUHH-Models")
                 .toString();
 
-        var gatewayConstraint = new Constraint(List.of(
+        var entryViaGatewayOnly = new Constraint(List.of(
                 new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
                 new Literal(false, new IncomingDataLabel(new Label("Stereotype" , "entrypoint"))),
                 new Literal(true, new IncomingDataLabel(new Label("Stereotype" , "gateway")))));
-        var gatewayConstraintInternal = new Constraint(List.of(
+        var nonInternalGateway = new Constraint(List.of(
                 new Literal(false, new NodeLabel(new Label("Stereotype", "gateway"))),
                 new Literal(false, new NodeLabel(new Label("Stereotype", "internal")))));
         var authenticatedRequest = new Constraint(List.of(
@@ -59,7 +59,7 @@ public class TUHHTest {
                 new Literal(false, new NodeLabel(new Label("Stereotype", "local_logging"))),
                 new Literal(true, new NodeLabel(new Label("Stereotype", "log_sanitization")))
         ));
-        var constraints = List.of(gatewayConstraint,gatewayConstraintInternal,authenticatedRequest,transformedEntry,
+        var constraints = List.of(entryViaGatewayOnly,nonInternalGateway,authenticatedRequest,transformedEntry,
                 tokenValidation,loginAttempts,encryptedEntry,encryptedInternals,localLogging);
 
         Map<Label, Integer> costs = ImmutableMap.<Label, Integer>builder()

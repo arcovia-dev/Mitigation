@@ -30,11 +30,11 @@ import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
-    private DataFlowDiagramAndDictionary dfd;
-    private List<Constraint> constraints;
-    private Map<Label, Integer> costs;
-    private List<Node> nodes;
-    private List<Flow> flows;
+    private final DataFlowDiagramAndDictionary dfd;
+    private final List<Constraint> constraints;
+    private final Map<Label, Integer> costs;
+    private final List<Node> nodes;
+    private final List<Flow> flows;
     private final String dfdName;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
