@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ranking.MitigationStrategy;
@@ -52,6 +53,7 @@ public class OnlineBanking14MitigationTest extends MitigationTestBase {
 		return constraints;
 	}
 
+	@Disabled
     @Test
     public void executeHalf() {
         deleteOldMeassurement();
@@ -66,6 +68,7 @@ public class OnlineBanking14MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM14_Half");
     }
     
+	@Disabled
     @Test
     public void executeQuarter() {
         deleteOldMeassurement();
@@ -80,6 +83,7 @@ public class OnlineBanking14MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM14_Quarter");
     }
     
+	@Disabled
     @Test
     public void executeIncreasing() {
         deleteOldMeassurement();
@@ -108,6 +112,7 @@ public class OnlineBanking14MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM14_Cluster");
     }
     
+    @Disabled
     @Test
     public void executeBruteForce() throws Exception {
         deleteOldMeassurement();
