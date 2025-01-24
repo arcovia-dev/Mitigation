@@ -28,8 +28,8 @@ def show_clusters(data_dict):
 
     best_kmeans = KMeans(n_clusters=best_k, random_state=42)
     best_kmeans.fit(features)
-
-    predictions = kmeans.predict(features)
+    labels = best_kmeans.labels_
+    predictions = best_kmeans.predict(features)
 
     # Create a DataFrame to view the results along with the original labels
     clustering_result = pd.DataFrame({
@@ -39,7 +39,7 @@ def show_clusters(data_dict):
     })
 
     cluster_maxes = []
-    for cluster_id in range(kmeans.n_clusters):
+    for cluster_id in range(best_kmeans.n_clusters):
         cluster_data = clustering_result[clustering_result['Cluster'] == cluster_id]
         cluster_maxes.append(max(list(cluster_data['Feature Vector'])))
 
