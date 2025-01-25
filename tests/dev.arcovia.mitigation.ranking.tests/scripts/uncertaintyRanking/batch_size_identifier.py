@@ -11,7 +11,7 @@ def show_clusters(data_dict):
     # The keys of the dictionary are the labels, and the values are the feature vectors
     features = np.array(list(data_dict.values()))
     features = features.reshape(-1, 1)
-    k_values = range(2, 3)
+    k_values = range(4, 5)
 
     best_k = -1
     best_silhouette_score = -1
