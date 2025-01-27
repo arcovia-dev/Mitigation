@@ -234,6 +234,10 @@ public class Mechanic {
                 }
             }
         }
+        nodes.sort(Comparator.comparing(node -> node.id()));
+        flows.sort(Comparator
+                .comparing((Flow flow) -> flow.source().id())
+                .thenComparing(flow -> flow.sink().id()));
     }
 
     private void deriveOutPinsToAssignmentsMap(DataFlowDiagramAndDictionary dfd) {
