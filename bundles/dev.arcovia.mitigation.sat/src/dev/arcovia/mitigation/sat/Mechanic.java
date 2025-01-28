@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.HashSet;
 import java.util.Comparator;
 
@@ -42,9 +41,7 @@ public class Mechanic {
 
     public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
-        var name = Paths.get(dfdLocation)
-                .getFileName()
-                .toString();
+        var name = Paths.get(dfdLocation).getFileName().toString();
         this.dfdName = name.substring(0, name.lastIndexOf('.'));
         this.constraints = constraints;
         this.costs = costs;
@@ -71,10 +68,10 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
-
+        
         List<Term> flatendNodes = getFlatNodes(nodes);
 
-        List<Term> chosenSolution = getChosenSolution(solutions, flatendNodes);
+        List<Term> chosenSolution = getChosenSolution(solutions,flatendNodes);
 
         List<Term> actions = getActions(chosenSolution, flatendNodes);
         applyActions(dfd, actions);
@@ -83,20 +80,18 @@ public class Mechanic {
     }
 
     private List<Term> getChosenSolution(List<List<Term>> solutions, List<Term> flatendNodes) {
-        if (costs != null) {
-            for (var constraint : constraints) {
-                for (var term : constraint.literals()) {
-                    if (term.positive() && !costs.containsKey(term.compositeLabel()
-                            .label())) {
-                        logger.warn("Cost of " + term.compositeLabel()
-                                .label()
-                                .toString() + " is missing. Defaulting to minimal solution.");
+        if(costs != null) {
+            for(var constraint : constraints) {
+                for(var term : constraint.literals()) {
+                    if(term.positive() && !costs.containsKey(term.compositeLabel().label())) {
+                        logger.warn("Cost of " + term.compositeLabel().label().toString() + " is missing. Defaulting to minimal solution.");
                         return getMinimalSolution(solutions);
                     }
                 }
             }
             return getCheapestSolution(solutions, costs, flatendNodes);
-        } else {
+        }
+        else {
             return getMinimalSolution(solutions);
         }
     }
@@ -116,10 +111,7 @@ public class Mechanic {
             if (checkConstraints(tfg, constraints))
                 violatingTransposeFlowGraphs.add(tfg);
         }
-        
-        var sortedViolatingTFGs= new ArrayList<>(violatingTransposeFlowGraphs);
-        sortedViolatingTFGs.sort(Comparator.comparing(tfg -> tfg.hashCode()));
-        return sortedViolatingTFGs;
+        return new ArrayList<>(violatingTransposeFlowGraphs);
     }
 
     private boolean checkConstraints(AbstractTransposeFlowGraph tfg, List<Constraint> constraints) {
@@ -167,14 +159,10 @@ public class Mechanic {
 
     private void getNodesAndFlows(List<AbstractTransposeFlowGraph> violatingTFGs) {
         for (var tfg : violatingTFGs) {
-            var vertices = tfg.getVertices()
-                    .stream()
-                    .map(v -> (DFDVertex) v)
-                    .collect(Collectors.toList());
-            vertices.sort(Comparator.comparing(vertex -> vertex.getReferencedElement()
-                    .getId()));
-            
-            for (var node : vertices) {
+            for (var vertex : tfg.getVertices()) {
+
+                DFDVertex node = (DFDVertex) vertex;
+
                 Map<InPin, List<Label>> inPinLabelMap = new HashMap<>();
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
@@ -217,29 +205,23 @@ public class Mechanic {
                                             .getId()))
                             .findFirst()
                             .get();
-                    for (var inPin : inPinLabelMap.keySet()) {
-                        if (satNode.inPins()
-                                .containsKey(inPin)) {
+                    for(var inPin : inPinLabelMap.keySet()) {
+                        if (satNode.inPins().containsKey(inPin)) {
                             Set<Label> inPinLabel = new HashSet<>(inPinLabelMap.get(inPin));
-                            inPinLabel.addAll(satNode.inPins()
-                                    .get(inPin));
-                            satNode.inPins()
-                                    .put(inPin, new ArrayList<>(inPinLabel));
-                        } else
-                            satNode.inPins()
-                                    .put(inPin, inPinLabelMap.get(inPin));
+                            inPinLabel.addAll(satNode.inPins().get(inPin));
+                            satNode.inPins().put(inPin, new ArrayList<>(inPinLabel));
+                        }
+                        else 
+                            satNode.inPins().put(inPin, inPinLabelMap.get(inPin));
                     }
-                    for (var outPin : outPinLabelMap.keySet()) {
-                        if (satNode.outPins()
-                                .containsKey(outPin)) {
+                    for(var outPin : outPinLabelMap.keySet()) {
+                        if (satNode.outPins().containsKey(outPin)) {
                             Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
-                            outPinLabel.addAll(satNode.outPins()
-                                    .get(outPin));
-                            satNode.outPins()
-                                    .put(outPin, new ArrayList<>(outPinLabel));
-                        } else
-                            satNode.outPins()
-                                    .put(outPin, outPinLabelMap.get(outPin));
+                            outPinLabel.addAll(satNode.outPins().get(outPin));
+                            satNode.outPins().put(outPin, new ArrayList<>(outPinLabel));
+                        }
+                        else 
+                            satNode.outPins().put(outPin, outPinLabelMap.get(outPin));
                     }
                 }
 
@@ -252,6 +234,10 @@ public class Mechanic {
                 }
             }
         }
+        nodes.sort(Comparator.comparing(node -> node.id()));
+        flows.sort(Comparator
+                .comparing((Flow flow) -> flow.source().id())
+                .thenComparing(flow -> flow.sink().id()));
     }
 
     private void deriveOutPinsToAssignmentsMap(DataFlowDiagramAndDictionary dfd) {
@@ -395,10 +381,11 @@ public class Mechanic {
                 .findAny();
 
         org.dataflowanalysis.dfd.datadictionary.Label label;
-
-        if (optionalLabel.isPresent()) {
+        
+        if(optionalLabel.isPresent()) {
             label = optionalLabel.get();
-        } else {
+        }                 
+        else {
             logger.warn("Could not find label " + type + "." + value + " in Dictionary. Therefore creating this label.");
             var ddFactory = datadictionaryFactory.eINSTANCE;
             label = ddFactory.createLabel();
