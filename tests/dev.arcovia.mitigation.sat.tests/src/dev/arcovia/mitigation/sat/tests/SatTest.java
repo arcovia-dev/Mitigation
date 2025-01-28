@@ -51,7 +51,7 @@ public class SatTest {
 
         var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts);
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "repaired.json");
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/minsat-repaired.json");
 
         var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
         checkIfConsistent(repairedDfdMinimal);
@@ -98,7 +98,7 @@ public class SatTest {
         }
         Map<String, List<String>> expectedNodeBehavior = Map.of("process", List.of("Forwarding: process_in_user", "Encrypted"), "user",
                 List.of("Personal"), "db", List.of());
-        
+
         Map<String, List<String>> expectedNodeProperties = Map.of("process", List.of("internal", "local_logging"), "user", List.of(), "db",
                 List.of("nonEU"));
 
@@ -106,5 +106,7 @@ public class SatTest {
         assertEquals(expectedNodeProperties, nodeProperties);
 
     }
+
+
 
 }

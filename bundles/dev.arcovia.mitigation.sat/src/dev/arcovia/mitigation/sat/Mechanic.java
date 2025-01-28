@@ -1,6 +1,7 @@
 package dev.arcovia.mitigation.sat;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,11 +35,14 @@ public class Mechanic {
     private final Map<Label, Integer> costs;
     private final List<Node> nodes;
     private final List<Flow> flows;
+    private final String dfdName;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
     public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
+        var name = Paths.get(dfdLocation).getFileName().toString();
+        this.dfdName = name.substring(0, name.lastIndexOf('.'));
         this.constraints = constraints;
         this.costs = costs;
         this.nodes = new ArrayList<>();
@@ -49,12 +53,26 @@ public class Mechanic {
         this(dfdLocation, constraints, null);
     }
 
+    public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints, Map<Label, Integer> costs) {
+        this.dfd = dfd;
+        this.dfdName = dfdName;
+        this.constraints = constraints;
+        this.costs = costs;
+        this.nodes = new ArrayList<>();
+        this.flows = new ArrayList<>();
+    }
+
+    public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints) {
+        this(dfd, dfdName, constraints, null);
+    }
+
     public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndFlows(violatingTFGs);
-        var solutions = new Sat().solve(nodes, flows, constraints);
+        sortNodesAndFlows();
+        var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
         
         List<Term> flatendNodes = getFlatNodes(nodes);
 
@@ -196,7 +214,7 @@ public class Mechanic {
                         if (satNode.inPins().containsKey(inPin)) {
                             Set<Label> inPinLabel = new HashSet<>(inPinLabelMap.get(inPin));
                             inPinLabel.addAll(satNode.inPins().get(inPin));
-                            satNode.inPins().put(inPin, new ArrayList<Label>(inPinLabel));
+                            satNode.inPins().put(inPin, new ArrayList<>(inPinLabel));
                         }
                         else 
                             satNode.inPins().put(inPin, inPinLabelMap.get(inPin));
@@ -205,7 +223,7 @@ public class Mechanic {
                         if (satNode.outPins().containsKey(outPin)) {
                             Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
                             outPinLabel.addAll(satNode.outPins().get(outPin));
-                            satNode.outPins().put(outPin, new ArrayList<Label>(outPinLabel));
+                            satNode.outPins().put(outPin, new ArrayList<>(outPinLabel));
                         }
                         else 
                             satNode.outPins().put(outPin, outPinLabelMap.get(outPin));
@@ -216,8 +234,11 @@ public class Mechanic {
                         .keySet()) {
                     var flow = node.getPinFlowMap()
                             .get(pin);
-                    flows.add(new Flow(new OutPin(flow.getSourcePin()
-                            .getId()), new InPin(pin.getId())));
+                    var SatFlow = new Flow(new OutPin(flow.getSourcePin()
+                            .getId()), new InPin(pin.getId()));
+                    if(!flows.contains(SatFlow)) {
+                        flows.add(SatFlow);
+                    }
                 }
             }
         }
@@ -234,6 +255,22 @@ public class Mechanic {
         }
     }
 
+    private void sortNodesAndFlows() {
+        nodes.sort(Comparator.comparing(node -> node.id()));
+        flows.sort(Comparator
+                .comparing((Flow flow) -> flow.source().id())
+                .thenComparing(flow -> flow.sink().id()));
+        for(var node : nodes) {
+            for(var labels : node.inPins().values()) {
+                labels.sort(Comparator.comparing(label->label.toString()));
+            }
+            for(var labels : node.outPins().values()) {
+                labels.sort(Comparator.comparing(label->label.toString()));
+            }
+            node.nodeChars().sort(Comparator.comparing(label->label.toString()));
+        }
+    }
+    
     private List<Term> getMinimalSolution(List<List<Term>> solutions) {
         solutions.sort(Comparator.comparingInt(List::size));
         return solutions.get(0);
