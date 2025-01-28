@@ -116,7 +116,10 @@ public class Mechanic {
             if (checkConstraints(tfg, constraints))
                 violatingTransposeFlowGraphs.add(tfg);
         }
-        return new ArrayList<>(violatingTransposeFlowGraphs);
+        
+        var sortedViolatingTFGs= new ArrayList<>(violatingTransposeFlowGraphs);
+        sortedViolatingTFGs.sort(Comparator.comparing(tfg -> tfg.hashCode()));
+        return sortedViolatingTFGs;
     }
 
     private boolean checkConstraints(AbstractTransposeFlowGraph tfg, List<Constraint> constraints) {
