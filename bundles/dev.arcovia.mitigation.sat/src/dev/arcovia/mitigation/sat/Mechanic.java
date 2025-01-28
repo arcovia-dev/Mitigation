@@ -256,6 +256,15 @@ public class Mechanic {
         flows.sort(Comparator
                 .comparing((Flow flow) -> flow.source().id())
                 .thenComparing(flow -> flow.sink().id()));
+        for(var node : nodes) {
+            for(var labels : node.inPins().values()) {
+                labels.sort(Comparator.comparing(label->label.toString()));
+            }
+            for(var labels : node.outPins().values()) {
+                labels.sort(Comparator.comparing(label->label.toString()));
+            }
+            node.nodeChars().sort(Comparator.comparing(label->label.toString()));
+        }
     }
     
     private List<Term> getMinimalSolution(List<List<Term>> solutions) {
