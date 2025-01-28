@@ -198,14 +198,6 @@ public class Mechanic {
                     }
                     nodes.add(new Node(node.getReferencedElement()
                             .getId(), inPinLabelMap, outPinLabelMap, nodeLabels));
-                    
-                    for (var pin : node.getPinFlowMap()
-                            .keySet()) {
-                        var flow = node.getPinFlowMap()
-                                .get(pin);
-                        flows.add(new Flow(new OutPin(flow.getSourcePin()
-                                .getId()), new InPin(pin.getId())));
-                    }
 
                 } else {
                     var satNode = nodes.stream()
@@ -231,6 +223,17 @@ public class Mechanic {
                         }
                         else 
                             satNode.outPins().put(outPin, outPinLabelMap.get(outPin));
+                    }
+                }
+
+                for (var pin : node.getPinFlowMap()
+                        .keySet()) {
+                    var flow = node.getPinFlowMap()
+                            .get(pin);
+                    var SatFlow = new Flow(new OutPin(flow.getSourcePin()
+                            .getId()), new InPin(pin.getId()));
+                    if(!flows.contains(SatFlow)) {
+                        flows.add(SatFlow);
                     }
                 }
             }
