@@ -218,7 +218,7 @@
       "id" : "4",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.circuit_breaker_link\nStereotype.github_repository\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nStereotype.circuit_breaker_link\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },

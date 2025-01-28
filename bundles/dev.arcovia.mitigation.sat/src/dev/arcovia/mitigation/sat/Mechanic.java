@@ -53,7 +53,7 @@ public class Mechanic {
         this(dfdLocation, constraints, null);
     }
 
-    public Mechanic(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs, String dfdName) {
+    public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = dfd;
         this.dfdName = dfdName;
         this.constraints = constraints;
@@ -62,16 +62,9 @@ public class Mechanic {
         this.flows = new ArrayList<>();
     }
 
-    public Mechanic(DataFlowDiagramAndDictionary dfd, Map<Label, Integer> costs, String dfdName) {
-        this.dfd = dfd;
-        this.dfdName = dfdName;
-        this.constraints = null;
-        this.costs = costs;
-        this.nodes = new ArrayList<>();
-        this.flows = new ArrayList<>();
+    public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints) {
+        this(dfd, dfdName, constraints, null);
     }
-
-
 
     public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
