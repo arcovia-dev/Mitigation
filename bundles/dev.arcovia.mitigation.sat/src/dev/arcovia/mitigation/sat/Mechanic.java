@@ -67,6 +67,7 @@ public class Mechanic {
         deriveOutPinsToAssignmentsMap(dfd);
 
         getNodesAndFlows(violatingTFGs);
+        sortNodesAndFlows();
         var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
         
         List<Term> flatendNodes = getFlatNodes(nodes);
@@ -197,6 +198,14 @@ public class Mechanic {
                     }
                     nodes.add(new Node(node.getReferencedElement()
                             .getId(), inPinLabelMap, outPinLabelMap, nodeLabels));
+                    
+                    for (var pin : node.getPinFlowMap()
+                            .keySet()) {
+                        var flow = node.getPinFlowMap()
+                                .get(pin);
+                        flows.add(new Flow(new OutPin(flow.getSourcePin()
+                                .getId()), new InPin(pin.getId())));
+                    }
 
                 } else {
                     var satNode = nodes.stream()
@@ -224,20 +233,8 @@ public class Mechanic {
                             satNode.outPins().put(outPin, outPinLabelMap.get(outPin));
                     }
                 }
-
-                for (var pin : node.getPinFlowMap()
-                        .keySet()) {
-                    var flow = node.getPinFlowMap()
-                            .get(pin);
-                    flows.add(new Flow(new OutPin(flow.getSourcePin()
-                            .getId()), new InPin(pin.getId())));
-                }
             }
         }
-        nodes.sort(Comparator.comparing(node -> node.id()));
-        flows.sort(Comparator
-                .comparing((Flow flow) -> flow.source().id())
-                .thenComparing(flow -> flow.sink().id()));
     }
 
     private void deriveOutPinsToAssignmentsMap(DataFlowDiagramAndDictionary dfd) {
@@ -251,6 +248,13 @@ public class Mechanic {
         }
     }
 
+    private void sortNodesAndFlows() {
+        nodes.sort(Comparator.comparing(node -> node.id()));
+        flows.sort(Comparator
+                .comparing((Flow flow) -> flow.source().id())
+                .thenComparing(flow -> flow.sink().id()));
+    }
+    
     private List<Term> getMinimalSolution(List<List<Term>> solutions) {
         solutions.sort(Comparator.comparingInt(List::size));
         return solutions.get(0);
