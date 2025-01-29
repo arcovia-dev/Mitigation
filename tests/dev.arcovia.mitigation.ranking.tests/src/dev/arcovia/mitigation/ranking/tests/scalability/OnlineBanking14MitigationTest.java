@@ -98,6 +98,7 @@ public class OnlineBanking14MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM14_Increasing");
     }
     
+	@Disabled
     @Test
     public void executeCluster() {
         deleteOldMeassurement();
@@ -110,6 +111,20 @@ public class OnlineBanking14MitigationTest extends MitigationTestBase {
             storeMeassurement(duration);
         }
         storeMeassurementResult(seeAverageRuntime(),"OBM14_Cluster");
+    }
+    
+    @Test
+    public void executeFastStart() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.FAST_START;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"OBM14_FastStart");
     }
     
     @Disabled

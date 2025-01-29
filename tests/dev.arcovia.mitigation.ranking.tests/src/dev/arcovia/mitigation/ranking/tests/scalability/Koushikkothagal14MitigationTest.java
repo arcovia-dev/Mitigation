@@ -107,6 +107,7 @@ public class Koushikkothagal14MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal14_Increasing");
     }
     
+    @Disabled
     @Test
     public void executeCluster() {
         deleteOldMeassurement();
@@ -119,6 +120,20 @@ public class Koushikkothagal14MitigationTest extends MitigationTestBase{
             storeMeassurement(duration);
         }
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal14_Cluster");
+    }
+    
+    @Test
+    public void executeFastStart() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.FAST_START;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal14_FastStart");
     }
     
     @Disabled

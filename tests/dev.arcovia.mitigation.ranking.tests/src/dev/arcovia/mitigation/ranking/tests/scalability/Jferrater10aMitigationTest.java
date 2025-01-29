@@ -103,6 +103,7 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf10a_Increasing");
     }
     
+	@Disabled
     @Test
     public void executeCluster() {
         deleteOldMeassurement();
@@ -115,6 +116,20 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
             storeMeassurement(duration);
         }
         storeMeassurementResult(seeAverageRuntime(),"jf10a_Cluster");
+    }
+    
+    @Test
+    public void executeFastStart() {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.FAST_START;
+            createTrainData();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(),"jf10a_FastStart");
     }
     
 	@Disabled

@@ -398,6 +398,25 @@ public abstract class MitigationTestBase extends TestBase {
 				result = mitigateWithFixAmountOfUncertainties(BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis()),
 						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
+		}
+		else if (mitigationStrategy.equals(MitigationStrategy.FAST_START)) {
+			int threshold = analysis.getUncertaintySources().size() / 2;
+			int n = analysis.getUncertaintySources().size();
+	        int i = 1;
+
+	        while (i <= n) {
+	        	result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+						i, analysis, ddAndDfd);
+				if (result.size() != 0) {
+					break;
+				}
+
+	            if (i * 2 > threshold) {
+	                i++;
+	            } else {
+	                i *= 2;
+	            }
+	        }
 		} 
 		else {
 			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
