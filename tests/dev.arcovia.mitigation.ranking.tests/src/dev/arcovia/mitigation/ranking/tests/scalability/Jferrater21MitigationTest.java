@@ -103,7 +103,6 @@ public class Jferrater21MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf21_Increasing");
     }
     
-	@Disabled
     @Test
     public void executeCluster() {
         deleteOldMeassurement();

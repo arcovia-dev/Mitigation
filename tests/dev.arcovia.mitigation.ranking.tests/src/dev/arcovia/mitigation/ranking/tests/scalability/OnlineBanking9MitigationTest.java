@@ -98,7 +98,7 @@ public class OnlineBanking9MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM9_Increasing");
     }
     
-	@Disabled
+
     @Test
     public void executeCluster() {
         deleteOldMeassurement();
@@ -113,6 +113,7 @@ public class OnlineBanking9MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM9_Cluster");
     }
     
+    @Disabled
     @Test
     public void executeFastStart() {
         deleteOldMeassurement();

@@ -392,11 +392,41 @@ public abstract class MitigationTestBase extends TestBase {
 			}
 		} 
 		else if (mitigationStrategy.equals(MitigationStrategy.BATCH_SIZE_OPTIMAL)) {
-			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					rankedUncertaintyEntityName.size(), analysis, ddAndDfd);
-			if (result.size() == 0) {
-				result = mitigateWithFixAmountOfUncertainties(BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis()),
-						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
+			String separator = "_Cluster-Separator_";
+			var prunedRankedNames = rankedUncertaintyEntityName.stream().filter(n -> !n.startsWith(separator)).toList();
+
+			List<List<String>> clusters = new ArrayList<>();
+			List<String> currentCluster = new ArrayList<>();
+			for(var line : rankedUncertaintyEntityName) {
+				if(line.startsWith(separator)) {
+					if(!currentCluster.isEmpty()) {
+						clusters.add(currentCluster);
+					}
+					currentCluster = new ArrayList<>();
+				}
+				else {
+					currentCluster.add(line);
+				}
+			}
+			if(!currentCluster.isEmpty()) {
+				clusters.add(currentCluster);
+			}
+			
+			var clusterSizes = clusters.stream().map(c -> c.size()).toList();
+			List<Integer> summedClusterSizes = new ArrayList<>();
+
+	        int sum = 0;
+	        for (int num : clusterSizes) {
+	            sum += num;
+	            summedClusterSizes.add(sum);
+	        }
+	        
+			for(int size : summedClusterSizes) {
+	        	result = mitigateWithFixAmountOfUncertainties(prunedRankedNames,
+						size, analysis, ddAndDfd);
+				if (result.size() != 0) {
+					break;
+				}
 			}
 		}
 		else if (mitigationStrategy.equals(MitigationStrategy.FAST_START)) {

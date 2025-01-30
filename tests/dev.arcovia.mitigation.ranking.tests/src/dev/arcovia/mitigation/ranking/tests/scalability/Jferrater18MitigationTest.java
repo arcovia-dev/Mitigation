@@ -103,7 +103,6 @@ public class Jferrater18MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf18_Increasing");
     }
     
-	@Disabled
     @Test
     public void executeCluster() {
         deleteOldMeassurement();
@@ -118,6 +117,7 @@ public class Jferrater18MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf18_Cluster");
     }
     
+	@Disabled
     @Test
     public void executeFastStart() {
         deleteOldMeassurement();

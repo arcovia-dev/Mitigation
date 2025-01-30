@@ -107,7 +107,6 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal18_Increasing");
     }
     
-    @Disabled
     @Test
     public void executeCluster() {
         deleteOldMeassurement();
@@ -122,6 +121,7 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal18_Cluster");
     }
     
+    @Disabled
     @Test
     public void executeFastStart() {
         deleteOldMeassurement();

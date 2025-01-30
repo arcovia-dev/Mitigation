@@ -34,15 +34,19 @@ def show_clusters(data_dict):
         'Feature Vector': list(data_dict.values())
     })
 
-    # Get max feature vector per cluster
-    cluster_maxes = []
-    for cluster_id in range(best_kmeans.n_clusters):
-        cluster_data = clustering_result[clustering_result['Cluster'] == cluster_id]
-        cluster_maxes.append(cluster_data['Feature Vector'].max())
+    result_list = []
+    prev_cluster = None
 
-    cutoff = min(cluster_maxes)
+    for _, row in clustering_result.iterrows():
+        cluster_id = row['Cluster']
+        
+        if prev_cluster is not None and prev_cluster != cluster_id:
+            result_list.append(("_Cluster-Separator_"+ str(cluster_id) +"_D", None))
+        
+        result_list.append((row['Label'], row['Feature Vector']))
+        
+        prev_cluster = cluster_id  # Update previous cluster
 
-    # Filter data based on cutoff
-    result = {key: value for key, value in data_dict.items() if value > cutoff}
+    result = OrderedDict(result_list)
+    return result
 
-    return OrderedDict(sorted(result.items(), key=lambda item: item[1], reverse=True))
