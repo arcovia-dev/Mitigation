@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 def show_clusters(data_dict):
     features = np.array(list(data_dict.values())).reshape(-1, 1)
-    k_values = range(2, 8)
+    k_values = range(8,9)
 
     best_k = -1
     best_silhouette_score = -np.inf
