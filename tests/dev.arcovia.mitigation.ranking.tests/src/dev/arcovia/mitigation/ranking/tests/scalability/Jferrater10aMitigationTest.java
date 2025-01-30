@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ranking.MitigationStrategy;
@@ -58,7 +57,6 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
 		return RankingAggregationMethod.EXPONENTIAL_RANKS;
 	}
 
-	@Disabled
     @Test
     public void executeHalf() {
         deleteOldMeassurement();
@@ -73,7 +71,6 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf10a_Half");
     }
     
-	@Disabled
     @Test
     public void executeQuarter() {
         deleteOldMeassurement();
@@ -88,7 +85,6 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf10a_Quarter");
     }
     
-	@Disabled
     @Test
     public void executeIncreasing() {
         deleteOldMeassurement();
@@ -117,7 +113,6 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf10a_Cluster");
     }
     
-	@Disabled
     @Test
     public void executeFastStart() {
         deleteOldMeassurement();
@@ -132,7 +127,6 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf10a_FastStart");
     }
     
-	@Disabled
     @Test
     public void executeBruteForce() throws Exception {
         deleteOldMeassurement();

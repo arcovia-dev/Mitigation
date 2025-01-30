@@ -53,7 +53,6 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
 		return constraints;
 	}
 
-	@Disabled
     @Test
     public void executeHalf() {
         deleteOldMeassurement();
@@ -68,7 +67,6 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM18_Half");
     }
     
-	@Disabled
     @Test
     public void executeQuarter() {
         deleteOldMeassurement();
@@ -83,7 +81,6 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM18_Quarter");
     }
     
-	@Disabled
     @Test
     public void executeIncreasing() {
         deleteOldMeassurement();
@@ -112,7 +109,6 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM18_Cluster");
     }
     
-	@Disabled
     @Test
     public void executeFastStart() {
         deleteOldMeassurement();
@@ -127,7 +123,6 @@ public class OnlineBanking18MitigationTest extends MitigationTestBase {
         storeMeassurementResult(seeAverageRuntime(),"OBM18_FastStart");
     }
     
-    @Disabled
     @Test
     public void executeBruteForce() throws Exception {
         deleteOldMeassurement();

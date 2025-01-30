@@ -62,7 +62,6 @@ public class Koushikkothagal14MitigationTest extends MitigationTestBase{
         return RankingAggregationMethod.EXPONENTIAL_RANKS;
     }
 
-    @Disabled
     @Test
     public void executeHalf() {
         deleteOldMeassurement();
@@ -77,7 +76,6 @@ public class Koushikkothagal14MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal14_Half");
     }
     
-    @Disabled
     @Test
     public void executeQuarter() {
         deleteOldMeassurement();
@@ -92,7 +90,6 @@ public class Koushikkothagal14MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal14_Quarter");
     }
     
-    @Disabled
     @Test
     public void executeIncreasing() {
         deleteOldMeassurement();
@@ -121,7 +118,6 @@ public class Koushikkothagal14MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal14_Cluster");
     }
     
-    @Disabled
     @Test
     public void executeFastStart() {
         deleteOldMeassurement();
@@ -136,7 +132,6 @@ public class Koushikkothagal14MitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"koushikkothagal14_FastStart");
     }
     
-    @Disabled
     @Test
     public void executeBruteForce() throws Exception {
         deleteOldMeassurement();

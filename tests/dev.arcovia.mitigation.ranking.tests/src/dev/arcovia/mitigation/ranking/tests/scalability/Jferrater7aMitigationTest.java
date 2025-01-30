@@ -58,7 +58,6 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
 		return RankingAggregationMethod.EXPONENTIAL_RANKS;
 	}
     
-	@Disabled
     @Test
     public void executeHalf() {
         deleteOldMeassurement();
@@ -73,7 +72,6 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf7a_Half");
     }
     
-	@Disabled
     @Test
     public void executeQuarter() {
         deleteOldMeassurement();
@@ -88,7 +86,6 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf7a_Quarter");
     }
     
-	@Disabled
     @Test
     public void executeIncreasing() {
         deleteOldMeassurement();
@@ -117,7 +114,6 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf7a_Cluster");
     }
     
-	@Disabled
     @Test
     public void executeFastStart() {
         deleteOldMeassurement();
@@ -132,7 +128,6 @@ public class Jferrater7aMitigationTest extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(),"jf7a_FastStart");
     }
     
-	@Disabled
     @Test
     public void executeBruteForce() throws Exception {
         deleteOldMeassurement();
