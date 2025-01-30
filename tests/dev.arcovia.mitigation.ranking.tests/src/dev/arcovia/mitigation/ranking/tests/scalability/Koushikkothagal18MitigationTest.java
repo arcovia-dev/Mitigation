@@ -108,7 +108,7 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.BATCH_SIZE_OPTIMAL;
+            mitigationStrategy = MitigationStrategy.CLUSTER;
             createTrainData();
             createMitigationCandidatesAutomatically();
             var duration = System.currentTimeMillis() - startTime;

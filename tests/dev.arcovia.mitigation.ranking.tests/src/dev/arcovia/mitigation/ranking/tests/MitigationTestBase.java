@@ -391,7 +391,7 @@ public abstract class MitigationTestBase extends TestBase {
 						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
 		} 
-		else if (mitigationStrategy.equals(MitigationStrategy.BATCH_SIZE_OPTIMAL)) {
+		else if (mitigationStrategy.equals(MitigationStrategy.CLUSTER)) {
 			String separator = "_Cluster-Separator_";
 			var prunedRankedNames = rankedUncertaintyEntityName.stream().filter(n -> !n.startsWith(separator)).toList();
 
