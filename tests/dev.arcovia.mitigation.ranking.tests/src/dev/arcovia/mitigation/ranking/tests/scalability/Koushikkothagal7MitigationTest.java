@@ -61,86 +61,50 @@ public class Koushikkothagal7MitigationTest extends MitigationTestBase{
         return RankingAggregationMethod.EXPONENTIAL_RANKS;
     }
 
+    private void executeMitigationStrategy(MitigationStrategy strategy) {
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = strategy;
+
+            if (!strategy.equals(MitigationStrategy.BRUTE_FORCE)) {
+                createTrainData();
+            }
+
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+        storeMeassurementResult(seeAverageRuntime(), getFolderName() + "_" + strategy.name());
+    }
+
     @Test
     public void executeHalf() {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.HALF;
-            createTrainData();
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal7_Half");
+        executeMitigationStrategy(MitigationStrategy.HALF);
     }
-    
+
     @Test
     public void executeQuarter() {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.QUATER;
-            createTrainData();
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal7_Quarter");
+        executeMitigationStrategy(MitigationStrategy.QUATER);
     }
-    
+
     @Test
     public void executeIncreasing() {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.INCREASING;
-            createTrainData();
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal7_Increasing");
+        executeMitigationStrategy(MitigationStrategy.INCREASING);
     }
-    
+
     @Test
     public void executeCluster() {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.CLUSTER;
-            createTrainData();
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal7_Cluster");
+        executeMitigationStrategy(MitigationStrategy.CLUSTER);
     }
-    
+
     @Test
     public void executeFastStart() {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.FAST_START;
-            createTrainData();
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal7_FastStart");
+        executeMitigationStrategy(MitigationStrategy.FAST_START);
     }
-    
+
     @Test
-    public void executeBruteForce() throws Exception {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal7_Brute_Force");
+    public void executeBruteForce() {
+        executeMitigationStrategy(MitigationStrategy.BRUTE_FORCE);
     }
 }
