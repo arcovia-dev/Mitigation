@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ranking.MitigationStrategy;
