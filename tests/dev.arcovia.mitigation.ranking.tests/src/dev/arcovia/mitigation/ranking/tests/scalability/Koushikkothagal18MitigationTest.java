@@ -24,10 +24,6 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
     
     protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
         List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
-        /*constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("internal")
-                    && !this.retrieveAllDataLabels(it).contains("authenticated_request");
-        });*/
         constraints.add(it -> {
             return this.retrieveNodeLabels(it).contains("authorization_server")
                     && !this.retrieveNodeLabels(it).contains("login_attempts_regulation");
@@ -36,18 +32,10 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
             return this.retrieveDataLabels(it).contains("entrypoint")
                     && !this.retrieveAllDataLabels(it).contains("encrypted_connection");
         });
-        /*constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("internal")
-                    && !this.retrieveAllDataLabels(it).contains("encrypted_connection");
-        });*/
         constraints.add(it -> {
              return this.retrieveNodeLabels(it).contains("internal") &&
                     !this.retrieveNodeLabels(it).contains("local_logging");
-        });/*
-        constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("local_logging") &&
-                   !this.retrieveNodeLabels(it).contains("log_sanitization");
-       });*/
+        });
         return constraints;
     }
     

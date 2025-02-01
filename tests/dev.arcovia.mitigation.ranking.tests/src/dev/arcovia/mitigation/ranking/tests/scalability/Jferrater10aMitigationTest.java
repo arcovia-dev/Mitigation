@@ -36,10 +36,6 @@ public class Jferrater10aMitigationTest extends MitigationTestBase{
 			return this.retrieveDataLabels(it).contains("entrypoint")
 					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
 		});
-		/*constraints.add(it -> {
-			return this.retrieveNodeLabels(it).contains("internal")
-					&& !this.retrieveAllDataLabels(it).contains("encrypted_connection");
-		});*/
 		constraints.add(it -> {
 			 return this.retrieveNodeLabels(it).contains("internal") &&
 					!this.retrieveNodeLabels(it).contains("local_logging");
