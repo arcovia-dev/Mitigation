@@ -373,85 +373,91 @@ public abstract class MitigationTestBase extends TestBase {
 				: relevantUncertaintyEntityNames;
 		var ddAndDfd = getDDAndDfd(analysis);
 		List<MitigationModel> result = new ArrayList<>();
-		if (mitigationStrategy.equals(MitigationStrategy.INCREASING)) {
-			result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName, analysis, ddAndDfd);
-		} else if (mitigationStrategy.equals(MitigationStrategy.QUATER)) {
-			for (int i = 1; i <= 4; i++) {
+		
+		switch (mitigationStrategy) {
+			case INCREASING -> {
+				result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName, analysis, ddAndDfd);
+			} 
+			case QUATER -> {
+				for (int i = 1; i <= 4; i++) {
+					result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+							i * analysis.getUncertaintySources().size() / 4, analysis, ddAndDfd);
+					if (result.size() != 0) {
+						break;
+					}
+				}
+			} 
+			case HALF -> {
 				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-						i * analysis.getUncertaintySources().size() / 4, analysis, ddAndDfd);
-				if (result.size() != 0) {
-					break;
+						analysis.getUncertaintySources().size() / 2, analysis, ddAndDfd);
+				if (result.size() == 0) {
+					result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+							analysis.getUncertaintySources().size(), analysis, ddAndDfd);
+				}
+			} 
+			case CLUSTER -> {
+				String separator = "_Cluster-Separator_";
+				var prunedRankedNames = rankedUncertaintyEntityName.stream().filter(n -> !n.startsWith(separator)).toList();
+	
+				List<List<String>> clusters = new ArrayList<>();
+				List<String> currentCluster = new ArrayList<>();
+				for(var line : rankedUncertaintyEntityName) {
+					if(line.startsWith(separator)) {
+						if(!currentCluster.isEmpty()) {
+							clusters.add(currentCluster);
+						}
+						currentCluster = new ArrayList<>();
+					}
+					else {
+						currentCluster.add(line);
+					}
+				}
+				if(!currentCluster.isEmpty()) {
+					clusters.add(currentCluster);
+				}
+				
+				var clusterSizes = clusters.stream().map(c -> c.size()).toList();
+				List<Integer> summedClusterSizes = new ArrayList<>();
+	
+		        int sum = 0;
+		        for (int num : clusterSizes) {
+		            sum += num;
+		            summedClusterSizes.add(sum);
+		        }
+		        
+				for(int size : summedClusterSizes) {
+		        	result = mitigateWithFixAmountOfUncertainties(prunedRankedNames,
+							size, analysis, ddAndDfd);
+					if (result.size() != 0) {
+						break;
+					}
 				}
 			}
-		} else if (mitigationStrategy.equals(MitigationStrategy.HALF)) {
-			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					analysis.getUncertaintySources().size() / 2, analysis, ddAndDfd);
-			if (result.size() == 0) {
+			case FAST_START -> {
+				int threshold = analysis.getUncertaintySources().size() / 2;
+				int n = analysis.getUncertaintySources().size();
+		        int i = 1;
+	
+		        while (i <= n) {
+		        	result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+							i, analysis, ddAndDfd);
+					if (result.size() != 0) {
+						break;
+					}
+	
+		            if (i * 2 > threshold) {
+		                i++;
+		            } else {
+		                i *= 2;
+		            }
+		        }
+			} 
+			default -> {
 				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
 						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
-		} 
-		else if (mitigationStrategy.equals(MitigationStrategy.CLUSTER)) {
-			String separator = "_Cluster-Separator_";
-			var prunedRankedNames = rankedUncertaintyEntityName.stream().filter(n -> !n.startsWith(separator)).toList();
-
-			List<List<String>> clusters = new ArrayList<>();
-			List<String> currentCluster = new ArrayList<>();
-			for(var line : rankedUncertaintyEntityName) {
-				if(line.startsWith(separator)) {
-					if(!currentCluster.isEmpty()) {
-						clusters.add(currentCluster);
-					}
-					currentCluster = new ArrayList<>();
-				}
-				else {
-					currentCluster.add(line);
-				}
-			}
-			if(!currentCluster.isEmpty()) {
-				clusters.add(currentCluster);
-			}
-			
-			var clusterSizes = clusters.stream().map(c -> c.size()).toList();
-			List<Integer> summedClusterSizes = new ArrayList<>();
-
-	        int sum = 0;
-	        for (int num : clusterSizes) {
-	            sum += num;
-	            summedClusterSizes.add(sum);
-	        }
-	        
-			for(int size : summedClusterSizes) {
-	        	result = mitigateWithFixAmountOfUncertainties(prunedRankedNames,
-						size, analysis, ddAndDfd);
-				if (result.size() != 0) {
-					break;
-				}
-			}
 		}
-		else if (mitigationStrategy.equals(MitigationStrategy.FAST_START)) {
-			int threshold = analysis.getUncertaintySources().size() / 2;
-			int n = analysis.getUncertaintySources().size();
-	        int i = 1;
-
-	        while (i <= n) {
-	        	result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-						i, analysis, ddAndDfd);
-				if (result.size() != 0) {
-					break;
-				}
-
-	            if (i * 2 > threshold) {
-	                i++;
-	            } else {
-	                i *= 2;
-	            }
-	        }
-		} 
-		else {
-			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
-					analysis.getUncertaintySources().size(), analysis, ddAndDfd);
-		}
+		
 		if (result.size() == 0) {
 			System.out.println("mitigation failed");
 		}
