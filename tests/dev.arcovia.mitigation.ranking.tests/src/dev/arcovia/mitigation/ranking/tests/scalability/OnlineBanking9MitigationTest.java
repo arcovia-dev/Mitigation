@@ -8,10 +8,10 @@ import org.dataflowanalysis.analysis.core.AbstractVertex;
 
 import dev.arcovia.mitigation.ranking.tests.ScalabilityBase;
 
-public class OnlineBanking18MitigationTest extends ScalabilityBase {
+public class OnlineBanking9MitigationTest extends ScalabilityBase {
 
 	protected String getFolderName() {
-		return "OBM_18";
+		return "OBM";
 	}
 
 	protected String getFilesName() {

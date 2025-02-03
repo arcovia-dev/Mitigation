@@ -51,7 +51,7 @@ public class UncertaintyRanker {
 	}
 
 	private static String getBatchSizeOptimizationParameter(MitigationStrategy mitigationStrategy) {
-		return mitigationStrategy.equals(MitigationStrategy.BATCH_SIZE_OPTIMAL) ? "Y" : "N";
+		return mitigationStrategy.equals(MitigationStrategy.CLUSTER) ? "Y" : "N";
 	}
 
 	private static String getRankerTypeCommandParameter(RankerType rankerType) {

@@ -8,10 +8,10 @@ import org.dataflowanalysis.analysis.core.AbstractVertex;
 
 import dev.arcovia.mitigation.ranking.tests.ScalabilityBase;
 
-public class Jferrater14MitigationTest extends ScalabilityBase{
+public class Jferrater21MitigationTest extends ScalabilityBase{
 	
 	protected String getFolderName() {
-		return "jferrater14";
+		return "jferrater";
 	}
 
 	protected String getFilesName() {

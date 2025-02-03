@@ -1,50 +1,55 @@
 import numpy as np
+import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from collections import OrderedDict
 
-
-import pandas as pd
-
 def show_clusters(data_dict):
-    # Convert the dictionary to a pandas DataFrame for easier handling
-    # The keys of the dictionary are the labels, and the values are the feature vectors
-    features = np.array(list(data_dict.values()))
-    features = features.reshape(-1, 1)
-    k_values = range(2, 8)
+    features = np.array(list(data_dict.values())).reshape(-1, 1)
+
+    min_k = 8
+    max_k = 8
+    k_values = range(min_k,max_k+1)
 
     best_k = -1
-    best_silhouette_score = -1
+    best_silhouette_score = -np.inf
 
+    # Find the best k using silhouette score
     for k in k_values:
-        kmeans = KMeans(n_clusters=k, random_state=42)
+        kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
         kmeans.fit(features)
         labels = kmeans.labels_
         silhouette_avg = silhouette_score(features, labels)
-        
+
         if silhouette_avg > best_silhouette_score:
             best_silhouette_score = silhouette_avg
             best_k = k
 
-    best_kmeans = KMeans(n_clusters=best_k, random_state=42)
+    # Fit the best model
+    best_kmeans = KMeans(n_clusters=best_k, random_state=42, n_init=10)
     best_kmeans.fit(features)
+    labels = best_kmeans.labels_
 
-    predictions = kmeans.predict(features)
-
-    # Create a DataFrame to view the results along with the original labels
+    # Create DataFrame with original labels
     clustering_result = pd.DataFrame({
-        'Label': labels,
-        'Cluster': predictions,
+        'Label': list(data_dict.keys()),
+        'Cluster': labels,
         'Feature Vector': list(data_dict.values())
     })
 
-    cluster_maxes = []
-    for cluster_id in range(kmeans.n_clusters):
-        cluster_data = clustering_result[clustering_result['Cluster'] == cluster_id]
-        cluster_maxes.append(max(list(cluster_data['Feature Vector'])))
+    result_list = []
+    prev_cluster = None
 
-    cutoff = min(cluster_maxes)
+    for _, row in clustering_result.iterrows():
+        cluster_id = row['Cluster']
+        
+        if prev_cluster is not None and prev_cluster != cluster_id:
+            result_list.append(("_Cluster-Separator_"+ str(cluster_id) +"_D", None))
+        
+        result_list.append((row['Label'], row['Feature Vector']))
+        
+        prev_cluster = cluster_id  # Update previous cluster
 
-    result = {key: value for key, value in data_dict.items() if value > cutoff}
+    result = OrderedDict(result_list)
+    return result
 
-    return OrderedDict(sorted(result.items(), key=lambda item: item[1], reverse=True))

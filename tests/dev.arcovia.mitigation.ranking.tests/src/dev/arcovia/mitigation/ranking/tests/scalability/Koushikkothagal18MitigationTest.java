@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
-import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.ranking.MitigationStrategy;
-import dev.arcovia.mitigation.ranking.RankerType;
-import dev.arcovia.mitigation.ranking.RankingAggregationMethod;
-import dev.arcovia.mitigation.ranking.tests.MitigationTestBase;
+import dev.arcovia.mitigation.ranking.tests.ScalabilityBase;
 
-public class Koushikkothagal18MitigationTest extends MitigationTestBase{
+public class Koushikkothagal18MitigationTest extends ScalabilityBase{
     
     protected String getFolderName() {
         return "koushikkothagal18";
@@ -24,10 +20,6 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
     
     protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
         List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
-        /*constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("internal")
-                    && !this.retrieveAllDataLabels(it).contains("authenticated_request");
-        });*/
         constraints.add(it -> {
             return this.retrieveNodeLabels(it).contains("authorization_server")
                     && !this.retrieveNodeLabels(it).contains("login_attempts_regulation");
@@ -36,55 +28,10 @@ public class Koushikkothagal18MitigationTest extends MitigationTestBase{
             return this.retrieveDataLabels(it).contains("entrypoint")
                     && !this.retrieveAllDataLabels(it).contains("encrypted_connection");
         });
-        /*constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("internal")
-                    && !this.retrieveAllDataLabels(it).contains("encrypted_connection");
-        });*/
         constraints.add(it -> {
              return this.retrieveNodeLabels(it).contains("internal") &&
                     !this.retrieveNodeLabels(it).contains("local_logging");
-        });/*
-        constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("local_logging") &&
-                   !this.retrieveNodeLabels(it).contains("log_sanitization");
-       });*/
+        });
         return constraints;
-    }
-    
-    @Override
-    protected RankerType getRankerType() {
-        return RankerType.LOGISTIC_REGRESSION;
-    }
-
-    @Override
-    protected RankingAggregationMethod getAggregationMethod() {
-        return RankingAggregationMethod.EXPONENTIAL_RANKS;
-    }
-
-    @Test
-    public void executeMitigation() {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.HALF;
-            createTrainData();
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal18_Best");
-    }
-    
-    @Test
-    public void executeBruteForce() throws Exception {
-        deleteOldMeassurement();
-        for (int i = 0; i < MITIGATION_RUNS; i++) {
-            var startTime = System.currentTimeMillis();
-            mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
-            createMitigationCandidatesAutomatically();
-            var duration = System.currentTimeMillis() - startTime;
-            storeMeassurement(duration);
-        }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal18_Brute_Force");
     }
 }

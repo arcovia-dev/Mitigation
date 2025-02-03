@@ -8,10 +8,10 @@ import org.dataflowanalysis.analysis.core.AbstractVertex;
 
 import dev.arcovia.mitigation.ranking.tests.ScalabilityBase;
 
-public class Koushikkothagal10MitigationTest extends ScalabilityBase{
+public class Koushikkothagal7MitigationTest extends ScalabilityBase{
     
     protected String getFolderName() {
-        return "koushikkothagal10";
+        return "koushikkothagal";
     }
 
     protected String getFilesName() {
