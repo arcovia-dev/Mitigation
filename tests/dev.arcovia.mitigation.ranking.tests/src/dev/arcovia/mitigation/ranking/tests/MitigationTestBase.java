@@ -397,19 +397,19 @@ public abstract class MitigationTestBase extends TestBase {
 			} 
 			case CLUSTER -> {
 				String separator = "_Cluster-Separator_";
-				var prunedRankedNames = rankedUncertaintyEntityName.stream().filter(n -> !n.startsWith(separator)).toList();
+				var prunedRankedEntityNames = rankedUncertaintyEntityName.stream().filter(n -> !n.startsWith(separator)).toList();
 	
 				List<List<String>> clusters = new ArrayList<>();
 				List<String> currentCluster = new ArrayList<>();
-				for(var line : rankedUncertaintyEntityName) {
-					if(line.startsWith(separator)) {
+				for(var entityName : rankedUncertaintyEntityName) {
+					if(entityName.startsWith(separator)) {
 						if(!currentCluster.isEmpty()) {
 							clusters.add(currentCluster);
 						}
 						currentCluster = new ArrayList<>();
 					}
 					else {
-						currentCluster.add(line);
+						currentCluster.add(entityName);
 					}
 				}
 				if(!currentCluster.isEmpty()) {
@@ -426,7 +426,7 @@ public abstract class MitigationTestBase extends TestBase {
 		        }
 		        
 				for(int size : summedClusterSizes) {
-		        	result = mitigateWithFixAmountOfUncertainties(prunedRankedNames,
+		        	result = mitigateWithFixAmountOfUncertainties(prunedRankedEntityNames,
 							size, analysis, ddAndDfd);
 					if (result.size() != 0) {
 						break;
