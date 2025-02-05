@@ -57,7 +57,7 @@ public class Sat {
         writeDimacsFile(("testresults/"+dfdName+ ".cnf"), dimacsClauses);
 
         writeLiteralMapping("testresults/"+ dfdName+ "-literalMapping.json");
-
+        
         return solveClauses();
     }
 
@@ -66,7 +66,7 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        if(problem.isSatisfiable()) {
+        while(problem.isSatisfiable() && solutions.size() < 1000) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
