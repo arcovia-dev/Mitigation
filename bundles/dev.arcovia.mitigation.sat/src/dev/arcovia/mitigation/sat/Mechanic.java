@@ -282,7 +282,7 @@ public class Mechanic {
         for (var solution : solutions) {
             int cost = 0;
             for (var term : solution) {
-                if (flatendNodes.contains(term))
+                if (flatendNodes.contains(term) || term.compositeLabel().category().equals(LabelCategory.IncomingData))
                     continue;
                 cost += costs.get(term.compositeLabel()
                         .label());

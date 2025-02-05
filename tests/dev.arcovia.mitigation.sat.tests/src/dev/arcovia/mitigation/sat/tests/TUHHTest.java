@@ -75,15 +75,21 @@ public class TUHHTest {
                 .put(new Label("Stereotype", "log_sanitization"), 2)
                 .build();
 
-        var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, "jferrater", "jferrater_0.dataflowdiagram")
-                .toString(),
-                Paths.get(location, "jferrater", "jferrater_0.datadictionary")
-                        .toString(),
-                Activator.class);
-        
-        var repairedDfdCosts = new Mechanic(dfd, "jferrater", constraints, costs).repair();
-        
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/jferrater-repaired.json");
+        var names = List.of("anilallewar", "apssouza22", "callistaenterprise", "ewolff-kafka", "georgwittberger", "jferrater", "koushikkothagal", "mudigal-technologies", "spring-petclinic", "sqshq" , "yidongnan");
+
+        for (var name : names) {
+            var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, name,(name + "_0.dataflowdiagram"))
+                            .toString(),
+                    Paths.get(location, name, (name + "_0.datadictionary"))
+                            .toString(),
+                    Activator.class);
+
+            var repairedDfdCosts = new Mechanic(dfd, name, constraints, costs).repair();
+
+            dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
+        }
+
+
         
     }
 }
