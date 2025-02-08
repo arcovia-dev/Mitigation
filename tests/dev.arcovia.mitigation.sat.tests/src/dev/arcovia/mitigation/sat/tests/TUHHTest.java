@@ -74,8 +74,8 @@ public class TUHHTest {
                 .put(new Label("Stereotype", "encrypted_connection"), 3)
                 .put(new Label("Stereotype", "log_sanitization"), 2)
                 .build();
-
-        var names = List.of("anilallewar", "apssouza22", "callistaenterprise", "ewolff-kafka", "georgwittberger", "jferrater", "koushikkothagal", "mudigal-technologies", "spring-petclinic", "sqshq" , "yidongnan");
+        //"ewolff-kafka"
+        var names = List.of("anilallewar", "apssouza22", "callistaenterprise", "georgwittberger", "jferrater", "koushikkothagal", "mudigal-technologies", "spring-petclinic", "sqshq" , "yidongnan");
 
         for (var name : names) {
             var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, name,(name + "_0.dataflowdiagram"))

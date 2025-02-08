@@ -36,6 +36,7 @@ public class Mechanic {
     private final List<Node> nodes;
     private final List<Flow> flows;
     private final String dfdName;
+    private boolean isCyclic = false;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
@@ -72,7 +73,7 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
-        var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
+        var solutions = new Sat().solve(nodes, flows, constraints, dfdName, isCyclic);
         
         List<Term> flatendNodes = getFlatNodes(nodes);
 
@@ -109,6 +110,10 @@ public class Mechanic {
 
         analysis.initializeAnalysis();
         var flowGraph = analysis.findFlowGraphs();
+        isCyclic = flowGraph.wasCyclic();
+        if (isCyclic){
+            logger.warn("Dataflow Diagram is Cyclic, reducing results to 1000");
+        }
         flowGraph.evaluate();
         Set<AbstractTransposeFlowGraph> violatingTransposeFlowGraphs = new HashSet<>();
 
@@ -140,6 +145,7 @@ public class Mechanic {
         }
 
         for (var node : tfg.getVertices()) {
+
             Set<String> nodeLiterals = new HashSet<>();
             for (var nodeChar : node.getAllVertexCharacteristics()) {
                 nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
@@ -165,10 +171,10 @@ public class Mechanic {
     private void getNodesAndFlows(List<AbstractTransposeFlowGraph> violatingTFGs) {
         for (var tfg : violatingTFGs) {
             for (var vertex : tfg.getVertices()) {
-
                 DFDVertex node = (DFDVertex) vertex;
-
+                final  String id = node.getReferencedElement().getId();
                 Map<InPin, List<Label>> inPinLabelMap = new HashMap<>();
+
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
                     for (var property : inPin.getAllCharacteristics()) {
@@ -190,24 +196,22 @@ public class Mechanic {
                     outPinLabelMap.put(new OutPin(outPin.getVariableName()), pinLabel);
                 }
                 // if not in list add otherwise add missing pins
+
                 if (nodes.stream()
                         .noneMatch(n -> n.id()
-                                .equals(node.getReferencedElement()
-                                        .getId()))) {
+                                .equals(id))) {
                     List<Label> nodeLabels = new ArrayList<>();
                     for (var property : node.getAllVertexCharacteristics()) {
                         var type = property.getTypeName();
                         var value = property.getValueName();
                         nodeLabels.add(new Label(type, value));
                     }
-                    nodes.add(new Node(node.getReferencedElement()
-                            .getId(), inPinLabelMap, outPinLabelMap, nodeLabels));
+                    nodes.add(new Node(id, inPinLabelMap, outPinLabelMap, nodeLabels));
 
                 } else {
                     var satNode = nodes.stream()
                             .filter(n -> n.id()
-                                    .equals(node.getReferencedElement()
-                                            .getId()))
+                                    .equals(id))
                             .findFirst()
                             .get();
                     for(var inPin : inPinLabelMap.keySet()) {
@@ -234,6 +238,7 @@ public class Mechanic {
                         .keySet()) {
                     var flow = node.getPinFlowMap()
                             .get(pin);
+
                     var SatFlow = new Flow(new OutPin(flow.getSourcePin()
                             .getId()), new InPin(pin.getId()));
                     if(!flows.contains(SatFlow)) {

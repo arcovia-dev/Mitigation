@@ -37,12 +37,14 @@ public class Sat {
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
+    private boolean isCyclic;
 
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean isCyclic)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
         this.constraints = constraints;
+        this.isCyclic = isCyclic;
 
         termToLiteral = new BiMap<>();
         flowToLiteral = new BiMap<>();
@@ -57,7 +59,7 @@ public class Sat {
         writeDimacsFile(("testresults/"+dfdName+ ".cnf"), dimacsClauses);
 
         writeLiteralMapping("testresults/"+ dfdName+ "-literalMapping.json");
-        
+
         return solveClauses();
     }
 
@@ -66,7 +68,7 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        while(problem.isSatisfiable() && solutions.size() < 1000) {
+        while(problem.isSatisfiable() && (!isCyclic ||solutions.size() < 1000)) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
@@ -74,6 +76,7 @@ public class Sat {
                     .filter(lit -> lit > 0)
                     .filter(lit -> termToLiteral.containsValue(lit))
                     .mapToObj(lit -> termToLiteral.getKey(lit))
+                    .filter(lit -> !lit.compositeLabel().category().equals(LabelCategory.IncomingData))
                     .toList();
 
             // Store unique solutions
