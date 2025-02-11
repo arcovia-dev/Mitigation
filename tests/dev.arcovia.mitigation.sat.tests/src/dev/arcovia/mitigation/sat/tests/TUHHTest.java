@@ -16,6 +16,8 @@ import com.google.common.collect.ImmutableMap;
 
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
+import org.dataflowanalysis.examplemodels.TuhhModels;
+
 public class TUHHTest {
     @Test
     public void tuhhTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
@@ -74,19 +76,20 @@ public class TUHHTest {
                 .put(new Label("Stereotype", "encrypted_connection"), 3)
                 .put(new Label("Stereotype", "log_sanitization"), 2)
                 .build();
-        //"ewolff-kafka"
-        var names = List.of("anilallewar", "apssouza22", "callistaenterprise", "georgwittberger", "jferrater", "koushikkothagal", "mudigal-technologies", "spring-petclinic", "sqshq" , "yidongnan");
+                
+        var tuhhModels = TuhhModels.getTuhhModels();
 
-        for (var name : names) {
-            var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, name,(name + "_0.dataflowdiagram"))
-                            .toString(),
-                    Paths.get(location, name, (name + "_0.datadictionary"))
-                            .toString(),
-                    Activator.class);
 
-            var repairedDfdCosts = new Mechanic(dfd, name, constraints, costs).repair();
+        for (var model :tuhhModels.keySet()) {
+            for (int variant : tuhhModels.get(model)) {
+                String name = model + "_" + variant;
+                System.out.println(name);
+                var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, model,(name + ".dataflowdiagram")).toString(), Paths.get(location,model, (name + ".datadictionary")).toString(),Activator.class);
 
-            dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
+                var repairedDfdCosts = new Mechanic(dfd, name, constraints, costs).repair();
+                if (variant == 0)
+                    dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json"); 
+            }
         }
 
 
