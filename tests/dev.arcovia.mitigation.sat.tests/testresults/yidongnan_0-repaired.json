@@ -701,11 +701,11 @@
       "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
       "text" : "log_sanitization"
     }, {
-      "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
-      "text" : "encrypted_connection"
-    }, {
       "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
       "text" : "transform_identity_representation"
+    }, {
+      "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
+      "text" : "encrypted_connection"
     }, {
       "id" : "da8a5bf4-c1f6-3d48-99f4-977454783a9f",
       "text" : "token_validation"
