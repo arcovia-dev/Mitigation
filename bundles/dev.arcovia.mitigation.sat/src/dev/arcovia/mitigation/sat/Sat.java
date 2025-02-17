@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 import java.util.StringJoiner;
 
+import org.apache.log4j.Logger;
 import org.sat4j.core.VecInt;
 import org.sat4j.minisat.SolverFactory;
 import org.sat4j.specs.ContradictionException;
@@ -39,6 +40,8 @@ public class Sat {
     private int maxLiteral;
     private boolean isCyclic;
 
+    private final Logger logger = Logger.getLogger(Sat.class);
+
     public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean isCyclic)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
@@ -56,9 +59,11 @@ public class Sat {
 
         buildClauses();
 
-        writeDimacsFile(("testresults/"+dfdName+ ".cnf"), dimacsClauses);
+        if (dfdName.contains("0")) {
+            writeDimacsFile(("testresults/" + dfdName + ".cnf"), dimacsClauses);
 
-        writeLiteralMapping("testresults/"+ dfdName+ "-literalMapping.json");
+            writeLiteralMapping("testresults/" + dfdName + "-literalMapping.json");
+        }
 
         return solveClauses();
     }
@@ -67,6 +72,8 @@ public class Sat {
         IProblem problem = solver;
 
         List<List<Term>> solutions = new ArrayList<>();
+
+        List<Term> minimal = new ArrayList<>();
 
         while(problem.isSatisfiable() && (!isCyclic ||solutions.size() < 1000)) {
             int[] model = problem.model();
@@ -83,6 +90,20 @@ public class Sat {
             if (!solutions.contains(deltaTerms)) {
                 solutions.add(deltaTerms);
 
+                if (minimal.isEmpty()){
+                    minimal = new ArrayList<>(deltaTerms);
+                }
+                else {
+                    List<Term> diff2 = new ArrayList<>(minimal);
+                    diff2.removeAll(deltaTerms);
+                    minimal.removeAll(diff2);
+                    var negatedMin = new VecInt();
+                    for (var literal : minimal) {
+                        negatedMin.push(-termToLiteral.getValue(literal));
+                    }
+                    addClause(negatedMin);
+
+                }
             }
 
             // Prohibit current solution
@@ -91,6 +112,11 @@ public class Sat {
                 negated.push(-termToLiteral.getValue(literal));
             }
             addClause(negated);
+
+            if (solutions.size() > 10000){
+                logger.error("needed to be terminated");
+                break;
+            }
         }
         return solutions;
     }
