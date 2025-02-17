@@ -1,8 +1,8 @@
 package dev.arcovia.mitigation.sat;
 
 import java.util.List;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
-public record Node(String id, Map<InPin, List<Label>> inPins, Map<OutPin, List<Label>> outPins, List<Label> nodeChars) {
+public record Node(String id, LinkedHashMap<InPin, List<Label>> inPins, LinkedHashMap<OutPin, List<Label>> outPins, List<Label> nodeChars) {
 
 }

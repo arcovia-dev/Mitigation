@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -173,7 +174,7 @@ public class Mechanic {
             for (var vertex : tfg.getVertices()) {
                 DFDVertex node = (DFDVertex) vertex;
                 final  String id = node.getReferencedElement().getId();
-                Map<InPin, List<Label>> inPinLabelMap = new HashMap<>();
+                LinkedHashMap<InPin, List<Label>> inPinLabelMap = new LinkedHashMap<>();
 
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
@@ -185,7 +186,7 @@ public class Mechanic {
                     inPinLabelMap.put(new InPin(inPin.getVariableName()), pinChars);
                 }
 
-                Map<OutPin, List<Label>> outPinLabelMap = new HashMap<>();
+                LinkedHashMap<OutPin, List<Label>> outPinLabelMap = new LinkedHashMap<>();
                 for (var outPin : node.getAllOutgoingDataCharacteristics()) {
                     List<Label> pinLabel = new ArrayList<>();
                     for (var property : outPin.getAllCharacteristics()) {

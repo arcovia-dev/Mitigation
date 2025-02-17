@@ -698,7 +698,7 @@
       "id" : "11",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.infrastructural\nStereotype.load_balanced_link\nStereotype.auth_provider\nStereotype.basic_authentication\nStereotype.database\nStereotype.authentication_with_plaintext_credentials\nStereotype.pre_authorized_endpoints\nStereotype.authentication\nStereotype.csrf_disabled\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.encryption\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.external_website\nStereotype.internal\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.token_server\nStereotype.authentication_scope_all_requests\nStereotype.circuit_breaker_link\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.infrastructural\nStereotype.auth_provider\nStereotype.load_balanced_link\nStereotype.basic_authentication\nStereotype.database\nStereotype.authentication_with_plaintext_credentials\nStereotype.pre_authorized_endpoints\nStereotype.authentication\nStereotype.csrf_disabled\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.encryption\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.external_website\nStereotype.internal\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.circuit_breaker_link\nStereotype.token_server\nStereotype.authentication_scope_all_requests\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -758,7 +758,7 @@
       "id" : "12",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.infrastructural\nStereotype.auth_provider\nStereotype.load_balanced_link\nStereotype.basic_authentication\nStereotype.database\nStereotype.authentication_with_plaintext_credentials\nStereotype.pre_authorized_endpoints\nStereotype.csrf_disabled\nStereotype.authentication\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.encryption\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.external_website\nStereotype.internal\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.token_server\nStereotype.authentication_scope_all_requests\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.plaintext_credentials_link\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.infrastructural\nStereotype.load_balanced_link\nStereotype.auth_provider\nStereotype.basic_authentication\nStereotype.database\nStereotype.authentication_with_plaintext_credentials\nStereotype.pre_authorized_endpoints\nStereotype.csrf_disabled\nStereotype.authentication\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.encryption\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.external_website\nStereotype.internal\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.token_server\nStereotype.authentication_scope_all_requests\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.plaintext_credentials_link\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -1121,11 +1121,11 @@
       "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
       "text" : "log_sanitization"
     }, {
-      "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
-      "text" : "transform_identity_representation"
-    }, {
       "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
       "text" : "encrypted_connection"
+    }, {
+      "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
+      "text" : "transform_identity_representation"
     }, {
       "id" : "da8a5bf4-c1f6-3d48-99f4-977454783a9f",
       "text" : "token_validation"
