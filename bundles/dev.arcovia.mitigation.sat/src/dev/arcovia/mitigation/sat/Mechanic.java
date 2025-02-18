@@ -37,7 +37,6 @@ public class Mechanic {
     private final List<Node> nodes;
     private final List<Flow> flows;
     private final String dfdName;
-    private boolean isCyclic = false;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
@@ -74,7 +73,7 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
-        var solutions = new Sat().solve(nodes, flows, constraints, dfdName, isCyclic);
+        var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
         
         List<Term> flatendNodes = getFlatNodes(nodes);
 
@@ -111,10 +110,6 @@ public class Mechanic {
 
         analysis.initializeAnalysis();
         var flowGraph = analysis.findFlowGraphs();
-        isCyclic = flowGraph.wasCyclic();
-        if (isCyclic){
-            logger.warn("Dataflow Diagram is Cyclic, reducing results to 1000");
-        }
         flowGraph.evaluate();
         Set<AbstractTransposeFlowGraph> violatingTransposeFlowGraphs = new HashSet<>();
 

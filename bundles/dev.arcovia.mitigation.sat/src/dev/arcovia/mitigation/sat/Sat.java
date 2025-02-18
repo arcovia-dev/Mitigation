@@ -42,12 +42,11 @@ public class Sat {
 
     private final Logger logger = Logger.getLogger(Sat.class);
 
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean isCyclic)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
         this.constraints = constraints;
-        this.isCyclic = isCyclic;
 
         termToLiteral = new BiMap<>();
         flowToLiteral = new BiMap<>();
@@ -59,7 +58,7 @@ public class Sat {
 
         buildClauses();
 
-        if (dfdName.contains("0")) {
+        if (dfdName.contains("0") || !dfdName.contains("_")) {
             writeDimacsFile(("testresults/" + dfdName + ".cnf"), dimacsClauses);
 
             writeLiteralMapping("testresults/" + dfdName + "-literalMapping.json");
@@ -73,9 +72,9 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        List<Term> minimal = new ArrayList<>();
+        List<Term> minimalSharedSubset = new ArrayList<>();
 
-        while(problem.isSatisfiable() && (!isCyclic ||solutions.size() < 1000)) {
+        while(problem.isSatisfiable()) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
@@ -90,19 +89,19 @@ public class Sat {
             if (!solutions.contains(deltaTerms)) {
                 solutions.add(deltaTerms);
 
-                if (minimal.isEmpty()){
-                    minimal = new ArrayList<>(deltaTerms);
+                if (minimalSharedSubset.isEmpty()){
+                    minimalSharedSubset = new ArrayList<>(deltaTerms);
                 }
                 else {
-                    List<Term> diff2 = new ArrayList<>(minimal);
-                    diff2.removeAll(deltaTerms);
-                    if (diff2.size() < 3) {
-                        minimal.removeAll(diff2);
-                        var negatedMin = new VecInt();
-                        for (var literal : minimal) {
-                            negatedMin.push(-termToLiteral.getValue(literal));
+                    List<Term> changedTerms = new ArrayList<>(minimalSharedSubset);
+                    changedTerms.removeAll(deltaTerms);
+                    if (changedTerms.size() < 2) {
+                        minimalSharedSubset.removeAll(changedTerms);
+                        var negatedSharedSubset = new VecInt();
+                        for (var literal : minimalSharedSubset) {
+                            negatedSharedSubset.push(-termToLiteral.getValue(literal));
                         }
-                        addClause(negatedMin);
+                        addClause(negatedSharedSubset);
                     }
                 }
             }
@@ -115,7 +114,7 @@ public class Sat {
             addClause(negated);
 
             if (solutions.size() > 10000){
-                logger.error("needed to be terminated");
+                logger.error("Solving needed to be terminated after finding 10.000 solutions");
                 break;
             }
         }
