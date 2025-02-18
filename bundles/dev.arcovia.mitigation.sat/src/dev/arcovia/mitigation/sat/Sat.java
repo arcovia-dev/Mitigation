@@ -96,13 +96,14 @@ public class Sat {
                 else {
                     List<Term> diff2 = new ArrayList<>(minimal);
                     diff2.removeAll(deltaTerms);
-                    minimal.removeAll(diff2);
-                    var negatedMin = new VecInt();
-                    for (var literal : minimal) {
-                        negatedMin.push(-termToLiteral.getValue(literal));
+                    if (diff2.size() < 3) {
+                        minimal.removeAll(diff2);
+                        var negatedMin = new VecInt();
+                        for (var literal : minimal) {
+                            negatedMin.push(-termToLiteral.getValue(literal));
+                        }
+                        addClause(negatedMin);
                     }
-                    addClause(negatedMin);
-
                 }
             }
 
