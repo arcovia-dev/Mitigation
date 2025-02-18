@@ -57,7 +57,7 @@ public class Sat {
 
         buildClauses();
 
-        if (dfdName.contains("0") || !dfdName.contains("_")) {
+        if (dfdName != null) {
             writeDimacsFile(("testresults/" + dfdName + ".cnf"), dimacsClauses);
 
             writeLiteralMapping("testresults/" + dfdName + "-literalMapping.json");

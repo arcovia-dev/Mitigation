@@ -86,8 +86,8 @@ public class TUHHTest {
                 String name = model + "_" + variant;
                 System.out.println(name);
                 var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, model,(name + ".dataflowdiagram")).toString(), Paths.get(location,model, (name + ".datadictionary")).toString(),Activator.class);
-
-                var repairedDfdCosts = new Mechanic(dfd, name, constraints, costs).repair();
+                String storeName = variant == 0 ? name : null;
+                var repairedDfdCosts = new Mechanic(dfd, storeName, constraints, costs).repair();
                 if (variant == 0)
                     dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json"); 
             }

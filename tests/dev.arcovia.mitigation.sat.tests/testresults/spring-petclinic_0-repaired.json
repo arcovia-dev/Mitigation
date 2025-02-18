@@ -892,5 +892,6 @@
       "text" : "HTTPS"
     } ]
   } ],
-  "editorMode" : "edit"
+  "editorMode" : "edit",
+  "constraints" : [ ]
 }

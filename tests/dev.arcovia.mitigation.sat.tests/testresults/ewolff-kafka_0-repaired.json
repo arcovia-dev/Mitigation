@@ -479,5 +479,6 @@
       "text" : "order"
     } ]
   } ],
-  "editorMode" : "edit"
+  "editorMode" : "edit",
+  "constraints" : [ ]
 }

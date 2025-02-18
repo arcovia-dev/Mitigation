@@ -324,5 +324,6 @@
       "text" : "Eureka"
     } ]
   } ],
-  "editorMode" : "edit"
+  "editorMode" : "edit",
+  "constraints" : [ ]
 }

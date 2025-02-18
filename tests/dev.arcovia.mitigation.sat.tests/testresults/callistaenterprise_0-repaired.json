@@ -990,7 +990,7 @@
       "id" : "17",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.load_balanced_link\nStereotype.plaintext_credentials\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.load_balancer\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.authorization_server\nStereotype.transform_identity_representation\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.load_balanced_link\nStereotype.plaintext_credentials\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.transform_identity_representation\nStereotype.monitoring_server\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -1332,5 +1332,6 @@
       "text" : "HTTPS"
     } ]
   } ],
-  "editorMode" : "edit"
+  "editorMode" : "edit",
+  "constraints" : [ ]
 }
