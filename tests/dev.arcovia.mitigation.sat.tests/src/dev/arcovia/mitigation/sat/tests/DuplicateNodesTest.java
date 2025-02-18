@@ -1,6 +1,5 @@
 package dev.arcovia.mitigation.sat.tests;
 
-
 import dev.arcovia.mitigation.sat.*;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,6 @@ public class DuplicateNodesTest {
                 new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted")))));
 
         var constraints = List.of(dataConstraint);
-
 
         var repairedDfdCosts = new Mechanic("models/duplicateNodes.json", constraints).repair();
 
