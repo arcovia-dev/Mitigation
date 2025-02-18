@@ -38,7 +38,6 @@ public class Sat {
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
-    private boolean isCyclic;
 
     private final Logger logger = Logger.getLogger(Sat.class);
 
