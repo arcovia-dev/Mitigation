@@ -109,7 +109,10 @@
         "labelTypeValueId" : "41"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "54",
@@ -145,7 +148,10 @@
         "labelTypeValueId" : "15"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "48",
@@ -187,7 +193,10 @@
         "labelTypeValueId" : "23"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "behavior" : "assign Stereotype.internal,Stereotype.load_balancer,Stereotype.restful_http,Stereotype.load_balanced_link,Stereotype.encrypted_connection if TRUE",
@@ -240,8 +249,11 @@
       "id" : "53",
       "text" : "load_balanced_link"
     }, {
-      "id" : "8b9e907e-6802-3672-a06b-820accccb1bd",
-      "text" : "local_logging2"
+      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
+      "text" : "local_logging"
+    }, {
+      "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
+      "text" : "log_sanitization"
     }, {
       "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
       "text" : "encrypted_connection"

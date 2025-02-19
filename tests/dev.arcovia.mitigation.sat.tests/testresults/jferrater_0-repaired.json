@@ -236,7 +236,10 @@
         "labelTypeValueId" : "25"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "74",
@@ -269,7 +272,10 @@
         "labelTypeValueId" : "33"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "79",
@@ -302,7 +308,10 @@
         "labelTypeValueId" : "64"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "84",
@@ -335,7 +344,10 @@
         "labelTypeValueId" : "29"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "89",
@@ -368,7 +380,10 @@
         "labelTypeValueId" : "37"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "94",
@@ -488,8 +503,11 @@
       "id" : "108",
       "text" : "load_balanced_link"
     }, {
-      "id" : "8b9e907e-6802-3672-a06b-820accccb1bd",
-      "text" : "local_logging2"
+      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
+      "text" : "local_logging"
+    }, {
+      "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
+      "text" : "log_sanitization"
     }, {
       "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
       "text" : "authenticated_request"

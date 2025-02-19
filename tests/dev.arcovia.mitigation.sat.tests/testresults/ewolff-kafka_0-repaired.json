@@ -176,7 +176,10 @@
         "labelTypeValueId" : "29"
       }, {
         "labelTypeId" : "10",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "28"
+      }, {
+        "labelTypeId" : "10",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "73",
@@ -380,9 +383,6 @@
     }, {
       "id" : "86",
       "text" : "plaintext_credentials_link"
-    }, {
-      "id" : "8b9e907e-6802-3672-a06b-820accccb1bd",
-      "text" : "local_logging2"
     }, {
       "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
       "text" : "log_sanitization"

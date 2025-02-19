@@ -110,7 +110,10 @@
         "labelTypeValueId" : "12"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "41",
@@ -130,7 +133,10 @@
         "labelTypeValueId" : "28"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "33",
@@ -150,7 +156,10 @@
         "labelTypeValueId" : "15"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "36",
@@ -194,8 +203,11 @@
       "id" : "32",
       "text" : "restful_http"
     }, {
-      "id" : "8b9e907e-6802-3672-a06b-820accccb1bd",
-      "text" : "local_logging2"
+      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
+      "text" : "local_logging"
+    }, {
+      "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
+      "text" : "log_sanitization"
     }, {
       "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
       "text" : "transform_identity_representation"
