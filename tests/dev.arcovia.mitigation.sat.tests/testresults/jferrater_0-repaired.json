@@ -218,7 +218,7 @@
       "id" : "4",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.circuit_breaker_link\nStereotype.github_repository\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nStereotype.circuit_breaker_link\nProtocol.HTTPS\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -236,10 +236,7 @@
         "labelTypeValueId" : "25"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "11",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "74",
@@ -272,10 +269,7 @@
         "labelTypeValueId" : "33"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "11",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "79",
@@ -308,10 +302,7 @@
         "labelTypeValueId" : "64"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "11",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "84",
@@ -344,10 +335,7 @@
         "labelTypeValueId" : "29"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "11",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "89",
@@ -380,10 +368,7 @@
         "labelTypeValueId" : "37"
       }, {
         "labelTypeId" : "11",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "11",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "94",
@@ -503,11 +488,8 @@
       "id" : "108",
       "text" : "load_balanced_link"
     }, {
-      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
-      "text" : "local_logging"
-    }, {
-      "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
-      "text" : "log_sanitization"
+      "id" : "8b9e907e-6802-3672-a06b-820accccb1bd",
+      "text" : "local_logging2"
     }, {
       "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
       "text" : "authenticated_request"

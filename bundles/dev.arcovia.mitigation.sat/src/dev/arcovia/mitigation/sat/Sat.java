@@ -69,8 +69,6 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        List<Term> minimalSharedSubset = new ArrayList<>();
-
         while (problem.isSatisfiable()) {
             int[] model = problem.model();
 
@@ -87,21 +85,6 @@ public class Sat {
             // Store unique solutions
             if (!solutions.contains(deltaTerms)) {
                 solutions.add(deltaTerms);
-
-                if (minimalSharedSubset.isEmpty()) {
-                    minimalSharedSubset = new ArrayList<>(deltaTerms);
-                } else {
-                    List<Term> changedTerms = new ArrayList<>(minimalSharedSubset);
-                    changedTerms.removeAll(deltaTerms);
-                    if (changedTerms.size() < 2) {
-                        minimalSharedSubset.removeAll(changedTerms);
-                        var negatedSharedSubset = new VecInt();
-                        for (var literal : minimalSharedSubset) {
-                            negatedSharedSubset.push(-termToLiteral.getValue(literal));
-                        }
-                        addClause(negatedSharedSubset);
-                    }
-                }
             }
 
             // Prohibit current solution
@@ -211,14 +194,39 @@ public class Sat {
                         // --> ((¬Source.outData ∨ ¬Flow(Source,Sink) ∨ Sink.incomingData) ∧ (¬To.incomingData ∨ Source.outData) ∧
                         // (¬Sink.incomingData ∨ Flow(Source,Sink))
                         // <--> (A ∧ B ↔ C --> (¬C ∨ A) ∧ (¬C ∨ B) ∧ (¬A ∨ ¬B ∨ C))
-                            addClause(clause(-outgoingDataTerm, -flow(sourcePin, sinkPin), incomingFlowData));
-                            addClause(clause(-incomingFlowData, outgoingDataTerm));
-                            addClause(clause(-incomingFlowData, flow(sourcePin, sinkPin)));
+                        addClause(clause(-outgoingDataTerm, -flow(sourcePin, sinkPin), incomingFlowData));
+                        addClause(clause(-incomingFlowData, outgoingDataTerm));
+                        addClause(clause(-incomingFlowData, flow(sourcePin, sinkPin)));
 
 
                     }
                 }
 
+            }
+        }
+        // Node has only incoming data labels that are received via all incoming flows
+        // --> (Not Node x has Label L or (Flow A with Label L and Flow B with Label L and ... Flow Z))
+        for (Label label : labels) {
+            for (Node sinkNode : nodes) {
+                for (InPin sinkPin : sinkNode.inPins()
+                        .keySet()) {
+                    int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label));
+
+                    var relevantOutPins = flows.stream()
+                            .filter(flow -> flow.sink()
+                                    .equals(sinkPin))
+                            .map(Flow::source)
+                            .toList();
+
+                    for (OutPin sourcePin : relevantOutPins) {
+                        var clause = new VecInt();
+                        clause.push(-incomingDataTerm);
+                        var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
+                        addClause(clause(-flowData, incomingDataTerm));
+                        clause.push(flowData);
+                        addClause(clause);
+                    }
+                }
             }
         }
     }

@@ -82,7 +82,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "39",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -95,7 +95,7 @@
       "id" : "3",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -110,10 +110,7 @@
         "labelTypeValueId" : "12"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "7",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "41",
@@ -133,10 +130,7 @@
         "labelTypeValueId" : "28"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "7",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "33",
@@ -156,10 +150,7 @@
         "labelTypeValueId" : "15"
       }, {
         "labelTypeId" : "7",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
-      }, {
-        "labelTypeId" : "7",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "36",
@@ -203,11 +194,8 @@
       "id" : "32",
       "text" : "restful_http"
     }, {
-      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
-      "text" : "local_logging"
-    }, {
-      "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
-      "text" : "log_sanitization"
+      "id" : "8b9e907e-6802-3672-a06b-820accccb1bd",
+      "text" : "local_logging2"
     }, {
       "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
       "text" : "transform_identity_representation"

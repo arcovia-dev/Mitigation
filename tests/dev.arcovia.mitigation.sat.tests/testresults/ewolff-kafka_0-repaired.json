@@ -112,7 +112,7 @@
         "labelTypeValueId" : "24"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.entrypoint if TRUE",
         "id" : "56",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -120,7 +120,7 @@
       "id" : "3",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.encrypted_connection\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -176,10 +176,7 @@
         "labelTypeValueId" : "29"
       }, {
         "labelTypeId" : "10",
-        "labelTypeValueId" : "28"
-      }, {
-        "labelTypeId" : "10",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "8b9e907e-6802-3672-a06b-820accccb1bd"
       } ],
       "ports" : [ {
         "id" : "73",
@@ -273,12 +270,12 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "76",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "78",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -286,7 +283,7 @@
       "id" : "8",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -310,17 +307,17 @@
         "labelTypeValueId" : "50"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "83",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "87",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "89",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -328,7 +325,7 @@
       "id" : "9",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nPassword.dbpass\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\nUsername.dbuser\n",
+        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.authenticated_request\nPassword.dbpass\nStereotype.encrypted_connection\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\nUsername.dbuser\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -384,14 +381,17 @@
       "id" : "86",
       "text" : "plaintext_credentials_link"
     }, {
+      "id" : "8b9e907e-6802-3672-a06b-820accccb1bd",
+      "text" : "local_logging2"
+    }, {
       "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
       "text" : "log_sanitization"
     }, {
-      "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
-      "text" : "transform_identity_representation"
-    }, {
       "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
       "text" : "encrypted_connection"
+    }, {
+      "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
+      "text" : "transform_identity_representation"
     }, {
       "id" : "3e21ab62-fb17-3003-81d9-f0156b6c3031",
       "text" : "gateway"
