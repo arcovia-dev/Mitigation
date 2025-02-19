@@ -76,7 +76,6 @@ public class Mechanic {
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
         var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
-        System.out.println(solutions.size());
         List<Term> flatendNodes = getFlatNodes(nodes);
 
         List<Term> chosenSolution = getChosenSolution(solutions, flatendNodes);
