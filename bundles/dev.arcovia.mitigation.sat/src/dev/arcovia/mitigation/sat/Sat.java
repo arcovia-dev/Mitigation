@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 
 import java.util.StringJoiner;
 
-import org.apache.log4j.Logger;
 import org.sat4j.core.VecInt;
 import org.sat4j.minisat.SolverFactory;
 import org.sat4j.specs.ContradictionException;
@@ -38,8 +37,6 @@ public class Sat {
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
-
-    private final Logger logger = Logger.getLogger(Sat.class);
 
     public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
             throws ContradictionException, TimeoutException, IOException {
@@ -113,8 +110,7 @@ public class Sat {
             addClause(negated);
 
             if (solutions.size() > 10000){
-                logger.error("Solving needed to be terminated after finding 10.000 solutions");
-                break;
+                throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
         }
         return solutions;
