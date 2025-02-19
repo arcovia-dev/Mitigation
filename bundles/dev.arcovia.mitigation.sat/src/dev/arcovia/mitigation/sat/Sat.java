@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import java.util.StringJoiner;
@@ -209,16 +210,27 @@ public class Sat {
             }
         }
 
-        // Node has only incoming data labels that are received via at least one flow
+        // Node has only incoming data labels that are received via all incoming flows
         // --> (Not Node x has Label L or Flow A with Label L or Flow B with Label L or ... Flow Z)
         for (Label label : labels) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
                     int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label));
-                    var clause = new VecInt();
-                    clause.push(-incomingDataTerm);
-                    for (Node sourceNode : nodes) {
+
+                    var relevantOutPins = flows.stream()
+                            .filter(flow -> flow.sink().equals(sinkPin))
+                            .map(Flow::source)
+                            .toList();
+                    for (OutPin sourcePin : relevantOutPins) {
+                        var clause = new VecInt();
+                        clause.push(-incomingDataTerm);
+                        var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
+                        addClause(clause(-flowData, incomingDataTerm));
+                        clause.push(flowData);
+                        addClause(clause);
+                    }
+                    /*for (Node sourceNode : nodes) {
                         for (OutPin sourcePin : sourceNode.outPins()
                                 .keySet()) {
                             var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
@@ -226,7 +238,8 @@ public class Sat {
                             clause.push(flowData);
                         }
                     }
-                    addClause(clause);
+                    System.out.println(clause);
+                    addClause(clause);*/
                 }
             }
         }

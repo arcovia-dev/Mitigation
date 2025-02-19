@@ -112,7 +112,7 @@
         "labelTypeValueId" : "24"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http,Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.entrypoint if TRUE",
         "id" : "56",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -120,7 +120,7 @@
       "id" : "3",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.encrypted_connection\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.encrypted_connection\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -186,7 +186,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http,Stereotype.message_producer_kafka,ProducerTopic.order if TRUE from apache|postgres\nforward apache|postgres",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http,Stereotype.message_producer_kafka,ProducerTopic.order if TRUE from apache|postgres\nforward apache|postgres\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "59",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -273,12 +273,12 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user",
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "76",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user",
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "78",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -286,7 +286,7 @@
       "id" : "8",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -310,17 +310,17 @@
         "labelTypeValueId" : "50"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "83",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "87",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.dbuser,Password.dbpass,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "89",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -328,7 +328,7 @@
       "id" : "9",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nPassword.dbpass\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\nUsername.dbuser\n",
+        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.authenticated_request\nPassword.dbpass\nStereotype.encrypted_connection\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\nUsername.dbuser\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -479,6 +479,5 @@
       "text" : "order"
     } ]
   } ],
-  "editorMode" : "edit",
-  "constraints" : [ ]
+  "editorMode" : "edit"
 }

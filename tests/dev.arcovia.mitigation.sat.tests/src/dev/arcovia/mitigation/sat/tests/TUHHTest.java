@@ -2,11 +2,15 @@ package dev.arcovia.mitigation.sat.tests;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import static java.util.Map.entry;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import dev.arcovia.mitigation.sat.*;
+import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
+import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
+import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.examplemodels.Activator;
@@ -14,6 +18,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
+
+import com.google.common.collect.ImmutableMap;
 
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
@@ -69,9 +75,14 @@ public class TUHHTest {
 
                 System.out.println(name);
 
-                var repairedDfdCosts = runRepair(model, name, variant == 0);
+                var repairedDfdCosts = runRepair(model, name,variant == 0);
+
+
+
                 if (variant == 0)
                     dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
+
+                assertTrue(verifyRepairs(repairedDfdCosts));
             }
         }
     }
@@ -101,5 +112,76 @@ public class TUHHTest {
                 .toString(), Activator.class);
         if (!store) name = null;
         return new Mechanic(dfd, name, constraints, costs).repair();
+    }
+
+    private Boolean verifyRepairs(DataFlowDiagramAndDictionary repairedDfd){
+        var resourceProvider = new DFDModelResourceProvider(repairedDfd.dataDictionary(), repairedDfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+
+        for (var tfg : flowGraph.getTransposeFlowGraphs()) {
+            if (checkConstraints(tfg))
+                return false;
+        }
+        return true;
+    }
+    private boolean checkConstraints(AbstractTransposeFlowGraph tfg) {
+        for (var constraint : constraints) {
+            if (checkConstraint(tfg, constraint.literals())) {
+                System.out.println("Constraint: " + constraint);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Literal> constraint) {
+        List<String> negativeLiterals = new ArrayList<>();
+        List<String> positiveLiterals = new ArrayList<>();
+        for (var literal : constraint) {
+            if (literal.positive())
+                positiveLiterals.add(literal.compositeLabel()
+                        .toString());
+            else
+                negativeLiterals.add(literal.compositeLabel()
+                        .toString());
+        }
+
+        for (var node : tfg.getVertices()) {
+
+            Set<String> nodeLiterals = new HashSet<>();
+            for (var nodeChar : node.getAllVertexCharacteristics()) {
+                nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
+            }
+            for (var variables : node.getAllIncomingDataCharacteristics()) {
+                for (var dataChar : variables.getAllCharacteristics()) {
+                    nodeLiterals.add(new IncomingDataLabel(new Label(dataChar.getTypeName(), dataChar.getValueName())).toString());
+                }
+            }
+
+
+            if (nodeLiterals.stream()
+                    .anyMatch(positiveLiterals::contains)) {
+                continue;
+            } else if (!nodeLiterals.containsAll(negativeLiterals)) {
+                continue;
+            } else if (node.getAllIncomingDataCharacteristics().isEmpty()) {
+                var missingLiterals = new HashSet<>(positiveLiterals);
+                missingLiterals.removeAll(nodeLiterals);
+                for (var lit : missingLiterals){
+                    if (!lit.contains("IncomingData"))
+                        return true;
+                }
+            }
+            else {
+                System.out.println(node.toString());
+                return true;
+            }
+        }
+        return false;
     }
 }

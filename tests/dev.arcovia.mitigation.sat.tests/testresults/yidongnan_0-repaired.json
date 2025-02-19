@@ -205,7 +205,7 @@
         "labelTypeValueId" : "63"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint if TRUE",
         "id" : "120",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -213,7 +213,7 @@
       "id" : "2",
       "type" : "node:input-output",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.encrypted_connection\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.entrypoint\nStereotype.encrypted_connection\nStereotype.gateway\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -237,27 +237,27 @@
         "labelTypeValueId" : "44"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint if TRUE",
         "id" : "80",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint if TRUE",
         "id" : "89",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint if TRUE",
         "id" : "92",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "97",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.token_validation,Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request if TRUE",
         "id" : "108",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -267,7 +267,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint if TRUE",
         "id" : "137",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -275,7 +275,7 @@
       "id" : "3",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.administration_server\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.token_validation\nStereotype.restful_http\nStereotype.csrf_disabled\n",
+        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.administration_server\nStereotype.infrastructural\nStereotype.gateway\nStereotype.transform_identity_representation\nStereotype.token_validation\nStereotype.restful_http\nStereotype.csrf_disabled\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -303,7 +303,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|hystrix_dashboard|service_a|service_b\nforward admin_dashboard|config_server|hystrix_dashboard|service_a|service_b",
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|hystrix_dashboard|service_a|service_b\nforward admin_dashboard|config_server|hystrix_dashboard|service_a|service_b\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "124",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -336,7 +336,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a|service_b|zuul\nforward admin_dashboard|config_server|service_a|service_b|zuul",
+        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a|service_b|zuul\nforward admin_dashboard|config_server|service_a|service_b|zuul\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "127",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -372,22 +372,22 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "84",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "87",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "101",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "112",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -395,7 +395,7 @@
       "id" : "6",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.gateway\nStereotype.token_validation\nStereotype.csrf_disabled\nStereotype.internal\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.gateway\nStereotype.token_validation\nStereotype.csrf_disabled\nStereotype.internal\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.monitoring_server\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -429,7 +429,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.monitoring_dashboard,Stereotype.monitoring_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|service_a|service_b\nforward admin_dashboard|service_a|service_b",
+        "behavior" : "assign Stereotype.monitoring_dashboard,Stereotype.monitoring_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|service_a|service_b\nforward admin_dashboard|service_a|service_b\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "94",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -471,27 +471,27 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "99",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "103",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "105",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.feign_connection if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.feign_connection if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "116",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "133",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -527,22 +527,22 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "110",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "114",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "129",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "131",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -819,6 +819,5 @@
       "text" : "Turbine"
     } ]
   } ],
-  "editorMode" : "edit",
-  "constraints" : [ ]
+  "editorMode" : "edit"
 }
