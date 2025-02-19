@@ -77,7 +77,7 @@ public class TUHHTest {
                 if (variant == 0)
                     dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
 
-                assertTrue(verifyRepairs(repairedDfdCosts));
+                assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
             }
         }
     }
@@ -87,12 +87,13 @@ public class TUHHTest {
     void specificTUHHTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
         String model = "ewolff-kafka";
-        int variant = 0;
+        int variant = 7;
 
         String name = model + "_" + variant;
 
         var repairedDfdCosts = runRepair(model, name, true);
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/specific_" + name + "-repaired.json");
+        assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
     }
 
     private DataFlowDiagramAndDictionary runRepair(String model, String name, Boolean store)
@@ -108,74 +109,5 @@ public class TUHHTest {
         if (!store)
             name = null;
         return new Mechanic(dfd, name, constraints, costs).repair();
-    }
-
-    private Boolean verifyRepairs(DataFlowDiagramAndDictionary repairedDfd) {
-        var resourceProvider = new DFDModelResourceProvider(repairedDfd.dataDictionary(), repairedDfd.dataFlowDiagram());
-        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
-                .useCustomResourceProvider(resourceProvider)
-                .build();
-        analysis.initializeAnalysis();
-        var flowGraph = analysis.findFlowGraphs();
-        flowGraph.evaluate();
-
-        for (var tfg : flowGraph.getTransposeFlowGraphs()) {
-            if (checkConstraints(tfg))
-                return false;
-        }
-        return true;
-    }
-
-    private boolean checkConstraints(AbstractTransposeFlowGraph tfg) {
-        for (var constraint : constraints) {
-            if (checkConstraint(tfg, constraint.literals())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Literal> constraint) {
-        List<String> negativeLiterals = new ArrayList<>();
-        List<String> positiveLiterals = new ArrayList<>();
-        for (var literal : constraint) {
-            if (literal.positive())
-                positiveLiterals.add(literal.compositeLabel()
-                        .toString());
-            else
-                negativeLiterals.add(literal.compositeLabel()
-                        .toString());
-        }
-
-        for (var node : tfg.getVertices()) {
-
-            Set<String> nodeLiterals = new HashSet<>();
-            for (var nodeChar : node.getAllVertexCharacteristics()) {
-                nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
-            }
-            for (var variables : node.getAllIncomingDataCharacteristics()) {
-                for (var dataChar : variables.getAllCharacteristics()) {
-                    nodeLiterals.add(new IncomingDataLabel(new Label(dataChar.getTypeName(), dataChar.getValueName())).toString());
-                }
-            }
-
-            if (nodeLiterals.stream()
-                    .anyMatch(positiveLiterals::contains)) {
-                continue;
-            } else if (!nodeLiterals.containsAll(negativeLiterals)) {
-                continue;
-            } else if (node.getAllIncomingDataCharacteristics()
-                    .isEmpty()) {
-                var missingLiterals = new HashSet<>(positiveLiterals);
-                missingLiterals.removeAll(nodeLiterals);
-                for (var lit : missingLiterals) {
-                    if (!lit.contains("IncomingData"))
-                        return true;
-                }
-            } else {
-                return true;
-            }
-        }
-        return false;
     }
 }

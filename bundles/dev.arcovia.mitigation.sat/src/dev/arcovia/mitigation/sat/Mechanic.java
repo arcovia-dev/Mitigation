@@ -82,6 +82,7 @@ public class Mechanic {
         List<Term> chosenSolution = getChosenSolution(solutions, flatendNodes);
 
         List<Term> actions = getActions(chosenSolution, flatendNodes);
+        System.out.println(actions);
         applyActions(dfd, actions);
 
         return dfd;
@@ -105,7 +106,9 @@ public class Mechanic {
             return getMinimalSolution(solutions);
         }
     }
-
+    public Boolean violatesDFD(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+        return (determineViolatingTFGs(dfd, constraints).isEmpty());
+    }
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
@@ -161,6 +164,14 @@ public class Mechanic {
                 continue;
             } else if (!nodeLiterals.containsAll(negativeLiterals)) {
                 continue;
+            } else if (node.getAllIncomingDataCharacteristics()
+                    .isEmpty()) {
+                var missingLiterals = new HashSet<>(positiveLiterals);
+                missingLiterals.removeAll(nodeLiterals);
+                for (var lit : missingLiterals) {
+                    if (!lit.contains("IncomingData"))
+                        return true;
+                }
             } else {
                 return true;
             }
@@ -247,8 +258,18 @@ public class Mechanic {
                         if (satNode.outPins()
                                 .containsKey(outPin)) {
                             Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
-                            outPinLabel.addAll(satNode.outPins()
+                            var enforcingLabels = constraints.stream().flatMap(c -> c.literals().stream()) // Flatten all literals from all constraints
+                                    .filter(Literal::positive) // Keep only positive literals
+                                    .map(literal -> literal.compositeLabel().label()) // Extract their labels
+                                    .toList();
+                            var newLabels = new ArrayList<>(satNode.outPins()
                                     .get(outPin));
+                            var sameLabels = outPinLabel.stream().filter(newLabels::contains).toList();
+
+                            outPinLabel.addAll(newLabels);
+                            outPinLabel.removeAll(enforcingLabels);
+                            outPinLabel.addAll(sameLabels);
+
                             satNode.outPins()
                                     .put(outPin, new ArrayList<>(outPinLabel));
                         } else

@@ -296,7 +296,7 @@
         "labelTypeValueId" : "95"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.external_website,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.external_website,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "200",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -304,7 +304,7 @@
       "id" : "3",
       "type" : "node:input-output",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.external_website\nStereotype.token_validation\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.external_website\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -316,7 +316,7 @@
         "labelTypeValueId" : "114"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http if TRUE",
         "id" : "218",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -324,7 +324,7 @@
       "id" : "4",
       "type" : "node:input-output",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.gateway\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -363,7 +363,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link if TRUE",
         "id" : "141",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -373,32 +373,32 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link if TRUE",
         "id" : "151",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http if TRUE",
         "id" : "160",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "174",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "184",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "196",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http if TRUE",
         "id" : "220",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -406,7 +406,7 @@
       "id" : "5",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.plaintext_credentials\nStereotype.basic_authentication\nStereotype.gateway\nStereotype.token_validation\nStereotype.csrf_disabled\nStereotype.authentication\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.plaintext_credentials\nStereotype.basic_authentication\nStereotype.plaintext_credentials_link\nStereotype.restful_http\nStereotype.csrf_disabled\nStereotype.authentication\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -602,17 +602,17 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.authorization_server,Stereotype.pre_authorized_endpoints,Stereotype.infrastructural,Stereotype.token_server,Stereotype.encryption,Stereotype.local_logging,Stereotype.resource_server,Stereotype.csrf_disabled,Stereotype.authentication_scope_all_requests,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.auth_provider,Stereotype.authentication_with_plaintext_credentials if TRUE from account_service|auth_mongodb|config|gateway\nforward account_service|auth_mongodb|config|gateway\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.authorization_server,Stereotype.pre_authorized_endpoints,Stereotype.infrastructural,Stereotype.token_server,Stereotype.encryption,Stereotype.local_logging,Stereotype.resource_server,Stereotype.csrf_disabled,Stereotype.authentication_scope_all_requests,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.auth_provider,Stereotype.authentication_with_plaintext_credentials if TRUE from account_service|auth_mongodb|config|gateway\nforward account_service|auth_mongodb|config|gateway\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "166",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.authorization_server,Stereotype.pre_authorized_endpoints,Stereotype.infrastructural,Stereotype.token_server,Stereotype.encryption,Stereotype.local_logging,Stereotype.resource_server,Stereotype.csrf_disabled,Stereotype.authentication_scope_all_requests,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.auth_provider,Stereotype.authentication_with_plaintext_credentials if TRUE from account_service|auth_mongodb|config|gateway\nforward account_service|auth_mongodb|config|gateway\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.authorization_server,Stereotype.pre_authorized_endpoints,Stereotype.infrastructural,Stereotype.token_server,Stereotype.encryption,Stereotype.local_logging,Stereotype.resource_server,Stereotype.csrf_disabled,Stereotype.authentication_scope_all_requests,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.auth_provider,Stereotype.authentication_with_plaintext_credentials if TRUE from account_service|auth_mongodb|config|gateway\nforward account_service|auth_mongodb|config|gateway\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "182",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.authorization_server,Stereotype.pre_authorized_endpoints,Stereotype.infrastructural,Stereotype.token_server,Stereotype.encryption,Stereotype.local_logging,Stereotype.resource_server,Stereotype.csrf_disabled,Stereotype.authentication_scope_all_requests,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.auth_provider,Stereotype.authentication_with_plaintext_credentials if TRUE from account_service|auth_mongodb|config|gateway\nforward account_service|auth_mongodb|config|gateway\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.authorization_server,Stereotype.pre_authorized_endpoints,Stereotype.infrastructural,Stereotype.token_server,Stereotype.encryption,Stereotype.local_logging,Stereotype.resource_server,Stereotype.csrf_disabled,Stereotype.authentication_scope_all_requests,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.auth_provider,Stereotype.authentication_with_plaintext_credentials if TRUE from account_service|auth_mongodb|config|gateway\nforward account_service|auth_mongodb|config|gateway\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "194",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -690,7 +690,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.pre_authorized_endpoints,Stereotype.local_logging,Stereotype.resource_server,Stereotype.circuit_breaker,Stereotype.authentication,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from account_mongodb|auth_service|config|gateway|notification_service\nforward account_mongodb|auth_service|config|gateway|notification_service\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.pre_authorized_endpoints,Stereotype.local_logging,Stereotype.resource_server,Stereotype.circuit_breaker,Stereotype.authentication,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from account_mongodb|auth_service|config|gateway|notification_service\nforward account_mongodb|auth_service|config|gateway|notification_service\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "202",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -750,7 +750,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.resource_server,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.load_balanced_link,LoadBalancer.Ribbon if TRUE from auth_service|config|gateway|notification_mongodb\nforward auth_service|config|gateway|notification_mongodb\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.resource_server,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.load_balanced_link,LoadBalancer.Ribbon if TRUE from auth_service|config|gateway|notification_mongodb\nforward auth_service|config|gateway|notification_mongodb\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "204",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -841,7 +841,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link if TRUE",
         "id" : "213",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -849,7 +849,7 @@
       "id" : "14",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\nStereotype.gateway\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -873,7 +873,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.authenticated_request if TRUE",
         "id" : "206",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -881,7 +881,7 @@
       "id" : "15",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -905,7 +905,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.authenticated_request if TRUE",
         "id" : "211",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -913,7 +913,7 @@
       "id" : "16",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -937,7 +937,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.authenticated_request if TRUE",
         "id" : "209",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -945,7 +945,7 @@
       "id" : "17",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
