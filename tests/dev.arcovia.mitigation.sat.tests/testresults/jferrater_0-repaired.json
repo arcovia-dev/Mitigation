@@ -200,12 +200,12 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "90",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "95",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -282,7 +282,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "82",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -290,7 +290,7 @@
       "id" : "6",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -318,7 +318,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service\nforward config_service\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "87",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -326,7 +326,7 @@
       "id" : "7",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -354,7 +354,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "92",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -362,7 +362,7 @@
       "id" : "8",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -390,7 +390,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from config_service|foodtray_service\nforward config_service|foodtray_service\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "97",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -398,7 +398,7 @@
       "id" : "9",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.load_balanced_link\nProtocol.HTTPS\nStereotype.internal\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.feign_connection\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -621,6 +621,5 @@
       "text" : "Ribbon"
     } ]
   } ],
-  "editorMode" : "edit",
-  "constraints" : [ ]
+  "editorMode" : "edit"
 }

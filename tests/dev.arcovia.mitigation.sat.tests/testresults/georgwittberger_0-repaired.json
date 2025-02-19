@@ -82,7 +82,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "39",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -95,7 +95,7 @@
       "id" : "3",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.token_validation\nStereotype.restful_http\nStereotype.internal\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -166,7 +166,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from apache_server\nforward apache_server",
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from apache_server\nforward apache_server\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "34",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -245,6 +245,5 @@
       "text" : "Apachehttpd"
     } ]
   } ],
-  "editorMode" : "edit",
-  "constraints" : [ ]
+  "editorMode" : "edit"
 }

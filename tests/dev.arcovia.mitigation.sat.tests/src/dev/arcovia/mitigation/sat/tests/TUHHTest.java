@@ -5,19 +5,19 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import static java.util.Map.entry;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.arcovia.mitigation.sat.*;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.examplemodels.Activator;
+import org.dataflowanalysis.examplemodels.TuhhModels;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
-
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
-import org.dataflowanalysis.examplemodels.TuhhModels;
+
 
 public class TUHHTest {
     final Constraint entryViaGatewayOnly = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
@@ -49,12 +49,9 @@ public class TUHHTest {
             loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
     final Map<Label, Integer> costs = Map.ofEntries(Map.entry(new Label("Stereotype", "internal"), 10),
-            entry(new Label("Stereotype", "authenticated_request"), 4),
-            entry(new Label("Stereotype", "transform_identity_representation"), 3),
-            entry(new Label("Stereotype", "token_validation"), 1),
-            entry(new Label("Stereotype", "login_attempts_regulation"), 2),
-            entry(new Label("Stereotype", "encrypted_connection"), 3),
-            entry(new Label("Stereotype", "log_sanitization"), 2),
+            entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
+            entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
+            entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
             entry(new Label("Stereotype", "local_logging"), 2));
 
     @Test
@@ -70,8 +67,11 @@ public class TUHHTest {
                 System.out.println(name);
 
                 var repairedDfdCosts = runRepair(model, name, variant == 0);
+
                 if (variant == 0)
                     dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
+
+                assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
             }
         }
     }
@@ -81,12 +81,13 @@ public class TUHHTest {
     void specificTUHHTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
         String model = "ewolff-kafka";
-        int variant = 0;
+        int variant = 7;
 
         String name = model + "_" + variant;
 
         var repairedDfdCosts = runRepair(model, name, true);
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/specific_" + name + "-repaired.json");
+        assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
     }
 
     private DataFlowDiagramAndDictionary runRepair(String model, String name, Boolean store)
@@ -99,7 +100,8 @@ public class TUHHTest {
         var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, model, (name + ".dataflowdiagram"))
                 .toString(), Paths.get(location, model, (name + ".datadictionary"))
                 .toString(), Activator.class);
-        if (!store) name = null;
+        if (!store)
+            name = null;
         return new Mechanic(dfd, name, constraints, costs).repair();
     }
 }

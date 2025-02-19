@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import java.util.StringJoiner;
@@ -68,9 +69,7 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        List<Term> minimalSharedSubset = new ArrayList<>();
-
-        while(problem.isSatisfiable()) {
+        while (problem.isSatisfiable()) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
@@ -78,28 +77,14 @@ public class Sat {
                     .filter(lit -> lit > 0)
                     .filter(lit -> termToLiteral.containsValue(lit))
                     .mapToObj(lit -> termToLiteral.getKey(lit))
-                    .filter(lit -> !lit.compositeLabel().category().equals(LabelCategory.IncomingData))
+                    .filter(lit -> !lit.compositeLabel()
+                            .category()
+                            .equals(LabelCategory.IncomingData))
                     .toList();
 
             // Store unique solutions
             if (!solutions.contains(deltaTerms)) {
                 solutions.add(deltaTerms);
-
-                if (minimalSharedSubset.isEmpty()){
-                    minimalSharedSubset = new ArrayList<>(deltaTerms);
-                }
-                else {
-                    List<Term> changedTerms = new ArrayList<>(minimalSharedSubset);
-                    changedTerms.removeAll(deltaTerms);
-                    if (changedTerms.size() < 2) {
-                        minimalSharedSubset.removeAll(changedTerms);
-                        var negatedSharedSubset = new VecInt();
-                        for (var literal : minimalSharedSubset) {
-                            negatedSharedSubset.push(-termToLiteral.getValue(literal));
-                        }
-                        addClause(negatedSharedSubset);
-                    }
-                }
             }
 
             // Prohibit current solution
@@ -109,7 +94,7 @@ public class Sat {
             }
             addClause(negated);
 
-            if (solutions.size() > 10000){
+            if (solutions.size() > 10000) {
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
         }
@@ -135,21 +120,27 @@ public class Sat {
                 } else {
                     for (InPin inPin : node.inPins()
                             .keySet()) {
-                        var clause = new VecInt();
-                        for (Literal literal : constraint.literals()) {
-                            var label = literal.compositeLabel();
-                            var sign = literal.positive() ? 1 : -1;
-                            if (literal.compositeLabel()
-                                    .category()
-                                    .equals(LabelCategory.Node)) {
-                                clause.push(sign * term(node.id(), label));
-                            } else if (literal.compositeLabel()
-                                    .category()
-                                    .equals(LabelCategory.IncomingData)) {
-                                clause.push(sign * term(inPin.id(), label));
+                        var incomingFlows = flows.stream()
+                                .filter(flow -> flow.sink()
+                                        .equals(inPin)).toList();
+                        for (Flow flow : incomingFlows) {
+                            var clause = new VecInt();
+                            for (Literal literal : constraint.literals()) {
+                                var label = literal.compositeLabel();
+                                var sign = literal.positive() ? 1 : -1;
+                                if (literal.compositeLabel()
+                                        .category()
+                                        .equals(LabelCategory.Node)) {
+                                    clause.push(sign * term(node.id(), label));
+                                } else if (literal.compositeLabel()
+                                        .category()
+                                        .equals(LabelCategory.IncomingData)) {
+                                    var data = flowData(flow, new IncomingDataLabel(label.label()));
+                                    clause.push(sign * data);
+                                }
                             }
+                            addClause(clause);
                         }
-                        addClause(clause);
                     }
                 }
             }
@@ -165,8 +156,8 @@ public class Sat {
                     .keySet()) {
                 for (Label outgoingCharacteristic : node.outPins()
                         .get(outPin)) {
-                    addClause(clause(
-                            term(outPin.id(), new OutgoingDataLabel(new Label(outgoingCharacteristic.type(), outgoingCharacteristic.value())))));
+                    addClause(clause(term(outPin.id(),
+                            new OutgoingDataLabel(new Label(outgoingCharacteristic.type(), outgoingCharacteristic.value())))));
                 }
             }
         }
@@ -189,44 +180,52 @@ public class Sat {
         for (Node sourceNode : nodes) {
             for (OutPin sourcePin : sourceNode.outPins()
                     .keySet()) {
-                for (Node sinkNode : nodes) {
-                    for (InPin sinkPin : sinkNode.inPins()
-                            .keySet()) {
-                        for (Label label : labels) {
-                            var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
-                            var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label));
+                var relevantInPins = flows.stream()
+                        .filter(flow -> flow.source()
+                                .equals(sourcePin))
+                        .map(Flow::sink)
+                        .toList();
+                for (InPin sinkPin : relevantInPins) {
+                    for (Label label : labels) {
+                        var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
+                        var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label));
 
-                            // (Source.outData AND Flow(Source,Sink)) <=> Sink.incomingData
-                            // --> ((¬Source.outData ∨ ¬Flow(Source,Sink) ∨ Sink.incomingData) ∧ (¬To.incomingData ∨ Source.outData) ∧
-                            // (¬Sink.incomingData ∨ Flow(Source,Sink))
-                            // <--> (A ∧ B ↔ C --> (¬C ∨ A) ∧ (¬C ∨ B) ∧ (¬A ∨ ¬B ∨ C))
-                            addClause(clause(-outgoingDataTerm, -flow(sourcePin, sinkPin), incomingFlowData));
-                            addClause(clause(-incomingFlowData, outgoingDataTerm));
-                            addClause(clause(-incomingFlowData, flow(sourcePin, sinkPin)));
-                        }
+                        // (Source.outData AND Flow(Source,Sink)) <=> Sink.incomingData
+                        // --> ((¬Source.outData ∨ ¬Flow(Source,Sink) ∨ Sink.incomingData) ∧ (¬To.incomingData ∨ Source.outData) ∧
+                        // (¬Sink.incomingData ∨ Flow(Source,Sink))
+                        // <--> (A ∧ B ↔ C --> (¬C ∨ A) ∧ (¬C ∨ B) ∧ (¬A ∨ ¬B ∨ C))
+                        addClause(clause(-outgoingDataTerm, -flow(sourcePin, sinkPin), incomingFlowData));
+                        addClause(clause(-incomingFlowData, outgoingDataTerm));
+                        addClause(clause(-incomingFlowData, flow(sourcePin, sinkPin)));
+
+
                     }
                 }
+
             }
         }
-
-        // Node has only incoming data labels that are received via at least one flow
-        // --> (Not Node x has Label L or Flow A with Label L or Flow B with Label L or ... Flow Z)
+        // Node has only incoming data labels that are received via all incoming flows
+        // --> (Not Node x has Label L or (Flow A with Label L and Flow B with Label L and ... Flow Z))
         for (Label label : labels) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
                     int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label));
-                    var clause = new VecInt();
-                    clause.push(-incomingDataTerm);
-                    for (Node sourceNode : nodes) {
-                        for (OutPin sourcePin : sourceNode.outPins()
-                                .keySet()) {
-                            var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
-                            addClause(clause(-flowData, incomingDataTerm));
-                            clause.push(flowData);
-                        }
+
+                    var relevantOutPins = flows.stream()
+                            .filter(flow -> flow.sink()
+                                    .equals(sinkPin))
+                            .map(Flow::source)
+                            .toList();
+
+                    for (OutPin sourcePin : relevantOutPins) {
+                        var clause = new VecInt();
+                        clause.push(-incomingDataTerm);
+                        var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
+                        addClause(clause(-flowData, incomingDataTerm));
+                        clause.push(flowData);
+                        addClause(clause);
                     }
-                    addClause(clause);
                 }
             }
         }
