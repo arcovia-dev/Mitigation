@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import static java.util.Map.entry;
 
 import dev.arcovia.mitigation.sat.*;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
-
-import com.google.common.collect.ImmutableMap;
 
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
@@ -51,10 +49,13 @@ public class TUHHTest {
             loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
     final Map<Label, Integer> costs = Map.ofEntries(Map.entry(new Label("Stereotype", "internal"), 10),
-            Map.entry(new Label("Stereotype", "authenticated_request"), 4),
-            Map.entry(new Label("Stereotype", "transform_identity_representation"), 3), Map.entry(new Label("Stereotype", "token_validation"), 1),
-            Map.entry(new Label("Stereotype", "login_attempts_regulation"), 2), Map.entry(new Label("Stereotype", "encrypted_connection"), 3),
-            Map.entry(new Label("Stereotype", "log_sanitization"), 2), Map.entry(new Label("Stereotype", "local_logging"), 2));
+            entry(new Label("Stereotype", "authenticated_request"), 4),
+            entry(new Label("Stereotype", "transform_identity_representation"), 3),
+            entry(new Label("Stereotype", "token_validation"), 1),
+            entry(new Label("Stereotype", "login_attempts_regulation"), 2),
+            entry(new Label("Stereotype", "encrypted_connection"), 3),
+            entry(new Label("Stereotype", "log_sanitization"), 2),
+            entry(new Label("Stereotype", "local_logging"), 2));
 
     @Test
     public void tuhhTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
@@ -68,7 +69,7 @@ public class TUHHTest {
 
                 System.out.println(name);
 
-                var repairedDfdCosts = runRepair(model, name,variant == 0);
+                var repairedDfdCosts = runRepair(model, name, variant == 0);
                 if (variant == 0)
                     dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
             }
