@@ -71,7 +71,7 @@ public class Sat {
 
         List<Term> minimalSharedSubset = new ArrayList<>();
 
-        while(problem.isSatisfiable()) {
+        while (problem.isSatisfiable()) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
@@ -79,17 +79,18 @@ public class Sat {
                     .filter(lit -> lit > 0)
                     .filter(lit -> termToLiteral.containsValue(lit))
                     .mapToObj(lit -> termToLiteral.getKey(lit))
-                    .filter(lit -> !lit.compositeLabel().category().equals(LabelCategory.IncomingData))
+                    .filter(lit -> !lit.compositeLabel()
+                            .category()
+                            .equals(LabelCategory.IncomingData))
                     .toList();
 
             // Store unique solutions
             if (!solutions.contains(deltaTerms)) {
                 solutions.add(deltaTerms);
 
-                if (minimalSharedSubset.isEmpty()){
+                if (minimalSharedSubset.isEmpty()) {
                     minimalSharedSubset = new ArrayList<>(deltaTerms);
-                }
-                else {
+                } else {
                     List<Term> changedTerms = new ArrayList<>(minimalSharedSubset);
                     changedTerms.removeAll(deltaTerms);
                     if (changedTerms.size() < 2) {
@@ -110,7 +111,7 @@ public class Sat {
             }
             addClause(negated);
 
-            if (solutions.size() > 10000){
+            if (solutions.size() > 10000) {
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
         }
@@ -166,8 +167,8 @@ public class Sat {
                     .keySet()) {
                 for (Label outgoingCharacteristic : node.outPins()
                         .get(outPin)) {
-                    addClause(clause(
-                            term(outPin.id(), new OutgoingDataLabel(new Label(outgoingCharacteristic.type(), outgoingCharacteristic.value())))));
+                    addClause(clause(term(outPin.id(),
+                            new OutgoingDataLabel(new Label(outgoingCharacteristic.type(), outgoingCharacteristic.value())))));
                 }
             }
         }
@@ -219,7 +220,8 @@ public class Sat {
                     int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label));
 
                     var relevantOutPins = flows.stream()
-                            .filter(flow -> flow.sink().equals(sinkPin))
+                            .filter(flow -> flow.sink()
+                                    .equals(sinkPin))
                             .map(Flow::source)
                             .toList();
                     for (OutPin sourcePin : relevantOutPins) {
@@ -230,16 +232,6 @@ public class Sat {
                         clause.push(flowData);
                         addClause(clause);
                     }
-                    /*for (Node sourceNode : nodes) {
-                        for (OutPin sourcePin : sourceNode.outPins()
-                                .keySet()) {
-                            var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
-                            addClause(clause(-flowData, incomingDataTerm));
-                            clause.push(flowData);
-                        }
-                    }
-                    System.out.println(clause);
-                    addClause(clause);*/
                 }
             }
         }

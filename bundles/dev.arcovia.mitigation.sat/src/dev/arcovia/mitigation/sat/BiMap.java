@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BiMap<K, V> {
-    private Map<K, V> keyToValueMap;
-    private Map<V, K> valueToKeyMap;
+    private final Map<K, V> keyToValueMap;
+    private final Map<V, K> valueToKeyMap;
 
     public BiMap() {
         keyToValueMap = new HashMap<>();
