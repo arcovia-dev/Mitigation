@@ -139,5 +139,6 @@
       "text" : "transformed_identity"
     } ]
   } ],
-  "editorMode" : "edit"
+  "editorMode" : "edit",
+  "constraints" : [ ]
 }

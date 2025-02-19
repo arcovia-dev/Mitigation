@@ -621,5 +621,6 @@
       "text" : "Ribbon"
     } ]
   } ],
-  "editorMode" : "edit"
+  "editorMode" : "edit",
+  "constraints" : [ ]
 }

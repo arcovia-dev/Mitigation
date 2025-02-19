@@ -54,9 +54,11 @@ public class Sat {
 
         buildClauses();
 
-        writeDimacsFile(("testresults/"+dfdName+ ".cnf"), dimacsClauses);
+        if (dfdName != null) {
+            writeDimacsFile(("testresults/" + dfdName + ".cnf"), dimacsClauses);
 
-        writeLiteralMapping("testresults/"+ dfdName+ "-literalMapping.json");
+            writeLiteralMapping("testresults/" + dfdName + "-literalMapping.json");
+        }
 
         return solveClauses();
     }
@@ -66,7 +68,9 @@ public class Sat {
 
         List<List<Term>> solutions = new ArrayList<>();
 
-        while (problem.isSatisfiable()) {
+        List<Term> minimalSharedSubset = new ArrayList<>();
+
+        while(problem.isSatisfiable()) {
             int[] model = problem.model();
 
             // Map literals to relevant Deltas
@@ -74,12 +78,28 @@ public class Sat {
                     .filter(lit -> lit > 0)
                     .filter(lit -> termToLiteral.containsValue(lit))
                     .mapToObj(lit -> termToLiteral.getKey(lit))
+                    .filter(lit -> !lit.compositeLabel().category().equals(LabelCategory.IncomingData))
                     .toList();
 
             // Store unique solutions
             if (!solutions.contains(deltaTerms)) {
                 solutions.add(deltaTerms);
 
+                if (minimalSharedSubset.isEmpty()){
+                    minimalSharedSubset = new ArrayList<>(deltaTerms);
+                }
+                else {
+                    List<Term> changedTerms = new ArrayList<>(minimalSharedSubset);
+                    changedTerms.removeAll(deltaTerms);
+                    if (changedTerms.size() < 2) {
+                        minimalSharedSubset.removeAll(changedTerms);
+                        var negatedSharedSubset = new VecInt();
+                        for (var literal : minimalSharedSubset) {
+                            negatedSharedSubset.push(-termToLiteral.getValue(literal));
+                        }
+                        addClause(negatedSharedSubset);
+                    }
+                }
             }
 
             // Prohibit current solution
@@ -88,6 +108,10 @@ public class Sat {
                 negated.push(-termToLiteral.getValue(literal));
             }
             addClause(negated);
+
+            if (solutions.size() > 10000){
+                throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
+            }
         }
         return solutions;
     }

@@ -12,7 +12,6 @@ Require-Bundle: org.dataflowanalysis.converter,
  org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
  org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",
  dev.arcovia.mitigation.sat;bundle-version="1.0.0",
- com.google.guava,
  org.dataflowanalysis.examplemodels,
  org.dataflowanalysis.analysis
 Automatic-Module-Name: dev.arcovia.mitigation.sat.tests

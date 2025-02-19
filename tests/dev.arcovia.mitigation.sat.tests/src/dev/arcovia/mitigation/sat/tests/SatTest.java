@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
@@ -106,7 +107,5 @@ public class SatTest {
         assertEquals(expectedNodeProperties, nodeProperties);
 
     }
-
-
 
 }

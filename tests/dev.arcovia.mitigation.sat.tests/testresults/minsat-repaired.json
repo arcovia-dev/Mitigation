@@ -114,5 +114,6 @@
       "text" : "local_logging"
     } ]
   } ],
-  "editorMode" : "edit"
+  "editorMode" : "edit",
+  "constraints" : [ ]
 }

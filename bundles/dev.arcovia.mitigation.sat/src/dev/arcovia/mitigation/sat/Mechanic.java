@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -140,6 +141,7 @@ public class Mechanic {
         }
 
         for (var node : tfg.getVertices()) {
+
             Set<String> nodeLiterals = new HashSet<>();
             for (var nodeChar : node.getAllVertexCharacteristics()) {
                 nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
@@ -162,13 +164,26 @@ public class Mechanic {
         return false;
     }
 
+    Comparator<OutPin> outPinComparator = (s1, s2) -> {
+        boolean isNumeric1 = s1.id().matches("\\d+");
+        boolean isNumeric2 = s2.id().matches("\\d+");
+
+        if (isNumeric1 && isNumeric2) {
+            return Integer.compare(Integer.parseInt(s1.id()), Integer.parseInt(s2.id())); // Sort numerically
+        } else if (!isNumeric1 && !isNumeric2) {
+            return s1.id().compareTo(s2.id()); // Sort lexicographically
+        } else {
+            return isNumeric1 ? -1 : 1; // Numbers first, then UUIDs
+        }
+    };
+
     private void getNodesAndFlows(List<AbstractTransposeFlowGraph> violatingTFGs) {
         for (var tfg : violatingTFGs) {
             for (var vertex : tfg.getVertices()) {
-
                 DFDVertex node = (DFDVertex) vertex;
-
+                final  String id = node.getReferencedElement().getId();
                 Map<InPin, List<Label>> inPinLabelMap = new HashMap<>();
+
                 for (var inPin : node.getAllIncomingDataCharacteristics()) {
                     List<Label> pinChars = new ArrayList<>();
                     for (var property : inPin.getAllCharacteristics()) {
@@ -179,7 +194,7 @@ public class Mechanic {
                     inPinLabelMap.put(new InPin(inPin.getVariableName()), pinChars);
                 }
 
-                Map<OutPin, List<Label>> outPinLabelMap = new HashMap<>();
+                TreeMap<OutPin, List<Label>> outPinLabelMap = new TreeMap<>(outPinComparator);
                 for (var outPin : node.getAllOutgoingDataCharacteristics()) {
                     List<Label> pinLabel = new ArrayList<>();
                     for (var property : outPin.getAllCharacteristics()) {
@@ -190,24 +205,22 @@ public class Mechanic {
                     outPinLabelMap.put(new OutPin(outPin.getVariableName()), pinLabel);
                 }
                 // if not in list add otherwise add missing pins
+
                 if (nodes.stream()
                         .noneMatch(n -> n.id()
-                                .equals(node.getReferencedElement()
-                                        .getId()))) {
+                                .equals(id))) {
                     List<Label> nodeLabels = new ArrayList<>();
                     for (var property : node.getAllVertexCharacteristics()) {
                         var type = property.getTypeName();
                         var value = property.getValueName();
                         nodeLabels.add(new Label(type, value));
                     }
-                    nodes.add(new Node(node.getReferencedElement()
-                            .getId(), inPinLabelMap, outPinLabelMap, nodeLabels));
+                    nodes.add(new Node(id, inPinLabelMap, outPinLabelMap, nodeLabels));
 
                 } else {
                     var satNode = nodes.stream()
                             .filter(n -> n.id()
-                                    .equals(node.getReferencedElement()
-                                            .getId()))
+                                    .equals(id))
                             .findFirst()
                             .get();
                     for(var inPin : inPinLabelMap.keySet()) {
@@ -234,6 +247,7 @@ public class Mechanic {
                         .keySet()) {
                     var flow = node.getPinFlowMap()
                             .get(pin);
+
                     var SatFlow = new Flow(new OutPin(flow.getSourcePin()
                             .getId()), new InPin(pin.getId()));
                     if(!flows.contains(SatFlow)) {
