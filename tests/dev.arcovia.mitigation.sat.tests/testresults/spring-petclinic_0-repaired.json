@@ -677,7 +677,7 @@
       "id" : "13",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.tracing_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.in_memory_data_store\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.load_balancer\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.administration_server\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.tracing_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.in_memory_data_store\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.github_repository\nStereotype.administration_server\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
