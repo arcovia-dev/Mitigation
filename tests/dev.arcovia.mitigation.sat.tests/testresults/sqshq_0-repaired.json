@@ -296,7 +296,7 @@
         "labelTypeValueId" : "95"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.external_website,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.external_website,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "200",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -304,7 +304,7 @@
       "id" : "3",
       "type" : "node:input-output",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.transform_identity_representation\nStereotype.gateway\nStereotype.external_website\nStereotype.token_validation\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.external_website\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -316,7 +316,7 @@
         "labelTypeValueId" : "114"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.entrypoint,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http if TRUE",
         "id" : "218",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -324,7 +324,7 @@
       "id" : "4",
       "type" : "node:input-output",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.entrypoint\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -363,7 +363,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link if TRUE",
         "id" : "141",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -373,32 +373,32 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.restful_http,Stereotype.plaintext_credentials_link if TRUE",
         "id" : "151",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http if TRUE",
         "id" : "160",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "174",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "184",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "196",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.entrypoint,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.basic_authentication,Stereotype.authentication,Stereotype.plaintext_credentials_link,Stereotype.restful_http if TRUE",
         "id" : "220",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -406,7 +406,7 @@
       "id" : "5",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.plaintext_credentials\nStereotype.basic_authentication\nStereotype.gateway\nStereotype.token_validation\nStereotype.csrf_disabled\nStereotype.authentication\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.plaintext_credentials\nStereotype.basic_authentication\nStereotype.plaintext_credentials_link\nStereotype.restful_http\nStereotype.csrf_disabled\nStereotype.authentication\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -490,7 +490,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.monitoring_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from config|rabbitmq\nforward config|rabbitmq\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.local_logging if TRUE",
+        "behavior" : "assign Stereotype.monitoring_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from config|rabbitmq\nforward config|rabbitmq\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "148",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -680,7 +680,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.pre_authorized_endpoints,Stereotype.local_logging,Stereotype.resource_server,Stereotype.circuit_breaker,Stereotype.authentication,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.load_balanced_link,LoadBalancer.Ribbon if TRUE from account_mongodb|auth_service|config|gateway|notification_service\nforward account_mongodb|auth_service|config|gateway|notification_service\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.pre_authorized_endpoints,Stereotype.local_logging,Stereotype.resource_server,Stereotype.circuit_breaker,Stereotype.authentication,Stereotype.restful_http,Stereotype.feign_connection,Stereotype.load_balanced_link,LoadBalancer.Ribbon if TRUE from account_mongodb|auth_service|config|gateway|notification_service\nforward account_mongodb|auth_service|config|gateway|notification_service\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "170",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -698,7 +698,7 @@
       "id" : "11",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.infrastructural\nStereotype.auth_provider\nStereotype.load_balanced_link\nStereotype.basic_authentication\nStereotype.database\nStereotype.authentication_with_plaintext_credentials\nStereotype.pre_authorized_endpoints\nStereotype.authentication\nStereotype.csrf_disabled\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.encryption\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.external_website\nStereotype.internal\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.circuit_breaker_link\nStereotype.token_server\nStereotype.authentication_scope_all_requests\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.infrastructural\nStereotype.load_balanced_link\nStereotype.auth_provider\nStereotype.basic_authentication\nStereotype.database\nStereotype.authentication_with_plaintext_credentials\nStereotype.pre_authorized_endpoints\nStereotype.authentication\nStereotype.csrf_disabled\nStereotype.entrypoint\nStereotype.authenticated_request\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.encryption\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.external_website\nStereotype.internal\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.token_server\nStereotype.authentication_scope_all_requests\nStereotype.circuit_breaker_link\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nLoadBalancer.Ribbon\nCircuitBreaker.Hystrix\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -841,7 +841,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link if TRUE",
         "id" : "213",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -849,7 +849,7 @@
       "id" : "14",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\nStereotype.gateway\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -873,7 +873,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.authenticated_request if TRUE",
         "id" : "206",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -881,7 +881,7 @@
       "id" : "15",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -905,7 +905,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.authenticated_request if TRUE",
         "id" : "211",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -913,7 +913,7 @@
       "id" : "16",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -937,7 +937,7 @@
         "labelTypeValueId" : "29"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.transform_identity_representation,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.token_validation,Stereotype.internal,Stereotype.entrypoint,Stereotype.authenticated_request,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Stereotype.authenticated_request if TRUE",
         "id" : "209",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -945,7 +945,7 @@
       "id" : "17",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nStereotype.transform_identity_representation\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -979,22 +979,22 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.local_logging if TRUE",
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "222",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.local_logging if TRUE",
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "224",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.local_logging if TRUE",
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "226",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,Stereotype.auth_provider,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.local_logging if TRUE",
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Stereotype.load_balanced_link,Stereotype.auth_provider,CircuitBreaker.Hystrix,LoadBalancer.Ribbon if TRUE from config|registry|user\nforward config|registry|user\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "228",
         "type" : "port:dfd-output",
         "children" : [ ]

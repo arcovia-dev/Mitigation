@@ -54,7 +54,7 @@
         "labelTypeValueId" : "28"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.external_website,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.external_website,Stereotype.restful_http,Stereotype.authenticated_request if TRUE",
         "id" : "49",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -62,7 +62,7 @@
       "id" : "2",
       "type" : "node:input-output",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.external_website\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.authenticated_request\nStereotype.external_website\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -255,11 +255,11 @@
       "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
       "text" : "log_sanitization"
     }, {
-      "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
-      "text" : "encrypted_connection"
-    }, {
       "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
       "text" : "authenticated_request"
+    }, {
+      "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
+      "text" : "encrypted_connection"
     } ]
   }, {
     "id" : "11",

@@ -326,12 +326,12 @@
         "labelTypeValueId" : "113"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging,Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http if TRUE",
         "id" : "197",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection,Stereotype.gateway,Stereotype.internal,Stereotype.entrypoint,Stereotype.local_logging if TRUE",
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http if TRUE",
         "id" : "199",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -339,7 +339,7 @@
       "id" : "3",
       "type" : "node:input-output",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.encrypted_connection\nStereotype.authorization_server\nStereotype.gateway\nStereotype.restful_http\nStereotype.internal\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -466,7 +466,7 @@
       "id" : "7",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.plaintext_credentials\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.plaintext_credentials\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.github_repository\nStereotype.load_balancer\nStereotype.authorization_server\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -505,7 +505,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.service_discovery,Stereotype.plaintext_credentials,Stereotype.restful_http if TRUE from composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nforward composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.service_discovery,Stereotype.plaintext_credentials,Stereotype.restful_http if TRUE from composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nforward composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "210",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -544,57 +544,57 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository",
         "id" : "137",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository",
         "id" : "142",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository",
         "id" : "145",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository",
         "id" : "148",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository",
         "id" : "157",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "165",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "170",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "175",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.authenticated_request if TRUE",
         "id" : "180",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository",
         "id" : "205",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.internal if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.configuration_server,Stereotype.local_logging,Stereotype.restful_http,Protocol.HTTPS if TRUE from github_repository\nforward github_repository",
         "id" : "212",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -602,7 +602,7 @@
       "id" : "9",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.github_repository\nProtocol.HTTPS\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -656,7 +656,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.authorization_server,Stereotype.resource_server,Stereotype.local_logging,Stereotype.plaintext_credentials,Stereotype.restful_http,Protocol.HTTPS if TRUE from config_server|edge_server|user\nforward config_server|edge_server|user\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.authorization_server,Stereotype.resource_server,Stereotype.local_logging,Stereotype.plaintext_credentials,Stereotype.restful_http,Protocol.HTTPS if TRUE from config_server|edge_server|user\nforward config_server|edge_server|user\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "214",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -700,7 +700,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.monitoring_dashboard,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|turbine_server\nforward config_server|turbine_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.monitoring_dashboard,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|turbine_server\nforward config_server|turbine_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "224",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -752,7 +752,7 @@
       "id" : "12",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.plaintext_credentials\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.plaintext_credentials\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.github_repository\nStereotype.load_balancer\nStereotype.authorization_server\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -777,7 +777,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.tracing_server,Stereotype.restful_http if TRUE from rabbitmq\nforward rabbitmq\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.entrypoint if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.tracing_server,Stereotype.restful_http if TRUE from rabbitmq\nforward rabbitmq\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "228",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -785,7 +785,7 @@
       "id" : "13",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.tracing_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.tracing_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nProtocol.HTTPS\nStereotype.internal\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.load_balancer\nStereotype.message_broker\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -816,12 +816,12 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "167",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "216",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -829,7 +829,7 @@
       "id" : "14",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -860,12 +860,12 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "172",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "218",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -873,7 +873,7 @@
       "id" : "15",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -904,12 +904,12 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "177",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "220",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -917,7 +917,7 @@
       "id" : "16",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.resource_server\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.authenticated_request\nStereotype.circuit_breaker\nStereotype.encrypted_connection\nStereotype.github_repository\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -982,7 +982,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.load_balancer,Stereotype.circuit_breaker,Stereotype.resource_server,Stereotype.restful_http if TRUE from auth_server|config_server|edge_server\nforward auth_server|config_server|edge_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.load_balancer,Stereotype.circuit_breaker,Stereotype.resource_server,Stereotype.restful_http if TRUE from auth_server|config_server|edge_server\nforward auth_server|config_server|edge_server\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "222",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -990,7 +990,7 @@
       "id" : "17",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.load_balanced_link\nStereotype.plaintext_credentials\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.load_balancer\nStereotype.github_repository\nStereotype.authorization_server\nStereotype.circuit_breaker_link\nStereotype.transform_identity_representation\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.resource_server\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.load_balanced_link\nStereotype.plaintext_credentials\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.load_balancer\nStereotype.github_repository\nStereotype.circuit_breaker_link\nStereotype.authorization_server\nStereotype.transform_identity_representation\nStereotype.monitoring_server\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -1036,7 +1036,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.gateway,Stereotype.resource_server,Stereotype.local_logging,Stereotype.circuit_breaker,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Protocol.HTTPS if TRUE from config_server|discovery_server|user\nforward config_server|discovery_server|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.gateway,Stereotype.resource_server,Stereotype.local_logging,Stereotype.circuit_breaker,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.circuit_breaker_link,Protocol.HTTPS if TRUE from config_server|discovery_server|user\nforward config_server|discovery_server|user\nassign Stereotype.transform_identity_representation if TRUE\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.token_validation if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "201",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -1046,7 +1046,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.gateway,Stereotype.resource_server,Stereotype.local_logging,Stereotype.circuit_breaker,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Protocol.HTTPS if TRUE from config_server|discovery_server|user\nforward config_server|discovery_server|user\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authorization_server if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.gateway,Stereotype.resource_server,Stereotype.local_logging,Stereotype.circuit_breaker,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http,Protocol.HTTPS if TRUE from config_server|discovery_server|user\nforward config_server|discovery_server|user\nassign Stereotype.encrypted_connection if TRUE",
         "id" : "226",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -1054,7 +1054,7 @@
       "id" : "18",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.plaintext_credentials\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.authorization_server\nStereotype.github_repository\nStereotype.transform_identity_representation\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.resource_server\nStereotype.configuration_server\nStereotype.plaintext_credentials\nStereotype.load_balanced_link\nStereotype.gateway\nProtocol.HTTPS\nStereotype.token_validation\nStereotype.internal\nStereotype.entrypoint\nStereotype.local_logging\nStereotype.circuit_breaker\nStereotype.authenticated_request\nStereotype.encrypted_connection\nStereotype.service_discovery\nStereotype.load_balancer\nStereotype.circuit_breaker_link\nStereotype.github_repository\nStereotype.transform_identity_representation\nStereotype.monitoring_server\nStereotype.restful_http\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },

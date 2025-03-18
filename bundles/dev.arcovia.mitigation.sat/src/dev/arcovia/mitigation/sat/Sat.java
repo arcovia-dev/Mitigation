@@ -206,6 +206,25 @@ public class Sat {
         }
         // Node has only incoming data labels that are received via all incoming flows
         // --> (Not Node x has Label L or (Flow A with Label L and Flow B with Label L and ... Flow Z))
+        for (Label label : extractPositiveUniqueLabels()) {
+            for (Node sinkNode : nodes) {
+                for (InPin sinkPin : sinkNode.inPins()
+                        .keySet()) {
+                    int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label));
+
+
+
+                    var relevantOutPins = determineRequiredPins(sinkPin, label);
+
+                    for (OutPin sourcePin : relevantOutPins) {
+                        var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
+                        //flowData <=> incomingData
+                        addClause(clause(-flowData, incomingDataTerm));
+                        addClause(clause(-incomingDataTerm, flowData));
+                    }
+                }
+            }
+        }
         for (Label label : labels) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
@@ -217,18 +236,48 @@ public class Sat {
                                     .equals(sinkPin))
                             .map(Flow::source)
                             .toList();
-
+                    var clause = new VecInt();
+                    clause.push(-incomingDataTerm);
                     for (OutPin sourcePin : relevantOutPins) {
-                        var clause = new VecInt();
-                        clause.push(-incomingDataTerm);
                         var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
+                        //flowData <=> incomingData
                         addClause(clause(-flowData, incomingDataTerm));
                         clause.push(flowData);
-                        addClause(clause);
                     }
+                    addClause(clause);
                 }
             }
         }
+    }
+    private List<OutPin> determineRequiredPins(InPin sinkPin, Label label){
+        var relevantFlows = flows.stream()
+                .filter(flow -> flow.sink()
+                        .equals(sinkPin))
+                .toList();
+        var pins = new ArrayList<OutPin>();
+        for (Flow flow : relevantFlows) {
+            var sourcePin = flow.source();
+            for (Node node : nodes) {
+                if (node.id().equals(sourcePin.id())) {
+                    if(node.outPins().get(sourcePin).contains(label)) pins.add(sourcePin);
+                }
+            }
+        }
+
+        return pins;
+    }
+
+    private List<Label> extractPositiveUniqueLabels() {
+        var labelPos = new HashSet<Label>();
+        for (Constraint constraint : constraints) {
+            for (Literal literal : constraint.literals()) {
+                if (literal.positive()){
+                    labelPos.add(literal.compositeLabel()
+                            .label());
+                }
+            }
+        }
+        return List.copyOf(labelPos);
     }
 
     private void extractUniqueLabels() {
