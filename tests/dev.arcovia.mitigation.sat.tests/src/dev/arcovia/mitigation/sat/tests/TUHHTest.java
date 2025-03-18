@@ -51,7 +51,7 @@ public class TUHHTest {
     final List<Constraint> constraints = List.of(entryViaGatewayOnly, nonInternalGateway, authenticatedRequest, transformedEntry, tokenValidation,
             loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
-    final Map<Label, Integer> costs = Map.ofEntries(entry(new Label("Stereotype", "internal"), 10),
+    final Map<Label, Integer> costs = Map.ofEntries(
             entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
             entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
@@ -81,9 +81,12 @@ public class TUHHTest {
     @Test
     void efficiencyTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
-
         for (var model : tuhhModels.keySet()) {
             System.out.println("Checking " + model);
+            if (!tuhhModels.get(model).contains(0)) continue;
+
+            var repairedDfd = runRepair(model, model+"_0", false, constraints);
+
             for (int variant : tuhhModels.get(model)) {
                 List<Constraint> constraint = switch (variant) {
                     case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
@@ -98,82 +101,15 @@ public class TUHHTest {
                 };
                 if (constraint == null) continue;
 
+                var cost = new ModelCostCalculator(repairedDfd, constraint, costs).calculateCost();
+                var cost2 = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, costs).calculateCost();
                 System.out.println("Comparing to " + model + "_" + variant);
+                System.out.println(cost + " <= " + cost2 + " : "+ (cost <= cost2));
 
-                var repairedDfdCosts = runRepair(model, model+"_0", false, constraint);
 
-                compareDeltas(model, repairedDfdCosts, variant);
-
-                System.out.println("Test");
             }
         }
     }
-    private void compareDeltas(String model, DataFlowDiagramAndDictionary repairedDfd, int variant) throws StandaloneInitializationException {
-        var repairedDiff = getDiff(repairedDfd, loadDFD(model, model + "_0"));
-        var optimalDiff = getDiff(loadDFD(model, model + "_0"), loadDFD(model, model + "_" + variant));
-        //assertEquals(repairedDiff, optimalDiff);
-    }
-    private List<String> getDiff(DataFlowDiagramAndDictionary original, DataFlowDiagramAndDictionary toCompare) {
-        List<org.dataflowanalysis.dfd.dataflowdiagram.Node> nodesOriginal = original.dataFlowDiagram().getNodes();
-        var nodesCompare = toCompare.dataFlowDiagram().getNodes();
-        var diff = new ArrayList<String>();
-        for (var node : nodesOriginal){
-
-            var compareNode = nodesCompare.stream()
-                    .filter(n -> n.getEntityName().equals(node.getEntityName()))
-                    .findFirst()
-                    .orElse(null);
-
-            if (compareNode != null){
-                diff.addAll(compareProperties(node.getProperties(), compareNode.getProperties(), node.getEntityName()));
-                diff.addAll(compareBehavior(node.getBehavior(), compareNode.getBehavior(), node.getEntityName()));
-            }
-            else {
-                System.out.println("Something went wrong");
-            }
-        }
-        return diff;
-    }
-    private List<String> compareProperties(List<org.dataflowanalysis.dfd.datadictionary.Label> properties,
-            List<org.dataflowanalysis.dfd.datadictionary.Label> compareNodeProperties, String nodeName) {
-        var diff = new ArrayList<String>();
-        // Extrahiere die entityNames in Sets
-        Set<String> propertyNames = properties.stream()
-                .map(org.dataflowanalysis.dfd.datadictionary.Label::getEntityName)
-                .collect(Collectors.toSet());
-
-        Set<String> comparePropertyNames = compareNodeProperties.stream()
-                .map(org.dataflowanalysis.dfd.datadictionary.Label::getEntityName)
-                .collect(Collectors.toSet());
-
-        // 1. Elemente in propertyNames, die NICHT in comparePropertyNames sind
-        Set<String> differenceA = propertyNames.stream()
-                .filter(name -> !comparePropertyNames.contains(name))
-                .collect(Collectors.toSet());
-
-        // 2. Elemente in comparePropertyNames, die NICHT in propertyNames sind
-        Set<String> differenceB = comparePropertyNames.stream()
-                .filter(name -> !propertyNames.contains(name))
-                .collect(Collectors.toSet());
-
-        // Kombiniere beide Unterschiede
-        Set<String> diffNames = new HashSet<>();
-        diffNames.addAll(differenceA);
-        diffNames.addAll(differenceB);
-
-        // Jetzt in deine diff-Liste schreiben
-        for (String diffName : diffNames) {
-            diff.add(nodeName + "_" + diffName);
-            System.out.println(nodeName + "_" + diffName);
-        }
-        return diff;
-    }
-    private List<String> compareBehavior(Behavior behavior, Behavior compareNodeBehavior, String nodeName) {
-        var diff = new ArrayList<String>();
-
-        return diff;
-    }
-
 
     @Disabled
     @Test
