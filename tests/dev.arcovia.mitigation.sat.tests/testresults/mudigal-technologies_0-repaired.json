@@ -403,7 +403,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.search_engine,Stereotype.infrastructural,Stereotype.restful_http if TRUE from logstash\nforward logstash\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.search_engine,Stereotype.infrastructural,Stereotype.restful_http if TRUE from logstash\nforward logstash\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "189",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -441,7 +441,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.logging_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from service_one|service_two\nforward service_one|service_two\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.logging_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from service_one|service_two\nforward service_one|service_two\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "191",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -474,7 +474,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.monitoring_dashboard,Stereotype.infrastructural,Stereotype.restful_http if TRUE from elasticsearch\nforward elasticsearch\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.monitoring_dashboard,Stereotype.infrastructural,Stereotype.restful_http if TRUE from elasticsearch\nforward elasticsearch\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "187",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -526,7 +526,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.message_broker,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.restful_http if TRUE from service_one|service_two\nforward service_one|service_two\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.message_broker,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.restful_http if TRUE from service_one|service_two\nforward service_one|service_two\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "179",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -569,7 +569,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_one_db\nforward api_gateway|consul|rabbit|service_one_db\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_one_db\nforward api_gateway|consul|rabbit|service_one_db\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "169",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -577,7 +577,7 @@
       "id" : "10",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.database\nStereotype.web_application\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.authenticated_request\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.user_stereotype\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.restful_http\nUsername.servicetwo\n",
+        "message" : "PropagatedLabels:\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.database\nStereotype.web_application\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.authenticated_request\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.user_stereotype\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.restful_http\nUsername.servicetwo\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -612,7 +612,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_two_db\nforward api_gateway|consul|rabbit|service_two_db\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_two_db\nforward api_gateway|consul|rabbit|service_two_db\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "173",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -620,7 +620,7 @@
       "id" : "11",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.database\nStereotype.web_application\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.authenticated_request\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.user_stereotype\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.restful_http\nUsername.servicetwo\n",
+        "message" : "PropagatedLabels:\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.database\nStereotype.web_application\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.authenticated_request\nStereotype.jdbc\nStereotype.transform_identity_representation\nStereotype.message_broker\nStereotype.user_stereotype\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.token_validation\nStereotype.internal\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.restful_http\nUsername.servicetwo\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },

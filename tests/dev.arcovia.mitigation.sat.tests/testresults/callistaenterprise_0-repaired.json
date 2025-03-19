@@ -505,7 +505,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.service_discovery,Stereotype.plaintext_credentials,Stereotype.restful_http if TRUE from composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nforward composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.service_discovery,Stereotype.plaintext_credentials,Stereotype.restful_http if TRUE from composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nforward composite_service|config_server|monitor_dashboard|product_service|recommendation_service|review_service|turbine_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "210",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -656,7 +656,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.authorization_server,Stereotype.resource_server,Stereotype.local_logging,Stereotype.plaintext_credentials,Stereotype.restful_http,Protocol.HTTPS if TRUE from config_server|edge_server|user\nforward config_server|edge_server|user\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.authorization_server,Stereotype.resource_server,Stereotype.local_logging,Stereotype.plaintext_credentials,Stereotype.restful_http,Protocol.HTTPS if TRUE from config_server|edge_server|user\nforward config_server|edge_server|user\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "214",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -700,7 +700,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.monitoring_dashboard,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|turbine_server\nforward config_server|turbine_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.monitoring_dashboard,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|turbine_server\nforward config_server|turbine_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "224",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -821,7 +821,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "216",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -865,7 +865,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "218",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -909,7 +909,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from composite_service|config_server\nforward composite_service|config_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "220",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -982,7 +982,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.load_balancer,Stereotype.circuit_breaker,Stereotype.resource_server,Stereotype.restful_http if TRUE from auth_server|config_server|edge_server\nforward auth_server|config_server|edge_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.load_balancer,Stereotype.circuit_breaker,Stereotype.resource_server,Stereotype.restful_http if TRUE from auth_server|config_server|edge_server\nforward auth_server|config_server|edge_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "222",
         "type" : "port:dfd-output",
         "children" : [ ]

@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import java.util.StringJoiner;
@@ -212,13 +211,10 @@ public class Sat {
                         .keySet()) {
                     int incomingDataTerm = term(sinkPin.id(), new IncomingDataLabel(label));
 
-
-
                     var relevantOutPins = determineRequiredPins(sinkPin, label);
 
                     for (OutPin sourcePin : relevantOutPins) {
                         var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
-                        //flowData <=> incomingData
                         addClause(clause(-flowData, incomingDataTerm));
                         addClause(clause(-incomingDataTerm, flowData));
                     }
@@ -240,7 +236,6 @@ public class Sat {
                     clause.push(-incomingDataTerm);
                     for (OutPin sourcePin : relevantOutPins) {
                         var flowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
-                        //flowData <=> incomingData
                         addClause(clause(-flowData, incomingDataTerm));
                         clause.push(flowData);
                     }
@@ -257,14 +252,35 @@ public class Sat {
         var pins = new ArrayList<OutPin>();
         for (Flow flow : relevantFlows) {
             var sourcePin = flow.source();
-            for (Node node : nodes) {
-                if (node.id().equals(sourcePin.id())) {
-                    if(node.outPins().get(sourcePin).contains(label)) pins.add(sourcePin);
-                }
-            }
+            Node sourceNode = nodes.stream()
+                    .filter(node -> node.outPins().containsKey(sourcePin))
+                    .findFirst()
+                    .orElse(null);
+            if(violatesConstraintWithLabel(label,sourceNode, sourcePin)) pins.add(sourcePin);
+
         }
 
         return pins;
+    }
+    private Boolean violatesConstraintWithLabel(Label enforcedLabel, Node sourceNode, OutPin sourcePin){
+        List<Label> outgoingData = sourceNode.outPins().get(sourcePin);
+
+        for (var constraint : constraints) {
+            List<Label> negativeLiterals = new ArrayList<>();
+            List<Label> positiveLiterals = new ArrayList<>();
+            for (var literal : constraint.literals()) {
+                if (literal.positive())
+                    positiveLiterals.add(literal.compositeLabel().label());
+                else
+                    negativeLiterals.add(literal.compositeLabel()
+                            .label());
+            }
+            if (positiveLiterals.contains(enforcedLabel)) {
+                if (outgoingData.containsAll(negativeLiterals)) return true;
+            }
+        }
+
+        return false;
     }
 
     private List<Label> extractPositiveUniqueLabels() {

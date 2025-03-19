@@ -400,7 +400,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "139",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -410,7 +410,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "182",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -454,12 +454,12 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|mailer|oauth|reminder\nforward config_server|mailer|oauth|reminder\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|mailer|oauth|reminder\nforward config_server|mailer|oauth|reminder\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "137",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|mailer|oauth|reminder\nforward config_server|mailer|oauth|reminder\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|mailer|oauth|reminder\nforward config_server|mailer|oauth|reminder\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "176",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -492,7 +492,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin|api_gateway|config_server|oauth\nforward admin|api_gateway|config_server|oauth\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin|api_gateway|config_server|oauth\nforward admin|api_gateway|config_server|oauth\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "172",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -525,7 +525,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http,Stereotype.message_consumer_kafka,ConsumerTopic.todomail if TRUE from reminder|zookeeper\nforward reminder|zookeeper\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authenticated_request if TRUE",
+        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http,Stereotype.message_consumer_kafka,ConsumerTopic.todomail if TRUE from reminder|zookeeper\nforward reminder|zookeeper\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authenticated_request if TRUE\nassign Stereotype.local_logging if TRUE",
         "id" : "118",
         "type" : "port:dfd-output",
         "children" : [ ]

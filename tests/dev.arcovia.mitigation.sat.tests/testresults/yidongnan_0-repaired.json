@@ -336,7 +336,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a|service_b|zuul\nforward admin_dashboard|config_server|service_a|service_b|zuul\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a|service_b|zuul\nforward admin_dashboard|config_server|service_a|service_b|zuul\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "127",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -377,7 +377,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "87",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -471,7 +471,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "99",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -491,7 +491,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "133",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -527,7 +527,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "110",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -537,7 +537,7 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "129",
         "type" : "port:dfd-output",
         "children" : [ ]

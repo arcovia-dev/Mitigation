@@ -341,7 +341,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.service_discovery,Stereotype.restful_http if TRUE from auth_server|comments_webservice|configserver|task_webservice|user_webservice|web_portal\nforward auth_server|comments_webservice|configserver|task_webservice|user_webservice|web_portal\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.service_discovery,Stereotype.restful_http if TRUE from auth_server|comments_webservice|configserver|task_webservice|user_webservice|web_portal\nforward auth_server|comments_webservice|configserver|task_webservice|user_webservice|web_portal\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.authenticated_request if TRUE",
         "id" : "170",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -561,7 +561,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.resource_server,Stereotype.authentication_scope_all_requests,Stereotype.restful_http if TRUE from api_gateway|auth_server|configserver\nforward api_gateway|auth_server|configserver\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.resource_server,Stereotype.authentication_scope_all_requests,Stereotype.restful_http if TRUE from api_gateway|auth_server|configserver\nforward api_gateway|auth_server|configserver\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "131",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -608,7 +608,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.resource_server,Stereotype.restful_http if TRUE from configserver|task_webservice\nforward configserver|task_webservice\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.resource_server,Stereotype.restful_http if TRUE from configserver|task_webservice\nforward configserver|task_webservice\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "140",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -673,7 +673,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.authentication_scope_all_requests,Stereotype.resource_server,Stereotype.circuit_breaker,Stereotype.load_balancer,Stereotype.authentication,Stereotype.restful_http if TRUE from api_gateway|auth_server|configserver\nforward api_gateway|auth_server|configserver\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.authentication_scope_all_requests,Stereotype.resource_server,Stereotype.circuit_breaker,Stereotype.load_balancer,Stereotype.authentication,Stereotype.restful_http if TRUE from api_gateway|auth_server|configserver\nforward api_gateway|auth_server|configserver\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.gateway if TRUE",
         "id" : "147",
         "type" : "port:dfd-output",
         "children" : [ ]
@@ -739,7 +739,7 @@
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign Stereotype.infrastructural,Stereotype.gateway,Stereotype.load_balancer,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.entrypoint,Stereotype.restful_http if TRUE from auth_server|configserver|user|webservice_registry\nforward auth_server|configserver|user|webservice_registry\nassign Stereotype.encrypted_connection if TRUE",
+        "behavior" : "assign Stereotype.infrastructural,Stereotype.gateway,Stereotype.load_balancer,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.entrypoint,Stereotype.restful_http if TRUE from auth_server|configserver|user|webservice_registry\nforward auth_server|configserver|user|webservice_registry\nassign Stereotype.encrypted_connection if TRUE\nassign Stereotype.local_logging if TRUE",
         "id" : "172",
         "type" : "port:dfd-output",
         "children" : [ ]
