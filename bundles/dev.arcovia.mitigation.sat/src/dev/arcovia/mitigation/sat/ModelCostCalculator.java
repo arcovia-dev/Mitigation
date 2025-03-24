@@ -94,16 +94,6 @@ public class ModelCostCalculator {
                         .getId();
                 Map<InPin, List<Label>> inPinLabelMap = new HashMap<>();
 
-                for (var inPin : node.getAllIncomingDataCharacteristics()) {
-                    List<Label> pinChars = new ArrayList<>();
-                    for (var property : inPin.getAllCharacteristics()) {
-                        var type = property.getTypeName();
-                        var value = property.getValueName();
-                        pinChars.add(new Label(type, value));
-                    }
-                    inPinLabelMap.put(new InPin(inPin.getVariableName()), pinChars);
-                }
-
                 TreeMap<OutPin, List<Label>> outPinLabelMap = new TreeMap<>(outPinComparator);
                 for (var outPin : node.getAllOutgoingDataCharacteristics()) {
                     List<Label> pinLabel = new ArrayList<>();
@@ -133,18 +123,6 @@ public class ModelCostCalculator {
                                     .equals(id))
                             .findFirst()
                             .get();
-                    for (var inPin : inPinLabelMap.keySet()) {
-                        if (satNode.inPins()
-                                .containsKey(inPin)) {
-                            Set<Label> inPinLabel = new HashSet<>(inPinLabelMap.get(inPin));
-                            inPinLabel.addAll(satNode.inPins()
-                                    .get(inPin));
-                            satNode.inPins()
-                                    .put(inPin, new ArrayList<>(inPinLabel));
-                        } else
-                            satNode.inPins()
-                                    .put(inPin, inPinLabelMap.get(inPin));
-                    }
                     for (var outPin : outPinLabelMap.keySet()) {
                         if (satNode.outPins()
                                 .containsKey(outPin)) {

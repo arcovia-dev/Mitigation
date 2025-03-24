@@ -91,7 +91,9 @@ public class Sat {
             for (var literal : deltaTerms) {
                 negated.push(-termToLiteral.getValue(literal));
             }
-            addClause(negated);
+            if (!negated.isEmpty()) {
+                addClause(negated);
+            }
 
             if (solutions.size() > 10000) {
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");

@@ -6,12 +6,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Map.entry;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.arcovia.mitigation.sat.*;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
-import org.dataflowanalysis.dfd.datadictionary.Behavior;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.dataflowanalysis.examplemodels.TuhhModels;
 import org.junit.jupiter.api.Disabled;
@@ -80,12 +78,16 @@ public class TUHHTest {
     }
     @Test
     void efficiencyTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
+        final Map<Label, Integer> costMap = Map.ofEntries(
+                entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
+                entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
+                entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
+                entry(new Label("Stereotype", "local_logging"), 2));
         var tuhhModels = TuhhModels.getTuhhModels();
+        var modelRepairMoreExpensive = new ArrayList<String>();
         for (var model : tuhhModels.keySet()) {
             System.out.println("Checking " + model);
             if (!tuhhModels.get(model).contains(0)) continue;
-
-            var repairedDfd = runRepair(model, model+"_0", false, constraints);
 
             for (int variant : tuhhModels.get(model)) {
                 List<Constraint> constraint = switch (variant) {
@@ -100,15 +102,22 @@ public class TUHHTest {
                     default -> null;
                 };
                 if (constraint == null) continue;
-
-                var cost = new ModelCostCalculator(repairedDfd, constraint, costs).calculateCost();
-                var cost2 = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, costs).calculateCost();
                 System.out.println("Comparing to " + model + "_" + variant);
+
+                var repairedDfd = runRepair(model, model+"_0", false, constraint);
+
+                var cost = new ModelCostCalculator(repairedDfd, constraint, costMap).calculateCost();
+                var cost2 = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, costMap).calculateCost();
+
                 System.out.println(cost + " <= " + cost2 + " : "+ (cost <= cost2));
+                if (cost > cost2){
+                    modelRepairMoreExpensive.add(model + "_" + variant + " is more expensive: " + cost + " <= " + cost2);
+                }
 
 
             }
         }
+        System.out.println(modelRepairMoreExpensive);
     }
 
     @Disabled
@@ -116,7 +125,7 @@ public class TUHHTest {
     void specificTUHHTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
         String model = "ewolff-kafka";
-        int variant = 7;
+        int variant = 0;
 
         String name = model + "_" + variant;
 
