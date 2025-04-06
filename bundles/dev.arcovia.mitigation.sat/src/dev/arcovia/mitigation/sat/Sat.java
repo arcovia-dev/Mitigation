@@ -50,7 +50,7 @@ public class Sat {
         solver = SolverFactory.newDefault();
         dimacsClauses = new ArrayList<>();
 
-        extractUniqueLabels();
+        extractConstraintLabels();
 
         buildClauses();
 
@@ -103,14 +103,16 @@ public class Sat {
     }
 
     private void buildClauses() throws ContradictionException {
-        // Apply constraints
+        // Force constraints ad each node and Flow
         for (Node node : nodes) {
             for (Constraint constraint : constraints) {
+                //Apply node only constraints
                 if (constraint.literals()
                         .stream()
                         .allMatch(literal -> literal.compositeLabel()
                                 .category()
                                 .equals(LabelCategory.Node))) {
+
                     var clause = new VecInt();
                     for (Literal literal : constraint.literals()) {
                         var label = literal.compositeLabel();
@@ -118,22 +120,29 @@ public class Sat {
                         clause.push(sign * term(node.id(), label));
                     }
                     addClause(clause);
-                } else {
+                }
+
+                else {
                     for (InPin inPin : node.inPins()
                             .keySet()) {
+
                         var incomingFlows = flows.stream()
                                 .filter(flow -> flow.sink()
                                         .equals(inPin)).toList();
+                        //Apply all other constraints per IncomingFlow
                         for (Flow flow : incomingFlows) {
+
                             var clause = new VecInt();
                             for (Literal literal : constraint.literals()) {
+
                                 var label = literal.compositeLabel();
                                 var sign = literal.positive() ? 1 : -1;
                                 if (literal.compositeLabel()
                                         .category()
                                         .equals(LabelCategory.Node)) {
                                     clause.push(sign * term(node.id(), label));
-                                } else if (literal.compositeLabel()
+                                }
+                                else if (literal.compositeLabel()
                                         .category()
                                         .equals(LabelCategory.IncomingData)) {
                                     var data = flowData(flow, new IncomingDataLabel(label.label()));
@@ -142,13 +151,14 @@ public class Sat {
                             }
                             addClause(clause);
                         }
+
                     }
                 }
             }
 
         }
 
-        // Require node and outgoing data chars
+        // Require node and outgoing data characteristics
         for (Node node : nodes) {
             for (Label characteristic : node.nodeChars()) {
                 addClause(clause(term(node.id(), new NodeLabel(new Label(characteristic.type(), characteristic.value())))));
@@ -205,9 +215,9 @@ public class Sat {
 
             }
         }
-        // Node has only incoming data labels that are received via all incoming flows
-        // --> (Not Node x has Label L or (Flow A with Label L and Flow B with Label L and ... Flow Z))
-        for (Label label : extractPositiveUniqueLabels()) {
+
+        // Node has repairing incoming data labels only if received via all violating incoming flows
+        for (Label label : extractRepairingConstrainLabels()) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
@@ -223,6 +233,7 @@ public class Sat {
                 }
             }
         }
+        // Node has incoming data if received via at least one flow (Above needs not be excluded since above clauses need to be fulfilled)
         for (Label label : labels) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
@@ -246,6 +257,7 @@ public class Sat {
             }
         }
     }
+
     private List<OutPin> determineRequiredPins(InPin sinkPin, Label label){
         var relevantFlows = flows.stream()
                 .filter(flow -> flow.sink()
@@ -285,7 +297,7 @@ public class Sat {
         return false;
     }
 
-    private List<Label> extractPositiveUniqueLabels() {
+    private List<Label> extractRepairingConstrainLabels() {
         var labelPos = new HashSet<Label>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
@@ -298,7 +310,7 @@ public class Sat {
         return List.copyOf(labelPos);
     }
 
-    private void extractUniqueLabels() {
+    private void extractConstraintLabels() {
         labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {

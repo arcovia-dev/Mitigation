@@ -105,7 +105,8 @@ public class TUHHTest {
                 System.out.println("Comparing to " + model + "_" + variant);
 
                 var repairedDfd = runRepair(model, model+"_0", false, constraint);
-
+                var dfdConverter = new DataFlowDiagramConverter();
+                dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "efficencyTest/" +  model + "_" + variant + "-repaired.json");
                 var cost = new ModelCostCalculator(repairedDfd, constraint, costMap).calculateCost();
                 var cost2 = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, costMap).calculateCost();
 
@@ -113,8 +114,6 @@ public class TUHHTest {
                 if (cost > cost2){
                     modelRepairMoreExpensive.add(model + "_" + variant + " is more expensive: " + cost + " <= " + cost2);
                 }
-
-
             }
         }
         System.out.println(modelRepairMoreExpensive);
@@ -124,12 +123,13 @@ public class TUHHTest {
     @Test
     void specificTUHHTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
-        String model = "ewolff-kafka";
-        int variant = 0;
+        String model = "mudigal-technologies";
+        int variant = 7;
 
         String name = model + "_" + variant;
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(loadDFD(model,name)), "testresults/specific_" + name + "-repaired.json");
 
-        var repairedDfdCosts = runRepair(model, name, true, constraints);
+        var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway));
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/specific_" + name + "-repaired.json");
         assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
     }

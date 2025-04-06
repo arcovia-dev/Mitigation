@@ -127,17 +127,9 @@ public class ModelCostCalculator {
                         if (satNode.outPins()
                                 .containsKey(outPin)) {
                             Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
-                            var enforcingLabels = constraints.stream().flatMap(c -> c.literals().stream()) // Flatten all literals from all constraints
-                                    .filter(Literal::positive) // Keep only positive literals
-                                    .map(literal -> literal.compositeLabel().label()) // Extract their labels
-                                    .toList();
-                            var newLabels = new ArrayList<>(satNode.outPins()
-                                    .get(outPin));
-                            var sameLabels = outPinLabel.stream().filter(newLabels::contains).toList();
 
-                            outPinLabel.addAll(newLabels);
-                            outPinLabel.removeAll(enforcingLabels);
-                            outPinLabel.addAll(sameLabels);
+                            outPinLabel.addAll(new ArrayList<>(satNode.outPins()
+                                    .get(outPin)));
 
                             satNode.outPins()
                                     .put(outPin, new ArrayList<>(outPinLabel));

@@ -75,6 +75,8 @@ public class Mechanic {
 
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
+
+        //IF there are no violations repairs are not needed
         if(nodes.isEmpty()){
             logger.warn("Analysis has no violations found in DFD");
             return dfd;
