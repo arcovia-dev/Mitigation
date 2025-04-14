@@ -103,7 +103,7 @@ public class Sat {
     }
 
     private void buildClauses() throws ContradictionException {
-        // Force constraints ad each node and Flow
+        // Force constraints at each node and Flow
         for (Node node : nodes) {
             for (Constraint constraint : constraints) {
                 //Apply node only constraints
@@ -298,16 +298,16 @@ public class Sat {
     }
 
     private List<Label> extractRepairingConstrainLabels() {
-        var labelPos = new HashSet<Label>();
+        Set<Label>  positiveLabels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
                 if (literal.positive()){
-                    labelPos.add(literal.compositeLabel()
+                     positiveLabels.add(literal.compositeLabel()
                             .label());
                 }
             }
         }
-        return List.copyOf(labelPos);
+        return List.copyOf( positiveLabels);
     }
 
     private void extractConstraintLabels() {

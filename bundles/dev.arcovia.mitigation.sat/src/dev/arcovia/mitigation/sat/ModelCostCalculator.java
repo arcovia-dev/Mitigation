@@ -1,12 +1,18 @@
 package dev.arcovia.mitigation.sat;
 
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
-import org.dataflowanalysis.analysis.dfd.core.DFDFlowGraphCollection;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class ModelCostCalculator {
     DataFlowDiagramAndDictionary dfd;
