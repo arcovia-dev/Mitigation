@@ -32,7 +32,7 @@ public class ModelCostCalculator {
                 if (vertex.hasVertexLabel(label))
                     allRelevantLabels.get(label).add("Vertex: " + vertex.name);
                 for (var outPin : vertex.hasOutgoingLabel(label)){
-                        allRelevantLabels.get(label).add("Outgoing: " + outPin);
+                        allRelevantLabels.get(label).add("Outgoing: " + outPin.getId() + " from: " + vertex.name );
                         pushLabel(label, outPin);
                 }
             }
@@ -45,8 +45,8 @@ public class ModelCostCalculator {
         var destinationPin = sourcePinToDestinationPin.get(sourcePin);
         var destinationNode = inPinToVertex.get(destinationPin);
         for(var outPin : destinationNode.isForwarding(destinationPin)){
-            if (!allRelevantLabels.get(label).contains("Outgoing: " + outPin)){
-                allRelevantLabels.get(label).add("Outgoing: " + outPin);
+            if (!allRelevantLabels.get(label).contains("Outgoing: " + outPin.getId() + " from: " + destinationNode.name)){
+                allRelevantLabels.get(label).add("Outgoing: " + outPin.getId() + " from: " + destinationNode.name);
                 pushLabel(label, outPin);
             }
         }
