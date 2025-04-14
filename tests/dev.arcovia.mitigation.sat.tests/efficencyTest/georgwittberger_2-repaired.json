@@ -1,0 +1,213 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "user",
+      "id" : "31",
+      "type" : "edge:arrow",
+      "sourceId" : "30",
+      "targetId" : "29",
+      "children" : [ ]
+    }, {
+      "text" : "cart_service",
+      "id" : "35",
+      "type" : "edge:arrow",
+      "sourceId" : "34",
+      "targetId" : "33",
+      "children" : [ ]
+    }, {
+      "text" : "apache_server",
+      "id" : "38",
+      "type" : "edge:arrow",
+      "sourceId" : "37",
+      "targetId" : "36",
+      "children" : [ ]
+    }, {
+      "text" : "apache_server",
+      "id" : "40",
+      "type" : "edge:arrow",
+      "sourceId" : "39",
+      "targetId" : "33",
+      "children" : [ ]
+    }, {
+      "text" : "apache_server",
+      "id" : "43",
+      "type" : "edge:arrow",
+      "sourceId" : "42",
+      "targetId" : "41",
+      "children" : [ ]
+    }, {
+      "text" : "user",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "25"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http if TRUE",
+        "id" : "30",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "2",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "apache_server",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "18"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "19"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "21",
+        "labelTypeValueId" : "22"
+      } ],
+      "ports" : [ {
+        "id" : "29",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.authenticated_request if TRUE",
+        "id" : "37",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.authenticated_request if TRUE",
+        "id" : "39",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.web_server,Stereotype.infrastructural,Stereotype.entrypoint,Stereotype.restful_http if TRUE from user\nforward user\nassign Stereotype.authenticated_request if TRUE",
+        "id" : "42",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "3",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.infrastructural\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "content_service",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "12"
+      } ],
+      "ports" : [ {
+        "id" : "41",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "4",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "product_service",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "28"
+      } ],
+      "ports" : [ {
+        "id" : "33",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "5",
+      "type" : "node:function",
+      "children" : [ ]
+    }, {
+      "text" : "cart_service",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "15"
+      } ],
+      "ports" : [ {
+        "id" : "36",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from apache_server\nforward apache_server\nassign Stereotype.authenticated_request if TRUE",
+        "id" : "34",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "6",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.web_server\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.authenticated_request\nStereotype.infrastructural\nStereotype.restful_http\nStereotype.internal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "7",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "10",
+      "text" : "internal"
+    }, {
+      "id" : "18",
+      "text" : "web_server"
+    }, {
+      "id" : "19",
+      "text" : "infrastructural"
+    }, {
+      "id" : "20",
+      "text" : "entrypoint"
+    }, {
+      "id" : "25",
+      "text" : "user_stereotype"
+    }, {
+      "id" : "32",
+      "text" : "restful_http"
+    }, {
+      "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
+      "text" : "authenticated_request"
+    } ]
+  }, {
+    "id" : "11",
+    "name" : "Port",
+    "values" : [ {
+      "id" : "12",
+      "text" : "11080"
+    }, {
+      "id" : "15",
+      "text" : "11082"
+    }, {
+      "id" : "28",
+      "text" : "11081"
+    } ]
+  }, {
+    "id" : "21",
+    "name" : "WebServer",
+    "values" : [ {
+      "id" : "22",
+      "text" : "Apachehttpd"
+    } ]
+  } ],
+  "editorMode" : "edit"
+}

@@ -574,7 +574,7 @@
       "id" : "10",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.web_application\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.web_application\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
@@ -614,7 +614,7 @@
       "id" : "11",
       "type" : "node:function",
       "annotation" : {
-        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.web_application\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.web_application\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
         "icon" : "tag",
         "color" : "#FFFFFF"
       },
