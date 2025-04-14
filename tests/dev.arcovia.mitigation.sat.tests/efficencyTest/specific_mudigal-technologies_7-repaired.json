@@ -1,0 +1,1048 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "consul2",
+      "id" : "106",
+      "type" : "edge:arrow",
+      "sourceId" : "105",
+      "targetId" : "104",
+      "children" : [ ]
+    }, {
+      "text" : "consul3",
+      "id" : "109",
+      "type" : "edge:arrow",
+      "sourceId" : "108",
+      "targetId" : "104",
+      "children" : [ ]
+    }, {
+      "text" : "consul3",
+      "id" : "112",
+      "type" : "edge:arrow",
+      "sourceId" : "111",
+      "targetId" : "110",
+      "children" : [ ]
+    }, {
+      "text" : "logstash",
+      "id" : "115",
+      "type" : "edge:arrow",
+      "sourceId" : "114",
+      "targetId" : "113",
+      "children" : [ ]
+    }, {
+      "text" : "elasticsearch",
+      "id" : "118",
+      "type" : "edge:arrow",
+      "sourceId" : "117",
+      "targetId" : "116",
+      "children" : [ ]
+    }, {
+      "text" : "consul",
+      "id" : "121",
+      "type" : "edge:arrow",
+      "sourceId" : "120",
+      "targetId" : "119",
+      "children" : [ ]
+    }, {
+      "text" : "service_one",
+      "id" : "124",
+      "type" : "edge:arrow",
+      "sourceId" : "123",
+      "targetId" : "122",
+      "children" : [ ]
+    }, {
+      "text" : "service_one",
+      "id" : "127",
+      "type" : "edge:arrow",
+      "sourceId" : "126",
+      "targetId" : "125",
+      "children" : [ ]
+    }, {
+      "text" : "rabbit",
+      "id" : "135",
+      "type" : "edge:arrow",
+      "sourceId" : "134",
+      "targetId" : "119",
+      "children" : [ ]
+    }, {
+      "text" : "consul",
+      "id" : "141",
+      "type" : "edge:arrow",
+      "sourceId" : "140",
+      "targetId" : "139",
+      "children" : [ ]
+    }, {
+      "text" : "service_two",
+      "id" : "143",
+      "type" : "edge:arrow",
+      "sourceId" : "142",
+      "targetId" : "122",
+      "children" : [ ]
+    }, {
+      "text" : "service_two",
+      "id" : "145",
+      "type" : "edge:arrow",
+      "sourceId" : "144",
+      "targetId" : "125",
+      "children" : [ ]
+    }, {
+      "text" : "rabbit",
+      "id" : "147",
+      "type" : "edge:arrow",
+      "sourceId" : "146",
+      "targetId" : "139",
+      "children" : [ ]
+    }, {
+      "text" : "service_one_db",
+      "id" : "150",
+      "type" : "edge:arrow",
+      "sourceId" : "149",
+      "targetId" : "119",
+      "children" : [ ]
+    }, {
+      "text" : "service_two_db",
+      "id" : "153",
+      "type" : "edge:arrow",
+      "sourceId" : "152",
+      "targetId" : "139",
+      "children" : [ ]
+    }, {
+      "text" : "api_gateway",
+      "id" : "155",
+      "type" : "edge:arrow",
+      "sourceId" : "154",
+      "targetId" : "119",
+      "children" : [ ]
+    }, {
+      "text" : "api_gateway",
+      "id" : "157",
+      "type" : "edge:arrow",
+      "sourceId" : "156",
+      "targetId" : "139",
+      "children" : [ ]
+    }, {
+      "text" : "consul",
+      "id" : "160",
+      "type" : "edge:arrow",
+      "sourceId" : "159",
+      "targetId" : "158",
+      "children" : [ ]
+    }, {
+      "text" : "user",
+      "id" : "163",
+      "type" : "edge:arrow",
+      "sourceId" : "162",
+      "targetId" : "161",
+      "children" : [ ]
+    }, {
+      "text" : "web_application",
+      "id" : "165",
+      "type" : "edge:arrow",
+      "sourceId" : "164",
+      "targetId" : "158",
+      "children" : [ ]
+    }, {
+      "text" : "api_gateway",
+      "id" : "168",
+      "type" : "edge:arrow",
+      "sourceId" : "167",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "service_one",
+      "id" : "170",
+      "type" : "edge:arrow",
+      "sourceId" : "169",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "service_one_db",
+      "id" : "172",
+      "type" : "edge:arrow",
+      "sourceId" : "171",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "service_two",
+      "id" : "174",
+      "type" : "edge:arrow",
+      "sourceId" : "173",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "service_two_db",
+      "id" : "176",
+      "type" : "edge:arrow",
+      "sourceId" : "175",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "web_application",
+      "id" : "178",
+      "type" : "edge:arrow",
+      "sourceId" : "177",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "rabbit",
+      "id" : "180",
+      "type" : "edge:arrow",
+      "sourceId" : "179",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "consul",
+      "id" : "182",
+      "type" : "edge:arrow",
+      "sourceId" : "181",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "consul2",
+      "id" : "184",
+      "type" : "edge:arrow",
+      "sourceId" : "183",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "consul3",
+      "id" : "186",
+      "type" : "edge:arrow",
+      "sourceId" : "185",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "kibana",
+      "id" : "188",
+      "type" : "edge:arrow",
+      "sourceId" : "187",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "elasticsearch",
+      "id" : "190",
+      "type" : "edge:arrow",
+      "sourceId" : "189",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "logstash",
+      "id" : "192",
+      "type" : "edge:arrow",
+      "sourceId" : "191",
+      "targetId" : "166",
+      "children" : [ ]
+    }, {
+      "text" : "user",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "101"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http if TRUE",
+        "id" : "162",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "2",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "consul",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "59"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "60"
+      }, {
+        "labelTypeId" : "61",
+        "labelTypeValueId" : "62"
+      } ],
+      "ports" : [ {
+        "id" : "104",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE from consul2|consul3\nforward consul2|consul3",
+        "id" : "120",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE from consul2|consul3\nforward consul2|consul3",
+        "id" : "140",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE from consul2|consul3\nforward consul2|consul3",
+        "id" : "159",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE from consul2|consul3\nforward consul2|consul3",
+        "id" : "181",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "3",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.service_discovery\nStereotype.infrastructural\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "consul2",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "59"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "60"
+      }, {
+        "labelTypeId" : "61",
+        "labelTypeValueId" : "62"
+      } ],
+      "ports" : [ {
+        "id" : "110",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE from consul3\nforward consul3",
+        "id" : "105",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE from consul3\nforward consul3",
+        "id" : "183",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "4",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.service_discovery\nStereotype.infrastructural\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "consul3",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "59"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "60"
+      }, {
+        "labelTypeId" : "61",
+        "labelTypeValueId" : "62"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE",
+        "id" : "108",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE",
+        "id" : "111",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.restful_http if TRUE",
+        "id" : "185",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "5",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.service_discovery\nStereotype.infrastructural\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "elasticsearch",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "50"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "51",
+        "labelTypeValueId" : "52"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "53"
+      } ],
+      "ports" : [ {
+        "id" : "113",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.search_engine,Stereotype.infrastructural,Stereotype.restful_http if TRUE from logstash\nforward logstash\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "117",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.search_engine,Stereotype.infrastructural,Stereotype.restful_http if TRUE from logstash\nforward logstash",
+        "id" : "189",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "6",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.search_engine\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.logging_server\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "logstash",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "26"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "28"
+      }, {
+        "labelTypeId" : "29",
+        "labelTypeValueId" : "30"
+      } ],
+      "ports" : [ {
+        "id" : "122",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.logging_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from service_one|service_two\nforward service_one|service_two\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "114",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.logging_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE from service_one|service_two\nforward service_one|service_two",
+        "id" : "191",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "7",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.logging_server\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "kibana",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "73"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "74",
+        "labelTypeValueId" : "91"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "92"
+      } ],
+      "ports" : [ {
+        "id" : "116",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.monitoring_dashboard,Stereotype.infrastructural,Stereotype.restful_http if TRUE from elasticsearch\nforward elasticsearch\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "187",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "8",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.database\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.jdbc\nStereotype.logging_server\nStereotype.message_broker\nStereotype.search_engine\nQueue.commudigalmicroservicessampleserviceone\nStereotype.monitoring_dashboard\nStereotype.plaintext_credentials\nStereotype.gateway\nStereotype.internal\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.restful_http\nUsername.servicetwo\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "rabbit",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "65"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "34"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "66",
+        "labelTypeValueId" : "67"
+      }, {
+        "labelTypeId" : "35",
+        "labelTypeValueId" : "68"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "69"
+      }, {
+        "labelTypeId" : "40",
+        "labelTypeValueId" : "70"
+      } ],
+      "ports" : [ {
+        "id" : "125",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.message_broker,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.message_consumer_rabbitmq,Stereotype.restful_http,Queue.commudigalmicroservicessampleserviceone if TRUE from service_one|service_two\nforward service_one|service_two\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "134",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.message_broker,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.message_consumer_rabbitmq,Stereotype.restful_http,Queue.commudigalmicroservicessampleservicetwo if TRUE from service_one|service_two\nforward service_one|service_two",
+        "id" : "146",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.message_broker,Stereotype.plaintext_credentials,Stereotype.infrastructural,Stereotype.restful_http if TRUE from service_one|service_two\nforward service_one|service_two",
+        "id" : "179",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "9",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.web_application\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "service_one",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "21"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "23"
+      } ],
+      "ports" : [ {
+        "id" : "119",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_one_db\nforward api_gateway|consul|rabbit|service_one_db\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "123",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.message_producer_rabbitmq,Stereotype.plaintext_credentials_link,Stereotype.restful_http,RoutingKey.commudigalmicroservicessampleservice,ProducerExchange.commudigalmicroservicessampleservicesexchange if TRUE from api_gateway|consul|rabbit|service_one_db\nforward api_gateway|consul|rabbit|service_one_db\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "126",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_one_db\nforward api_gateway|consul|rabbit|service_one_db\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "169",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "10",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nQueue.commudigalmicroservicessampleserviceone\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.web_application\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "service_two",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "21"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "56"
+      } ],
+      "ports" : [ {
+        "id" : "139",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_two_db\nforward api_gateway|consul|rabbit|service_two_db\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "142",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.message_producer_rabbitmq,Stereotype.restful_http,Stereotype.plaintext_credentials_link,RoutingKey.commudigalmicroservicessampleservice,ProducerExchange.commudigalmicroservicessampleservicesexchange if TRUE from api_gateway|consul|rabbit|service_two_db\nforward api_gateway|consul|rabbit|service_two_db\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "144",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from api_gateway|consul|rabbit|service_two_db\nforward api_gateway|consul|rabbit|service_two_db\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "173",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "11",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nPassword.servicetwo\nProducerExchange.commudigalmicroservicessampleservicesexchange\nStereotype.infrastructural\nStereotype.plaintext_credentials\nStereotype.database\nStereotype.gateway\nStereotype.web_application\nStereotype.internal\nStereotype.entrypoint\nStereotype.message_consumer_rabbitmq\nStereotype.local_logging\nStereotype.message_producer_rabbitmq\nStereotype.service_discovery\nStereotype.encrypted_connection\nRoutingKey.commudigalmicroservicessampleservice\nStereotype.load_balancer\nStereotype.jdbc\nStereotype.plaintext_credentials_link\nQueue.commudigalmicroservicessampleservicetwo\nStereotype.message_broker\nStereotype.restful_http\nUsername.servicetwo\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "service_one_db",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "33"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "34"
+      }, {
+        "labelTypeId" : "35",
+        "labelTypeValueId" : "95"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "96"
+      }, {
+        "labelTypeId" : "38",
+        "labelTypeValueId" : "97"
+      }, {
+        "labelTypeId" : "40",
+        "labelTypeValueId" : "98"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc if TRUE",
+        "id" : "149",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.restful_http if TRUE",
+        "id" : "171",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "12",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "service_two_db",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "33"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "34"
+      }, {
+        "labelTypeId" : "35",
+        "labelTypeValueId" : "36"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "37"
+      }, {
+        "labelTypeId" : "38",
+        "labelTypeValueId" : "39"
+      }, {
+        "labelTypeId" : "40",
+        "labelTypeValueId" : "41"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.jdbc,Stereotype.plaintext_credentials_link,Username.servicetwo,Password.servicetwo if TRUE",
+        "id" : "152",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.database,Stereotype.plaintext_credentials,Stereotype.restful_http if TRUE",
+        "id" : "175",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "13",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nPassword.servicetwo\nStereotype.plaintext_credentials\nStereotype.jdbc\nStereotype.database\nStereotype.plaintext_credentials_link\nStereotype.restful_http\nUsername.servicetwo\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "api_gateway",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "79"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "80"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "81"
+      }, {
+        "labelTypeId" : "82",
+        "labelTypeValueId" : "83"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "84"
+      }, {
+        "labelTypeId" : "85",
+        "labelTypeValueId" : "86"
+      } ],
+      "ports" : [ {
+        "id" : "158",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http if TRUE from consul|web_application\nforward consul|web_application\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "154",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http if TRUE from consul|web_application\nforward consul|web_application\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "156",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.entrypoint,Stereotype.restful_http if TRUE from consul|web_application\nforward consul|web_application\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "167",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "14",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.entrypoint\nStereotype.user_stereotype\nStereotype.local_logging\nStereotype.service_discovery\nStereotype.encrypted_connection\nStereotype.infrastructural\nStereotype.load_balancer\nStereotype.gateway\nStereotype.web_application\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "web_application",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "44"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "21"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "45"
+      }, {
+        "labelTypeId" : "46",
+        "labelTypeValueId" : "47"
+      } ],
+      "ports" : [ {
+        "id" : "161",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.web_application,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from user\nforward user",
+        "id" : "164",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.web_application,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from user\nforward user",
+        "id" : "177",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "15",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.local_logging\nStereotype.infrastructural\nStereotype.web_application\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "scope",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "73"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "27"
+      }, {
+        "labelTypeId" : "74",
+        "labelTypeValueId" : "75"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "76"
+      } ],
+      "ports" : [ {
+        "id" : "166",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "16",
+      "type" : "node:function",
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "17",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "20",
+      "text" : "internal"
+    }, {
+      "id" : "21",
+      "text" : "local_logging"
+    }, {
+      "id" : "26",
+      "text" : "logging_server"
+    }, {
+      "id" : "27",
+      "text" : "infrastructural"
+    }, {
+      "id" : "33",
+      "text" : "database"
+    }, {
+      "id" : "34",
+      "text" : "plaintext_credentials"
+    }, {
+      "id" : "44",
+      "text" : "web_application"
+    }, {
+      "id" : "50",
+      "text" : "search_engine"
+    }, {
+      "id" : "59",
+      "text" : "service_discovery"
+    }, {
+      "id" : "65",
+      "text" : "message_broker"
+    }, {
+      "id" : "73",
+      "text" : "monitoring_dashboard"
+    }, {
+      "id" : "79",
+      "text" : "gateway"
+    }, {
+      "id" : "80",
+      "text" : "load_balancer"
+    }, {
+      "id" : "81",
+      "text" : "entrypoint"
+    }, {
+      "id" : "101",
+      "text" : "user_stereotype"
+    }, {
+      "id" : "107",
+      "text" : "restful_http"
+    }, {
+      "id" : "128",
+      "text" : "message_producer_rabbitmq"
+    }, {
+      "id" : "129",
+      "text" : "plaintext_credentials_link"
+    }, {
+      "id" : "136",
+      "text" : "message_consumer_rabbitmq"
+    }, {
+      "id" : "151",
+      "text" : "jdbc"
+    }, {
+      "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
+      "text" : "encrypted_connection"
+    } ]
+  }, {
+    "id" : "22",
+    "name" : "Port",
+    "values" : [ {
+      "id" : "23",
+      "text" : "8082"
+    }, {
+      "id" : "28",
+      "text" : "5000"
+    }, {
+      "id" : "37",
+      "text" : "3310"
+    }, {
+      "id" : "45",
+      "text" : "4200"
+    }, {
+      "id" : "53",
+      "text" : "9200"
+    }, {
+      "id" : "56",
+      "text" : "8084"
+    }, {
+      "id" : "60",
+      "text" : "8500"
+    }, {
+      "id" : "69",
+      "text" : "15672"
+    }, {
+      "id" : "76",
+      "text" : "4040"
+    }, {
+      "id" : "84",
+      "text" : "8080"
+    }, {
+      "id" : "92",
+      "text" : "5601"
+    }, {
+      "id" : "96",
+      "text" : "27017"
+    } ]
+  }, {
+    "id" : "29",
+    "name" : "LoggingServer",
+    "values" : [ {
+      "id" : "30",
+      "text" : "Logstash"
+    } ]
+  }, {
+    "id" : "35",
+    "name" : "Username",
+    "values" : [ {
+      "id" : "36",
+      "text" : "servicetwo"
+    }, {
+      "id" : "68",
+      "text" : "mudigal"
+    }, {
+      "id" : "95",
+      "text" : "serviceone"
+    } ]
+  }, {
+    "id" : "38",
+    "name" : "Database",
+    "values" : [ {
+      "id" : "39",
+      "text" : "MySQL"
+    }, {
+      "id" : "97",
+      "text" : "MongoDB"
+    } ]
+  }, {
+    "id" : "40",
+    "name" : "Password",
+    "values" : [ {
+      "id" : "41",
+      "text" : "servicetwo"
+    }, {
+      "id" : "70",
+      "text" : "mudigal"
+    }, {
+      "id" : "98",
+      "text" : "serviceone"
+    } ]
+  }, {
+    "id" : "46",
+    "name" : "WebApplication",
+    "values" : [ {
+      "id" : "47",
+      "text" : "Nginx"
+    } ]
+  }, {
+    "id" : "51",
+    "name" : "SearchEngine",
+    "values" : [ {
+      "id" : "52",
+      "text" : "Elasticsearch"
+    } ]
+  }, {
+    "id" : "61",
+    "name" : "ServiceDiscovery",
+    "values" : [ {
+      "id" : "62",
+      "text" : "Consul"
+    } ]
+  }, {
+    "id" : "66",
+    "name" : "MessageBroker",
+    "values" : [ {
+      "id" : "67",
+      "text" : "RabbitMQ"
+    } ]
+  }, {
+    "id" : "74",
+    "name" : "MonitoringDashboard",
+    "values" : [ {
+      "id" : "75",
+      "text" : "WeaveScope"
+    }, {
+      "id" : "91",
+      "text" : "Kibana"
+    } ]
+  }, {
+    "id" : "82",
+    "name" : "Gateway",
+    "values" : [ {
+      "id" : "83",
+      "text" : "Zuul"
+    } ]
+  }, {
+    "id" : "85",
+    "name" : "LoadBalancer",
+    "values" : [ {
+      "id" : "86",
+      "text" : "Ribbon"
+    } ]
+  }, {
+    "id" : "130",
+    "name" : "RoutingKey",
+    "values" : [ {
+      "id" : "131",
+      "text" : "commudigalmicroservicessampleservice"
+    } ]
+  }, {
+    "id" : "132",
+    "name" : "ProducerExchange",
+    "values" : [ {
+      "id" : "133",
+      "text" : "commudigalmicroservicessampleservicesexchange"
+    } ]
+  }, {
+    "id" : "137",
+    "name" : "Queue",
+    "values" : [ {
+      "id" : "138",
+      "text" : "commudigalmicroservicessampleserviceone"
+    }, {
+      "id" : "148",
+      "text" : "commudigalmicroservicessampleservicetwo"
+    } ]
+  } ],
+  "editorMode" : "edit"
+}

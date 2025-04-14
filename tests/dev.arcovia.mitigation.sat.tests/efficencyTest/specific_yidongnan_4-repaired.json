@@ -1,0 +1,796 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "admin_dashboard",
+      "id" : "81",
+      "type" : "edge:arrow",
+      "sourceId" : "80",
+      "targetId" : "79",
+      "children" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "85",
+      "type" : "edge:arrow",
+      "sourceId" : "84",
+      "targetId" : "83",
+      "children" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "88",
+      "type" : "edge:arrow",
+      "sourceId" : "87",
+      "targetId" : "86",
+      "children" : [ ]
+    }, {
+      "text" : "admin_dashboard",
+      "id" : "90",
+      "type" : "edge:arrow",
+      "sourceId" : "89",
+      "targetId" : "83",
+      "children" : [ ]
+    }, {
+      "text" : "admin_dashboard",
+      "id" : "93",
+      "type" : "edge:arrow",
+      "sourceId" : "92",
+      "targetId" : "91",
+      "children" : [ ]
+    }, {
+      "text" : "hystrix_dashboard",
+      "id" : "95",
+      "type" : "edge:arrow",
+      "sourceId" : "94",
+      "targetId" : "83",
+      "children" : [ ]
+    }, {
+      "text" : "admin_dashboard",
+      "id" : "98",
+      "type" : "edge:arrow",
+      "sourceId" : "97",
+      "targetId" : "96",
+      "children" : [ ]
+    }, {
+      "text" : "service_a",
+      "id" : "100",
+      "type" : "edge:arrow",
+      "sourceId" : "99",
+      "targetId" : "86",
+      "children" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "102",
+      "type" : "edge:arrow",
+      "sourceId" : "101",
+      "targetId" : "96",
+      "children" : [ ]
+    }, {
+      "text" : "service_a",
+      "id" : "104",
+      "type" : "edge:arrow",
+      "sourceId" : "103",
+      "targetId" : "83",
+      "children" : [ ]
+    }, {
+      "text" : "service_a",
+      "id" : "106",
+      "type" : "edge:arrow",
+      "sourceId" : "105",
+      "targetId" : "91",
+      "children" : [ ]
+    }, {
+      "text" : "admin_dashboard",
+      "id" : "109",
+      "type" : "edge:arrow",
+      "sourceId" : "108",
+      "targetId" : "107",
+      "children" : [ ]
+    }, {
+      "text" : "service_b",
+      "id" : "111",
+      "type" : "edge:arrow",
+      "sourceId" : "110",
+      "targetId" : "86",
+      "children" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "113",
+      "type" : "edge:arrow",
+      "sourceId" : "112",
+      "targetId" : "107",
+      "children" : [ ]
+    }, {
+      "text" : "service_b",
+      "id" : "115",
+      "type" : "edge:arrow",
+      "sourceId" : "114",
+      "targetId" : "83",
+      "children" : [ ]
+    }, {
+      "text" : "service_a",
+      "id" : "117",
+      "type" : "edge:arrow",
+      "sourceId" : "116",
+      "targetId" : "107",
+      "children" : [ ]
+    }, {
+      "text" : "user",
+      "id" : "121",
+      "type" : "edge:arrow",
+      "sourceId" : "120",
+      "targetId" : "119",
+      "children" : [ ]
+    }, {
+      "text" : "zuul",
+      "id" : "123",
+      "type" : "edge:arrow",
+      "sourceId" : "122",
+      "targetId" : "96",
+      "children" : [ ]
+    }, {
+      "text" : "eureka_server",
+      "id" : "125",
+      "type" : "edge:arrow",
+      "sourceId" : "124",
+      "targetId" : "119",
+      "children" : [ ]
+    }, {
+      "text" : "rabbitmq",
+      "id" : "128",
+      "type" : "edge:arrow",
+      "sourceId" : "127",
+      "targetId" : "126",
+      "children" : [ ]
+    }, {
+      "text" : "service_b",
+      "id" : "130",
+      "type" : "edge:arrow",
+      "sourceId" : "129",
+      "targetId" : "126",
+      "children" : [ ]
+    }, {
+      "text" : "service_b",
+      "id" : "132",
+      "type" : "edge:arrow",
+      "sourceId" : "131",
+      "targetId" : "91",
+      "children" : [ ]
+    }, {
+      "text" : "service_a",
+      "id" : "134",
+      "type" : "edge:arrow",
+      "sourceId" : "133",
+      "targetId" : "126",
+      "children" : [ ]
+    }, {
+      "text" : "admin_dashboard",
+      "id" : "136",
+      "type" : "edge:arrow",
+      "sourceId" : "135",
+      "targetId" : "86",
+      "children" : [ ]
+    }, {
+      "text" : "admin_dashboard",
+      "id" : "138",
+      "type" : "edge:arrow",
+      "sourceId" : "137",
+      "targetId" : "119",
+      "children" : [ ]
+    }, {
+      "text" : "zuul",
+      "id" : "140",
+      "type" : "edge:arrow",
+      "sourceId" : "139",
+      "targetId" : "86",
+      "children" : [ ]
+    }, {
+      "text" : "zuul",
+      "id" : "142",
+      "type" : "edge:arrow",
+      "sourceId" : "141",
+      "targetId" : "126",
+      "children" : [ ]
+    }, {
+      "text" : "zuul",
+      "id" : "144",
+      "type" : "edge:arrow",
+      "sourceId" : "143",
+      "targetId" : "79",
+      "children" : [ ]
+    }, {
+      "text" : "user",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "63"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http if TRUE",
+        "id" : "120",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "2",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "admin_dashboard",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "41"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "16"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "42"
+      }, {
+        "labelTypeId" : "43",
+        "labelTypeValueId" : "44"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "id" : "80",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "id" : "89",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "id" : "92",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "id" : "97",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "id" : "108",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "id" : "135",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE",
+        "id" : "137",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "3",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.administration_server\nStereotype.infrastructural\nStereotype.restful_http\nStereotype.csrf_disabled\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "eureka_server",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "35"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "16"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "36"
+      }, {
+        "labelTypeId" : "37",
+        "labelTypeValueId" : "38"
+      } ],
+      "ports" : [ {
+        "id" : "83",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|hystrix_dashboard|service_a|service_b\nforward admin_dashboard|config_server|hystrix_dashboard|service_a|service_b",
+        "id" : "124",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "4",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.monitoring_dashboard\nStereotype.gateway\nStereotype.csrf_disabled\nStereotype.internal\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.service_discovery\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "rabbitmq",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "66"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "67",
+        "labelTypeValueId" : "68"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "69"
+      } ],
+      "ports" : [ {
+        "id" : "86",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a|service_b|zuul\nforward admin_dashboard|config_server|service_a|service_b|zuul",
+        "id" : "127",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "5",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.monitoring_dashboard\nStereotype.gateway\nStereotype.csrf_disabled\nStereotype.internal\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.service_discovery\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.message_broker\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "config_server",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "16"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "30"
+      }, {
+        "labelTypeId" : "31",
+        "labelTypeValueId" : "32"
+      } ],
+      "ports" : [ {
+        "id" : "79",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "id" : "84",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "id" : "87",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "id" : "101",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|zuul\nforward admin_dashboard|zuul",
+        "id" : "112",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "6",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.configuration_server\nStereotype.infrastructural\nStereotype.monitoring_dashboard\nStereotype.gateway\nStereotype.csrf_disabled\nStereotype.internal\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.service_discovery\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "hystrix_dashboard",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "72"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "73"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "16"
+      }, {
+        "labelTypeId" : "74",
+        "labelTypeValueId" : "75"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "76"
+      }, {
+        "labelTypeId" : "77",
+        "labelTypeValueId" : "78"
+      } ],
+      "ports" : [ {
+        "id" : "91",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.monitoring_dashboard,Stereotype.monitoring_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|service_a|service_b\nforward admin_dashboard|service_a|service_b",
+        "id" : "94",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "7",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.monitoring_dashboard\nStereotype.gateway\nStereotype.csrf_disabled\nStereotype.internal\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "service_a",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "15"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "47"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "16"
+      }, {
+        "labelTypeId" : "48",
+        "labelTypeValueId" : "49"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "50"
+      } ],
+      "ports" : [ {
+        "id" : "96",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "id" : "99",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "id" : "103",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "id" : "105",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http,Stereotype.feign_connection if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul\nassign Stereotype.transform_identity_representation if TRUE",
+        "id" : "116",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.circuit_breaker,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|zuul\nforward admin_dashboard|config_server|zuul",
+        "id" : "133",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "8",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.gateway\nStereotype.internal\nStereotype.csrf_disabled\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "service_b",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "15"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "16"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "19"
+      } ],
+      "ports" : [ {
+        "id" : "107",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "id" : "110",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "id" : "114",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "id" : "129",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.csrf_disabled,Stereotype.restful_http if TRUE from admin_dashboard|config_server|service_a\nforward admin_dashboard|config_server|service_a",
+        "id" : "131",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "9",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.gateway\nStereotype.internal\nStereotype.csrf_disabled\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.administration_server\nStereotype.load_balancer\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "zuul",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "53"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "54"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "16"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "55"
+      }, {
+        "labelTypeId" : "56",
+        "labelTypeValueId" : "57"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "58"
+      }, {
+        "labelTypeId" : "59",
+        "labelTypeValueId" : "60"
+      } ],
+      "ports" : [ {
+        "id" : "119",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.csrf_disabled,Stereotype.entrypoint,Stereotype.restful_http if TRUE from admin_dashboard|eureka_server|user\nforward admin_dashboard|eureka_server|user\nassign Stereotype.transform_identity_representation if TRUE",
+        "id" : "122",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.csrf_disabled,Stereotype.entrypoint,Stereotype.restful_http if TRUE from admin_dashboard|eureka_server|user\nforward admin_dashboard|eureka_server|user",
+        "id" : "139",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.csrf_disabled,Stereotype.entrypoint,Stereotype.restful_http if TRUE from admin_dashboard|eureka_server|user\nforward admin_dashboard|eureka_server|user",
+        "id" : "141",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.infrastructural,Stereotype.load_balancer,Stereotype.csrf_disabled,Stereotype.entrypoint,Stereotype.restful_http if TRUE from admin_dashboard|eureka_server|user\nforward admin_dashboard|eureka_server|user",
+        "id" : "143",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "10",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nStereotype.user_stereotype\nStereotype.infrastructural\nStereotype.configuration_server\nStereotype.monitoring_dashboard\nStereotype.gateway\nStereotype.csrf_disabled\nStereotype.internal\nStereotype.entrypoint\nStereotype.circuit_breaker\nStereotype.service_discovery\nStereotype.load_balancer\nStereotype.administration_server\nStereotype.transform_identity_representation\nStereotype.feign_connection\nStereotype.monitoring_server\nStereotype.restful_http\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "zipkin",
+      "labels" : [ {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "22"
+      }, {
+        "labelTypeId" : "12",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "25"
+      }, {
+        "labelTypeId" : "18",
+        "labelTypeValueId" : "26"
+      } ],
+      "ports" : [ {
+        "id" : "126",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "11",
+      "type" : "node:function",
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "12",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "15",
+      "text" : "internal"
+    }, {
+      "id" : "16",
+      "text" : "csrf_disabled"
+    }, {
+      "id" : "22",
+      "text" : "tracing_server"
+    }, {
+      "id" : "23",
+      "text" : "infrastructural"
+    }, {
+      "id" : "29",
+      "text" : "configuration_server"
+    }, {
+      "id" : "35",
+      "text" : "service_discovery"
+    }, {
+      "id" : "41",
+      "text" : "administration_server"
+    }, {
+      "id" : "47",
+      "text" : "circuit_breaker"
+    }, {
+      "id" : "53",
+      "text" : "gateway"
+    }, {
+      "id" : "54",
+      "text" : "load_balancer"
+    }, {
+      "id" : "55",
+      "text" : "entrypoint"
+    }, {
+      "id" : "63",
+      "text" : "user_stereotype"
+    }, {
+      "id" : "66",
+      "text" : "message_broker"
+    }, {
+      "id" : "72",
+      "text" : "monitoring_dashboard"
+    }, {
+      "id" : "73",
+      "text" : "monitoring_server"
+    }, {
+      "id" : "82",
+      "text" : "restful_http"
+    }, {
+      "id" : "118",
+      "text" : "feign_connection"
+    }, {
+      "id" : "ee6b12c3-6bc8-34d6-86fb-dd9729270280",
+      "text" : "transform_identity_representation"
+    } ]
+  }, {
+    "id" : "17",
+    "name" : "Endpoints",
+    "values" : [ ]
+  }, {
+    "id" : "18",
+    "name" : "Port",
+    "values" : [ {
+      "id" : "19",
+      "text" : "8070"
+    }, {
+      "id" : "26",
+      "text" : "9411"
+    }, {
+      "id" : "30",
+      "text" : "8100"
+    }, {
+      "id" : "36",
+      "text" : "8761"
+    }, {
+      "id" : "42",
+      "text" : "8040"
+    }, {
+      "id" : "50",
+      "text" : "8080"
+    }, {
+      "id" : "58",
+      "text" : "8060"
+    }, {
+      "id" : "69",
+      "text" : "4369"
+    }, {
+      "id" : "76",
+      "text" : "8050"
+    } ]
+  }, {
+    "id" : "24",
+    "name" : "TracingServer",
+    "values" : [ {
+      "id" : "25",
+      "text" : "Zipkin"
+    } ]
+  }, {
+    "id" : "31",
+    "name" : "ConfigurationServer",
+    "values" : [ {
+      "id" : "32",
+      "text" : "SpringCloudConfig"
+    } ]
+  }, {
+    "id" : "37",
+    "name" : "ServiceDiscovery",
+    "values" : [ {
+      "id" : "38",
+      "text" : "Eureka"
+    } ]
+  }, {
+    "id" : "43",
+    "name" : "AdministrationServer",
+    "values" : [ {
+      "id" : "44",
+      "text" : "SpringBootAdmin"
+    } ]
+  }, {
+    "id" : "48",
+    "name" : "CircuitBreaker",
+    "values" : [ {
+      "id" : "49",
+      "text" : "Hystrix"
+    } ]
+  }, {
+    "id" : "56",
+    "name" : "Gateway",
+    "values" : [ {
+      "id" : "57",
+      "text" : "Zuul"
+    } ]
+  }, {
+    "id" : "59",
+    "name" : "LoadBalancer",
+    "values" : [ {
+      "id" : "60",
+      "text" : "Ribbon"
+    } ]
+  }, {
+    "id" : "67",
+    "name" : "MessageBroker",
+    "values" : [ {
+      "id" : "68",
+      "text" : "RabbitMQ"
+    } ]
+  }, {
+    "id" : "74",
+    "name" : "MonitoringDashboard",
+    "values" : [ {
+      "id" : "75",
+      "text" : "Hystrix"
+    } ]
+  }, {
+    "id" : "77",
+    "name" : "MonitoringServer",
+    "values" : [ {
+      "id" : "78",
+      "text" : "Turbine"
+    } ]
+  } ],
+  "editorMode" : "edit"
+}
