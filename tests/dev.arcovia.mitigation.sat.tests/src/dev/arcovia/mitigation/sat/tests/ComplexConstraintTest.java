@@ -20,7 +20,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComplexConstraintTest extends BaseTest{
-    public final String MIN_SAT = "models/complexMinsat.json";
+    public final String MIN_SAT = "models/minsat.json";
     Constraint dataConstraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
             new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
             new Literal(true, new IncomingDataLabel(new Label("Encryption", "Encrypted"))),
