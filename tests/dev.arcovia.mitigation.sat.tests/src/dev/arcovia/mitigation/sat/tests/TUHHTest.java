@@ -2,8 +2,10 @@ package dev.arcovia.mitigation.sat.tests;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.arcovia.mitigation.sat.*;
@@ -48,7 +50,7 @@ public class TUHHTest {
     final List<Constraint> constraints = List.of(entryViaGatewayOnly, nonInternalGateway, authenticatedRequest, transformedEntry, tokenValidation,
             loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
-    final Map<Label, Integer> costs = Map.ofEntries(Map.entry(new Label("Stereotype", "internal"), 10),
+    final Map<Label, Integer> costs = Map.ofEntries(entry(new Label("Stereotype", "internal"), 10),
             entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
             entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
@@ -66,7 +68,7 @@ public class TUHHTest {
 
                 System.out.println(name);
 
-                var repairedDfdCosts = runRepair(model, name, variant == 0);
+                var repairedDfdCosts = runRepair(model, name, variant == 0, constraints);
 
                 if (variant == 0)
                     dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
@@ -75,33 +77,79 @@ public class TUHHTest {
             }
         }
     }
+    @Test
+    void efficiencyTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
+        final Map<Label, Integer> costMap = Map.ofEntries(
+                entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
+                entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
+                entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
+                entry(new Label("Stereotype", "local_logging"), 2));
+        var tuhhModels = TuhhModels.getTuhhModels();
+        List<String> modelRepairMoreExpensive = new ArrayList<>();
+        for (var model : tuhhModels.keySet()) {
+            System.out.println("Checking " + model);
+            if (!tuhhModels.get(model).contains(0)) continue;
+
+            for (int variant : tuhhModels.get(model)) {
+                List<Constraint> constraint = switch (variant) {
+                    case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
+                    case 2 -> List.of(authenticatedRequest);
+                    case 4 -> List.of(transformedEntry);
+                    case 5 -> List.of(tokenValidation);
+                    case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
+                    case 8 -> List.of(encryptedInternals);
+                    case 10 -> List.of(localLogging);
+                    case 11 -> List.of(localLogging, logSanitization);
+                    default -> null;
+                };
+                if (constraint == null) continue;
+                System.out.println("Comparing to " + model + "_" + variant);
+
+                var repairedDfd = runRepair(model, model+"_0", false, constraint);
+                var dfdConverter = new DataFlowDiagramConverter();
+                dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "efficencyTest/" +  model + "_" + variant + "-repaired.json");
+                var cost = new ModelCostCalculator(repairedDfd, constraint, costMap).calculateCost();
+                var cost2 = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, costMap).calculateCost();
+
+                System.out.println(cost + " <= " + cost2 + " : "+ (cost <= cost2));
+                if (cost > cost2){
+                    modelRepairMoreExpensive.add(model + "_" + variant + " is more expensive: " + cost + " <= " + cost2);
+                }
+            }
+        }
+        System.out.println(modelRepairMoreExpensive);
+    }
 
     @Disabled
     @Test
     void specificTUHHTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
-        String model = "ewolff-kafka";
+        String model = "mudigal-technologies";
         int variant = 7;
 
         String name = model + "_" + variant;
+        dfdConverter.storeWeb(dfdConverter.dfdToWeb(loadDFD(model,name)), "testresults/specific_" + name + "-repaired.json");
 
-        var repairedDfdCosts = runRepair(model, name, true);
+        var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway));
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/specific_" + name + "-repaired.json");
         assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
     }
 
-    private DataFlowDiagramAndDictionary runRepair(String model, String name, Boolean store)
+    private DataFlowDiagramAndDictionary runRepair(String model, String name, Boolean store, List<Constraint> constraints)
             throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
+        var dfd = loadDFD(model, name);
+        if (!store)
+            name = null;
+        return new Mechanic(dfd, name, constraints, costs).repair();
+    }
+    private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
         final String location = Paths.get("casestudies", "TUHH-Models")
                 .toString();
 
-        var dfd = dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, model, (name + ".dataflowdiagram"))
+        return  dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, model, (name + ".dataflowdiagram"))
                 .toString(), Paths.get(location, model, (name + ".datadictionary"))
                 .toString(), Activator.class);
-        if (!store)
-            name = null;
-        return new Mechanic(dfd, name, constraints, costs).repair();
     }
 }
