@@ -70,3 +70,6 @@ xtend-gen/
 .idea/
 /out
 *.iml
+
+tests/dev.arcovia.mitigation.sat.tests/testresults/*.json
+tests/dev.arcovia.mitigation.sat.tests/efficencyTest/*.json
