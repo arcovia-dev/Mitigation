@@ -2,8 +2,9 @@ package dev.arcovia.mitigation.sat.tests;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -85,7 +86,7 @@ public class TUHHTest {
                 entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
                 entry(new Label("Stereotype", "local_logging"), 2));
         var tuhhModels = TuhhModels.getTuhhModels();
-        var modelRepairMoreExpensive = new ArrayList<String>();
+        List<String> modelRepairMoreExpensive = new ArrayList<>();
         for (var model : tuhhModels.keySet()) {
             System.out.println("Checking " + model);
             if (!tuhhModels.get(model).contains(0)) continue;
