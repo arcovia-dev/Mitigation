@@ -36,7 +36,7 @@ public class ModelCostCalculator {
             for (var vertex : nodes){
                 if (vertex.hasVertexLabel(label))
                     allRelevantLabels.get(label).add("Vertex: " + vertex.name);
-                for (var outPin : vertex.hasOutgoingLabel(label)){
+                for (var outPin : vertex.getOutPinsWithLabel(label)){
                         allRelevantLabels.get(label).add("Outgoing: " + outPin.getId() + " from: " + vertex.name );
                         pushLabel(label, outPin);
                 }
@@ -49,7 +49,7 @@ public class ModelCostCalculator {
     private void pushLabel(Label label, Pin sourcePin){
         var destinationPin = sourcePinToDestinationPin.get(sourcePin);
         var destinationNode = inPinToVertex.get(destinationPin);
-        for(var outPin : destinationNode.isForwarding(destinationPin)){
+        for(var outPin : destinationNode.getForwardingOutPins(destinationPin)){
             if (!allRelevantLabels.get(label).contains("Outgoing: " + outPin.getId() + " from: " + destinationNode.name)){
                 allRelevantLabels.get(label).add("Outgoing: " + outPin.getId() + " from: " + destinationNode.name);
                 pushLabel(label, outPin);

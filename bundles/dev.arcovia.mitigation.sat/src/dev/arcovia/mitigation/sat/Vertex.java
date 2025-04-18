@@ -70,7 +70,7 @@ public class Vertex {
             }
         }
     }
-    public List<Pin> hasOutgoingLabel(Label label) {
+    public List<Pin> getOutPinsWithLabel(Label label) {
         var pins = new ArrayList<Pin>();
         for (var pin : outgoingLabels.keySet()) {
             if (outgoingLabels.get(pin).contains(label)) {
@@ -83,7 +83,7 @@ public class Vertex {
         return vertexLabels.contains(label);
     }
 
-    public List<Pin> isForwarding(Pin pin) {
+    public List<Pin> getForwardingOutPins(Pin pin) {
         var forwardingPins = new ArrayList<Pin>();
         for (var forwardingAssignment : forwardingAssignments) {
             if (forwardingAssignment.getInputPins().contains(pin))
