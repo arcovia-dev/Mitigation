@@ -15,10 +15,10 @@ public class ModelCostCalculator {
     DataFlowDiagramAndDictionary dfd;
     List<Constraint> constraints;
     Map<Label, Integer> costs;
-    List<Vertex> nodes = new ArrayList<>();
+    List<Vertex> nodes;
     HashMap<Label, Set<String>> allRelevantLabels = new HashMap<>();
-    HashMap<Pin, Vertex> inPinToVertex = new HashMap<>();
-    HashMap<Pin, Pin> sourcePinToDestinationPin = new HashMap<>();
+    HashMap<Pin, Vertex> inPinToVertex;
+    HashMap<Pin, Pin> sourcePinToDestinationPin;
 
     int cost = 0;
 
@@ -26,7 +26,9 @@ public class ModelCostCalculator {
         this.dfd = dfd;
         this.constraints = constraints;
         this.costs = costs;
-        getNodes();
+        this.nodes = extractVertecies();
+        this.inPinToVertex = inPinToVertex();
+        this.sourcePinToDestinationPin = sourcePinToDestinationPin();
     }
 
 
@@ -83,14 +85,20 @@ public class ModelCostCalculator {
         return vertices;
     }
 
-    private void getNodes () {
-        nodes = extractVertecies();
+    private HashMap<Pin, Vertex> inPinToVertex() {
+        HashMap<Pin, Vertex> pinVertexHashMap = new HashMap<>();
         for (var node : nodes){
             for (var inPin : node.inPins)
-                inPinToVertex.put(inPin, node);
+                pinVertexHashMap.put(inPin, node);
         }
+        return pinVertexHashMap;
+    }
+
+    private HashMap<Pin, Pin> sourcePinToDestinationPin() {
+        HashMap<Pin, Pin> sourcePinToDestinationPinMap = new HashMap<>();
         for (var flow : dfd.dataFlowDiagram().getFlows()){
-            sourcePinToDestinationPin.put(flow.getSourcePin(),flow.getDestinationPin());
+            sourcePinToDestinationPinMap.put(flow.getSourcePin(),flow.getDestinationPin());
         }
+        return sourcePinToDestinationPinMap;
     }
 }

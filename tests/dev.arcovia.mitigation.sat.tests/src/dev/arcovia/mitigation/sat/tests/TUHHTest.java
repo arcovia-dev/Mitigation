@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.arcovia.mitigation.sat.*;
 import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
@@ -51,6 +52,7 @@ public class TUHHTest {
             loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
     final Map<Label, Integer> costs = Map.ofEntries(entry(new Label("Stereotype", "internal"), 10),
+            entry(new Label("Stereotype", "gateway"), 4),
             entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
             entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
@@ -114,11 +116,11 @@ public class TUHHTest {
 
                 System.out.println(cost + " <= " + cost2 + " : "+ (cost <= cost2));
                 if (cost > cost2){
-                    modelRepairMoreExpensive.add(model + "_" + variant + " is more expensive: " + cost + " <= " + cost2);
+                    modelRepairMoreExpensive.add(model + "_" + variant);
                 }
             }
         }
-        System.out.println(modelRepairMoreExpensive);
+        assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_4", "apssouza22_7"));
     }
 
     @Disabled

@@ -17,22 +17,24 @@ public class Vertex {
     private List<AbstractAssignment> assignments;
     private List<Assignment> outgoingAssignments = new ArrayList<>();
     private List<ForwardingAssignment> forwardingAssignments = new ArrayList<>();
-    private HashMap<Pin,List<Label>> outgoingLabels = new HashMap<>();
-    private List<Label> vertexLabels = new ArrayList<>();
+    private HashMap<Pin,List<Label>> outgoingLabels;
+    private List<Label> vertexLabels;
     public List<Pin> inPins;
 
-    public Vertex(Node vertex) {
-        this.behavior = vertex.getBehavior();
+    public Vertex(Node node) {
+        this.behavior = node.getBehavior();
+        this.name = node.getEntityName();
+        this.properties = node.getProperties();
+        this.inPins = getInpins();
         this.assignments = behavior.getAssignment();
-        this.name = vertex.getEntityName();
-        this.properties = vertex.getProperties();
-        getInpins();
+
         differentiateAssignments();
-        getVertexLabels();
-        getOutgoingLabels();
+
+        this.vertexLabels = getVertexLabels();
+        this.outgoingLabels = getOutgoingLabels();
     }
-    private void getInpins(){
-        inPins = behavior.getInPin();
+    private List<Pin> getInpins(){
+        return behavior.getInPin();
     }
     private List<Label> transformLabels (List<org.dataflowanalysis.dfd.datadictionary.Label> labels){
         var transformedLabels = new ArrayList<Label>();
@@ -43,22 +45,26 @@ public class Vertex {
         }
         return transformedLabels;
     }
-    private void getOutgoingLabels(){
+    private HashMap<Pin, List<Label>> getOutgoingLabels(){
+        HashMap<Pin,List<Label>> outgoingCharacteristics = new HashMap<>();
         for (var assignment : outgoingAssignments) {
             var labels = assignment.getOutputLabels();
             var pin = assignment.getOutputPin();
-            if (outgoingLabels.containsKey(pin)) {
-                outgoingLabels.get(pin).addAll(transformLabels(labels));
+            if (outgoingCharacteristics.containsKey(pin)) {
+                outgoingCharacteristics.get(pin).addAll(transformLabels(labels));
             }
-            else outgoingLabels.put(pin, transformLabels(labels));
+            else outgoingCharacteristics.put(pin, transformLabels(labels));
         }
+        return outgoingCharacteristics;
     }
-    private void getVertexLabels(){
+    private List<Label> getVertexLabels(){
+        List<Label> nodeLabels = new ArrayList<>();
         for (var property : properties) {
             LabelTypeImpl container = (LabelTypeImpl) property.eContainer();
             String type = container.getEntityName();
-            vertexLabels.add(new Label(type, property.getEntityName()));
+            nodeLabels.add(new Label(type, property.getEntityName()));
         }
+        return nodeLabels;
     }
     private void differentiateAssignments() {
         for (AbstractAssignment assignment : assignments) {
