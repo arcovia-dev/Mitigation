@@ -1,356 +1,356 @@
-<?xml version="1.0" encoding="ASCII"?>
-<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="__StH0Fc1Ee-aJpuBt44G8A">
-  <labelTypes id="4h3wzk" entityName="Sensitivity">
-    <label id="zzvphn" entityName="Personal"/>
-    <label id="veaan9" entityName="Public"/>
-    <label id="j62tp6" entityName="Develop"/>
-  </labelTypes>
-  <labelTypes id="gvia09" entityName="Location">
-    <label id="g10hr" entityName="EU"/>
-    <label id="5hnugm" entityName="nonEU"/>
-  </labelTypes>
-  <labelTypes id="84rllz" entityName="Encryption">
-    <label id="2r6xe6" entityName="Encrypted"/>
-    <label id="d01uv5" entityName="Processable"/>
-  </labelTypes>
-  <behaviour id="__SwLIFc1Ee-aJpuBt44G8A" entityName="Customer">
-    <inPin id="_1Q_AwJrMEe-XppFr_tE9WA" entityName="customer_in"/>
-    <outPin id="sigr8p" entityName="customer_out_Get_Loan_Offer_Process_Loan_Offer"/>
-    <outPin id="q70tfa" entityName="Customer_out_Customer_Transfer_Money"/>
-    <outPin id="_XoS2gViSEe-5ZvwoYHO9Vg" entityName="customer_out_show_balance"/>
-    <outPin id="_8UhF0VidEe-01fJ0Yo6HNg" entityName="customer_out_change_settings"/>
-    <outPin id="_i5uHoVi3Ee-DsdRrhZRfUQ" entityName="customer_out_change_cc_limit"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_xxbiwli3Ee-DsdRrhZRfUQ" entityName="encrypted_change_cc_limit" outputPin="_i5uHoVi3Ee-DsdRrhZRfUQ" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="_12PcAFi3Ee-DsdRrhZRfUQ"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7KQFc1Ee-aJpuBt44G8A" outputPin="q70tfa" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="__S7KQVc1Ee-aJpuBt44G8A"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="__S5VEFc1Ee-aJpuBt44G8A" outputPin="sigr8p" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="__S58IFc1Ee-aJpuBt44G8A"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="_coZ6YliSEe-5ZvwoYHO9Vg" entityName="public_show_balance" outputPin="_XoS2gViSEe-5ZvwoYHO9Vg" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_iygsOViSEe-5ZvwoYHO9Vg"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="__HOeAlidEe-01fJ0Yo6HNg" entityName="public change settings" outputPin="_8UhF0VidEe-01fJ0Yo6HNg" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_IbdCcFieEe-01fJ0Yo6HNg"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_JryB5VieEe-01fJ0Yo6HNg" entityName="change_settings">
-    <inPin id="_MBc4wFieEe-01fJ0Yo6HNg" entityName="change_settings_in"/>
-    <outPin id="_NjWJUVieEe-01fJ0Yo6HNg" entityName="change_settings_out"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_PR9nQ1ieEe-01fJ0Yo6HNg" inputPins="_MBc4wFieEe-01fJ0Yo6HNg" outputPin="_NjWJUVieEe-01fJ0Yo6HNg"/>
-  </behaviour>
-  <behaviour id="_U5-YpVieEe-01fJ0Yo6HNg" entityName="Customer_Settings_Data">
-    <inPin id="_W2rV4FieEe-01fJ0Yo6HNg" entityName="CSD_in_change_settings"/>
-    <inPin id="_6qz-QFi3Ee-DsdRrhZRfUQ" entityName="CSD_in_change_cc_limit"/>
-  </behaviour>
-  <behaviour id="_j7Qc9ViSEe-5ZvwoYHO9Vg" entityName="show_balance">
-    <inPin id="_mASPwFiSEe-5ZvwoYHO9Vg" entityName="show_balance_in_customer"/>
-    <outPin id="_n28PYViSEe-5ZvwoYHO9Vg" entityName="show_balance_out_customer_banking_data"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_rNRSAliSEe-5ZvwoYHO9Vg" entityName="show_balance_enc" inputPins="_mASPwFiSEe-5ZvwoYHO9Vg" outputPin="_n28PYViSEe-5ZvwoYHO9Vg" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="_19RQ4FiSEe-5ZvwoYHO9Vg"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_3gU_FViSEe-5ZvwoYHO9Vg" entityName="show_balance_alt">
-    <inPin id="_5iE0YFiSEe-5ZvwoYHO9Vg" entityName="show_balance_in_customer"/>
-    <outPin id="_7cNl0ViSEe-5ZvwoYHO9Vg" entityName="show_balance_out_customer_banking_data"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_9tFcQliSEe-5ZvwoYHO9Vg" entityName="show_balance_denc" inputPins="_5iE0YFiSEe-5ZvwoYHO9Vg" outputPin="_7cNl0ViSEe-5ZvwoYHO9Vg" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:NOT" id="_GTreo1iTEe-5ZvwoYHO9Vg">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_G0ZmEFiTEe-5ZvwoYHO9Vg"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="__SzOcFc1Ee-aJpuBt44G8A" entityName="Bank_Clerk_View">
-    <inPin id="ey45c6" entityName="Bank_Clerk_View_in_"/>
-    <inPin id="l43wk" entityName="Bank_Clerk_View_in_"/>
-    <inPin id="_9RsEcFspEe-imMDNUFdrZA" entityName="Bank_Clerk_View_in_fond_data_response"/>
-  </behaviour>
-  <behaviour id="__SzOdFc1Ee-aJpuBt44G8A" entityName="request_account_state">
-    <inPin id="dvpfqm" entityName="request_account_state_in_Developer_Request_Account_State"/>
-    <outPin id="gv76y" entityName="request_account_state_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMFc1Ee-aJpuBt44G8A" inputPins="dvpfqm" outputPin="gv76y"/>
-  </behaviour>
-  <behaviour id="__SzOeFc1Ee-aJpuBt44G8A" entityName="show_account_state">
-    <inPin id="7dlio" entityName="show_account_state_in_"/>
-    <outPin id="wsw6q4" entityName="show_account_state_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMVc1Ee-aJpuBt44G8A" entityName="personalize" inputPins="7dlio" outputPin="wsw6q4"/>
-  </behaviour>
-  <behaviour id="_efyO5Vc2Ee-m2-jCTo323w" entityName="show_account_state_alt">
-    <inPin id="_h0ruIFc2Ee-m2-jCTo323w" entityName="show_account_state_in_"/>
-    <outPin id="_jUVjAVc2Ee-m2-jCTo323w" entityName="show_account_state_out_"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_k6awAlc2Ee-m2-jCTo323w" entityName="unpersonalize" inputPins="_h0ruIFc2Ee-m2-jCTo323w" outputPin="_jUVjAVc2Ee-m2-jCTo323w" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:NOT" id="_uRWDI1c2Ee-m2-jCTo323w">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_upFNsFc2Ee-m2-jCTo323w"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="__SzOfFc1Ee-aJpuBt44G8A" entityName="Developer_View">
-    <inPin id="4d824d" entityName="Developer_View_in_"/>
-  </behaviour>
-  <behaviour id="__SzOf1c1Ee-aJpuBt44G8A" entityName="Developer">
-    <outPin id="495yo3" entityName="Developer_out_Developer_Request_Account_State"/>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7KRFc1Ee-aJpuBt44G8A" outputPin="495yo3" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="__S7KRVc1Ee-aJpuBt44G8A"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_gvS3dVsoEe-imMDNUFdrZA" entityName="Bank_Clerk">
-    <outPin id="_luCCUVsoEe-imMDNUFdrZA" entityName="bank_clerk_out"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_n2ZdAlsoEe-imMDNUFdrZA" entityName="bank_clerk_public" outputPin="_luCCUVsoEe-imMDNUFdrZA" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_rIPoQFsoEe-imMDNUFdrZA"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_uGKK5VsoEe-imMDNUFdrZA" entityName="Bank_Clerk_alt">
-    <outPin id="_v_7I4VsoEe-imMDNUFdrZA" entityName="bank_clerk_out"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_yWbtQlsoEe-imMDNUFdrZA" entityName="bank_clerk_unpublic" outputPin="_v_7I4VsoEe-imMDNUFdrZA" outputLabels="veaan9">
-      <term xsi:type="datadictionary:NOT" id="_44Qbg1soEe-imMDNUFdrZA">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_5ZMlYFsoEe-imMDNUFdrZA"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="_95PpJVsoEe-imMDNUFdrZA" entityName="get_fond_data">
-    <inPin id="__gBZsFsoEe-imMDNUFdrZA" entityName="get_fond_data_in"/>
-    <outPin id="_BJG3YVspEe-imMDNUFdrZA" entityName="get_fond_data_out"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_DPAM41spEe-imMDNUFdrZA" inputPins="__gBZsFsoEe-imMDNUFdrZA" outputPin="_BJG3YVspEe-imMDNUFdrZA"/>
-  </behaviour>
-  <behaviour id="_JNp8pVspEe-imMDNUFdrZA" entityName="get_fond_data2">
-    <inPin id="_Ks1QYFspEe-imMDNUFdrZA" entityName="get_fond_data2_in"/>
-    <outPin id="_NE0bcVspEe-imMDNUFdrZA" entityName="get_fond_data2_out"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_O_VnYlspEe-imMDNUFdrZA" inputPins="_Ks1QYFspEe-imMDNUFdrZA" outputPin="_NE0bcVspEe-imMDNUFdrZA" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="_V9MKUFspEe-imMDNUFdrZA"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_ais85VspEe-imMDNUFdrZA" entityName="Fond_Data">
-    <inPin id="_cKUa8FspEe-imMDNUFdrZA" entityName="fond_data_in_get_fond_data"/>
-    <inPin id="_gbII0FspEe-imMDNUFdrZA" entityName="fond_data_in_get_fond_data2"/>
-    <outPin id="_jF5F8VspEe-imMDNUFdrZA" entityName="fond_data_out_fond_data_response"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_oN8k4lspEe-imMDNUFdrZA" outputPin="_jF5F8VspEe-imMDNUFdrZA" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_q6SPUFspEe-imMDNUFdrZA"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_sSEhpVspEe-imMDNUFdrZA" entityName="Fond_Data2"/>
-  <behaviour id="_vNDFBVspEe-imMDNUFdrZA" entityName="fond_data_response">
-    <inPin id="_xpvJ4FspEe-imMDNUFdrZA" entityName="fond_data_response_in"/>
-    <outPin id="_0En38VspEe-imMDNUFdrZA" entityName="fond_data_response_out"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_2sCmI1spEe-imMDNUFdrZA" inputPins="_xpvJ4FspEe-imMDNUFdrZA" outputPin="_0En38VspEe-imMDNUFdrZA"/>
-  </behaviour>
-  <behaviour id="__SzOglc1Ee-aJpuBt44G8A" entityName="Customer_Banking_Data">
-    <inPin id="rab6wn" entityName="Customer_Banking_Data_in_"/>
-    <inPin id="2vr30b" entityName="Customer_Banking_Data_in_"/>
-    <inPin id="_KasXUFiTEe-5ZvwoYHO9Vg" entityName="Customer_Banking_Data_in_show_balance"/>
-    <outPin id="0p5bqf" entityName="Customer_Banking_Data_out_Customer_Banking_Data_Show_Account_State"/>
-    <outPin id="_TR8r4ViTEe-5ZvwoYHO9Vg" entityName="Customer_Banking_Data_out_balance_response"/>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7KQlc1Ee-aJpuBt44G8A" inputPins="rab6wn 2vr30b" outputPin="0p5bqf" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="__S7KQ1c1Ee-aJpuBt44G8A"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_cCqTlViTEe-5ZvwoYHO9Vg" entityName="balance_response">
-    <inPin id="_dXHlEFiTEe-5ZvwoYHO9Vg" entityName="balance_response_in"/>
-    <outPin id="_erGVcViTEe-5ZvwoYHO9Vg" entityName="balance_response_out"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_hIBq41iTEe-5ZvwoYHO9Vg" inputPins="_dXHlEFiTEe-5ZvwoYHO9Vg" outputPin="_erGVcViTEe-5ZvwoYHO9Vg"/>
-  </behaviour>
-  <behaviour id="_pNCDJViTEe-5ZvwoYHO9Vg" entityName="Customer_view">
-    <inPin id="_tK5m4FiTEe-5ZvwoYHO9Vg" entityName="customer_view_in"/>
-  </behaviour>
-  <behaviour id="__SzOh1c1Ee-aJpuBt44G8A" entityName="transfer_money">
-    <inPin id="dyh2k6" entityName="transfer_money_in_"/>
-    <outPin id="xqi29" entityName="transfer_money_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S7KRlc1Ee-aJpuBt44G8A" inputPins="dyh2k6" outputPin="xqi29"/>
-  </behaviour>
-  <behaviour id="__Sz1glc1Ee-aJpuBt44G8A" entityName="process_loan_offer">
-    <inPin id="e6jni4" entityName="process_loan_offer_in_Get_Loan_Offer_Process_Loan_Offer"/>
-    <outPin id="xtg9lq" entityName="process_loan_offer_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S240Fc1Ee-aJpuBt44G8A" inputPins="e6jni4" outputPin="xtg9lq"/>
-  </behaviour>
-  <behaviour id="__Sz1hlc1Ee-aJpuBt44G8A" entityName="process_loan_offer2">
-    <inPin id="42dbbn" entityName="process_loan_offer2_in_"/>
-    <outPin id="fj3z0l" entityName="process_loan_offer2_out_"/>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7xUFc1Ee-aJpuBt44G8A" outputPin="fj3z0l" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:NOT" id="_u2TL81lHEe-IFvzMcV1fzw">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_vQl7QFlHEe-IFvzMcV1fzw"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="_t9vEIVi2Ee-DsdRrhZRfUQ" entityName="Developer_View2"/>
-  <behaviour id="_E4r89Vi3Ee-DsdRrhZRfUQ" entityName="change_cc_limit">
-    <inPin id="_8kjjkFi2Ee-DsdRrhZRfUQ" entityName="change_cc_limit_in_customer"/>
-    <outPin id="_-_iYQVi2Ee-DsdRrhZRfUQ" entityName="change_cc_limit_out_customer_settings_db"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_CC2_U1i3Ee-DsdRrhZRfUQ" inputPins="_8kjjkFi2Ee-DsdRrhZRfUQ" outputPin="_-_iYQVi2Ee-DsdRrhZRfUQ"/>
-  </behaviour>
-  <behaviour id="_SHR2BXQSEe-hMp-vXVNX6A" entityName="bank_clerk_view2"/>
-  <behaviour id="__SwLIFc1Ee-aJpuBt44G8A_1" entityName="Customer_1">
-    <inPin id="_4W_vcJrMEe-XppFr_tE9WA" entityName="customer1_in"/>
-    <outPin id="sigr8p_1" entityName="customer_out_Get_Loan_Offer_Process_Loan_Offer_1"/>
-    <outPin id="q70tfa_1" entityName="Customer_out_Customer_Transfer_Money_1"/>
-    <outPin id="_XoS2gViSEe-5ZvwoYHO9Vg_1" entityName="customer_out_show_balance_1"/>
-    <outPin id="_8UhF0VidEe-01fJ0Yo6HNg_1" entityName="customer_out_change_settings_1"/>
-    <outPin id="_i5uHoVi3Ee-DsdRrhZRfUQ_1" entityName="customer_out_change_cc_limit_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_xxbiwli3Ee-DsdRrhZRfUQ_1" entityName="encrypted_change_cc_limit_1" outputPin="_i5uHoVi3Ee-DsdRrhZRfUQ_1" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="_12PcAFi3Ee-DsdRrhZRfUQ_1"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7KQFc1Ee-aJpuBt44G8A_1" outputPin="q70tfa_1" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="__S7KQVc1Ee-aJpuBt44G8A_1"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="__S5VEFc1Ee-aJpuBt44G8A_1" outputPin="sigr8p_1" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="__S58IFc1Ee-aJpuBt44G8A_1"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="_coZ6YliSEe-5ZvwoYHO9Vg_1" entityName="public_show_balance_1" outputPin="_XoS2gViSEe-5ZvwoYHO9Vg_1" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_iygsOViSEe-5ZvwoYHO9Vg_1"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="__HOeAlidEe-01fJ0Yo6HNg_1" entityName="public change settings_1" outputPin="_8UhF0VidEe-01fJ0Yo6HNg_1" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_IbdCcFieEe-01fJ0Yo6HNg_1"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_JryB5VieEe-01fJ0Yo6HNg_1" entityName="change_settings_1">
-    <inPin id="_MBc4wFieEe-01fJ0Yo6HNg_1" entityName="change_settings_in_1"/>
-    <outPin id="_NjWJUVieEe-01fJ0Yo6HNg_1" entityName="change_settings_out_1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_PR9nQ1ieEe-01fJ0Yo6HNg_1" inputPins="_MBc4wFieEe-01fJ0Yo6HNg_1" outputPin="_NjWJUVieEe-01fJ0Yo6HNg_1"/>
-  </behaviour>
-  <behaviour id="_U5-YpVieEe-01fJ0Yo6HNg_1" entityName="Customer_Settings_Data_1">
-    <inPin id="_W2rV4FieEe-01fJ0Yo6HNg_1" entityName="CSD_in_change_settings_1"/>
-    <inPin id="_6qz-QFi3Ee-DsdRrhZRfUQ_1" entityName="CSD_in_change_cc_limit_1"/>
-  </behaviour>
-  <behaviour id="_j7Qc9ViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_1">
-    <inPin id="_mASPwFiSEe-5ZvwoYHO9Vg_1" entityName="show_balance_in_customer_1"/>
-    <outPin id="_n28PYViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_out_customer_banking_data_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_rNRSAliSEe-5ZvwoYHO9Vg_1" entityName="show_balance_enc_1" inputPins="_mASPwFiSEe-5ZvwoYHO9Vg_1" outputPin="_n28PYViSEe-5ZvwoYHO9Vg_1" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="_19RQ4FiSEe-5ZvwoYHO9Vg_1"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_3gU_FViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_alt_1">
-    <inPin id="_5iE0YFiSEe-5ZvwoYHO9Vg_1" entityName="show_balance_in_customer_1"/>
-    <outPin id="_7cNl0ViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_out_customer_banking_data_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_9tFcQliSEe-5ZvwoYHO9Vg_1" entityName="show_balance_denc_1" inputPins="_5iE0YFiSEe-5ZvwoYHO9Vg_1" outputPin="_7cNl0ViSEe-5ZvwoYHO9Vg_1" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:NOT" id="_GTreo1iTEe-5ZvwoYHO9Vg_1">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_G0ZmEFiTEe-5ZvwoYHO9Vg_1"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="__SzOcFc1Ee-aJpuBt44G8A_1" entityName="Bank_Clerk_View_1">
-    <inPin id="ey45c6_1" entityName="Bank_Clerk_View_in__1"/>
-    <inPin id="l43wk_1" entityName="Bank_Clerk_View_in__1"/>
-    <inPin id="_9RsEcFspEe-imMDNUFdrZA_1" entityName="Bank_Clerk_View_in_fond_data_response_1"/>
-  </behaviour>
-  <behaviour id="__SzOdFc1Ee-aJpuBt44G8A_1" entityName="request_account_state_1">
-    <inPin id="dvpfqm_1" entityName="request_account_state_in_Developer_Request_Account_State_1"/>
-    <outPin id="gv76y_1" entityName="request_account_state_out__1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMFc1Ee-aJpuBt44G8A_1" inputPins="dvpfqm_1" outputPin="gv76y_1"/>
-  </behaviour>
-  <behaviour id="__SzOeFc1Ee-aJpuBt44G8A_1" entityName="show_account_state_1">
-    <inPin id="7dlio_1" entityName="show_account_state_in__1"/>
-    <outPin id="wsw6q4_1" entityName="show_account_state_out__1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMVc1Ee-aJpuBt44G8A_1" entityName="personalize_1" inputPins="7dlio_1" outputPin="wsw6q4_1"/>
-  </behaviour>
-  <behaviour id="_efyO5Vc2Ee-m2-jCTo323w_1" entityName="show_account_state_alt_1">
-    <inPin id="_h0ruIFc2Ee-m2-jCTo323w_1" entityName="show_account_state_in__1"/>
-    <outPin id="_jUVjAVc2Ee-m2-jCTo323w_1" entityName="show_account_state_out__1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_k6awAlc2Ee-m2-jCTo323w_1" entityName="unpersonalize_1" inputPins="_h0ruIFc2Ee-m2-jCTo323w_1" outputPin="_jUVjAVc2Ee-m2-jCTo323w_1" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:NOT" id="_uRWDI1c2Ee-m2-jCTo323w_1">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_upFNsFc2Ee-m2-jCTo323w_1"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="__SzOfFc1Ee-aJpuBt44G8A_1" entityName="Developer_View_1">
-    <inPin id="4d824d_1" entityName="Developer_View_in__1"/>
-  </behaviour>
-  <behaviour id="__SzOf1c1Ee-aJpuBt44G8A_1" entityName="Developer_1">
-    <outPin id="495yo3_1" entityName="Developer_out_Developer_Request_Account_State_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7KRFc1Ee-aJpuBt44G8A_1" outputPin="495yo3_1" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="__S7KRVc1Ee-aJpuBt44G8A_1"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_gvS3dVsoEe-imMDNUFdrZA_1" entityName="Bank_Clerk_1">
-    <outPin id="_luCCUVsoEe-imMDNUFdrZA_1" entityName="bank_clerk_out_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_n2ZdAlsoEe-imMDNUFdrZA_1" entityName="bank_clerk_public_1" outputPin="_luCCUVsoEe-imMDNUFdrZA_1" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_rIPoQFsoEe-imMDNUFdrZA_1"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_uGKK5VsoEe-imMDNUFdrZA_1" entityName="Bank_Clerk_alt_1">
-    <outPin id="_v_7I4VsoEe-imMDNUFdrZA_1" entityName="bank_clerk_out_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_yWbtQlsoEe-imMDNUFdrZA_1" entityName="bank_clerk_unpublic_1" outputPin="_v_7I4VsoEe-imMDNUFdrZA_1" outputLabels="veaan9">
-      <term xsi:type="datadictionary:NOT" id="_44Qbg1soEe-imMDNUFdrZA_1">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_5ZMlYFsoEe-imMDNUFdrZA_1"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="_95PpJVsoEe-imMDNUFdrZA_1" entityName="get_fond_data_1">
-    <inPin id="__gBZsFsoEe-imMDNUFdrZA_1" entityName="get_fond_data_in_1"/>
-    <outPin id="_BJG3YVspEe-imMDNUFdrZA_1" entityName="get_fond_data_out_1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_DPAM41spEe-imMDNUFdrZA_1" inputPins="__gBZsFsoEe-imMDNUFdrZA_1" outputPin="_BJG3YVspEe-imMDNUFdrZA_1"/>
-  </behaviour>
-  <behaviour id="_JNp8pVspEe-imMDNUFdrZA_1" entityName="get_fond_data2_1">
-    <inPin id="_Ks1QYFspEe-imMDNUFdrZA_1" entityName="get_fond_data2_in_1"/>
-    <outPin id="_NE0bcVspEe-imMDNUFdrZA_1" entityName="get_fond_data2_out_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_O_VnYlspEe-imMDNUFdrZA_1" inputPins="_Ks1QYFspEe-imMDNUFdrZA_1" outputPin="_NE0bcVspEe-imMDNUFdrZA_1" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:TRUE" id="_V9MKUFspEe-imMDNUFdrZA_1"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_ais85VspEe-imMDNUFdrZA_1" entityName="Fond_Data_1">
-    <inPin id="_cKUa8FspEe-imMDNUFdrZA_1" entityName="fond_data_in_get_fond_data_1"/>
-    <inPin id="_gbII0FspEe-imMDNUFdrZA_1" entityName="fond_data_in_get_fond_data2_1"/>
-    <outPin id="_jF5F8VspEe-imMDNUFdrZA_1" entityName="fond_data_out_fond_data_response_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_oN8k4lspEe-imMDNUFdrZA_1" outputPin="_jF5F8VspEe-imMDNUFdrZA_1" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_q6SPUFspEe-imMDNUFdrZA_1"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_sSEhpVspEe-imMDNUFdrZA_1" entityName="Fond_Data2_1"/>
-  <behaviour id="_vNDFBVspEe-imMDNUFdrZA_1" entityName="fond_data_response_1">
-    <inPin id="_xpvJ4FspEe-imMDNUFdrZA_1" entityName="fond_data_response_in_1"/>
-    <outPin id="_0En38VspEe-imMDNUFdrZA_1" entityName="fond_data_response_out_1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_2sCmI1spEe-imMDNUFdrZA_1" inputPins="_xpvJ4FspEe-imMDNUFdrZA_1" outputPin="_0En38VspEe-imMDNUFdrZA_1"/>
-  </behaviour>
-  <behaviour id="__SzOglc1Ee-aJpuBt44G8A_1" entityName="Customer_Banking_Data_1">
-    <inPin id="rab6wn_1" entityName="Customer_Banking_Data_in__1"/>
-    <inPin id="2vr30b_1" entityName="Customer_Banking_Data_in__1"/>
-    <inPin id="_KasXUFiTEe-5ZvwoYHO9Vg_1" entityName="Customer_Banking_Data_in_show_balance_1"/>
-    <outPin id="0p5bqf_1" entityName="Customer_Banking_Data_out_Customer_Banking_Data_Show_Account_State_1"/>
-    <outPin id="_TR8r4ViTEe-5ZvwoYHO9Vg_1" entityName="Customer_Banking_Data_out_balance_response_1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7KQlc1Ee-aJpuBt44G8A_1" inputPins="rab6wn 2vr30b_1" outputPin="0p5bqf_1" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="__S7KQ1c1Ee-aJpuBt44G8A_1"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_cCqTlViTEe-5ZvwoYHO9Vg_1" entityName="balance_response_1">
-    <inPin id="_dXHlEFiTEe-5ZvwoYHO9Vg_1" entityName="balance_response_in_1"/>
-    <outPin id="_erGVcViTEe-5ZvwoYHO9Vg_1" entityName="balance_response_out_1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_hIBq41iTEe-5ZvwoYHO9Vg_1" inputPins="_dXHlEFiTEe-5ZvwoYHO9Vg_1" outputPin="_erGVcViTEe-5ZvwoYHO9Vg_1"/>
-  </behaviour>
-  <behaviour id="_pNCDJViTEe-5ZvwoYHO9Vg_1" entityName="Customer_view_1">
-    <inPin id="_tK5m4FiTEe-5ZvwoYHO9Vg_1" entityName="customer_view_in_1"/>
-  </behaviour>
-  <behaviour id="__SzOh1c1Ee-aJpuBt44G8A_1" entityName="transfer_money_1">
-    <inPin id="dyh2k6_1" entityName="transfer_money_in__1"/>
-    <outPin id="xqi29_1" entityName="transfer_money_out__1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S7KRlc1Ee-aJpuBt44G8A_1" inputPins="dyh2k6_1" outputPin="xqi29_1"/>
-  </behaviour>
-  <behaviour id="__Sz1glc1Ee-aJpuBt44G8A_1" entityName="process_loan_offer_1">
-    <inPin id="e6jni4_1" entityName="process_loan_offer_in_Get_Loan_Offer_Process_Loan_Offer_1"/>
-    <outPin id="xtg9lq_1" entityName="process_loan_offer_out__1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S240Fc1Ee-aJpuBt44G8A_1" inputPins="e6jni4_1" outputPin="xtg9lq_1"/>
-  </behaviour>
-  <behaviour id="__Sz1hlc1Ee-aJpuBt44G8A_1" entityName="process_loan_offer2_1">
-    <inPin id="42dbbn_1" entityName="process_loan_offer2_in__1"/>
-    <outPin id="fj3z0l_1" entityName="process_loan_offer2_out__1"/>
-    <assignment xsi:type="datadictionary:Assignment" id="__S7xUFc1Ee-aJpuBt44G8A_1" outputPin="fj3z0l_1" outputLabels="2r6xe6">
-      <term xsi:type="datadictionary:NOT" id="_u2TL81lHEe-IFvzMcV1fzw_1">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_vQl7QFlHEe-IFvzMcV1fzw_1"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="_t9vEIVi2Ee-DsdRrhZRfUQ_1" entityName="Developer_View2_1"/>
-  <behaviour id="_E4r89Vi3Ee-DsdRrhZRfUQ_1" entityName="change_cc_limit_1">
-    <inPin id="_8kjjkFi2Ee-DsdRrhZRfUQ_1" entityName="change_cc_limit_in_customer_1"/>
-    <outPin id="_-_iYQVi2Ee-DsdRrhZRfUQ_1" entityName="change_cc_limit_out_customer_settings_db_1"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_CC2_U1i3Ee-DsdRrhZRfUQ_1" inputPins="_8kjjkFi2Ee-DsdRrhZRfUQ_1" outputPin="_-_iYQVi2Ee-DsdRrhZRfUQ_1"/>
-  </behaviour>
-  <behaviour id="_SHR2BXQSEe-hMp-vXVNX6A_1" entityName="bank_clerk_view2_1"/>
-  <behaviour id="_yqrRYZrCEe-XoJKjkS98pA" entityName="root">
-    <outPin id="_0lafx5rCEe-XoJKjkS98pA" entityName="root_out1"/>
-    <outPin id="_2OA1QZrCEe-XoJKjkS98pA" entityName="root_out2"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_9NrWEprCEe-XoJKjkS98pA" outputPin="_0lafx5rCEe-XoJKjkS98pA" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_uRMkIJrMEe-XppFr_tE9WA"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="_C4gx8prDEe-XoJKjkS98pA" outputPin="_2OA1QZrCEe-XoJKjkS98pA" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_vFpf4JrMEe-XppFr_tE9WA"/>
-    </assignment>
-  </behaviour>
-</datadictionary:DataDictionary>
+<?xml version="1.0" encoding="ASCII"?> 
+<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="__StH0Fc1Ee-aJpuBt44G8A"> 
+  <labelTypes id="4h3wzk" entityName="Sensitivity"> 
+    <label id="zzvphn" entityName="Personal"/> 
+    <label id="veaan9" entityName="Public"/> 
+    <label id="j62tp6" entityName="Develop"/> 
+  </labelTypes> 
+  <labelTypes id="gvia09" entityName="Location"> 
+    <label id="g10hr" entityName="EU"/> 
+    <label id="5hnugm" entityName="nonEU"/> 
+  </labelTypes> 
+  <labelTypes id="84rllz" entityName="Encryption"> 
+    <label id="2r6xe6" entityName="Encrypted"/> 
+    <label id="d01uv5" entityName="Processable"/> 
+  </labelTypes> 
+  <behavior id="__SwLIFc1Ee-aJpuBt44G8A" entityName="Customer"> 
+    <inPin id="_1Q_AwJrMEe-XppFr_tE9WA" entityName="customer_in"/> 
+    <outPin id="sigr8p" entityName="customer_out_Get_Loan_Offer_Process_Loan_Offer"/> 
+    <outPin id="q70tfa" entityName="Customer_out_Customer_Transfer_Money"/> 
+    <outPin id="_XoS2gViSEe-5ZvwoYHO9Vg" entityName="customer_out_show_balance"/> 
+    <outPin id="_8UhF0VidEe-01fJ0Yo6HNg" entityName="customer_out_change_settings"/> 
+    <outPin id="_i5uHoVi3Ee-DsdRrhZRfUQ" entityName="customer_out_change_cc_limit"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_xxbiwli3Ee-DsdRrhZRfUQ" entityName="encrypted_change_cc_limit" outputPin="_i5uHoVi3Ee-DsdRrhZRfUQ" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="_12PcAFi3Ee-DsdRrhZRfUQ"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7KQFc1Ee-aJpuBt44G8A" outputPin="q70tfa" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="__S7KQVc1Ee-aJpuBt44G8A"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S5VEFc1Ee-aJpuBt44G8A" outputPin="sigr8p" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="__S58IFc1Ee-aJpuBt44G8A"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="_coZ6YliSEe-5ZvwoYHO9Vg" entityName="public_show_balance" outputPin="_XoS2gViSEe-5ZvwoYHO9Vg" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_iygsOViSEe-5ZvwoYHO9Vg"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="__HOeAlidEe-01fJ0Yo6HNg" entityName="public change settings" outputPin="_8UhF0VidEe-01fJ0Yo6HNg" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_IbdCcFieEe-01fJ0Yo6HNg"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_JryB5VieEe-01fJ0Yo6HNg" entityName="change_settings"> 
+    <inPin id="_MBc4wFieEe-01fJ0Yo6HNg" entityName="change_settings_in"/> 
+    <outPin id="_NjWJUVieEe-01fJ0Yo6HNg" entityName="change_settings_out"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_PR9nQ1ieEe-01fJ0Yo6HNg" inputPins="_MBc4wFieEe-01fJ0Yo6HNg" outputPin="_NjWJUVieEe-01fJ0Yo6HNg"/> 
+  </behavior> 
+  <behavior id="_U5-YpVieEe-01fJ0Yo6HNg" entityName="Customer_Settings_Data"> 
+    <inPin id="_W2rV4FieEe-01fJ0Yo6HNg" entityName="CSD_in_change_settings"/> 
+    <inPin id="_6qz-QFi3Ee-DsdRrhZRfUQ" entityName="CSD_in_change_cc_limit"/> 
+  </behavior> 
+  <behavior id="_j7Qc9ViSEe-5ZvwoYHO9Vg" entityName="show_balance"> 
+    <inPin id="_mASPwFiSEe-5ZvwoYHO9Vg" entityName="show_balance_in_customer"/> 
+    <outPin id="_n28PYViSEe-5ZvwoYHO9Vg" entityName="show_balance_out_customer_banking_data"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_rNRSAliSEe-5ZvwoYHO9Vg" entityName="show_balance_enc" inputPins="_mASPwFiSEe-5ZvwoYHO9Vg" outputPin="_n28PYViSEe-5ZvwoYHO9Vg" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="_19RQ4FiSEe-5ZvwoYHO9Vg"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_3gU_FViSEe-5ZvwoYHO9Vg" entityName="show_balance_alt"> 
+    <inPin id="_5iE0YFiSEe-5ZvwoYHO9Vg" entityName="show_balance_in_customer"/> 
+    <outPin id="_7cNl0ViSEe-5ZvwoYHO9Vg" entityName="show_balance_out_customer_banking_data"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_9tFcQliSEe-5ZvwoYHO9Vg" entityName="show_balance_denc" inputPins="_5iE0YFiSEe-5ZvwoYHO9Vg" outputPin="_7cNl0ViSEe-5ZvwoYHO9Vg" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:NOT" id="_GTreo1iTEe-5ZvwoYHO9Vg"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_G0ZmEFiTEe-5ZvwoYHO9Vg"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="__SzOcFc1Ee-aJpuBt44G8A" entityName="Bank_Clerk_View"> 
+    <inPin id="ey45c6" entityName="Bank_Clerk_View_in_"/> 
+    <inPin id="l43wk" entityName="Bank_Clerk_View_in_"/> 
+    <inPin id="_9RsEcFspEe-imMDNUFdrZA" entityName="Bank_Clerk_View_in_fond_data_response"/> 
+  </behavior> 
+  <behavior id="__SzOdFc1Ee-aJpuBt44G8A" entityName="request_account_state"> 
+    <inPin id="dvpfqm" entityName="request_account_state_in_Developer_Request_Account_State"/> 
+    <outPin id="gv76y" entityName="request_account_state_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMFc1Ee-aJpuBt44G8A" inputPins="dvpfqm" outputPin="gv76y"/> 
+  </behavior> 
+  <behavior id="__SzOeFc1Ee-aJpuBt44G8A" entityName="show_account_state"> 
+    <inPin id="7dlio" entityName="show_account_state_in_"/> 
+    <outPin id="wsw6q4" entityName="show_account_state_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMVc1Ee-aJpuBt44G8A" entityName="personalize" inputPins="7dlio" outputPin="wsw6q4"/> 
+  </behavior> 
+  <behavior id="_efyO5Vc2Ee-m2-jCTo323w" entityName="show_account_state_alt"> 
+    <inPin id="_h0ruIFc2Ee-m2-jCTo323w" entityName="show_account_state_in_"/> 
+    <outPin id="_jUVjAVc2Ee-m2-jCTo323w" entityName="show_account_state_out_"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_k6awAlc2Ee-m2-jCTo323w" entityName="unpersonalize" inputPins="_h0ruIFc2Ee-m2-jCTo323w" outputPin="_jUVjAVc2Ee-m2-jCTo323w" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:NOT" id="_uRWDI1c2Ee-m2-jCTo323w"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_upFNsFc2Ee-m2-jCTo323w"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="__SzOfFc1Ee-aJpuBt44G8A" entityName="Developer_View"> 
+    <inPin id="4d824d" entityName="Developer_View_in_"/> 
+  </behavior> 
+  <behavior id="__SzOf1c1Ee-aJpuBt44G8A" entityName="Developer"> 
+    <outPin id="495yo3" entityName="Developer_out_Developer_Request_Account_State"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7KRFc1Ee-aJpuBt44G8A" outputPin="495yo3" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="__S7KRVc1Ee-aJpuBt44G8A"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_gvS3dVsoEe-imMDNUFdrZA" entityName="Bank_Clerk"> 
+    <outPin id="_luCCUVsoEe-imMDNUFdrZA" entityName="bank_clerk_out"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_n2ZdAlsoEe-imMDNUFdrZA" entityName="bank_clerk_public" outputPin="_luCCUVsoEe-imMDNUFdrZA" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_rIPoQFsoEe-imMDNUFdrZA"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_uGKK5VsoEe-imMDNUFdrZA" entityName="Bank_Clerk_alt"> 
+    <outPin id="_v_7I4VsoEe-imMDNUFdrZA" entityName="bank_clerk_out"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_yWbtQlsoEe-imMDNUFdrZA" entityName="bank_clerk_unpublic" outputPin="_v_7I4VsoEe-imMDNUFdrZA" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:NOT" id="_44Qbg1soEe-imMDNUFdrZA"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_5ZMlYFsoEe-imMDNUFdrZA"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_95PpJVsoEe-imMDNUFdrZA" entityName="get_fond_data"> 
+    <inPin id="__gBZsFsoEe-imMDNUFdrZA" entityName="get_fond_data_in"/> 
+    <outPin id="_BJG3YVspEe-imMDNUFdrZA" entityName="get_fond_data_out"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_DPAM41spEe-imMDNUFdrZA" inputPins="__gBZsFsoEe-imMDNUFdrZA" outputPin="_BJG3YVspEe-imMDNUFdrZA"/> 
+  </behavior> 
+  <behavior id="_JNp8pVspEe-imMDNUFdrZA" entityName="get_fond_data2"> 
+    <inPin id="_Ks1QYFspEe-imMDNUFdrZA" entityName="get_fond_data2_in"/> 
+    <outPin id="_NE0bcVspEe-imMDNUFdrZA" entityName="get_fond_data2_out"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_O_VnYlspEe-imMDNUFdrZA" inputPins="_Ks1QYFspEe-imMDNUFdrZA" outputPin="_NE0bcVspEe-imMDNUFdrZA" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="_V9MKUFspEe-imMDNUFdrZA"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_ais85VspEe-imMDNUFdrZA" entityName="Fond_Data"> 
+    <inPin id="_cKUa8FspEe-imMDNUFdrZA" entityName="fond_data_in_get_fond_data"/> 
+    <inPin id="_gbII0FspEe-imMDNUFdrZA" entityName="fond_data_in_get_fond_data2"/> 
+    <outPin id="_jF5F8VspEe-imMDNUFdrZA" entityName="fond_data_out_fond_data_response"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_oN8k4lspEe-imMDNUFdrZA" outputPin="_jF5F8VspEe-imMDNUFdrZA" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_q6SPUFspEe-imMDNUFdrZA"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_sSEhpVspEe-imMDNUFdrZA" entityName="Fond_Data2"/> 
+  <behavior id="_vNDFBVspEe-imMDNUFdrZA" entityName="fond_data_response"> 
+    <inPin id="_xpvJ4FspEe-imMDNUFdrZA" entityName="fond_data_response_in"/> 
+    <outPin id="_0En38VspEe-imMDNUFdrZA" entityName="fond_data_response_out"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_2sCmI1spEe-imMDNUFdrZA" inputPins="_xpvJ4FspEe-imMDNUFdrZA" outputPin="_0En38VspEe-imMDNUFdrZA"/> 
+  </behavior> 
+  <behavior id="__SzOglc1Ee-aJpuBt44G8A" entityName="Customer_Banking_Data"> 
+    <inPin id="rab6wn" entityName="Customer_Banking_Data_in_"/> 
+    <inPin id="2vr30b" entityName="Customer_Banking_Data_in_"/> 
+    <inPin id="_KasXUFiTEe-5ZvwoYHO9Vg" entityName="Customer_Banking_Data_in_show_balance"/> 
+    <outPin id="0p5bqf" entityName="Customer_Banking_Data_out_Customer_Banking_Data_Show_Account_State"/> 
+    <outPin id="_TR8r4ViTEe-5ZvwoYHO9Vg" entityName="Customer_Banking_Data_out_balance_response"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7KQlc1Ee-aJpuBt44G8A" inputPins="rab6wn 2vr30b" outputPin="0p5bqf" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="__S7KQ1c1Ee-aJpuBt44G8A"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_cCqTlViTEe-5ZvwoYHO9Vg" entityName="balance_response"> 
+    <inPin id="_dXHlEFiTEe-5ZvwoYHO9Vg" entityName="balance_response_in"/> 
+    <outPin id="_erGVcViTEe-5ZvwoYHO9Vg" entityName="balance_response_out"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_hIBq41iTEe-5ZvwoYHO9Vg" inputPins="_dXHlEFiTEe-5ZvwoYHO9Vg" outputPin="_erGVcViTEe-5ZvwoYHO9Vg"/> 
+  </behavior> 
+  <behavior id="_pNCDJViTEe-5ZvwoYHO9Vg" entityName="Customer_view"> 
+    <inPin id="_tK5m4FiTEe-5ZvwoYHO9Vg" entityName="customer_view_in"/> 
+  </behavior> 
+  <behavior id="__SzOh1c1Ee-aJpuBt44G8A" entityName="transfer_money"> 
+    <inPin id="dyh2k6" entityName="transfer_money_in_"/> 
+    <outPin id="xqi29" entityName="transfer_money_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S7KRlc1Ee-aJpuBt44G8A" inputPins="dyh2k6" outputPin="xqi29"/> 
+  </behavior> 
+  <behavior id="__Sz1glc1Ee-aJpuBt44G8A" entityName="process_loan_offer"> 
+    <inPin id="e6jni4" entityName="process_loan_offer_in_Get_Loan_Offer_Process_Loan_Offer"/> 
+    <outPin id="xtg9lq" entityName="process_loan_offer_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S240Fc1Ee-aJpuBt44G8A" inputPins="e6jni4" outputPin="xtg9lq"/> 
+  </behavior> 
+  <behavior id="__Sz1hlc1Ee-aJpuBt44G8A" entityName="process_loan_offer2"> 
+    <inPin id="42dbbn" entityName="process_loan_offer2_in_"/> 
+    <outPin id="fj3z0l" entityName="process_loan_offer2_out_"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7xUFc1Ee-aJpuBt44G8A" outputPin="fj3z0l" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:NOT" id="_u2TL81lHEe-IFvzMcV1fzw"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_vQl7QFlHEe-IFvzMcV1fzw"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_t9vEIVi2Ee-DsdRrhZRfUQ" entityName="Developer_View2"/> 
+  <behavior id="_E4r89Vi3Ee-DsdRrhZRfUQ" entityName="change_cc_limit"> 
+    <inPin id="_8kjjkFi2Ee-DsdRrhZRfUQ" entityName="change_cc_limit_in_customer"/> 
+    <outPin id="_-_iYQVi2Ee-DsdRrhZRfUQ" entityName="change_cc_limit_out_customer_settings_db"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_CC2_U1i3Ee-DsdRrhZRfUQ" inputPins="_8kjjkFi2Ee-DsdRrhZRfUQ" outputPin="_-_iYQVi2Ee-DsdRrhZRfUQ"/> 
+  </behavior> 
+  <behavior id="_SHR2BXQSEe-hMp-vXVNX6A" entityName="bank_clerk_view2"/> 
+  <behavior id="__SwLIFc1Ee-aJpuBt44G8A_1" entityName="Customer_1"> 
+    <inPin id="_4W_vcJrMEe-XppFr_tE9WA" entityName="customer1_in"/> 
+    <outPin id="sigr8p_1" entityName="customer_out_Get_Loan_Offer_Process_Loan_Offer_1"/> 
+    <outPin id="q70tfa_1" entityName="Customer_out_Customer_Transfer_Money_1"/> 
+    <outPin id="_XoS2gViSEe-5ZvwoYHO9Vg_1" entityName="customer_out_show_balance_1"/> 
+    <outPin id="_8UhF0VidEe-01fJ0Yo6HNg_1" entityName="customer_out_change_settings_1"/> 
+    <outPin id="_i5uHoVi3Ee-DsdRrhZRfUQ_1" entityName="customer_out_change_cc_limit_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_xxbiwli3Ee-DsdRrhZRfUQ_1" entityName="encrypted_change_cc_limit_1" outputPin="_i5uHoVi3Ee-DsdRrhZRfUQ_1" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="_12PcAFi3Ee-DsdRrhZRfUQ_1"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7KQFc1Ee-aJpuBt44G8A_1" outputPin="q70tfa_1" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="__S7KQVc1Ee-aJpuBt44G8A_1"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S5VEFc1Ee-aJpuBt44G8A_1" outputPin="sigr8p_1" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="__S58IFc1Ee-aJpuBt44G8A_1"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="_coZ6YliSEe-5ZvwoYHO9Vg_1" entityName="public_show_balance_1" outputPin="_XoS2gViSEe-5ZvwoYHO9Vg_1" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_iygsOViSEe-5ZvwoYHO9Vg_1"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="__HOeAlidEe-01fJ0Yo6HNg_1" entityName="public change settings_1" outputPin="_8UhF0VidEe-01fJ0Yo6HNg_1" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_IbdCcFieEe-01fJ0Yo6HNg_1"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_JryB5VieEe-01fJ0Yo6HNg_1" entityName="change_settings_1"> 
+    <inPin id="_MBc4wFieEe-01fJ0Yo6HNg_1" entityName="change_settings_in_1"/> 
+    <outPin id="_NjWJUVieEe-01fJ0Yo6HNg_1" entityName="change_settings_out_1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_PR9nQ1ieEe-01fJ0Yo6HNg_1" inputPins="_MBc4wFieEe-01fJ0Yo6HNg_1" outputPin="_NjWJUVieEe-01fJ0Yo6HNg_1"/> 
+  </behavior> 
+  <behavior id="_U5-YpVieEe-01fJ0Yo6HNg_1" entityName="Customer_Settings_Data_1"> 
+    <inPin id="_W2rV4FieEe-01fJ0Yo6HNg_1" entityName="CSD_in_change_settings_1"/> 
+    <inPin id="_6qz-QFi3Ee-DsdRrhZRfUQ_1" entityName="CSD_in_change_cc_limit_1"/> 
+  </behavior> 
+  <behavior id="_j7Qc9ViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_1"> 
+    <inPin id="_mASPwFiSEe-5ZvwoYHO9Vg_1" entityName="show_balance_in_customer_1"/> 
+    <outPin id="_n28PYViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_out_customer_banking_data_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_rNRSAliSEe-5ZvwoYHO9Vg_1" entityName="show_balance_enc_1" inputPins="_mASPwFiSEe-5ZvwoYHO9Vg_1" outputPin="_n28PYViSEe-5ZvwoYHO9Vg_1" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="_19RQ4FiSEe-5ZvwoYHO9Vg_1"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_3gU_FViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_alt_1"> 
+    <inPin id="_5iE0YFiSEe-5ZvwoYHO9Vg_1" entityName="show_balance_in_customer_1"/> 
+    <outPin id="_7cNl0ViSEe-5ZvwoYHO9Vg_1" entityName="show_balance_out_customer_banking_data_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_9tFcQliSEe-5ZvwoYHO9Vg_1" entityName="show_balance_denc_1" inputPins="_5iE0YFiSEe-5ZvwoYHO9Vg_1" outputPin="_7cNl0ViSEe-5ZvwoYHO9Vg_1" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:NOT" id="_GTreo1iTEe-5ZvwoYHO9Vg_1"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_G0ZmEFiTEe-5ZvwoYHO9Vg_1"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="__SzOcFc1Ee-aJpuBt44G8A_1" entityName="Bank_Clerk_View_1"> 
+    <inPin id="ey45c6_1" entityName="Bank_Clerk_View_in__1"/> 
+    <inPin id="l43wk_1" entityName="Bank_Clerk_View_in__1"/> 
+    <inPin id="_9RsEcFspEe-imMDNUFdrZA_1" entityName="Bank_Clerk_View_in_fond_data_response_1"/> 
+  </behavior> 
+  <behavior id="__SzOdFc1Ee-aJpuBt44G8A_1" entityName="request_account_state_1"> 
+    <inPin id="dvpfqm_1" entityName="request_account_state_in_Developer_Request_Account_State_1"/> 
+    <outPin id="gv76y_1" entityName="request_account_state_out__1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMFc1Ee-aJpuBt44G8A_1" inputPins="dvpfqm_1" outputPin="gv76y_1"/> 
+  </behavior> 
+  <behavior id="__SzOeFc1Ee-aJpuBt44G8A_1" entityName="show_account_state_1"> 
+    <inPin id="7dlio_1" entityName="show_account_state_in__1"/> 
+    <outPin id="wsw6q4_1" entityName="show_account_state_out__1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S6jMVc1Ee-aJpuBt44G8A_1" entityName="personalize_1" inputPins="7dlio_1" outputPin="wsw6q4_1"/> 
+  </behavior> 
+  <behavior id="_efyO5Vc2Ee-m2-jCTo323w_1" entityName="show_account_state_alt_1"> 
+    <inPin id="_h0ruIFc2Ee-m2-jCTo323w_1" entityName="show_account_state_in__1"/> 
+    <outPin id="_jUVjAVc2Ee-m2-jCTo323w_1" entityName="show_account_state_out__1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_k6awAlc2Ee-m2-jCTo323w_1" entityName="unpersonalize_1" inputPins="_h0ruIFc2Ee-m2-jCTo323w_1" outputPin="_jUVjAVc2Ee-m2-jCTo323w_1" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:NOT" id="_uRWDI1c2Ee-m2-jCTo323w_1"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_upFNsFc2Ee-m2-jCTo323w_1"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="__SzOfFc1Ee-aJpuBt44G8A_1" entityName="Developer_View_1"> 
+    <inPin id="4d824d_1" entityName="Developer_View_in__1"/> 
+  </behavior> 
+  <behavior id="__SzOf1c1Ee-aJpuBt44G8A_1" entityName="Developer_1"> 
+    <outPin id="495yo3_1" entityName="Developer_out_Developer_Request_Account_State_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7KRFc1Ee-aJpuBt44G8A_1" outputPin="495yo3_1" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="__S7KRVc1Ee-aJpuBt44G8A_1"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_gvS3dVsoEe-imMDNUFdrZA_1" entityName="Bank_Clerk_1"> 
+    <outPin id="_luCCUVsoEe-imMDNUFdrZA_1" entityName="bank_clerk_out_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_n2ZdAlsoEe-imMDNUFdrZA_1" entityName="bank_clerk_public_1" outputPin="_luCCUVsoEe-imMDNUFdrZA_1" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_rIPoQFsoEe-imMDNUFdrZA_1"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_uGKK5VsoEe-imMDNUFdrZA_1" entityName="Bank_Clerk_alt_1"> 
+    <outPin id="_v_7I4VsoEe-imMDNUFdrZA_1" entityName="bank_clerk_out_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_yWbtQlsoEe-imMDNUFdrZA_1" entityName="bank_clerk_unpublic_1" outputPin="_v_7I4VsoEe-imMDNUFdrZA_1" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:NOT" id="_44Qbg1soEe-imMDNUFdrZA_1"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_5ZMlYFsoEe-imMDNUFdrZA_1"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_95PpJVsoEe-imMDNUFdrZA_1" entityName="get_fond_data_1"> 
+    <inPin id="__gBZsFsoEe-imMDNUFdrZA_1" entityName="get_fond_data_in_1"/> 
+    <outPin id="_BJG3YVspEe-imMDNUFdrZA_1" entityName="get_fond_data_out_1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_DPAM41spEe-imMDNUFdrZA_1" inputPins="__gBZsFsoEe-imMDNUFdrZA_1" outputPin="_BJG3YVspEe-imMDNUFdrZA_1"/> 
+  </behavior> 
+  <behavior id="_JNp8pVspEe-imMDNUFdrZA_1" entityName="get_fond_data2_1"> 
+    <inPin id="_Ks1QYFspEe-imMDNUFdrZA_1" entityName="get_fond_data2_in_1"/> 
+    <outPin id="_NE0bcVspEe-imMDNUFdrZA_1" entityName="get_fond_data2_out_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_O_VnYlspEe-imMDNUFdrZA_1" inputPins="_Ks1QYFspEe-imMDNUFdrZA_1" outputPin="_NE0bcVspEe-imMDNUFdrZA_1" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:TRUE" id="_V9MKUFspEe-imMDNUFdrZA_1"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_ais85VspEe-imMDNUFdrZA_1" entityName="Fond_Data_1"> 
+    <inPin id="_cKUa8FspEe-imMDNUFdrZA_1" entityName="fond_data_in_get_fond_data_1"/> 
+    <inPin id="_gbII0FspEe-imMDNUFdrZA_1" entityName="fond_data_in_get_fond_data2_1"/> 
+    <outPin id="_jF5F8VspEe-imMDNUFdrZA_1" entityName="fond_data_out_fond_data_response_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_oN8k4lspEe-imMDNUFdrZA_1" outputPin="_jF5F8VspEe-imMDNUFdrZA_1" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_q6SPUFspEe-imMDNUFdrZA_1"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_sSEhpVspEe-imMDNUFdrZA_1" entityName="Fond_Data2_1"/> 
+  <behavior id="_vNDFBVspEe-imMDNUFdrZA_1" entityName="fond_data_response_1"> 
+    <inPin id="_xpvJ4FspEe-imMDNUFdrZA_1" entityName="fond_data_response_in_1"/> 
+    <outPin id="_0En38VspEe-imMDNUFdrZA_1" entityName="fond_data_response_out_1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_2sCmI1spEe-imMDNUFdrZA_1" inputPins="_xpvJ4FspEe-imMDNUFdrZA_1" outputPin="_0En38VspEe-imMDNUFdrZA_1"/> 
+  </behavior> 
+  <behavior id="__SzOglc1Ee-aJpuBt44G8A_1" entityName="Customer_Banking_Data_1"> 
+    <inPin id="rab6wn_1" entityName="Customer_Banking_Data_in__1"/> 
+    <inPin id="2vr30b_1" entityName="Customer_Banking_Data_in__1"/> 
+    <inPin id="_KasXUFiTEe-5ZvwoYHO9Vg_1" entityName="Customer_Banking_Data_in_show_balance_1"/> 
+    <outPin id="0p5bqf_1" entityName="Customer_Banking_Data_out_Customer_Banking_Data_Show_Account_State_1"/> 
+    <outPin id="_TR8r4ViTEe-5ZvwoYHO9Vg_1" entityName="Customer_Banking_Data_out_balance_response_1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7KQlc1Ee-aJpuBt44G8A_1" inputPins="rab6wn 2vr30b_1" outputPin="0p5bqf_1" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="__S7KQ1c1Ee-aJpuBt44G8A_1"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_cCqTlViTEe-5ZvwoYHO9Vg_1" entityName="balance_response_1"> 
+    <inPin id="_dXHlEFiTEe-5ZvwoYHO9Vg_1" entityName="balance_response_in_1"/> 
+    <outPin id="_erGVcViTEe-5ZvwoYHO9Vg_1" entityName="balance_response_out_1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_hIBq41iTEe-5ZvwoYHO9Vg_1" inputPins="_dXHlEFiTEe-5ZvwoYHO9Vg_1" outputPin="_erGVcViTEe-5ZvwoYHO9Vg_1"/> 
+  </behavior> 
+  <behavior id="_pNCDJViTEe-5ZvwoYHO9Vg_1" entityName="Customer_view_1"> 
+    <inPin id="_tK5m4FiTEe-5ZvwoYHO9Vg_1" entityName="customer_view_in_1"/> 
+  </behavior> 
+  <behavior id="__SzOh1c1Ee-aJpuBt44G8A_1" entityName="transfer_money_1"> 
+    <inPin id="dyh2k6_1" entityName="transfer_money_in__1"/> 
+    <outPin id="xqi29_1" entityName="transfer_money_out__1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S7KRlc1Ee-aJpuBt44G8A_1" inputPins="dyh2k6_1" outputPin="xqi29_1"/> 
+  </behavior> 
+  <behavior id="__Sz1glc1Ee-aJpuBt44G8A_1" entityName="process_loan_offer_1"> 
+    <inPin id="e6jni4_1" entityName="process_loan_offer_in_Get_Loan_Offer_Process_Loan_Offer_1"/> 
+    <outPin id="xtg9lq_1" entityName="process_loan_offer_out__1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="__S240Fc1Ee-aJpuBt44G8A_1" inputPins="e6jni4_1" outputPin="xtg9lq_1"/> 
+  </behavior> 
+  <behavior id="__Sz1hlc1Ee-aJpuBt44G8A_1" entityName="process_loan_offer2_1"> 
+    <inPin id="42dbbn_1" entityName="process_loan_offer2_in__1"/> 
+    <outPin id="fj3z0l_1" entityName="process_loan_offer2_out__1"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="__S7xUFc1Ee-aJpuBt44G8A_1" outputPin="fj3z0l_1" outputLabels="2r6xe6"> 
+      <term xsi:type="datadictionary:NOT" id="_u2TL81lHEe-IFvzMcV1fzw_1"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_vQl7QFlHEe-IFvzMcV1fzw_1"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_t9vEIVi2Ee-DsdRrhZRfUQ_1" entityName="Developer_View2_1"/> 
+  <behavior id="_E4r89Vi3Ee-DsdRrhZRfUQ_1" entityName="change_cc_limit_1"> 
+    <inPin id="_8kjjkFi2Ee-DsdRrhZRfUQ_1" entityName="change_cc_limit_in_customer_1"/> 
+    <outPin id="_-_iYQVi2Ee-DsdRrhZRfUQ_1" entityName="change_cc_limit_out_customer_settings_db_1"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_CC2_U1i3Ee-DsdRrhZRfUQ_1" inputPins="_8kjjkFi2Ee-DsdRrhZRfUQ_1" outputPin="_-_iYQVi2Ee-DsdRrhZRfUQ_1"/> 
+  </behavior> 
+  <behavior id="_SHR2BXQSEe-hMp-vXVNX6A_1" entityName="bank_clerk_view2_1"/> 
+  <behavior id="_yqrRYZrCEe-XoJKjkS98pA" entityName="root"> 
+    <outPin id="_0lafx5rCEe-XoJKjkS98pA" entityName="root_out1"/> 
+    <outPin id="_2OA1QZrCEe-XoJKjkS98pA" entityName="root_out2"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_9NrWEprCEe-XoJKjkS98pA" outputPin="_0lafx5rCEe-XoJKjkS98pA" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_uRMkIJrMEe-XppFr_tE9WA"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="_C4gx8prDEe-XoJKjkS98pA" outputPin="_2OA1QZrCEe-XoJKjkS98pA" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_vFpf4JrMEe-XppFr_tE9WA"/> 
+    </assignment> 
+  </behavior> 
+</datadictionary:DataDictionary> 

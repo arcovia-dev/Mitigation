@@ -48,7 +48,7 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract RankingAggregationMethod getAggregationMethod();
 
 	protected String customPythonPath() {
-		return "/Users/nniehues/miniconda3/bin/python";
+		return "D:/entwicklungsumgebungen/Conda/envs/MitigationRanking/python";
 	}
 
 	// Mitigation ranking variables

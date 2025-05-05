@@ -1,98 +1,98 @@
-<?xml version="1.0" encoding="ASCII"?>
-<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_MsaqkEj2Ee-hG70gk0zumA">
-  <labelTypes id="4h3wzk" entityName="Sensitivity">
-    <label id="zzvphn" entityName="Personal"/>
-    <label id="veaan9" entityName="Public"/>
-  </labelTypes>
-  <labelTypes id="gvia09" entityName="Location">
-    <label id="g10hr" entityName="EU"/>
-    <label id="5hnugm" entityName="nonEU"/>
-  </labelTypes>
-  <labelTypes id="84rllz" entityName="Encryption">
-    <label id="2r6xe6" entityName="Encrypted"/>
-  </labelTypes>
-  <labelTypes id="iwzymi" entityName="Processability">
-    <label id="34uuc" entityName="Processable"/>
-    <label id="ic7t3uuf" entityName="nonProcessable"/>
-  </labelTypes>
-  <labelTypes id="lxmx8s" entityName="Developer">
-    <label id="itrwbp" entityName="Develop"/>
-    <label id="v2hrlm" entityName="nonDevelop"/>
-  </labelTypes>
-  <behaviour id="_Mse8AEj2Ee-hG70gk0zumA" entityName="User">
-    <outPin id="y3onni" entityName="User_out_user_create_accuser_trans_money"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_MsxP4Ej2Ee-hG70gk0zumA" outputPin="y3onni" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="_MsxP4Uj2Ee-hG70gk0zumA"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_MslCoEj2Ee-hG70gk0zumA" entityName="Personal_DB">
-    <inPin id="nq2jhf" entityName="Personal_DB_in_"/>
-    <inPin id="5j1fjm" entityName="Personal_DB_in_"/>
-    <outPin id="1kew5" entityName="Personal_DB_out_pdb_to_bdb"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_MsuzoEj2Ee-hG70gk0zumA" inputPins="nq2jhf 5j1fjm" outputPin="1kew5" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="_Mswo0Ej2Ee-hG70gk0zumA"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_MslCpUj2Ee-hG70gk0zumA" entityName="Banking_DB">
-    <inPin id="pw6l" entityName="Banking_DB_in_"/>
-    <inPin id="qvivz" entityName="Banking_DB_in_pdb_to_bdb"/>
-    <inPin id="fh8kq" entityName="Banking_DB_in_"/>
-    <outPin id="gwxlxj" entityName="Banking_DB_out_db_to_response"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_BiRuklyYEe-W3tZYogekcQ" outputPin="gwxlxj" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="_HGWbIFyYEe-W3tZYogekcQ"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_MslCq0j2Ee-hG70gk0zumA" entityName="Transactions_DB">
-    <inPin id="ufc3ba" entityName="Transactions_DB_in_trans_to_transac"/>
-    <outPin id="fu652u" entityName="Transactions_DB_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Msx28Ej2Ee-hG70gk0zumA" inputPins="ufc3ba" outputPin="fu652u"/>
-  </behaviour>
-  <behaviour id="_MslCr0j2Ee-hG70gk0zumA" entityName="Settings_DB">
-    <inPin id="hi0pmf" entityName="Settings_DB_in_"/>
-    <outPin id="n6orsj" entityName="Settings_DB_out_"/>
-  </behaviour>
-  <behaviour id="_MslCs0j2Ee-hG70gk0zumA" entityName="create_account">
-    <inPin id="2kkn69" entityName="create_account_in_user_create_acc"/>
-    <outPin id="26bl29" entityName="create_account_out_"/>
-    <outPin id="62339g" entityName="create_account_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_MsxP4kj2Ee-hG70gk0zumA" inputPins="2kkn69" outputPin="62339g"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_MsxP40j2Ee-hG70gk0zumA" inputPins="2kkn69" outputPin="26bl29"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_MsxP5Ej2Ee-hG70gk0zumA" inputPins="2kkn69" outputPin="26bl29" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:NOT" id="_MsxP5Uj2Ee-hG70gk0zumA">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_MsxP5kj2Ee-hG70gk0zumA"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="_MslptEj2Ee-hG70gk0zumA" entityName="transfer_money">
-    <inPin id="cfqjxn" entityName="transfer_money_in_user_trans_money"/>
-    <outPin id="2ch6r9" entityName="transfer_money_out_"/>
-    <outPin id="8jvhdi" entityName="transfer_money_out_trans_to_transac"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Msx28Uj2Ee-hG70gk0zumA" inputPins="cfqjxn" outputPin="8jvhdi"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Msx28kj2Ee-hG70gk0zumA" inputPins="cfqjxn" outputPin="2ch6r9"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_Msx280j2Ee-hG70gk0zumA" inputPins="cfqjxn" outputPin="2ch6r9" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:NOT" id="_Msx29Ej2Ee-hG70gk0zumA">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_Msx29Uj2Ee-hG70gk0zumA"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="_MslpuUj2Ee-hG70gk0zumA" entityName="Developer">
-    <inPin id="nz2ubx" entityName="Developer_in_"/>
-    <outPin id="zgq3ro" entityName="Developer_out_"/>
-  </behaviour>
-  <behaviour id="_MslpvUj2Ee-hG70gk0zumA" entityName="account_state_response">
-    <inPin id="rr06af" entityName="account_state_response_in_db_to_response"/>
-    <inPin id="idnz6g" entityName="account_state_response_in_"/>
-    <outPin id="0xc5mg" entityName="account_state_response_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_MsrwUEj2Ee-hG70gk0zumA" inputPins="rr06af" outputPin="0xc5mg"/>
-  </behaviour>
-  <behaviour id="_Mslpwkj2Ee-hG70gk0zumA" entityName="show_account_state">
-    <inPin id="lvpc1" entityName="show_account_state_in_"/>
-    <outPin id="k9wufi" entityName="show_account_state_out_"/>
-    <outPin id="befuo" entityName="show_account_state_out_"/>
-  </behaviour>
-  <behaviour id="_Mslpx0j2Ee-hG70gk0zumA" entityName="User2"/>
-  <behaviour id="_MsmQwEj2Ee-hG70gk0zumA" entityName="Banking_DB2"/>
-  <behaviour id="_MsmQw0j2Ee-hG70gk0zumA" entityName="Transactions_DB2"/>
-  <behaviour id="_MsmQxkj2Ee-hG70gk0zumA" entityName="Settings_DB2"/>
-  <behaviour id="_MsmQzUj2Ee-hG70gk0zumA" entityName="Developer2"/>
-</datadictionary:DataDictionary>
+<?xml version="1.0" encoding="ASCII"?> 
+<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_MsaqkEj2Ee-hG70gk0zumA"> 
+  <labelTypes id="4h3wzk" entityName="Sensitivity"> 
+    <label id="zzvphn" entityName="Personal"/> 
+    <label id="veaan9" entityName="Public"/> 
+  </labelTypes> 
+  <labelTypes id="gvia09" entityName="Location"> 
+    <label id="g10hr" entityName="EU"/> 
+    <label id="5hnugm" entityName="nonEU"/> 
+  </labelTypes> 
+  <labelTypes id="84rllz" entityName="Encryption"> 
+    <label id="2r6xe6" entityName="Encrypted"/> 
+  </labelTypes> 
+  <labelTypes id="iwzymi" entityName="Processability"> 
+    <label id="34uuc" entityName="Processable"/> 
+    <label id="ic7t3uuf" entityName="nonProcessable"/> 
+  </labelTypes> 
+  <labelTypes id="lxmx8s" entityName="Developer"> 
+    <label id="itrwbp" entityName="Develop"/> 
+    <label id="v2hrlm" entityName="nonDevelop"/> 
+  </labelTypes> 
+  <behavior id="_Mse8AEj2Ee-hG70gk0zumA" entityName="User"> 
+    <outPin id="y3onni" entityName="User_out_user_create_accuser_trans_money"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_MsxP4Ej2Ee-hG70gk0zumA" outputPin="y3onni" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="_MsxP4Uj2Ee-hG70gk0zumA"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_MslCoEj2Ee-hG70gk0zumA" entityName="Personal_DB"> 
+    <inPin id="nq2jhf" entityName="Personal_DB_in_"/> 
+    <inPin id="5j1fjm" entityName="Personal_DB_in_"/> 
+    <outPin id="1kew5" entityName="Personal_DB_out_pdb_to_bdb"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_MsuzoEj2Ee-hG70gk0zumA" inputPins="nq2jhf 5j1fjm" outputPin="1kew5" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="_Mswo0Ej2Ee-hG70gk0zumA"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_MslCpUj2Ee-hG70gk0zumA" entityName="Banking_DB"> 
+    <inPin id="pw6l" entityName="Banking_DB_in_"/> 
+    <inPin id="qvivz" entityName="Banking_DB_in_pdb_to_bdb"/> 
+    <inPin id="fh8kq" entityName="Banking_DB_in_"/> 
+    <outPin id="gwxlxj" entityName="Banking_DB_out_db_to_response"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_BiRuklyYEe-W3tZYogekcQ" outputPin="gwxlxj" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="_HGWbIFyYEe-W3tZYogekcQ"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_MslCq0j2Ee-hG70gk0zumA" entityName="Transactions_DB"> 
+    <inPin id="ufc3ba" entityName="Transactions_DB_in_trans_to_transac"/> 
+    <outPin id="fu652u" entityName="Transactions_DB_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Msx28Ej2Ee-hG70gk0zumA" inputPins="ufc3ba" outputPin="fu652u"/> 
+  </behavior> 
+  <behavior id="_MslCr0j2Ee-hG70gk0zumA" entityName="Settings_DB"> 
+    <inPin id="hi0pmf" entityName="Settings_DB_in_"/> 
+    <outPin id="n6orsj" entityName="Settings_DB_out_"/> 
+  </behavior> 
+  <behavior id="_MslCs0j2Ee-hG70gk0zumA" entityName="create_account"> 
+    <inPin id="2kkn69" entityName="create_account_in_user_create_acc"/> 
+    <outPin id="26bl29" entityName="create_account_out_"/> 
+    <outPin id="62339g" entityName="create_account_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_MsxP4kj2Ee-hG70gk0zumA" inputPins="2kkn69" outputPin="62339g"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_MsxP40j2Ee-hG70gk0zumA" inputPins="2kkn69" outputPin="26bl29"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_MsxP5Ej2Ee-hG70gk0zumA" inputPins="2kkn69" outputPin="26bl29" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:NOT" id="_MsxP5Uj2Ee-hG70gk0zumA"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_MsxP5kj2Ee-hG70gk0zumA"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_MslptEj2Ee-hG70gk0zumA" entityName="transfer_money"> 
+    <inPin id="cfqjxn" entityName="transfer_money_in_user_trans_money"/> 
+    <outPin id="2ch6r9" entityName="transfer_money_out_"/> 
+    <outPin id="8jvhdi" entityName="transfer_money_out_trans_to_transac"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Msx28Uj2Ee-hG70gk0zumA" inputPins="cfqjxn" outputPin="8jvhdi"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Msx28kj2Ee-hG70gk0zumA" inputPins="cfqjxn" outputPin="2ch6r9"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_Msx280j2Ee-hG70gk0zumA" inputPins="cfqjxn" outputPin="2ch6r9" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:NOT" id="_Msx29Ej2Ee-hG70gk0zumA"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_Msx29Uj2Ee-hG70gk0zumA"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_MslpuUj2Ee-hG70gk0zumA" entityName="Developer"> 
+    <inPin id="nz2ubx" entityName="Developer_in_"/> 
+    <outPin id="zgq3ro" entityName="Developer_out_"/> 
+  </behavior> 
+  <behavior id="_MslpvUj2Ee-hG70gk0zumA" entityName="account_state_response"> 
+    <inPin id="rr06af" entityName="account_state_response_in_db_to_response"/> 
+    <inPin id="idnz6g" entityName="account_state_response_in_"/> 
+    <outPin id="0xc5mg" entityName="account_state_response_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_MsrwUEj2Ee-hG70gk0zumA" inputPins="rr06af" outputPin="0xc5mg"/> 
+  </behavior> 
+  <behavior id="_Mslpwkj2Ee-hG70gk0zumA" entityName="show_account_state"> 
+    <inPin id="lvpc1" entityName="show_account_state_in_"/> 
+    <outPin id="k9wufi" entityName="show_account_state_out_"/> 
+    <outPin id="befuo" entityName="show_account_state_out_"/> 
+  </behavior> 
+  <behavior id="_Mslpx0j2Ee-hG70gk0zumA" entityName="User2"/> 
+  <behavior id="_MsmQwEj2Ee-hG70gk0zumA" entityName="Banking_DB2"/> 
+  <behavior id="_MsmQw0j2Ee-hG70gk0zumA" entityName="Transactions_DB2"/> 
+  <behavior id="_MsmQxkj2Ee-hG70gk0zumA" entityName="Settings_DB2"/> 
+  <behavior id="_MsmQzUj2Ee-hG70gk0zumA" entityName="Developer2"/> 
+</datadictionary:DataDictionary> 
