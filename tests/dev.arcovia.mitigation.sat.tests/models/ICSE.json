@@ -1,758 +1,258 @@
 {
-    "model": {
-        "canvasBounds": {
-            "x": 0,
-            "y": 0,
-            "width": 2112,
-            "height": 1082.13330078125
-        },
-        "scroll": {
-            "x": -63,
-            "y": -116.0107342113148
-        },
-        "zoom": 2.49645390070922,
-        "position": {
-            "x": 0,
-            "y": 0
-        },
-        "size": {
-            "width": -1,
-            "height": -1
-        },
-        "features": {},
-        "type": "graph",
-        "id": "root",
-        "children": [
-            {
-                "position": {
-                    "x": 411,
-                    "y": 141
-                },
-                "size": {
-                    "width": 62,
-                    "height": 36
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "view",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 14.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "behavior": null,
-                        "id": "_UQQ3cL6GEe6fAKdvyu1GEg",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 58.5,
-                            "y": 14.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward request",
-                        "features": {},
-                        "id": "_WsXGcb6GEe6fAKdvyu1GEg",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "annotation": null,
-                "features": {},
-                "id": "_Q0i7U76CEe6fAKdvyu1GEg",
-                "type": "node:function",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 558,
-                    "y": 75
-                },
-                "size": {
-                    "width": 150,
-                    "height": 42
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "DatabaseReceiving",
-                "labels": [
-                    {
-                        "labelTypeId": "_XQxtAb6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_Zd8vML6EEe6fAKdvyu1GEg"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 18
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "behavior": null,
-                        "id": "_448GwMBCEe62ZOq30ePU7Q",
-                        "type": "port:dfd-input",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "annotation": null,
-                "features": {},
-                "id": "_U27Lor6CEe6fAKdvyu1GEg",
-                "type": "node:storage",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 239.5,
-                    "y": 15
-                },
-                "size": {
-                    "width": 62,
-                    "height": 36
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "buy",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 14.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "behavior": null,
-                        "id": "_xM37QL6HEe6fAKdvyu1GEg",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 58.5,
-                            "y": 14.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward buying",
-                        "features": {},
-                        "id": "_yZ354b6HEe6fAKdvyu1GEg",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "annotation": null,
-                "features": {},
-                "id": "_Y50ZU76CEe6fAKdvyu1GEg",
-                "type": "node:function",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 208,
-                    "y": 138
-                },
-                "size": {
-                    "width": 118,
-                    "height": 42
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "UserRequesting",
-                "labels": [
-                    {
-                        "labelTypeId": "_XQxtAb6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_YruBAL6EEe6fAKdvyu1GEg"
-                    },
-                    {
-                        "labelTypeId": "_T_-DkL6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_WM1jwL6EEe6fAKdvyu1GEg"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 114.5,
-                            "y": 18
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "assign Sensitivity.Public if TRUE",
-                        "features": {},
-                        "id": "_xDI30b6EEe6fAKdvyu1GEg",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "features": {},
-                "id": "_LX33QL6CEe6fAKdvyu1GEg",
-                "type": "node:input-output",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 12,
-                    "y": 74
-                },
-                "size": {
-                    "width": 129,
-                    "height": 42
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "AdminRequesting",
-                "labels": [
-                    {
-                        "labelTypeId": "_XQxtAb6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_YruBAL6EEe6fAKdvyu1GEg"
-                    },
-                    {
-                        "labelTypeId": "_T_-DkL6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_VPo7sL6EEe6fAKdvyu1GEg"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 125.5,
-                            "y": 18
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "assign Sensitivity.Personal if TRUE",
-                        "features": {},
-                        "id": "6qqlqs",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "features": {},
-                "id": "lbqr5o",
-                "type": "node:input-output",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 53,
-                    "y": 12
-                },
-                "size": {
-                    "width": 88,
-                    "height": 42
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "UserBuying",
-                "labels": [
-                    {
-                        "labelTypeId": "_XQxtAb6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_YruBAL6EEe6fAKdvyu1GEg"
-                    },
-                    {
-                        "labelTypeId": "_T_-DkL6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_VPo7sL6EEe6fAKdvyu1GEg"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": 84.5,
-                            "y": 18
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "assign Sensitivity.Personal if TRUE",
-                        "features": {},
-                        "id": "_xYNLF76TEe6fAKdvyu1GEg",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "features": {},
-                "id": "_bmXPYb6TEe6fAKdvyu1GEg",
-                "type": "node:input-output",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 228,
-                    "y": 72
-                },
-                "size": {
-                    "width": 85,
-                    "height": 46
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "encrypt",
-                "labels": [
-                    {
-                        "labelTypeId": "_a84LUb6EEe6fAKdvyu1GEg",
-                        "labelTypeValueId": "_fvwEcL6EEe6fAKdvyu1GEg"
-                    }
-                ],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 19.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "behavior": null,
-                        "id": "ir0ig",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 81.5,
-                            "y": 19.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward admin\nassign Encryption.Encrypted if TRUE",
-                        "features": {},
-                        "id": "dmn17o",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "features": {},
-                "id": "29bzv4",
-                "type": "node:function",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "routingPoints": [
-                    {
-                        "x": 148,
-                        "y": 33
-                    },
-                    {
-                        "x": 232.5,
-                        "y": 33
-                    }
-                ],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "buying",
-                "features": {},
-                "labels": null,
-                "ports": null,
-                "id": "_0m3IIL6CEe6fAKdvyu1GEg",
-                "type": "edge:arrow",
-                "sourceId": "_xYNLF76TEe6fAKdvyu1GEg",
-                "targetId": "_xM37QL6HEe6fAKdvyu1GEg",
-                "annotation": null,
-                "children": []
-            },
-            {
-                "routingPoints": [
-                    {
-                        "x": 148,
-                        "y": 95
-                    },
-                    {
-                        "x": 221,
-                        "y": 95
-                    }
-                ],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "admin",
-                "features": {},
-                "labels": null,
-                "ports": null,
-                "id": "wns8ue",
-                "type": "edge:arrow",
-                "sourceId": "6qqlqs",
-                "targetId": "ir0ig",
-                "annotation": null,
-                "children": []
-            },
-            {
-                "position": {
-                    "x": 410,
-                    "y": 46
-                },
-                "size": {
-                    "width": 64,
-                    "height": 36
-                },
-                "strokeWidth": 0,
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "process",
-                "labels": [],
-                "ports": [
-                    {
-                        "position": {
-                            "x": -3.5,
-                            "y": 14.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "features": {},
-                        "behavior": null,
-                        "id": "_1xf9AL6HEe6fAKdvyu1GEg",
-                        "type": "port:dfd-input",
-                        "children": []
-                    },
-                    {
-                        "position": {
-                            "x": 60.5,
-                            "y": 10.5
-                        },
-                        "size": {
-                            "width": 7,
-                            "height": 7
-                        },
-                        "strokeWidth": 0,
-                        "selected": false,
-                        "hoverFeedback": false,
-                        "opacity": 1,
-                        "behavior": "forward buying|encrypt",
-                        "features": {},
-                        "id": "_283j8b6HEe6fAKdvyu1GEg",
-                        "type": "port:dfd-output",
-                        "children": []
-                    }
-                ],
-                "hideLabels": false,
-                "minimumWidth": 50,
-                "annotation": null,
-                "features": {},
-                "id": "_aPLpw76CEe6fAKdvyu1GEg",
-                "type": "node:function",
-                "sourceId": null,
-                "targetId": null,
-                "children": []
-            },
-            {
-                "routingPoints": [
-                    {
-                        "x": 308.5,
-                        "y": 33
-                    },
-                    {
-                        "x": 383,
-                        "y": 33
-                    },
-                    {
-                        "x": 383,
-                        "y": 64
-                    },
-                    {
-                        "x": 403,
-                        "y": 64
-                    }
-                ],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "buying",
-                "features": {},
-                "labels": null,
-                "ports": null,
-                "id": "_29kg0L6CEe6fAKdvyu1GEg",
-                "type": "edge:arrow",
-                "sourceId": "_yZ354b6HEe6fAKdvyu1GEg",
-                "targetId": "_1xf9AL6HEe6fAKdvyu1GEg",
-                "annotation": null,
-                "children": []
-            },
-            {
-                "routingPoints": [
-                    {
-                        "x": 320,
-                        "y": 95
-                    },
-                    {
-                        "x": 383,
-                        "y": 95
-                    },
-                    {
-                        "x": 383,
-                        "y": 64
-                    },
-                    {
-                        "x": 403,
-                        "y": 64
-                    }
-                ],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "encrypt",
-                "features": {},
-                "labels": null,
-                "ports": null,
-                "id": "q3q6k",
-                "type": "edge:arrow",
-                "sourceId": "dmn17o",
-                "targetId": "_1xf9AL6HEe6fAKdvyu1GEg",
-                "annotation": null,
-                "children": []
-            },
-            {
-                "routingPoints": [
-                    {
-                        "x": 333,
-                        "y": 159
-                    },
-                    {
-                        "x": 404,
-                        "y": 159
-                    }
-                ],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "request",
-                "features": {},
-                "labels": null,
-                "ports": null,
-                "id": "_fFgfgL6CEe6fAKdvyu1GEg",
-                "type": "edge:arrow",
-                "sourceId": "_xDI30b6EEe6fAKdvyu1GEg",
-                "targetId": "_UQQ3cL6GEe6fAKdvyu1GEg",
-                "annotation": null,
-                "children": []
-            },
-            {
-                "routingPoints": [
-                    {
-                        "x": 480,
-                        "y": 159
-                    },
-                    {
-                        "x": 531,
-                        "y": 159
-                    },
-                    {
-                        "x": 531,
-                        "y": 96
-                    },
-                    {
-                        "x": 551,
-                        "y": 96
-                    }
-                ],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "request",
-                "features": {},
-                "labels": null,
-                "ports": null,
-                "id": "_lHxj8L6CEe6fAKdvyu1GEg",
-                "type": "edge:arrow",
-                "sourceId": "_WsXGcb6GEe6fAKdvyu1GEg",
-                "targetId": "_448GwMBCEe62ZOq30ePU7Q",
-                "annotation": null,
-                "children": []
-            },
-            {
-                "routingPoints": [
-                    {
-                        "x": 481,
-                        "y": 64
-                    },
-                    {
-                        "x": 531,
-                        "y": 64
-                    },
-                    {
-                        "x": 531,
-                        "y": 96
-                    },
-                    {
-                        "x": 551,
-                        "y": 96
-                    }
-                ],
-                "selected": false,
-                "hoverFeedback": false,
-                "opacity": 1,
-                "text": "process",
-                "features": {},
-                "labels": null,
-                "ports": null,
-                "id": "f5kouq",
-                "type": "edge:arrow",
-                "sourceId": "_283j8b6HEe6fAKdvyu1GEg",
-                "targetId": "_448GwMBCEe62ZOq30ePU7Q",
-                "annotation": null,
-                "children": []
-            }
-        ]
-    },
-    "labelTypes": [
-        {
-            "id": "_T_-DkL6EEe6fAKdvyu1GEg",
-            "name": "Sensitivity",
-            "values": [
-                {
-                    "id": "_VPo7sL6EEe6fAKdvyu1GEg",
-                    "text": "Personal"
-                },
-                {
-                    "id": "_WM1jwL6EEe6fAKdvyu1GEg",
-                    "text": "Public"
-                }
-            ]
-        },
-        {
-            "id": "_XQxtAb6EEe6fAKdvyu1GEg",
-            "name": "Location",
-            "values": [
-                {
-                    "id": "_YruBAL6EEe6fAKdvyu1GEg",
-                    "text": "EU"
-                },
-                {
-                    "id": "_Zd8vML6EEe6fAKdvyu1GEg",
-                    "text": "nonEU"
-                },
-                {
-                    "id": "qwaoye",
-                    "text": "internal"
-                }
-            ]
-        },
-        {
-            "id": "_a84LUb6EEe6fAKdvyu1GEg",
-            "name": "Encryption",
-            "values": [
-                {
-                    "id": "_fvwEcL6EEe6fAKdvyu1GEg",
-                    "text": "Encrypted"
-                }
-            ]
-        }
-    ],
-    "constraints": [],
-    "mode": "edit"
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "buying",
+      "id" : "_0m3IIL6CEe6fAKdvyu1GEg",
+      "type" : "edge:arrow",
+      "sourceId" : "_xYNLF76TEe6fAKdvyu1GEg",
+      "targetId" : "_xM37QL6HEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "wns8ue",
+      "type" : "edge:arrow",
+      "sourceId" : "6qqlqs",
+      "targetId" : "ir0ig",
+      "children" : [ ]
+    }, {
+      "text" : "buying",
+      "id" : "_29kg0L6CEe6fAKdvyu1GEg",
+      "type" : "edge:arrow",
+      "sourceId" : "_yZ354b6HEe6fAKdvyu1GEg",
+      "targetId" : "_1xf9AL6HEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "encrypt",
+      "id" : "q3q6k",
+      "type" : "edge:arrow",
+      "sourceId" : "dmn17o",
+      "targetId" : "_1xf9AL6HEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "request",
+      "id" : "_fFgfgL6CEe6fAKdvyu1GEg",
+      "type" : "edge:arrow",
+      "sourceId" : "_xDI30b6EEe6fAKdvyu1GEg",
+      "targetId" : "_UQQ3cL6GEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "request",
+      "id" : "_lHxj8L6CEe6fAKdvyu1GEg",
+      "type" : "edge:arrow",
+      "sourceId" : "_WsXGcb6GEe6fAKdvyu1GEg",
+      "targetId" : "_448GwMBCEe62ZOq30ePU7Q",
+      "children" : [ ]
+    }, {
+      "text" : "process",
+      "id" : "f5kouq",
+      "type" : "edge:arrow",
+      "sourceId" : "_283j8b6HEe6fAKdvyu1GEg",
+      "targetId" : "_448GwMBCEe62ZOq30ePU7Q",
+      "children" : [ ]
+    }, {
+      "text" : "view",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_UQQ3cL6GEe6fAKdvyu1GEg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward request",
+        "id" : "_WsXGcb6GEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_Q0i7U76CEe6fAKdvyu1GEg",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Public\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "DatabaseReceiving",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_Zd8vML6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "id" : "_448GwMBCEe62ZOq30ePU7Q",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_U27Lor6CEe6fAKdvyu1GEg",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "buy",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_xM37QL6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward buying",
+        "id" : "_yZ354b6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_Y50ZU76CEe6fAKdvyu1GEg",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "UserRequesting",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_YruBAL6EEe6fAKdvyu1GEg"
+      }, {
+        "labelTypeId" : "_T_-DkL6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_WM1jwL6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Sensitivity.Public if TRUE",
+        "id" : "_xDI30b6EEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_LX33QL6CEe6fAKdvyu1GEg",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Public\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "AdminRequesting",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_YruBAL6EEe6fAKdvyu1GEg"
+      }, {
+        "labelTypeId" : "_T_-DkL6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_VPo7sL6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Sensitivity.Personal if TRUE",
+        "id" : "6qqlqs",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "lbqr5o",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "UserBuying",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_YruBAL6EEe6fAKdvyu1GEg"
+      }, {
+        "labelTypeId" : "_T_-DkL6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_VPo7sL6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Sensitivity.Personal if TRUE",
+        "id" : "_xYNLF76TEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_bmXPYb6TEe6fAKdvyu1GEg",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "encrypt",
+      "labels" : [ {
+        "labelTypeId" : "_a84LUb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_fvwEcL6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "id" : "ir0ig",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward admin\nassign Encryption.Encrypted if TRUE",
+        "id" : "dmn17o",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "29bzv4",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nEncryption.Encrypted\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "process",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_1xf9AL6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward buying|encrypt",
+        "id" : "_283j8b6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_aPLpw76CEe6fAKdvyu1GEg",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nEncryption.Encrypted\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "_T_-DkL6EEe6fAKdvyu1GEg",
+    "name" : "Sensitivity",
+    "values" : [ {
+      "id" : "_VPo7sL6EEe6fAKdvyu1GEg",
+      "text" : "Personal"
+    }, {
+      "id" : "_WM1jwL6EEe6fAKdvyu1GEg",
+      "text" : "Public"
+    } ]
+  }, {
+    "id" : "_XQxtAb6EEe6fAKdvyu1GEg",
+    "name" : "Location",
+    "values" : [ {
+      "id" : "_YruBAL6EEe6fAKdvyu1GEg",
+      "text" : "EU"
+    }, {
+      "id" : "_Zd8vML6EEe6fAKdvyu1GEg",
+      "text" : "nonEU"
+    }, {
+      "id" : "qwaoye",
+      "text" : "internal"
+    } ]
+  }, {
+    "id" : "_a84LUb6EEe6fAKdvyu1GEg",
+    "name" : "Encryption",
+    "values" : [ {
+      "id" : "_fvwEcL6EEe6fAKdvyu1GEg",
+      "text" : "Encrypted"
+    } ]
+  } ],
+  "editorMode" : "edit"
 }
