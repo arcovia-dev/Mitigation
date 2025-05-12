@@ -1,0 +1,234 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "buying",
+      "id" : "_29kg0L6CEe6fAKdvyu1GEg",
+      "type" : "edge:arrow",
+      "sourceId" : "_yZ354b6HEe6fAKdvyu1GEg",
+      "targetId" : "_1xf9AL6HEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "encrypt",
+      "id" : "q3q6k",
+      "type" : "edge:arrow",
+      "sourceId" : "dmn17o",
+      "targetId" : "_1xf9AL6HEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "request",
+      "id" : "_lHxj8L6CEe6fAKdvyu1GEg",
+      "type" : "edge:arrow",
+      "sourceId" : "_WsXGcb6GEe6fAKdvyu1GEg",
+      "targetId" : "_448GwMBCEe62ZOq30ePU7Q",
+      "children" : [ ]
+    }, {
+      "text" : "process",
+      "id" : "f5kouq",
+      "type" : "edge:arrow",
+      "sourceId" : "_283j8b6HEe6fAKdvyu1GEg",
+      "targetId" : "_448GwMBCEe62ZOq30ePU7Q",
+      "children" : [ ]
+    }, {
+      "text" : "buying",
+      "id" : "_0m3IIL6CEe6fAKdvyu1GEg",
+      "type" : "edge:arrow",
+      "sourceId" : "_xYNLF76TEe6fAKdvyu1GEg",
+      "targetId" : "_xM37QL6HEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "request",
+      "id" : "266lxe",
+      "type" : "edge:arrow",
+      "sourceId" : "je4q2j",
+      "targetId" : "_UQQ3cL6GEe6fAKdvyu1GEg",
+      "children" : [ ]
+    }, {
+      "text" : "instruction",
+      "id" : "wns8ue",
+      "type" : "edge:arrow",
+      "sourceId" : "6qqlqs",
+      "targetId" : "ir0ig",
+      "children" : [ ]
+    }, {
+      "text" : "view",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_UQQ3cL6GEe6fAKdvyu1GEg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward request",
+        "id" : "_WsXGcb6GEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_Q0i7U76CEe6fAKdvyu1GEg",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Public\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "buy",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_xM37QL6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward buying",
+        "id" : "_yZ354b6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_Y50ZU76CEe6fAKdvyu1GEg",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "encrypt",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "qwaoye"
+      } ],
+      "ports" : [ {
+        "id" : "ir0ig",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward instruction\nassign Encryption.Encrypted if TRUE",
+        "id" : "dmn17o",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "29bzv4",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nEncryption.Encrypted\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "process",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "_1xf9AL6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward buying|encrypt",
+        "id" : "_283j8b6HEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_aPLpw76CEe6fAKdvyu1GEg",
+      "type" : "node:function",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nEncryption.Encrypted\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "User",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_YruBAL6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Sensitivity.Personal if TRUE",
+        "id" : "_xYNLF76TEe6fAKdvyu1GEg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Sensitivity.Public if TRUE",
+        "id" : "je4q2j",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "_bmXPYb6TEe6fAKdvyu1GEg",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Public\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    }, {
+      "text" : "Database",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_Zd8vML6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "id" : "_448GwMBCEe62ZOq30ePU7Q",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "id" : "_U27Lor6CEe6fAKdvyu1GEg",
+      "type" : "node:storage",
+      "children" : [ ]
+    }, {
+      "text" : "Admin",
+      "labels" : [ {
+        "labelTypeId" : "_XQxtAb6EEe6fAKdvyu1GEg",
+        "labelTypeValueId" : "_YruBAL6EEe6fAKdvyu1GEg"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Sensitivity.Personal if TRUE",
+        "id" : "6qqlqs",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "id" : "lbqr5o",
+      "type" : "node:input-output",
+      "annotation" : {
+        "message" : "PropagatedLabels:\nSensitivity.Personal\n",
+        "icon" : "tag",
+        "color" : "#FFFFFF"
+      },
+      "children" : [ ]
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "_T_-DkL6EEe6fAKdvyu1GEg",
+    "name" : "Sensitivity",
+    "values" : [ {
+      "id" : "_VPo7sL6EEe6fAKdvyu1GEg",
+      "text" : "Personal"
+    }, {
+      "id" : "_WM1jwL6EEe6fAKdvyu1GEg",
+      "text" : "Public"
+    } ]
+  }, {
+    "id" : "_XQxtAb6EEe6fAKdvyu1GEg",
+    "name" : "Location",
+    "values" : [ {
+      "id" : "_YruBAL6EEe6fAKdvyu1GEg",
+      "text" : "EU"
+    }, {
+      "id" : "_Zd8vML6EEe6fAKdvyu1GEg",
+      "text" : "nonEU"
+    }, {
+      "id" : "qwaoye",
+      "text" : "internal"
+    } ]
+  }, {
+    "id" : "_a84LUb6EEe6fAKdvyu1GEg",
+    "name" : "Encryption",
+    "values" : [ {
+      "id" : "_fvwEcL6EEe6fAKdvyu1GEg",
+      "text" : "Encrypted"
+    } ]
+  } ],
+  "editorMode" : "edit"
+}
