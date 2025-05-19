@@ -147,7 +147,7 @@ public class Mechanic {
         for (var constraint : constraints) {
             if (checkConstraint(tfg, constraint.literals()))
                 violation = true;
-                violations = getViolations() + 1;
+                violations++;
         }
         return violation;
     }
