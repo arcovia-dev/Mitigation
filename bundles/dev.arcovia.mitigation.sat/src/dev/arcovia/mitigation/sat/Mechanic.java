@@ -113,7 +113,7 @@ public class Mechanic {
             return getMinimalSolution(solutions);
         }
     }
-    public Boolean violatesDFD(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+    public Boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
         return (determineViolatingTFGs(dfd, constraints).isEmpty());
     }
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
