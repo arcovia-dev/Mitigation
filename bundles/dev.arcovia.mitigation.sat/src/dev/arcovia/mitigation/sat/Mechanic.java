@@ -37,6 +37,7 @@ public class Mechanic {
     private final List<Node> nodes;
     private final List<Flow> flows;
     private final String dfdName;
+    private int violations = 0;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
@@ -112,7 +113,7 @@ public class Mechanic {
             return getMinimalSolution(solutions);
         }
     }
-    public Boolean violatesDFD(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+    public Boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
         return (determineViolatingTFGs(dfd, constraints).isEmpty());
     }
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
@@ -127,7 +128,7 @@ public class Mechanic {
         Set<AbstractTransposeFlowGraph> violatingTransposeFlowGraphs = new HashSet<>();
 
         for (var tfg : flowGraph.getTransposeFlowGraphs()) {
-            if (checkConstraints(tfg, constraints))
+            if (checkAllConstraints(tfg, constraints))
                 violatingTransposeFlowGraphs.add(tfg);
         }
         return new ArrayList<>(violatingTransposeFlowGraphs);
@@ -139,6 +140,20 @@ public class Mechanic {
                 return true;
         }
         return false;
+    }
+    
+    private boolean checkAllConstraints(AbstractTransposeFlowGraph tfg, List<Constraint> constraints) {
+        boolean violation = false;
+        for (var constraint : constraints) {
+            if (checkConstraint(tfg, constraint.literals()))
+                violation = true;
+                violations++;
+        }
+        return violation;
+    }
+
+    public int getViolations() {
+        return violations;
     }
 
     private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Literal> constraint) {

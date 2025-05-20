@@ -1,10 +1,14 @@
 package dev.arcovia.mitigation.sat.tests;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,6 +18,7 @@ import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.DataFlowDiagramConverter;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.dataflowanalysis.examplemodels.TuhhModels;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
@@ -63,6 +68,8 @@ public class TUHHTest {
         var dfdConverter = new DataFlowDiagramConverter();
 
         var tuhhModels = TuhhModels.getTuhhModels();
+        
+        List<Scalability> scalabilityValues = new ArrayList<>();
 
         for (var model : tuhhModels.keySet()) {
             for (int variant : tuhhModels.get(model)) {
@@ -70,15 +77,27 @@ public class TUHHTest {
 
                 System.out.println(name);
 
-                var repairedDfdCosts = runRepair(model, name, variant == 0, constraints);
+                var repairResult = runRepair(model, name, variant == 0, constraints);
+                var repairedDfdCosts = repairResult.repairedDfd();
+                
+                int amountClauses = extractClauseCount("testresults/" +  (variant == 0 ? name : "aName") + ".cnf");
+                scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
 
                 if (variant == 0)
                     dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
 
-                assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
+                assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
             }
         }
+        
+        System.out.println(scalabilityValues);
     }
+    
+    private record Scalability(
+            int amountClause,
+            long runtimeInMilliseconds
+        ) {}
+    
     @Test
     void efficiencyTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         final Map<Label, Integer> costMap = Map.ofEntries(
@@ -87,11 +106,26 @@ public class TUHHTest {
                 entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
                 entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
                 entry(new Label("Stereotype", "local_logging"), 2));
+        
+        final Map<Label, Integer> minMap = Map.ofEntries(
+                entry(new Label("Stereotype", "gateway"), 1),
+                entry(new Label("Stereotype", "authenticated_request"), 1), entry(new Label("Stereotype", "transform_identity_representation"), 1),
+                entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 1),
+                entry(new Label("Stereotype", "encrypted_connection"), 1), entry(new Label("Stereotype", "log_sanitization"), 1),
+                entry(new Label("Stereotype", "local_logging"), 1));
+        
         var tuhhModels = TuhhModels.getTuhhModels();
         List<String> modelRepairMoreExpensive = new ArrayList<>();
+        
+        Map<String,Integer> tuhhCosts = new LinkedHashMap<>();
+        Map<String,Integer> satCosts = new LinkedHashMap<>();
+        Map<String,Integer> violationsBefore = new LinkedHashMap<>();
+        List<Scalability> scalabilityValues = new ArrayList<>();
+
         for (var model : tuhhModels.keySet()) {
-            System.out.println("Checking " + model);
             if (!tuhhModels.get(model).contains(0)) continue;
+            
+            System.out.println("Checking " + model);
 
             for (int variant : tuhhModels.get(model)) {
                 List<Constraint> constraint = switch (variant) {
@@ -107,19 +141,32 @@ public class TUHHTest {
                 };
                 if (constraint == null) continue;
                 System.out.println("Comparing to " + model + "_" + variant);
-
-                var repairedDfd = runRepair(model, model+"_0", false, constraint);
+                var repairResult = runRepair(model, model+"_0", false, constraint);
+                var repairedDfd = repairResult.repairedDfd();
                 var dfdConverter = new DataFlowDiagramConverter();
                 dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "efficencyTest/" +  model + "_" + variant + "-repaired.json");
-                var cost = new ModelCostCalculator(repairedDfd, constraint, costMap).calculateCost();
-                var cost2 = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, costMap).calculateCost();
+                var satCost = new ModelCostCalculator(repairedDfd, constraint, minMap).calculateCost();
+                var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, minMap).calculateCost();
 
-                System.out.println(cost + " <= " + cost2 + " : "+ (cost <= cost2));
-                if (cost > cost2){
+                System.out.println(satCost + " <= " + tuhhCost + " : "+ (satCost <= tuhhCost));
+                if (satCost > tuhhCost){
                     modelRepairMoreExpensive.add(model + "_" + variant);
                 }
+                
+                satCosts.put(model + "_" + variant, satCost);
+                tuhhCosts.put(model + "_" + variant, tuhhCost);
+                violationsBefore.put(model + "_" + variant, repairResult.amountViolations());
+                
+                int amountClauses = extractClauseCount("testresults/aName.cnf");
+                scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
             }
         }
+        
+        System.out.println(satCosts.values());
+        System.out.println(tuhhCosts.values());
+        System.out.println(violationsBefore);
+        System.out.println(scalabilityValues);
+        
         assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_4", "apssouza22_7"));
     }
 
@@ -133,18 +180,42 @@ public class TUHHTest {
         String name = model + "_" + variant;
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(loadDFD(model,name)), "testresults/specific_" + name + "-repaired.json");
 
-        var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway));
+        var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway)).repairedDfd();
         dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/specific_" + name + "-repaired.json");
-        assertTrue(new Mechanic(repairedDfdCosts,null, null).violatesDFD(repairedDfdCosts,constraints));
+        assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
     }
+    
+    private int extractClauseCount(String filePath) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String firstLine = reader.readLine();
+            if (firstLine != null && firstLine.startsWith("p cnf")) {
+                String[] parts = firstLine.trim().split("\\s+");
+                if (parts.length == 4) {
+                    return Integer.parseInt(parts[3]);
+                }
+            }
+        }
+        throw new IllegalArgumentException("First line is not in the expected 'p cnf <vars> <clauses>' format.");
+    }
+    
+    private record RepairResult(
+            DataFlowDiagramAndDictionary repairedDfd,
+            int amountViolations,
+            long runtimeInMilliseconds
+        ) {}
 
-    private DataFlowDiagramAndDictionary runRepair(String model, String name, Boolean store, List<Constraint> constraints)
+    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints)
             throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
         var dfd = loadDFD(model, name);
         if (!store)
-            name = null;
-        return new Mechanic(dfd, name, constraints, costs).repair();
+            name = "aName";
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, costs);
+        long startTime = System.currentTimeMillis();
+        var repairedDfd = mechanic.repair();
+        long endTime = System.currentTimeMillis();
+        return new RepairResult(repairedDfd,mechanic.getViolations(),endTime-startTime);
     }
+    
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
         var dfdConverter = new DataFlowDiagramConverter();
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
@@ -154,5 +225,11 @@ public class TUHHTest {
         return  dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, model, (name + ".dataflowdiagram"))
                 .toString(), Paths.get(location, model, (name + ".datadictionary"))
                 .toString(), Activator.class);
+    }
+    
+    @AfterEach
+    void cleanup() throws IOException {
+        Files.deleteIfExists(Paths.get("testresults/aName-literalMapping.json"));
+        Files.deleteIfExists(Paths.get("testresults/aName.cnf"));
     }
 }
