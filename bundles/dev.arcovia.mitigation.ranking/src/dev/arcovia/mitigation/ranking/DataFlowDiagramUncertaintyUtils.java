@@ -6,8 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -47,11 +46,9 @@ public class DataFlowDiagramUncertaintyUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		var conv = new DataFlowDiagramConverter();
 		String outputPath = getOutputPathFromURI(newUcertaintyURI);
 
-		conv.storeDFD(dfd, Paths.get(outputPath, newModelName).toString());
+		dfd.save("", Paths.get(outputPath, newModelName).toString());
 	}
 
 	private static String getOutputPathFromURI(URI mitigationUncertaintyURI) {

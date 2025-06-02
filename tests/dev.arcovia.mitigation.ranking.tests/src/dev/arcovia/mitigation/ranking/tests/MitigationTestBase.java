@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -71,7 +71,7 @@ public abstract class MitigationTestBase extends TestBase {
 			.get("models", getFolderName(), getFilesName() + "_solution.txt").toString();
 
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 12; // Must be at least 3 for meassurments
+	protected final int MITIGATION_RUNS = 3; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
 	protected List<String> relevantUncertaintyEntityNames;
@@ -257,22 +257,18 @@ public abstract class MitigationTestBase extends TestBase {
 					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode,
 					Activator.class);
 
-			if (result.size() > 0) {
-				if (evalMode)
-					break;
-				else {
-					var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-							result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
-									.stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
-					System.out.println(i);
-					System.out.println(result);
-					System.out.println(relevantUncertaintyEntityNames);
-					System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
-					for (int k = 0; k < resultMinimal.size(); k++) {
-						System.out.println(resultMinimal.get(k));
-					}
-					break;
+			if (result.size() > 0&& !evalMode) {
+				var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+						result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
+								.stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
+				System.out.println(i);
+				System.out.println(result);
+				System.out.println(relevantUncertaintyEntityNames);
+				System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
+				for (int k = 0; k < resultMinimal.size(); k++) {
+					System.out.println(resultMinimal.get(k));
 				}
+				break;
 			}
 		}
 		return result;

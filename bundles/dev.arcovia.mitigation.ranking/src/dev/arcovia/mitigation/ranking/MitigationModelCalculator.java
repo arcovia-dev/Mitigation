@@ -15,8 +15,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 
 import dev.abunai.confidentiality.analysis.core.UncertaintyUtils;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysis;
@@ -68,13 +67,17 @@ public class MitigationModelCalculator {
 		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone().modelProjectName(projectName)
 				.usePluginActivator(pluginActivator).useDataDictionary(dataDictionaryPath)
 				.useDataFlowDiagram(dataFlowDiagramPath).useUncertaintyModel(uncertaintyPath);
-
+		
 		DFDUncertaintyAwareConfidentialityAnalysis ana = builder.build();
 		ana.initializeAnalysis();
 
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) ana.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
+		
+		var start = System.currentTimeMillis();
 		uncertainFlowGraphs.evaluate();
+		
+		System.out.println(flowGraphs.getTransposeFlowGraphs().size());
 
 		for (var constraint : constraintFunctions) {
 			List<UncertainConstraintViolation> violations = ana.queryUncertainDataFlow(uncertainFlowGraphs, constraint);
@@ -82,6 +85,9 @@ public class MitigationModelCalculator {
 				return false;
 			}
 		}
+		var time = (System.currentTimeMillis()- start);
+		System.out.println("End eval:");
+		System.out.println(time);
 
 		return true;
 	}
@@ -119,13 +125,13 @@ public class MitigationModelCalculator {
 		}
 
 		var result = new ArrayList<MitigationModel>();
-		var conv = new DataFlowDiagramConverter();
 		String outputPath = getOutputPathFromURI(mitigationURIs.mitigationUncertaintyURI());
 		String projectName = getProjectNameFromURI(mitigationURIs.mitigationUncertaintyURI());
 
 		for (int i = 0; i < candidates.size(); i++) {
 			// Store dataflowdigrams and datadictionaries
-			conv.storeDFD(candidates.get(i).model(), Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
+		    var dfd = candidates.get(i).model();
+		    dfd.save("",Paths.get(outputPath, "mitigation" + Integer.toString(i)).toString());
 			if (isViolationfreeModel(outputPath, i, projectName, constraintFunctions, pluginActivator)) {
 				result.add(candidates.get(i));
 

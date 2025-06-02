@@ -31,7 +31,6 @@ public abstract class TestBase {
 	}
 	
 	protected List<String> retrieveAllDataLabels(AbstractVertex<?> vertex) {
-	    System.out.println(vertex.getDataCharacteristicNamesMap("Stereotype"));
         return vertex.getAllDataCharacteristics().stream()
                 .map(DataCharacteristic::getAllCharacteristics)
                 .flatMap(List::stream).map(DFDCharacteristicValue.class::cast).map(DFDCharacteristicValue::getValueName)
