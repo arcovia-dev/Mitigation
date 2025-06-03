@@ -257,19 +257,23 @@ public abstract class MitigationTestBase extends TestBase {
 					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode,
 					Activator.class);
 
-			if (result.size() > 0&& !evalMode) {
-				var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-						result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
-								.stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
-				System.out.println(i);
-				System.out.println(result);
-				System.out.println(relevantUncertaintyEntityNames);
-				System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
-				for (int k = 0; k < resultMinimal.size(); k++) {
-					System.out.println(resultMinimal.get(k));
-				}
-				break;
-			}
+			if (result.size() > 0) {
+                if (evalMode)
+                    break;
+                else {
+                    var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+                            result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
+                                    .stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
+                    System.out.println(i);
+                    System.out.println(result);
+                    System.out.println(relevantUncertaintyEntityNames);
+                    System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
+                    for (int k = 0; k < resultMinimal.size(); k++) {
+                        System.out.println(resultMinimal.get(k));
+                    }
+                    break;
+                }
+            }
 		}
 		return result;
 	}

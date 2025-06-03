@@ -74,20 +74,14 @@ public class MitigationModelCalculator {
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) ana.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
 		
-		var start = System.currentTimeMillis();
 		uncertainFlowGraphs.evaluate();
-		
-		System.out.println(flowGraphs.getTransposeFlowGraphs().size());
-
+	
 		for (var constraint : constraintFunctions) {
 			List<UncertainConstraintViolation> violations = ana.queryUncertainDataFlow(uncertainFlowGraphs, constraint);
 			if (violations.size() > 0) {
 				return false;
 			}
 		}
-		var time = (System.currentTimeMillis()- start);
-		System.out.println("End eval:");
-		System.out.println(time);
 
 		return true;
 	}
