@@ -71,7 +71,7 @@ public abstract class MitigationTestBase extends TestBase {
 			.get("models", getFolderName(), getFilesName() + "_solution.txt").toString();
 
 	// Mitigation execution variables
-	protected final int MITIGATION_RUNS = 3; // Must be at least 3 for meassurments
+	protected final int MITIGATION_RUNS = 12; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
 	protected List<String> relevantUncertaintyEntityNames;
