@@ -1,7 +1,7 @@
 package dev.arcovia.mitigation.sat.tests;
 
 import dev.arcovia.mitigation.sat.*;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -12,7 +12,7 @@ import java.util.List;
 public class DuplicateNodesTest {
     @Test
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
-        var dfdConverter = new DataFlowDiagramConverter();
+        var dfdConverter = new DFD2WebConverter();
 
         // (personal AND nonEU) => encrypted
         var dataConstraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
@@ -23,6 +23,6 @@ public class DuplicateNodesTest {
 
         var repairedDfdCosts = new Mechanic("models/duplicateNodes.json", constraints).repair();
 
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/duplicateNodes-repaired.json");
+        dfdConverter.convert(repairedDfdCosts).save("testresults/","duplicateNodes-repaired.json");
     }
 }

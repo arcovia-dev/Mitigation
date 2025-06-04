@@ -14,8 +14,8 @@ import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.arcovia.mitigation.sat.*;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.dataflowanalysis.examplemodels.TuhhModels;
 import org.junit.jupiter.api.AfterEach;
@@ -24,8 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
-
-
 
 public class TUHHTest {
     final Constraint entryViaGatewayOnly = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
@@ -65,7 +63,7 @@ public class TUHHTest {
 
     @Test
     public void tuhhTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
-        var dfdConverter = new DataFlowDiagramConverter();
+        var dfdConverter = new DFD2WebConverter();
 
         var tuhhModels = TuhhModels.getTuhhModels();
         
@@ -84,7 +82,7 @@ public class TUHHTest {
                 scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
 
                 if (variant == 0)
-                    dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/" + name + "-repaired.json");
+                    dfdConverter.convert(repairedDfdCosts).save("testresults/",  name + "-repaired.json");
 
                 assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
             }
@@ -143,8 +141,8 @@ public class TUHHTest {
                 System.out.println("Comparing to " + model + "_" + variant);
                 var repairResult = runRepair(model, model+"_0", false, constraint);
                 var repairedDfd = repairResult.repairedDfd();
-                var dfdConverter = new DataFlowDiagramConverter();
-                dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfd), "efficencyTest/" +  model + "_" + variant + "-repaired.json");
+                var dfdConverter = new DFD2WebConverter();
+                dfdConverter.convert(repairedDfd).save("efficencyTest/",  model + "_" + variant + "-repaired.json");
                 var satCost = new ModelCostCalculator(repairedDfd, constraint, minMap).calculateCost();
                 var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, minMap).calculateCost();
 
@@ -173,15 +171,15 @@ public class TUHHTest {
     @Disabled
     @Test
     void specificTUHHTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
-        var dfdConverter = new DataFlowDiagramConverter();
+        var dfdConverter = new DFD2WebConverter();
         String model = "mudigal-technologies";
         int variant = 7;
 
         String name = model + "_" + variant;
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(loadDFD(model,name)), "testresults/specific_" + name + "-repaired.json");
+        dfdConverter.convert(loadDFD(model,name)).save("testresults/",  "specific_" + name + "-repaired.json");
 
         var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway)).repairedDfd();
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/specific_" + name + "-repaired.json");
+        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "specific_" + name + "-repaired.json");
         assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
     }
     
@@ -217,13 +215,12 @@ public class TUHHTest {
     }
     
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
-        var dfdConverter = new DataFlowDiagramConverter();
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
-        final String location = Paths.get("casestudies", "TUHH-Models")
+        final String location = Paths.get("scenarios","dfd", "TUHH-Models")
                 .toString();
-
-        return  dfdConverter.loadDFD(PROJECT_NAME, Paths.get(location, model, (name + ".dataflowdiagram"))
-                .toString(), Paths.get(location, model, (name + ".datadictionary"))
+        return new DataFlowDiagramAndDictionary(PROJECT_NAME, 
+        		Paths.get(location, model, (name + ".dataflowdiagram")).toString(), 
+        		Paths.get(location, model, (name + ".datadictionary"))
                 .toString(), Activator.class);
     }
     
