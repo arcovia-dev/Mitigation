@@ -15,6 +15,6 @@ Require-Bundle:
  org.dataflowanalysis.dfd.dataflowdiagram,
  org.dataflowanalysis.analysis.dfd,
  org.dataflowanalysis.analysis,
- org.apache.log4j;bundle-version="1.2.24"
+ org.apache.log4j
 Automatic-Module-Name: dev.arcovia.mitigation.sat
 Bundle-RequiredExecutionEnvironment: JavaSE-17
