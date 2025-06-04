@@ -2,7 +2,7 @@ package dev.arcovia.mitigation.sat.tests;
 
 import com.google.common.collect.ImmutableMap;
 import dev.arcovia.mitigation.sat.Label;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;

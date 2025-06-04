@@ -9,7 +9,7 @@ import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.Literal;
 import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.NodeLabel;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -28,9 +28,9 @@ public class ICSETest extends BaseTest{
 
     @Test
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
-        var dfdConverter = new DataFlowDiagramConverter();
+        var dfdConverter = new DFD2WebConverter();
         var repairedDfdCosts = new Mechanic(ICSE_Sat, constraints, costs).repair();
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/ICSE-repaired.json");
+        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "ICSE-repaired.json");
     }
 
 }

@@ -1,14 +1,14 @@
 package dev.arcovia.mitigation.sat.tests;
 
-import com.google.common.collect.ImmutableMap;
+
 import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.Literal;
 import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.NodeLabel;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.google.common.collect.ImmutableMap;
 
 public class ComplexConstraintTest extends BaseTest{
     public final String MIN_SAT = "models/minsat.json";
@@ -31,7 +33,7 @@ public class ComplexConstraintTest extends BaseTest{
 
     @Test
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
-        var dfdConverter = new DataFlowDiagramConverter();
+        var dfdConverter = new DFD2WebConverter();
 
         costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)
@@ -45,7 +47,7 @@ public class ComplexConstraintTest extends BaseTest{
         var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts, "Strong_Encrypted");
 
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/complexMinsat-repaired.json");
+        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "complexMinsat-repaired.json");
 
         costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)

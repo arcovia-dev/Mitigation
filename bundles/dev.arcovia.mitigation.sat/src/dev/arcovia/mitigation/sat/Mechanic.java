@@ -15,8 +15,9 @@ import java.util.Comparator;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.WebEditorConverter;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.web2dfd.WebEditorConverterModel;
+import org.dataflowanalysis.converter.web2dfd.Web2DFDConverter;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
@@ -42,7 +43,7 @@ public class Mechanic {
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
     public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
-        this.dfd = new WebEditorConverter().webToDfd(dfdLocation);
+        this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
         var name = Paths.get(dfdLocation)
                 .getFileName()
                 .toString();

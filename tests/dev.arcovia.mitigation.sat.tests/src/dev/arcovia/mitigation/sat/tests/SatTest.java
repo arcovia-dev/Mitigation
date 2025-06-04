@@ -10,8 +10,8 @@ import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.Literal;
 import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.NodeLabel;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.converter.DataFlowDiagramConverter;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -31,11 +31,11 @@ public class SatTest extends BaseTest{
 
     @Test
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
-        var dfdConverter = new DataFlowDiagramConverter();
+        var dfdConverter = new DFD2WebConverter();
 
         var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts);
-        dfdConverter.storeWeb(dfdConverter.dfdToWeb(repairedDfdCosts), "testresults/minsat-repaired.json");
+        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "minsat-repaired.json");
 
         var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
         checkIfConsistent(repairedDfdMinimal);
