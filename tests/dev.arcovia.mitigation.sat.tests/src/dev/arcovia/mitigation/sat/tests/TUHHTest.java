@@ -25,8 +25,6 @@ import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
-
-
 public class TUHHTest {
     final Constraint entryViaGatewayOnly = new Constraint(List.of(new Literal(false, new NodeLabel(new Label("Stereotype", "internal"))),
             new Literal(false, new IncomingDataLabel(new Label("Stereotype", "entrypoint"))),
@@ -217,9 +215,8 @@ public class TUHHTest {
     }
     
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
-        var dfdConverter = new DFD2WebConverter();
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
-        final String location = Paths.get("casestudies", "TUHH-Models")
+        final String location = Paths.get("scenarios","dfd", "TUHH-Models")
                 .toString();
         return new DataFlowDiagramAndDictionary(PROJECT_NAME, 
         		Paths.get(location, model, (name + ".dataflowdiagram")).toString(), 
