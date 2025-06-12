@@ -83,7 +83,7 @@ public class TUHHTest {
 
                 System.out.println(name);
 
-                var repairResult = runRepair(model, name, variant == 0, constraints);
+                var repairResult = runRepair(model, name, variant == 0, constraints, costs);
                 var repairedDfdCosts = repairResult.repairedDfd();
                 
                 int amountClauses = extractClauseCount("testresults/" +  (variant == 0 ? name : "aName") + ".cnf");
@@ -93,36 +93,11 @@ public class TUHHTest {
                     dfdConverter.convert(repairedDfdCosts).save("testresults/",  name + "-repaired.json");
 
                 assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
-            }
-        }
-        
-        System.out.println(scalabilityValues);
-    }
-    
-    @Test
-    public void tuhhTestRankedCosts() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
-        var dfdConverter = new DFD2WebConverter();
-
-        var tuhhModels = TuhhModels.getTuhhModels();
-        
-        List<Scalability> scalabilityValues = new ArrayList<>();
-
-        for (var model : tuhhModels.keySet()) {
-            for (int variant : tuhhModels.get(model)) {
-                String name = model + "_" + variant;
-
-                System.out.println(name);
-
-                var repairResult = runRepairRanked(model, name, false , constraints);
-                var repairedDfdCosts = repairResult.repairedDfd();
                 
-                int amountClauses = extractClauseCount("testresults/" +  (variant == 0 ? name : "aName") + ".cnf");
-                scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
-
-                if (variant == 0)
-                    dfdConverter.convert(repairedDfdCosts).save("testresults/",  name + "-repaired.json");
-
+                repairResult = runRepair(model, name, false , constraints, getRankedCosts(rankingLabels));
+                repairedDfdCosts = repairResult.repairedDfd();
                 assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
+                
             }
         }
         
@@ -178,7 +153,7 @@ public class TUHHTest {
                 };
                 if (constraint == null) continue;
                 System.out.println("Comparing to " + model + "_" + variant);
-                var repairResult = runRepair(model, model+"_0", false, constraint);
+                var repairResult = runRepair(model, model+"_0", false, constraint, minMap);
                 var repairedDfd = repairResult.repairedDfd();
                 var dfdConverter = new DFD2WebConverter();
                 dfdConverter.convert(repairedDfd).save("efficencyTest/",  model + "_" + variant + "-repaired.json");
@@ -217,7 +192,7 @@ public class TUHHTest {
         String name = model + "_" + variant;
         dfdConverter.convert(loadDFD(model,name)).save("testresults/",  "specific_" + name + "-repaired.json");
 
-        var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway)).repairedDfd();
+        var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway), costs).repairedDfd();
         dfdConverter.convert(repairedDfdCosts).save("testresults/",  "specific_" + name + "-repaired.json");
         assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
     }
@@ -241,25 +216,12 @@ public class TUHHTest {
             long runtimeInMilliseconds
         ) {}
 
-    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints)
+    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints, Map<Label,Integer> costMap)
             throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
         var dfd = loadDFD(model, name);
         if (!store)
             name = "aName";
-        Mechanic mechanic = new Mechanic(dfd, name, constraints, costs);
-        long startTime = System.currentTimeMillis();
-        var repairedDfd = mechanic.repair();
-        long endTime = System.currentTimeMillis();
-        return new RepairResult(repairedDfd,mechanic.getViolations(),endTime-startTime);
-    }
-    
-    private RepairResult runRepairRanked(String model, String name, Boolean store, List<Constraint> constraints)
-            throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
-        var dfd = loadDFD(model, name);
-        if (!store)
-            name = "aName";
-        var rankedCosts = getRankedCosts(rankingLabels);
-        Mechanic mechanic = new Mechanic(dfd, name, constraints, rankedCosts);
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap);
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
