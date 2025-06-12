@@ -229,30 +229,31 @@ public class TUHHTest {
         return new RepairResult(repairedDfd,mechanic.getViolations(),endTime-startTime);
     }
     
-    private Map<Label, Integer> getRankedCosts(Map<Label, Integer> rankedLabels){
-    	Map<Label, Integer> costMap = new HashMap<>();
+    private Map<Label, Integer> getRankedCosts(Map<Label, Integer> rankedLabels) {
+        int maxRank = rankedLabels.values().stream()
+            .max(Integer::compareTo)
+            .orElse(0);
 
+        int[] fibs = fibonacciNumbers(maxRank);
+
+        Map<Label, Integer> costMap = new HashMap<>();
         for (Map.Entry<Label, Integer> entry : rankedLabels.entrySet()) {
-        	Label label = entry.getKey();
-            int rank = entry.getValue();
-            int cost = fibonacci(rank);
-            costMap.put(label, cost);
+            costMap.put(entry.getKey(), fibs[entry.getValue()]);
         }
 
         return costMap;
     }
-    
-    private static int fibonacci(int n) {
-        if (n <= 0) return 0;
-        if (n == 1) return 1;
 
-        int a = 0, b = 1, c = 1;
+    private int[] fibonacciNumbers(int n) {
+        int[] fibs = new int[Math.max(n + 1, 2)];
+        fibs[0] = 0;
+        fibs[1] = 1;
+
         for (int i = 2; i <= n; i++) {
-            c = a + b;
-            a = b;
-            b = c;
+            fibs[i] = fibs[i - 1] + fibs[i - 2];
         }
-        return c;
+
+        return fibs;
     }
     
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
