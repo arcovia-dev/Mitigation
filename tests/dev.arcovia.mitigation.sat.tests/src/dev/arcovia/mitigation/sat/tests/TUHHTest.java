@@ -62,7 +62,14 @@ public class TUHHTest {
             entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
             entry(new Label("Stereotype", "local_logging"), 2));
     
-    final Map<Label, Integer> rankingLabels= Map.ofEntries(entry(new Label("Stereotype", "internal"), 7),
+    final Map<Label, Integer> minCosts = Map.ofEntries(
+            entry(new Label("Stereotype", "gateway"), 1),
+            entry(new Label("Stereotype", "authenticated_request"), 1), entry(new Label("Stereotype", "transform_identity_representation"), 1),
+            entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 1),
+            entry(new Label("Stereotype", "encrypted_connection"), 1), entry(new Label("Stereotype", "log_sanitization"), 1),
+            entry(new Label("Stereotype", "local_logging"), 1));
+        
+    final Map<Label, Integer> labelRanking = Map.ofEntries(entry(new Label("Stereotype", "internal"), 7),
             entry(new Label("Stereotype", "gateway"), 6),
             entry(new Label("Stereotype", "authenticated_request"), 6), entry(new Label("Stereotype", "transform_identity_representation"), 3),
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 4),
@@ -76,7 +83,7 @@ public class TUHHTest {
         var tuhhModels = TuhhModels.getTuhhModels();
         
         List<Scalability> scalabilityValues = new ArrayList<>();
-        var rankedCosts = getRankedCosts(rankingLabels);
+        var rankedCosts = getRankedCosts(labelRanking);
 
         for (var model : tuhhModels.keySet()) {
             for (int variant : tuhhModels.get(model)) {
@@ -113,20 +120,6 @@ public class TUHHTest {
     
     @Test
     void efficiencyTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
-        final Map<Label, Integer> costMap = Map.ofEntries(
-                entry(new Label("Stereotype", "gateway"), 4),
-                entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
-                entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
-                entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
-                entry(new Label("Stereotype", "local_logging"), 2));
-        
-        final Map<Label, Integer> minMap = Map.ofEntries(
-                entry(new Label("Stereotype", "gateway"), 1),
-                entry(new Label("Stereotype", "authenticated_request"), 1), entry(new Label("Stereotype", "transform_identity_representation"), 1),
-                entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 1),
-                entry(new Label("Stereotype", "encrypted_connection"), 1), entry(new Label("Stereotype", "log_sanitization"), 1),
-                entry(new Label("Stereotype", "local_logging"), 1));
-        
         var tuhhModels = TuhhModels.getTuhhModels();
         List<String> modelRepairMoreExpensive = new ArrayList<>();
         
@@ -154,12 +147,12 @@ public class TUHHTest {
                 };
                 if (constraint == null) continue;
                 System.out.println("Comparing to " + model + "_" + variant);
-                var repairResult = runRepair(model, model+"_0", false, constraint, minMap);
+                var repairResult = runRepair(model, model+"_0", false, constraint, minCosts);
                 var repairedDfd = repairResult.repairedDfd();
                 var dfdConverter = new DFD2WebConverter();
                 dfdConverter.convert(repairedDfd).save("efficencyTest/",  model + "_" + variant + "-repaired.json");
-                var satCost = new ModelCostCalculator(repairedDfd, constraint, minMap).calculateCost();
-                var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, minMap).calculateCost();
+                var satCost = new ModelCostCalculator(repairedDfd, constraint, minCosts).calculateCost();
+                var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, minCosts).calculateCost();
 
                 System.out.println(satCost + " <= " + tuhhCost + " : "+ (satCost <= tuhhCost));
                 if (satCost > tuhhCost){
