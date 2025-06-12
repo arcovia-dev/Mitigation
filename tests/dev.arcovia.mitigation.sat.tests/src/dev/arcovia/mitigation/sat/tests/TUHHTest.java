@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static java.util.Map.entry;
@@ -60,6 +61,13 @@ public class TUHHTest {
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
             entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
             entry(new Label("Stereotype", "local_logging"), 2));
+    
+    final Map<Label, Integer> rankingLabels= Map.ofEntries(entry(new Label("Stereotype", "internal"), 7),
+            entry(new Label("Stereotype", "gateway"), 6),
+            entry(new Label("Stereotype", "authenticated_request"), 6), entry(new Label("Stereotype", "transform_identity_representation"), 3),
+            entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 4),
+            entry(new Label("Stereotype", "encrypted_connection"), 5), entry(new Label("Stereotype", "log_sanitization"), 3),
+            entry(new Label("Stereotype", "local_logging"), 2));
 
     @Test
     public void tuhhTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
@@ -90,6 +98,37 @@ public class TUHHTest {
         
         System.out.println(scalabilityValues);
     }
+    
+    @Test
+    public void tuhhTestRankedCosts() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
+        var dfdConverter = new DFD2WebConverter();
+
+        var tuhhModels = TuhhModels.getTuhhModels();
+        
+        List<Scalability> scalabilityValues = new ArrayList<>();
+
+        for (var model : tuhhModels.keySet()) {
+            for (int variant : tuhhModels.get(model)) {
+                String name = model + "_" + variant;
+
+                System.out.println(name);
+
+                var repairResult = runRepairRanked(model, name, variant == 0, constraints);
+                var repairedDfdCosts = repairResult.repairedDfd();
+                
+                int amountClauses = extractClauseCount("testresults/" +  (variant == 0 ? name : "aName") + ".cnf");
+                scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
+
+                if (variant == 0)
+                    dfdConverter.convert(repairedDfdCosts).save("testresults/",  name + "-repaired.json");
+
+                assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
+            }
+        }
+        
+        System.out.println(scalabilityValues);
+    }
+    
     
     private record Scalability(
             int amountClause,
@@ -212,6 +251,46 @@ public class TUHHTest {
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
         return new RepairResult(repairedDfd,mechanic.getViolations(),endTime-startTime);
+    }
+    
+    private RepairResult runRepairRanked(String model, String name, Boolean store, List<Constraint> constraints)
+            throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
+        var dfd = loadDFD(model, name);
+        if (!store)
+            name = "aName";
+        var rankedCosts = getRankedCosts(rankingLabels);
+        System.out.println(rankedCosts);
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, rankedCosts);
+        long startTime = System.currentTimeMillis();
+        var repairedDfd = mechanic.repair();
+        long endTime = System.currentTimeMillis();
+        return new RepairResult(repairedDfd,mechanic.getViolations(),endTime-startTime);
+    }
+    
+    private Map<Label, Integer> getRankedCosts(Map<Label, Integer> rankedLabels){
+    	Map<Label, Integer> costMap = new HashMap<>();
+
+        for (Map.Entry<Label, Integer> entry : rankedLabels.entrySet()) {
+        	Label label = entry.getKey();
+            int rank = entry.getValue();
+            int cost = fibonacci(rank);
+            costMap.put(label, cost);
+        }
+
+        return costMap;
+    }
+    
+    private static int fibonacci(int n) {
+        if (n <= 0) return 0;
+        if (n == 1) return 1;
+
+        int a = 0, b = 1, c = 1;
+        for (int i = 2; i <= n; i++) {
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        return c;
     }
     
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
