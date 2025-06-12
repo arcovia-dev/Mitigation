@@ -113,7 +113,7 @@ public class TUHHTest {
 
                 System.out.println(name);
 
-                var repairResult = runRepairRanked(model, name, variant == 0, constraints);
+                var repairResult = runRepairRanked(model, name, false , constraints);
                 var repairedDfdCosts = repairResult.repairedDfd();
                 
                 int amountClauses = extractClauseCount("testresults/" +  (variant == 0 ? name : "aName") + ".cnf");
@@ -259,7 +259,6 @@ public class TUHHTest {
         if (!store)
             name = "aName";
         var rankedCosts = getRankedCosts(rankingLabels);
-        System.out.println(rankedCosts);
         Mechanic mechanic = new Mechanic(dfd, name, constraints, rankedCosts);
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
