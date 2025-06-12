@@ -76,6 +76,7 @@ public class TUHHTest {
         var tuhhModels = TuhhModels.getTuhhModels();
         
         List<Scalability> scalabilityValues = new ArrayList<>();
+        var rankedCosts = getRankedCosts(rankingLabels);
 
         for (var model : tuhhModels.keySet()) {
             for (int variant : tuhhModels.get(model)) {
@@ -94,7 +95,7 @@ public class TUHHTest {
 
                 assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
                 
-                repairResult = runRepair(model, name, false , constraints, getRankedCosts(rankingLabels));
+                repairResult = runRepair(model, name, false , constraints, rankedCosts);
                 repairedDfdCosts = repairResult.repairedDfd();
                 assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
                 
