@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
@@ -454,10 +456,7 @@ public abstract class MitigationTestBase extends TestBase {
 						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
 		}
-		
-		if (result.size() == 0) {
-			System.out.println("mitigation failed");
-		}
+		assertTrue(result.size() > 0);
 	}
 
 	public DataFlowDiagramAndDictionary getDDAndDfd(UncertaintyAwareConfidentialityAnalysis analysis) {

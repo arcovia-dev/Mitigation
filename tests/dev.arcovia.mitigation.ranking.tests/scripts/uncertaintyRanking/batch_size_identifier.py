@@ -7,7 +7,7 @@ from collections import OrderedDict
 def show_clusters(data_dict):
     features = np.array(list(data_dict.values())).reshape(-1, 1)
 
-    min_k = 8
+    min_k = 6
     max_k = 8
     k_values = range(min_k,max_k+1)
 
