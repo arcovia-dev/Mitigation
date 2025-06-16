@@ -48,7 +48,7 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract RankingAggregationMethod getAggregationMethod();
 
 	protected String customPythonPath() {
-		return "/Users/nniehues/miniconda3/bin/python";
+		return "D:/entwicklungsumgebungen/Conda/envs/MitigationRanking/python";
 	}
 
 	// Mitigation ranking variables
@@ -252,10 +252,9 @@ public abstract class MitigationTestBase extends TestBase {
 					.filter(u -> relevantUncertaintyEntityNames.contains(u.getEntityName())).toList();
 
 			// Run mitigation with i+1 uncertainties
-			result = MitigationModelCalculator.findMitigatingModel(dfdAnddd,
+			result = new MitigationModelCalculator(dfdAnddd,
 					new UncertaintySubset(analysis.getUncertaintySources(), relevantUncertainties),
-					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode,
-					Activator.class);
+					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode).findMitigatingModel();
 
 			if (result.size() > 0) {
                 if (evalMode)
@@ -285,13 +284,11 @@ public abstract class MitigationTestBase extends TestBase {
 		var relevantEntityNames = rankedUncertaintyEntityName.stream().limit(n).toList();
 		var relevantUncertainties = analysis.getUncertaintySources().stream()
 				.filter(u -> relevantEntityNames.contains(u.getEntityName())).toList();
-
 		// Execute mitigation
-		result = MitigationModelCalculator.findMitigatingModel(dfdAnddd,
+		result = new MitigationModelCalculator(dfdAnddd,
 				new UncertaintySubset(analysis.getUncertaintySources(), relevantUncertainties),
-				new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode,
-				Activator.class);
-
+				new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode).findMitigatingModel();
+		
 		if (result.size() > 0 && !evalMode) {
 			var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
 					result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources().stream()
