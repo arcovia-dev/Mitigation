@@ -72,6 +72,7 @@ public class UncertaintyRanker {
 			return "P";
 		}
 	}
+
 	private static String getAggregationMethodCommandParamter(RankingAggregationMethod aggregationMethod) {
 		if (aggregationMethod.equals(RankingAggregationMethod.SUM)) {
 			return "L";

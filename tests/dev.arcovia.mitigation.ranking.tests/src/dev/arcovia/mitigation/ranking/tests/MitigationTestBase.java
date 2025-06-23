@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.eclipse.emf.common.util.URI;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -252,28 +254,27 @@ public abstract class MitigationTestBase extends TestBase {
 					.filter(u -> relevantUncertaintyEntityNames.contains(u.getEntityName())).toList();
 
 			// Run mitigation with i+1 uncertainties
-			result = MitigationModelCalculator.findMitigatingModel(dfdAnddd,
+			result = new MitigationModelCalculator(dfdAnddd,
 					new UncertaintySubset(analysis.getUncertaintySources(), relevantUncertainties),
-					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode,
-					Activator.class);
+					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode).findMitigatingModel();
 
 			if (result.size() > 0) {
-				if (evalMode)
-					break;
-				else {
-					var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-							result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
-									.stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
-					System.out.println(i);
-					System.out.println(result);
-					System.out.println(relevantUncertaintyEntityNames);
-					System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
-					for (int k = 0; k < resultMinimal.size(); k++) {
-						System.out.println(resultMinimal.get(k));
-					}
-					break;
-				}
-			}
+                if (evalMode)
+                    break;
+                else {
+                    var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+                            result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
+                                    .stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
+                    System.out.println(i);
+                    System.out.println(result);
+                    System.out.println(relevantUncertaintyEntityNames);
+                    System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
+                    for (int k = 0; k < resultMinimal.size(); k++) {
+                        System.out.println(resultMinimal.get(k));
+                    }
+                    break;
+                }
+            }
 		}
 		return result;
 	}
@@ -285,13 +286,11 @@ public abstract class MitigationTestBase extends TestBase {
 		var relevantEntityNames = rankedUncertaintyEntityName.stream().limit(n).toList();
 		var relevantUncertainties = analysis.getUncertaintySources().stream()
 				.filter(u -> relevantEntityNames.contains(u.getEntityName())).toList();
-
 		// Execute mitigation
-		result = MitigationModelCalculator.findMitigatingModel(dfdAnddd,
+		result = new MitigationModelCalculator(dfdAnddd,
 				new UncertaintySubset(analysis.getUncertaintySources(), relevantUncertainties),
-				new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode,
-				Activator.class);
-
+				new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode).findMitigatingModel();
+		
 		if (result.size() > 0 && !evalMode) {
 			var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
 					result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources().stream()
@@ -457,10 +456,7 @@ public abstract class MitigationTestBase extends TestBase {
 						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
 		}
-		
-		if (result.size() == 0) {
-			System.out.println("mitigation failed");
-		}
+		assertTrue(result.size() > 0);
 	}
 
 	public DataFlowDiagramAndDictionary getDDAndDfd(UncertaintyAwareConfidentialityAnalysis analysis) {
