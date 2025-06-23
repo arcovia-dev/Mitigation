@@ -199,11 +199,16 @@ if BATCH_SIZE_OPTIMIZATION == 'Y':
 
 while printedCount < RELEVANT_UNCERTAINTIES_LENGTH and bool(final_ranking):
     item = final_ranking.popitem(last=False)
+
     column = item[0].split('_').pop()
     uncertainty_name = '_'.join(item[0].split('_')[:-1])
-    
+
+
+    if(uncertainty_name.startswith('_Cluster-Separator')):
+        relevant_uncertainties.append(uncertainty_name)
+
     # Do not add uncertainties that are already in the ranking 
-    if uncertainty_name not in relevant_uncertainties:
+    elif uncertainty_name not in relevant_uncertainties:
         relevant_uncertainties.append(uncertainty_name)
         printedCount = printedCount + 1
 

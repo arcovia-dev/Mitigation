@@ -13,7 +13,7 @@ def show_clusters(data_dict):
     else:
         min_k = 8
         max_k = 8
-        
+
     k_values = range(min_k,max_k+1)
 
     best_k = -1
