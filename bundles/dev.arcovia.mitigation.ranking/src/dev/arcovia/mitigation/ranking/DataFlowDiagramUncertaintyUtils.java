@@ -17,42 +17,45 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class DataFlowDiagramUncertaintyUtils {
 
-	public static void createNewModelWithRemovedUncertainties(DataFlowDiagramAndDictionary dfd,
-			List<String> uncertaintyIdsToRemove, URI oldUncertaintyURI, URI newUcertaintyURI, String newModelName,
-			Class<? extends Plugin> pluginActivator) {
+    public static void createNewModelWithRemovedUncertainties(DataFlowDiagramAndDictionary dfd, List<String> uncertaintyIdsToRemove,
+            URI oldUncertaintyURI, URI newUcertaintyURI, String newModelName, Class<? extends Plugin> pluginActivator) {
 
-		ResourceSet resSet = new ResourceSetImpl();
-		Resource oldUncertaintyRes = resSet.getResource(oldUncertaintyURI, true);
-		Resource newUncertaintyRes = resSet.createResource(newUcertaintyURI);
+        ResourceSet resSet = new ResourceSetImpl();
+        Resource oldUncertaintyRes = resSet.getResource(oldUncertaintyURI, true);
+        Resource newUncertaintyRes = resSet.createResource(newUcertaintyURI);
 
-		var sourceCollection = oldUncertaintyRes.getContents().get(0);
-		newUncertaintyRes.getContents().add(sourceCollection);
+        var sourceCollection = oldUncertaintyRes.getContents()
+                .get(0);
+        newUncertaintyRes.getContents()
+                .add(sourceCollection);
 
-		Stack<EObject> objectsToRemove = new Stack<>();
-		for (EObject eObject : sourceCollection.eContents()) {
-			var id = EcoreUtil.getID(eObject);
-			if (uncertaintyIdsToRemove.contains(id)) {
-				objectsToRemove.push(eObject);
-			}
-		}
+        Stack<EObject> objectsToRemove = new Stack<>();
+        for (EObject eObject : sourceCollection.eContents()) {
+            var id = EcoreUtil.getID(eObject);
+            if (uncertaintyIdsToRemove.contains(id)) {
+                objectsToRemove.push(eObject);
+            }
+        }
 
-		while (!objectsToRemove.isEmpty()) {
-			var object = objectsToRemove.pop();
-			EcoreUtil.delete(object);
-		}
+        while (!objectsToRemove.isEmpty()) {
+            var object = objectsToRemove.pop();
+            EcoreUtil.delete(object);
+        }
 
-		try {
-			newUncertaintyRes.save(Collections.EMPTY_MAP);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String outputPath = getOutputPathFromURI(newUcertaintyURI);
+        try {
+            newUncertaintyRes.save(Collections.EMPTY_MAP);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String outputPath = getOutputPathFromURI(newUcertaintyURI);
 
-		dfd.save("", Paths.get(outputPath, newModelName).toString());
-	}
+        dfd.save("", Paths.get(outputPath, newModelName)
+                .toString());
+    }
 
-	private static String getOutputPathFromURI(URI mitigationUncertaintyURI) {
-		var segments = mitigationUncertaintyURI.segmentsList();
-		return Paths.get(segments.get(2)).toString();
-	}
+    private static String getOutputPathFromURI(URI mitigationUncertaintyURI) {
+        var segments = mitigationUncertaintyURI.segmentsList();
+        return Paths.get(segments.get(2))
+                .toString();
+    }
 }

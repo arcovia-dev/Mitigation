@@ -14,65 +14,68 @@ import dev.arcovia.mitigation.ranking.tests.MitigationTestBase;
 
 public class ExternalUncertaintyMitigationTest extends MitigationTestBase {
 
-	protected String getFolderName() {
-		return "DFDExternalUncertaintyMitigation";
-	}
+    protected String getFolderName() {
+        return "DFDExternalUncertaintyMitigation";
+    }
 
-	protected String getFilesName() {
-		return "ext";
-	}
-	
-	
-	@Override
-	protected RankerType getRankerType() {
-		return RankerType.RANDOM_FOREST;
-	}
+    protected String getFilesName() {
+        return "ext";
+    }
 
-	@Override
-	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.EXPONENTIAL_RANKS;
-	}
+    @Override
+    protected RankerType getRankerType() {
+        return RankerType.RANDOM_FOREST;
+    }
 
-	protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
-		List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+    @Override
+    protected RankingAggregationMethod getAggregationMethod() {
+        return RankingAggregationMethod.EXPONENTIAL_RANKS;
+    }
 
-		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("Develop")
-					&& this.retrieveDataLabels(it).contains("Personal");
-			return vio;
-		});
-		constraints.add(it -> {
-			boolean vio = this.retrieveNodeLabels(it).contains("nonEU")
-					&& this.retrieveDataLabels(it).contains("Personal");
-			return vio;
-		});
-		return constraints;
-	}
-	
-	@Test
-	public void executeMitigation() {
-		// For meassuring at least 30 runs are required
-		deleteOldMeassurement();
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.INCREASING;
-			createUncertaintyRanking();
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-	}
-	
-	@Test
-	public void executeBruteForce() throws Exception {
-		// For meassuring at least 30 runs are required
-		deleteOldMeassurement();
-		for (int i = 0; i < MITIGATION_RUNS; i++) {
-			var startTime = System.currentTimeMillis();
-			mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
-			createMitigationCandidatesAutomatically();
-			var duration = System.currentTimeMillis() - startTime;
-			storeMeassurement(duration);
-		}
-	}
+    protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
+        List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
+
+        constraints.add(it -> {
+            boolean vio = this.retrieveNodeLabels(it)
+                    .contains("Develop")
+                    && this.retrieveDataLabels(it)
+                            .contains("Personal");
+            return vio;
+        });
+        constraints.add(it -> {
+            boolean vio = this.retrieveNodeLabels(it)
+                    .contains("nonEU")
+                    && this.retrieveDataLabels(it)
+                            .contains("Personal");
+            return vio;
+        });
+        return constraints;
+    }
+
+    @Test
+    public void executeMitigation() {
+        // For meassuring at least 30 runs are required
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.INCREASING;
+            createUncertaintyRanking();
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+    }
+
+    @Test
+    public void executeBruteForce() throws Exception {
+        // For meassuring at least 30 runs are required
+        deleteOldMeassurement();
+        for (int i = 0; i < MITIGATION_RUNS; i++) {
+            var startTime = System.currentTimeMillis();
+            mitigationStrategy = MitigationStrategy.BRUTE_FORCE;
+            createMitigationCandidatesAutomatically();
+            var duration = System.currentTimeMillis() - startTime;
+            storeMeassurement(duration);
+        }
+    }
 }
