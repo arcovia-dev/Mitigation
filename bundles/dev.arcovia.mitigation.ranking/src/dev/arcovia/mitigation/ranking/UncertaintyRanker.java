@@ -16,7 +16,6 @@ public class UncertaintyRanker {
                 getAggregationMethodCommandParamter(aggregationMethod), getBatchSizeOptimizationParameter(mitigationStrategy)};
         try {
             // Execute the command
-            var startTime = System.currentTimeMillis();
             Process process = Runtime.getRuntime()
                     .exec(command);
 
@@ -30,16 +29,8 @@ public class UncertaintyRanker {
                         .append(System.lineSeparator());
             }
 
-            System.out.println(System.currentTimeMillis() - startTime);
-
             // Get the output as a String
             String result = output.toString();
-
-            /*
-             * reader = new BufferedReader(new InputStreamReader(process.getErrorStream())); output = new StringBuilder(); while
-             * ((line = reader.readLine()) != null) { output.append(line).append(System.lineSeparator()); }
-             * System.out.println(output.toString());
-             */
 
             return Arrays.asList(result.split(System.lineSeparator()));
 
