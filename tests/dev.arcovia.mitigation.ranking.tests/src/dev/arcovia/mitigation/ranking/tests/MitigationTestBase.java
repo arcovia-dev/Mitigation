@@ -9,10 +9,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
+import org.dataflowanalysis.analysis.dfd.DFDConfidentialityAnalysis;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.eclipse.emf.common.util.URI;
@@ -25,6 +29,7 @@ import dev.abunai.confidentiality.analysis.dfd.DFDUncertainFlowGraphCollection;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertainTransposeFlowGraph;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyAwareConfidentialityAnalysisBuilder;
 import dev.abunai.confidentiality.analysis.dfd.DFDUncertaintyResourceProvider;
+import dev.abunai.confidentiality.analysis.model.uncertainty.UncertaintySource;
 import dev.arcovia.mitigation.ranking.MitigationListSimplifier;
 import dev.arcovia.mitigation.ranking.MitigationModel;
 import dev.arcovia.mitigation.ranking.MitigationModelCalculator;
@@ -37,7 +42,7 @@ import dev.arcovia.mitigation.ranking.UncertaintyRanker;
 import dev.arcovia.mitigation.ranking.UncertaintySubset;
 
 public abstract class MitigationTestBase extends TestBase {
-
+	private final Logger logger = Logger.getLogger(DFDConfidentialityAnalysis.class);
 	// Abstract variables for concrete test classes
 	protected abstract String getFolderName();
 
@@ -50,7 +55,7 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract RankingAggregationMethod getAggregationMethod();
 
 	protected String customPythonPath() {
-		return "/Users/nniehues/miniconda3/bin/python";
+		return "D:/entwicklungsumgebungen/Conda/envs/MitigationRanking/python";
 	}
 
 	// Mitigation ranking variables
@@ -76,24 +81,17 @@ public abstract class MitigationTestBase extends TestBase {
 	protected final int MITIGATION_RUNS = 12; // Must be at least 3 for meassurments
 	protected MitigationStrategy mitigationStrategy = MitigationStrategy.INCREASING;
 
-	protected List<String> relevantUncertaintyEntityNames;
+	protected List<String> rankedUncertaintyEntityNames;
 
 	@BeforeEach
-	public void before() {
-		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
-				.toString();
-		final var dataDictionaryPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".datadictionary")
-				.toString();
-		final var uncertaintyPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".uncertainty")
-				.toString();
-
-		var builder = new DFDUncertaintyAwareConfidentialityAnalysisBuilder().standalone()
-				.modelProjectName(TEST_MODEL_PROJECT_NAME).usePluginActivator(Activator.class)
-				.useDataDictionary(dataDictionaryPath).useDataFlowDiagram(dataFlowDiagramPath)
-				.useUncertaintyModel(uncertaintyPath);
-
-		UncertaintyAwareConfidentialityAnalysis analysis = builder.build();
-		analysis.initializeAnalysis();
+	public void before() {		
+		var trainDir = new File(trainDataDirectory);
+		if (!trainDir.exists()) {
+		    trainDir.mkdirs();
+		}
+		for (File file : trainDir.listFiles()) {
+	        file.delete();
+		}
 	}
 
 	public void storeMeassurementResults(List<Float> meassurements, String rankerType, String aggregationMethod) {
@@ -195,7 +193,7 @@ public abstract class MitigationTestBase extends TestBase {
 		Path filePath = Paths.get(pathToRankingSolution);
 		try {
 			if (!Files.isRegularFile(filePath)) {
-				System.out.println("Metric Calcuation Solution does not exist");
+				logger.error("Metric Calcuation Solution does not exist");
 				return new ArrayList<>();
 			}
 			return Files.readAllLines(filePath);
@@ -208,7 +206,7 @@ public abstract class MitigationTestBase extends TestBase {
 	public float seeAverageRuntime() {
 		Path filePath = Paths.get(pathToMeassurements);
 		if (!Files.isRegularFile(filePath)) {
-			System.out.println("run mitigation first !!!");
+			logger.error("Execute mitigation first");
 
 		}
 		try {
@@ -218,7 +216,7 @@ public abstract class MitigationTestBase extends TestBase {
 			for (int i = contentLines.size() - 2 * warmupEnd; i < contentLines.size() && i >= 0; i++) {
 				sum += Integer.parseInt(contentLines.get(i));
 			}
-			System.out.println((float) sum / ((float) 2 * warmupEnd));
+			logger.info((float) sum / ((float) 2 * warmupEnd));
 			return (float) sum / ((float) 2 * warmupEnd);
 
 		} catch (IOException e) {
@@ -229,17 +227,17 @@ public abstract class MitigationTestBase extends TestBase {
 
 	public void printMetricies() {
 		var solutionRanking = loadSolutionRanking();
-		var programRanking = relevantUncertaintyEntityNames;
+		var programRanking = rankedUncertaintyEntityNames;
 		var k = solutionRanking.size();
 		var r = MetricCalculator.determineR(solutionRanking, programRanking);
-		System.out.println("P@K");
-		System.out.println(MetricCalculator.calculatePAtK(k, solutionRanking, programRanking));
-		System.out.println("MAP@K");
-		System.out.println(MetricCalculator.calculateMAPAtK(k, solutionRanking, programRanking));
-		System.out.println("P@R");
-		System.out.println(MetricCalculator.calculatePAtK(r, solutionRanking, programRanking));
-		System.out.println("MAP@R");
-		System.out.println(MetricCalculator.calculateMAPAtK(r, solutionRanking, programRanking));
+		logger.info("P@K");
+		logger.info(MetricCalculator.calculatePAtK(k, solutionRanking, programRanking));
+		logger.info("MAP@K");
+		logger.info(MetricCalculator.calculateMAPAtK(k, solutionRanking, programRanking));
+		logger.info("P@R");
+		logger.info(MetricCalculator.calculatePAtK(r, solutionRanking, programRanking));
+		logger.info("MAP@R");
+		logger.info(MetricCalculator.calculateMAPAtK(r, solutionRanking, programRanking));
 	}
 
 	public List<MitigationModel> mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName,
@@ -247,33 +245,11 @@ public abstract class MitigationTestBase extends TestBase {
 		List<MitigationModel> result = new ArrayList<MitigationModel>();
 		// Increase amount of uncertainties used if the current amount is not enough
 		for (int i = 1; i <= rankedUncertaintyEntityName.size(); i++) {
-
-			// Extract relevant uncertainties
-			var relevantUncertaintyEntityNames = rankedUncertaintyEntityName.stream().limit(i).toList();
-			var relevantUncertainties = analysis.getUncertaintySources().stream()
-					.filter(u -> relevantUncertaintyEntityNames.contains(u.getEntityName())).toList();
-
-			// Run mitigation with i+1 uncertainties
-			result = new MitigationModelCalculator(dfdAnddd,
-					new UncertaintySubset(analysis.getUncertaintySources(), relevantUncertainties),
-					new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode).findMitigatingModel();
+			
+			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,i, analysis, dfdAnddd);
 
 			if (result.size() > 0) {
-                if (evalMode)
-                    break;
-                else {
-                    var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-                            result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources()
-                                    .stream().map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
-                    System.out.println(i);
-                    System.out.println(result);
-                    System.out.println(relevantUncertaintyEntityNames);
-                    System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
-                    for (int k = 0; k < resultMinimal.size(); k++) {
-                        System.out.println(resultMinimal.get(k));
-                    }
-                    break;
-                }
+                break;
             }
 		}
 		return result;
@@ -282,29 +258,39 @@ public abstract class MitigationTestBase extends TestBase {
 	public List<MitigationModel> mitigateWithFixAmountOfUncertainties(List<String> rankedUncertaintyEntityName, int n,
 			UncertaintyAwareConfidentialityAnalysis analysis, DataFlowDiagramAndDictionary dfdAnddd) {
 		List<MitigationModel> result = new ArrayList<MitigationModel>();
-		// Extract relevant uncertainties
-		var relevantEntityNames = rankedUncertaintyEntityName.stream().limit(n).toList();
-		var relevantUncertainties = analysis.getUncertaintySources().stream()
-				.filter(u -> relevantEntityNames.contains(u.getEntityName())).toList();
+		
+		// Get relevant (top n) uncertainties by entityName
+		List<UncertaintySource> relevantUncertainties = analysis.getUncertaintySources().stream()
+		        .filter(u -> rankedUncertaintyEntityName.stream()
+		                .limit(n)
+		                .collect(Collectors.toSet())
+		                .contains(u.getEntityName()))
+		        .collect(Collectors.toList());
+		
 		// Execute mitigation
 		result = new MitigationModelCalculator(dfdAnddd,
 				new UncertaintySubset(analysis.getUncertaintySources(), relevantUncertainties),
 				new MitigationURIs(modelUncertaintyURI, mitigationUncertaintyURI), getConstraints(), evalMode).findMitigatingModel();
 		
-		if (result.size() > 0 && !evalMode) {
-			var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
-					result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources().stream()
-							.map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
-			System.out.println(result);
-			System.out.println(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
-			for (int k = 0; k < resultMinimal.size(); k++) {
-				System.out.println(resultMinimal.get(k));
-			}
-		}
+		if (result.size() > 0 && !evalMode) 
+			printEval(result, analysis, relevantUncertainties);
 
 		return result;
 	}
-
+	
+	private void printEval(List<MitigationModel> result, UncertaintyAwareConfidentialityAnalysis analysis, List<UncertaintySource> relevantUncertainties) {
+		var resultMinimal = MitigationListSimplifier.simplifyMitigationList(
+				result.stream().map(m -> m.chosenScenarios()).toList(), analysis.getUncertaintySources().stream()
+						.map(u -> UncertaintyUtils.getUncertaintyScenarios(u).size()).toList());
+		logger.info(result);
+		logger.info(relevantUncertainties.stream().map(u -> u.getEntityName()).toList());
+		for (int k = 0; k < resultMinimal.size(); k++) {
+			logger.info(resultMinimal.get(k));
+		}
+	}
+	
+	
+	
 	protected UncertaintyAwareConfidentialityAnalysis getAnalysis() {
 		final var dataFlowDiagramPath = Paths.get(getBaseFolder(), getFolderName(), getFilesName() + ".dataflowdiagram")
 				.toString();
@@ -322,64 +308,67 @@ public abstract class MitigationTestBase extends TestBase {
 		return analysis;
 	}
 
-	public void createTrainData() {
-		var trainDir = new File(trainDataDirectory);
-		if (!trainDir.exists()) {
-		    trainDir.mkdirs();
-		}
-		for (File file : trainDir.listFiles()) {
-	        file.delete();
-		}
-		
+	public void createUncertaintyRanking() {	
 		var analysis = this.getAnalysis();
 		// Get constraints and define count variable for constraint file differentiation
 		List<Predicate<? super AbstractVertex<?>>> constraints = getConstraints();
 		var count = 0;
 		DFDUncertainFlowGraphCollection flowGraphs = (DFDUncertainFlowGraphCollection) analysis.findFlowGraph();
 		DFDUncertainFlowGraphCollection uncertainFlowGraphs = flowGraphs.createUncertainFlows();
-
+		
+		
 		uncertainFlowGraphs.evaluate();
 
 		List<DFDUncertainTransposeFlowGraph> allTFGs = uncertainFlowGraphs.getTransposeFlowGraphs().stream()
 				.map(DFDUncertainTransposeFlowGraph.class::cast).toList();
+
+		
+		
 		// Generate train data for each constraint
 		for (var constraint : constraints) {
 			List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs,
 					constraint);
 
-			// If no violation occured no training data needs to be created
+			// If no violation occurred no mitigation needs to be executed
 			if (violations.size() == 0) {
-				continue;
+				logger.error("No violations found - terminating mitigation");
+				System.exit(0);
 			}
+			
 
 			trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
 					Paths.get(trainDataDirectory, "violations_" + Integer.toString(count) + ".csv").toString());
 			count++;
+			
 		}
+		
 
 		// Rank the uncertainties specified in the given model and store the result in
 		// the specified file
-		relevantUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(customPythonPath(),
+		rankedUncertaintyEntityNames = UncertaintyRanker.rankUncertaintiesBasedOnTrainData(customPythonPath(),
 				pathToUncertaintyRankingScript, trainDataDirectory, analysis.getUncertaintySources().size(),
 				getRankerType(), getAggregationMethod(),mitigationStrategy);
+		
 
 	}
 
 	public void createMitigationCandidatesAutomatically() {
 		var analysis = getAnalysis();
-		var rankedUncertaintyEntityName = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE)
+		var uncertaintyEntityNames = mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE)
 				? BruteForceUncertaintyFinder.getBruteForceUncertaintyEntityNames(getAnalysis())
-				: relevantUncertaintyEntityNames;
+				: rankedUncertaintyEntityNames;
 		var ddAndDfd = getDDAndDfd(analysis);
 		List<MitigationModel> result = new ArrayList<>();
 		
 		switch (mitigationStrategy) {
 			case INCREASING -> {
-				result = mitigateWithIncreasingAmountOfUncertainties(rankedUncertaintyEntityName, analysis, ddAndDfd);
+				for(int i = 1; i <= uncertaintyEntityNames.size(); i++) {
+					result = mitigateWithIncreasingAmountOfUncertainties(uncertaintyEntityNames, analysis, ddAndDfd);
+				}
 			} 
 			case QUATER -> {
 				for (int i = 1; i <= 4; i++) {
-					result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					result = mitigateWithFixAmountOfUncertainties(uncertaintyEntityNames,
 							i * analysis.getUncertaintySources().size() / 4, analysis, ddAndDfd);
 					if (result.size() != 0) {
 						break;
@@ -387,50 +376,15 @@ public abstract class MitigationTestBase extends TestBase {
 				}
 			} 
 			case HALF -> {
-				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+				result = mitigateWithFixAmountOfUncertainties(uncertaintyEntityNames,
 						analysis.getUncertaintySources().size() / 2, analysis, ddAndDfd);
 				if (result.size() == 0) {
-					result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+					result = mitigateWithFixAmountOfUncertainties(uncertaintyEntityNames,
 							analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 				}
 			} 
 			case CLUSTER -> {
-				String separator = "_Cluster-Separator_";
-				var prunedRankedEntityNames = rankedUncertaintyEntityName.stream().filter(n -> !n.startsWith(separator)).toList();
-	
-				List<List<String>> clusters = new ArrayList<>();
-				List<String> currentCluster = new ArrayList<>();
-				for(var entityName : rankedUncertaintyEntityName) {
-					if(entityName.startsWith(separator)) {
-						if(!currentCluster.isEmpty()) {
-							clusters.add(currentCluster);
-						}
-						currentCluster = new ArrayList<>();
-					}
-					else {
-						currentCluster.add(entityName);
-					}
-				}
-				if(!currentCluster.isEmpty()) {
-					clusters.add(currentCluster);
-				}
-				
-				var clusterSizes = clusters.stream().map(c -> c.size()).toList();
-				List<Integer> summedClusterSizes = new ArrayList<>();
-	
-		        int sum = 0;
-		        for (int num : clusterSizes) {
-		            sum += num;
-		            summedClusterSizes.add(sum);
-		        }
-		        
-				for(int size : summedClusterSizes) {
-		        	result = mitigateWithFixAmountOfUncertainties(prunedRankedEntityNames,
-							size, analysis, ddAndDfd);
-					if (result.size() != 0) {
-						break;
-					}
-				}
+				result = executeCluster(uncertaintyEntityNames, analysis, ddAndDfd);
 			}
 			case FAST_START -> {
 				int threshold = analysis.getUncertaintySources().size() / 2;
@@ -438,7 +392,7 @@ public abstract class MitigationTestBase extends TestBase {
 		        int i = 1;
 	
 		        while (i <= n) {
-		        	result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+		        	result = mitigateWithFixAmountOfUncertainties(uncertaintyEntityNames,
 							i, analysis, ddAndDfd);
 					if (result.size() != 0) {
 						break;
@@ -451,12 +405,54 @@ public abstract class MitigationTestBase extends TestBase {
 		            }
 		        }
 			} 
+			//BruteForce
 			default -> {
-				result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,
+				result = mitigateWithFixAmountOfUncertainties(uncertaintyEntityNames,
 						analysis.getUncertaintySources().size(), analysis, ddAndDfd);
 			}
 		}
 		assertTrue(result.size() > 0);
+	}
+	
+	private List<MitigationModel> executeCluster(List<String> uncertaintyEntityNames, UncertaintyAwareConfidentialityAnalysis analysis, DataFlowDiagramAndDictionary ddAndDfd){
+		String separator = "_Cluster-Separator_";
+		var prunedRankedEntityNames = uncertaintyEntityNames.stream().filter(n -> !n.startsWith(separator)).toList();
+
+		List<List<String>> clusters = new ArrayList<>();
+		List<String> currentCluster = new ArrayList<>();
+		for(var entityName : uncertaintyEntityNames) {
+			if(entityName.startsWith(separator)) {
+				if(!currentCluster.isEmpty()) {
+					clusters.add(currentCluster);
+				}
+				currentCluster = new ArrayList<>();
+			}
+			else {
+				currentCluster.add(entityName);
+			}
+		}
+		if(!currentCluster.isEmpty()) {
+			clusters.add(currentCluster);
+		}
+		
+		var clusterSizes = clusters.stream().map(c -> c.size()).toList();
+		List<Integer> summedClusterSizes = new ArrayList<>();
+
+        int sum = 0;
+        for (int num : clusterSizes) {
+            sum += num;
+            summedClusterSizes.add(sum);
+        }
+        List<MitigationModel> result = new ArrayList<>();
+		for(int size : summedClusterSizes) {
+        	result = mitigateWithFixAmountOfUncertainties(prunedRankedEntityNames,
+					size, analysis, ddAndDfd);
+			if (result.size() != 0) {
+				break;
+			}
+		}
+		return result;
+		
 	}
 
 	public DataFlowDiagramAndDictionary getDDAndDfd(UncertaintyAwareConfidentialityAnalysis analysis) {

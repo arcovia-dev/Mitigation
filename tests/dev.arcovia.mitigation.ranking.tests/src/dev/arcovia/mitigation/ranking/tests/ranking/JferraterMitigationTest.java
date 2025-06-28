@@ -63,7 +63,7 @@ public class JferraterMitigationTest extends MitigationTestBase{
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.HALF;
-			createTrainData();
+			createUncertaintyRanking();
 			printMetricies();
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;

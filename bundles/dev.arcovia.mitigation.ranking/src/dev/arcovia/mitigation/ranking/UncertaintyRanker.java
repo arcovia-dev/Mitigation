@@ -18,6 +18,7 @@ public class UncertaintyRanker {
 				getBatchSizeOptimizationParameter(mitigationStrategy)};
 		try {
 			// Execute the command
+			var startTime = System.currentTimeMillis();
 			Process process = Runtime.getRuntime().exec(command);
 
 			// Read the output from the process
@@ -29,9 +30,12 @@ public class UncertaintyRanker {
 				output.append(line).append(System.lineSeparator());
 			}
 
+			System.out.println(System.currentTimeMillis() - startTime);
+
 			// Get the output as a String
 			String result = output.toString();
-			
+
+			/*
 			reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 			output = new StringBuilder();
 
@@ -40,7 +44,7 @@ public class UncertaintyRanker {
             }
             
             System.out.println(output.toString());
-			
+			*/
 
 			return Arrays.asList(result.split(System.lineSeparator()));
 

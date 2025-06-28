@@ -149,7 +149,7 @@ public abstract class LoginFrameWorkTestBase extends MitigationTestBase {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = strategy;
 			if (!mitigationStrategy.equals(MitigationStrategy.BRUTE_FORCE)) {
-				createTrainData();
+				createUncertaintyRanking();
 			}
 			var duration = System.currentTimeMillis() - startTime;
 			training_durations.add(duration);

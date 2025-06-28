@@ -55,7 +55,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.INCREASING;
-			createTrainData();
+			createUncertaintyRanking();
 			train_data_meassurements.add((float) (System.currentTimeMillis() - startTime));
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;
@@ -65,7 +65,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.QUATER;
-			createTrainData();
+			createUncertaintyRanking();
 			train_data_meassurements.add((float) (System.currentTimeMillis() - startTime));
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;
@@ -76,7 +76,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.HALF;
-			createTrainData();
+			createUncertaintyRanking();
 			train_data_meassurements.add((float) (System.currentTimeMillis() - startTime));
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;

@@ -55,7 +55,7 @@ public class InterfaceUncertaintyMitigationTest extends MitigationTestBase {
 		for (int i = 0; i < MITIGATION_RUNS; i++) {
 			var startTime = System.currentTimeMillis();
 			mitigationStrategy = MitigationStrategy.INCREASING;
-			createTrainData();
+			createUncertaintyRanking();
 			createMitigationCandidatesAutomatically();
 			var duration = System.currentTimeMillis() - startTime;
 			storeMeassurement(duration);
