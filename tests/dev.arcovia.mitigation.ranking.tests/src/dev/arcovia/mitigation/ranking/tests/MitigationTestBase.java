@@ -220,7 +220,7 @@ public abstract class MitigationTestBase extends TestBase {
             for (int i = contentLines.size() - 2 * warmupEnd; i < contentLines.size() && i >= 0; i++) {
                 sum += Integer.parseInt(contentLines.get(i));
             }
-            logger.info((float) sum / ((float) 2 * warmupEnd));
+            logger.info("Average Runtime: " + (float) sum / ((float) 2 * warmupEnd));
             return (float) sum / ((float) 2 * warmupEnd);
 
         } catch (IOException e) {
@@ -339,10 +339,9 @@ public abstract class MitigationTestBase extends TestBase {
         for (var constraint : constraints) {
             List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs, constraint);
 
-            // If no violation occurred no mitigation needs to be executed
+            // If no violation occurred for this constraint no traindata nedds to bes stored
             if (violations.size() == 0) {
-                logger.error("No violations found - terminating mitigation");
-                System.exit(0);
+                continue;
             }
 
             trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
