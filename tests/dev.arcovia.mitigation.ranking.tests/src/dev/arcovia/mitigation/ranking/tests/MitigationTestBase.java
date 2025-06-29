@@ -340,14 +340,12 @@ public abstract class MitigationTestBase extends TestBase {
             List<UncertainConstraintViolation> violations = analysis.queryUncertainDataFlow(uncertainFlowGraphs, constraint);
 
             // If no violation occurred for this constraint no traindata nedds to bes stored
-            if (violations.size() == 0) {
-                continue;
+            if (violations.size() > 0) {
+                trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
+                        Paths.get(trainDataDirectory, "violations_" + Integer.toString(count) + ".csv")
+                                .toString());
+                count++;
             }
-
-            trainDataGeneration.violationDataToCSV(violations, allTFGs, analysis.getUncertaintySources(),
-                    Paths.get(trainDataDirectory, "violations_" + Integer.toString(count) + ".csv")
-                            .toString());
-            count++;
 
         }
 
