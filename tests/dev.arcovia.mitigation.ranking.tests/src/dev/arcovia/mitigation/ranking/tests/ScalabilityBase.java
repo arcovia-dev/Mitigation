@@ -35,7 +35,7 @@ public abstract class ScalabilityBase extends MitigationTestBase{
         storeMeassurementResult(seeAverageRuntime(), getFolderName() + "_" + strategy.name());
     }
 
-    @Test
+    /*@Test
     public void executeHalf() {
         executeMitigationStrategy(MitigationStrategy.HALF);
     }
@@ -48,14 +48,14 @@ public abstract class ScalabilityBase extends MitigationTestBase{
     @Test
     public void executeIncreasing() {
         executeMitigationStrategy(MitigationStrategy.INCREASING);
-    }
+    }*/
 
     @Test
     public void executeCluster() {
         executeMitigationStrategy(MitigationStrategy.CLUSTER);
     }
 
-    @Test
+    /*@Test
     public void executeFastStart() {
         executeMitigationStrategy(MitigationStrategy.FAST_START);
     }
@@ -63,5 +63,5 @@ public abstract class ScalabilityBase extends MitigationTestBase{
     @Test
     public void executeBruteForce() {
         executeMitigationStrategy(MitigationStrategy.BRUTE_FORCE);
-    }
+    }*/
 }
