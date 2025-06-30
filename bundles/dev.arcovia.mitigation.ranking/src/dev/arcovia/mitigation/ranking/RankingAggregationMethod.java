@@ -1,5 +1,7 @@
 package dev.arcovia.mitigation.ranking;
 
 public enum RankingAggregationMethod {
-	SUM, EXPONENTIAL_RANKS,TOP_3
+    SUM,
+    EXPONENTIAL_RANKS,
+    TOP_3
 }

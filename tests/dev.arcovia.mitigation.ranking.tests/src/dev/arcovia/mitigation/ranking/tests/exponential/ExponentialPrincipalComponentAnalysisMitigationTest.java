@@ -6,11 +6,11 @@ import dev.arcovia.mitigation.ranking.tests.MitigationModelTestBase;
 
 public class ExponentialPrincipalComponentAnalysisMitigationTest extends MitigationModelTestBase {
 
-	protected RankerType getRankerType() {
-		return RankerType.PCA;
-	}
+    protected RankerType getRankerType() {
+        return RankerType.PCA;
+    }
 
-	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.EXPONENTIAL_RANKS;
-	}
+    protected RankingAggregationMethod getAggregationMethod() {
+        return RankingAggregationMethod.EXPONENTIAL_RANKS;
+    }
 }

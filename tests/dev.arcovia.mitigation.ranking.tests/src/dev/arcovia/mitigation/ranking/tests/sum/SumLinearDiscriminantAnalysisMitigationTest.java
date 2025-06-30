@@ -6,12 +6,11 @@ import dev.arcovia.mitigation.ranking.tests.MitigationModelTestBase;
 
 public class SumLinearDiscriminantAnalysisMitigationTest extends MitigationModelTestBase {
 
-	
-	protected RankerType getRankerType() {
-		return RankerType.LDA;
-	}
+    protected RankerType getRankerType() {
+        return RankerType.LDA;
+    }
 
-	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.SUM;
-	}
+    protected RankingAggregationMethod getAggregationMethod() {
+        return RankingAggregationMethod.SUM;
+    }
 }
