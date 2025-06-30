@@ -1,7 +1,7 @@
 package dev.arcovia.mitigation.sat;
 
 
-import org.dataflowanalysis.converter.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Pin;
 
 import java.util.ArrayList;
