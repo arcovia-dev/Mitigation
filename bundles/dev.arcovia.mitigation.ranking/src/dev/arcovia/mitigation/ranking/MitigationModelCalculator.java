@@ -6,7 +6,6 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.function.Predicate;
 
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;

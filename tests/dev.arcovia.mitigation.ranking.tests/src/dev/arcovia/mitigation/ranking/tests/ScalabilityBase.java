@@ -25,7 +25,7 @@ public abstract class ScalabilityBase extends MitigationTestBase{
             mitigationStrategy = strategy;
 
             if (!strategy.equals(MitigationStrategy.BRUTE_FORCE)) {
-                createTrainData();
+                createUncertaintyRanking();
             }
 
             createMitigationCandidatesAutomatically();

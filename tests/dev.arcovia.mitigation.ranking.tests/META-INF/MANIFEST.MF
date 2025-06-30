@@ -12,6 +12,8 @@ Import-Package: dev.abunai.confidentiality.analysis.testmodels,
 Require-Bundle: dev.arcovia.mitigation.ranking;bundle-version="1.0.0",
  org.dataflowanalysis.converter;bundle-version="2.0.0",
  dev.abunai.confidentiality.analysis;bundle-version="1.0.0",
- org.dataflowanalysis.analysis.dfd
+ org.dataflowanalysis.analysis.dfd,
+ org.apache.log4j,
+ dev.abunai.confidentiality.analysis.model
 Automatic-Module-Name: dev.arcovia.mitigation.ranking.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17

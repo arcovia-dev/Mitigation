@@ -31,16 +31,6 @@ public class UncertaintyRanker {
 
 			// Get the output as a String
 			String result = output.toString();
-			
-			reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-			output = new StringBuilder();
-
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append(System.lineSeparator());
-            }
-            
-            System.out.println(output.toString());
-			
 
 			return Arrays.asList(result.split(System.lineSeparator()));
 
