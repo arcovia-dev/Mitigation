@@ -6,11 +6,11 @@ import dev.arcovia.mitigation.ranking.tests.MitigationModelTestBase;
 
 public class ExponentialFactorAnalysisMitigationTest extends MitigationModelTestBase {
 
-	protected RankerType getRankerType() {
-		return RankerType.FAMD;
-	}
+    protected RankerType getRankerType() {
+        return RankerType.FAMD;
+    }
 
-	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.EXPONENTIAL_RANKS;
-	}
+    protected RankingAggregationMethod getAggregationMethod() {
+        return RankingAggregationMethod.EXPONENTIAL_RANKS;
+    }
 }

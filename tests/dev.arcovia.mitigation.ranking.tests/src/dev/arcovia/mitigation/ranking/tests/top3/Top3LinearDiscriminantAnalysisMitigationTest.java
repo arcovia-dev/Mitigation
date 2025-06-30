@@ -6,11 +6,11 @@ import dev.arcovia.mitigation.ranking.tests.MitigationModelTestBase;
 
 public class Top3LinearDiscriminantAnalysisMitigationTest extends MitigationModelTestBase {
 
-	protected RankerType getRankerType() {
-		return RankerType.LDA;
-	}
+    protected RankerType getRankerType() {
+        return RankerType.LDA;
+    }
 
-	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.TOP_3;
-	}
+    protected RankingAggregationMethod getAggregationMethod() {
+        return RankingAggregationMethod.TOP_3;
+    }
 }

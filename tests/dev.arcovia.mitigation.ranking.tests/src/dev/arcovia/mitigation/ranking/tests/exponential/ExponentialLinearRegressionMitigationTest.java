@@ -6,11 +6,11 @@ import dev.arcovia.mitigation.ranking.tests.MitigationModelTestBase;
 
 public class ExponentialLinearRegressionMitigationTest extends MitigationModelTestBase {
 
-	protected RankerType getRankerType() {
-		return RankerType.LINEAR_REGRESSION;
-	}
+    protected RankerType getRankerType() {
+        return RankerType.LINEAR_REGRESSION;
+    }
 
-	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.EXPONENTIAL_RANKS;
-	}
+    protected RankingAggregationMethod getAggregationMethod() {
+        return RankingAggregationMethod.EXPONENTIAL_RANKS;
+    }
 }
