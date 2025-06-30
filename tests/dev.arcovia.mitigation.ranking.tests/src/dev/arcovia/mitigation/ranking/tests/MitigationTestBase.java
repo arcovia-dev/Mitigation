@@ -13,10 +13,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
-import org.dataflowanalysis.analysis.dfd.DFDConfidentialityAnalysis;
 import org.dataflowanalysis.analysis.utils.ResourceUtils;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.eclipse.emf.common.util.URI;
