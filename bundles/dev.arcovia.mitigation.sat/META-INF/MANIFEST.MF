@@ -14,6 +14,7 @@ Require-Bundle:
  com.fasterxml.jackson.core.jackson-databind;bundle-version="2.13.2";visibility:=reexport,
  org.dataflowanalysis.dfd.dataflowdiagram,
  org.dataflowanalysis.analysis.dfd,
- org.dataflowanalysis.analysis
+ org.dataflowanalysis.analysis,
+ org.apache.log4j
 Automatic-Module-Name: dev.arcovia.mitigation.sat
 Bundle-RequiredExecutionEnvironment: JavaSE-17
