@@ -244,17 +244,16 @@ public abstract class MitigationTestBase extends TestBase {
 
     public List<MitigationModel> mitigateWithIncreasingAmountOfUncertainties(List<String> rankedUncertaintyEntityName,
             UncertaintyAwareConfidentialityAnalysis analysis, DataFlowDiagramAndDictionary dfdAnddd) {
-        List<MitigationModel> result = new ArrayList<MitigationModel>();
         // Increase amount of uncertainties used if the current amount is not enough
         for (int i = 1; i <= rankedUncertaintyEntityName.size(); i++) {
 
-            result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, i, analysis, dfdAnddd);
+            List<MitigationModel> result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName, i, analysis, dfdAnddd);
 
             if (result.size() > 0) {
                 return result;
             }
         }
-        return result;
+        return List.of();
     }
 
     public List<MitigationModel> mitigateWithFixAmountOfUncertainties(List<String> rankedUncertaintyEntityName, int n,
