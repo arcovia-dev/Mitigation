@@ -42,7 +42,7 @@ import dev.arcovia.mitigation.ranking.UncertaintyRanker;
 import dev.arcovia.mitigation.ranking.UncertaintySubset;
 
 public abstract class MitigationTestBase extends TestBase {
-	private final Logger logger = Logger.getLogger(DFDConfidentialityAnalysis.class);
+	private final Logger logger = Logger.getLogger(MitigationTestBase.class);
 	// Abstract variables for concrete test classes
 	protected abstract String getFolderName();
 
@@ -55,7 +55,7 @@ public abstract class MitigationTestBase extends TestBase {
 	protected abstract RankingAggregationMethod getAggregationMethod();
 
 	protected String customPythonPath() {
-		return "D:/entwicklungsumgebungen/Conda/envs/MitigationRanking/python";
+		return "/Users/nniehues/miniconda3/bin/python";
 	}
 
 	// Mitigation ranking variables
