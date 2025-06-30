@@ -249,7 +249,7 @@ public abstract class MitigationTestBase extends TestBase {
 			result = mitigateWithFixAmountOfUncertainties(rankedUncertaintyEntityName,i, analysis, dfdAnddd);
 
 			if (result.size() > 0) {
-                break;
+			    return result;
             }
 		}
 		return result;
@@ -361,9 +361,7 @@ public abstract class MitigationTestBase extends TestBase {
 		
 		switch (mitigationStrategy) {
 			case INCREASING -> {
-				for(int i = 1; i <= uncertaintyEntityNames.size(); i++) {
-					result = mitigateWithIncreasingAmountOfUncertainties(uncertaintyEntityNames, analysis, ddAndDfd);
-				}
+				result = mitigateWithIncreasingAmountOfUncertainties(uncertaintyEntityNames, analysis, ddAndDfd);
 			} 
 			case QUATER -> {
 				for (int i = 1; i <= 4; i++) {
