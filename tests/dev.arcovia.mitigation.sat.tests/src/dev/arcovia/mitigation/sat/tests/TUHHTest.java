@@ -126,6 +126,7 @@ public class TUHHTest {
         Map<String,Integer> tuhhCosts = new LinkedHashMap<>();
         Map<String,Integer> satCosts = new LinkedHashMap<>();
         Map<String,Integer> violationsBefore = new LinkedHashMap<>();
+        Map<String,Integer> violationsAfter = new LinkedHashMap<>();
         List<Scalability> scalabilityValues = new ArrayList<>();
 
         for (var model : tuhhModels.keySet()) {
@@ -161,7 +162,8 @@ public class TUHHTest {
                 
                 satCosts.put(model + "_" + variant, satCost);
                 tuhhCosts.put(model + "_" + variant, tuhhCost);
-                violationsBefore.put(model + "_" + variant, repairResult.amountViolations());
+                violationsBefore.put(model + "_" + variant, repairResult.violationsBefore());
+                violationsAfter.put(model + "_" + variant, repairResult.violationsAfter());
                 
                 int amountClauses = extractClauseCount("testresults/aName.cnf");
                 scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
@@ -171,7 +173,7 @@ public class TUHHTest {
         System.out.println(satCosts.values());
         System.out.println(tuhhCosts.values());
         System.out.println(violationsBefore);
-        System.out.println(scalabilityValues);
+        System.out.println(violationsAfter);
         
         assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_4", "apssouza22_7"));
     }
@@ -206,7 +208,8 @@ public class TUHHTest {
     
     private record RepairResult(
             DataFlowDiagramAndDictionary repairedDfd,
-            int amountViolations,
+            int violationsBefore,
+            int violationsAfter,
             long runtimeInMilliseconds
         ) {}
 
@@ -219,7 +222,8 @@ public class TUHHTest {
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
-        return new RepairResult(repairedDfd,mechanic.getViolations(),endTime-startTime);
+        int violationsAfter = new Mechanic(repairedDfd,null, null).amountOfViolations(repairedDfd,constraints);
+        return new RepairResult(repairedDfd,mechanic.getViolations(),violationsAfter,endTime-startTime);
     }
     
     private Map<Label, Integer> getRankedCosts(Map<Label, Integer> rankedLabels) {

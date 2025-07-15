@@ -117,6 +117,11 @@ public class Mechanic {
     public Boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
         return (determineViolatingTFGs(dfd, constraints).isEmpty());
     }
+    
+    public int amountOfViolations(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+        return (determineViolatingTFGs(dfd, constraints).size());
+    }
+        
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
