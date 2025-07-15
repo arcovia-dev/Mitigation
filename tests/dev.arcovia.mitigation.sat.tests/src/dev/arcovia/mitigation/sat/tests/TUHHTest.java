@@ -109,6 +109,7 @@ public class TUHHTest {
             }
         }
         
+        System.out.println("Put these into scalability.py");
         System.out.println(scalabilityValues);
     }
     
@@ -170,8 +171,13 @@ public class TUHHTest {
             }
         }
         
+        System.out.println("Put these into cost.py");
+        System.out.println(satCosts);
+        System.out.println(tuhhCosts);
+        System.out.println("Put these into statistical.py");
         System.out.println(satCosts.values());
         System.out.println(tuhhCosts.values());
+        System.out.println("Put these into violations.py");
         System.out.println(violationsBefore);
         System.out.println(violationsAfter);
         
