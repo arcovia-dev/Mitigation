@@ -9,6 +9,20 @@ import java.io.IOException;
 
 public class UncertaintyRanker {
 
+    /**
+     * Executes the Python script for ranking uncertainties based on training data and returns the ranked results.
+     * This method interacts with the Python script by invoking it with the given parameters
+     * and processes the output to return a list of ranked uncertainties.
+     *
+     * @param pythonPath Path to the Python interpreter to execute the script.
+     * @param scriptPath Path to the Python script that performs the ranking.
+     * @param pathToTrainDataFolder Path to the folder containing the training data used for ranking.
+     * @param rankingLength The desired number of top-ranked uncertainties to output.
+     * @param rankerType The type of ranking method or model to be used for ranking (e.g., PCA, LDA).
+     * @param aggregationMethod The method used to aggregate rankings (e.g., SUM, EXPONENTIAL_RANKS).
+     * @param mitigationStrategy The strategy for mitigating uncertainty during the ranking process (e.g., CLUSTER).
+     * @return A list of ranked uncertainties as strings, or null if an error occurs during execution.
+     */
     public static List<String> rankUncertaintiesBasedOnTrainData(String pythonPath, String scriptPath, String pathToTrainDataFolder,
             int rankingLength, RankerType rankerType, RankingAggregationMethod aggregationMethod, MitigationStrategy mitigationStrategy) {
         // Command to run the Python script

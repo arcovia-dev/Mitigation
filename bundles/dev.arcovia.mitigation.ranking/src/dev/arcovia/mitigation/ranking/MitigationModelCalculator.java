@@ -41,6 +41,14 @@ public class MitigationModelCalculator {
         this.findFirstModel = findFirstModel;
     }
 
+    /**
+     * Finds and returns a list of mitigating models based on the given uncertainty sources,
+     * data flow diagrams, and constraints. The method cleans the output path, generates
+     * mitigation candidates by considering uncertainty scenarios, and finally stores and processes
+     * them while filtering irrelevant uncertainties.
+     *
+     * @return A list of mitigating models that meet the constraints and have been successfully processed.
+     */
     public List<MitigationModel> findMitigatingModel() {
 
         cleanOutputPath(mitigationURIs);
@@ -63,6 +71,16 @@ public class MitigationModelCalculator {
         }
     }
 
+    /**
+     * Generates mitigation candidates by exploring combinations of uncertainty scenarios
+     * and determining if they lead to valid mitigation models.
+     *
+     * @param index The current index of the uncertainty source being considered in the recursive process.
+     * @param relevantUncertainties A list of uncertainty sources relevant to the mitigation computation.
+     * @param diagramAndDict The current data flow diagram and its corresponding dictionary being analyzed.
+     * @param candidates The list where discovered mitigation models are stored as candidates.
+     * @param chosenScenarios A list of scenario identifiers representing the current combination of uncertainties being processed.
+     */
     private void createMitigationCandidates(int index, List<UncertaintySource> relevantUncertainties, DataFlowDiagramAndDictionary diagramAndDict,
             List<MitigationModel> candidates, List<String> chosenScenarios) {
         // Store possible mitigation in mitigations list when all uncertainties got
@@ -150,6 +168,15 @@ public class MitigationModelCalculator {
         }
     }
 
+    /**
+     * Stores and processes mitigation candidates by filtering uncertainty sources and saving the relevant mitigation models.
+     *
+     * @param candidates A list of mitigation models to be stored after filtering relevant uncertainties.
+     * @param uncertaintiesToKeep A list of uncertainty sources that should be retained during filtering.
+     * @param mitigationURIs URIs representing file paths or memory locations used for storing uncertainty models
+     *                       and their mitigated versions.
+     * @return A list of mitigation models that have been successfully stored and processed.
+     */
     private List<MitigationModel> storeMitigationCandidates(List<MitigationModel> candidates, List<UncertaintySource> uncertaintiesToKeep,
             MitigationURIs mitigationURIs) {
 
