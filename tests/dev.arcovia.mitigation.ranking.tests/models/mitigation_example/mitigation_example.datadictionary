@@ -1,84 +1,84 @@
-<?xml version="1.0" encoding="ASCII"?>
-<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_f7p2QFWREe-ZrNdnTZogqw">
-  <labelTypes id="4h3wzk" entityName="Sensitivity">
-    <label id="zzvphn" entityName="Personal"/>
-    <label id="veaan9" entityName="Public"/>
-    <label id="ygymnk" entityName="dummy"/>
-  </labelTypes>
-  <labelTypes id="gvia09" entityName="Location">
-    <label id="g10hr" entityName="EU"/>
-    <label id="5hnugm" entityName="nonEU"/>
-  </labelTypes>
-  <labelTypes id="84rllz" entityName="Encryption">
-    <label id="2r6xe6" entityName="Encrypted"/>
-  </labelTypes>
-  <behaviour id="_f7sSiFWREe-ZrNdnTZogqw" entityName="b">
-    <inPin id="i39hra" entityName="b_in_"/>
-    <outPin id="eodokp" entityName="b_out_bc"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_f71ccFWREe-ZrNdnTZogqw" entityName="b_personal" inputPins="i39hra" outputPin="eodokp" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="_f72qkFWREe-ZrNdnTZogqw"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_f7wj8VWREe-ZrNdnTZogqw" entityName="d">
-    <inPin id="s3v30e" entityName="d_in_"/>
-  </behaviour>
-  <behaviour id="_f7wj9FWREe-ZrNdnTZogqw" entityName="e">
-    <inPin id="oz8pf" entityName="e_in_ce"/>
-    <outPin id="251qn" entityName="e_out_eg"/>
-    <outPin id="_Zy8ucWQ-Ee-FUaEuwf1uIg" entityName="e_out_j"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_f734slWREe-ZrNdnTZogqw" inputPins="oz8pf" outputPin="251qn"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Ay3YU2RCEe-Wl5qwCrgTyA" inputPins="oz8pf" outputPin="_Zy8ucWQ-Ee-FUaEuwf1uIg"/>
-  </behaviour>
-  <behaviour id="_3kRCJWQ-Ee-FUaEuwf1uIg" entityName="e_alt">
-    <inPin id="_5y4OwGQ-Ee-FUaEuwf1uIg" entityName="e_in_ce"/>
-    <outPin id="_8Z2RAWQ-Ee-FUaEuwf1uIg" entityName="e_out_eg"/>
-    <outPin id="_-dp70WQ-Ee-FUaEuwf1uIg" entityName="e_out_j"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_Fmp3cmRCEe-Wl5qwCrgTyA" entityName="e_pub" inputPins="_5y4OwGQ-Ee-FUaEuwf1uIg" outputPin="_-dp70WQ-Ee-FUaEuwf1uIg" outputLabels="veaan9">
-      <term xsi:type="datadictionary:TRUE" id="_J0ph4GRCEe-Wl5qwCrgTyA"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_f7wj-FWREe-ZrNdnTZogqw" entityName="f">
-    <inPin id="1szvhm" entityName="f_in_"/>
-  </behaviour>
-  <behaviour id="_f7xLAVWREe-ZrNdnTZogqw" entityName="a">
-    <outPin id="mrodef" entityName="a_out_"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_f72qkVWREe-ZrNdnTZogqw" outputPin="mrodef" outputLabels="zzvphn">
-      <term xsi:type="datadictionary:TRUE" id="_f72qklWREe-ZrNdnTZogqw"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_f7xLB1WREe-ZrNdnTZogqw" entityName="g">
-    <inPin id="542ls6" entityName="g_in_eg"/>
-    <outPin id="xy50nr" entityName="g_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_f734sVWREe-ZrNdnTZogqw" inputPins="542ls6" outputPin="xy50nr"/>
-  </behaviour>
-  <behaviour id="_f7xLC1WREe-ZrNdnTZogqw" entityName="h">
-    <inPin id="mt254o" entityName="h_in_"/>
-  </behaviour>
-  <behaviour id="_f7xLDlWREe-ZrNdnTZogqw" entityName="c">
-    <inPin id="4b0hk" entityName="c_in_"/>
-    <outPin id="hmzzdfg" entityName="c_out_"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_f734sFWREe-ZrNdnTZogqw" inputPins="4b0hk" outputPin="hmzzdfg"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_Yecy8lWTEe-76ITJEz2D_A" entityName="dummy_true" inputPins="4b0hk" outputPin="hmzzdfg" outputLabels="ygymnk">
-      <term xsi:type="datadictionary:TRUE" id="_sLdOAFYgEe-OEL7j3ivG2Q"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_6Rivc1WSEe-76ITJEz2D_A" entityName="c_alt">
-    <inPin id="_i0lgUFWTEe-76ITJEz2D_A" entityName="c_in_"/>
-    <outPin id="_j7on8VWTEe-76ITJEz2D_A" entityName="c_out_"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_lNFBslWTEe-76ITJEz2D_A" entityName="dummy_false" inputPins="_i0lgUFWTEe-76ITJEz2D_A" outputPin="_j7on8VWTEe-76ITJEz2D_A" outputLabels="ygymnk">
-      <term xsi:type="datadictionary:NOT" id="_nFFsM1WTEe-76ITJEz2D_A">
-        <negatedTerm xsi:type="datadictionary:TRUE" id="_nnkuMFWTEe-76ITJEz2D_A"/>
-      </term>
-    </assignment>
-  </behaviour>
-  <behaviour id="_jM3rNWQ-Ee-FUaEuwf1uIg" entityName="j">
-    <inPin id="_kuq1IGQ-Ee-FUaEuwf1uIg" entityName="j_in"/>
-  </behaviour>
-  <behaviour id="_ofolUWQ-Ee-FUaEuwf1uIg" entityName="k">
-    <inPin id="_pr6yQGQ-Ee-FUaEuwf1uIg" entityName="k_in"/>
-  </behaviour>
-  <behaviour id="_squFtWQ-Ee-FUaEuwf1uIg" entityName="i2"/>
-  <behaviour id="_uvn8tWQ-Ee-FUaEuwf1uIg" entityName="i">
-    <inPin id="_xp1rEGQ-Ee-FUaEuwf1uIg" entityName="i_in"/>
-  </behaviour>
-</datadictionary:DataDictionary>
+<?xml version="1.0" encoding="ASCII"?> 
+<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_f7p2QFWREe-ZrNdnTZogqw"> 
+  <labelTypes id="4h3wzk" entityName="Sensitivity"> 
+    <label id="zzvphn" entityName="Personal"/> 
+    <label id="veaan9" entityName="Public"/> 
+    <label id="ygymnk" entityName="dummy"/> 
+  </labelTypes> 
+  <labelTypes id="gvia09" entityName="Location"> 
+    <label id="g10hr" entityName="EU"/> 
+    <label id="5hnugm" entityName="nonEU"/> 
+  </labelTypes> 
+  <labelTypes id="84rllz" entityName="Encryption"> 
+    <label id="2r6xe6" entityName="Encrypted"/> 
+  </labelTypes> 
+  <behavior id="_f7sSiFWREe-ZrNdnTZogqw" entityName="b"> 
+    <inPin id="i39hra" entityName="b_in_"/> 
+    <outPin id="eodokp" entityName="b_out_bc"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_f71ccFWREe-ZrNdnTZogqw" entityName="b_personal" inputPins="i39hra" outputPin="eodokp" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="_f72qkFWREe-ZrNdnTZogqw"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_f7wj8VWREe-ZrNdnTZogqw" entityName="d"> 
+    <inPin id="s3v30e" entityName="d_in_"/> 
+  </behavior> 
+  <behavior id="_f7wj9FWREe-ZrNdnTZogqw" entityName="e"> 
+    <inPin id="oz8pf" entityName="e_in_ce"/> 
+    <outPin id="251qn" entityName="e_out_eg"/> 
+    <outPin id="_Zy8ucWQ-Ee-FUaEuwf1uIg" entityName="e_out_j"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_f734slWREe-ZrNdnTZogqw" inputPins="oz8pf" outputPin="251qn"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_Ay3YU2RCEe-Wl5qwCrgTyA" inputPins="oz8pf" outputPin="_Zy8ucWQ-Ee-FUaEuwf1uIg"/> 
+  </behavior> 
+  <behavior id="_3kRCJWQ-Ee-FUaEuwf1uIg" entityName="e_alt"> 
+    <inPin id="_5y4OwGQ-Ee-FUaEuwf1uIg" entityName="e_in_ce"/> 
+    <outPin id="_8Z2RAWQ-Ee-FUaEuwf1uIg" entityName="e_out_eg"/> 
+    <outPin id="_-dp70WQ-Ee-FUaEuwf1uIg" entityName="e_out_j"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_Fmp3cmRCEe-Wl5qwCrgTyA" entityName="e_pub" inputPins="_5y4OwGQ-Ee-FUaEuwf1uIg" outputPin="_-dp70WQ-Ee-FUaEuwf1uIg" outputLabels="veaan9"> 
+      <term xsi:type="datadictionary:TRUE" id="_J0ph4GRCEe-Wl5qwCrgTyA"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_f7wj-FWREe-ZrNdnTZogqw" entityName="f"> 
+    <inPin id="1szvhm" entityName="f_in_"/> 
+  </behavior> 
+  <behavior id="_f7xLAVWREe-ZrNdnTZogqw" entityName="a"> 
+    <outPin id="mrodef" entityName="a_out_"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_f72qkVWREe-ZrNdnTZogqw" outputPin="mrodef" outputLabels="zzvphn"> 
+      <term xsi:type="datadictionary:TRUE" id="_f72qklWREe-ZrNdnTZogqw"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_f7xLB1WREe-ZrNdnTZogqw" entityName="g"> 
+    <inPin id="542ls6" entityName="g_in_eg"/> 
+    <outPin id="xy50nr" entityName="g_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_f734sVWREe-ZrNdnTZogqw" inputPins="542ls6" outputPin="xy50nr"/> 
+  </behavior> 
+  <behavior id="_f7xLC1WREe-ZrNdnTZogqw" entityName="h"> 
+    <inPin id="mt254o" entityName="h_in_"/> 
+  </behavior> 
+  <behavior id="_f7xLDlWREe-ZrNdnTZogqw" entityName="c"> 
+    <inPin id="4b0hk" entityName="c_in_"/> 
+    <outPin id="hmzzdfg" entityName="c_out_"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_f734sFWREe-ZrNdnTZogqw" inputPins="4b0hk" outputPin="hmzzdfg"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_Yecy8lWTEe-76ITJEz2D_A" entityName="dummy_true" inputPins="4b0hk" outputPin="hmzzdfg" outputLabels="ygymnk"> 
+      <term xsi:type="datadictionary:TRUE" id="_sLdOAFYgEe-OEL7j3ivG2Q"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_6Rivc1WSEe-76ITJEz2D_A" entityName="c_alt"> 
+    <inPin id="_i0lgUFWTEe-76ITJEz2D_A" entityName="c_in_"/> 
+    <outPin id="_j7on8VWTEe-76ITJEz2D_A" entityName="c_out_"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_lNFBslWTEe-76ITJEz2D_A" entityName="dummy_false" inputPins="_i0lgUFWTEe-76ITJEz2D_A" outputPin="_j7on8VWTEe-76ITJEz2D_A" outputLabels="ygymnk"> 
+      <term xsi:type="datadictionary:NOT" id="_nFFsM1WTEe-76ITJEz2D_A"> 
+        <negatedTerm xsi:type="datadictionary:TRUE" id="_nnkuMFWTEe-76ITJEz2D_A"/> 
+      </term> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_jM3rNWQ-Ee-FUaEuwf1uIg" entityName="j"> 
+    <inPin id="_kuq1IGQ-Ee-FUaEuwf1uIg" entityName="j_in"/> 
+  </behavior> 
+  <behavior id="_ofolUWQ-Ee-FUaEuwf1uIg" entityName="k"> 
+    <inPin id="_pr6yQGQ-Ee-FUaEuwf1uIg" entityName="k_in"/> 
+  </behavior> 
+  <behavior id="_squFtWQ-Ee-FUaEuwf1uIg" entityName="i2"/> 
+  <behavior id="_uvn8tWQ-Ee-FUaEuwf1uIg" entityName="i"> 
+    <inPin id="_xp1rEGQ-Ee-FUaEuwf1uIg" entityName="i_in"/> 
+  </behavior> 
+</datadictionary:DataDictionary> 

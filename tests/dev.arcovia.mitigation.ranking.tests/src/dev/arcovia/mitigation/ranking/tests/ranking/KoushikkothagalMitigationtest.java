@@ -12,8 +12,8 @@ import dev.arcovia.mitigation.ranking.RankerType;
 import dev.arcovia.mitigation.ranking.RankingAggregationMethod;
 import dev.arcovia.mitigation.ranking.tests.MitigationTestBase;
 
-public class KoushikkothagalMitigationtest extends MitigationTestBase{
-    
+public class KoushikkothagalMitigationtest extends MitigationTestBase {
+
     protected String getFolderName() {
         return "koushikkothagal";
     }
@@ -21,36 +21,41 @@ public class KoushikkothagalMitigationtest extends MitigationTestBase{
     protected String getFilesName() {
         return "koushikkothagal";
     }
-    
+
     protected List<Predicate<? super AbstractVertex<?>>> getConstraints() {
         List<Predicate<? super AbstractVertex<?>>> constraints = new ArrayList<>();
-        /*constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("internal")
-                    && !this.retrieveAllDataLabels(it).contains("authenticated_request");
-        });*/
+        /*
+         * constraints.add(it -> { return this.retrieveNodeLabels(it).contains("internal") &&
+         * !this.retrieveAllDataLabels(it).contains("authenticated_request"); });
+         */
         constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("authorization_server")
-                    && !this.retrieveNodeLabels(it).contains("login_attempts_regulation");
+            return this.retrieveNodeLabels(it)
+                    .contains("authorization_server")
+                    && !this.retrieveNodeLabels(it)
+                            .contains("login_attempts_regulation");
         });
         constraints.add(it -> {
-            return this.retrieveDataLabels(it).contains("entrypoint")
-                    && !this.retrieveAllDataLabels(it).contains("encrypted_connection");
+            return this.retrieveDataLabels(it)
+                    .contains("entrypoint")
+                    && !this.retrieveAllDataLabels(it)
+                            .contains("encrypted_connection");
         });
-        /*constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("internal")
-                    && !this.retrieveAllDataLabels(it).contains("encrypted_connection");
-        });*/
+        /*
+         * constraints.add(it -> { return this.retrieveNodeLabels(it).contains("internal") &&
+         * !this.retrieveAllDataLabels(it).contains("encrypted_connection"); });
+         */
         constraints.add(it -> {
-             return this.retrieveNodeLabels(it).contains("internal") &&
-                    !this.retrieveNodeLabels(it).contains("local_logging");
+            return this.retrieveNodeLabels(it)
+                    .contains("internal")
+                    && !this.retrieveNodeLabels(it)
+                            .contains("local_logging");
         });/*
-        constraints.add(it -> {
-            return this.retrieveNodeLabels(it).contains("local_logging") &&
-                   !this.retrieveNodeLabels(it).contains("log_sanitization");
-       });*/
+            * constraints.add(it -> { return this.retrieveNodeLabels(it).contains("local_logging") &&
+            * !this.retrieveNodeLabels(it).contains("log_sanitization"); });
+            */
         return constraints;
     }
-    
+
     @Override
     protected RankerType getRankerType() {
         return RankerType.LOGISTIC_REGRESSION;
@@ -67,14 +72,14 @@ public class KoushikkothagalMitigationtest extends MitigationTestBase{
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
             mitigationStrategy = MitigationStrategy.HALF;
-            createTrainData();
+            createUncertaintyRanking();
             createMitigationCandidatesAutomatically();
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal");
+        storeMeassurementResult(seeAverageRuntime(), "koushikkothagal");
     }
-    
+
     @Test
     public void executeBruteForce() throws Exception {
         deleteOldMeassurement();
@@ -85,6 +90,6 @@ public class KoushikkothagalMitigationtest extends MitigationTestBase{
             var duration = System.currentTimeMillis() - startTime;
             storeMeassurement(duration);
         }
-        storeMeassurementResult(seeAverageRuntime(),"koushikkothagal");
+        storeMeassurementResult(seeAverageRuntime(), "koushikkothagal");
     }
 }

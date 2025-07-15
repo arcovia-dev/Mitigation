@@ -6,26 +6,26 @@ import dev.arcovia.mitigation.ranking.MitigationStrategy;
 import dev.arcovia.mitigation.ranking.RankerType;
 import dev.arcovia.mitigation.ranking.RankingAggregationMethod;
 
-public abstract class ScalabilityBase extends MitigationTestBase{
-	
-	@Override
-	protected RankerType getRankerType() {
-		return RankerType.LOGISTIC_REGRESSION;
-	}
+public abstract class ScalabilityBase extends MitigationTestBase {
 
-	@Override
-	protected RankingAggregationMethod getAggregationMethod() {
-		return RankingAggregationMethod.EXPONENTIAL_RANKS;
-	}
+    @Override
+    protected RankerType getRankerType() {
+        return RankerType.LOGISTIC_REGRESSION;
+    }
 
-	private void executeMitigationStrategy(MitigationStrategy strategy) {
+    @Override
+    protected RankingAggregationMethod getAggregationMethod() {
+        return RankingAggregationMethod.EXPONENTIAL_RANKS;
+    }
+
+    private void executeMitigationStrategy(MitigationStrategy strategy) {
         deleteOldMeassurement();
         for (int i = 0; i < MITIGATION_RUNS; i++) {
             var startTime = System.currentTimeMillis();
             mitigationStrategy = strategy;
 
             if (!strategy.equals(MitigationStrategy.BRUTE_FORCE)) {
-                createTrainData();
+                createUncertaintyRanking();
             }
 
             createMitigationCandidatesAutomatically();

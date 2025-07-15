@@ -1,157 +1,157 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_cDZWYI4oEe--__rPTWj_sg">
-  <labelTypes id="_IQrnsI8WEe-JJbe6mLv2Lg" entityName="Stereotype">
-    <label id="_JzbM0I8WEe-JJbe6mLv2Lg" entityName="external"/>
-    <label id="_NIqDQI8WEe-JJbe6mLv2Lg" entityName="database"/>
-    <label id="_PMTWAI8WEe-JJbe6mLv2Lg" entityName="admin"/>
-    <label id="_QZVJ0I8WEe-JJbe6mLv2Lg" entityName="user"/>
-    <label id="_RbBQUI8WEe-JJbe6mLv2Lg" entityName="log"/>
-    <label id="_S9ghUI8XEe-JJbe6mLv2Lg" entityName="log_sanitize"/>
-    <label id="_U97g8I8XEe-JJbe6mLv2Lg" entityName="mask"/>
-    <label id="_X6PhEI8XEe-JJbe6mLv2Lg" entityName="payment_data"/>
-    <label id="_ZtPvwI8XEe-JJbe6mLv2Lg" entityName="sensitive_data"/>
-    <label id="_YJJDQI8YEe-JJbe6mLv2Lg" entityName="MFA"/>
-    <label id="_xdVEUI8YEe-JJbe6mLv2Lg" entityName="dummy"/>
-    <label id="_3L37gI8YEe-JJbe6mLv2Lg" entityName="bank"/>
-    <label id="_4SflUI8YEe-JJbe6mLv2Lg" entityName="trusted"/>
-    <label id="_mo9igJB7Ee-emtzpVHzKjw" entityName="internal"/>
-    <label id="_uYFKUJB7Ee-emtzpVHzKjw" entityName="local_logging"/>
-  </labelTypes>
-  <behaviour id="_NZUAMY4rEe--__rPTWj_sg" entityName="Admin">
-    <outPin id="_l7MlIY4sEe--__rPTWj_sg" entityName="adminout"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_BWq7ko8ZEe-JJbe6mLv2Lg" entityName="admin" outputPin="_l7MlIY4sEe--__rPTWj_sg" outputLabels="_PMTWAI8WEe-JJbe6mLv2Lg">
-      <term xsi:type="datadictionary:TRUE" id="_ElMtEI8ZEe-JJbe6mLv2Lg"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_PTbjhY4rEe--__rPTWj_sg" entityName="User">
-    <outPin id="_oKtwsY4sEe--__rPTWj_sg" entityName="userout"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_K5iY8o8ZEe-JJbe6mLv2Lg" entityName="USer" outputPin="_oKtwsY4sEe--__rPTWj_sg" outputLabels="_QZVJ0I8WEe-JJbe6mLv2Lg"/>
-  </behaviour>
-  <behaviour id="_SU8MtY4rEe--__rPTWj_sg" entityName="External Service1">
-    <inPin id="_rAjVYI4sEe--__rPTWj_sg" entityName="external1in"/>
-  </behaviour>
-  <behaviour id="_VdCmFY4rEe--__rPTWj_sg" entityName="External Service2">
-    <inPin id="_tVpkgI4sEe--__rPTWj_sg" entityName="external2in"/>
-  </behaviour>
-  <behaviour id="_YiG5lY4rEe--__rPTWj_sg" entityName="Logs">
-    <inPin id="_u-ubII4sEe--__rPTWj_sg" entityName="LogsIn"/>
-    <outPin id="_D3CGwY4tEe--__rPTWj_sg" entityName="LogsOut"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_IeA8Q48aEe-JJbe6mLv2Lg" entityName="Logs" inputPins="_u-ubII4sEe--__rPTWj_sg" outputPin="_D3CGwY4tEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_aE13qo4rEe--__rPTWj_sg" entityName="PayDB">
-    <inPin id="_IguOsI4tEe--__rPTWj_sg" entityName="payDBin"/>
-    <outPin id="_WLDQsY4tEe--__rPTWj_sg" entityName="payDBout"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_MyzLMo8aEe-JJbe6mLv2Lg" entityName="PAYDB" inputPins="_IguOsI4tEe--__rPTWj_sg" outputPin="_WLDQsY4tEe--__rPTWj_sg" outputLabels="_ZtPvwI8XEe-JJbe6mLv2Lg">
-      <term xsi:type="datadictionary:TRUE" id="_X6vI8I8aEe-JJbe6mLv2Lg"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_YrtS6I8aEe-JJbe6mLv2Lg" inputPins="_IguOsI4tEe--__rPTWj_sg" outputPin="_WLDQsY4tEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_blt0hY4rEe--__rPTWj_sg" entityName="Multi Factor Auth">
-    <inPin id="_iriVwI4tEe--__rPTWj_sg" entityName="mfain"/>
-    <outPin id="_kp-_cY4tEe--__rPTWj_sg" entityName="MFAout"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_cdEEoo8aEe-JJbe6mLv2Lg" entityName="MFA" inputPins="_iriVwI4tEe--__rPTWj_sg" outputPin="_kp-_cY4tEe--__rPTWj_sg" outputLabels="_YJJDQI8YEe-JJbe6mLv2Lg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_yPyxIo8aEe-JJbe6mLv2Lg" inputPins="_iriVwI4tEe--__rPTWj_sg" outputPin="_kp-_cY4tEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_djz45Y4rEe--__rPTWj_sg" entityName="Login">
-    <inPin id="_lxXeQI4tEe--__rPTWj_sg" entityName="Loginin"/>
-    <outPin id="_nG8xIY4tEe--__rPTWj_sg" entityName="LoginOut"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_1Gq3o48aEe-JJbe6mLv2Lg" inputPins="_lxXeQI4tEe--__rPTWj_sg" outputPin="_nG8xIY4tEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_e-aOpY4rEe--__rPTWj_sg" entityName="Admin Service">
-    <inPin id="_yPyt0I4tEe--__rPTWj_sg" entityName="AdminServIn"/>
-    <outPin id="_0C0xsY4tEe--__rPTWj_sg" entityName="AdminServOut"/>
-    <outPin id="_74Dr4Y8aEe-JJbe6mLv2Lg" entityName="AdminServOut2"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="adminServ1" inputPins="_yPyt0I4tEe--__rPTWj_sg" outputPin="_0C0xsY4tEe--__rPTWj_sg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="adminServ2" inputPins="_yPyt0I4tEe--__rPTWj_sg" outputPin="_74Dr4Y8aEe-JJbe6mLv2Lg"/>
-  </behaviour>
-  <behaviour id="_gy0ym44rEe--__rPTWj_sg" entityName="Credential Manager">
-    <inPin id="_1rD60I4tEe--__rPTWj_sg" entityName="CredIn"/>
-    <outPin id="_A-v1kY4uEe--__rPTWj_sg" entityName="CredOut"/>
-    <outPin id="_UKzeEY8bEe-JJbe6mLv2Lg" entityName="CredOut2"/>
-    <outPin id="_aWTXAY8bEe-JJbe6mLv2Lg" entityName="Cred3"/>
-    <outPin id="_boq90Y8bEe-JJbe6mLv2Lg" entityName="cred4"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_q55FI48bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_aWTXAY8bEe-JJbe6mLv2Lg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_rbn5M48bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_boq90Y8bEe-JJbe6mLv2Lg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_rzN5048bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_A-v1kY4uEe--__rPTWj_sg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_sO1e048bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_UKzeEY8bEe-JJbe6mLv2Lg"/>
-  </behaviour>
-  <behaviour id="_msqTxY4rEe--__rPTWj_sg" entityName="Logging Server">
-    <inPin id="_CCsl4I4uEe--__rPTWj_sg" entityName="LogServerIn"/>
-    <outPin id="_DdQfYY4uEe--__rPTWj_sg" entityName="LogServerOut"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_4R4Z848bEe-JJbe6mLv2Lg" inputPins="_CCsl4I4uEe--__rPTWj_sg" outputPin="_DdQfYY4uEe--__rPTWj_sg"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_7gjVYo8bEe-JJbe6mLv2Lg" entityName="LogServ" inputPins="_CCsl4I4uEe--__rPTWj_sg" outputPin="_DdQfYY4uEe--__rPTWj_sg" outputLabels="_RbBQUI8WEe-JJbe6mLv2Lg">
-      <term xsi:type="datadictionary:TRUE" id="_FXEcYI-9Ee-ftKOFDXzzKg"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_4Or3lY_BEe-ftKOFDXzzKg" entityName="SanLog">
-    <inPin id="_5rtPMI_BEe-ftKOFDXzzKg" entityName="LogServerIn"/>
-    <outPin id="_7NB4AY_BEe-ftKOFDXzzKg" entityName="LogServerOut"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_GxCjMo_BEe-ftKOFDXzzKg" entityName="LoggingServ" inputPins="_5rtPMI_BEe-ftKOFDXzzKg" outputPin="_7NB4AY_BEe-ftKOFDXzzKg" outputLabels="_RbBQUI8WEe-JJbe6mLv2Lg _S9ghUI8XEe-JJbe6mLv2Lg">
-      <term xsi:type="datadictionary:TRUE" id="_C1YwgI_CEe-ftKOFDXzzKg"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_D1HvM4_CEe-ftKOFDXzzKg" inputPins="_5rtPMI_BEe-ftKOFDXzzKg" outputPin="_DdQfYY4uEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_sRrbhY4rEe--__rPTWj_sg" entityName="Logging Monitor">
-    <inPin id="_FM20wI4uEe--__rPTWj_sg" entityName="LogMonIn"/>
-    <outPin id="_JGWO0Y4uEe--__rPTWj_sg" entityName="LogMonOut"/>
-  </behaviour>
-  <behaviour id="_uTqhZY4rEe--__rPTWj_sg" entityName="Auth Service">
-    <inPin id="_KV3V8I4uEe--__rPTWj_sg" entityName="AuthServIn"/>
-    <outPin id="_UdiwkY4uEe--__rPTWj_sg" entityName="AuthServiceOut"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_OmjV448cEe-JJbe6mLv2Lg" inputPins="_KV3V8I4uEe--__rPTWj_sg" outputPin="_UdiwkY4uEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_xC-ARY4rEe--__rPTWj_sg" entityName="Payment Service">
-    <inPin id="_WuSEII4uEe--__rPTWj_sg" entityName="PayServIn"/>
-    <outPin id="_Y0UjkY4uEe--__rPTWj_sg" entityName="PayServOut"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_bU-JQ48cEe-JJbe6mLv2Lg" inputPins="_WuSEII4uEe--__rPTWj_sg" outputPin="_Y0UjkY4uEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_cItacY-4Ee-ftKOFDXzzKg" entityName="Trusting PayServ">
-    <inPin id="_hmTrlo-4Ee-ftKOFDXzzKg" entityName="PayServIn"/>
-    <outPin id="_jA0hwY-4Ee-ftKOFDXzzKg" entityName="PayServOut"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_kWhwco-4Ee-ftKOFDXzzKg" entityName="trustedPay" inputPins="_hmTrlo-4Ee-ftKOFDXzzKg" outputPin="_jA0hwY-4Ee-ftKOFDXzzKg" outputLabels="_4SflUI8YEe-JJbe6mLv2Lg"/>
-  </behaviour>
-  <behaviour id="_zB2HxY4rEe--__rPTWj_sg" entityName="bank1">
-    <inPin id="_aFEZwI4uEe--__rPTWj_sg" entityName="bank1In"/>
-    <outPin id="_bPYQwY4uEe--__rPTWj_sg" entityName="bank1out"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_xSqvoo8cEe-JJbe6mLv2Lg" inputPins="_aFEZwI4uEe--__rPTWj_sg" outputPin="_bPYQwY4uEe--__rPTWj_sg" outputLabels="_3L37gI8YEe-JJbe6mLv2Lg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_x8VXs48cEe-JJbe6mLv2Lg" inputPins="_aFEZwI4uEe--__rPTWj_sg" outputPin="_bPYQwY4uEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_0xijxY4rEe--__rPTWj_sg" entityName="bank2">
-    <inPin id="_cuMYII4uEe--__rPTWj_sg" entityName="bank2in"/>
-    <outPin id="_ekQh4Y4uEe--__rPTWj_sg" entityName="bank2out"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_4IkQco8cEe-JJbe6mLv2Lg" inputPins="_cuMYII4uEe--__rPTWj_sg" outputPin="_ekQh4Y4uEe--__rPTWj_sg" outputLabels="_3L37gI8YEe-JJbe6mLv2Lg _4SflUI8YEe-JJbe6mLv2Lg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_4q79s48cEe-JJbe6mLv2Lg" inputPins="_cuMYII4uEe--__rPTWj_sg" outputPin="_ekQh4Y4uEe--__rPTWj_sg"/>
-  </behaviour>
-  <behaviour id="_1z4Ki44rEe--__rPTWj_sg" entityName="user database">
-    <inPin id="_i32eAI4uEe--__rPTWj_sg" entityName="userDBin"/>
-    <outPin id="_kbWREY4uEe--__rPTWj_sg" entityName="userDBout"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_EEugco8dEe-JJbe6mLv2Lg" inputPins="_i32eAI4uEe--__rPTWj_sg" outputPin="_kbWREY4uEe--__rPTWj_sg" outputLabels="_ZtPvwI8XEe-JJbe6mLv2Lg"/>
-  </behaviour>
-  <behaviour id="_3K8rJY4rEe--__rPTWj_sg" entityName="masking Service">
-    <inPin id="_mF8xsI4uEe--__rPTWj_sg" entityName="MaskingIn"/>
-    <outPin id="_oWqQEY4uEe--__rPTWj_sg" entityName="MaskingOut"/>
-    <outPin id="_u9rN8Y-7Ee-ftKOFDXzzKg" entityName="MaskingOut2"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_KjfTo48dEe-JJbe6mLv2Lg" inputPins="_mF8xsI4uEe--__rPTWj_sg" outputPin="_oWqQEY4uEe--__rPTWj_sg"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_wOqUs4-7Ee-ftKOFDXzzKg" inputPins="_mF8xsI4uEe--__rPTWj_sg" outputPin="_u9rN8Y-7Ee-ftKOFDXzzKg"/>
-  </behaviour>
-  <behaviour id="_y-di1Y-7Ee-ftKOFDXzzKg" entityName="maskedMasking">
-    <inPin id="_06SWUI-7Ee-ftKOFDXzzKg" entityName="MaskingIn"/>
-    <outPin id="_2P6shY-7Ee-ftKOFDXzzKg" entityName="MaskingOut"/>
-    <outPin id="_3VnJQY-7Ee-ftKOFDXzzKg" entityName="MaskingOut2"/>
-    <assignment xsi:type="datadictionary:Assignment" id="_42z2Ro-7Ee-ftKOFDXzzKg" entityName="MasktoPay" inputPins="_06SWUI-7Ee-ftKOFDXzzKg" outputPin="_2P6shY-7Ee-ftKOFDXzzKg" outputLabels="_U97g8I8XEe-JJbe6mLv2Lg">
-      <term xsi:type="datadictionary:TRUE" id="_Fqcg0I-8Ee-ftKOFDXzzKg"/>
-    </assignment>
-    <assignment xsi:type="datadictionary:Assignment" id="_Gh2p94-8Ee-ftKOFDXzzKg" entityName="masktoauth" inputPins="_06SWUI-7Ee-ftKOFDXzzKg" outputPin="_3VnJQY-7Ee-ftKOFDXzzKg" outputLabels="_U97g8I8XEe-JJbe6mLv2Lg">
-      <term xsi:type="datadictionary:TRUE" id="_KYHJ0I-8Ee-ftKOFDXzzKg"/>
-    </assignment>
-  </behaviour>
-  <behaviour id="_7gjZdY4rEe--__rPTWj_sg" entityName="reciept Log">
-    <inPin id="_pkhxYI4uEe--__rPTWj_sg" entityName="recieptIn"/>
-    <outPin id="_qnj7sY4uEe--__rPTWj_sg" entityName="recieptOut"/>
-  </behaviour>
-  <behaviour id="_AetVhY4sEe--__rPTWj_sg" entityName="Log Out">
-    <inPin id="_royvMI4uEe--__rPTWj_sg" entityName="LogOutIn"/>
-    <outPin id="_s-FuMY4uEe--__rPTWj_sg" entityName="LogOutout"/>
-    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_fZVhI48dEe-JJbe6mLv2Lg" inputPins="_royvMI4uEe--__rPTWj_sg" outputPin="_s-FuMY4uEe--__rPTWj_sg"/>
-  </behaviour>
-</datadictionary:DataDictionary>
+<?xml version="1.0" encoding="UTF-8"?> 
+<datadictionary:DataDictionary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" id="_cDZWYI4oEe--__rPTWj_sg"> 
+  <labelTypes id="_IQrnsI8WEe-JJbe6mLv2Lg" entityName="Stereotype"> 
+    <label id="_JzbM0I8WEe-JJbe6mLv2Lg" entityName="external"/> 
+    <label id="_NIqDQI8WEe-JJbe6mLv2Lg" entityName="database"/> 
+    <label id="_PMTWAI8WEe-JJbe6mLv2Lg" entityName="admin"/> 
+    <label id="_QZVJ0I8WEe-JJbe6mLv2Lg" entityName="user"/> 
+    <label id="_RbBQUI8WEe-JJbe6mLv2Lg" entityName="log"/> 
+    <label id="_S9ghUI8XEe-JJbe6mLv2Lg" entityName="log_sanitize"/> 
+    <label id="_U97g8I8XEe-JJbe6mLv2Lg" entityName="mask"/> 
+    <label id="_X6PhEI8XEe-JJbe6mLv2Lg" entityName="payment_data"/> 
+    <label id="_ZtPvwI8XEe-JJbe6mLv2Lg" entityName="sensitive_data"/> 
+    <label id="_YJJDQI8YEe-JJbe6mLv2Lg" entityName="MFA"/> 
+    <label id="_xdVEUI8YEe-JJbe6mLv2Lg" entityName="dummy"/> 
+    <label id="_3L37gI8YEe-JJbe6mLv2Lg" entityName="bank"/> 
+    <label id="_4SflUI8YEe-JJbe6mLv2Lg" entityName="trusted"/> 
+    <label id="_mo9igJB7Ee-emtzpVHzKjw" entityName="internal"/> 
+    <label id="_uYFKUJB7Ee-emtzpVHzKjw" entityName="local_logging"/> 
+  </labelTypes> 
+  <behavior id="_NZUAMY4rEe--__rPTWj_sg" entityName="Admin"> 
+    <outPin id="_l7MlIY4sEe--__rPTWj_sg" entityName="adminout"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_BWq7ko8ZEe-JJbe6mLv2Lg" entityName="admin" outputPin="_l7MlIY4sEe--__rPTWj_sg" outputLabels="_PMTWAI8WEe-JJbe6mLv2Lg"> 
+      <term xsi:type="datadictionary:TRUE" id="_ElMtEI8ZEe-JJbe6mLv2Lg"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_PTbjhY4rEe--__rPTWj_sg" entityName="User"> 
+    <outPin id="_oKtwsY4sEe--__rPTWj_sg" entityName="userout"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_K5iY8o8ZEe-JJbe6mLv2Lg" entityName="USer" outputPin="_oKtwsY4sEe--__rPTWj_sg" outputLabels="_QZVJ0I8WEe-JJbe6mLv2Lg"/> 
+  </behavior> 
+  <behavior id="_SU8MtY4rEe--__rPTWj_sg" entityName="External Service1"> 
+    <inPin id="_rAjVYI4sEe--__rPTWj_sg" entityName="external1in"/> 
+  </behavior> 
+  <behavior id="_VdCmFY4rEe--__rPTWj_sg" entityName="External Service2"> 
+    <inPin id="_tVpkgI4sEe--__rPTWj_sg" entityName="external2in"/> 
+  </behavior> 
+  <behavior id="_YiG5lY4rEe--__rPTWj_sg" entityName="Logs"> 
+    <inPin id="_u-ubII4sEe--__rPTWj_sg" entityName="LogsIn"/> 
+    <outPin id="_D3CGwY4tEe--__rPTWj_sg" entityName="LogsOut"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_IeA8Q48aEe-JJbe6mLv2Lg" entityName="Logs" inputPins="_u-ubII4sEe--__rPTWj_sg" outputPin="_D3CGwY4tEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_aE13qo4rEe--__rPTWj_sg" entityName="PayDB"> 
+    <inPin id="_IguOsI4tEe--__rPTWj_sg" entityName="payDBin"/> 
+    <outPin id="_WLDQsY4tEe--__rPTWj_sg" entityName="payDBout"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_MyzLMo8aEe-JJbe6mLv2Lg" entityName="PAYDB" inputPins="_IguOsI4tEe--__rPTWj_sg" outputPin="_WLDQsY4tEe--__rPTWj_sg" outputLabels="_ZtPvwI8XEe-JJbe6mLv2Lg"> 
+      <term xsi:type="datadictionary:TRUE" id="_X6vI8I8aEe-JJbe6mLv2Lg"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_YrtS6I8aEe-JJbe6mLv2Lg" inputPins="_IguOsI4tEe--__rPTWj_sg" outputPin="_WLDQsY4tEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_blt0hY4rEe--__rPTWj_sg" entityName="Multi Factor Auth"> 
+    <inPin id="_iriVwI4tEe--__rPTWj_sg" entityName="mfain"/> 
+    <outPin id="_kp-_cY4tEe--__rPTWj_sg" entityName="MFAout"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_cdEEoo8aEe-JJbe6mLv2Lg" entityName="MFA" inputPins="_iriVwI4tEe--__rPTWj_sg" outputPin="_kp-_cY4tEe--__rPTWj_sg" outputLabels="_YJJDQI8YEe-JJbe6mLv2Lg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_yPyxIo8aEe-JJbe6mLv2Lg" inputPins="_iriVwI4tEe--__rPTWj_sg" outputPin="_kp-_cY4tEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_djz45Y4rEe--__rPTWj_sg" entityName="Login"> 
+    <inPin id="_lxXeQI4tEe--__rPTWj_sg" entityName="Loginin"/> 
+    <outPin id="_nG8xIY4tEe--__rPTWj_sg" entityName="LoginOut"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_1Gq3o48aEe-JJbe6mLv2Lg" inputPins="_lxXeQI4tEe--__rPTWj_sg" outputPin="_nG8xIY4tEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_e-aOpY4rEe--__rPTWj_sg" entityName="Admin Service"> 
+    <inPin id="_yPyt0I4tEe--__rPTWj_sg" entityName="AdminServIn"/> 
+    <outPin id="_0C0xsY4tEe--__rPTWj_sg" entityName="AdminServOut"/> 
+    <outPin id="_74Dr4Y8aEe-JJbe6mLv2Lg" entityName="AdminServOut2"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="adminServ1" inputPins="_yPyt0I4tEe--__rPTWj_sg" outputPin="_0C0xsY4tEe--__rPTWj_sg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="adminServ2" inputPins="_yPyt0I4tEe--__rPTWj_sg" outputPin="_74Dr4Y8aEe-JJbe6mLv2Lg"/> 
+  </behavior> 
+  <behavior id="_gy0ym44rEe--__rPTWj_sg" entityName="Credential Manager"> 
+    <inPin id="_1rD60I4tEe--__rPTWj_sg" entityName="CredIn"/> 
+    <outPin id="_A-v1kY4uEe--__rPTWj_sg" entityName="CredOut"/> 
+    <outPin id="_UKzeEY8bEe-JJbe6mLv2Lg" entityName="CredOut2"/> 
+    <outPin id="_aWTXAY8bEe-JJbe6mLv2Lg" entityName="Cred3"/> 
+    <outPin id="_boq90Y8bEe-JJbe6mLv2Lg" entityName="cred4"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_q55FI48bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_aWTXAY8bEe-JJbe6mLv2Lg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_rbn5M48bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_boq90Y8bEe-JJbe6mLv2Lg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_rzN5048bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_A-v1kY4uEe--__rPTWj_sg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_sO1e048bEe-JJbe6mLv2Lg" inputPins="_1rD60I4tEe--__rPTWj_sg" outputPin="_UKzeEY8bEe-JJbe6mLv2Lg"/> 
+  </behavior> 
+  <behavior id="_msqTxY4rEe--__rPTWj_sg" entityName="Logging Server"> 
+    <inPin id="_CCsl4I4uEe--__rPTWj_sg" entityName="LogServerIn"/> 
+    <outPin id="_DdQfYY4uEe--__rPTWj_sg" entityName="LogServerOut"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_4R4Z848bEe-JJbe6mLv2Lg" inputPins="_CCsl4I4uEe--__rPTWj_sg" outputPin="_DdQfYY4uEe--__rPTWj_sg"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_7gjVYo8bEe-JJbe6mLv2Lg" entityName="LogServ" inputPins="_CCsl4I4uEe--__rPTWj_sg" outputPin="_DdQfYY4uEe--__rPTWj_sg" outputLabels="_RbBQUI8WEe-JJbe6mLv2Lg"> 
+      <term xsi:type="datadictionary:TRUE" id="_FXEcYI-9Ee-ftKOFDXzzKg"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_4Or3lY_BEe-ftKOFDXzzKg" entityName="SanLog"> 
+    <inPin id="_5rtPMI_BEe-ftKOFDXzzKg" entityName="LogServerIn"/> 
+    <outPin id="_7NB4AY_BEe-ftKOFDXzzKg" entityName="LogServerOut"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_GxCjMo_BEe-ftKOFDXzzKg" entityName="LoggingServ" inputPins="_5rtPMI_BEe-ftKOFDXzzKg" outputPin="_7NB4AY_BEe-ftKOFDXzzKg" outputLabels="_RbBQUI8WEe-JJbe6mLv2Lg _S9ghUI8XEe-JJbe6mLv2Lg"> 
+      <term xsi:type="datadictionary:TRUE" id="_C1YwgI_CEe-ftKOFDXzzKg"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_D1HvM4_CEe-ftKOFDXzzKg" inputPins="_5rtPMI_BEe-ftKOFDXzzKg" outputPin="_DdQfYY4uEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_sRrbhY4rEe--__rPTWj_sg" entityName="Logging Monitor"> 
+    <inPin id="_FM20wI4uEe--__rPTWj_sg" entityName="LogMonIn"/> 
+    <outPin id="_JGWO0Y4uEe--__rPTWj_sg" entityName="LogMonOut"/> 
+  </behavior> 
+  <behavior id="_uTqhZY4rEe--__rPTWj_sg" entityName="Auth Service"> 
+    <inPin id="_KV3V8I4uEe--__rPTWj_sg" entityName="AuthServIn"/> 
+    <outPin id="_UdiwkY4uEe--__rPTWj_sg" entityName="AuthServiceOut"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_OmjV448cEe-JJbe6mLv2Lg" inputPins="_KV3V8I4uEe--__rPTWj_sg" outputPin="_UdiwkY4uEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_xC-ARY4rEe--__rPTWj_sg" entityName="Payment Service"> 
+    <inPin id="_WuSEII4uEe--__rPTWj_sg" entityName="PayServIn"/> 
+    <outPin id="_Y0UjkY4uEe--__rPTWj_sg" entityName="PayServOut"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_bU-JQ48cEe-JJbe6mLv2Lg" inputPins="_WuSEII4uEe--__rPTWj_sg" outputPin="_Y0UjkY4uEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_cItacY-4Ee-ftKOFDXzzKg" entityName="Trusting PayServ"> 
+    <inPin id="_hmTrlo-4Ee-ftKOFDXzzKg" entityName="PayServIn"/> 
+    <outPin id="_jA0hwY-4Ee-ftKOFDXzzKg" entityName="PayServOut"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_kWhwco-4Ee-ftKOFDXzzKg" entityName="trustedPay" inputPins="_hmTrlo-4Ee-ftKOFDXzzKg" outputPin="_jA0hwY-4Ee-ftKOFDXzzKg" outputLabels="_4SflUI8YEe-JJbe6mLv2Lg"/> 
+  </behavior> 
+  <behavior id="_zB2HxY4rEe--__rPTWj_sg" entityName="bank1"> 
+    <inPin id="_aFEZwI4uEe--__rPTWj_sg" entityName="bank1In"/> 
+    <outPin id="_bPYQwY4uEe--__rPTWj_sg" entityName="bank1out"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_xSqvoo8cEe-JJbe6mLv2Lg" inputPins="_aFEZwI4uEe--__rPTWj_sg" outputPin="_bPYQwY4uEe--__rPTWj_sg" outputLabels="_3L37gI8YEe-JJbe6mLv2Lg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_x8VXs48cEe-JJbe6mLv2Lg" inputPins="_aFEZwI4uEe--__rPTWj_sg" outputPin="_bPYQwY4uEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_0xijxY4rEe--__rPTWj_sg" entityName="bank2"> 
+    <inPin id="_cuMYII4uEe--__rPTWj_sg" entityName="bank2in"/> 
+    <outPin id="_ekQh4Y4uEe--__rPTWj_sg" entityName="bank2out"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_4IkQco8cEe-JJbe6mLv2Lg" inputPins="_cuMYII4uEe--__rPTWj_sg" outputPin="_ekQh4Y4uEe--__rPTWj_sg" outputLabels="_3L37gI8YEe-JJbe6mLv2Lg _4SflUI8YEe-JJbe6mLv2Lg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_4q79s48cEe-JJbe6mLv2Lg" inputPins="_cuMYII4uEe--__rPTWj_sg" outputPin="_ekQh4Y4uEe--__rPTWj_sg"/> 
+  </behavior> 
+  <behavior id="_1z4Ki44rEe--__rPTWj_sg" entityName="user database"> 
+    <inPin id="_i32eAI4uEe--__rPTWj_sg" entityName="userDBin"/> 
+    <outPin id="_kbWREY4uEe--__rPTWj_sg" entityName="userDBout"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_EEugco8dEe-JJbe6mLv2Lg" inputPins="_i32eAI4uEe--__rPTWj_sg" outputPin="_kbWREY4uEe--__rPTWj_sg" outputLabels="_ZtPvwI8XEe-JJbe6mLv2Lg"/> 
+  </behavior> 
+  <behavior id="_3K8rJY4rEe--__rPTWj_sg" entityName="masking Service"> 
+    <inPin id="_mF8xsI4uEe--__rPTWj_sg" entityName="MaskingIn"/> 
+    <outPin id="_oWqQEY4uEe--__rPTWj_sg" entityName="MaskingOut"/> 
+    <outPin id="_u9rN8Y-7Ee-ftKOFDXzzKg" entityName="MaskingOut2"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_KjfTo48dEe-JJbe6mLv2Lg" inputPins="_mF8xsI4uEe--__rPTWj_sg" outputPin="_oWqQEY4uEe--__rPTWj_sg"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_wOqUs4-7Ee-ftKOFDXzzKg" inputPins="_mF8xsI4uEe--__rPTWj_sg" outputPin="_u9rN8Y-7Ee-ftKOFDXzzKg"/> 
+  </behavior> 
+  <behavior id="_y-di1Y-7Ee-ftKOFDXzzKg" entityName="maskedMasking"> 
+    <inPin id="_06SWUI-7Ee-ftKOFDXzzKg" entityName="MaskingIn"/> 
+    <outPin id="_2P6shY-7Ee-ftKOFDXzzKg" entityName="MaskingOut"/> 
+    <outPin id="_3VnJQY-7Ee-ftKOFDXzzKg" entityName="MaskingOut2"/> 
+    <assignment xsi:type="datadictionary:Assignment" id="_42z2Ro-7Ee-ftKOFDXzzKg" entityName="MasktoPay" inputPins="_06SWUI-7Ee-ftKOFDXzzKg" outputPin="_2P6shY-7Ee-ftKOFDXzzKg" outputLabels="_U97g8I8XEe-JJbe6mLv2Lg"> 
+      <term xsi:type="datadictionary:TRUE" id="_Fqcg0I-8Ee-ftKOFDXzzKg"/> 
+    </assignment> 
+    <assignment xsi:type="datadictionary:Assignment" id="_Gh2p94-8Ee-ftKOFDXzzKg" entityName="masktoauth" inputPins="_06SWUI-7Ee-ftKOFDXzzKg" outputPin="_3VnJQY-7Ee-ftKOFDXzzKg" outputLabels="_U97g8I8XEe-JJbe6mLv2Lg"> 
+      <term xsi:type="datadictionary:TRUE" id="_KYHJ0I-8Ee-ftKOFDXzzKg"/> 
+    </assignment> 
+  </behavior> 
+  <behavior id="_7gjZdY4rEe--__rPTWj_sg" entityName="reciept Log"> 
+    <inPin id="_pkhxYI4uEe--__rPTWj_sg" entityName="recieptIn"/> 
+    <outPin id="_qnj7sY4uEe--__rPTWj_sg" entityName="recieptOut"/> 
+  </behavior> 
+  <behavior id="_AetVhY4sEe--__rPTWj_sg" entityName="Log Out"> 
+    <inPin id="_royvMI4uEe--__rPTWj_sg" entityName="LogOutIn"/> 
+    <outPin id="_s-FuMY4uEe--__rPTWj_sg" entityName="LogOutout"/> 
+    <assignment xsi:type="datadictionary:ForwardingAssignment" id="_fZVhI48dEe-JJbe6mLv2Lg" inputPins="_royvMI4uEe--__rPTWj_sg" outputPin="_s-FuMY4uEe--__rPTWj_sg"/> 
+  </behavior> 
+</datadictionary:DataDictionary> 
