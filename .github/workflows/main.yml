@@ -1,0 +1,30 @@
+name: Build Updatesite
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [created]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * *' # run nightly at 2:00 am
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.6
+      - name: Build and Verify
+        run: mvn clean verify 
+          
