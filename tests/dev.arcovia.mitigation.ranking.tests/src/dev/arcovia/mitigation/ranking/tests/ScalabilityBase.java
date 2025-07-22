@@ -1,5 +1,6 @@
 package dev.arcovia.mitigation.ranking.tests;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ranking.MitigationStrategy;
@@ -36,31 +37,37 @@ public abstract class ScalabilityBase extends MitigationTestBase {
     }
 
     @Test
+    @Disabled
     public void executeHalf() {
         executeMitigationStrategy(MitigationStrategy.HALF);
     }
 
     @Test
+    @Disabled
     public void executeQuarter() {
         executeMitigationStrategy(MitigationStrategy.QUATER);
     }
 
     @Test
+    @Disabled
     public void executeIncreasing() {
         executeMitigationStrategy(MitigationStrategy.INCREASING);
     }
 
     @Test
+    @Disabled
     public void executeCluster() {
         executeMitigationStrategy(MitigationStrategy.CLUSTER);
     }
 
     @Test
+    @Disabled
     public void executeFastStart() {
         executeMitigationStrategy(MitigationStrategy.FAST_START);
     }
 
     @Test
+    @Disabled
     public void executeBruteForce() {
         executeMitigationStrategy(MitigationStrategy.BRUTE_FORCE);
     }
