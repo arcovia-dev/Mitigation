@@ -72,7 +72,7 @@ public abstract class MitigationTestBase extends TestBase {
                     .toString(), TEST_MODEL_PROJECT_NAME);
     protected final URI mitigationUncertaintyURI =
             URI.createFileURI(Paths.get("mitigation", "mitigation.uncertainty")
-                    .toString());  
+                    .toString());   
 
     // Evaluation variables
     protected final String pathToMeassurements = "meassurements.txt";
