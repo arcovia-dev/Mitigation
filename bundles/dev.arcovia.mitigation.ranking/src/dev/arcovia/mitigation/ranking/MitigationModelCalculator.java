@@ -231,7 +231,7 @@ public class MitigationModelCalculator {
 
     private static String getOutputPathFromURI(URI mitigationUncertaintyURI) {
         var segments = mitigationUncertaintyURI.segmentsList();
-        return Paths.get(segments.get(2))
+        return Paths.get(segments.get(segments.size() - 2))
                 .toString();
     }
 
