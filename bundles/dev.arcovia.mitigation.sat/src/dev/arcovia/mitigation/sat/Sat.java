@@ -25,6 +25,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+/**
+ * The Sat class provides a framework for solving satisfiability problems.
+ * It models and solves a set of constraints related to nodes, flows, and terms
+ * in a data flow diagram (DFD).
+ */
 public class Sat {
 
     private BiMap<Term, Integer> termToLiteral;
@@ -38,6 +43,22 @@ public class Sat {
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
 
+    /**
+     * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints.
+     * The method builds the necessary clauses, writes related output files for debugging or analysis
+     * if a DFD name is provided, and then solves the problem using a SAT solver.
+     *
+     * @param nodes       the list of nodes involved in the system.
+     * @param flows       the list of flows between nodes in the system.
+     * @param constraints the list of constraints that must be satisfied.
+     * @param dfdName     the optional name for the data flow diagram; used for output file naming.
+     *
+     * @return a list of solutions, where each solution is represented as a list of terms.
+     *
+     * @throws ContradictionException if the constraints contain a direct contradiction.
+     * @throws TimeoutException       if the solver exceeds the allocated time without finding a solution.
+     * @throws IOException            if an error occurs during file writing operations.
+     */
     public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
@@ -63,6 +84,22 @@ public class Sat {
         return solveClauses();
     }
 
+    /**
+     * Solves a system of logical clauses using a SAT solver and returns a list of unique solutions.
+     *
+     * The method iteratively finds solutions to the given SAT problem, extracts relevant terms
+     * from each solution while excluding terms associated with incoming data, and ensures each
+     * solution is unique. It also prohibits previously found solutions to ensure the discovery of
+     * distinct results. The solver halts if more than 10,000 solutions are found, throwing a
+     * {@link TimeoutException}. Additional constraints are dynamically added to avoid revisiting
+     * the same solutions.
+     *
+     * @return a list of unique solutions, where each solution is represented as a list of
+     *         {@link Term} objects.
+     * @throws TimeoutException       if the solver exceeds the allocated time or reaches the
+     *                                maximum number of allowed solutions.
+     * @throws ContradictionException if a contradiction is encountered in the constraints.
+     */
     private List<List<Term>> solveClauses() throws TimeoutException, ContradictionException {
         IProblem problem = solver;
 
@@ -102,6 +139,30 @@ public class Sat {
         return solutions;
     }
 
+    /**
+     * Builds the logical clauses required for solving the constraint satisfaction problem
+     * using a SAT solver. This method encodes various constraints and relationships between
+     * nodes, flows, and labels into clausal form, ensuring the problem's logical structure
+     * can be processed by the solver. The clauses include constraints for enforcing node
+     * characteristics, handling data flows, prohibiting invalid edges, and managing label
+     * propagation and interactions.
+     *
+     * The method performs the following tasks:
+     * 1. Encodes node-only constraints.
+     * 2. Applies constraints to flows entering a node.
+     * 3. Ensures that each node and its outgoing data align with predefined characteristics.
+     * 4. Prohibits the creation of unauthorized edges between nodes.
+     * 5. Encodes label propagation rules, ensuring labels and data attributes are correctly
+     *    transferred along defined flows.
+     * 6. Ensures nodes have repairing incoming data labels via all necessary violating flows.
+     * 7. Ensures nodes receive incoming data labels if any relevant flows are active.
+     *
+     * The clauses are constructed and added to the SAT solver iteratively by processing nodes,
+     * pins, flows, and constraints within the system.
+     *
+     * @throws ContradictionException if the constraints result in any logical contradictions
+     *                                during clause addition, rendering the problem unsolvable.
+     */
     private void buildClauses() throws ContradictionException {
         // Force constraints at each node and Flow
         for (Node node : nodes) {
@@ -276,6 +337,7 @@ public class Sat {
 
         return pins;
     }
+
     private Boolean violatesConstraintWithLabel(Label enforcedLabel, Node sourceNode, OutPin sourcePin){
         List<Label> outgoingData = sourceNode.outPins().get(sourcePin);
 
