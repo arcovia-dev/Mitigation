@@ -29,6 +29,11 @@ import org.sat4j.specs.TimeoutException;
 
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 
+/**
+ * The Mechanic class is designed to operate on a Data Flow Diagram (DFD) and its associated dictionary,
+ * applying constraints and repairing violations found within the DFD. It provides the ability to assess
+ * whether a DFD and its constraints are consistent and suggests corrections to resolve violations.
+ */
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
 
@@ -42,6 +47,15 @@ public class Mechanic {
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
+    /**
+     * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location, constraints, and
+     * mapping of costs for specific labels. This constructor initializes the DFD, its associated name, constraints,
+     * costs, and prepares the internal data structures for nodes and flows.
+     *
+     * @param dfdLocation the file location of the Web Data Flow Diagram (DFD)
+     * @param constraints the list of constraints to be applied to the DFD
+     * @param costs the map associating labels with their respective integer costs
+     */
     public Mechanic(String dfdLocation, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
         var name = Paths.get(dfdLocation)
@@ -54,10 +68,28 @@ public class Mechanic {
         this.flows = new ArrayList<>();
     }
 
+    /**
+     * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location and constraints.
+     * This constructor initializes the DFD, its associated name, and constraints. Internal data structures for
+     * nodes and flows are also prepared.
+     *
+     * @param dfdLocation the file location of the Web Data Flow Diagram (DFD)
+     * @param constraints the list of constraints to be applied to the DFD
+     */
     public Mechanic(String dfdLocation, List<Constraint> constraints) {
         this(dfdLocation, constraints, null);
     }
 
+    /**
+     * Constructs a new Mechanic instance with the specified Data Flow Diagram and Dictionary (DFD),
+     * DFD name, constraints, and label costs. This constructor initializes the DFD, its associated name,
+     * constraints, costs, and prepares the internal data structures for nodes and flows.
+     *
+     * @param dfd the Data Flow Diagram and Dictionary (DFD) to be processed
+     * @param dfdName the name associated with the Data Flow Diagram
+     * @param constraints the list of constraints to be applied to the DFD
+     * @param costs the map associating labels with their respective integer costs
+     */
     public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = dfd;
         this.dfdName = dfdName;
@@ -67,10 +99,34 @@ public class Mechanic {
         this.flows = new ArrayList<>();
     }
 
+    /**
+     * Constructs a new Mechanic instance with the specified Data Flow Diagram and Dictionary (DFD),
+     * DFD name, and constraints. This constructor initializes the DFD, its associated name,
+     * constraints, and prepares the internal data structures for nodes and flows.
+     *
+     * @param dfd the Data Flow Diagram and Dictionary (DFD) to be processed
+     * @param dfdName the name associated with the Data Flow Diagram
+     * @param constraints the list of constraints to be applied to the DFD
+     */
     public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints) {
         this(dfd, dfdName, constraints, null);
     }
 
+    /**
+     * Repairs the given Data Flow Diagram and Dictionary (DFD) by analyzing violations
+     * against constraints, identifying necessary corrective actions, and applying those
+     * corrections to provide an updated and valid DFD.
+     *
+     * The method first determines the violating Transpose Flow Graphs (TFGs) in the DFD
+     * and analyzes the nodes and flows to be adjusted. If no violations are found, the original DFD is returned.
+     * Otherwise, it solves for feasible corrective actions, chooses the best solution, and applies
+     * the appropriate changes to the DFD.
+     *
+     * @return the updated Data Flow Diagram and Dictionary (DFD) that adheres to the specified constraints
+     * @throws ContradictionException if the constraint solving process encounters a contradiction
+     * @throws TimeoutException if the constraint solving process exceeds the predefined time limit
+     * @throws IOException if there is an error reading or writing the DFD data during the repair
+     */
     public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
         deriveOutPinsToAssignmentsMap(dfd);
@@ -96,6 +152,44 @@ public class Mechanic {
         return dfd;
     }
 
+    /**
+     * Determines whether the given Data Flow Diagram and Dictionary (DFD) adheres to all specified constraints.
+     *
+     * This method evaluates the DFD by analyzing its Transpose Flow Graphs (TFGs) against the provided constraints.
+     * If no violations are found, the DFD is deemed violation-free.
+     *
+     * @param dfd the Data Flow Diagram and Dictionary (DFD) to be evaluated
+     * @param constraints the list of constraints that the DFD must satisfy
+     * @return true if the DFD satisfies all constraints and is violation-free, false otherwise
+     */
+    public Boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+        return (determineViolatingTFGs(dfd, constraints).isEmpty());
+    }
+
+    /**
+     * Calculates the number of violations in a given Data Flow Diagram and Dictionary (DFD)
+     * based on the provided constraints.
+     *
+     * This method uses the internal logic to determine the Transpose Flow Graphs (TFGs) within the
+     * DFD that do not adhere to the specified constraints, and returns the count of such violations.
+     *
+     * @param dfd the Data Flow Diagram and Dictionary (DFD) to be analyzed for violations
+     * @param constraints the list of constraints that the DFD should satisfy
+     * @return the number of violations found in the DFD based on the provided constraints
+     */
+    public int amountOfViolations(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+        return (determineViolatingTFGs(dfd, constraints).size());
+    }
+
+    /**
+     * Retrieves the current number of violations identified in the Data Flow Diagram and Dictionary (DFD).
+     *
+     * @return the number of violations as an integer
+     */
+    public int getViolations() {
+        return violations;
+    }
+
     private List<Term> getChosenSolution(List<List<Term>> solutions, List<Term> flatendNodes) {
         if (costs != null) {
             for (var constraint : constraints) {
@@ -114,14 +208,7 @@ public class Mechanic {
             return getMinimalSolution(solutions);
         }
     }
-    public Boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
-        return (determineViolatingTFGs(dfd, constraints).isEmpty());
-    }
-    
-    public int amountOfViolations(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
-        return (determineViolatingTFGs(dfd, constraints).size());
-    }
-        
+
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
@@ -156,10 +243,6 @@ public class Mechanic {
                 violations++;
         }
         return violation;
-    }
-
-    public int getViolations() {
-        return violations;
     }
 
     private boolean checkConstraint(AbstractTransposeFlowGraph tfg, List<Literal> constraint) {

@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * ModelCostCalculator is responsible for computing the total cost of a data flow diagram (DFD)
+ * based on predefined constraints and label costs. The calculator traverses the DFD, identifies
+ * relevant labels, and evaluates their occurrences in various nodes and connections within the diagram.
+ */
 public class ModelCostCalculator {
     DataFlowDiagramAndDictionary dfd;
     List<Constraint> constraints;
@@ -22,6 +27,16 @@ public class ModelCostCalculator {
 
     int cost = 0;
 
+    /**
+     * Constructs a ModelCostCalculator that computes the cost of evaluating
+     * a data flow model with provided constraints and associated costs for labels.
+     *
+     * @param dfd the DataFlowDiagramAndDictionary instance representing the data flow
+     *            diagram and its dictionary used in the evaluation.
+     * @param constraints the list of constraints to be applied during the cost
+     *                    calculation process.
+     * @param costs a map that associates a label with its corresponding integer cost.
+     */
     public ModelCostCalculator(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, Map<Label, Integer> costs) {
         this.dfd = dfd;
         this.constraints = constraints;
@@ -32,6 +47,15 @@ public class ModelCostCalculator {
     }
 
 
+    /**
+     * Calculates the cost of evaluating a data flow model by computing the combined
+     * cost of all relevant labels and their associated operations within the model.
+     * It identifies relevant labels based on constraints, evaluates vertices, and
+     * processes outgoing pins linked to those labels. The cost for a label is determined
+     * by multiplying the number of related operations by the predefined cost of the label.
+     *
+     * @return the total calculated cost of the model evaluation as an integer
+     */
     public int calculateCost() {
         determineRelevantLabels();
         for (var label : allRelevantLabels.keySet()){

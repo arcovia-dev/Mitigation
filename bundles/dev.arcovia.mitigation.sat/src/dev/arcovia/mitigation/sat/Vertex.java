@@ -10,15 +10,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The Vertex class represents an entity in a data flow analysis graph.
+ * It encapsulates properties, behaviors, and relationships with other entities,
+ * such as incoming and outgoing pins and assignments.
+ */
 public class Vertex {
     public final String name;
-    private Behavior behavior;
-    private List<org.dataflowanalysis.dfd.datadictionary.Label> properties;
-    private List<AbstractAssignment> assignments;
-    private List<Assignment> outgoingAssignments = new ArrayList<>();
-    private List<ForwardingAssignment> forwardingAssignments = new ArrayList<>();
-    private HashMap<Pin,List<Label>> outgoingLabels;
-    private List<Label> vertexLabels;
+    private final Behavior behavior;
+    private final List<org.dataflowanalysis.dfd.datadictionary.Label> properties;
+    private final List<AbstractAssignment> assignments;
+    private final List<Assignment> outgoingAssignments = new ArrayList<>();
+    private final List<ForwardingAssignment> forwardingAssignments = new ArrayList<>();
+    private final HashMap<Pin,List<Label>> outgoingLabels;
+    private final List<Label> vertexLabels;
     public List<Pin> inPins;
 
     public Vertex(Node node) {
@@ -36,6 +41,7 @@ public class Vertex {
     private List<Pin> getInpins(){
         return behavior.getInPin();
     }
+
     private List<Label> transformLabels (List<org.dataflowanalysis.dfd.datadictionary.Label> labels){
         var transformedLabels = new ArrayList<Label>();
         for (var label: labels){
@@ -45,6 +51,7 @@ public class Vertex {
         }
         return transformedLabels;
     }
+
     private HashMap<Pin, List<Label>> getOutgoingLabels(){
         HashMap<Pin,List<Label>> outgoingCharacteristics = new HashMap<>();
         for (var assignment : outgoingAssignments) {
@@ -57,6 +64,7 @@ public class Vertex {
         }
         return outgoingCharacteristics;
     }
+
     private List<Label> getVertexLabels(){
         List<Label> nodeLabels = new ArrayList<>();
         for (var property : properties) {
@@ -66,6 +74,7 @@ public class Vertex {
         }
         return nodeLabels;
     }
+
     private void differentiateAssignments() {
         for (AbstractAssignment assignment : assignments) {
             if (assignment instanceof ForwardingAssignmentImpl) {
@@ -76,6 +85,17 @@ public class Vertex {
             }
         }
     }
+
+    /**
+     * Retrieves a list of outgoing pins associated with a specific label.
+     *
+     * This method iterates through the set of outgoing labels and selects pins
+     * that contain the given label in their corresponding list of labels.
+     *
+     * @param label the label used to filter the outgoing pins; must not be null
+     * @return a list of pins associated with the specified label;
+     *         returns an empty list if no pins match the given label
+     */
     public List<Pin> getOutPinsWithLabel(Label label) {
         var pins = new ArrayList<Pin>();
         for (var pin : outgoingLabels.keySet()) {
@@ -85,10 +105,27 @@ public class Vertex {
         }
         return pins;
     }
+
+    /**
+     * Checks if the specified label exists in the collection of vertex labels.
+     *
+     * @param label the label to check for existence; must not be null
+     * @return true if the label exists in the vertex labels; false otherwise
+     */
     public boolean hasVertexLabel(Label label) {
         return vertexLabels.contains(label);
     }
 
+    /**
+     * Retrieves a list of output pins that are forward-connected to the specified input pin.
+     *
+     * This method iterates through the forwarding assignments and identifies output pins
+     * connected to the provided input pin through forwarding logic.
+     *
+     * @param pin the input pin for which forwarding output pins are to be retrieved; must not be null
+     * @return a list of output pins that are forward-connected to the specified input pin;
+     *         returns an empty list if no forward connections exist for the input pin
+     */
     public List<Pin> getForwardingOutPins(Pin pin) {
         var forwardingPins = new ArrayList<Pin>();
         for (var forwardingAssignment : forwardingAssignments) {
