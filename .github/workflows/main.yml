@@ -25,6 +25,10 @@ jobs:
         uses: stCarolas/setup-maven@v5
         with:
           maven-version: 3.9.6
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r tests/dev.arcovia.mitigation.ranking.tests/scripts/uncertaintyRanking/requirements.txt
       - name: Build and Verify
         run: mvn clean verify 
           
