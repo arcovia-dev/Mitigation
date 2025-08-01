@@ -12,6 +12,6 @@ Require-Bundle: org.dataflowanalysis.converter;bundle-version="2.0.0",
  dev.abunai.confidentiality.analysis.model,
  dev.abunai.confidentiality.analysis.testmodels,
  org.eclipse.emf.ecore,
- org.apache.log4j;bundle-version="1.2.24"
+ org.apache.log4j
 Automatic-Module-Name: dev.arcovia.mitigation.ranking
 Bundle-RequiredExecutionEnvironment: JavaSE-17
