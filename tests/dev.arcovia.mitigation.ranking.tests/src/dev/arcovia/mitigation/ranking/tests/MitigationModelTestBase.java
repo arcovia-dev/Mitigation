@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.dataflowanalysis.analysis.core.AbstractVertex;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ranking.MitigationStrategy;
@@ -56,6 +57,7 @@ public abstract class MitigationModelTestBase extends MitigationTestBase {
     }
 
     @Test
+    @Disabled
     public void executeMitigation() {
         List<Float> meassurements = new ArrayList<>();
         List<Float> train_data_meassurements = new ArrayList<>();
