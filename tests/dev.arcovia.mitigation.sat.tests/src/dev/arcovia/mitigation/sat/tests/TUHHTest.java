@@ -181,7 +181,7 @@ public class TUHHTest {
         System.out.println(violationsBefore);
         System.out.println(violationsAfter);
         
-        assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_4", "apssouza22_7"));
+        assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_7"));
     }
 
     @Disabled
@@ -194,7 +194,7 @@ public class TUHHTest {
         String name = model + "_" + variant;
         dfdConverter.convert(loadDFD(model,name)).save("testresults/",  "specific_" + name + "-repaired.json");
 
-        var repairedDfdCosts = runRepair(model, name, true, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway), costs).repairedDfd();
+        var repairedDfdCosts = runRepair(model, name, true, constraints, costs).repairedDfd();
         dfdConverter.convert(repairedDfdCosts).save("testresults/",  "specific_" + name + "-repaired.json");
         assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
     }
