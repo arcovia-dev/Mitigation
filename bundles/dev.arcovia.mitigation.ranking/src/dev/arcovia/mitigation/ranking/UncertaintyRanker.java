@@ -3,12 +3,12 @@ package dev.arcovia.mitigation.ranking;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class UncertaintyRanker {
-
     /**
      * Executes the Python script for ranking uncertainties based on training data and returns the ranked results.
      * This method interacts with the Python script by invoking it with the given parameters
@@ -43,15 +43,28 @@ public class UncertaintyRanker {
                         .append(System.lineSeparator());
             }
 
-            // Get the output as a String
-            String result = output.toString();
+            
+            BufferedReader stdErr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            StringBuilder errorOutput = new StringBuilder();
+            while ((line = stdErr.readLine()) != null) {
+                errorOutput.append(line).append(System.lineSeparator());
+            }
 
-            return Arrays.asList(result.split(System.lineSeparator()));
+            int exitCode = process.waitFor();
 
-        } catch (IOException e) {
+            if (exitCode != 0) {
+            	Logger logger = Logger.getLogger(UncertaintyRanker.class);
+            	logger.error("Python script failed with exit code " + exitCode);
+            	logger.error("Error output:\n" + errorOutput.toString());
+                throw new RuntimeException("Python script execution failed.");
+            }
+
+            return Arrays.asList(output.toString().split(System.lineSeparator()));
+
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to execute Python script.", e);
         }
-        return null;
     }
 
     private static String getBatchSizeOptimizationParameter(MitigationStrategy mitigationStrategy) {

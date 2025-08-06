@@ -54,7 +54,7 @@ public abstract class MitigationTestBase extends TestBase {
     protected abstract RankingAggregationMethod getAggregationMethod();
 
     protected String customPythonPath() {
-        return "/Users/nniehues/miniconda3/bin/python";
+        return "python3";
     }
 
     // Mitigation ranking variables
@@ -70,8 +70,9 @@ public abstract class MitigationTestBase extends TestBase {
     protected final URI modelUncertaintyURI = ResourceUtils
             .createRelativePluginURI(Paths.get("models", getFolderName(), getFilesName() + ".uncertainty")
                     .toString(), TEST_MODEL_PROJECT_NAME);
-    protected final URI mitigationUncertaintyURI = ResourceUtils.createRelativePluginURI(Paths.get("mitigation", "mitigation.uncertainty")
-            .toString(), TEST_MODEL_PROJECT_NAME);
+    protected final URI mitigationUncertaintyURI =
+            URI.createFileURI(Paths.get("mitigation", "mitigation.uncertainty")
+                    .toString());   
 
     // Evaluation variables
     protected final String pathToMeassurements = "meassurements.txt";
