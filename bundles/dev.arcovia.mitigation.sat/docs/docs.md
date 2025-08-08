@@ -13,11 +13,14 @@ whether a DFD and its constraints are consistent and suggests corrections to res
 ### Constructor
 
 _The Mechanic class has four different constructors allowing multiple options in providing the DFD._
-
-    DFD Format:
-        - Location of the web json DFD
+    
+    Options:
+    - DFD Format:
+        - Location of the web json DFD or
         - DataFlowDiagramAndDictionary object from xDecaf
-    - optional LabelCostMap
+    - LabelCostMap:
+        - no Costs
+        - CostMap {Label : Value}
 
 ### `repair()`
 

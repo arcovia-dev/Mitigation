@@ -1,7 +1,7 @@
 package dev.arcovia.mitigation.sat;
 
 /**
- * Represents a label specifically categorized as a Node.
+ * Represents a label specifically categorized as a {@link LabelCategory#Node}.
  *
  * This class is a concrete implementation of the {@link CompositeLabel} class,
  * associating the {@code LabelCategory.Node} category with a specific {@link Label}.
