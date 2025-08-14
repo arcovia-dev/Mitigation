@@ -9,11 +9,11 @@ Import-Package: org.junit;version="4.13.2",
  org.junit.jupiter.params;version="5.8.1",
  org.junit.jupiter.params.provider;version="5.8.1"
 Require-Bundle: dev.arcovia.mitigation.ranking,
- org.dataflowanalysis.analysis,
- org.dataflowanalysis.analysis.dfd,
- org.apache.log4j,
- dev.abunai.confidentiality.analysis.model,
  org.dataflowanalysis.converter,
- dev.abunai.confidentiality.analysis
+ dev.abunai.confidentiality.analysis,
+ org.dataflowanalysis.analysis.dfd,
+ org.dataflowanalysis.analysis,
+ org.apache.log4j,
+ dev.abunai.confidentiality.analysis.model
 Automatic-Module-Name: dev.arcovia.mitigation.ranking.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17
