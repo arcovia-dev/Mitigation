@@ -7,7 +7,7 @@ public class BaseFormula {
 		this.root = root;
 	}
 	
-	public void translateToCNF() {
+	public void toCNF() {
 		
 	}
 }

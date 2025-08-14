@@ -1,68 +1,44 @@
 package dev.arcovia.mitigation.sat.cnf;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import dev.arcovia.mitigation.sat.Literal;
+import dev.arcovia.mitigation.sat.Constraint;
 
-public class DisjunctionNode {
-	protected final List<DisjunctionNode> predicates;
-	protected final LogicNodeDescriptor descriptor;
-	protected final Literal literal;
+public class DisjunctionNode extends LogicNode {
+	protected final List<LogicNode> predicates = Collections.emptyList();
 	
-	public DisjunctionNode(LogicNodeDescriptor descriptor) {
-		this.predicates = new ArrayList<DisjunctionNode>();
-		this.descriptor = descriptor;
-		this.literal = null;
+	public DisjunctionNode() {
+		super(LogicNodeDescriptor.LITERAL);
 	}
 	
-	public DisjunctionNode(Literal literal) {
-		this.predicates = null;
-		this.descriptor = LogicNodeDescriptor.LITERAL;
-		this.literal = literal;
-	}
-	
-	public void addPredicate(DisjunctionNode predicate) {
-		if(descriptor == LogicNodeDescriptor.LITERAL) { return; }
+	public void addPredicate(LogicNode predicate) {
 		predicates.add(predicate);
 	}
 	
-	public void collectCNFClauses(List<Clause> result, List<Clause> activeClauses) {
-		switch(descriptor) {
-			case CONJUNCTION	-> traverseConjunction(result, activeClauses);
-			case DISJUNCTION	-> traverseDisjunction(result, activeClauses);
-			case LITERAL		-> traverseLiteral(result, activeClauses);
-		}
-	}
-	
-	private void traverseConjunction(List<Clause> result, List<Clause> activeClauses) {
-		predicates.forEach(it -> it.collectCNFClauses(result, activeClauses));
-	}
-	
-	private void traverseDisjunction(List<Clause> result, List<Clause> activeClauses) {
-	    List<List<Clause>> branchClauses = new ArrayList<>();
+	@Override
+	public void collectCNFClauses(List<Constraint> result, List<Constraint> activeClauses) {
+		List<List<Constraint>> branchClauses = new ArrayList<>();
 	    branchClauses.add(activeClauses);
 
 	    predicates.stream()
 	            .skip(1)
 	            .forEach(p -> {
-	                List<Clause> copiedClauses = activeClauses.stream()
-	                		.map(Clause::new)
+	                List<Constraint> copiedClauses = activeClauses.stream()
+	                		.map(Constraint::literals) // TODO does that work?
+	                		.map(Constraint::new)
 	                		.peek(result::add)
 	                		.toList();
 	                branchClauses.add(copiedClauses);
 	            });
 
 	    for (int i = 0; i < predicates.size(); i++) {
-	        List<Clause> branch = branchClauses.get(i);
+	        List<Constraint> branch = branchClauses.get(i);
 	        predicates.get(i).collectCNFClauses(result, branch);
 	        if (i > 0) {
 	            activeClauses.addAll(branch);
 	        }
 	    }
-	}
-	
-	private void traverseLiteral(List<Clause> result, List<Clause> activeClauses) {
-		activeClauses.forEach(it -> it.add(literal));
 	}
 }
