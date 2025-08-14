@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Export-Package: 
  dev.arcovia.mitigation.ranking
 Require-Bundle: org.dataflowanalysis.converter,
- org.dataflowanalysis.analysis,
  dev.abunai.confidentiality.analysis,
  dev.abunai.confidentiality.analysis.model,
  org.eclipse.emf.ecore,

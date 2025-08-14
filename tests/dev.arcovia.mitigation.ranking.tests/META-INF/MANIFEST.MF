@@ -12,7 +12,6 @@ Require-Bundle: dev.arcovia.mitigation.ranking,
  org.dataflowanalysis.converter,
  dev.abunai.confidentiality.analysis,
  org.dataflowanalysis.analysis.dfd,
- org.dataflowanalysis.analysis,
  org.apache.log4j,
  dev.abunai.confidentiality.analysis.model
 Automatic-Module-Name: dev.arcovia.mitigation.ranking.tests
