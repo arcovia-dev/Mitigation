@@ -27,7 +27,7 @@ public class DisjunctionNode extends LogicNode implements BranchNode {
 	            .skip(1)
 	            .forEach(p -> {
 	                List<Constraint> copiedClauses = activeClauses.stream()
-	                		.map(Constraint::literals) // TODO does that work?
+	                		.map(Constraint::literals)
 	                		.map(Constraint::new)
 	                		.peek(result::add)
 	                		.toList();
