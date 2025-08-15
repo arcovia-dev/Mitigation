@@ -1,17 +1,19 @@
 package dev.arcovia.mitigation.sat.cnf;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import dev.arcovia.mitigation.sat.Constraint;
 
-public class ConjunctionNode extends LogicNode {
-	protected final List<LogicNode> predicates = Collections.emptyList();
+public class ConjunctionNode extends LogicNode implements BranchNode {
+	protected final List<LogicNode> predicates = new ArrayList<LogicNode>();
 	
 	public ConjunctionNode() {
 		super(LogicNodeDescriptor.CONJUNCTION);
 	}
-	
+
+    @Override
 	public void addPredicate(LogicNode predicate) {
 		predicates.add(predicate);
 	}

@@ -6,13 +6,14 @@ import java.util.List;
 
 import dev.arcovia.mitigation.sat.Constraint;
 
-public class DisjunctionNode extends LogicNode {
-	protected final List<LogicNode> predicates = Collections.emptyList();
+public class DisjunctionNode extends LogicNode implements BranchNode {
+	protected final List<LogicNode> predicates = new ArrayList<LogicNode>();
 	
 	public DisjunctionNode() {
 		super(LogicNodeDescriptor.LITERAL);
 	}
-	
+
+    @Override
 	public void addPredicate(LogicNode predicate) {
 		predicates.add(predicate);
 	}
