@@ -6,7 +6,7 @@ import java.util.List;
 
 import dev.arcovia.mitigation.sat.Constraint;
 
-public class DisjunctionNode extends LogicNode implements BranchNode {
+public class DisjunctionNode extends BranchNode {
 	protected final List<LogicNode> predicates = new ArrayList<LogicNode>();
 	
 	public DisjunctionNode() {
