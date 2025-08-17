@@ -1,6 +1,5 @@
 package dev.arcovia.mitigation.sat.cnf;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
