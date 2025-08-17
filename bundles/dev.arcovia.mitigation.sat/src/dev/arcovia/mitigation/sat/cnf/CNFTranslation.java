@@ -44,6 +44,7 @@ public class CNFTranslation {
         selectors.addAll(analysisConstraint.getDataSourceSelectors().getSelectors());
         selectors.addAll(analysisConstraint.getVertexSourceSelectors().getSelectors());
         selectors.addAll(analysisConstraint.getVertexDestinationSelectors().getSelectors());
+        conditionalSelectors.addAll(analysisConstraint.getConditionalSelectors().getSelectors());
 
         for (var selector : selectors) {
             if (selector instanceof DataCharacteristicsSelector dataCharacteristicsSelector) {
