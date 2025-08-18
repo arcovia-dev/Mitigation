@@ -16,6 +16,7 @@ public class ConstantVertexCharacteristicListSelector implements ConstantDataSel
     @Override
     public void addLiterals(BranchNode root, boolean hasOutgoingData, boolean hasIncomingData) {
         var node = selector.isInverted() ? new ConjunctionNode() : new DisjunctionNode();
+        root.addPredicate(node);
         selector.getCharacteristicsSelectorDataList().forEach(it ->
                 new ConstantVertexCharacteristicSelector(
                         new VertexCharacteristicsSelector(null, it, selector.isInverted())

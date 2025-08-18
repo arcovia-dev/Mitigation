@@ -39,6 +39,7 @@ public class CNFTranslation {
         cnf = new ArrayList<>();
         var baseCNF = baseFormula.toCNF();
         var conditionalCNF = conditionalFormula.toCNF();
+
         if (baseCNF != null && !baseCNF.isEmpty()) {
             cnf.addAll(baseCNF);
         }

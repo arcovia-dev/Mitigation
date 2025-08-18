@@ -24,7 +24,7 @@ public class ConstantDataCharacteristicListSelector implements ConstantDataSelec
                 new ConstantDataCharacteristicSelector(
                         new DataCharacteristicsSelector(null, it, selector.isInverted())
                 )).toList();
-        dataSelectors.forEach(it -> it.addLiterals(incomingDataNode, hasOutgoingData, !hasIncomingData));
-        dataSelectors.forEach(it -> it.addLiterals(outgoingDataNode, !hasOutgoingData, hasIncomingData));
+        dataSelectors.forEach(it -> it.addLiterals(incomingDataNode, hasOutgoingData, false));
+        dataSelectors.forEach(it -> it.addLiterals(outgoingDataNode, false, hasIncomingData));
     }
 }

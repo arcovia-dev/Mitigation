@@ -16,8 +16,8 @@ public class ConjunctionNode extends BranchNode {
 	public void addPredicate(LogicNode predicate) {
 		predicates.add(predicate);
 	}
-	
-	@Override
+
+    @Override
 	public void collectCNFClauses(List<Constraint> result, List<Constraint> activeConstraints) {
 		predicates.forEach(it -> it.collectCNFClauses(result, activeConstraints));
 	}
@@ -29,7 +29,9 @@ public class ConjunctionNode extends BranchNode {
         var res = new StringBuilder();
         res.append("( ");
         for (LogicNode predicate : predicates) {
-            res.append(predicate.toString()).append("AND ");
+            String str = predicate.toString();
+            if(str.isEmpty()) continue;
+            res.append(str).append("AND ");
         }
         res.delete(res.length() - 4, res.length());
         res.append(") ");

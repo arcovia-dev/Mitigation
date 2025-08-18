@@ -1,15 +1,17 @@
 package dev.arcovia.mitigation.sat.cnf;
 
 import dev.arcovia.mitigation.sat.Constraint;
+import dev.arcovia.mitigation.sat.cnf.nodes.BranchNode;
 import dev.arcovia.mitigation.sat.cnf.nodes.LogicNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BaseFormula {
-	private final LogicNode root;
+	private final BranchNode root;
 	
-	public BaseFormula(LogicNode root) {
+	public BaseFormula(BranchNode root) {
 		this.root = root;
 	}
 	
@@ -19,6 +21,10 @@ public class BaseFormula {
         var activeClauses = new ArrayList<>(List.of(constraint));
 
 		root.collectCNFClauses(result, activeClauses);
+
+        if (result.size() == 1 && result.get(0).literals().isEmpty()) {
+            return Collections.emptyList();
+        }
         return result;
 	}
 

@@ -16,8 +16,8 @@ public class DisjunctionNode extends BranchNode {
 	public void addPredicate(LogicNode predicate) {
 		predicates.add(predicate);
 	}
-	
-	@Override
+
+    @Override
 	public void collectCNFClauses(List<Constraint> result, List<Constraint> activeConstraints) {
 		List<List<Constraint>> branchClauses = new ArrayList<>();
 	    branchClauses.add(activeConstraints);
@@ -50,7 +50,9 @@ public class DisjunctionNode extends BranchNode {
         var res = new StringBuilder();
         res.append("( ");
         for (LogicNode predicate : predicates) {
-            res.append(predicate.toString()).append("OR ");
+            String str = predicate.toString();
+            if(str.isEmpty()) continue;
+            res.append(str).append("OR ");
         }
         res.delete(res.length() - 3, res.length());
         res.append(") ");

@@ -20,6 +20,6 @@ public class DynamicVariableConditionalSelector implements DynamicConditionalSel
         if (dynamicDataSelector.isInverted()) {
             throw new IllegalStateException("CharacteristicSelector must be positive");
         }
-        dynamicDataSelector.addLiterals(root, variables, hasOutgoingData, selector.isInverted(), hasIncomingData);
+        dynamicDataSelector.addLiterals(root, variables, hasOutgoingData, hasIncomingData, selector.isInverted());
     }
 }
