@@ -19,27 +19,42 @@ public class DisjunctionNode extends BranchNode {
 	}
 	
 	@Override
-	public void collectCNFClauses(List<Constraint> result, List<Constraint> activeClauses) {
+	public void collectCNFClauses(List<Constraint> result, List<Constraint> activeConstraints) {
 		List<List<Constraint>> branchClauses = new ArrayList<>();
-	    branchClauses.add(activeClauses);
+	    branchClauses.add(activeConstraints);
 
 	    predicates.stream()
 	            .skip(1)
 	            .forEach(p -> {
-	                List<Constraint> copiedClauses = activeClauses.stream()
+	                List<Constraint> copiedConstraints = activeConstraints.stream()
 	                		.map(Constraint::literals)
+                            .map(ArrayList::new)
 	                		.map(Constraint::new)
 	                		.peek(result::add)
 	                		.toList();
-	                branchClauses.add(copiedClauses);
+	                branchClauses.add(copiedConstraints);
 	            });
 
 	    for (int i = 0; i < predicates.size(); i++) {
 	        List<Constraint> branch = branchClauses.get(i);
 	        predicates.get(i).collectCNFClauses(result, branch);
 	        if (i > 0) {
-	            activeClauses.addAll(branch);
+	            activeConstraints.addAll(branch);
 	        }
 	    }
 	}
+
+    @Override
+    public String toString() {
+        if (predicates.isEmpty()) return "";
+        if (predicates.size() == 1) return predicates.get(0).toString();
+        var res = new StringBuilder();
+        res.append("( ");
+        for (LogicNode predicate : predicates) {
+            res.append(predicate.toString()).append("OR ");
+        }
+        res.delete(res.length() - 3, res.length());
+        res.append(") ");
+        return res.toString();
+    }
 }

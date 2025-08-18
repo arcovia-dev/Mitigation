@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseFormula {
-	protected final LogicNode root;
+	private final LogicNode root;
 	
 	public BaseFormula(LogicNode root) {
 		this.root = root;
@@ -20,4 +20,9 @@ public class BaseFormula {
 		root.collectCNFClauses(result, activeClauses);
         return result;
 	}
+
+    @Override
+    public String toString() {
+        return root.toString();
+    }
 }

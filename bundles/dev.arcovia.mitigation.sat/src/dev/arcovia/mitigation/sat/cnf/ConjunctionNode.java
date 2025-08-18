@@ -19,7 +19,21 @@ public class ConjunctionNode extends BranchNode {
 	}
 	
 	@Override
-	public void collectCNFClauses(List<Constraint> result, List<Constraint> activeClauses) {
-		predicates.forEach(it -> it.collectCNFClauses(result, activeClauses));
+	public void collectCNFClauses(List<Constraint> result, List<Constraint> activeConstraints) {
+		predicates.forEach(it -> it.collectCNFClauses(result, activeConstraints));
 	}
+
+    @Override
+    public String toString() {
+        if (predicates.isEmpty()) return "";
+        if (predicates.size() == 1) return predicates.get(0).toString();
+        var res = new StringBuilder();
+        res.append("( ");
+        for (LogicNode predicate : predicates) {
+            res.append(predicate.toString()).append("AND ");
+        }
+        res.delete(res.length() - 4, res.length());
+        res.append(") ");
+        return res.toString();
+    }
 }
