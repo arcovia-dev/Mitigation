@@ -1,6 +1,7 @@
 package dev.arcovia.mitigation.sat.cnf;
 
 import dev.arcovia.mitigation.sat.Constraint;
+import dev.arcovia.mitigation.sat.cnf.nodes.LogicNode;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,6 +4,10 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import dev.arcovia.mitigation.sat.*;
+import dev.arcovia.mitigation.sat.cnf.nodes.BranchNode;
+import dev.arcovia.mitigation.sat.cnf.nodes.ConjunctionNode;
+import dev.arcovia.mitigation.sat.cnf.nodes.DisjunctionNode;
+import dev.arcovia.mitigation.sat.cnf.nodes.LiteralNode;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.selectors.*;
 
@@ -45,53 +49,45 @@ public class CNFTranslation {
 
     public void initialiseTranslation() {
         if(initialized) return;
-        var selectors = new ArrayList<AbstractSelector>();
+
+        List<AbstractSelector> selectors = new ArrayList<>();
         selectors.addAll(analysisConstraint.getDataSourceSelectors().getSelectors());
         selectors.addAll(analysisConstraint.getVertexSourceSelectors().getSelectors());
         selectors.addAll(analysisConstraint.getVertexDestinationSelectors().getSelectors());
         conditionalSelectors.addAll(analysisConstraint.getConditionalSelectors().getSelectors());
 
-        for (var selector : selectors) {
-            if (selector instanceof DataCharacteristicsSelector dataCharacteristicsSelector) {
-                var value = dataCharacteristicsSelector.getCharacteristicsSelectorData().characteristicValue();
-                if(!value.isConstant()) {
-                    dynamicSelectors.put(value.name(), dataCharacteristicsSelector);
-                } else  {
-                    constantSelectors.add(dataCharacteristicsSelector);
-                }
-                continue;
-            }
+        selectors.forEach(this::initializeSelector);
 
-            if (selector instanceof VertexCharacteristicsSelector vertexCharacteristicsSelector) {
-                var value = vertexCharacteristicsSelector.getCharacteristicsSelectorData().characteristicValue();
-                if(!value.isConstant()) {
-                    dynamicSelectors.put(value.name(), vertexCharacteristicsSelector);
-                } else {
-                    constantSelectors.add(vertexCharacteristicsSelector);
-                }
-                continue;
-            }
-
-            if (selector instanceof DataCharacteristicListSelector dataCharacteristicListSelector) {
-                constantSelectors.add(dataCharacteristicListSelector);
-                continue;
-            }
-
-            if (selector instanceof VertexCharacteristicsListSelector vertexCharacteristicsListSelector) {
-                constantSelectors.add(vertexCharacteristicsListSelector);
-                continue;
-            }
-
-            if (selector instanceof ConditionalSelector conditionalSelector) {
-                conditionalSelectors.add(conditionalSelector);
-                continue;
-            }
-
-            throw new IllegalArgumentException("Constraint has unexpected selector type:" + selector);
-        }
         constructBaseFormula();
         constructConditionalFormula();
         initialized = true;
+    }
+
+    private void initializeSelector(AbstractSelector selector) {
+        if (selector instanceof DataCharacteristicsSelector dataCharacteristicsSelector) {
+            var value = dataCharacteristicsSelector.getCharacteristicsSelectorData().characteristicValue();
+            if (value.isConstant()) {
+                constantSelectors.add(dataCharacteristicsSelector);
+            } else {
+                dynamicSelectors.put(value.name(), dataCharacteristicsSelector);
+            }
+            return;
+        }
+        if (selector instanceof VertexCharacteristicsSelector vertexCharacteristicsSelector) {
+            var value = vertexCharacteristicsSelector.getCharacteristicsSelectorData().characteristicValue();
+            if (value.isConstant()) {
+                constantSelectors.add(vertexCharacteristicsSelector);
+            } else {
+                dynamicSelectors.put(value.name(), vertexCharacteristicsSelector);
+            }
+            return;
+        }
+        if (selector instanceof DataCharacteristicListSelector
+                || selector instanceof VertexCharacteristicsListSelector) {
+            constantSelectors.add(selector);
+            return;
+        }
+        throw new IllegalArgumentException("Unexpected selector type: " + selector);
     }
 
     private void constructBaseFormula() {
@@ -154,6 +150,8 @@ public class CNFTranslation {
             throw new IllegalStateException("Unexpected type:" + selector);
         }
     }
+
+
 
     private void constructConditionalFormula() {
         var root = new ConjunctionNode();
