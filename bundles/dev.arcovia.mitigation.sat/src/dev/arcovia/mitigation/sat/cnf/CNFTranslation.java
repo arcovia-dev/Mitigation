@@ -1,9 +1,6 @@
 package dev.arcovia.mitigation.sat.cnf;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 import dev.arcovia.mitigation.sat.*;
@@ -25,6 +22,7 @@ public class CNFTranslation {
     private List<Constraint> cnf;
     private BaseFormula baseFormula;
     private BaseFormula conditionalFormula;
+    private boolean initialized = false;
 
 	public CNFTranslation(AnalysisConstraint analysisConstraint, DataFlowDiagramAndDictionary  dataFlowDiagramAndDictionary) {
         this.analysisConstraint = analysisConstraint;
@@ -32,14 +30,21 @@ public class CNFTranslation {
         hasOutgoingData = !analysisConstraint.getVertexSourceSelectors().getSelectors().isEmpty();
 	}
 
-    private void constructCNF() {
+    public void constructCNF() {
         initialiseTranslation();
         cnf = new ArrayList<>();
-        cnf.addAll(baseFormula.toCNF());
-        cnf.addAll(conditionalFormula.toCNF());
+        var baseCNF = baseFormula.toCNF();
+        var conditionalCNF = conditionalFormula.toCNF();
+        if (baseCNF != null && !baseCNF.isEmpty()) {
+            cnf.addAll(baseCNF);
+        }
+        if (conditionalCNF != null && !conditionalCNF.isEmpty()) {
+            cnf.addAll(conditionalCNF);
+        }
     }
 
-    private void initialiseTranslation() {
+    public void initialiseTranslation() {
+        if(initialized) return;
         var selectors = new ArrayList<AbstractSelector>();
         selectors.addAll(analysisConstraint.getDataSourceSelectors().getSelectors());
         selectors.addAll(analysisConstraint.getVertexSourceSelectors().getSelectors());
@@ -61,6 +66,7 @@ public class CNFTranslation {
                 var value = vertexCharacteristicsSelector.getCharacteristicsSelectorData().characteristicValue();
                 if(!value.isConstant()) {
                     dynamicSelectors.put(value.name(), vertexCharacteristicsSelector);
+                } else {
                     constantSelectors.add(vertexCharacteristicsSelector);
                 }
                 continue;
@@ -85,6 +91,7 @@ public class CNFTranslation {
         }
         constructBaseFormula();
         constructConditionalFormula();
+        initialized = true;
     }
 
     private void constructBaseFormula() {
@@ -116,7 +123,7 @@ public class CNFTranslation {
                 for (var characteristicsSelectorData: characteristicsSelectorDataList) {
                     var dataCharacteristicsSelector = new DataCharacteristicsSelector(null, characteristicsSelectorData, inverted);
                     var labels =  getLabels(dataCharacteristicsSelector.getCharacteristicsSelectorData());
-                    addIncomingDataLabels(node, labels, dataCharacteristicsSelector.isInverted());
+                    addIncomingDataLabels(node, labels, inverted);
                     addOutgoingDataLabels(outGoingDataNode, labels, inverted);
                 }
                 continue;
@@ -170,8 +177,8 @@ public class CNFTranslation {
 
 
                 if (dynamicSelector instanceof DataCharacteristicsSelector dataCharacteristicsSelector) {
-                    if (dataCharacteristicsSelector.isInverted() != inverted) {
-                        throw new IllegalStateException("Inverted data conditional selectors are not the same");
+                    if (dataCharacteristicsSelector.isInverted()) {
+                        throw new IllegalStateException("CharacteristicSelector must be positive");
                     }
                     var labels = getLabels(dataCharacteristicsSelector.getCharacteristicsSelectorData());
                     addIncomingDataLabels(node, labels, inverted);
@@ -180,8 +187,8 @@ public class CNFTranslation {
                 }
 
                 if (dynamicSelector instanceof VertexCharacteristicsSelector vertexCharacteristicsSelector) {
-                    if (vertexCharacteristicsSelector.isInverted() != inverted) {
-                        throw new IllegalStateException("Inverted data conditional selectors are not the same");
+                    if (vertexCharacteristicsSelector.isInverted()) {
+                        throw new IllegalStateException("CharacteristicSelector must be positive");
                     }
                     var labels = getLabels(vertexCharacteristicsSelector.getCharacteristicsSelectorData());
                     addNodeLabels(node, labels, inverted);
@@ -257,14 +264,14 @@ public class CNFTranslation {
         for (int i = 0; i < dataLabels.size(); i++) {
             var node = new DisjunctionNode();
             root.addPredicate(node);
-            node.addPredicate(new LiteralNode(false, new NodeLabel(nodeLabels.get(i))));
+            node.addPredicate(new LiteralNode(true, new NodeLabel(nodeLabels.get(i))));
             if (hasOutgoingData) {
                 var dataNode = new ConjunctionNode();
                 root.addPredicate(dataNode);
-                dataNode.addPredicate(new LiteralNode(false, new IncomingDataLabel(dataLabels.get(i))));
-                dataNode.addPredicate(new LiteralNode(false, new OutgoingDataLabel(dataLabels.get(i))));
+                dataNode.addPredicate(new LiteralNode(true, new IncomingDataLabel(dataLabels.get(i))));
+                dataNode.addPredicate(new LiteralNode(true, new OutgoingDataLabel(dataLabels.get(i))));
             } else {
-                root.addPredicate(new LiteralNode(false, new IncomingDataLabel(dataLabels.get(i))));
+                node.addPredicate(new LiteralNode(true, new IncomingDataLabel(dataLabels.get(i))));
             }
         }
     }
@@ -293,5 +300,58 @@ public class CNFTranslation {
         dfd.dataDictionary().getLabelTypes().forEach(it -> variables.put(
                 it.getEntityName(),
                 it.getLabel().stream().map(NamedElement::getEntityName).toList()));
+    }
+
+    public String formulaToString() {
+        return "\n" + baseFormula.toString() + "\nAND\n" + conditionalFormula.toString();
+    }
+
+    public String cnfToString() {
+        var s = new StringBuilder();
+        for (var constraint : cnf) {
+            s.append(constraint.toString()).append("\n");
+        }
+        return s.toString();
+    }
+
+    public String simpleCNFToString() {
+        var s = new StringBuilder();
+        var literals = new ArrayList<Literal>();
+        s.append("\n");
+        for (var constraint : cnf) {
+            for (var literal : constraint.literals()) {
+                if (literals.contains(literal)) {
+                    s.append(literal.positive() ? "" : "!").append(literals.indexOf(literal)).append(" ");
+                } else {
+                    s.append(literal.positive() ? "" : "!").append(literals.size()).append(" ");
+                    literals.add(literal);
+                }
+            }
+            s.append("\n");
+        }
+        s.append(getCNFStatistics(literals));
+        return s.toString();
+    }
+
+    public String getCNFStatistics(List<Literal> literals) {
+        StringBuilder s = new StringBuilder();
+
+        s.append("Clauses: ").append(cnf.size()).append("\n");
+        s.append("Literals: ").append(literals.size()).append("\n");
+
+        var longest = 0;
+        var totalLiterals = 0;
+        for (Constraint constraint : cnf) {
+            var len =  constraint.literals().size();
+            if(len > longest) {
+                longest = len;
+            }
+            totalLiterals += len;
+        }
+
+        s.append("Longest Clause: ").append(longest).append("\n");
+        s.append("Total Literals: ").append(totalLiterals).append("\n");
+        s.append("Literals per Clause (avg): ").append((float) (totalLiterals) / cnf.size()).append("\n");
+        return s.toString();
     }
 }
