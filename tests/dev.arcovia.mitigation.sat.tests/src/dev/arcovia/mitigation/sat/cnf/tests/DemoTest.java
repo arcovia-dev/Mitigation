@@ -6,51 +6,46 @@ import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.analysis.dsl.selectors.Intersection;
 import org.dataflowanalysis.analysis.dsl.variable.ConstraintVariable;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
-import org.dataflowanalysis.dfd.datadictionary.LabelType;
-import org.dataflowanalysis.examplemodels.Activator;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import dev.arcovia.mitigation.sat.cnf.tests.utility.DataLoader;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
-import tools.mdsd.modelingfoundations.identifier.NamedElement;
+
 import org.apache.log4j.Logger;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DemoTest {
 
     private final Logger logger = Logger.getLogger(DemoTest.class);
+    private static DataFlowDiagramAndDictionary dfd;
 
-    @Test
-    public void testCNF() throws StandaloneInitializationException {
+    @BeforeAll
+    public static void setup() throws StandaloneInitializationException {
         String model = "ewolff";
         int variant = 5;
 
         String name = model + "_" + variant;
 
-        var dfd = loadDFD(model, name);
-        var variables = variables(dfd);
-        assertTrue(true);
+        dfd = DataLoader.loadDFD(model, name);
+    }
+
+    @Test
+    public void simpleConstraint() {
 
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
                 .withLabel("Data", "Pos")
                 .withoutLabel("NoData", "Neg")
                 .withLabel("Positivity", List.of("A", "B", "C"))
                 .withoutLabel("Negativity", List.of("A", "B", "C"))
-//                .fromNode()
                 .neverFlows()
                 .toVertex()
                 .withCharacteristic("Node", "Pos")
                 .withoutCharacteristic("NoNode", "Neg")
                 .withCharacteristic("Positivity", List.of("A", "B", "C"))
                 .withoutCharacteristic("Negativity", List.of("A", "B", "C"))
-//                .where()
                 .create();
-
-        assertTrue(true);
 
         var translation = new CNFTranslation(constraint, dfd);
         translation.initialiseTranslation();
@@ -59,18 +54,13 @@ public class DemoTest {
 
         translation.constructCNF();
         logger.info(translation.simpleCNFToString());
+        logger.info(translation.getCNFStatistics());
+
+        assertTrue(true);
     }
 
     @Test
-    public void testImplementation() throws StandaloneInitializationException {
-        String model = "ewolff";
-        int variant = 5;
-
-        String name = model + "_" + variant;
-
-        var dfd = loadDFD(model, name);
-        var variables = variables(dfd);
-        assertTrue(true);
+    public void complexConstraint() {
 
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
                 .withLabel("Monitoring", ConstraintVariable.of("MonitoringDashboard"))
@@ -79,6 +69,7 @@ public class DemoTest {
                 .withLabel("Positivity", List.of("A", "B", "C"))
                 .withoutLabel("Negativity", List.of("A", "B", "C"))
                 .fromNode()
+                .withCharacteristic("Out", "Node")
                 .neverFlows()
                 .toVertex()
                 .withCharacteristic("Role", "Clerk")
@@ -93,32 +84,15 @@ public class DemoTest {
                 .isEmpty(Intersection.of(ConstraintVariable.of("MonitoringDashboard"), ConstraintVariable.of("CircuitBreaker")))
                 .create();
 
-        assertTrue(true);
-
         var translation = new CNFTranslation(constraint, dfd);
-        translation.initialiseTranslation();
 
+        translation.initialiseTranslation();
         logger.info(translation.formulaToString());
 
         translation.constructCNF();
         logger.info(translation.simpleCNFToString());
-    }
+        logger.info(translation.getCNFStatistics());
 
-    private HashMap<String, List<String>> variables(DataFlowDiagramAndDictionary dfd){
-        var variables = new HashMap<String, List<String>>();
-        dfd.dataDictionary().getLabelTypes().forEach(it -> variables.put(
-                it.getEntityName(),
-                it.getLabel().stream().map(NamedElement::getEntityName).toList()));
-        return variables;
-    }
-
-    private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
-        final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
-        final String location = Paths.get("scenarios","dfd", "TUHH-Models")
-                .toString();
-        return new DataFlowDiagramAndDictionary(PROJECT_NAME,
-                Paths.get(location, model, (name + ".dataflowdiagram")).toString(),
-                Paths.get(location, model, (name + ".datadictionary"))
-                        .toString(), Activator.class);
+        assertTrue(true);
     }
 }
