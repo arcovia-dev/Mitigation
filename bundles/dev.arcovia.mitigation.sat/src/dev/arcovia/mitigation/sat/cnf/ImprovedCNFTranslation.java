@@ -29,7 +29,6 @@ public class ImprovedCNFTranslation {
     private final List<DynamicConditionalSelector> conditionalSelectors =  new ArrayList<>();
 
     private final Map<String, List<String>> variables = new HashMap<>();
-    private final Map<String, List<String>> conditionalVariables = new HashMap<>();
 
     private List<Constraint> cnf;
     private BaseFormula baseFormula;
