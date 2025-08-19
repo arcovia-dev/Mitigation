@@ -22,6 +22,6 @@ public class LiteralNode extends LogicNode {
     public String toString() {
         var positive = literal.positive() ? "!" : "";
         var label = literal.compositeLabel();
-        return "%s[%s %s.%s] ".formatted(positive, label.category(), label.label().type(), label.label().value());
+        return "%s[%s.%s] ".formatted(positive, label.label().type(), label.label().value());
     }
 }

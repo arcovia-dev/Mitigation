@@ -42,7 +42,7 @@ public class CNFTranslation {
         hasIncomingData = !analysisConstraint.getVertexDestinationSelectors().getSelectors().isEmpty();
     }
 
-    public void constructCNF() {
+    public List<Constraint> constructCNF() {
         initialiseTranslation();
         cnf = new ArrayList<>();
         var baseCNF = baseFormula.toCNF();
@@ -54,6 +54,7 @@ public class CNFTranslation {
         if (conditionalCNF != null && !conditionalCNF.isEmpty()) {
             cnf.addAll(conditionalCNF);
         }
+        return cnf;
     }
 
     public void initialiseTranslation() {
@@ -123,6 +124,9 @@ public class CNFTranslation {
     private void constructConditionalFormula() {
         var root = new ConjunctionNode();
         conditionalFormula = new BaseFormula(root);
+
+        if (conditionalSelectors.isEmpty()) { return; }
+
         initialiseVariables(dataFlowDiagramAndDictionary);
         conditionalSelectors.forEach(it -> it.addLiterals(
                 root,
@@ -140,14 +144,36 @@ public class CNFTranslation {
     }
 
     public String formulaToString() {
-        return "\n" + baseFormula.toString() + "\nAND\n" + conditionalFormula.toString();
+        var baseString = baseFormula.toString();
+        var conditionalString = conditionalFormula.toString();
+
+        var s = new StringBuilder();
+        s.append("\n");
+        s.append("!");
+        s.append(baseString);
+        if (!baseString.isEmpty() && !conditionalString.isEmpty()) {
+            s.append("\nAND\n");
+        }
+        s.append(conditionalString);
+        return s.toString();
     }
 
     public String cnfToString() {
         var s = new StringBuilder();
+        s.append("\n");
         for (var constraint : cnf) {
-            s.append(constraint.toString()).append("\n");
+            s.append("( ");
+            for (var literal : constraint.literals()) {
+                var positive = literal.positive() ? "" : "!";
+                var label = literal.compositeLabel().label();
+                s.append("%s[%s.%s]".formatted(positive, label.type(), label.value()));
+                s.append(" OR ");
+            }
+            s.delete(s.length() - 3, s.length());
+            s.append(") AND");
+            s.append("\n");
         }
+        s.delete(s.length() - 5, s.length());
         return s.toString();
     }
 
@@ -156,14 +182,18 @@ public class CNFTranslation {
         var literals = new ArrayList<Literal>();
         s.append("\n");
         for (var constraint : cnf) {
+            s.append("[");
             for (var literal : constraint.literals()) {
                 if (literals.contains(literal)) {
-                    s.append(literal.positive() ? "" : "!").append(literals.indexOf(literal)).append(" ");
+                    s.append(literal.positive() ? "" : "!");
+                    s.append(literals.indexOf(literal));
+                    s.append(" ");
                 } else {
                     s.append(literal.positive() ? "" : "!").append(literals.size()).append(" ");
                     literals.add(literal);
                 }
             }
+            s.append("]");
             s.append("\n");
         }
         return s.toString();
