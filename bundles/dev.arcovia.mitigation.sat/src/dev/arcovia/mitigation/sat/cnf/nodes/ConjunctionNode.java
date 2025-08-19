@@ -6,7 +6,7 @@ import java.util.List;
 import dev.arcovia.mitigation.sat.Constraint;
 
 public class ConjunctionNode extends BranchNode {
-	private final List<LogicNode> predicates = new ArrayList<LogicNode>();
+	private final List<LogicNode> predicates = new ArrayList<>();
 
     @Override
 	public void addPredicate(LogicNode predicate) {
