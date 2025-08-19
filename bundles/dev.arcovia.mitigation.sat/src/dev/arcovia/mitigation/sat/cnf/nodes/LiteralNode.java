@@ -10,7 +10,6 @@ public class LiteralNode extends LogicNode {
     // TODO remove comment
     // Careful!! Literal has boolean positive while all selectors have boolean inverted
 	public LiteralNode(boolean inverted, CompositeLabel label) {
-		super(LogicNodeDescriptor.LITERAL);
 		this.literal = new Literal(inverted, label); // inverted for CNF
 	}
 	

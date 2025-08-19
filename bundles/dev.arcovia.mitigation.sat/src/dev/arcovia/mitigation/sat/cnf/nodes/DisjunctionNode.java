@@ -7,10 +7,6 @@ import dev.arcovia.mitigation.sat.Constraint;
 
 public class DisjunctionNode extends BranchNode {
 	protected final List<LogicNode> predicates = new ArrayList<LogicNode>();
-	
-	public DisjunctionNode() {
-		super(LogicNodeDescriptor.LITERAL);
-	}
 
     @Override
 	public void addPredicate(LogicNode predicate) {
