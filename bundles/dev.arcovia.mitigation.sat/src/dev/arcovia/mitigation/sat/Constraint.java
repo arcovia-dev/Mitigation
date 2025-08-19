@@ -1,7 +1,5 @@
 package dev.arcovia.mitigation.sat;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import java.util.List;
 
 /**
