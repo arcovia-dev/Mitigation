@@ -166,15 +166,17 @@ public class ImprovedCNFTranslation {
             }
             s.append("\n");
         }
-        s.append(getCNFStatistics(literals));
         return s.toString();
     }
 
-    public String getCNFStatistics(List<Literal> literals) {
+    public String getCNFStatistics() {
         StringBuilder s = new StringBuilder();
+        s.append("\n");
+
+        var literalCount = cnf.stream().map(it -> it.literals().size()).reduce(0, Integer::sum);
 
         s.append("Clauses: ").append(cnf.size()).append("\n");
-        s.append("Literals: ").append(literals.size()).append("\n");
+        s.append("Literals: ").append(literalCount).append("\n");
 
         var longest = 0;
         var totalLiterals = 0;
