@@ -4,7 +4,8 @@ Bundle-Name: Sat
 Bundle-SymbolicName: dev.arcovia.mitigation.sat
 Bundle-Version: 1.0.0.qualifier
 Export-Package: 
- dev.arcovia.mitigation.sat
+ dev.arcovia.mitigation.sat,
+ dev.arcovia.mitigation.sat.cnf
 Require-Bundle: 
  org.sat4j.core;bundle-version="2.3.6",
  org.dataflowanalysis.converter,
