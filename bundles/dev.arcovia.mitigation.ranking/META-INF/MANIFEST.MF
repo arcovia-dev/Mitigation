@@ -5,12 +5,9 @@ Bundle-SymbolicName: dev.arcovia.mitigation.ranking
 Bundle-Version: 1.0.0.qualifier
 Export-Package: 
  dev.arcovia.mitigation.ranking
-Require-Bundle: org.dataflowanalysis.converter;bundle-version="2.0.0",
- org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
- org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",
+Require-Bundle: org.dataflowanalysis.converter,
  dev.abunai.confidentiality.analysis,
  dev.abunai.confidentiality.analysis.model,
- dev.abunai.confidentiality.analysis.testmodels,
  org.eclipse.emf.ecore,
  org.apache.log4j
 Automatic-Module-Name: dev.arcovia.mitigation.ranking
