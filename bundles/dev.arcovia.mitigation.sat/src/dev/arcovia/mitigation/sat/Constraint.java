@@ -7,4 +7,6 @@ import java.util.List;
  * a specific logical condition or rule. Each literal within the constraint is a
  * component that can either be satisfied or not, based on its state.
  */
-public record Constraint(List<Literal> literals) {}
+public record Constraint(List<Literal> literals) {
+
+}
