@@ -22,7 +22,6 @@ public class CNFTranslation {
     private final DataFlowDiagramAndDictionary  dataFlowDiagramAndDictionary;
     private final boolean hasOutgoingData;
     private final boolean hasIncomingData;
-    private boolean initialized = false;
 
     private final List<ConstantDataSelector> constantSelectors =  new ArrayList<>();
     private final Map <String, DynamicDataSelector> dynamicSelectors =  new HashMap<>();
@@ -58,8 +57,6 @@ public class CNFTranslation {
     }
 
     public void initialiseTranslation() {
-        if(initialized) return;
-
         List<AbstractSelector> selectors = new ArrayList<>();
         selectors.addAll(analysisConstraint.getDataSourceSelectors().getSelectors());
         selectors.addAll(analysisConstraint.getVertexSourceSelectors().getSelectors());
@@ -70,7 +67,6 @@ public class CNFTranslation {
 
         constructBaseFormula();
         constructConditionalFormula();
-        initialized = true;
     }
 
     private void initialiseSelector(AbstractSelector selector) {

@@ -48,11 +48,9 @@ public class DemoTest {
                 .create();
 
         var translation = new CNFTranslation(constraint, dfd);
-        translation.initialiseTranslation();
+        translation.constructCNF();
 
         logger.info(translation.formulaToString());
-
-        translation.constructCNF();
         logger.info(translation.simpleCNFToString());
         logger.info(translation.getCNFStatistics());
 
@@ -85,11 +83,9 @@ public class DemoTest {
                 .create();
 
         var translation = new CNFTranslation(constraint, dfd);
-
-        translation.initialiseTranslation();
-        logger.info(translation.formulaToString());
-
         translation.constructCNF();
+
+        logger.info(translation.formulaToString());
         logger.info(translation.simpleCNFToString());
         logger.info(translation.getCNFStatistics());
 

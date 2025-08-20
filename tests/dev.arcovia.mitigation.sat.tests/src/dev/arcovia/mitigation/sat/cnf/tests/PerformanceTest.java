@@ -55,7 +55,6 @@ public class PerformanceTest {
                 .create();
 
         var translation = new CNFTranslation(constraint, dfd);
-        translation.initialiseTranslation();
         translation.constructCNF();
         logger.info(translation.getCNFStatistics());
 
