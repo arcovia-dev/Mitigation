@@ -19,7 +19,6 @@ import tools.mdsd.modelingfoundations.identifier.NamedElement;
 
 public class CNFTranslation {
     private final AnalysisConstraint analysisConstraint;
-    private final DataFlowDiagramAndDictionary  dataFlowDiagramAndDictionary;
     private final boolean hasOutgoingData;
     private final boolean hasIncomingData;
 
@@ -27,32 +26,36 @@ public class CNFTranslation {
     private final Map <String, DynamicDataSelector> dynamicSelectors =  new HashMap<>();
     private final List<DynamicConditionalSelector> conditionalSelectors =  new ArrayList<>();
 
-    private final Map<String, List<String>> variables = new HashMap<>();
+    private final Map<String, List<String>> variables;
 
     private List<Constraint> cnf;
     private BaseFormula baseFormula;
     private BaseFormula conditionalFormula;
+    private BaseFormula cnfFormula;
 
-
-    public CNFTranslation(AnalysisConstraint analysisConstraint, DataFlowDiagramAndDictionary  dataFlowDiagramAndDictionary) {
-        this.analysisConstraint = analysisConstraint;
-        this.dataFlowDiagramAndDictionary = dataFlowDiagramAndDictionary;
+    public CNFTranslation(AnalysisConstraint analysisConstraint, Map<String, List<String>> variables) {
+        this.analysisConstraint = Objects.requireNonNull(analysisConstraint);
+        this.variables = Objects.requireNonNull(variables);
         hasOutgoingData = !analysisConstraint.getVertexSourceSelectors().getSelectors().isEmpty();
         hasIncomingData = !analysisConstraint.getVertexDestinationSelectors().getSelectors().isEmpty();
     }
 
+    public CNFTranslation(AnalysisConstraint analysisConstraint) {
+        this(analysisConstraint, new HashMap<>());
+    }
+
+    public CNFTranslation(AnalysisConstraint analysisConstraint, DataFlowDiagramAndDictionary dataFlowDiagramAndDictionary) {
+        this(analysisConstraint);
+        initialiseVariables(dataFlowDiagramAndDictionary);
+    }
+
     public List<Constraint> constructCNF() {
         initialiseTranslation();
-        cnf = new ArrayList<>();
-        var baseCNF = baseFormula.toCNF();
-        var conditionalCNF = conditionalFormula.toCNF();
-
-        if (baseCNF != null && !baseCNF.isEmpty()) {
-            cnf.addAll(baseCNF);
-        }
-        if (conditionalCNF != null && !conditionalCNF.isEmpty()) {
-            cnf.addAll(conditionalCNF);
-        }
+        var root = new ConjunctionNode();
+        cnfFormula = new BaseFormula(root);
+        root.addPredicate(baseFormula.getRoot());
+        root.addPredicate(conditionalFormula.getRoot());
+        cnf = cnfFormula.toCNF();
         return cnf;
     }
 
@@ -122,8 +125,8 @@ public class CNFTranslation {
         conditionalFormula = new BaseFormula(root);
 
         if (conditionalSelectors.isEmpty()) { return; }
+        if (variables.isEmpty()) { throw new IllegalStateException("Variables are empty."); }
 
-        initialiseVariables(dataFlowDiagramAndDictionary);
         conditionalSelectors.forEach(it -> it.addLiterals(
                 root,
                 dynamicSelectors,
@@ -140,18 +143,8 @@ public class CNFTranslation {
     }
 
     public String formulaToString() {
-        var baseString = baseFormula.toString();
-        var conditionalString = conditionalFormula.toString();
-
-        var s = new StringBuilder();
-        s.append("\n");
-        s.append("!");
-        s.append(baseString);
-        if (!baseString.isEmpty() && !conditionalString.isEmpty()) {
-            s.append("\nAND\n");
-        }
-        s.append(conditionalString);
-        return s.toString();
+        var formulaString = cnfFormula.toString();
+        return "\n!%s".formatted(formulaString);
     }
 
     public String cnfToString() {
