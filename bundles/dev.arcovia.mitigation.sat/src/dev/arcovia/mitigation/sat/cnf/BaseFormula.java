@@ -14,6 +14,10 @@ public class BaseFormula {
 	public BaseFormula(BranchNode root) {
 		this.root = root;
 	}
+
+    public BranchNode getRoot() {
+        return root;
+    }
 	
 	public List<Constraint> toCNF() {
         var constraint = new Constraint(new ArrayList<>());
