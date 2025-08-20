@@ -47,7 +47,7 @@ public class ConjunctionTest {
                 .withoutCharacteristic(dNodeNeg1.type(), dNodeNeg1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodeNeg1)))
         );
@@ -65,7 +65,7 @@ public class ConjunctionTest {
                 .withCharacteristic(dNodePos1.type(), dNodePos1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataNeg1), List.of(), List.of(dNodePos1)))
         );
@@ -87,7 +87,7 @@ public class ConjunctionTest {
                 .withCharacteristic(dNodePos1.type(), dNodePos1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(), List.of(dNodePos1)))
         );
@@ -105,7 +105,7 @@ public class ConjunctionTest {
                 .withoutCharacteristic(dNodeNeg1.type(), dNodeNeg1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(), List.of(dNodeNeg1)))
         );
@@ -127,7 +127,7 @@ public class ConjunctionTest {
                 .withoutCharacteristic(dNodeNeg1.type(), dNodeNeg1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1, dNodeNeg1)))
         );
@@ -145,7 +145,7 @@ public class ConjunctionTest {
                 .withoutCharacteristic(dNodeNeg1.type(), dNodeNeg1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataNeg1), List.of(), List.of(dNodePos1, dNodeNeg1)))
         );
@@ -168,7 +168,7 @@ public class ConjunctionTest {
                 .withoutCharacteristic(dNodeNeg1.type(), dNodeNeg1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(), List.of(dNodePos1, dNodeNeg1)))
         );

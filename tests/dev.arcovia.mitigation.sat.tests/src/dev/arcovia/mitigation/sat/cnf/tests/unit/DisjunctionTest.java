@@ -47,7 +47,7 @@ public class DisjunctionTest {
                 .withCharacteristic(dNodePos1.type(), dNodePos1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
                 CNFUtil.generateClause(List.of(dInDataPos2), List.of(), List.of(dNodePos1))
@@ -65,7 +65,7 @@ public class DisjunctionTest {
                 .withCharacteristic(dNodePos1.type(), dNodePos1.value())
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataNeg1, dInDataNeg2), List.of(), List.of(dNodePos1))
         ));
@@ -85,7 +85,7 @@ public class DisjunctionTest {
                 .withCharacteristic(dNodePos1.type(), List.of(dNodePos1.value(), dNodePos2.value()))
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
                 CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos2))
@@ -103,7 +103,7 @@ public class DisjunctionTest {
                 .withoutCharacteristic(dNodeNeg1.type(), List.of(dNodeNeg1.value(), dNodeNeg2.value()))
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodeNeg1, dNodeNeg2))
         ));
@@ -123,7 +123,7 @@ public class DisjunctionTest {
                 .withCharacteristic(dNodePos1.type(), List.of(dNodePos1.value(), dNodePos2.value()))
                 .create();
 
-        translation = new CNFTranslation(constraint, null);
+        translation = new CNFTranslation(constraint);
         expected = new DCNF(List.of(
                 CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
                 CNFUtil.generateClause(List.of(dInDataPos2), List.of(), List.of(dNodePos1)),

@@ -54,9 +54,12 @@ public class PerformanceTest {
                 .withCharacteristic("NodeLabel", longList)
                 .create();
 
+        var start = System.currentTimeMillis();
         var translation = new CNFTranslation(constraint, dfd);
-        translation.initialiseTranslation();
         translation.constructCNF();
+        var end = System.currentTimeMillis();
+        var time = end - start;
+        logger.info("Test finished in: " + time + " ms");
         logger.info(translation.getCNFStatistics());
 
         assertTrue(true);

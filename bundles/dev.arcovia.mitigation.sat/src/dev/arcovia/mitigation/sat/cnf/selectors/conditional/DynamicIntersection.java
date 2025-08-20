@@ -64,18 +64,21 @@ public class DynamicIntersection implements DynamicSetOperation {
             return;
         }
 
-        throw new IllegalArgumentException("Unexpected dynamic selectors" + firstDynamicSelector + secondDynamicSelector);
+        throw new IllegalArgumentException("Unexpected dynamic selectors: " + firstDynamicSelector + secondDynamicSelector);
     }
 
     private void addIntersectionLiterals(BranchNode root, List<Label> dataLabels, List<Label> nodeLabels, boolean hasOutgoingData, boolean hasIncomingData) {
         // (not data1 OR not node1) AND (not data2 OR not node2) AND
         // (not node1 OR (not data_in1 and not data_out1) AND
+        var rootNode = new DisjunctionNode();
+        root.addPredicate(rootNode);
+
         for (int i = 0; i < dataLabels.size(); i++) {
 
-            var node = new DisjunctionNode();
-            root.addPredicate(node);
+            var node = new ConjunctionNode();
+            rootNode.addPredicate(node);
 
-            var dataNode = new ConjunctionNode();
+            var dataNode = new DisjunctionNode();
             node.addPredicate(dataNode);
             node.addPredicate(new LiteralNode(true, new NodeLabel(nodeLabels.get(i))));
 

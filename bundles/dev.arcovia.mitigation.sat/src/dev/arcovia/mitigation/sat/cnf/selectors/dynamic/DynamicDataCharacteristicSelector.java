@@ -25,9 +25,11 @@ public class DynamicDataCharacteristicSelector implements DynamicDataSelector {
 
     @Override
     public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData, boolean inverted) {
-        List<CharacteristicsSelectorData> data = variables
-                .get(selector.getCharacteristicsSelectorData().characteristicValue().name())
-                .stream().map(it -> new CharacteristicsSelectorData(
+        List<String> vars = variables
+                .get(selector.getCharacteristicsSelectorData().characteristicValue().name());
+        if(vars == null || vars.isEmpty()) { throw new IllegalStateException("Variables not found."); }
+        List<CharacteristicsSelectorData> data = vars.stream().map(it ->
+                new CharacteristicsSelectorData(
                         selector.getCharacteristicsSelectorData().characteristicType(),
                         ConstraintVariableReference.ofConstant(List.of(it))
                 )).toList();
