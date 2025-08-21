@@ -32,6 +32,26 @@ public class DemoTest {
     }
 
     @Test
+    public void verySimpleConstraint() {
+        AnalysisConstraint constraint = new ConstraintDSL().ofData()
+                .withLabel("Sensitivity", "Personal")
+//                .withoutLabel("Encryption", "Encrypted")
+                .neverFlows()
+                .toVertex()
+                .withCharacteristic("Location", "nonEU")
+                .create();
+
+        var translation = new CNFTranslation(constraint);
+        translation.constructCNF();
+
+        logger.info(translation.formulaToString());
+        logger.info(translation.cnfToString());
+//        logger.info(translation.getCNFStatistics());
+
+        assertTrue(true);
+    }
+
+    @Test
     public void simpleConstraint() {
 
         AnalysisConstraint constraint = new ConstraintDSL().ofData()

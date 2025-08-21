@@ -1,15 +1,20 @@
 package dev.arcovia.mitigation.sat.dsl.tests;
 
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,8 +59,33 @@ public class PerformanceTest {
         assertTrue(true);
     }
 
+    private static final int max = 7000; //7000
+    private static final int start = 6000;
+    private static final int step = 100;
+
+    private static final int count = 1 + (max-start) / step;
+    private static final int[] outputLiterals = new int[count];
+    private static final int[] outputTime = new int[count];
+
+
+    private static IntStream inputLiterals() {
+        int[] inputs = new int[count];
+        for (int i = 0; i < count; i++) {
+            inputs[i] = i;
+        }
+        return Arrays.stream(inputs);
+    }
+
+    @AfterAll
+    public static void afterAll() throws IOException {
+        var input = inputLiterals().toArray();
+        DataLoader.outputJsonArray(outputLiterals, "literals.json");
+        DataLoader.outputJsonArray(outputTime, "time.json");
+    }
+
+
     @ParameterizedTest()
-    @ValueSource(ints =  {500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000})
+    @MethodSource("inputLiterals")
     public void performanceTest2(int input) {
 
         // set heap size of JVM to 16GB before running, then set true
@@ -67,8 +97,9 @@ public class PerformanceTest {
             return;
         }
 
+        var literals = input*step+start;
         List<String> longList = new ArrayList<>();
-        for (int i = 0; i < input; i++) {
+        for (int i = 0; i < literals; i++) {
             longList.add(Integer.toString(i));
         }
 
@@ -79,13 +110,14 @@ public class PerformanceTest {
                 .withCharacteristic("NodeLabel", longList)
                 .create();
 
-        var start = System.currentTimeMillis();
+        var timeStart = System.currentTimeMillis();
         var translation = new CNFTranslation(constraint);
         translation.constructCNF();
-        var end = System.currentTimeMillis();
-        var time = end - start;
-        logger.info("\n=== " + input + " ===");
-        logger.info("\nTest finished in: " + time + " ms");
+        var timeEnd = System.currentTimeMillis();
+        var time = timeEnd - timeStart;
+        logger.info("\n " + literals + " Literals | " +  time + " ms");
+        outputLiterals[input] = literals;
+        outputTime[input] = Math.toIntExact(time);
 //        logger.info(translation.getCNFStatistics());
 
         assertTrue(true);
