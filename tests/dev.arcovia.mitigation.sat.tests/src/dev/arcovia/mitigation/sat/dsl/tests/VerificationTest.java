@@ -4,172 +4,119 @@ import dev.arcovia.mitigation.sat.*;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
 import org.apache.log4j.Logger;
-import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
-import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
-import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
+import org.dataflowanalysis.examplemodels.results.ExpectedCharacteristic;
+import org.dataflowanalysis.examplemodels.results.ExpectedViolation;
 import org.dataflowanalysis.examplemodels.results.dfd.DFDExampleModelResult;
-import org.dataflowanalysis.examplemodels.results.dfd.models.BranchingResult;
-import org.dataflowanalysis.examplemodels.results.dfd.scenarios.CWANoViolation;
-import org.dataflowanalysis.examplemodels.results.dfd.scenarios.CWAPersonalDataViolation;
-import org.dataflowanalysis.examplemodels.results.dfd.scenarios.OnlineShopResult;
-import org.dataflowanalysis.examplemodels.results.dfd.scenarios.SimpleOnlineShopResult;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.sat4j.specs.ContradictionException;
-import org.sat4j.specs.TimeoutException;
+import org.dataflowanalysis.examplemodels.results.dfd.scenarios.*;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VerificationTest {
 
     private final Logger logger = Logger.getLogger(VerificationTest.class);
 
-    private static DFDExampleModelResult exampleModelResult;
-    private static DataFlowDiagramAndDictionary dfd;
+    private static Stream<Arguments> provideDFDExampleModelViolations() {
+        return Stream.of(
+                Arguments.of(new OnlineShopResult()), Arguments.of(new SimpleOnlineShopResult()),
+                Arguments.of(new CWANoViolation()), Arguments.of(new VWCariad()), Arguments.of(new CWAPersonalDataViolation()),
+                Arguments.of(new CWARPIViolation()));
+    }
 
-    private static List<AnalysisConstraint> analysisConstraints;
-    private static List<Constraint> constraints;
-    private static Map<String, List<String>> variables;
-    private static final Map<Label, Integer> costs = new HashMap<>();
-    private static final Map<Label, Integer> minCosts = new HashMap<>();
-    private static final Map<Label, Integer> labelRanking = new HashMap<>();
+    @ParameterizedTest
+    @MethodSource("provideDFDExampleModelViolations")
+    public void validate(DFDExampleModelResult exampleModelResult) throws StandaloneInitializationException {
 
-    @BeforeAll
-    public static void setup() throws StandaloneInitializationException {
-
-        exampleModelResult = new SimpleOnlineShopResult();
-
-        dfd = DataLoader.loadDFDfromPath(exampleModelResult.getDataFlowDiagram(), exampleModelResult.getDataDictionary());
-        analysisConstraints = exampleModelResult.getDSLConstraints();
-
-        constraints = analysisConstraints.stream().map(it -> new CNFTranslation(it, dfd))
+        var name = exampleModelResult.getModelName();
+        var dfd = DataLoader.loadDFDfromPath(exampleModelResult.getDataFlowDiagram(), exampleModelResult.getDataDictionary());
+        var analysisConstraints = exampleModelResult.getDSLConstraints();
+        var constraints = analysisConstraints.stream().map(it -> new CNFTranslation(it, dfd))
                 .map(CNFTranslation::constructCNF)
                 .flatMap(Collection::stream).toList();
 
-        int max = 10;
-        int min = 2;
-
-        variables = DataLoader.variables(dfd);
-        variables.forEach((key, values) -> values.forEach(value -> {
-            var randomNumber = new Random().nextInt(max - min + 1) + min;
-            costs.put(new Label(key, value), randomNumber);
-            minCosts.put(new Label(key, value), randomNumber-1);
-            labelRanking.put(new Label(key, value), new Random().nextInt(max - min + 1) + min);
-        }));
-    }
-
-    @Test
-    public void validate() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
-        var dfdConverter = new DFD2WebConverter();
-
-        List<Scalability> scalabilityValues = new ArrayList<>();
-        var rankedCosts = getRankedCosts(labelRanking);
-
-        var name = exampleModelResult.getModelName();
 
         logger.info("Model Name: " + name);
         logger.info("Constraints: " + constraints.toString());
 
-
-        var costsTest = costs;
-        var minCostsTest = minCosts;
-        var labelRankingTest = labelRanking;
-        var constraintsTest = constraints;
-        var variablesTest = variables;
-
-        var repairResult = runRepair(true, costs);
-        var repairedDfdCosts = repairResult.repairedDfd();
-
-        int amountClauses = extractClauseCount("testresults/aName.cnf");
-        scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
-
-        dfdConverter.convert(repairedDfdCosts).save("testresults/",  name + "-repaired.json");
-
-        assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
-
-        repairResult = runRepair(false, rankedCosts);
-        repairedDfdCosts = repairResult.repairedDfd();
-        assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
-
-        logger.info(scalabilityValues);
-    }
-
-    private record Scalability(
-            int amountClause,
-            long runtimeInMilliseconds
-        ) {}
-    
-    private int extractClauseCount(String filePath) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String firstLine = reader.readLine();
-            if (firstLine != null && firstLine.startsWith("p cnf")) {
-                String[] parts = firstLine.trim().split("\\s+");
-                if (parts.length == 4) {
-                    return Integer.parseInt(parts[3]);
-                }
-            }
-        }
-        throw new IllegalArgumentException("First line is not in the expected 'p cnf <vars> <clauses>' format.");
-    }
-    
-    private record RepairResult(
-            DataFlowDiagramAndDictionary repairedDfd,
-            int violationsBefore,
-            int violationsAfter,
-            long runtimeInMilliseconds
-        ) {}
-
-    private RepairResult runRepair(boolean store, Map<Label,Integer> costMap)
-            throws ContradictionException, IOException, TimeoutException {
-        var name = store ? exampleModelResult.getModelName() : "aName";
-//        var name = exampleModelResult.getModelName();
-//        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap);
         Mechanic mechanic = new Mechanic(dfd, name, constraints);
-        long startTime = System.currentTimeMillis();
-        var repairedDfd = mechanic.repair();
-        long endTime = System.currentTimeMillis();
-//        int violationsAfter = new Mechanic(repairedDfd,null, null).amountOfViolations(repairedDfd,constraints);
-        int violationsAfter = new Mechanic(repairedDfd,null, null).amountOfViolations(repairedDfd,constraints);
-        return new RepairResult(repairedDfd,mechanic.getViolations(),violationsAfter,endTime-startTime);
+        List<AbstractTransposeFlowGraph> violatingTFGs = mechanic.getViolatingTFGs(dfd, constraints);
+
+        shouldReturnCorrectViolations(violatingTFGs, exampleModelResult);
     }
-    
-    private Map<Label, Integer> getRankedCosts(Map<Label, Integer> rankedLabels) {
-        int maxRank = rankedLabels.values().stream()
-            .max(Integer::compareTo)
-            .orElse(0);
 
-        int[] fibs = fibonacciNumbers(maxRank);
+    private void shouldReturnCorrectViolations(List<AbstractTransposeFlowGraph> violatingTFGs, DFDExampleModelResult exampleModelResult) {
+        Assumptions.assumeTrue(!exampleModelResult.getDSLConstraints()
+                .isEmpty(), "Example Model does not define any constraints!");
 
-        Map<Label, Integer> costMap = new HashMap<>();
-        for (Map.Entry<Label, Integer> entry : rankedLabels.entrySet()) {
-            costMap.put(entry.getKey(), fibs[entry.getValue()]);
+        if (exampleModelResult.getExpectedViolations().isEmpty() && !violatingTFGs.isEmpty()) {
+            logger.error("Offending violations:" + violatingTFGs);
+            fail("Analysis found violating vertices, but none were expected");
         }
 
-        return costMap;
-    }
+        for (ExpectedViolation expectedViolation : exampleModelResult.getExpectedViolations()) {
+            var violatingVertices = violatingTFGs.stream()
+                    .map(AbstractTransposeFlowGraph::getVertices)
+                    .flatMap(Collection::stream)
+                    .filter(it -> expectedViolation.getIdentifier().matches(it))
+                    .toList();
 
-    private int[] fibonacciNumbers(int n) {
-        int[] fibs = new int[Math.max(n + 1, 2)];
-        fibs[0] = 0;
-        fibs[1] = 1;
+            if (violatingVertices.isEmpty()) {
+                logger.error(String.format("Could not find vertex with id: %s", expectedViolation.getIdentifier()));
+                logger.error(String.format("Number of violating TFGs: %s", violatingTFGs.size()));
+                fail(String.format("Could not find vertex with id: %s", expectedViolation.getIdentifier()));
+            }
 
-        for (int i = 2; i <= n; i++) {
-            fibs[i] = fibs[i - 1] + fibs[i - 2];
+            int numberOfViolatingVertices = 0;
+
+            for (var violatingVertex : violatingVertices) {
+                logger.info("Evaluating vertex: " + expectedViolation.getIdentifier());
+
+                List<ExpectedCharacteristic> missingNodeCharacteristics = expectedViolation.hasNodeCharacteristic(violatingVertex
+                        .getAllVertexCharacteristics());
+                if (!missingNodeCharacteristics.isEmpty()) {
+                    logger.warn(String.format("Skipped: Vertex %s is missing the following node characteristics: %s", violatingVertex,
+                            missingNodeCharacteristics));
+                    continue;
+                }
+
+                var incorrectNodeCharacteristics = expectedViolation.hasIncorrectNodeCharacteristics(violatingVertex
+                        .getAllVertexCharacteristics());
+                if (!incorrectNodeCharacteristics.isEmpty()) {
+                    logger.warn(String.format("Skipped: Vertex %s has the following incorrect node characteristics: %s", violatingVertex,
+                            incorrectNodeCharacteristics));
+                    continue;
+                }
+
+                Map<String, List<ExpectedCharacteristic>> missingDataCharacteristics = expectedViolation.hasDataCharacteristics(violatingVertex
+                        .getAllDataCharacteristics());
+                if (!missingDataCharacteristics.isEmpty()) {
+                    logger.warn(String.format("Skipped: Vertex %s is missing the following data characteristics: %s", violatingVertex,
+                            missingDataCharacteristics));
+                    continue;
+                }
+
+                var incorrectDataCharacteristics = expectedViolation.hasMissingDataCharacteristics(violatingVertex
+                        .getAllDataCharacteristics());
+                if (!incorrectDataCharacteristics.isEmpty()) {
+                    logger.warn(String.format("Skipped: Vertex %s has the following incorrect data characteristics: %s", violatingVertex,
+                            incorrectDataCharacteristics));
+                    continue;
+                }
+
+                logger.info("Found violating Vertex.");
+                numberOfViolatingVertices++;
+            }
+
+            logger.info("Number of violating Vertex: " + numberOfViolatingVertices);
+            assertNotEquals(0, numberOfViolatingVertices, "Found no matching vertices for violation.");
         }
-
-        return fibs;
-    }
-    
-    @AfterEach
-    void cleanup() throws IOException {
-//        Files.deleteIfExists(Paths.get("testresults/aName-literalMapping.json"));
-//        Files.deleteIfExists(Paths.get("testresults/aName.cnf"));
     }
 }
