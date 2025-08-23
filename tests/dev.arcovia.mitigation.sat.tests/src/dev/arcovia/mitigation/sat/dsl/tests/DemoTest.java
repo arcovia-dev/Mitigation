@@ -1,41 +1,34 @@
 package dev.arcovia.mitigation.sat.dsl.tests;
 
+import dev.arcovia.mitigation.sat.Label;
+import dev.arcovia.mitigation.sat.Literal;
+import dev.arcovia.mitigation.sat.NodeLabel;
+import dev.arcovia.mitigation.sat.dsl.BaseFormula;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.analysis.dsl.selectors.Intersection;
 import org.dataflowanalysis.analysis.dsl.variable.ConstraintVariable;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 import org.apache.log4j.Logger;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DemoTest {
 
     private final Logger logger = Logger.getLogger(DemoTest.class);
-    private static DataFlowDiagramAndDictionary dfd;
-
-    @BeforeAll
-    public static void setup() throws StandaloneInitializationException {
-        String model = "ewolff";
-        int variant = 5;
-
-        String name = model + "_" + variant;
-
-        dfd = DataLoader.loadDFD(model, name);
-    }
 
     @Test
     public void verySimpleConstraint() {
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
                 .withLabel("Sensitivity", "Personal")
-//                .withoutLabel("Encryption", "Encrypted")
                 .neverFlows()
                 .toVertex()
                 .withCharacteristic("Location", "nonEU")
@@ -46,8 +39,6 @@ public class DemoTest {
 
         logger.info(translation.formulaToString());
         logger.info(translation.cnfToString());
-//        logger.info(translation.getCNFStatistics());
-
         assertTrue(true);
     }
 
@@ -67,7 +58,7 @@ public class DemoTest {
                 .withoutCharacteristic("Negativity", List.of("A", "B", "C"))
                 .create();
 
-        var translation = new CNFTranslation(constraint, dfd);
+        var translation = new CNFTranslation(constraint);
         translation.constructCNF();
 
         logger.info(translation.formulaToString());
@@ -78,7 +69,12 @@ public class DemoTest {
     }
 
     @Test
-    public void complexConstraint() {
+    public void complexConstraint() throws StandaloneInitializationException {
+
+        String model = "ewolff";
+        int variant = 5;
+        String name = model + "_" + variant;
+        DataFlowDiagramAndDictionary dfd = DataLoader.loadDFD(model, name);
 
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
                 .withLabel("Monitoring", ConstraintVariable.of("MonitoringDashboard"))
@@ -110,5 +106,25 @@ public class DemoTest {
         logger.info(translation.getCNFStatistics());
 
         assertTrue(true);
+    }
+
+    @Test
+    public void duplicateLiteralTest() {
+        AnalysisConstraint con = new ConstraintDSL().ofData()
+                .withLabel("Sensitivity", "Personal")
+                .withLabel("Sensitivity", "Personal")
+                .neverFlows()
+                .toVertex()
+                .withCharacteristic("Location", "nonEU")
+                .create();
+
+        var translation = new CNFTranslation(con).constructCNF();
+        translation.get(0).literals().add(new Literal(false, new NodeLabel(new Label("Location", "nonEU"))));
+        var newCnf = BaseFormula.fromCNF(translation).toCNF();
+
+        logger.info(CNFUtil.cnfToString(translation));
+        logger.info(CNFUtil.cnfToString(newCnf));
+
+        assertNotEquals(Collections.emptyList(), CNFUtil.compare(translation, newCnf));
     }
 }
