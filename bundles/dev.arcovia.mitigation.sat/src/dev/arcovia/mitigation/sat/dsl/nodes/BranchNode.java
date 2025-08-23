@@ -1,5 +1,5 @@
 package dev.arcovia.mitigation.sat.dsl.nodes;
 
-public abstract class BranchNode extends LogicNode {
-    abstract public void addPredicate(LogicNode predicate);
+public interface BranchNode extends LogicNode {
+    void addPredicate(LogicNode predicate);
 }
