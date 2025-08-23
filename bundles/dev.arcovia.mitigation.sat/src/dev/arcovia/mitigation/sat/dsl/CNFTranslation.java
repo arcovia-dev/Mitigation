@@ -36,8 +36,10 @@ public class CNFTranslation {
     public CNFTranslation(AnalysisConstraint analysisConstraint, Map<String, List<String>> variables) {
         this.analysisConstraint = Objects.requireNonNull(analysisConstraint);
         this.variables = Objects.requireNonNull(variables);
-        hasOutgoingData = !analysisConstraint.getVertexSourceSelectors().getSelectors().isEmpty();
-        hasIncomingData = !analysisConstraint.getVertexDestinationSelectors().getSelectors().isEmpty();
+//        hasOutgoingData = !analysisConstraint.getVertexSourceSelectors().getSelectors().isEmpty();
+//        hasIncomingData = !analysisConstraint.getVertexDestinationSelectors().getSelectors().isEmpty();
+        hasOutgoingData = false;
+        hasIncomingData = true;
     }
 
     public CNFTranslation(AnalysisConstraint analysisConstraint) {
@@ -156,6 +158,7 @@ public class CNFTranslation {
                 var positive = literal.positive() ? "" : "!";
                 var label = literal.compositeLabel().label();
                 s.append("%s[%s.%s]".formatted(positive, label.type(), label.value()));
+//                s.append("%s[%s %s.%s]".formatted(positive, literal.compositeLabel().category().name(), label.type(), label.value()));
                 s.append(" OR ");
             }
             s.delete(s.length() - 3, s.length());
