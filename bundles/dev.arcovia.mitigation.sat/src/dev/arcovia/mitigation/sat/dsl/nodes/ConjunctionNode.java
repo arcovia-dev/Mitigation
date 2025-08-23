@@ -5,11 +5,20 @@ import java.util.List;
 
 import dev.arcovia.mitigation.sat.Constraint;
 
-public class ConjunctionNode extends BranchNode {
+// not a record because each node should have different hash values
+public class ConjunctionNode implements BranchNode {
 	private final List<LogicNode> predicates = new ArrayList<>();
+
+    public List<LogicNode> getPredicates() {
+        return predicates;
+    }
 
     @Override
 	public void addPredicate(LogicNode predicate) {
+        // TODO do I enable this? Could also add a flag to decide if we check for duplicate literals
+        if (predicate instanceof LiteralNode literalNode && predicates.contains(literalNode)) {
+            return;
+        }
 		predicates.add(predicate);
 	}
 
