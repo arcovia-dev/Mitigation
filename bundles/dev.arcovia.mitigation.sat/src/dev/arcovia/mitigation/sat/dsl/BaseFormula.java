@@ -1,7 +1,11 @@
 package dev.arcovia.mitigation.sat.dsl;
 
 import dev.arcovia.mitigation.sat.Constraint;
+import dev.arcovia.mitigation.sat.Literal;
 import dev.arcovia.mitigation.sat.dsl.nodes.BranchNode;
+import dev.arcovia.mitigation.sat.dsl.nodes.ConjunctionNode;
+import dev.arcovia.mitigation.sat.dsl.nodes.DisjunctionNode;
+import dev.arcovia.mitigation.sat.dsl.nodes.LiteralNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +17,18 @@ public class BaseFormula {
 	public BaseFormula(BranchNode root) {
 		this.root = root;
 	}
+
+    public static BaseFormula fromCNF(List<Constraint> cnf) {
+        var root = new DisjunctionNode();
+        for (Constraint constraint : cnf) {
+            var node = new ConjunctionNode();
+            root.addPredicate(node);
+            for (Literal literal : constraint.literals()) {
+                node.addPredicate(new LiteralNode(literal));
+            }
+        }
+        return new BaseFormula(root);
+    }
 
     public BranchNode getRoot() {
         return root;
