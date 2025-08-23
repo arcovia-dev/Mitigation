@@ -4,6 +4,6 @@ import java.util.List;
 
 import dev.arcovia.mitigation.sat.Constraint;
 
-public abstract class LogicNode {
-	public abstract void collectCNFClauses(List<Constraint> result, List<Constraint> activeClauses);
+public interface LogicNode {
+	void collectCNFClauses(List<Constraint> result, List<Constraint> activeClauses);
 }
