@@ -16,8 +16,8 @@ public class ConstantDataCharacteristicSelector implements ConstantDataSelector 
 
     @Override
     public void addLiterals(BranchNode root, boolean hasOutgoingData, boolean hasIncomingData) {
-        var characteristicType = selector.getCharacteristicsSelectorData().characteristicType();
-        var characteristicValue = selector.getCharacteristicsSelectorData().characteristicValue();
+        var characteristicType = selector.getDataCharacteristic().characteristicType();
+        var characteristicValue = selector.getDataCharacteristic().characteristicValue();
 
         if(!characteristicType.isConstant()) {
             throw new IllegalStateException("Selector Type not constant:" + selector);

@@ -26,11 +26,11 @@ public class DynamicVertexCharacteristicSelector implements DynamicDataSelector 
     @Override
     public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData, boolean inverted) {
         List<String> vars = variables
-                .get(selector.getCharacteristicsSelectorData().characteristicValue().name());
+                .get(selector.getVertexCharacteristics().characteristicValue().name());
         if(vars == null || vars.isEmpty()) { throw new IllegalStateException("Variables not found."); }
         List<CharacteristicsSelectorData> data = vars.stream().map(it ->
                 new CharacteristicsSelectorData(
-                        selector.getCharacteristicsSelectorData().characteristicType(),
+                        selector.getVertexCharacteristics().characteristicType(),
                         ConstraintVariableReference.ofConstant(List.of(it))
                 )).toList();
         new ConstantVertexCharacteristicListSelector(
@@ -40,8 +40,8 @@ public class DynamicVertexCharacteristicSelector implements DynamicDataSelector 
 
     @Override
     public List<Label> getLabels(Map<String, List<String>> variables) {
-        var characteristicType = selector.getCharacteristicsSelectorData().characteristicType();
-        var characteristicValue = selector.getCharacteristicsSelectorData().characteristicValue();
+        var characteristicType = selector.getVertexCharacteristics().characteristicType();
+        var characteristicValue = selector.getVertexCharacteristics().characteristicValue();
 
         if(!characteristicType.isConstant()) {
             throw new IllegalStateException("Selector Type not constant:" + selector);

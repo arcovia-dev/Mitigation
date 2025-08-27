@@ -76,7 +76,7 @@ public class CNFTranslation {
 
     private void initialiseSelector(AbstractSelector selector) {
         if (selector instanceof DataCharacteristicsSelector dataCharacteristicsSelector) {
-            var value = dataCharacteristicsSelector.getCharacteristicsSelectorData().characteristicValue();
+            var value = dataCharacteristicsSelector.getDataCharacteristic().characteristicValue();
             if (value.isConstant()) {
                 constantSelectors.add(new ConstantDataCharacteristicSelector(dataCharacteristicsSelector));
             } else {
@@ -85,7 +85,7 @@ public class CNFTranslation {
             return;
         }
         if (selector instanceof VertexCharacteristicsSelector vertexCharacteristicsSelector) {
-            var value = vertexCharacteristicsSelector.getCharacteristicsSelectorData().characteristicValue();
+            var value = vertexCharacteristicsSelector.getVertexCharacteristics().characteristicValue();
             if (value.isConstant()) {
                 constantSelectors.add(new ConstantVertexCharacteristicSelector(vertexCharacteristicsSelector));
             } else {

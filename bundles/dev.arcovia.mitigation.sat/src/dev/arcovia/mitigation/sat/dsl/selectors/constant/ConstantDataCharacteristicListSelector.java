@@ -20,7 +20,7 @@ public class ConstantDataCharacteristicListSelector implements ConstantDataSelec
         root.addPredicate(incomingDataNode);
         root.addPredicate(outgoingDataNode);
 
-        var dataSelectors = selector.getCharacteristicsSelectorDataList().stream().map(it ->
+        var dataSelectors = selector.getDataCharacteristics().stream().map(it ->
                 new ConstantDataCharacteristicSelector(
                         new DataCharacteristicsSelector(null, it, selector.isInverted())
                 )).toList();
