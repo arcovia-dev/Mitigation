@@ -34,18 +34,14 @@ public abstract class CNFUtil {
     }
 
     public static List<Constraint> compare(List<Constraint> expected, List<Constraint> actual) {
-        var differences = new ArrayList<>(expected);
-        var differences2 = new ArrayList<>(actual);
-        ArrayList<Constraint> expectedDifferences = differences;
-        ArrayList<Constraint> actualDifferences = differences2;
-        expected.forEach(constraint -> {
-            actual.forEach(it -> {
-                if (matches(constraint, it)) {
-                    expectedDifferences.remove(constraint);
-                    actualDifferences.remove(it);
-                }
-            });
-        });
+        var expectedDifferences = new ArrayList<>(expected);
+        var actualDifferences = new ArrayList<>(actual);
+        expected.forEach(constraint -> actual.forEach(it -> {
+            if (matches(constraint, it)) {
+                expectedDifferences.remove(constraint);
+                actualDifferences.remove(it);
+            }
+        }));
 
         return expectedDifferences.size() > actualDifferences.size() ? expectedDifferences : actualDifferences;
     }

@@ -15,7 +15,7 @@ public class DisjunctionNode implements BranchNode {
 
     @Override
 	public void addPredicate(LogicNode predicate) {
-        // TODO do I enable this? Could also add a flag to decide if we check for duplicate literals
+        // this is only for constructing a formula tree from the cnf, not for the dsl
         if (predicate instanceof LiteralNode literalNode && predicates.contains(literalNode)) {
             return;
         }
