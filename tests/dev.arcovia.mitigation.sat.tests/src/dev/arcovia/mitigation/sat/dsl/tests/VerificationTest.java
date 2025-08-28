@@ -9,7 +9,6 @@ import org.dataflowanalysis.examplemodels.results.ExpectedCharacteristic;
 import org.dataflowanalysis.examplemodels.results.ExpectedViolation;
 import org.dataflowanalysis.examplemodels.results.dfd.DFDExampleModelResult;
 import org.dataflowanalysis.examplemodels.results.dfd.scenarios.*;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -53,7 +52,7 @@ public class VerificationTest {
     }
 
     private void shouldReturnCorrectViolations(List<AbstractTransposeFlowGraph> violatingTFGs, DFDExampleModelResult exampleModelResult) {
-        Assumptions.assumeTrue(!exampleModelResult.getDSLConstraints()
+        assertFalse(exampleModelResult.getDSLConstraints()
                 .isEmpty(), "Example Model does not define any constraints!");
 
         if (exampleModelResult.getExpectedViolations().isEmpty() && !violatingTFGs.isEmpty()) {
