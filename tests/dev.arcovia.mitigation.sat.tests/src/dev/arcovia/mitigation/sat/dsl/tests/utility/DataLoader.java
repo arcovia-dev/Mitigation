@@ -45,7 +45,15 @@ public abstract class DataLoader {
     public static void outputJsonArray(int[] output, String fileName) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(output);
-        System.out.println(jsonString);
+        Path path = Paths.get("output", fileName);
+        byte[] strToBytes = jsonString.getBytes();
+        Files.deleteIfExists(path);
+        Files.write(path, strToBytes);
+    }
+
+    public static void outputTestResults(ReadabilityTestResult[] results, String fileName) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(results);
         Path path = Paths.get("output", fileName);
         byte[] strToBytes = jsonString.getBytes();
         Files.deleteIfExists(path);
