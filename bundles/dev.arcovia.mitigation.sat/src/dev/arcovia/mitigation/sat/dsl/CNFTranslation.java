@@ -192,27 +192,29 @@ public class CNFTranslation {
     }
 
     public String getCNFStatistics() {
-        StringBuilder s = new StringBuilder();
-        s.append("\n");
+        return "\n" +
+                "Clauses: " + outputClauses() + "\n" +
+                "Literals: " + outputLiterals() + "\n" +
+                "Longest Clause: " + outputLongestClause() + "\n" +
+                "Literals per Clause (avg): " + (float) (outputLiterals()) / outputClauses() + "\n";
+    }
 
-        var literalCount = cnf.stream().map(it -> it.literals().size()).reduce(0, Integer::sum);
+    public int outputClauses() {
+        return cnf.size();
+    }
 
-        s.append("Clauses: ").append(cnf.size()).append("\n");
-        s.append("Literals: ").append(literalCount).append("\n");
+    public int outputLiterals() {
+        return cnf.stream().map(it -> it.literals().size()).reduce(0, Integer::sum);
+    }
 
+    public int outputLongestClause() {
         var longest = 0;
-        var totalLiterals = 0;
         for (Constraint constraint : cnf) {
             var len =  constraint.literals().size();
             if(len > longest) {
                 longest = len;
             }
-            totalLiterals += len;
         }
-
-        s.append("Longest Clause: ").append(longest).append("\n");
-        s.append("Total Literals: ").append(totalLiterals).append("\n");
-        s.append("Literals per Clause (avg): ").append((float) (totalLiterals) / cnf.size()).append("\n");
-        return s.toString();
+        return longest;
     }
 }
