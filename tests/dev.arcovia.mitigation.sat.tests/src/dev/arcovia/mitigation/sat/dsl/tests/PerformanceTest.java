@@ -16,21 +16,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class PerformanceTest {
 
     private final Logger logger = Logger.getLogger(PerformanceTest.class);
 
-    private final static int[] inputs = {1,2};
+    // set heap size of JVM to 16GB before running, then set true
+    private static final boolean heapMemorySetTo16Gb = false;
 
     @Test
     public void performanceTest() {
-
-        // set heap size of JVM to 16GB before running, then set true
-        boolean heapMemorySetTo16Gb = false;
-
-        assertTrue(true);
 
         if (!heapMemorySetTo16Gb) {
             return;
@@ -55,8 +49,6 @@ public class PerformanceTest {
         var time = end - start;
         logger.info("\nTest finished in: " + time + " ms");
         logger.info(translation.getCNFStatistics());
-
-        assertTrue(true);
     }
 
     private static final int max = 7000; //7000
@@ -76,22 +68,9 @@ public class PerformanceTest {
         return Arrays.stream(inputs);
     }
 
-    @AfterAll
-    public static void afterAll() throws IOException {
-        var input = inputLiterals().toArray();
-        DataLoader.outputJsonArray(outputLiterals, "literals.json");
-        DataLoader.outputJsonArray(outputTime, "time.json");
-    }
-
-
     @ParameterizedTest()
     @MethodSource("inputLiterals")
     public void performanceTest2(int input) {
-
-        // set heap size of JVM to 16GB before running, then set true
-        boolean heapMemorySetTo16Gb = false;
-
-        assertTrue(true);
 
         if (!heapMemorySetTo16Gb) {
             return;
@@ -119,7 +98,14 @@ public class PerformanceTest {
         outputLiterals[input] = literals;
         outputTime[input] = Math.toIntExact(time);
 //        logger.info(translation.getCNFStatistics());
+    }
 
-        assertTrue(true);
+    @AfterAll
+    public static void afterAll() throws IOException {
+        if (!heapMemorySetTo16Gb) {
+            return;
+        }
+        DataLoader.outputJsonArray(outputLiterals, "literals.json");
+        DataLoader.outputJsonArray(outputTime, "time.json");
     }
 }
