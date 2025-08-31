@@ -45,18 +45,22 @@ public abstract class DataLoader {
     public static void outputJsonArray(int[] output, String fileName) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(output);
-        Path path = Paths.get("output", fileName);
         byte[] strToBytes = jsonString.getBytes();
-        Files.deleteIfExists(path);
-        Files.write(path, strToBytes);
+        printToFile(strToBytes, fileName);
     }
 
     public static void outputTestResults(ReadabilityTestResult[] results, String fileName) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(results);
-        Path path = Paths.get("output", fileName);
         byte[] strToBytes = jsonString.getBytes();
-        Files.deleteIfExists(path);
-        Files.write(path, strToBytes);
+        printToFile(strToBytes, fileName);
+    }
+
+    private static void printToFile(byte[] strToBytes, String fileName) throws IOException {
+        Path dir = Paths.get("output");
+        Files.createDirectories(dir);
+        Path file = Paths.get(String.valueOf(dir), fileName);
+        Files.deleteIfExists(file);
+        Files.write(file, strToBytes);
     }
 }
