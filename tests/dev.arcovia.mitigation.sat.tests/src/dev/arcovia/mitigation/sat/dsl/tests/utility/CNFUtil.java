@@ -1,11 +1,16 @@
 package dev.arcovia.mitigation.sat.dsl.tests.utility;
 
 import dev.arcovia.mitigation.sat.*;
+import dev.arcovia.mitigation.sat.dsl.tests.VerificationTest;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CNFUtil {
+
+    private static final Logger logger = Logger.getLogger(CNFUtil.class);
+
     private static int literalValueCounter = 0;
     public static int getNewValue() {
         return literalValueCounter++;
@@ -30,6 +35,9 @@ public abstract class CNFUtil {
                 actualDifferences.remove(it);
             }
         }));
+
+        logger.info("Differences in expected: " + expectedDifferences);
+        logger.info("Differences in actual: " + actualDifferences);
 
         return expectedDifferences.size() > actualDifferences.size() ? expectedDifferences : actualDifferences;
     }
