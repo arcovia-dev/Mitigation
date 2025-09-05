@@ -40,7 +40,6 @@ public class DemoTest {
 
         logger.info(translation.formulaToString());
         logger.info(translation.cnfToString());
-        assertTrue(true);
     }
 
     @Test
@@ -65,8 +64,6 @@ public class DemoTest {
         logger.info(translation.formulaToString());
         logger.info(translation.simpleCNFToString());
         logger.info(translation.getCNFStatistics());
-
-        assertTrue(true);
     }
 
     @Test
@@ -106,8 +103,6 @@ public class DemoTest {
         logger.info(translation.formulaToString());
         logger.info(translation.simpleCNFToString());
         logger.info(translation.getCNFStatistics());
-
-        assertTrue(true);
     }
 
     @Test
