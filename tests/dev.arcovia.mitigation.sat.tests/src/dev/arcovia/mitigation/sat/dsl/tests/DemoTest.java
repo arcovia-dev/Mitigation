@@ -116,6 +116,11 @@ public class DemoTest {
                 .create();
 
         var translation = new CNFTranslation(con).constructCNF();
+        var checkCnf = BaseFormula.fromCNF(translation).toCNF();
+
+        logger.info(CNFUtil.cnfToString(checkCnf));
+        assertEquals(Collections.emptyList(), CNFUtil.compare(translation, checkCnf));
+
         translation.get(0).literals().add(new Literal(false, new NodeLabel(new Label("Location", "nonEU"))));
         var newCnf = BaseFormula.fromCNF(translation).toCNF();
 

@@ -125,9 +125,5 @@ public class TUHHTestDSL {
 
         logger.info(CNFUtil.cnfToString(converted));
         assertEquals(Collections.emptyList(), CNFUtil.compare(constraints, converted));
-
-        var checkCnf = BaseFormula.fromCNF(converted).toCNF();
-        logger.info(CNFUtil.cnfToString(checkCnf));
-        assertEquals(Collections.emptyList(), CNFUtil.compare(converted, checkCnf));
     }
 }
