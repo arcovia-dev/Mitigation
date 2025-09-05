@@ -99,7 +99,6 @@ public class PerformanceTest {
         logger.info("\n " + literals + " Literals | " +  time + " ms");
         outputLiterals[input] = literals;
         outputTime[input] = Math.toIntExact(time);
-//        logger.info(translation.getCNFStatistics());
     }
 
     @AfterAll
