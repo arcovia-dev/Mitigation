@@ -15,10 +15,13 @@ import java.util.Random;
 
 public class ReadabilityTest {
 
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+
     private final Logger logger = Logger.getLogger(ReadabilityTest.class);
 
     private static final int testCount = 10000;
     private static final int bound = 100;
+
     // set heap size of JVM to 16GB before running, then set true
     private static final boolean heapMemorySetTo16Gb = true;
 

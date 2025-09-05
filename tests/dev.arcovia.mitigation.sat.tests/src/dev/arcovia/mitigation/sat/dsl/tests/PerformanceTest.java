@@ -18,6 +18,8 @@ import java.util.stream.IntStream;
 
 public class PerformanceTest {
 
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+
     private final Logger logger = Logger.getLogger(PerformanceTest.class);
 
     // set heap size of JVM to 16GB before running, then set true
