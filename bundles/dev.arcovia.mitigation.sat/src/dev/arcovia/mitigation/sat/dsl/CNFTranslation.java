@@ -58,7 +58,7 @@ public class CNFTranslation {
         return cnf;
     }
 
-    public void initialiseTranslation() {
+    private void initialiseTranslation() {
         List<AbstractSelector> selectors = new ArrayList<>();
         selectors.addAll(analysisConstraint.getDataSourceSelectors().getSelectors());
         selectors.addAll(analysisConstraint.getVertexSourceSelectors().getSelectors());
