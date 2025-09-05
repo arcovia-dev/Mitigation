@@ -50,10 +50,7 @@ public class CNFTranslation {
 
     public List<Constraint> constructCNF() {
         initialiseTranslation();
-        var root = new ConjunctionNode();
-        cnfFormula = new BaseFormula(root);
-        root.addPredicate(baseFormula.getRoot());
-        root.addPredicate(conditionalFormula.getRoot());
+        cnfFormula = new BaseFormula().add(baseFormula).add(conditionalFormula);
         cnf = cnfFormula.toCNF();
         return cnf;
     }
@@ -114,20 +111,18 @@ public class CNFTranslation {
     }
 
     private void constructBaseFormula() {
-        var root = new ConjunctionNode();
-        baseFormula = new BaseFormula(root);
-        constantSelectors.forEach(it -> it.addLiterals(root));
+        baseFormula = new BaseFormula();
+        constantSelectors.forEach(it -> it.addLiterals(baseFormula.getRoot()));
     }
 
     private void constructConditionalFormula() {
-        var root = new ConjunctionNode();
-        conditionalFormula = new BaseFormula(root);
+        conditionalFormula = new BaseFormula();
 
         if (conditionalSelectors.isEmpty()) { return; }
         if (variables.isEmpty()) { throw new IllegalStateException("Variables are empty."); }
 
         conditionalSelectors.forEach(it -> it.addLiterals(
-                root,
+                conditionalFormula.getRoot(),
                 dynamicSelectors,
                 variables
         ));

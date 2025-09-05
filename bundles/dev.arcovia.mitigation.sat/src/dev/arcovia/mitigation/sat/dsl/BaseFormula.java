@@ -14,9 +14,14 @@ import java.util.List;
 public class BaseFormula {
 	private final BranchNode root;
 	
-	public BaseFormula(BranchNode root) {
-		this.root = root;
+	public BaseFormula() {
+		this.root = new ConjunctionNode();
 	}
+
+    public BaseFormula add(BaseFormula baseFormula) {
+        root.addPredicate(baseFormula.getRoot());
+        return this;
+    }
 
     public static BaseFormula fromCNF(List<Constraint> cnf) {
         var root = new DisjunctionNode();
@@ -27,7 +32,9 @@ public class BaseFormula {
                 node.addPredicate(new LiteralNode(literal));
             }
         }
-        return new BaseFormula(root);
+        var baseFormula = new BaseFormula();
+        baseFormula.getRoot().addPredicate(root);
+        return baseFormula;
     }
 
     public BranchNode getRoot() {
