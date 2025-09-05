@@ -4,7 +4,6 @@ import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
-import dev.arcovia.mitigation.sat.dsl.tests.utility.DCNF;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DInData;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DNode;
 import org.apache.log4j.Logger;
@@ -31,8 +30,8 @@ public class VariableTest {
     static Map<String, List<String>> variablesDataPos, variablesDataNeg, variablesNodePos, variablesNodeNeg, variablesDataNode;
     static AnalysisConstraint constraint;
     static CNFTranslation translation;
-    static DCNF expected;
-    static DCNF actual;
+    static List<Constraint> expected;
+    static List<Constraint> actual;
 
     @BeforeAll
     public static void setup() {
@@ -69,16 +68,15 @@ public class VariableTest {
                 .create();
 
         translation = new CNFTranslation(constraint, variablesDataPos);
-        expected = new DCNF(List.of(
-                CNFUtil.generateNodeClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
-                CNFUtil.generateNodeClause(List.of(dInDataPos2), List.of(), List.of(dNodePos1))
-        ));
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos1)),
+                CNFUtil.generateClause(List.of(dInDataPos2), List.of(dNodePos1))
+        );
 
-        actual = new DCNF(translation.constructCNF());
+        actual = translation.constructCNF();
         logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 
     @Test
@@ -94,16 +92,15 @@ public class VariableTest {
                 .create();
 
         translation = new CNFTranslation(constraint, variablesNodePos);
-        expected = new DCNF(List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos2))
-        ));
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos1)),
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos2))
+        );
 
-        actual = new DCNF(translation.constructCNF());
+        actual = translation.constructCNF();
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 
     @Test
@@ -119,15 +116,14 @@ public class VariableTest {
                 .create();
 
         translation = new CNFTranslation(constraint, variablesDataNeg);
-        expected = new DCNF(List.of(
-                CNFUtil.generateNodeClause(List.of(dInDataNeg1, dInDataNeg2), List.of(), List.of(dNodePos1))
-        ));
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataNeg1, dInDataNeg2), List.of(dNodePos1))
+        );
 
-        actual = new DCNF(translation.constructCNF());
+        actual = translation.constructCNF();
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 
     @Test
@@ -143,15 +139,14 @@ public class VariableTest {
                 .create();
 
         translation = new CNFTranslation(constraint, variablesNodeNeg);
-        expected = new DCNF(List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodeNeg1, dNodeNeg2))
-        ));
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodeNeg1, dNodeNeg2))
+        );
 
-        actual = new DCNF(translation.constructCNF());
+        actual = translation.constructCNF();
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 
     @Test
@@ -167,15 +162,14 @@ public class VariableTest {
                 .create();
 
         translation = new CNFTranslation(constraint, variablesDataNode);
-        List<Constraint> expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataNeg1), List.of(), List.of(new DNode(dInDataNeg1.positive(), LabelCategory.Node.name(), dInDataNeg1.value()))),
-                CNFUtil.generateClause(List.of(dInDataNeg2), List.of(), List.of(new DNode(dInDataNeg2.positive(), LabelCategory.Node.name(), dInDataNeg2.value())))
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataNeg1), List.of(new DNode(dInDataNeg1.positive(), LabelCategory.Node.name(), dInDataNeg1.value()))),
+                CNFUtil.generateClause(List.of(dInDataNeg2), List.of(new DNode(dInDataNeg2.positive(), LabelCategory.Node.name(), dInDataNeg2.value())))
         );
 
-        List<Constraint> actual = translation.constructCNF();
+        actual = translation.constructCNF();
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-
         assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 }

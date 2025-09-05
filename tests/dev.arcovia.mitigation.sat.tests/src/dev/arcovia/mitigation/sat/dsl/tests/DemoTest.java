@@ -17,6 +17,7 @@ import tools.mdsd.library.standalone.initialization.StandaloneInitializationExce
 
 import org.apache.log4j.Logger;
 
+import java.nio.file.Paths;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,7 +75,10 @@ public class DemoTest {
         String model = "ewolff";
         int variant = 5;
         String name = model + "_" + variant;
-        DataFlowDiagramAndDictionary dfd = DataLoader.loadDFD(model, name);
+        String location = Paths.get("scenarios","dfd", "TUHH-Models").toString();
+        String inputDataFlowDiagram = Paths.get(location, model, (name + ".dataflowdiagram")).toString();
+        String inputDataDictionary = Paths.get(location, model, (name + ".datadictionary")).toString();
+        DataFlowDiagramAndDictionary dfd = DataLoader.loadDFDFromPath(inputDataFlowDiagram, inputDataDictionary);
 
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
                 .withLabel("Monitoring", ConstraintVariable.of("MonitoringDashboard"))

@@ -36,7 +36,7 @@ public class VerificationTest {
     public void validate(DFDExampleModelResult exampleModelResult) throws StandaloneInitializationException {
 
         var name = exampleModelResult.getModelName();
-        var dfd = DataLoader.loadDFDfromPath(exampleModelResult.getDataFlowDiagram(), exampleModelResult.getDataDictionary());
+        var dfd = DataLoader.loadDFDFromPath(exampleModelResult.getDataFlowDiagram(), exampleModelResult.getDataDictionary());
         var analysisConstraints = exampleModelResult.getDSLConstraints();
         var constraints = analysisConstraints.stream().map(it -> new CNFTranslation(it, dfd))
                 .map(CNFTranslation::constructCNF)

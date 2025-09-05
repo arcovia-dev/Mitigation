@@ -1,8 +1,8 @@
 package dev.arcovia.mitigation.sat.dsl.tests.unit;
 
+import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
-import dev.arcovia.mitigation.sat.dsl.tests.utility.DCNF;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DInData;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DNode;
 import org.apache.log4j.Logger;
@@ -11,6 +11,7 @@ import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,8 +24,8 @@ public class DisjunctionTest {
     static DNode dNodePos1, dNodePos2,  dNodeNeg1, dNodeNeg2;
     static AnalysisConstraint constraint;
     static CNFTranslation translation;
-    static DCNF expected;
-    static DCNF actual;
+    static List<Constraint> expected;
+    static List<Constraint> actual;
 
     @BeforeAll
     public static void setup() {
@@ -48,15 +49,15 @@ public class DisjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = new DCNF(List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
-                CNFUtil.generateClause(List.of(dInDataPos2), List.of(), List.of(dNodePos1))
-        ));
-        actual = new DCNF(translation.constructCNF());
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos1)),
+                CNFUtil.generateClause(List.of(dInDataPos2), List.of(dNodePos1))
+        );
+        actual = translation.constructCNF();
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
 
         constraint = new ConstraintDSL().ofData()
                 .withoutLabel(dInDataNeg1.type(), List.of(dInDataNeg1.value(), dInDataNeg2.value()))
@@ -66,14 +67,14 @@ public class DisjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = new DCNF(List.of(
-                CNFUtil.generateClause(List.of(dInDataNeg1, dInDataNeg2), List.of(), List.of(dNodePos1))
-        ));
-        actual = new DCNF(translation.constructCNF());
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataNeg1, dInDataNeg2), List.of(dNodePos1))
+        );
+        actual = translation.constructCNF();
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 
     @Test
@@ -86,15 +87,15 @@ public class DisjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = new DCNF(List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos2))
-        ));
-        actual = new DCNF(translation.constructCNF());
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos1)),
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos2))
+        );
+        actual = translation.constructCNF();
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
 
         constraint = new ConstraintDSL().ofData()
                 .withLabel(dInDataPos1.type(), dInDataPos1.value())
@@ -104,14 +105,14 @@ public class DisjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = new DCNF(List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodeNeg1, dNodeNeg2))
-        ));
-        actual = new DCNF(translation.constructCNF());
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodeNeg1, dNodeNeg2))
+        );
+        actual = translation.constructCNF();
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 
     @Test
@@ -124,16 +125,16 @@ public class DisjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = new DCNF(List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos1)),
-                CNFUtil.generateClause(List.of(dInDataPos2), List.of(), List.of(dNodePos1)),
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(), List.of(dNodePos2)),
-                CNFUtil.generateClause(List.of(dInDataPos2), List.of(), List.of(dNodePos2))
-        ));
-        actual = new DCNF(translation.constructCNF());
+        expected = List.of(
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos1)),
+                CNFUtil.generateClause(List.of(dInDataPos2), List.of(dNodePos1)),
+                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos2)),
+                CNFUtil.generateClause(List.of(dInDataPos2), List.of(dNodePos2))
+        );
+        actual = translation.constructCNF();
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 }

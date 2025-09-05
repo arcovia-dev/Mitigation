@@ -14,17 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class DataLoader {
-    public static DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
-        final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
-        final String location = Paths.get("scenarios","dfd", "TUHH-Models")
-                .toString();
-        return new DataFlowDiagramAndDictionary(PROJECT_NAME,
-                Paths.get(location, model, (name + ".dataflowdiagram")).toString(),
-                Paths.get(location, model, (name + ".datadictionary"))
-                        .toString(), Activator.class);
-    }
 
-    public static DataFlowDiagramAndDictionary loadDFDfromPath(String inputDataFlowDiagram, String inputDataDictionary) throws StandaloneInitializationException {
+    public static DataFlowDiagramAndDictionary loadDFDFromPath(String inputDataFlowDiagram, String inputDataDictionary) throws StandaloneInitializationException {
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
         return new DataFlowDiagramAndDictionary(
                 PROJECT_NAME,
