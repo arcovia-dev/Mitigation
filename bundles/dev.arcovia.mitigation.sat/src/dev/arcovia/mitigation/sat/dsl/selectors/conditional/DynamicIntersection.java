@@ -26,7 +26,7 @@ public class DynamicIntersection implements DynamicSetOperation {
     }
 
     @Override
-    public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData) {
+    public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables) {
         var firstVariableReference = intersection.getFirstVariable().name();
         var secondVariableReference = intersection.getSecondVariable().name();
 
@@ -50,7 +50,7 @@ public class DynamicIntersection implements DynamicSetOperation {
             var dataLabels = dataSelector.getLabels(conditionalVariables);
             var nodeLabels = vertexSelector.getLabels(conditionalVariables);
 
-            addIntersectionLiterals(root, dataLabels, nodeLabels, hasOutgoingData, hasIncomingData);
+            addIntersectionLiterals(root, dataLabels, nodeLabels);
             return;
         }
 
@@ -60,35 +60,23 @@ public class DynamicIntersection implements DynamicSetOperation {
             var dataLabels = dataSelector.getLabels(conditionalVariables);
             var nodeLabels = vertexSelector.getLabels(conditionalVariables);
 
-            addIntersectionLiterals(root, dataLabels, nodeLabels, hasOutgoingData, hasIncomingData);
+            addIntersectionLiterals(root, dataLabels, nodeLabels);
             return;
         }
 
         throw new IllegalArgumentException("Unexpected dynamic selectors: " + firstDynamicSelector + secondDynamicSelector);
     }
 
-    private void addIntersectionLiterals(BranchNode root, List<Label> dataLabels, List<Label> nodeLabels, boolean hasOutgoingData, boolean hasIncomingData) {
-        // (not data1 OR not node1) AND (not data2 OR not node2) AND
-        // (not node1 OR (not data_in1 and not data_out1) AND
+    private void addIntersectionLiterals(BranchNode root, List<Label> dataLabels, List<Label> nodeLabels) {
         var rootNode = new DisjunctionNode();
         root.addPredicate(rootNode);
 
         for (int i = 0; i < dataLabels.size(); i++) {
-
             var node = new ConjunctionNode();
             rootNode.addPredicate(node);
 
-            var dataNode = new DisjunctionNode();
-            node.addPredicate(dataNode);
             node.addPredicate(new LiteralNode(true, new NodeLabel(nodeLabels.get(i))));
-
-            if (hasIncomingData) {
-                dataNode.addPredicate(new LiteralNode(true, new IncomingDataLabel(dataLabels.get(i))));
-            }
-
-            if (hasOutgoingData) {
-                dataNode.addPredicate(new LiteralNode(true, new OutgoingDataLabel(dataLabels.get(i))));
-            }
+            node.addPredicate(new LiteralNode(true, new IncomingDataLabel(dataLabels.get(i))));
         }
     }
 }

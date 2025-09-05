@@ -21,7 +21,7 @@ public class DynamicEmptySetOperationConditionalSelector implements DynamicCondi
     }
 
     @Override
-    public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData) {
-        operation.addLiterals(root, dynamicSelectors, variables, hasOutgoingData, hasIncomingData);
+    public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables) {
+        operation.addLiterals(root, dynamicSelectors, variables);
     }
 }

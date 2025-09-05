@@ -19,8 +19,6 @@ import tools.mdsd.modelingfoundations.identifier.NamedElement;
 
 public class CNFTranslation {
     private final AnalysisConstraint analysisConstraint;
-    private final boolean hasOutgoingData;
-    private final boolean hasIncomingData;
 
     private final List<ConstantDataSelector> constantSelectors =  new ArrayList<>();
     private final Map <String, DynamicDataSelector> dynamicSelectors =  new HashMap<>();
@@ -36,10 +34,9 @@ public class CNFTranslation {
     public CNFTranslation(AnalysisConstraint analysisConstraint, Map<String, List<String>> variables) {
         this.analysisConstraint = Objects.requireNonNull(analysisConstraint);
         this.variables = Objects.requireNonNull(variables);
-//        hasOutgoingData = !analysisConstraint.getVertexSourceSelectors().getSelectors().isEmpty();
-//        hasIncomingData = !analysisConstraint.getVertexDestinationSelectors().getSelectors().isEmpty();
-        hasOutgoingData = false;
-        hasIncomingData = true;
+        if (!analysisConstraint.getVertexSourceSelectors().getSelectors().isEmpty()) {
+            throw new IllegalArgumentException("OutgoingData (VertexSourceSelectors) is not allowed in this context.");
+        }
     }
 
     public CNFTranslation(AnalysisConstraint analysisConstraint) {
@@ -119,7 +116,7 @@ public class CNFTranslation {
     private void constructBaseFormula() {
         var root = new ConjunctionNode();
         baseFormula = new BaseFormula(root);
-        constantSelectors.forEach(it -> it.addLiterals(root, hasOutgoingData, hasIncomingData));
+        constantSelectors.forEach(it -> it.addLiterals(root));
     }
 
     private void constructConditionalFormula() {
@@ -132,9 +129,7 @@ public class CNFTranslation {
         conditionalSelectors.forEach(it -> it.addLiterals(
                 root,
                 dynamicSelectors,
-                variables,
-                hasOutgoingData,
-                hasIncomingData
+                variables
         ));
     }
 
@@ -157,8 +152,8 @@ public class CNFTranslation {
             for (var literal : constraint.literals()) {
                 var positive = literal.positive() ? "" : "!";
                 var label = literal.compositeLabel().label();
-                s.append("%s[%s.%s]".formatted(positive, label.type(), label.value()));
-//                s.append("%s[%s %s.%s]".formatted(positive, literal.compositeLabel().category().name(), label.type(), label.value()));
+                s.append("%s[%s %s.%s]".formatted(positive, literal.compositeLabel().category().name(),
+                        label.type(), label.value()));
                 s.append(" OR ");
             }
             s.delete(s.length() - 3, s.length());

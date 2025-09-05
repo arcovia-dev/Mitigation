@@ -15,7 +15,7 @@ public class ConstantDataCharacteristicSelector implements ConstantDataSelector 
     }
 
     @Override
-    public void addLiterals(BranchNode root, boolean hasOutgoingData, boolean hasIncomingData) {
+    public void addLiterals(BranchNode root) {
         var characteristicType = selector.getDataCharacteristic().characteristicType();
         var characteristicValue = selector.getDataCharacteristic().characteristicValue();
 
@@ -30,11 +30,6 @@ public class ConstantDataCharacteristicSelector implements ConstantDataSelector 
         var type = characteristicType.values().orElseThrow().get(0);
         var values = characteristicValue.values().orElseThrow().get(0);
 
-        if (hasIncomingData) {
-            root.addPredicate(new LiteralNode(selector.isInverted(), new IncomingDataLabel(new Label(type, values))));
-        }
-        if (hasOutgoingData) {
-            root.addPredicate(new LiteralNode(selector.isInverted(), new OutgoingDataLabel(new Label(type, values))));
-        }
+        root.addPredicate(new LiteralNode(selector.isInverted(), new IncomingDataLabel(new Label(type, values))));
     }
 }

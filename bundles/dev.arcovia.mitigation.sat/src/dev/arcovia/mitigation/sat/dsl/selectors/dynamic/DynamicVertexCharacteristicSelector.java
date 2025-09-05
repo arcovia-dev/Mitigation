@@ -24,7 +24,7 @@ public class DynamicVertexCharacteristicSelector implements DynamicDataSelector 
     }
 
     @Override
-    public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData, boolean inverted) {
+    public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean inverted) {
         List<String> vars = variables
                 .get(selector.getVertexCharacteristics().characteristicValue().name());
         if(vars == null || vars.isEmpty()) { throw new IllegalStateException("Variables not found."); }
@@ -35,7 +35,7 @@ public class DynamicVertexCharacteristicSelector implements DynamicDataSelector 
                 )).toList();
         new ConstantVertexCharacteristicListSelector(
                 new VertexCharacteristicsListSelector(null, data, inverted)
-        ).addLiterals(root, hasOutgoingData, hasIncomingData);
+        ).addLiterals(root);
     }
 
     @Override

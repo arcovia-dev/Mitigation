@@ -24,7 +24,7 @@ public class DynamicDataCharacteristicSelector implements DynamicDataSelector {
     }
 
     @Override
-    public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData, boolean inverted) {
+    public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean inverted) {
         List<String> vars = variables
                 .get(selector.getDataCharacteristic().characteristicValue().name());
         if(vars == null || vars.isEmpty()) { throw new IllegalStateException("Variables not found."); }
@@ -36,7 +36,7 @@ public class DynamicDataCharacteristicSelector implements DynamicDataSelector {
 
         new ConstantDataCharacteristicListSelector(
                 new DataCharacteristicListSelector(null, data, inverted)
-        ).addLiterals(root, hasOutgoingData, hasIncomingData);
+        ).addLiterals(root);
     }
 
     @Override

@@ -82,8 +82,6 @@ public class DemoTest {
                 .withoutLabel("Bad", "Data")
                 .withLabel("Positivity", List.of("A", "B", "C"))
                 .withoutLabel("Negativity", List.of("A", "B", "C"))
-                .fromNode()
-                .withCharacteristic("Out", "Node")
                 .neverFlows()
                 .toVertex()
                 .withCharacteristic("Role", "Clerk")

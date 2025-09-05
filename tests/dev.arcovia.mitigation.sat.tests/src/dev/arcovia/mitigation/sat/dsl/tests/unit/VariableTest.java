@@ -1,5 +1,6 @@
 package dev.arcovia.mitigation.sat.dsl.tests.unit;
 
+import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
@@ -15,6 +16,7 @@ import org.dataflowanalysis.analysis.dsl.variable.ConstraintVariableReference;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,15 +167,15 @@ public class VariableTest {
                 .create();
 
         translation = new CNFTranslation(constraint, variablesDataNode);
-        expected = new DCNF(List.of(
+        List<Constraint> expected = List.of(
                 CNFUtil.generateClause(List.of(dInDataNeg1), List.of(), List.of(new DNode(dInDataNeg1.positive(), LabelCategory.Node.name(), dInDataNeg1.value()))),
                 CNFUtil.generateClause(List.of(dInDataNeg2), List.of(), List.of(new DNode(dInDataNeg2.positive(), LabelCategory.Node.name(), dInDataNeg2.value())))
-        ));
+        );
 
-        actual = new DCNF(translation.constructCNF());
+        List<Constraint> actual = translation.constructCNF();
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
 
-        assertEquals(expected, actual);
+        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
     }
 }

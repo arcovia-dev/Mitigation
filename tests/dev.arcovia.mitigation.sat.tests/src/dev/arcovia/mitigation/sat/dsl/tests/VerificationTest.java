@@ -24,6 +24,7 @@ public class VerificationTest {
     private final Logger logger = Logger.getLogger(VerificationTest.class);
 
     private static Stream<Arguments> provideDFDExampleModelViolations() {
+        // BranchingResult not included because VertexTypeSelector is not supported
         return Stream.of(
                 Arguments.of(new OnlineShopResult()), Arguments.of(new SimpleOnlineShopResult()),
                 Arguments.of(new CWANoViolation()), Arguments.of(new VWCariad()), Arguments.of(new CWAPersonalDataViolation()),

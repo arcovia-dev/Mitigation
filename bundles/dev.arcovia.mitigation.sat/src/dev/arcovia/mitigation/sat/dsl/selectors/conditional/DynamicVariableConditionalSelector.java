@@ -15,11 +15,11 @@ public class DynamicVariableConditionalSelector implements DynamicConditionalSel
     }
 
     @Override
-    public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData) {
+    public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables) {
         var dynamicDataSelector = dynamicSelectors.get(selector.getConstraintVariable().name());
         if (dynamicDataSelector.isInverted()) {
             throw new IllegalStateException("CharacteristicSelector must be positive");
         }
-        dynamicDataSelector.addLiterals(root, variables, hasOutgoingData, hasIncomingData, selector.isInverted());
+        dynamicDataSelector.addLiterals(root, variables, selector.isInverted());
     }
 }

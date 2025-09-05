@@ -14,7 +14,7 @@ public class ConstantVertexCharacteristicSelector implements ConstantDataSelecto
     }
 
     @Override
-    public void addLiterals(BranchNode root, boolean hasOutgoingData, boolean hasIncomingData) {
+    public void addLiterals(BranchNode root) {
         var characteristicType = selector.getVertexCharacteristics().characteristicType();
         var characteristicValue = selector.getVertexCharacteristics().characteristicValue();
 

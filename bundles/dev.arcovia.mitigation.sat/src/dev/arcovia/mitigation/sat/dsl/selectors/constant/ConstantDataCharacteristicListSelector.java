@@ -14,17 +14,14 @@ public class ConstantDataCharacteristicListSelector implements ConstantDataSelec
     }
 
     @Override
-    public void addLiterals(BranchNode root, boolean hasOutgoingData, boolean hasIncomingData) {
+    public void addLiterals(BranchNode root) {
         var incomingDataNode = selector.isInverted() ? new ConjunctionNode() : new DisjunctionNode();
-        var outgoingDataNode = selector.isInverted() ? new ConjunctionNode() : new DisjunctionNode();
         root.addPredicate(incomingDataNode);
-        root.addPredicate(outgoingDataNode);
 
         var dataSelectors = selector.getDataCharacteristics().stream().map(it ->
                 new ConstantDataCharacteristicSelector(
                         new DataCharacteristicsSelector(null, it, selector.isInverted())
                 )).toList();
-        dataSelectors.forEach(it -> it.addLiterals(incomingDataNode, hasOutgoingData, false));
-        dataSelectors.forEach(it -> it.addLiterals(outgoingDataNode, false, hasIncomingData));
+        dataSelectors.forEach(it -> it.addLiterals(incomingDataNode));
     }
 }

@@ -8,6 +8,6 @@ import java.util.Map;
 
 public interface DynamicDataSelector {
     List<Label> getLabels(Map<String, List<String>> variables);
-    void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean hasOutgoingData, boolean hasIncomingData, boolean inverted);
+    void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean inverted);
     boolean isInverted();
 }
