@@ -6,6 +6,7 @@ import dev.arcovia.mitigation.sat.dsl.tests.utility.ReadabilityTestResult;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -23,13 +24,14 @@ public class ReadabilityTest {
     private static final int bound = 100;
 
     // set heap size of JVM to 16GB before running, then set true
-    private static final boolean heapMemorySetTo16Gb = true;
+    private static final boolean heapMemorySetTo16Gb = false;
 
+    @Disabled
     @Test
     public void randomTest() throws IOException {
 
         if (!heapMemorySetTo16Gb) {
-            return;
+            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
         }
 
         ReadabilityTestResult[] testResults =  new ReadabilityTestResult[testCount];
@@ -84,11 +86,12 @@ public class ReadabilityTest {
                 .create();
     }
 
+    @Disabled
     @Test
     public void randomWorstCaseTest() throws IOException {
 
         if (!heapMemorySetTo16Gb) {
-            return;
+            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
         }
 
         ReadabilityTestResult[] testResults =  new ReadabilityTestResult[testCount];
