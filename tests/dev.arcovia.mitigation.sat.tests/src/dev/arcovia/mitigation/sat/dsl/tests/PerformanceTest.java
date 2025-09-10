@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,11 +26,12 @@ public class PerformanceTest {
     // set heap size of JVM to 16GB before running, then set true
     private static final boolean heapMemorySetTo16Gb = false;
 
+    @Disabled
     @Test
     public void performanceTest() {
 
         if (!heapMemorySetTo16Gb) {
-            return;
+            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
         }
 
         List<String> longList = new ArrayList<>();
@@ -70,12 +72,13 @@ public class PerformanceTest {
         return Arrays.stream(inputs);
     }
 
+    @Disabled
     @ParameterizedTest()
     @MethodSource("inputLiterals")
     public void performanceTest2(int input) {
 
         if (!heapMemorySetTo16Gb) {
-            return;
+            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
         }
 
         var literals = input*step+start;
@@ -101,6 +104,7 @@ public class PerformanceTest {
         outputTime[input] = Math.toIntExact(time);
     }
 
+    @Disabled
     @AfterAll
     public static void afterAll() throws IOException {
         if (!heapMemorySetTo16Gb) {
