@@ -104,7 +104,7 @@ public class PerformanceTest {
         outputTime[input] = Math.toIntExact(time);
     }
 
-    @Disabled
+
     @AfterAll
     public static void afterAll() throws IOException {
         if (!heapMemorySetTo16Gb) {
