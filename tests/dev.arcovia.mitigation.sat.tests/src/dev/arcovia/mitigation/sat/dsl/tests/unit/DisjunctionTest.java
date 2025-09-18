@@ -57,7 +57,7 @@ public class DisjunctionTest {
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
+        assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
 
         constraint = new ConstraintDSL().ofData()
                 .withoutLabel(dInDataNeg1.type(), List.of(dInDataNeg1.value(), dInDataNeg2.value()))
@@ -74,7 +74,7 @@ public class DisjunctionTest {
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
+        assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class DisjunctionTest {
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
+        assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
 
         constraint = new ConstraintDSL().ofData()
                 .withLabel(dInDataPos1.type(), dInDataPos1.value())
@@ -112,7 +112,7 @@ public class DisjunctionTest {
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
+        assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
     }
 
     @Test
@@ -135,6 +135,6 @@ public class DisjunctionTest {
 
         logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
-        assertEquals(Collections.emptyList(), CNFUtil.compare(expected, actual));
+        assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
     }
 }

@@ -1,7 +1,6 @@
 package dev.arcovia.mitigation.sat.dsl.tests;
 
 import dev.arcovia.mitigation.sat.*;
-import dev.arcovia.mitigation.sat.dsl.BaseFormula;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
 import org.apache.log4j.Logger;
@@ -125,6 +124,6 @@ public class TUHHTestDSL {
                 .toList();
 
         logger.info(CNFUtil.cnfToString(converted));
-        assertEquals(Collections.emptyList(), CNFUtil.compare(constraints, converted));
+        assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(constraints, converted));
     }
 }

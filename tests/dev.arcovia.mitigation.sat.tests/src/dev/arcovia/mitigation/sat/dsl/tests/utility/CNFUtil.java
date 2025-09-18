@@ -27,7 +27,7 @@ public abstract class CNFUtil {
     }
 
     // returns greatest differences between two clauses or empty list if the same
-    public static List<Constraint> compare(List<Constraint> expected, List<Constraint> actual) {
+    public static List<Constraint> getGreatestDifference(List<Constraint> expected, List<Constraint> actual) {
         var expectedDifferences = new ArrayList<>(expected);
         var actualDifferences = new ArrayList<>(actual);
         expected.forEach(constraint -> actual.forEach(it -> {
