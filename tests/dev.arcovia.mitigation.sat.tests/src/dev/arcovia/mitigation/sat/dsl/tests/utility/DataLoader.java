@@ -48,7 +48,8 @@ public abstract class DataLoader {
     }
 
     private static void printToFile(byte[] strToBytes, String fileName) throws IOException {
-        Path dir = Paths.get("output");
+        final String OUTPUT_DIRECTORY = "output";
+        Path dir = Paths.get(OUTPUT_DIRECTORY);
         Files.createDirectories(dir);
         Path file = Paths.get(String.valueOf(dir), fileName);
         Files.deleteIfExists(file);
