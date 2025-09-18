@@ -6,7 +6,7 @@ import dev.arcovia.mitigation.sat.dsl.tests.utility.ReadabilityTestResult;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -25,10 +25,10 @@ public class StructureTest {
     private static final int bound = 100;
 
     // 20.000 input literals need roughly 16 GB of heap size memory
-    private static final long expectedMemoryInGigabyte = 16L;
+    private static final long expectedMemoryInGigabyte = 16;
 
-    @BeforeAll
-    static void beforeAll() {
+    @BeforeEach
+    void beforeEach() {
         assertEquals(expectedMemoryInGigabyte*1024*1024*1024, Runtime.getRuntime().maxMemory(), "Incorrect JVM heap size");
     }
 

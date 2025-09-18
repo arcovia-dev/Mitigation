@@ -5,8 +5,8 @@ import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,10 +25,10 @@ public class PerformanceTest {
     private final Logger logger = Logger.getLogger(PerformanceTest.class);
 
     // 20.000 input literals need roughly 16 GB of heap size memory
-    private static final long expectedMemoryInGigabyte = 16L;
+    private static final long expectedMemoryInGigabyte = 16;
 
-    @BeforeAll
-    static void beforeAll() {
+    @BeforeEach
+    void beforeEach() {
         assertEquals(expectedMemoryInGigabyte*1024*1024*1024, Runtime.getRuntime().maxMemory(), "Incorrect JVM heap size");
     }
 
@@ -106,8 +106,8 @@ public class PerformanceTest {
     }
 
 
-    @AfterAll
-    public static void afterAll() throws IOException {
+    @AfterEach
+    public void afterEach() throws IOException {
         DataLoader.outputJsonArray(outputLiterals, "literals.json");
         DataLoader.outputJsonArray(outputTime, "time.json");
     }
