@@ -114,7 +114,7 @@ public class TUHHTestDSL {
     );
 
     @Test
-    public void convert() {
+    public void validateConvertedTUHHConstraints() {
 
         logger.info(CNFUtil.cnfToString(constraints));
 
