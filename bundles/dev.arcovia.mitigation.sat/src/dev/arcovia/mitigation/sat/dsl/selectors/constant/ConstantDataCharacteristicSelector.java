@@ -24,7 +24,7 @@ public class ConstantDataCharacteristicSelector implements ConstantDataSelector 
         }
 
         if(!characteristicValue.isConstant()) {
-            throw new IllegalStateException("Selector Type not constant:" + selector);
+            throw new IllegalStateException("Selector Value not constant:" + selector);
         }
 
         var type = characteristicType.values().orElseThrow().get(0);
