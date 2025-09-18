@@ -18,7 +18,8 @@ import tools.mdsd.library.standalone.initialization.StandaloneInitializationExce
 import org.apache.log4j.Logger;
 
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
