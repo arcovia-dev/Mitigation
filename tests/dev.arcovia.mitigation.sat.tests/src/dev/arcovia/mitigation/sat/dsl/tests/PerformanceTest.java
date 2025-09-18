@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,25 +18,29 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class PerformanceTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+public class PerformanceTest {
 
     private final Logger logger = Logger.getLogger(PerformanceTest.class);
 
-    // set heap size of JVM to 16GB before running, then set true
-    private static final boolean heapMemorySetTo16Gb = false;
+    // 20.000 input literals need roughly 16 GB of heap size memory
+    private static final long expectedMemoryInGigabyte = 16L;
 
+    @BeforeAll
+    static void beforeAll() {
+        assertEquals(expectedMemoryInGigabyte*1024*1024*1024, Runtime.getRuntime().maxMemory(), "Incorrect JVM heap size");
+    }
+
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
     @Disabled
     @Test
-    public void performanceTest() {
+    public void singleInputPerformanceTest() {
 
-        if (!heapMemorySetTo16Gb) {
-            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
-        }
+        int inputLiteralsPerSide = 10000; // double that as total literals
 
         List<String> longList = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < inputLiteralsPerSide; i++) {
             longList.add(Integer.toString(i));
         }
 
@@ -55,11 +60,11 @@ public class PerformanceTest {
         logger.info(translation.getCNFStatistics());
     }
 
-    private static final int max = 7000; //7000
+    private static final int maxInputLiterals = 7000;
     private static final int start = 6000;
     private static final int step = 100;
 
-    private static final int count = 1 + (max-start) / step;
+    private static final int count = 1 + (maxInputLiterals - start) / step;
     private static final int[] outputLiterals = new int[count];
     private static final int[] outputTime = new int[count];
 
@@ -75,11 +80,7 @@ public class PerformanceTest {
     @Disabled
     @ParameterizedTest()
     @MethodSource("inputLiterals")
-    public void performanceTest2(int input) {
-
-        if (!heapMemorySetTo16Gb) {
-            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
-        }
+    public void multipleInputPerformanceTest(int input) {
 
         var literals = input*step+start;
         List<String> longList = new ArrayList<>();
@@ -107,9 +108,6 @@ public class PerformanceTest {
 
     @AfterAll
     public static void afterAll() throws IOException {
-        if (!heapMemorySetTo16Gb) {
-            return;
-        }
         DataLoader.outputJsonArray(outputLiterals, "literals.json");
         DataLoader.outputJsonArray(outputTime, "time.json");
     }

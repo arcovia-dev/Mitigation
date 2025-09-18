@@ -6,6 +6,7 @@ import dev.arcovia.mitigation.sat.dsl.tests.utility.ReadabilityTestResult;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -14,25 +15,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ReadabilityTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+public class StructureTest {
 
-    private final Logger logger = Logger.getLogger(ReadabilityTest.class);
+    private final Logger logger = Logger.getLogger(StructureTest.class);
 
     private static final int testCount = 10000;
     private static final int bound = 100;
 
-    // set heap size of JVM to 16GB before running, then set true
-    private static final boolean heapMemorySetTo16Gb = false;
+    // 20.000 input literals need roughly 16 GB of heap size memory
+    private static final long expectedMemoryInGigabyte = 16L;
 
+    @BeforeAll
+    static void beforeAll() {
+        assertEquals(expectedMemoryInGigabyte*1024*1024*1024, Runtime.getRuntime().maxMemory(), "Incorrect JVM heap size");
+    }
+
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
     @Disabled
     @Test
     public void randomTest() throws IOException {
-
-        if (!heapMemorySetTo16Gb) {
-            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
-        }
 
         ReadabilityTestResult[] testResults =  new ReadabilityTestResult[testCount];
 
@@ -86,13 +89,10 @@ public class ReadabilityTest {
                 .create();
     }
 
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
     @Disabled
     @Test
     public void randomWorstCaseTest() throws IOException {
-
-        if (!heapMemorySetTo16Gb) {
-            throw new IllegalStateException("Set heap size of JVM to 16GB before running, then set true.");
-        }
 
         ReadabilityTestResult[] testResults =  new ReadabilityTestResult[testCount];
 
