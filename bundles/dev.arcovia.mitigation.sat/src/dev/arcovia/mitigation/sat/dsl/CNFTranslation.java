@@ -136,12 +136,12 @@ public class CNFTranslation {
 
     public String formulaToString() {
         var formulaString = cnfFormula.toString();
-        return "\n!%s".formatted(formulaString);
+        return "%s!%s".formatted(System.lineSeparator(), formulaString);
     }
 
     public String cnfToString() {
         var s = new StringBuilder();
-        s.append("\n");
+        s.append(System.lineSeparator());
         for (var constraint : cnf) {
             s.append("( ");
             for (var literal : constraint.literals()) {
@@ -153,7 +153,7 @@ public class CNFTranslation {
             }
             s.delete(s.length() - 3, s.length());
             s.append(") AND");
-            s.append("\n");
+            s.append(System.lineSeparator());
         }
         s.delete(s.length() - 5, s.length());
         return s.toString();
@@ -162,7 +162,7 @@ public class CNFTranslation {
     public String simpleCNFToString() {
         var s = new StringBuilder();
         var literals = new ArrayList<Literal>();
-        s.append("\n");
+        s.append(System.lineSeparator());
         for (var constraint : cnf) {
             s.append("[");
             for (var literal : constraint.literals()) {
@@ -176,17 +176,17 @@ public class CNFTranslation {
                 }
             }
             s.append("]");
-            s.append("\n");
+            s.append(System.lineSeparator());
         }
         return s.toString();
     }
 
     public String getCNFStatistics() {
-        return "\n" +
-                "Clauses: " + outputClauses() + "\n" +
-                "Literals: " + outputLiterals() + "\n" +
-                "Longest Clause: " + outputLongestClause() + "\n" +
-                "Literals per Clause (avg): " + (float) (outputLiterals()) / outputClauses() + "\n";
+        return System.lineSeparator() +
+                "Clauses: " + outputClauses() + System.lineSeparator() +
+                "Literals: " + outputLiterals() + System.lineSeparator() +
+                "Longest Clause: " + outputLongestClause() + System.lineSeparator() +
+                "Literals per Clause (avg): " + (float) (outputLiterals()) / outputClauses() + System.lineSeparator();
     }
 
     public int outputClauses() {

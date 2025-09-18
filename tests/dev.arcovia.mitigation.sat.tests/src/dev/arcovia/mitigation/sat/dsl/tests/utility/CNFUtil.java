@@ -57,7 +57,7 @@ public abstract class CNFUtil {
 
     public static String cnfToString(List<Constraint> cnf) {
         var s = new StringBuilder();
-        s.append("\n");
+        s.append(System.lineSeparator());
         for (var constraint : cnf) {
             s.append("( ");
             for (var literal : constraint.literals()) {
@@ -68,7 +68,7 @@ public abstract class CNFUtil {
             }
             s.delete(s.length() - 3, s.length());
             s.append(") AND");
-            s.append("\n");
+            s.append(System.lineSeparator());
         }
         s.delete(s.length() - 5, s.length());
         return s.toString();
