@@ -75,6 +75,13 @@ public class TUHHTest {
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 4),
             entry(new Label("Stereotype", "encrypted_connection"), 5), entry(new Label("Stereotype", "log_sanitization"), 3),
             entry(new Label("Stereotype", "local_logging"), 2));
+    
+    /*
+     * Returns a shallow copy of the constraint list
+     */
+    public List<Constraint> getConstraints() {
+        return new ArrayList<>(constraints);
+    }
 
     @Test
     public void tuhhTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
