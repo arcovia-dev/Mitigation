@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ilp
+Bundle-SymbolicName: dev.arcovia.mitigation.ilp
+Bundle-Version: 1.0.0.qualifier
+Export-Package: 
+ dev.arcovia.mitigation.ilp
+Require-Bundle: org.dataflowanalysis.converter,
+ org.apache.log4j,
+ org.dataflowanalysis.analysis,
+ org.dataflowanalysis.analysis.dfd,
+ org.dataflowanalysis.dfd.datadictionary,
+ org.dataflowanalysis.dfd.dataflowdiagram
+Automatic-Module-Name: dev.arcovia.mitigation.ilp
+Bundle-RequiredExecutionEnvironment: JavaSE-17
