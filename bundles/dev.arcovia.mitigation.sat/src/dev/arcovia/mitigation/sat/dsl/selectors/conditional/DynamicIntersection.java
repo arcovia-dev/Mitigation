@@ -21,10 +21,26 @@ import java.util.stream.Stream;
 public class DynamicIntersection implements DynamicSetOperation {
     private final Intersection intersection;
 
+    /**
+     * Constructs a {@link DynamicIntersection} wrapping the given {@link Intersection} operation.
+     *
+     * @param intersection the {@link Intersection} to wrap
+     */
     public DynamicIntersection(Intersection intersection) {
         this.intersection = intersection;
     }
 
+    /**
+     * Adds literals to the given root node based on the intersection of variables from dynamic selectors.
+     * Handles combinations of {@link DynamicDataCharacteristicSelector} and {@link DynamicVertexCharacteristicSelector}.
+     * Throws an exception if no intersection is found or if selectors are of unexpected types.
+     *
+     * @param root the {@link BranchNode} to which literals are added
+     * @param dynamicSelectors a map of dynamic selectors by variable name
+     * @param variables a map of variable names to their corresponding string values
+     * @throws IllegalStateException if the intersection of variables is empty
+     * @throws IllegalArgumentException if dynamic selectors are of unexpected types
+     */
     @Override
     public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables) {
         var firstVariableReference = intersection.getFirstVariable().name();

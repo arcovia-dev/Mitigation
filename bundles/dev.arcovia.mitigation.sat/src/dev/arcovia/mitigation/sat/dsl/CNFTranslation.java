@@ -31,6 +31,14 @@ public class CNFTranslation {
     private BaseFormula conditionalFormula;
     private BaseFormula cnfFormula;
 
+    /**
+     * Constructs a {@link CNFTranslation} with the given analysis constraint and variable mappings.
+     * Throws an exception if the analysis constraint contains vertex source selectors.
+     *
+     * @param analysisConstraint the {@link AnalysisConstraint} to translate
+     * @param variables a map of variable names to their corresponding string values
+     * @throws IllegalArgumentException if the analysis constraint contains vertex source selectors
+     */
     public CNFTranslation(AnalysisConstraint analysisConstraint, Map<String, List<String>> variables) {
         this.analysisConstraint = Objects.requireNonNull(analysisConstraint);
         this.variables = Objects.requireNonNull(variables);
@@ -39,15 +47,33 @@ public class CNFTranslation {
         }
     }
 
+    /**
+     * Constructs a {@link CNFTranslation} with the given analysis constraint and an empty variable map.
+     *
+     * @param analysisConstraint the {@link AnalysisConstraint} to translate
+     */
     public CNFTranslation(AnalysisConstraint analysisConstraint) {
         this(analysisConstraint, new HashMap<>());
     }
 
+    /**
+     * Constructs a {@link CNFTranslation} with the given analysis constraint and initializes variables
+     * using the provided {@link DataFlowDiagramAndDictionary}.
+     *
+     * @param analysisConstraint the {@link AnalysisConstraint} to translate
+     * @param dataFlowDiagramAndDictionary the data flow diagram and dictionary used to initialize variables
+     */
     public CNFTranslation(AnalysisConstraint analysisConstraint, DataFlowDiagramAndDictionary dataFlowDiagramAndDictionary) {
         this(analysisConstraint);
         initialiseVariables(dataFlowDiagramAndDictionary);
     }
 
+    /**
+     * Constructs the CNF representation of the analysis constraint by initializing the translation,
+     * combining the base and conditional formulas, and converting the result to CNF.
+     *
+     * @return a list of {@link Constraint} objects representing the CNF
+     */
     public List<Constraint> constructCNF() {
         initialiseTranslation();
         cnfFormula = new BaseFormula().add(baseFormula).add(conditionalFormula);
@@ -134,11 +160,23 @@ public class CNFTranslation {
                 it.getLabel().stream().map(NamedElement::getEntityName).toList()));
     }
 
+    /**
+     * Returns a string representation of the CNF formula, prefixed with a line separator and an exclamation mark.
+     *
+     * @return the formatted string representation of the CNF formula
+     */
     public String formulaToString() {
         var formulaString = cnfFormula.toString();
         return "%s!%s".formatted(System.lineSeparator(), formulaString);
     }
 
+    /**
+     * Returns a formatted string representation of the CNF, showing each constraint and its literals.
+     * Each literal is displayed with its polarity, category, type, and value, combined using "OR" within
+     * constraints and "AND" between constraints.
+     *
+     * @return the formatted string representation of the CNF
+     */
     public String cnfToString() {
         var s = new StringBuilder();
         s.append(System.lineSeparator());
@@ -159,6 +197,13 @@ public class CNFTranslation {
         return s.toString();
     }
 
+    /**
+     * Returns a simplified string representation of the CNF using indices for literals.
+     * Each literal is represented by its index in the order of first occurrence, with
+     * negation indicated by "!". Constraints are enclosed in brackets.
+     *
+     * @return the simplified string representation of the CNF
+     */
     public String simpleCNFToString() {
         var s = new StringBuilder();
         var literals = new ArrayList<Literal>();
@@ -181,6 +226,12 @@ public class CNFTranslation {
         return s.toString();
     }
 
+    /**
+     * Returns a summary of CNF statistics, including the number of clauses, total literals,
+     * length of the longest clause, and the average number of literals per clause.
+     *
+     * @return a formatted string containing CNF statistics
+     */
     public String getCNFStatistics() {
         return System.lineSeparator() +
                 "Clauses: " + outputClauses() + System.lineSeparator() +
@@ -189,14 +240,29 @@ public class CNFTranslation {
                 "Literals per Clause (avg): " + (float) (outputLiterals()) / outputClauses() + System.lineSeparator();
     }
 
+    /**
+     * Returns the number of clauses in the CNF.
+     *
+     * @return the total number of clauses
+     */
     public int outputClauses() {
         return cnf.size();
     }
 
+    /**
+     * Returns the total number of literals across all CNF clauses.
+     *
+     * @return the sum of literals in all clauses
+     */
     public int outputLiterals() {
         return cnf.stream().map(it -> it.literals().size()).reduce(0, Integer::sum);
     }
 
+    /**
+     * Returns the size of the longest clause in the CNF.
+     *
+     * @return the number of literals in the longest clause
+     */
     public int outputLongestClause() {
         var longest = 0;
         for (Constraint constraint : cnf) {

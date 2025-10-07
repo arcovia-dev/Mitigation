@@ -14,15 +14,35 @@ import java.util.Map;
 public class DynamicVertexCharacteristicSelector implements DynamicDataSelector {
     private final VertexCharacteristicsSelector selector;
 
+    /**
+     * Constructs a {@link DynamicVertexCharacteristicSelector} wrapping the given {@link VertexCharacteristicsSelector}.
+     *
+     * @param selector the {@link VertexCharacteristicsSelector} to wrap
+     */
     public DynamicVertexCharacteristicSelector(VertexCharacteristicsSelector selector) {
         this.selector = selector;
     }
 
+    /**
+     * Returns whether this vertex characteristic selector is inverted.
+     *
+     * @return true if the selector is inverted, false otherwise
+     */
     @Override
     public boolean isInverted() {
         return selector.isInverted();
     }
 
+    /**
+     * Adds literals to the root node based on the dynamic vertex characteristic values.
+     * Converts variable values into constant vertex characteristic selectors and delegates
+     * literal addition. Throws an exception if no variables are found.
+     *
+     * @param root the {@link BranchNode} to which literals are added
+     * @param variables a map of variable names to their corresponding string values
+     * @param inverted whether the literals should be added as inverted
+     * @throws IllegalStateException if no variables are found for the selector
+     */
     @Override
     public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean inverted) {
         List<String> vars = variables
@@ -38,6 +58,14 @@ public class DynamicVertexCharacteristicSelector implements DynamicDataSelector 
         ).addLiterals(root);
     }
 
+    /**
+     * Returns a list of {@link Label} objects for the dynamic vertex characteristic based on the provided variables.
+     * Ensures the characteristic type is constant and maps variable values to labels.
+     *
+     * @param variables a map of variable names to their corresponding string values
+     * @return a list of {@link Label} objects representing the characteristic values
+     * @throws IllegalStateException if the characteristic type is not constant
+     */
     @Override
     public List<Label> getLabels(Map<String, List<String>> variables) {
         var characteristicType = selector.getVertexCharacteristics().characteristicType();

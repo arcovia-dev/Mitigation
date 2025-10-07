@@ -14,15 +14,35 @@ import java.util.Map;
 public class DynamicDataCharacteristicSelector implements DynamicDataSelector {
     private final DataCharacteristicsSelector selector;
 
+    /**
+     * Constructs a {@link DynamicDataCharacteristicSelector} wrapping the given {@link DataCharacteristicsSelector}.
+     *
+     * @param selector the {@link DataCharacteristicsSelector} to wrap
+     */
     public DynamicDataCharacteristicSelector(DataCharacteristicsSelector selector) {
         this.selector = selector;
     }
 
+    /**
+     * Returns whether this selector is inverted.
+     *
+     * @return true if the selector is inverted, false otherwise
+     */
     @Override
     public boolean isInverted() {
         return selector.isInverted();
     }
 
+    /**
+     * Adds literals to the root node based on the dynamic data characteristic values.
+     * Converts variable values into constant data characteristic selectors and delegates
+     * literal addition. Throws an exception if no variables are found.
+     *
+     * @param root the {@link BranchNode} to which literals are added
+     * @param variables a map of variable names to their corresponding string values
+     * @param inverted whether the literals should be added as inverted
+     * @throws IllegalStateException if no variables are found for the selector
+     */
     @Override
     public void addLiterals(BranchNode root, Map<String, List<String>> variables, boolean inverted) {
         List<String> vars = variables
@@ -39,6 +59,14 @@ public class DynamicDataCharacteristicSelector implements DynamicDataSelector {
         ).addLiterals(root);
     }
 
+    /**
+     * Returns a list of {@link Label} objects for the dynamic data characteristic based on the provided variables.
+     * Ensures the characteristic type is constant and maps variable values to labels.
+     *
+     * @param variables a map of variable names to their corresponding string values
+     * @return a list of {@link Label} objects representing the characteristic values
+     * @throws IllegalStateException if the characteristic type is not constant
+     */
     @Override
     public List<Label> getLabels(Map<String, List<String>> variables) {
         var characteristicType = selector.getDataCharacteristic().characteristicType();

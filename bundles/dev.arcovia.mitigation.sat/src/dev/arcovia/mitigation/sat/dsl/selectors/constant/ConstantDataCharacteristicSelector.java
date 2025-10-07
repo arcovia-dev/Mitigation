@@ -10,10 +10,22 @@ import org.dataflowanalysis.analysis.dsl.selectors.DataCharacteristicsSelector;
 public class ConstantDataCharacteristicSelector implements ConstantDataSelector {
     private final DataCharacteristicsSelector selector;
 
+    /**
+     * Constructs a {@link ConstantDataCharacteristicSelector} wrapping the given {@link DataCharacteristicsSelector}.
+     *
+     * @param selector the {@link DataCharacteristicsSelector} to wrap
+     */
     public ConstantDataCharacteristicSelector(DataCharacteristicsSelector selector) {
         this.selector = selector;
     }
 
+    /**
+     * Adds a literal to the root node representing this constant data characteristic.
+     * Ensures that both the characteristic type and value are constant; throws an exception otherwise.
+     *
+     * @param root the {@link BranchNode} to which the literal is added
+     * @throws IllegalStateException if the characteristic type or value is not constant
+     */
     @Override
     public void addLiterals(BranchNode root) {
         var characteristicType = selector.getDataCharacteristic().characteristicType();

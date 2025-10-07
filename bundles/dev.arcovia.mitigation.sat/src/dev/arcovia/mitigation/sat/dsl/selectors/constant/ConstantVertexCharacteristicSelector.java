@@ -9,10 +9,22 @@ import org.dataflowanalysis.analysis.dsl.selectors.VertexCharacteristicsSelector
 public class ConstantVertexCharacteristicSelector implements ConstantDataSelector {
     private final VertexCharacteristicsSelector selector;
 
+    /**
+     * Constructs a {@link ConstantVertexCharacteristicSelector} wrapping the given {@link VertexCharacteristicsSelector}.
+     *
+     * @param selector the {@link VertexCharacteristicsSelector} to wrap
+     */
     public ConstantVertexCharacteristicSelector(VertexCharacteristicsSelector selector) {
         this.selector = selector;
     }
 
+    /**
+     * Adds a literal to the root node representing this constant vertex characteristic.
+     * Ensures that both the characteristic type and value are constant; throws an exception otherwise.
+     *
+     * @param root the {@link BranchNode} to which the literal is added
+     * @throws IllegalStateException if the characteristic type or value is not constant
+     */
     @Override
     public void addLiterals(BranchNode root) {
         var characteristicType = selector.getVertexCharacteristics().characteristicType();
