@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IlpTests
+Bundle-SymbolicName: dev.arcovia.mitigation.ilp.tests
+Bundle-Version: 1.0.0.qualifier
+Import-Package: org.junit.jupiter.api;version="5.8.1",
+ org.junit.jupiter.api.function;version="5.8.1",
+ org.junit.jupiter.params;version="5.8.1",
+ org.junit.jupiter.params.provider;version="5.8.1"
+Require-Bundle: 
+ dev.arcovia.mitigation.ilp,
+ org.dataflowanalysis.analysis.dfd,
+ org.dataflowanalysis.analysis,
+ org.apache.log4j,
+ org.dataflowanalysis.converter
+Automatic-Module-Name: dev.arcovia.mitigation.ilp.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-17
