@@ -6,6 +6,11 @@ import dev.arcovia.mitigation.sat.dsl.nodes.DisjunctionNode;
 import org.dataflowanalysis.analysis.dsl.selectors.VertexCharacteristicsListSelector;
 import org.dataflowanalysis.analysis.dsl.selectors.VertexCharacteristicsSelector;
 
+/**
+ * Wraps a {@link VertexCharacteristicsListSelector} to add constant vertex characteristic literals
+ * to a {@link BranchNode}. Handles inversion by creating conjunction or disjunction nodes
+ * and recursively adding literals for each vertex characteristic in the selector.
+ */
 public class ConstantVertexCharacteristicListSelector implements ConstantDataSelector {
     private final VertexCharacteristicsListSelector selector;
 

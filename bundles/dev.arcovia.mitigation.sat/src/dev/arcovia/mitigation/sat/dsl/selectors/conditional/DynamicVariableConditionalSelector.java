@@ -7,6 +7,21 @@ import org.dataflowanalysis.analysis.dsl.selectors.VariableConditionalSelector;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A dynamic implementation of a conditional selector that integrates a {@link VariableConditionalSelector}
+ * with dynamic data selectors to construct CNF literals at runtime.
+ * <p>
+ * This class acts as a bridge between variable-based conditional selectors and
+ * dynamically resolved data selectors, allowing flexible formula construction
+ * based on runtime variable mappings.
+ * <p>
+ * It ensures that only non-inverted dynamic selectors are used, throwing an exception
+ * if an inverted selector is encountered.
+ *
+ * @see VariableConditionalSelector
+ * @see DynamicDataSelector
+ * @see BranchNode
+ */
 public class DynamicVariableConditionalSelector implements DynamicConditionalSelector {
     private final VariableConditionalSelector selector;
 

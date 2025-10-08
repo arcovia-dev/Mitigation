@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents a logical formula with a {@link BranchNode} as its root.
+ * Supports construction from CNF constraints, conversion to CNF, and combination with other formulas.
+ * Provides utility methods to manipulate and retrieve the underlying logical structure.
+ */
 public class BaseFormula {
 	private final BranchNode root;
 

@@ -8,6 +8,25 @@ import org.dataflowanalysis.analysis.dsl.selectors.Intersection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A dynamic implementation of an empty set operation conditional selector.
+ * <p>
+ * This class adapts an {@link EmptySetOperationConditionalSelector} into a runtime-resolvable form
+ * by delegating its behavior to a corresponding {@link DynamicSetOperation}. It currently supports
+ * only intersection operations.
+ *
+ * <p>During initialization, the class inspects the provided selector’s set operation and wraps it in
+ * a suitable dynamic counterpart (e.g., {@link DynamicIntersection}). If an unsupported operation is
+ * encountered, an {@link IllegalArgumentException} is thrown.
+ *
+ * <p>At runtime, this class allows dynamic CNF literal generation based on provided
+ * {@link BranchNode} structures and variable mappings.
+ *
+ * @see EmptySetOperationConditionalSelector
+ * @see DynamicSetOperation
+ * @see DynamicIntersection
+ * @see BranchNode
+ */
 public class DynamicEmptySetOperationConditionalSelector implements DynamicConditionalSelector {
     private final DynamicSetOperation operation;
 

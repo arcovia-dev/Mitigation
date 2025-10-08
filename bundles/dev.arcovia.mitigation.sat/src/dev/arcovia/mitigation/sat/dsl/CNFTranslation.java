@@ -17,6 +17,12 @@ import org.dataflowanalysis.analysis.dsl.selectors.*;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import tools.mdsd.modelingfoundations.identifier.NamedElement;
 
+/**
+ * Translates an {@link AnalysisConstraint} into a CNF representation.
+ * Handles constant and dynamic data/vertex selectors, conditional selectors,
+ * and variable mappings. Provides methods to construct, format, and analyze
+ * the resulting CNF formula.
+ */
 public class CNFTranslation {
     private final AnalysisConstraint analysisConstraint;
 

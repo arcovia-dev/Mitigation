@@ -11,6 +11,11 @@ import org.dataflowanalysis.analysis.dsl.variable.ConstraintVariableReference;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Wraps a {@link VertexCharacteristicsSelector} to provide dynamic vertex characteristic selection.
+ * Converts variable values into constant vertex characteristic literals for a {@link BranchNode}
+ * and generates {@link Label} objects for dynamic vertex characteristics based on provided variables.
+ */
 public class DynamicVertexCharacteristicSelector implements DynamicDataSelector {
     private final VertexCharacteristicsSelector selector;
 

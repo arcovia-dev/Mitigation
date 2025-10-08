@@ -6,6 +6,11 @@ import dev.arcovia.mitigation.sat.dsl.nodes.DisjunctionNode;
 import org.dataflowanalysis.analysis.dsl.selectors.DataCharacteristicListSelector;
 import org.dataflowanalysis.analysis.dsl.selectors.DataCharacteristicsSelector;
 
+/**
+ * Wraps a {@link DataCharacteristicListSelector} to add constant data characteristic literals
+ * to a {@link BranchNode}. Handles inversion by creating conjunction or disjunction nodes
+ * and recursively adding literals for each data characteristic in the selector.
+ */
 public class ConstantDataCharacteristicListSelector implements ConstantDataSelector {
     private final DataCharacteristicListSelector selector;
 

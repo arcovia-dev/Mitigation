@@ -18,6 +18,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+/**
+ * Performs a dynamic intersection operation between two variable sets in a graph-based data model.
+ * Combines labels from {@link DynamicDataCharacteristicSelector} and {@link DynamicVertexCharacteristicSelector}
+ * based on shared variable values, adding corresponding literal predicates to a {@link BranchNode}.
+ * Used to dynamically construct logical conditions involving intersecting data and vertex characteristics.
+ */
 public class DynamicIntersection implements DynamicSetOperation {
     private final Intersection intersection;
 

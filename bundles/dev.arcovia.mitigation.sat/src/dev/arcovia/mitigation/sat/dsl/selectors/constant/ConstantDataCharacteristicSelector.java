@@ -7,6 +7,11 @@ import dev.arcovia.mitigation.sat.dsl.nodes.BranchNode;
 import dev.arcovia.mitigation.sat.dsl.nodes.LiteralNode;
 import org.dataflowanalysis.analysis.dsl.selectors.DataCharacteristicsSelector;
 
+/**
+ * Wraps a {@link DataCharacteristicsSelector} to add a literal representing a constant
+ * data characteristic to a {@link BranchNode}. Validates that both the characteristic type
+ * and value are constant before adding the corresponding {@link LiteralNode}.
+ */
 public class ConstantDataCharacteristicSelector implements ConstantDataSelector {
     private final DataCharacteristicsSelector selector;
 

@@ -11,6 +11,11 @@ import org.dataflowanalysis.analysis.dsl.variable.ConstraintVariableReference;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Wraps a {@link DataCharacteristicsSelector} to provide dynamic data characteristic selection.
+ * Converts variable values into constant data characteristic literals for a {@link BranchNode}
+ * and generates {@link Label} objects for dynamic data based on provided variables.
+ */
 public class DynamicDataCharacteristicSelector implements DynamicDataSelector {
     private final DataCharacteristicsSelector selector;
 
