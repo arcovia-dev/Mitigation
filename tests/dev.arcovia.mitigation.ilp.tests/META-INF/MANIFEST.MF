@@ -12,6 +12,7 @@ Require-Bundle:
  org.dataflowanalysis.analysis.dfd,
  org.dataflowanalysis.analysis,
  org.apache.log4j,
- org.dataflowanalysis.converter
+ org.dataflowanalysis.converter,
+ dev.arcovia.mitigation.sat
 Automatic-Module-Name: dev.arcovia.mitigation.ilp.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17
