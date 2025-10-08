@@ -3,10 +3,11 @@ package dev.arcovia.mitigation.ilp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
@@ -27,15 +28,38 @@ public class OptimizationManager {
      
     private Set<Node> violatingNodes = new HashSet<>(); 
     
-    public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
+    private List<List<Mitigation>> mitigations = new ArrayList<>();
+    private Set<Mitigation> allMitigations = new HashSet<>();
+    
+    public OptimizationManager(String dfdLocation, List<Constraint> constraints) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        this.constraints = getConstraints(constraints);        
+        this.constraints = constraints;        
     }
     
-    public DataFlowDiagramAndDictionary repair() {
+    public DataFlowDiagramAndDictionary repair() throws IOException {
         analyseDFD();
         
+        for (var node : violatingNodes) {            
+            addMitigations(node.getpossibleMitigations());
+        }
+        
+        var solver = new ILPSolver();
+        solver.writeLP(mitigations, allMitigations);
+        
         return dfd;
+    }
+    
+    private void addMitigations(List<Mitigation> mitigation) {
+        //done to prevent having the same Mitigation twice by replacing duplicates with the original/first appearance
+        List<Mitigation> merged = mitigation.stream()
+                .map(u -> allMitigations.stream()
+                        .filter(u::equals)
+                        .findFirst()
+                        .orElse(u))
+                        .collect(Collectors.toList());
+        
+        mitigations.add(merged);
+        allMitigations.addAll(merged);
     }
     
     private List<Constraint> getConstraints(List<AnalysisConstraint> constraints) {
@@ -64,8 +88,6 @@ public class OptimizationManager {
                 for (var vertex : result.getMatchedVertices())
                     violatingNodes.add(new Node((DFDVertex) vertex, tfg, constraint));
             }
-        }
-        System.out.println(violatingNodes);
-        
+        }        
     }
 }
