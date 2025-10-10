@@ -9,7 +9,6 @@ import org.dataflowanalysis.examplemodels.results.ExpectedCharacteristic;
 import org.dataflowanalysis.examplemodels.results.ExpectedViolation;
 import org.dataflowanalysis.examplemodels.results.dfd.DFDExampleModelResult;
 import org.dataflowanalysis.examplemodels.results.dfd.scenarios.*;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -36,8 +35,6 @@ public class VerificationTest {
                 Arguments.of(new CWARPIViolation()));
     }
 
-    // TODO disabled until issue in ExampleModelResult for CWARPIViolation DFA has been resolved
-    @Disabled
     @ParameterizedTest
     @MethodSource("provideDFDExampleModelViolations")
     public void validate(DFDExampleModelResult exampleModelResult) throws StandaloneInitializationException {
