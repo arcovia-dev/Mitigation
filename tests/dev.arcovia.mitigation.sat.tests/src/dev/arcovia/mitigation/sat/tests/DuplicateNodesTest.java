@@ -23,6 +23,7 @@ public class DuplicateNodesTest {
 
         var repairedDfdCosts = new Mechanic("models/duplicateNodes.json", constraints).repair();
 
-        dfdConverter.convert(repairedDfdCosts).save("testresults/","duplicateNodes-repaired.json");
+        dfdConverter.convert(repairedDfdCosts)
+                .save("testresults/", "duplicateNodes-repaired.json");
     }
 }

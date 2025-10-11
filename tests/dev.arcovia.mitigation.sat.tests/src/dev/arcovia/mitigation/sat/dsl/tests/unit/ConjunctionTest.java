@@ -21,7 +21,7 @@ public class ConjunctionTest {
     private final Logger logger = Logger.getLogger(ConjunctionTest.class);
 
     static DInData dInDataPos1, dInDataPos2, dInDataNeg1, dInDataNeg2;
-    static DNode dNodePos1, dNodePos2,  dNodeNeg1, dNodeNeg2;
+    static DNode dNodePos1, dNodePos2, dNodeNeg1, dNodeNeg2;
     static AnalysisConstraint constraint;
     static CNFTranslation translation;
     static List<Constraint> expected;
@@ -49,12 +49,10 @@ public class ConjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodeNeg1))
-        );
+        expected = List.of(CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodeNeg1)));
 
         actual = translation.constructCNF();
-        logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
+        logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
 
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
@@ -67,12 +65,10 @@ public class ConjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataNeg1), List.of(dNodePos1))
-        );
+        expected = List.of(CNFUtil.generateClause(List.of(dInDataNeg1), List.of(dNodePos1)));
 
         actual = translation.constructCNF();
-        logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
+        logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
 
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
@@ -89,12 +85,10 @@ public class ConjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(dNodePos1))
-        );
+        expected = List.of(CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(dNodePos1)));
         actual = translation.constructCNF();
 
-        logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
+        logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
 
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
@@ -108,12 +102,10 @@ public class ConjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(dNodeNeg1))
-        );
+        expected = List.of(CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(dNodeNeg1)));
 
         actual = translation.constructCNF();
-        logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
+        logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
 
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
@@ -130,12 +122,10 @@ public class ConjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos1, dNodeNeg1))
-        );
+        expected = List.of(CNFUtil.generateClause(List.of(dInDataPos1), List.of(dNodePos1, dNodeNeg1)));
         actual = translation.constructCNF();
 
-        logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
+        logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
 
@@ -148,12 +138,10 @@ public class ConjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataNeg1), List.of(dNodePos1, dNodeNeg1))
-        );
+        expected = List.of(CNFUtil.generateClause(List.of(dInDataNeg1), List.of(dNodePos1, dNodeNeg1)));
 
         actual = translation.constructCNF();
-        logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
+        logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
 
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
@@ -171,12 +159,10 @@ public class ConjunctionTest {
                 .create();
 
         translation = new CNFTranslation(constraint);
-        expected = List.of(
-                CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(dNodePos1, dNodeNeg1))
-        );
+        expected = List.of(CNFUtil.generateClause(List.of(dInDataPos1, dInDataNeg1), List.of(dNodePos1, dNodeNeg1)));
         actual = translation.constructCNF();
 
-        logger.info("Evaluating CNF with Base Formula:"+ translation.formulaToString());
+        logger.info("Evaluating CNF with Base Formula:" + translation.formulaToString());
         logger.info("Generated CNF as:" + translation.cnfToString());
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(expected, actual));
     }

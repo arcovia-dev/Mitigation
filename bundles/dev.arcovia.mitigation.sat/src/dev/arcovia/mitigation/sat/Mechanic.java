@@ -30,9 +30,9 @@ import org.sat4j.specs.TimeoutException;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 
 /**
- * The Mechanic class is designed to operate on a Data Flow Diagram (DFD) and its associated dictionary,
- * applying constraints and repairing violations found within the DFD. It provides the ability to assess
- * whether a DFD and its constraints are consistent and suggests corrections to resolve violations.
+ * The Mechanic class is designed to operate on a Data Flow Diagram (DFD) and its associated dictionary, applying
+ * constraints and repairing violations found within the DFD. It provides the ability to assess whether a DFD and its
+ * constraints are consistent and suggests corrections to resolve violations.
  */
 public class Mechanic {
     Map<String, String> outPinToAss = new HashMap<>();
@@ -48,10 +48,9 @@ public class Mechanic {
     private final Logger logger = Logger.getLogger(Mechanic.class);
 
     /**
-     * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location, constraints, and
-     * mapping of costs for specific labels. This constructor initializes the DFD, its associated name, constraints,
-     * costs, and prepares the internal data structures for nodes and flows.
-     *
+     * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location, constraints, and mapping
+     * of costs for specific labels. This constructor initializes the DFD, its associated name, constraints, costs, and
+     * prepares the internal data structures for nodes and flows.
      * @param dfdLocation the file location of the Web Data Flow Diagram (DFD)
      * @param constraints the list of constraints to be applied to the DFD
      * @param costs the map associating labels with their respective integer costs
@@ -69,10 +68,9 @@ public class Mechanic {
     }
 
     /**
-     * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location and constraints.
-     * This constructor initializes the DFD, its associated name, and constraints. Internal data structures for
-     * nodes and flows are also prepared.
-     *
+     * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location and constraints. This
+     * constructor initializes the DFD, its associated name, and constraints. Internal data structures for nodes and flows
+     * are also prepared.
      * @param dfdLocation the file location of the Web Data Flow Diagram (DFD)
      * @param constraints the list of constraints to be applied to the DFD
      */
@@ -81,10 +79,9 @@ public class Mechanic {
     }
 
     /**
-     * Constructs a new Mechanic instance with the specified Data Flow Diagram and Dictionary (DFD),
-     * DFD name, constraints, and label costs. This constructor initializes the DFD, its associated name,
-     * constraints, costs, and prepares the internal data structures for nodes and flows.
-     *
+     * Constructs a new Mechanic instance with the specified Data Flow Diagram and Dictionary (DFD), DFD name, constraints,
+     * and label costs. This constructor initializes the DFD, its associated name, constraints, costs, and prepares the
+     * internal data structures for nodes and flows.
      * @param dfd the Data Flow Diagram and Dictionary (DFD) to be processed
      * @param dfdName the name associated with the Data Flow Diagram
      * @param constraints the list of constraints to be applied to the DFD
@@ -100,10 +97,9 @@ public class Mechanic {
     }
 
     /**
-     * Constructs a new Mechanic instance with the specified Data Flow Diagram and Dictionary (DFD),
-     * DFD name, and constraints. This constructor initializes the DFD, its associated name,
-     * constraints, and prepares the internal data structures for nodes and flows.
-     *
+     * Constructs a new Mechanic instance with the specified Data Flow Diagram and Dictionary (DFD), DFD name, and
+     * constraints. This constructor initializes the DFD, its associated name, constraints, and prepares the internal data
+     * structures for nodes and flows.
      * @param dfd the Data Flow Diagram and Dictionary (DFD) to be processed
      * @param dfdName the name associated with the Data Flow Diagram
      * @param constraints the list of constraints to be applied to the DFD
@@ -113,15 +109,11 @@ public class Mechanic {
     }
 
     /**
-     * Repairs the given Data Flow Diagram and Dictionary (DFD) by analyzing violations
-     * against constraints, identifying necessary corrective actions, and applying those
-     * corrections to provide an updated and valid DFD.
-     *
-     * The method first determines the violating Transpose Flow Graphs (TFGs) in the DFD
-     * and analyzes the nodes and flows to be adjusted. If no violations are found, the original DFD is returned.
-     * Otherwise, it solves for feasible corrective actions, chooses the best solution, and applies
-     * the appropriate changes to the DFD.
-     *
+     * Repairs the given Data Flow Diagram and Dictionary (DFD) by analyzing violations against constraints, identifying
+     * necessary corrective actions, and applying those corrections to provide an updated and valid DFD. The method first
+     * determines the violating Transpose Flow Graphs (TFGs) in the DFD and analyzes the nodes and flows to be adjusted. If
+     * no violations are found, the original DFD is returned. Otherwise, it solves for feasible corrective actions, chooses
+     * the best solution, and applies the appropriate changes to the DFD.
      * @return the updated Data Flow Diagram and Dictionary (DFD) that adheres to the specified constraints
      * @throws ContradictionException if the constraint solving process encounters a contradiction
      * @throws TimeoutException if the constraint solving process exceeds the predefined time limit
@@ -134,8 +126,8 @@ public class Mechanic {
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
 
-        //IF there are no violations repairs are not needed
-        if(nodes.isEmpty()){
+        // IF there are no violations repairs are not needed
+        if (nodes.isEmpty()) {
             logger.warn("Analysis has no violations found in DFD");
             return dfd;
         }
@@ -153,41 +145,35 @@ public class Mechanic {
     }
 
     /**
-     * Determines whether the given Data Flow Diagram and Dictionary (DFD) adheres to all specified constraints.
-     *
-     * This method evaluates the DFD by analyzing its Transpose Flow Graphs (TFGs) against the provided constraints.
-     * If no violations are found, the DFD is deemed violation-free.
-     *
+     * Determines whether the given Data Flow Diagram and Dictionary (DFD) adheres to all specified constraints. This method
+     * evaluates the DFD by analyzing its Transpose Flow Graphs (TFGs) against the provided constraints. If no violations
+     * are found, the DFD is deemed violation-free.
      * @param dfd the Data Flow Diagram and Dictionary (DFD) to be evaluated
      * @param constraints the list of constraints that the DFD must satisfy
      * @return true if the DFD satisfies all constraints and is violation-free, false otherwise
      */
-    public Boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+    public Boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
         return (determineViolatingTFGs(dfd, constraints).isEmpty());
     }
 
     /**
-     * Calculates the number of violations in a given Data Flow Diagram and Dictionary (DFD)
-     * based on the provided constraints.
-     *
-     * This method uses the internal logic to determine the Transpose Flow Graphs (TFGs) within the
-     * DFD that do not adhere to the specified constraints, and returns the count of such violations.
-     *
+     * Calculates the number of violations in a given Data Flow Diagram and Dictionary (DFD) based on the provided
+     * constraints. This method uses the internal logic to determine the Transpose Flow Graphs (TFGs) within the DFD that do
+     * not adhere to the specified constraints, and returns the count of such violations.
      * @param dfd the Data Flow Diagram and Dictionary (DFD) to be analyzed for violations
      * @param constraints the list of constraints that the DFD should satisfy
      * @return the number of violations found in the DFD based on the provided constraints
      */
-    public int amountOfViolations(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+    public int amountOfViolations(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
         return (determineViolatingTFGs(dfd, constraints).size());
     }
 
-    public List<AbstractTransposeFlowGraph> getViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+    public List<AbstractTransposeFlowGraph> getViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
         return determineViolatingTFGs(dfd, constraints);
     }
 
     /**
      * Retrieves the current number of violations identified in the Data Flow Diagram and Dictionary (DFD).
-     *
      * @return the number of violations as an integer
      */
     public int getViolations() {
@@ -238,13 +224,13 @@ public class Mechanic {
         }
         return false;
     }
-    
+
     private boolean checkAllConstraints(AbstractTransposeFlowGraph tfg, List<Constraint> constraints) {
         boolean violation = false;
         for (var constraint : constraints) {
             if (checkConstraint(tfg, constraint.literals()))
                 violation = true;
-                violations++;
+            violations++;
         }
         return violation;
     }
@@ -372,13 +358,18 @@ public class Mechanic {
                         if (satNode.outPins()
                                 .containsKey(outPin)) {
                             Set<Label> outPinLabel = new HashSet<>(outPinLabelMap.get(outPin));
-                            var enforcingLabels = constraints.stream().flatMap(c -> c.literals().stream()) // Flatten all literals from all constraints
+                            var enforcingLabels = constraints.stream()
+                                    .flatMap(c -> c.literals()
+                                            .stream()) // Flatten all literals from all constraints
                                     .filter(Literal::positive) // Keep only positive literals
-                                    .map(literal -> literal.compositeLabel().label()) // Extract their labels
+                                    .map(literal -> literal.compositeLabel()
+                                            .label()) // Extract their labels
                                     .toList();
                             var newLabels = new ArrayList<>(satNode.outPins()
                                     .get(outPin));
-                            var sameLabels = outPinLabel.stream().filter(newLabels::contains).toList();
+                            var sameLabels = outPinLabel.stream()
+                                    .filter(newLabels::contains)
+                                    .toList();
 
                             outPinLabel.addAll(newLabels);
                             outPinLabel.removeAll(enforcingLabels);
@@ -421,7 +412,7 @@ public class Mechanic {
     private void sortNodesAndFlows() {
         nodes.sort(Comparator.comparing(node -> node.id()));
         flows.sort(Comparator.comparing((Flow flow) -> flow.source()
-                        .id())
+                .id())
                 .thenComparing(flow -> flow.sink()
                         .id()));
         for (var node : nodes) {

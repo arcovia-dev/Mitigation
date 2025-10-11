@@ -8,16 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A dynamic implementation of a conditional selector that integrates a {@link VariableConditionalSelector}
- * with dynamic data selectors to construct CNF literals at runtime.
+ * A dynamic implementation of a conditional selector that integrates a {@link VariableConditionalSelector} with dynamic
+ * data selectors to construct CNF literals at runtime.
  * <p>
- * This class acts as a bridge between variable-based conditional selectors and
- * dynamically resolved data selectors, allowing flexible formula construction
- * based on runtime variable mappings.
+ * This class acts as a bridge between variable-based conditional selectors and dynamically resolved data selectors,
+ * allowing flexible formula construction based on runtime variable mappings.
  * <p>
- * It ensures that only non-inverted dynamic selectors are used, throwing an exception
- * if an inverted selector is encountered.
- *
+ * It ensures that only non-inverted dynamic selectors are used, throwing an exception if an inverted selector is
+ * encountered.
  * @see VariableConditionalSelector
  * @see DynamicDataSelector
  * @see BranchNode
@@ -27,7 +25,6 @@ public class DynamicVariableConditionalSelector implements DynamicConditionalSel
 
     /**
      * Constructs a {@link DynamicVariableConditionalSelector} wrapping the given {@link VariableConditionalSelector}.
-     *
      * @param selector the {@link VariableConditionalSelector} to wrap
      */
     public DynamicVariableConditionalSelector(VariableConditionalSelector selector) {
@@ -35,9 +32,8 @@ public class DynamicVariableConditionalSelector implements DynamicConditionalSel
     }
 
     /**
-     * Adds literals to the root node using the dynamic selector corresponding to this selector's variable.
-     * Throws an exception if the dynamic selector is inverted, as only positive selectors are allowed.
-     *
+     * Adds literals to the root node using the dynamic selector corresponding to this selector's variable. Throws an
+     * exception if the dynamic selector is inverted, as only positive selectors are allowed.
      * @param root the {@link BranchNode} to which literals are added
      * @param dynamicSelectors a map of dynamic selectors by variable name
      * @param variables a map of variable names to their corresponding string values
@@ -45,7 +41,8 @@ public class DynamicVariableConditionalSelector implements DynamicConditionalSel
      */
     @Override
     public void addLiterals(BranchNode root, Map<String, DynamicDataSelector> dynamicSelectors, Map<String, List<String>> variables) {
-        var dynamicDataSelector = dynamicSelectors.get(selector.getConstraintVariable().name());
+        var dynamicDataSelector = dynamicSelectors.get(selector.getConstraintVariable()
+                .name());
         if (dynamicDataSelector.isInverted()) {
             throw new IllegalStateException("CharacteristicSelector must be positive");
         }

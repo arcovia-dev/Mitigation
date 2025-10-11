@@ -29,10 +29,8 @@ public class VerificationTest {
 
     private static Stream<Arguments> provideDFDExampleModelViolations() {
         // BranchingResult not included because VertexTypeSelector is not supported
-        return Stream.of(
-                Arguments.of(new OnlineShopResult()), Arguments.of(new SimpleOnlineShopResult()),
-                Arguments.of(new CWANoViolation()), Arguments.of(new VWCariad()), Arguments.of(new CWAPersonalDataViolation()),
-                Arguments.of(new CWARPIViolation()));
+        return Stream.of(Arguments.of(new OnlineShopResult()), Arguments.of(new SimpleOnlineShopResult()), Arguments.of(new CWANoViolation()),
+                Arguments.of(new VWCariad()), Arguments.of(new CWAPersonalDataViolation()), Arguments.of(new CWARPIViolation()));
     }
 
     @ParameterizedTest
@@ -42,10 +40,11 @@ public class VerificationTest {
         var name = exampleModelResult.getModelName();
         var dfd = DataLoader.loadDFDFromPath(exampleModelResult.getDataFlowDiagram(), exampleModelResult.getDataDictionary());
         var analysisConstraints = exampleModelResult.getDSLConstraints();
-        var constraints = analysisConstraints.stream().map(it -> new CNFTranslation(it, dfd))
+        var constraints = analysisConstraints.stream()
+                .map(it -> new CNFTranslation(it, dfd))
                 .map(CNFTranslation::constructCNF)
-                .flatMap(Collection::stream).toList();
-
+                .flatMap(Collection::stream)
+                .toList();
 
         logger.info("Model Name: " + name);
         logger.info("Constraints: " + constraints.toString());
@@ -60,8 +59,10 @@ public class VerificationTest {
         assertFalse(exampleModelResult.getDSLConstraints()
                 .isEmpty(), "Example Model does not define any constraints!");
 
-        if (exampleModelResult.getExpectedViolations().size() < violatingTFGs.size()) {
-            logger.error("Expected violations:" + exampleModelResult.getExpectedViolations().size());
+        if (exampleModelResult.getExpectedViolations()
+                .size() < violatingTFGs.size()) {
+            logger.error("Expected violations:" + exampleModelResult.getExpectedViolations()
+                    .size());
             logger.error("Offending violations:" + violatingTFGs.size());
             fail("Analysis found more violations than expected.");
         }
@@ -70,7 +71,8 @@ public class VerificationTest {
             var violatingVertices = violatingTFGs.stream()
                     .map(AbstractTransposeFlowGraph::getVertices)
                     .flatMap(Collection::stream)
-                    .filter(it -> expectedViolation.getIdentifier().matches(it))
+                    .filter(it -> expectedViolation.getIdentifier()
+                            .matches(it))
                     .toList();
 
             if (violatingVertices.isEmpty()) {
@@ -84,32 +86,30 @@ public class VerificationTest {
             for (var violatingVertex : violatingVertices) {
                 logger.info("Evaluating vertex: " + expectedViolation.getIdentifier());
 
-                List<ExpectedCharacteristic> missingNodeCharacteristics = expectedViolation.hasNodeCharacteristic(violatingVertex
-                        .getAllVertexCharacteristics());
+                List<ExpectedCharacteristic> missingNodeCharacteristics = expectedViolation
+                        .hasNodeCharacteristic(violatingVertex.getAllVertexCharacteristics());
                 if (!missingNodeCharacteristics.isEmpty()) {
                     logger.warn(String.format("Skipped: Vertex %s is missing the following node characteristics: %s", violatingVertex,
                             missingNodeCharacteristics));
                     continue;
                 }
 
-                var incorrectNodeCharacteristics = expectedViolation.hasIncorrectNodeCharacteristics(violatingVertex
-                        .getAllVertexCharacteristics());
+                var incorrectNodeCharacteristics = expectedViolation.hasIncorrectNodeCharacteristics(violatingVertex.getAllVertexCharacteristics());
                 if (!incorrectNodeCharacteristics.isEmpty()) {
                     logger.warn(String.format("Skipped: Vertex %s has the following incorrect node characteristics: %s", violatingVertex,
                             incorrectNodeCharacteristics));
                     continue;
                 }
 
-                Map<String, List<ExpectedCharacteristic>> missingDataCharacteristics = expectedViolation.hasDataCharacteristics(violatingVertex
-                        .getAllDataCharacteristics());
+                Map<String, List<ExpectedCharacteristic>> missingDataCharacteristics = expectedViolation
+                        .hasDataCharacteristics(violatingVertex.getAllDataCharacteristics());
                 if (!missingDataCharacteristics.isEmpty()) {
                     logger.warn(String.format("Skipped: Vertex %s is missing the following data characteristics: %s", violatingVertex,
                             missingDataCharacteristics));
                     continue;
                 }
 
-                var incorrectDataCharacteristics = expectedViolation.hasMissingDataCharacteristics(violatingVertex
-                        .getAllDataCharacteristics());
+                var incorrectDataCharacteristics = expectedViolation.hasMissingDataCharacteristics(violatingVertex.getAllDataCharacteristics());
                 if (!incorrectDataCharacteristics.isEmpty()) {
                     logger.warn(String.format("Skipped: Vertex %s has the following incorrect data characteristics: %s", violatingVertex,
                             incorrectDataCharacteristics));

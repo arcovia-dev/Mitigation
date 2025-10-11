@@ -29,7 +29,8 @@ public class PerformanceTest {
 
     @BeforeEach
     void beforeEach() {
-        assertEquals(expectedMemoryInGigabyte*1024*1024*1024, Runtime.getRuntime().maxMemory(), "Incorrect JVM heap size");
+        assertEquals(expectedMemoryInGigabyte * 1024 * 1024 * 1024, Runtime.getRuntime()
+                .maxMemory(), "Incorrect JVM heap size");
     }
 
     // This test is only to generate data for evaluating performance, it should be disabled in normal use
@@ -68,7 +69,6 @@ public class PerformanceTest {
     private static final int[] outputLiterals = new int[count];
     private static final int[] outputTime = new int[count];
 
-
     private static IntStream inputLiterals() {
         int[] inputs = new int[count];
         for (int i = 0; i < count; i++) {
@@ -82,7 +82,7 @@ public class PerformanceTest {
     @MethodSource("inputLiterals")
     public void multipleInputPerformanceTest(int input) {
 
-        var literals = input*step+start;
+        var literals = input * step + start;
         List<String> longList = new ArrayList<>();
         for (int i = 0; i < literals; i++) {
             longList.add(Integer.toString(i));
@@ -100,11 +100,10 @@ public class PerformanceTest {
         translation.constructCNF();
         var timeEnd = System.currentTimeMillis();
         var time = timeEnd - timeStart;
-        logger.info("\n " + literals + " Literals | " +  time + " ms");
+        logger.info("\n " + literals + " Literals | " + time + " ms");
         outputLiterals[input] = literals;
         outputTime[input] = Math.toIntExact(time);
     }
-
 
     @AfterEach
     public void afterEach() throws IOException {

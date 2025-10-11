@@ -10,10 +10,9 @@ import java.io.IOException;
 
 public class UncertaintyRanker {
     /**
-     * Executes the Python script for ranking uncertainties based on training data and returns the ranked results.
-     * This method interacts with the Python script by invoking it with the given parameters
-     * and processes the output to return a list of ranked uncertainties.
-     *
+     * Executes the Python script for ranking uncertainties based on training data and returns the ranked results. This
+     * method interacts with the Python script by invoking it with the given parameters and processes the output to return a
+     * list of ranked uncertainties.
      * @param pythonPath Path to the Python interpreter to execute the script.
      * @param scriptPath Path to the Python script that performs the ranking.
      * @param pathToTrainDataFolder Path to the folder containing the training data used for ranking.
@@ -43,23 +42,24 @@ public class UncertaintyRanker {
                         .append(System.lineSeparator());
             }
 
-            
             BufferedReader stdErr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             StringBuilder errorOutput = new StringBuilder();
             while ((line = stdErr.readLine()) != null) {
-                errorOutput.append(line).append(System.lineSeparator());
+                errorOutput.append(line)
+                        .append(System.lineSeparator());
             }
 
             int exitCode = process.waitFor();
 
             if (exitCode != 0) {
-            	Logger logger = Logger.getLogger(UncertaintyRanker.class);
-            	logger.error("Python script failed with exit code " + exitCode);
-            	logger.error("Error output:\n" + errorOutput.toString());
+                Logger logger = Logger.getLogger(UncertaintyRanker.class);
+                logger.error("Python script failed with exit code " + exitCode);
+                logger.error("Error output:\n" + errorOutput.toString());
                 throw new RuntimeException("Python script execution failed.");
             }
 
-            return Arrays.asList(output.toString().split(System.lineSeparator()));
+            return Arrays.asList(output.toString()
+                    .split(System.lineSeparator()));
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

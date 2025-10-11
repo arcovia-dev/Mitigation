@@ -21,8 +21,7 @@ abstract class BaseTest {
             .put(new Label("Stereotype", "local_logging"), 1)
             .build();
 
-
-    protected Map<String, List<String>> getNodeBehavior(DataFlowDiagramAndDictionary dfd){
+    protected Map<String, List<String>> getNodeBehavior(DataFlowDiagramAndDictionary dfd) {
         var behaviors = dfd.dataDictionary()
                 .getBehavior();
         Map<String, List<String>> nodeBehavior = new HashMap<>();
@@ -50,7 +49,8 @@ abstract class BaseTest {
         }
         return nodeBehavior;
     }
-    protected Map<String, List<String>> getNodeProperties(DataFlowDiagramAndDictionary dfd){
+
+    protected Map<String, List<String>> getNodeProperties(DataFlowDiagramAndDictionary dfd) {
         var nodes = dfd.dataFlowDiagram()
                 .getNodes();
         Map<String, List<String>> nodeProperties = new HashMap<>();

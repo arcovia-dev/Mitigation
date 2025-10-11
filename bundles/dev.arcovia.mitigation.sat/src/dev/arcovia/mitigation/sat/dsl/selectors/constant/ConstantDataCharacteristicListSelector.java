@@ -7,16 +7,16 @@ import org.dataflowanalysis.analysis.dsl.selectors.DataCharacteristicListSelecto
 import org.dataflowanalysis.analysis.dsl.selectors.DataCharacteristicsSelector;
 
 /**
- * Wraps a {@link DataCharacteristicListSelector} to add constant data characteristic literals
- * to a {@link BranchNode}. Handles inversion by creating conjunction or disjunction nodes
- * and recursively adding literals for each data characteristic in the selector.
+ * Wraps a {@link DataCharacteristicListSelector} to add constant data characteristic literals to a {@link BranchNode}.
+ * Handles inversion by creating conjunction or disjunction nodes and recursively adding literals for each data
+ * characteristic in the selector.
  */
 public class ConstantDataCharacteristicListSelector implements ConstantDataSelector {
     private final DataCharacteristicListSelector selector;
 
     /**
-     * Constructs a {@link ConstantDataCharacteristicListSelector} wrapping the given {@link DataCharacteristicListSelector}.
-     *
+     * Constructs a {@link ConstantDataCharacteristicListSelector} wrapping the given
+     * {@link DataCharacteristicListSelector}.
      * @param selector the {@link DataCharacteristicListSelector} to wrap
      */
     public ConstantDataCharacteristicListSelector(DataCharacteristicListSelector selector) {
@@ -24,10 +24,9 @@ public class ConstantDataCharacteristicListSelector implements ConstantDataSelec
     }
 
     /**
-     * Adds literals to the root node based on the data characteristics of this selector.
-     * Creates a conjunction or disjunction node depending on the inversion flag, and adds
-     * corresponding constant data characteristic selectors as predicates.
-     *
+     * Adds literals to the root node based on the data characteristics of this selector. Creates a conjunction or
+     * disjunction node depending on the inversion flag, and adds corresponding constant data characteristic selectors as
+     * predicates.
      * @param root the {@link BranchNode} to which literals are added
      */
     @Override
@@ -35,10 +34,10 @@ public class ConstantDataCharacteristicListSelector implements ConstantDataSelec
         var incomingDataNode = selector.isInverted() ? new ConjunctionNode() : new DisjunctionNode();
         root.addPredicate(incomingDataNode);
 
-        var dataSelectors = selector.getDataCharacteristics().stream().map(it ->
-                new ConstantDataCharacteristicSelector(
-                        new DataCharacteristicsSelector(null, it, selector.isInverted())
-                )).toList();
+        var dataSelectors = selector.getDataCharacteristics()
+                .stream()
+                .map(it -> new ConstantDataCharacteristicSelector(new DataCharacteristicsSelector(null, it, selector.isInverted())))
+                .toList();
         dataSelectors.forEach(it -> it.addLiterals(incomingDataNode));
     }
 }

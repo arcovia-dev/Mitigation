@@ -9,11 +9,10 @@ import java.util.Map;
 /**
  * Represents a dynamic set operation that constructs and adds CNF literals to a logical formula tree.
  * <p>
- * Implementations of this interface perform set-based logical operations (such as unions or intersections)
- * on dynamic data selectors and append the corresponding literals to a given {@link BranchNode}.
+ * Implementations of this interface perform set-based logical operations (such as unions or intersections) on dynamic
+ * data selectors and append the corresponding literals to a given {@link BranchNode}.
  * <p>
  * These operations are typically used in the dynamic translation of data flow constraints into CNF form.
- *
  * @see BranchNode
  * @see DynamicDataSelector
  */

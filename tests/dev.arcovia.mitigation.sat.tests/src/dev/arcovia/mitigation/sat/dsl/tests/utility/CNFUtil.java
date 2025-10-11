@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utility class providing helper methods for constructing, manipulating, and comparing
- * CNF (Conjunctive Normal Form) constraints for testing purposes.
+ * Utility class providing helper methods for constructing, manipulating, and comparing CNF (Conjunctive Normal Form)
+ * constraints for testing purposes.
  * <p>
- * This class includes methods to generate clauses from test data, obtain unique literal values,
- * compare CNF lists for differences, check literal equality in constraints, and produce
- * formatted string representations of CNF constraints.
+ * This class includes methods to generate clauses from test data, obtain unique literal values, compare CNF lists for
+ * differences, check literal equality in constraints, and produce formatted string representations of CNF constraints.
  */
 public abstract class CNFUtil {
 
@@ -23,7 +22,6 @@ public abstract class CNFUtil {
 
     /**
      * Returns a unique integer value for use in literals and increments the internal counter.
-     *
      * @return a new unique integer value
      */
     public static int getNewValue() {
@@ -31,26 +29,23 @@ public abstract class CNFUtil {
     }
 
     /**
-     * Generates a {@link Constraint} clause from the given incoming data and node lists.
-     * Each item is converted to a literal with inverted polarity.
-     *
+     * Generates a {@link Constraint} clause from the given incoming data and node lists. Each item is converted to a
+     * literal with inverted polarity.
      * @param incomingData the list of {@link DInData} elements
      * @param nodes the list of {@link DNode} elements
      * @return a {@link Constraint} representing the generated clause
      */
     public static Constraint generateClause(List<DInData> incomingData, List<DNode> nodes) {
         ArrayList<Literal> constraint = new ArrayList<>();
-        incomingData.forEach(it ->
-                constraint.add(new Literal(!it.positive(), new IncomingDataLabel(new Label(LabelCategory.IncomingData.name(), it.value())))));
-        nodes.forEach(it ->
-                constraint.add(new Literal(!it.positive(), new NodeLabel(new Label(LabelCategory.Node.name(), it.value())))));
+        incomingData.forEach(
+                it -> constraint.add(new Literal(!it.positive(), new IncomingDataLabel(new Label(LabelCategory.IncomingData.name(), it.value())))));
+        nodes.forEach(it -> constraint.add(new Literal(!it.positive(), new NodeLabel(new Label(LabelCategory.Node.name(), it.value())))));
         return new Constraint(constraint);
     }
 
     /**
-     * Returns the greatest differences between two lists of CNF {@link Constraint} objects.
-     * If the lists are identical, returns an empty list. Differences are determined by matching constraints.
-     *
+     * Returns the greatest differences between two lists of CNF {@link Constraint} objects. If the lists are identical,
+     * returns an empty list. Differences are determined by matching constraints.
      * @param expected the list of expected {@link Constraint} objects
      * @param actual the list of actual {@link Constraint} objects
      * @return the list of constraints representing the greatest differences
@@ -73,26 +68,28 @@ public abstract class CNFUtil {
 
     /**
      * Checks whether two {@link Constraint} objects match exactly by comparing their literals.
-     *
      * @param expected the expected {@link Constraint}
      * @param actual the actual {@link Constraint}
      * @return true if both constraints contain the same literals, false otherwise
      */
     public static boolean matches(Constraint expected, Constraint actual) {
         var differences = new ArrayList<>(expected.literals());
-        actual.literals().forEach(differences::remove);
-        if(!differences.isEmpty()) { return false; }
+        actual.literals()
+                .forEach(differences::remove);
+        if (!differences.isEmpty()) {
+            return false;
+        }
 
         differences = new ArrayList<>(actual.literals());
-        expected.literals().forEach(differences::remove);
+        expected.literals()
+                .forEach(differences::remove);
 
         return differences.isEmpty();
     }
 
     /**
-     * Returns a formatted string representation of a given CNF list of {@link Constraint} objects.
-     * Each constraint is shown with its literals using "OR" within the constraint and "AND" between constraints.
-     *
+     * Returns a formatted string representation of a given CNF list of {@link Constraint} objects. Each constraint is shown
+     * with its literals using "OR" within the constraint and "AND" between constraints.
      * @param cnf the list of CNF {@link Constraint} objects to format
      * @return the formatted string representation of the CNF
      */
@@ -103,8 +100,11 @@ public abstract class CNFUtil {
             s.append("( ");
             for (var literal : constraint.literals()) {
                 var positive = literal.positive() ? "" : "!";
-                var label = literal.compositeLabel().label();
-                s.append("%s[%s %s.%s]".formatted(positive, literal.compositeLabel().category().name(), label.type(), label.value()));
+                var label = literal.compositeLabel()
+                        .label();
+                s.append("%s[%s %s.%s]".formatted(positive, literal.compositeLabel()
+                        .category()
+                        .name(), label.type(), label.value()));
                 s.append(" OR ");
             }
             s.delete(s.length() - 3, s.length());

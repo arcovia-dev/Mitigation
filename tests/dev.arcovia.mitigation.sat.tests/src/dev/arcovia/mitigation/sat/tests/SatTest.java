@@ -18,7 +18,7 @@ import org.sat4j.specs.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SatTest extends BaseTest{
+public class SatTest extends BaseTest {
 
     public final String MIN_SAT = "models/minsat.json";
     // (personal AND nonEU) => encrypted
@@ -35,7 +35,8 @@ public class SatTest extends BaseTest{
 
         var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts);
-        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "minsat-repaired.json");
+        dfdConverter.convert(repairedDfdCosts)
+                .save("testresults/", "minsat-repaired.json");
 
         var repairedDfdMinimal = new Mechanic(MIN_SAT, constraints).repair();
         checkIfConsistent(repairedDfdMinimal);

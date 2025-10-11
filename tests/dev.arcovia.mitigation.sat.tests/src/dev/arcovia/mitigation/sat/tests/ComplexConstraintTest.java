@@ -1,6 +1,5 @@
 package dev.arcovia.mitigation.sat.tests;
 
-
 import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.common.collect.ImmutableMap;
 
-public class ComplexConstraintTest extends BaseTest{
+public class ComplexConstraintTest extends BaseTest {
     public final String MIN_SAT = "models/minsat.json";
     Constraint dataConstraint = new Constraint(List.of(new Literal(false, new IncomingDataLabel(new Label("Sensitivity", "Personal"))),
             new Literal(false, new NodeLabel(new Label("Location", "nonEU"))),
@@ -47,7 +46,8 @@ public class ComplexConstraintTest extends BaseTest{
         var repairedDfdCosts = new Mechanic(MIN_SAT, constraints, costs).repair();
         checkIfConsistent(repairedDfdCosts, "Strong_Encrypted");
 
-        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "complexMinsat-repaired.json");
+        dfdConverter.convert(repairedDfdCosts)
+                .save("testresults/", "complexMinsat-repaired.json");
 
         costs = ImmutableMap.<Label, Integer>builder()
                 .put(new Label("Sensitivity", "Personal"), 10)
