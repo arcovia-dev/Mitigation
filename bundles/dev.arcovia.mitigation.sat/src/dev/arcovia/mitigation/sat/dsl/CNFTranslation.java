@@ -3,7 +3,6 @@ package dev.arcovia.mitigation.sat.dsl;
 import java.util.*;
 
 import dev.arcovia.mitigation.sat.*;
-import dev.arcovia.mitigation.sat.dsl.nodes.ConjunctionNode;
 import dev.arcovia.mitigation.sat.dsl.selectors.conditional.DynamicConditionalSelector;
 import dev.arcovia.mitigation.sat.dsl.selectors.conditional.DynamicEmptySetOperationConditionalSelector;
 import dev.arcovia.mitigation.sat.dsl.selectors.conditional.DynamicVariableConditionalSelector;

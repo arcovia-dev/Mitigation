@@ -2,7 +2,6 @@ package dev.arcovia.mitigation.sat.dsl.selectors.constant;
 
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;
-import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import dev.arcovia.mitigation.sat.dsl.nodes.BranchNode;
 import dev.arcovia.mitigation.sat.dsl.nodes.LiteralNode;
 import org.dataflowanalysis.analysis.dsl.selectors.DataCharacteristicsSelector;
