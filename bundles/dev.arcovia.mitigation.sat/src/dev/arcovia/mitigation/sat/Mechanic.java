@@ -181,6 +181,10 @@ public class Mechanic {
         return (determineViolatingTFGs(dfd, constraints).size());
     }
 
+    public List<AbstractTransposeFlowGraph> getViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints){
+        return determineViolatingTFGs(dfd, constraints);
+    }
+
     /**
      * Retrieves the current number of violations identified in the Data Flow Diagram and Dictionary (DFD).
      *
