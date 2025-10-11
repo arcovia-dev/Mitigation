@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A BiMap is a bidirectional map that maintains a one-to-one relationship between keys and values.
- * It allows retrieval of keys by their corresponding values as well as values by their corresponding keys.
- *
- * This class ensures uniqueness of both keys and values, where a key can only map to one value
- * and a value can only map to one key. Adding a duplicate key or value will overwrite the
- * previous mapping and maintain the bidirectional consistency.
- *
+ * A BiMap is a bidirectional map that maintains a one-to-one relationship between keys and values. It allows retrieval
+ * of keys by their corresponding values as well as values by their corresponding keys. This class ensures uniqueness of
+ * both keys and values, where a key can only map to one value and a value can only map to one key. Adding a duplicate
+ * key or value will overwrite the previous mapping and maintain the bidirectional consistency.
  * @param <K> the type of keys maintained by this bimap
  * @param <V> the type of values mapped by this bimap
  */

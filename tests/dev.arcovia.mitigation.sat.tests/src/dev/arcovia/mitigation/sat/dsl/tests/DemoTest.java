@@ -73,9 +73,12 @@ public class DemoTest {
         String model = "ewolff";
         int variant = 5;
         String name = model + "_" + variant;
-        String location = Paths.get("scenarios","dfd", "TUHH-Models").toString();
-        String inputDataFlowDiagram = Paths.get(location, model, (name + ".dataflowdiagram")).toString();
-        String inputDataDictionary = Paths.get(location, model, (name + ".datadictionary")).toString();
+        String location = Paths.get("scenarios", "dfd", "TUHH-Models")
+                .toString();
+        String inputDataFlowDiagram = Paths.get(location, model, (name + ".dataflowdiagram"))
+                .toString();
+        String inputDataDictionary = Paths.get(location, model, (name + ".datadictionary"))
+                .toString();
         DataFlowDiagramAndDictionary dfd = DataLoader.loadDFDFromPath(inputDataFlowDiagram, inputDataDictionary);
 
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
@@ -117,13 +120,17 @@ public class DemoTest {
                 .create();
 
         var translation = new CNFTranslation(con).constructCNF();
-        var checkCnf = BaseFormula.fromCNF(translation).toCNF();
+        var checkCnf = BaseFormula.fromCNF(translation)
+                .toCNF();
 
         logger.info(CNFUtil.cnfToString(checkCnf));
         assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(translation, checkCnf));
 
-        translation.get(0).literals().add(new Literal(false, new NodeLabel(new Label("Location", "nonEU"))));
-        var newCnf = BaseFormula.fromCNF(translation).toCNF();
+        translation.get(0)
+                .literals()
+                .add(new Literal(false, new NodeLabel(new Label("Location", "nonEU"))));
+        var newCnf = BaseFormula.fromCNF(translation)
+                .toCNF();
 
         logger.info(CNFUtil.cnfToString(translation));
         logger.info(CNFUtil.cnfToString(newCnf));
