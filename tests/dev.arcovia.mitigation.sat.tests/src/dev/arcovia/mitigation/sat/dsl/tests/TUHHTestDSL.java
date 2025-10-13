@@ -20,14 +20,13 @@ public class TUHHTestDSL {
 
     final List<Constraint> constraints = new TUHHTest().getConstraints();
 
-    final List<AnalysisConstraint> analysisConstraints = List.of(
-            new ConstraintDSL().ofData()
-                    .withLabel("Stereotype", "entrypoint")
-                    .withoutLabel("Stereotype", "gateway")
-                    .neverFlows()
-                    .toVertex()
-                    .withCharacteristic("Stereotype", "internal")
-                    .create(),
+    final List<AnalysisConstraint> analysisConstraints = List.of(new ConstraintDSL().ofData()
+            .withLabel("Stereotype", "entrypoint")
+            .withoutLabel("Stereotype", "gateway")
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "internal")
+            .create(),
             new ConstraintDSL().ofData()
                     .neverFlows()
                     .toVertex()

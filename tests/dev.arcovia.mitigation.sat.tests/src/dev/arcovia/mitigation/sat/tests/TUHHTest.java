@@ -55,27 +55,24 @@ public class TUHHTest {
     final List<Constraint> constraints = List.of(entryViaGatewayOnly, nonInternalGateway, authenticatedRequest, transformedEntry, tokenValidation,
             loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
-    final Map<Label, Integer> costs = Map.ofEntries(entry(new Label("Stereotype", "internal"), 10),
-            entry(new Label("Stereotype", "gateway"), 4),
+    final Map<Label, Integer> costs = Map.ofEntries(entry(new Label("Stereotype", "internal"), 10), entry(new Label("Stereotype", "gateway"), 4),
             entry(new Label("Stereotype", "authenticated_request"), 4), entry(new Label("Stereotype", "transform_identity_representation"), 3),
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 2),
             entry(new Label("Stereotype", "encrypted_connection"), 3), entry(new Label("Stereotype", "log_sanitization"), 2),
             entry(new Label("Stereotype", "local_logging"), 2));
-    
-    final Map<Label, Integer> minCosts = Map.ofEntries(
-            entry(new Label("Stereotype", "gateway"), 1),
+
+    final Map<Label, Integer> minCosts = Map.ofEntries(entry(new Label("Stereotype", "gateway"), 1),
             entry(new Label("Stereotype", "authenticated_request"), 1), entry(new Label("Stereotype", "transform_identity_representation"), 1),
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 1),
             entry(new Label("Stereotype", "encrypted_connection"), 1), entry(new Label("Stereotype", "log_sanitization"), 1),
             entry(new Label("Stereotype", "local_logging"), 1));
-        
+
     final Map<Label, Integer> labelRanking = Map.ofEntries(entry(new Label("Stereotype", "internal"), 7),
-            entry(new Label("Stereotype", "gateway"), 6),
-            entry(new Label("Stereotype", "authenticated_request"), 6), entry(new Label("Stereotype", "transform_identity_representation"), 3),
-            entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 4),
-            entry(new Label("Stereotype", "encrypted_connection"), 5), entry(new Label("Stereotype", "log_sanitization"), 3),
-            entry(new Label("Stereotype", "local_logging"), 2));
-    
+            entry(new Label("Stereotype", "gateway"), 6), entry(new Label("Stereotype", "authenticated_request"), 6),
+            entry(new Label("Stereotype", "transform_identity_representation"), 3), entry(new Label("Stereotype", "token_validation"), 1),
+            entry(new Label("Stereotype", "login_attempts_regulation"), 4), entry(new Label("Stereotype", "encrypted_connection"), 5),
+            entry(new Label("Stereotype", "log_sanitization"), 3), entry(new Label("Stereotype", "local_logging"), 2));
+
     /*
      * Returns a shallow copy of the constraint list
      */
@@ -88,7 +85,7 @@ public class TUHHTest {
         var dfdConverter = new DFD2WebConverter();
 
         var tuhhModels = TuhhModels.getTuhhModels();
-        
+
         List<Scalability> scalabilityValues = new ArrayList<>();
         var rankedCosts = getRankedCosts(labelRanking);
 
@@ -100,46 +97,46 @@ public class TUHHTest {
 
                 var repairResult = runRepair(model, name, variant == 0, constraints, costs);
                 var repairedDfdCosts = repairResult.repairedDfd();
-                
-                int amountClauses = extractClauseCount("testresults/" +  (variant == 0 ? name : "aName") + ".cnf");
-                scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
+
+                int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
+                scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
 
                 if (variant == 0)
-                    dfdConverter.convert(repairedDfdCosts).save("testresults/",  name + "-repaired.json");
+                    dfdConverter.convert(repairedDfdCosts)
+                            .save("testresults/", name + "-repaired.json");
 
-                assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
-                
-                repairResult = runRepair(model, name, false , constraints, rankedCosts);
+                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraints));
+
+                repairResult = runRepair(model, name, false, constraints, rankedCosts);
                 repairedDfdCosts = repairResult.repairedDfd();
-                assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
-                
+                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraints));
+
             }
         }
-        
+
         System.out.println("Put these into scalability.py");
         System.out.println(scalabilityValues);
     }
-    
-    
-    private record Scalability(
-            int amountClause,
-            long runtimeInMilliseconds
-        ) {}
-    
+
+    private record Scalability(int amountClause, long runtimeInMilliseconds) {
+    }
+
     @Test
     void efficiencyTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
         List<String> modelRepairMoreExpensive = new ArrayList<>();
-        
-        Map<String,Integer> tuhhCosts = new LinkedHashMap<>();
-        Map<String,Integer> satCosts = new LinkedHashMap<>();
-        Map<String,Integer> violationsBefore = new LinkedHashMap<>();
-        Map<String,Integer> violationsAfter = new LinkedHashMap<>();
+
+        Map<String, Integer> tuhhCosts = new LinkedHashMap<>();
+        Map<String, Integer> satCosts = new LinkedHashMap<>();
+        Map<String, Integer> violationsBefore = new LinkedHashMap<>();
+        Map<String, Integer> violationsAfter = new LinkedHashMap<>();
         List<Scalability> scalabilityValues = new ArrayList<>();
 
         for (var model : tuhhModels.keySet()) {
-            if (!tuhhModels.get(model).contains(0)) continue;
-            
+            if (!tuhhModels.get(model)
+                    .contains(0))
+                continue;
+
             System.out.println("Checking " + model);
 
             for (int variant : tuhhModels.get(model)) {
@@ -154,30 +151,32 @@ public class TUHHTest {
                     case 11 -> List.of(localLogging, logSanitization);
                     default -> null;
                 };
-                if (constraint == null) continue;
+                if (constraint == null)
+                    continue;
                 System.out.println("Comparing to " + model + "_" + variant);
-                var repairResult = runRepair(model, model+"_0", false, constraint, minCosts);
+                var repairResult = runRepair(model, model + "_0", false, constraint, minCosts);
                 var repairedDfd = repairResult.repairedDfd();
                 var dfdConverter = new DFD2WebConverter();
-                dfdConverter.convert(repairedDfd).save("efficencyTest/",  model + "_" + variant + "-repaired.json");
+                dfdConverter.convert(repairedDfd)
+                        .save("efficencyTest/", model + "_" + variant + "-repaired.json");
                 var satCost = new ModelCostCalculator(repairedDfd, constraint, minCosts).calculateCost();
                 var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, minCosts).calculateCost();
 
-                System.out.println(satCost + " <= " + tuhhCost + " : "+ (satCost <= tuhhCost));
-                if (satCost > tuhhCost){
+                System.out.println(satCost + " <= " + tuhhCost + " : " + (satCost <= tuhhCost));
+                if (satCost > tuhhCost) {
                     modelRepairMoreExpensive.add(model + "_" + variant);
                 }
-                
+
                 satCosts.put(model + "_" + variant, satCost);
                 tuhhCosts.put(model + "_" + variant, tuhhCost);
                 violationsBefore.put(model + "_" + variant, repairResult.violationsBefore());
                 violationsAfter.put(model + "_" + variant, repairResult.violationsAfter());
-                
+
                 int amountClauses = extractClauseCount("testresults/aName.cnf");
-                scalabilityValues.add(new Scalability(amountClauses,repairResult.runtimeInMilliseconds));
+                scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
             }
         }
-        
+
         System.out.println("Put these into cost.py");
         System.out.println(satCosts);
         System.out.println(tuhhCosts);
@@ -187,7 +186,7 @@ public class TUHHTest {
         System.out.println("Put these into violations.py");
         System.out.println(violationsBefore);
         System.out.println(violationsAfter);
-        
+
         assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_7"));
     }
 
@@ -199,18 +198,21 @@ public class TUHHTest {
         int variant = 7;
 
         String name = model + "_" + variant;
-        dfdConverter.convert(loadDFD(model,name)).save("testresults/",  "specific_" + name + "-repaired.json");
+        dfdConverter.convert(loadDFD(model, name))
+                .save("testresults/", "specific_" + name + "-repaired.json");
 
         var repairedDfdCosts = runRepair(model, name, true, constraints, costs).repairedDfd();
-        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "specific_" + name + "-repaired.json");
-        assertTrue(new Mechanic(repairedDfdCosts,null, null).isViolationFree(repairedDfdCosts,constraints));
+        dfdConverter.convert(repairedDfdCosts)
+                .save("testresults/", "specific_" + name + "-repaired.json");
+        assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraints));
     }
-    
+
     private int extractClauseCount(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String firstLine = reader.readLine();
             if (firstLine != null && firstLine.startsWith("p cnf")) {
-                String[] parts = firstLine.trim().split("\\s+");
+                String[] parts = firstLine.trim()
+                        .split("\\s+");
                 if (parts.length == 4) {
                     return Integer.parseInt(parts[3]);
                 }
@@ -218,15 +220,11 @@ public class TUHHTest {
         }
         throw new IllegalArgumentException("First line is not in the expected 'p cnf <vars> <clauses>' format.");
     }
-    
-    private record RepairResult(
-            DataFlowDiagramAndDictionary repairedDfd,
-            int violationsBefore,
-            int violationsAfter,
-            long runtimeInMilliseconds
-        ) {}
 
-    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints, Map<Label,Integer> costMap)
+    private record RepairResult(DataFlowDiagramAndDictionary repairedDfd, int violationsBefore, int violationsAfter, long runtimeInMilliseconds) {
+    }
+
+    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints, Map<Label, Integer> costMap)
             throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
         var dfd = loadDFD(model, name);
         if (!store)
@@ -235,14 +233,15 @@ public class TUHHTest {
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
-        int violationsAfter = new Mechanic(repairedDfd,null, null).amountOfViolations(repairedDfd,constraints);
-        return new RepairResult(repairedDfd,mechanic.getViolations(),violationsAfter,endTime-startTime);
+        int violationsAfter = new Mechanic(repairedDfd, null, null).amountOfViolations(repairedDfd, constraints);
+        return new RepairResult(repairedDfd, mechanic.getViolations(), violationsAfter, endTime - startTime);
     }
-    
+
     private Map<Label, Integer> getRankedCosts(Map<Label, Integer> rankedLabels) {
-        int maxRank = rankedLabels.values().stream()
-            .max(Integer::compareTo)
-            .orElse(0);
+        int maxRank = rankedLabels.values()
+                .stream()
+                .max(Integer::compareTo)
+                .orElse(0);
 
         int[] fibs = fibonacciNumbers(maxRank);
 
@@ -265,17 +264,18 @@ public class TUHHTest {
 
         return fibs;
     }
-    
+
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
-        final String location = Paths.get("scenarios","dfd", "TUHH-Models")
+        final String location = Paths.get("scenarios", "dfd", "TUHH-Models")
                 .toString();
-        return new DataFlowDiagramAndDictionary(PROJECT_NAME, 
-        		Paths.get(location, model, (name + ".dataflowdiagram")).toString(), 
-        		Paths.get(location, model, (name + ".datadictionary"))
-                .toString(), Activator.class);
+        return new DataFlowDiagramAndDictionary(PROJECT_NAME, Paths.get(location, model, (name + ".dataflowdiagram"))
+                .toString(),
+                Paths.get(location, model, (name + ".datadictionary"))
+                        .toString(),
+                Activator.class);
     }
-    
+
     @AfterEach
     void cleanup() throws IOException {
         Files.deleteIfExists(Paths.get("testresults/aName-literalMapping.json"));

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
-public class ICSETest extends BaseTest{
+public class ICSETest extends BaseTest {
 
     public final String ICSE_Sat = "models/ICSE.json";
     // (personal AND nonEU) => encrypted
@@ -30,7 +30,8 @@ public class ICSETest extends BaseTest{
     public void automaticTest() throws ContradictionException, TimeoutException, IOException {
         var dfdConverter = new DFD2WebConverter();
         var repairedDfdCosts = new Mechanic(ICSE_Sat, constraints, costs).repair();
-        dfdConverter.convert(repairedDfdCosts).save("testresults/",  "ICSE-repaired.json");
+        dfdConverter.convert(repairedDfdCosts)
+                .save("testresults/", "ICSE-repaired.json");
     }
 
 }
