@@ -1,10 +1,9 @@
 package dev.arcovia.mitigation.ilp.tests;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
-
+import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ilp.Constraint;
@@ -27,10 +26,15 @@ public class BasicTest {
             );
     
     @Test
-    public void minTest() throws IOException {
+    public void minTest(){
         var optimization = new OptimizationManager(MinDFD, List.of(constraint));
         
         var result = optimization.repair();
+        
+        var dfdConverter = new DFD2WebConverter();
+        dfdConverter.convert(result).save("models/" ,"mindfd-repaired.json");
+        
+        
     }
     
 }

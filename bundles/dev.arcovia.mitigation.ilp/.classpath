@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/ortools-java-9.14.6206.jar"/>
+	<classpathentry kind="lib" path="lib/linux64/ortools-linux-x86-64-9.14.6206.jar"/>
+	<classpathentry kind="lib" path="lib/win64/ortools-win32-x86-64-9.14.6206.jar"/>
+	<classpathentry kind="lib" path="lib/macos/ortools-linux-aarch64-9.14.6206.jar"/>
+	<classpathentry kind="lib" path="lib/protobuf-java-3.24.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

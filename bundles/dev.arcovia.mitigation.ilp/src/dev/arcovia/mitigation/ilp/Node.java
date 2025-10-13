@@ -2,11 +2,15 @@ package dev.arcovia.mitigation.ilp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
+import org.dataflowanalysis.dfd.datadictionary.Pin;
+import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 
+import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import dev.arcovia.mitigation.sat.Term;
 
 public class Node {
@@ -15,26 +19,30 @@ public class Node {
     protected AbstractTransposeFlowGraph tfg;
     private final boolean isForwarding;
     private List<AbstractVertex<?>> previous;
+    private Map<Pin, Flow> pinFlowMap;
+    private Map<Pin, DFDVertex> pinDFDVertexMap;
     
     public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg, Constraint constraint){
         this.tfg = tfg;
-        violatingConstraints.add(constraint);
+        
+        if (constraint != null)
+            violatingConstraints.add(constraint);
         
         name = vertex.getName();
         
         isForwarding = determineForwarding(vertex);
         
         previous = vertex.getPreviousElements();
+        
+        pinFlowMap = vertex.getPinFlowMap();
+        
+        pinDFDVertexMap = vertex.getPinDFDVertexMap();
+        
     }
     
+    
     public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg){
-        this.tfg = tfg;
-        
-        name = vertex.getName();
-        
-        isForwarding = determineForwarding(vertex);
-        
-        previous = vertex.getPreviousElements();
+        this ( vertex, tfg, null);
     }
     
     public boolean determineForwarding(DFDVertex vertex) {
@@ -73,7 +81,7 @@ public class Node {
         
         for (var vertex : previous) {
             Node node = new Node((DFDVertex) vertex, tfg);
-            mitigations.add(new Mitigation(new Term(node.name, mitigation.label()), mitigation.cost()));
+            mitigations.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label().label())), mitigation.cost()));
             
             if (node.isForwarding) {
                 
@@ -82,5 +90,13 @@ public class Node {
         }
         
         return mitigations;
+    }
+    private String getOutpin(DFDVertex vertex) {
+        Pin pin = pinDFDVertexMap.entrySet().stream()
+        .filter(e -> e.getValue().equals(vertex)).map(Map.Entry::getKey).findFirst().get();
+        
+        var flow = pinFlowMap.get(pin);
+        
+        return flow.getSourcePin().getId();
     }
 }

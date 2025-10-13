@@ -11,6 +11,7 @@ Require-Bundle: org.dataflowanalysis.converter,
  org.dataflowanalysis.analysis.dfd,
  org.dataflowanalysis.dfd.datadictionary,
  org.dataflowanalysis.dfd.dataflowdiagram,
- dev.arcovia.mitigation.sat;bundle-version="1.0.0"
+ dev.arcovia.mitigation.sat,
+ com.sun.jna
 Automatic-Module-Name: dev.arcovia.mitigation.ilp
 Bundle-RequiredExecutionEnvironment: JavaSE-17
