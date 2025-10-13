@@ -1,5 +1,7 @@
 package dev.arcovia.mitigation.ilp.tests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
@@ -34,7 +36,7 @@ public class BasicTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(result).save("models/" ,"mindfd-repaired.json");
         
-        
+        assertTrue(optimization.isViolationFree(result, List.of(constraint)));
     }
     
 }

@@ -59,10 +59,27 @@ public class OptimizationManager {
         
         var solver = new ILPSolver();
         var result = solver.solve(mitigations, allMitigations);
-        System.out.println(result);
+        
         applyActions(dfd, result);
         
         return dfd;
+    }
+    
+    public boolean isViolationFree(DataFlowDiagramAndDictionary dfd,List<Constraint> constraints) {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        
+        for(var constraint : constraints) {
+            List<DSLResult> results = constraint.dsl.findViolations(flowGraph);
+            if (!results.isEmpty()) return false;
+        }    
+        return true;
     }
     
     private void addMitigations(List<Mitigation> mitigation) {
