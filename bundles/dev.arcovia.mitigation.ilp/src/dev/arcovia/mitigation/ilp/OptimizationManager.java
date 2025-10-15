@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,6 +26,7 @@ import org.dataflowanalysis.dfd.datadictionary.LabelType;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 
+import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.Term;
 
@@ -50,7 +50,14 @@ public class OptimizationManager {
         this.constraints = constraints;        
     }
     
+    public OptimizationManager(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
+        this.dfd = dfd;
+        this.constraints = constraints;        
+    }
+    
     public DataFlowDiagramAndDictionary repair(){
+        analyseConstraints();
+        
         analyseDFD();
         
         for (var node : violatingNodes) {            
@@ -60,7 +67,9 @@ public class OptimizationManager {
         var solver = new ILPSolver();
         var result = solver.solve(mitigations, allMitigations);
         
-        applyActions(dfd, result);
+        var actions = getActions(result);
+        
+        applyActions(dfd, actions);
         
         return dfd;
     }
@@ -82,8 +91,39 @@ public class OptimizationManager {
         return true;
     }
     
+    private List<Term> getActions (List<Mitigation> result){
+        List<Mitigation> additoonal = new ArrayList<>();
+        for (var mit : result) {
+            additoonal.addAll(mit.required());
+        }
+        result.addAll(additoonal);
+        List<Term> actions = new ArrayList<>();
+        for (var mit : result) {
+            actions.add(mit.mitigation());
+        }
+        return actions;
+    }
+    
+    private void analyseConstraints() {
+        for (var constraint: constraints) {
+            for (var mitigation : constraint.getMitigations()) {
+                var additionalMitigations = getAdditionalMitigations(mitigation.label);
+                if (additionalMitigations != null) {
+                    mitigation.addRequired(additionalMitigations);
+                }
+            }
+        }
+    }
+    
+    private List<MitigationStrategy> getAdditionalMitigations(CompositeLabel label) {
+        for (var constraint: constraints) {
+            if (constraint.isPrecondition(label)) return constraint.getMitigations();
+        }
+        return null;
+    }
+    
     private void addMitigations(List<Mitigation> mitigation) {
-        //done to prevent having the same Mitigation twice by replacing duplicates with the original/first appearance
+        //done to prevent having the same Mitigation twice by replacing duplicates with the original/first appearance              
         List<Mitigation> merged = mitigation.stream()
                 .map(u -> allMitigations.stream()
                         .filter(u::equals)

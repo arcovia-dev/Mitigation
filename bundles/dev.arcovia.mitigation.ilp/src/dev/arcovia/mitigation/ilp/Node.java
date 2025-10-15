@@ -28,7 +28,8 @@ public class Node {
         if (constraint != null)
             violatingConstraints.add(constraint);
         
-        name = vertex.getName();
+        name = vertex.getReferencedElement()
+                .getId();
         
         isForwarding = determineForwarding(vertex);
         
@@ -62,9 +63,13 @@ public class Node {
         List<Mitigation> mitigations = new ArrayList<>();
         for (var constraint : violatingConstraints) {
             for (var mitigation : constraint.getMitigations()) {
-                switch (mitigation.type()) {
+                switch (mitigation.type) {
                     case Node -> {
-                        mitigations.add(new Mitigation(new Term(this.name, mitigation.label()), mitigation.cost()));
+                        List<Mitigation> req= new ArrayList<>();
+                        for(var r : mitigation.required)
+                            req.add(new Mitigation(new Term(this.name, r.label), r.cost, List.of()));
+                        
+                        mitigations.add(new Mitigation(new Term(this.name, mitigation.label), mitigation.cost, req));
                     }
                     case Data -> {
                         mitigations.addAll(getDataMitigations(mitigation));
@@ -81,11 +86,14 @@ public class Node {
         
         for (var vertex : previous) {
             Node node = new Node((DFDVertex) vertex, tfg);
-            mitigations.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label().label())), mitigation.cost()));
+            List<Mitigation> req= new ArrayList<>();
+            for(var r : mitigation.required)
+                req.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(r.label.label())), r.cost, List.of()));
+            mitigations.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())), mitigation.cost, req));
             
             if (node.isForwarding) {
                 
-                mitigations.addAll(node.getDataMitigations(new MitigationStrategy(mitigation.label(), mitigation.cost()-0.1, MitigationType.Data)));
+                mitigations.addAll(node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost-0.1, MitigationType.Data)));
             }
         }
         

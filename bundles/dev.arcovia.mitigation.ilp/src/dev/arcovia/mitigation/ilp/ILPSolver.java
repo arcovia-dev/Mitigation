@@ -23,7 +23,7 @@ public class ILPSolver {
         
     }
     
-    public List<Term> solve(List<List<Mitigation>> mitigations,Set<Mitigation> allMitigations){
+    public List<Mitigation> solve(List<List<Mitigation>> mitigations,Set<Mitigation> allMitigations){
         Loader.loadNativeLibraries();
         MPSolver solver = MPSolver.createSolver("CBC_MIXED_INTEGER_PROGRAMMING");
         
@@ -31,10 +31,11 @@ public class ILPSolver {
             MPVariable var = solver.makeIntVar(0, 1, m.toString());
             mitigationMap.put(var, m);            
         }
-        
+        Integer counter = 0;
         for(var constraint : mitigations) {
             // Coverage constraint for the single violation: at least one mitigation active
-            MPConstraint cover = solver.makeConstraint(1.0, Double.POSITIVE_INFINITY, "cover_violation");
+            MPConstraint cover = solver.makeConstraint(1.0, Double.POSITIVE_INFINITY, counter.toString());
+            counter++;
             for (var mitigation : constraint) {
                 cover.setCoefficient(mitigationMap.getKey(mitigation), 1.0);
             }
@@ -59,12 +60,12 @@ public class ILPSolver {
         
         if (st == MPSolver.ResultStatus.OPTIMAL
                 || st == MPSolver.ResultStatus.FEASIBLE) {
-              List<Term> chosen = new ArrayList<>();
+              List<Mitigation> chosen = new ArrayList<>();
               for (MPVariable var : solver.variables()) {
                 if (var.solutionValue() > 0.5) {
                   Optional<Mitigation> mitigation = allMitigations.stream().filter(m -> var.name().equals(m.toString())).findFirst();
                   if (mitigation.isPresent())
-                      chosen.add((mitigation.get()).mitigation());
+                      chosen.add(mitigation.get());
                 }
               }
               return chosen;

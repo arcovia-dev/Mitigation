@@ -23,9 +23,7 @@ public class BasicTest {
             .neverFlows()
             .toVertex()
             .withCharacteristic("Location", "nonEU")
-            .create(), List.of(
-                    new MitigationStrategy(new IncomingDataLabel(new Label("Encryption", "Encrypted")), 3, MitigationType.Data))
-            );
+            .create());
     
     @Test
     public void minTest(){
