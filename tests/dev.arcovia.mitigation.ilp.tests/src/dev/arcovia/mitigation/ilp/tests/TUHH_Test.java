@@ -28,7 +28,12 @@ public class TUHH_Test {
             .toVertex()
             .withCharacteristic("Stereotype", "internal")
             .create(),
-            
+            new ConstraintDSL().ofData()
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "gateway")
+            .withCharacteristic("Stereotype", "internal")
+            .create(),
             new ConstraintDSL().ofData()
                     .withoutLabel("Stereotype", "authenticated_request")
                     .neverFlows()
