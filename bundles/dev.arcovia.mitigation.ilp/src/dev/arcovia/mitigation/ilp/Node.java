@@ -92,8 +92,8 @@ public class Node {
             mitigations.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())), mitigation.cost, req));
             
             if (node.isForwarding) {
-                
-                mitigations.addAll(node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost-0.1, MitigationType.Data)));
+                //need to discuss whether forwarding should be prioritized or not & if the user should decide
+                mitigations.addAll(node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost, MitigationType.Data)));
             }
         }
         

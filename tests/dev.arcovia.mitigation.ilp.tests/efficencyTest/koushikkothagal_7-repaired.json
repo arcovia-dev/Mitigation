@@ -1,0 +1,403 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "ratings_data_service",
+      "id" : "44",
+      "type" : "edge:arrow",
+      "sourceId" : "43",
+      "targetId" : "42",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "movie_info_service",
+      "id" : "47",
+      "type" : "edge:arrow",
+      "sourceId" : "46",
+      "targetId" : "42",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "external_website",
+      "id" : "50",
+      "type" : "edge:arrow",
+      "sourceId" : "49",
+      "targetId" : "48",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "movie_catalog_service",
+      "id" : "52",
+      "type" : "edge:arrow",
+      "sourceId" : "51",
+      "targetId" : "42",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "movie_catalog_service",
+      "id" : "56",
+      "type" : "edge:arrow",
+      "sourceId" : "55",
+      "targetId" : "54",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "movie_catalog_service",
+      "id" : "58",
+      "type" : "edge:arrow",
+      "sourceId" : "57",
+      "targetId" : "48",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "external_website",
+      "id" : "2",
+      "type" : "node:input-output",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "26"
+      }, {
+        "labelTypeId" : "27",
+        "labelTypeValueId" : "28"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.external_website,Stereotype.restful_http if TRUE",
+        "id" : "49",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.external_website, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1630046228
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "discovery_server",
+      "id" : "3",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "31"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "32"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "33"
+      }, {
+        "labelTypeId" : "34",
+        "labelTypeValueId" : "35"
+      } ],
+      "ports" : [ {
+        "id" : "42",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.load_balancer, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 159847162
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.external_website",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1630046228
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.load_balancer, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 999107262
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.load_balancer, Stereotype.restful_http, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 107388090
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "ratings_data_service",
+      "id" : "4",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "38"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "39"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "40"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "41"
+      } ],
+      "ports" : [ {
+        "id" : "54",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from movie_catalog_service\nforward movie_catalog_service",
+        "id" : "43",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.load_balancer, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 159847162
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.load_balancer, Stereotype.restful_http, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 159847162
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "movie_info_service",
+      "id" : "5",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "12"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "13"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "15"
+      } ],
+      "ports" : [ {
+        "id" : "48",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.restful_http if TRUE from external_website|movie_catalog_service\nforward external_website|movie_catalog_service",
+        "id" : "46",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.external_website",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1630046228
+      }, {
+        "message" : "Incoming: Stereotype.external_website, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1630046228
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.load_balancer, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 999107262
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.load_balancer, Stereotype.restful_http, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 999107262
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "movie_catalog_service",
+      "id" : "6",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "10"
+      }, {
+        "labelTypeId" : "7",
+        "labelTypeValueId" : "18"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "19"
+      }, {
+        "labelTypeId" : "11",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "14",
+        "labelTypeValueId" : "21"
+      }, {
+        "labelTypeId" : "22",
+        "labelTypeValueId" : "23"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.internal,Stereotype.load_balancer,Stereotype.restful_http,Stereotype.load_balanced_link if TRUE",
+        "id" : "51",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.load_balancer,Stereotype.restful_http,Stereotype.load_balanced_link if TRUE",
+        "id" : "55",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.load_balancer,Stereotype.restful_http,Stereotype.load_balanced_link if TRUE",
+        "id" : "57",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.internal, Stereotype.load_balancer, Stereotype.restful_http, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 159847162
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.load_balancer, Stereotype.restful_http, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 999107262
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.load_balancer, Stereotype.restful_http, Stereotype.load_balanced_link",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 107388090
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "7",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "10",
+      "text" : "internal"
+    }, {
+      "id" : "18",
+      "text" : "load_balancer"
+    }, {
+      "id" : "26",
+      "text" : "external_website"
+    }, {
+      "id" : "31",
+      "text" : "infrastructural"
+    }, {
+      "id" : "32",
+      "text" : "service_discovery"
+    }, {
+      "id" : "45",
+      "text" : "restful_http"
+    }, {
+      "id" : "53",
+      "text" : "load_balanced_link"
+    } ]
+  }, {
+    "id" : "11",
+    "name" : "Endpoints",
+    "values" : [ {
+      "id" : "12",
+      "text" : "movies"
+    }, {
+      "id" : "13",
+      "text" : "moviesmovieId"
+    }, {
+      "id" : "19",
+      "text" : "catalog"
+    }, {
+      "id" : "20",
+      "text" : "cataloguserId"
+    }, {
+      "id" : "38",
+      "text" : "ratingsdata"
+    }, {
+      "id" : "39",
+      "text" : "ratingsdatamoviesmovieId"
+    }, {
+      "id" : "40",
+      "text" : "ratingsdatauseruserId"
+    } ]
+  }, {
+    "id" : "14",
+    "name" : "Port",
+    "values" : [ {
+      "id" : "15",
+      "text" : "8082"
+    }, {
+      "id" : "21",
+      "text" : "8081"
+    }, {
+      "id" : "33",
+      "text" : "8761"
+    }, {
+      "id" : "41",
+      "text" : "8083"
+    } ]
+  }, {
+    "id" : "22",
+    "name" : "LoadBalancer",
+    "values" : [ {
+      "id" : "23",
+      "text" : "SpringCloud"
+    } ]
+  }, {
+    "id" : "27",
+    "name" : "URL",
+    "values" : [ {
+      "id" : "28",
+      "text" : "httpsapithemoviedborg"
+    } ]
+  }, {
+    "id" : "34",
+    "name" : "ServiceDiscovery",
+    "values" : [ {
+      "id" : "35",
+      "text" : "Eureka"
+    } ]
+  } ],
+  "mode" : "edit",
+  "constraints" : [ ]
+}

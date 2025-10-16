@@ -45,14 +45,16 @@ public class OptimizationManager {
     private List<List<Mitigation>> mitigations = new ArrayList<>();
     private Set<Mitigation> allMitigations = new HashSet<>();
     
-    public OptimizationManager(String dfdLocation, List<Constraint> constraints) {
+    private List<Term> actions;
+    
+    public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        this.constraints = constraints;        
+        this.constraints = getConstraints(constraints);        
     }
     
-    public OptimizationManager(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
+    public OptimizationManager(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
         this.dfd = dfd;
-        this.constraints = constraints;        
+        this.constraints = getConstraints(constraints);        
     }
     
     public DataFlowDiagramAndDictionary repair(){
@@ -67,14 +69,18 @@ public class OptimizationManager {
         var solver = new ILPSolver();
         var result = solver.solve(mitigations, allMitigations);
         
-        var actions = getActions(result);
+        actions = getActions(result);
         
         applyActions(dfd, actions);
         
         return dfd;
     }
     
-    public boolean isViolationFree(DataFlowDiagramAndDictionary dfd,List<Constraint> constraints) {
+    public int getCost() {
+        return actions.size();
+    }
+    
+    public boolean isViolationFree(DataFlowDiagramAndDictionary dfd,List<AnalysisConstraint> constraints) {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
                 .useCustomResourceProvider(resourceProvider)
@@ -85,7 +91,7 @@ public class OptimizationManager {
         flowGraph.evaluate();
         
         for(var constraint : constraints) {
-            List<DSLResult> results = constraint.dsl.findViolations(flowGraph);
+            List<DSLResult> results = constraint.findViolations(flowGraph);
             if (!results.isEmpty()) return false;
         }    
         return true;
@@ -163,6 +169,7 @@ public class OptimizationManager {
             }
         }        
     }
+    
     private void applyActions(DataFlowDiagramAndDictionary dfd, List<Term> actions) {
         deriveOutPinsToAssignmentsMap(dfd);
         var dd = dfd.dataDictionary();
@@ -278,6 +285,7 @@ public class OptimizationManager {
         }
         return label;
     }
+    
     private void deriveOutPinsToAssignmentsMap(DataFlowDiagramAndDictionary dfd) {
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {

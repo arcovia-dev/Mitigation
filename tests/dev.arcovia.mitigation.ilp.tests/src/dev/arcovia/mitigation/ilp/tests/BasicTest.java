@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.junit.jupiter.api.Test;
@@ -17,13 +18,13 @@ import dev.arcovia.mitigation.sat.Label;
 
 public class BasicTest {
     private final String MinDFD = "models/mindfd.json";
-    Constraint constraint = new Constraint( new ConstraintDSL().ofData()
+    AnalysisConstraint constraint = new ConstraintDSL().ofData()
             .withLabel("Sensitivity", "Personal")
             .withoutLabel("Encryption", "Encrypted")
             .neverFlows()
             .toVertex()
             .withCharacteristic("Location", "nonEU")
-            .create());
+            .create();
     
     @Test
     public void minTest(){

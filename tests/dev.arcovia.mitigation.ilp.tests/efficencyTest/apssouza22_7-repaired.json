@@ -1,0 +1,2871 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "admin",
+      "id" : "98",
+      "type" : "edge:arrow",
+      "sourceId" : "97",
+      "targetId" : "96",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "102",
+      "type" : "edge:arrow",
+      "sourceId" : "101",
+      "targetId" : "100",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "eureka_server",
+      "id" : "105",
+      "type" : "edge:arrow",
+      "sourceId" : "104",
+      "targetId" : "103",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "108",
+      "type" : "edge:arrow",
+      "sourceId" : "107",
+      "targetId" : "106",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "110",
+      "type" : "edge:arrow",
+      "sourceId" : "109",
+      "targetId" : "106",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "113",
+      "type" : "edge:arrow",
+      "sourceId" : "112",
+      "targetId" : "111",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "115",
+      "type" : "edge:arrow",
+      "sourceId" : "114",
+      "targetId" : "111",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "mailer",
+      "id" : "117",
+      "type" : "edge:arrow",
+      "sourceId" : "116",
+      "targetId" : "100",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "kafka",
+      "id" : "119",
+      "type" : "edge:arrow",
+      "sourceId" : "118",
+      "targetId" : "111",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "reminder",
+      "id" : "124",
+      "type" : "edge:arrow",
+      "sourceId" : "123",
+      "targetId" : "100",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "127",
+      "type" : "edge:arrow",
+      "sourceId" : "126",
+      "targetId" : "125",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "129",
+      "type" : "edge:arrow",
+      "sourceId" : "128",
+      "targetId" : "125",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "reminder",
+      "id" : "132",
+      "type" : "edge:arrow",
+      "sourceId" : "131",
+      "targetId" : "130",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "eureka_server",
+      "id" : "138",
+      "type" : "edge:arrow",
+      "sourceId" : "137",
+      "targetId" : "136",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "140",
+      "type" : "edge:arrow",
+      "sourceId" : "139",
+      "targetId" : "136",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "142",
+      "type" : "edge:arrow",
+      "sourceId" : "141",
+      "targetId" : "136",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "api_gateway",
+      "id" : "144",
+      "type" : "edge:arrow",
+      "sourceId" : "143",
+      "targetId" : "106",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "151",
+      "type" : "edge:arrow",
+      "sourceId" : "150",
+      "targetId" : "149",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "oauth",
+      "id" : "153",
+      "type" : "edge:arrow",
+      "sourceId" : "152",
+      "targetId" : "106",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "oauth",
+      "id" : "156",
+      "type" : "edge:arrow",
+      "sourceId" : "155",
+      "targetId" : "100",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "158",
+      "type" : "edge:arrow",
+      "sourceId" : "157",
+      "targetId" : "149",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "user",
+      "id" : "161",
+      "type" : "edge:arrow",
+      "sourceId" : "160",
+      "targetId" : "159",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "user",
+      "id" : "163",
+      "type" : "edge:arrow",
+      "sourceId" : "162",
+      "targetId" : "149",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "proxy",
+      "id" : "165",
+      "type" : "edge:arrow",
+      "sourceId" : "164",
+      "targetId" : "136",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "zookeeper",
+      "id" : "168",
+      "type" : "edge:arrow",
+      "sourceId" : "167",
+      "targetId" : "130",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "proxy",
+      "id" : "171",
+      "type" : "edge:arrow",
+      "sourceId" : "170",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "user_service",
+      "id" : "173",
+      "type" : "edge:arrow",
+      "sourceId" : "172",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "reminder",
+      "id" : "175",
+      "type" : "edge:arrow",
+      "sourceId" : "174",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "eureka_server",
+      "id" : "177",
+      "type" : "edge:arrow",
+      "sourceId" : "176",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "api_gateway",
+      "id" : "179",
+      "type" : "edge:arrow",
+      "sourceId" : "178",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "oauth",
+      "id" : "181",
+      "type" : "edge:arrow",
+      "sourceId" : "180",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "183",
+      "type" : "edge:arrow",
+      "sourceId" : "182",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "config_server",
+      "id" : "185",
+      "type" : "edge:arrow",
+      "sourceId" : "184",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "mailer",
+      "id" : "187",
+      "type" : "edge:arrow",
+      "sourceId" : "186",
+      "targetId" : "169",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "user",
+      "id" : "2",
+      "type" : "node:input-output",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "87"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection if TRUE",
+        "id" : "160",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.user_stereotype,Stereotype.restful_http,Stereotype.encrypted_connection if TRUE",
+        "id" : "162",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1761678320
+      }, {
+        "message" : "Propagated: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Propagated: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Propagated: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1059143319
+      }, {
+        "message" : "Propagated: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1962233742
+      }, {
+        "message" : "Propagated: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 476182975
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "logstash",
+      "id" : "3",
+      "type" : "node:input-output",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "44"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "45"
+      }, {
+        "labelTypeId" : "46",
+        "labelTypeValueId" : "47"
+      } ],
+      "ports" : [ {
+        "id" : "169",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: Stereotype.web_application, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1761678320
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 779263978
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.authentication, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.web_application, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 553209498
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1059143319
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1765570369
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2101036614
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 391924453
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 566172447
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 724821526
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.administration_server, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 350895823
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.web_application, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1962233742
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 307418240
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1505273857
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 476182975
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1187280528
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1520445161
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1235193859
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "config_server",
+      "id" : "4",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "28"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "61"
+      }, {
+        "labelTypeId" : "31",
+        "labelTypeValueId" : "62"
+      } ],
+      "ports" : [ {
+        "id" : "96",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin\nforward admin",
+        "id" : "101",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin\nforward admin",
+        "id" : "109",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin\nforward admin",
+        "id" : "114",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin\nforward admin",
+        "id" : "128",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin\nforward admin",
+        "id" : "141",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin\nforward admin",
+        "id" : "150",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin\nforward admin",
+        "id" : "184",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 779263978
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 779263978
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2101036614
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2101036614
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 391924453
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 391924453
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 350895823
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 350895823
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 307418240
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 307418240
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1187280528
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1187280528
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1235193859
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1235193859
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "admin",
+      "id" : "5",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "35"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "36"
+      }, {
+        "labelTypeId" : "37",
+        "labelTypeValueId" : "38"
+      } ],
+      "ports" : [ {
+        "id" : "103",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "97",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server\nassign Stereotype.gateway if TRUE",
+        "id" : "107",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server",
+        "id" : "112",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server",
+        "id" : "126",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server",
+        "id" : "139",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "157",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.administration_server,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from eureka_server\nforward eureka_server",
+        "id" : "182",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 779263978
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 553209498
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1765570369
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2101036614
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 391924453
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 566172447
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 724821526
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 350895823
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 307418240
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1505273857
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1187280528
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1520445161
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1235193859
+      }, {
+        "message" : "Propagated: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "eureka_server",
+      "id" : "6",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "71"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "72"
+      }, {
+        "labelTypeId" : "73",
+        "labelTypeValueId" : "74"
+      } ],
+      "ports" : [ {
+        "id" : "100",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|mailer|oauth|reminder\nforward config_server|mailer|oauth|reminder",
+        "id" : "104",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|mailer|oauth|reminder\nforward config_server|mailer|oauth|reminder\nassign Stereotype.encrypted_connection if TRUE",
+        "id" : "137",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.service_discovery,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from config_server|mailer|oauth|reminder\nforward config_server|mailer|oauth|reminder",
+        "id" : "176",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 391924453
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 391924453
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 566172447
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 566172447
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 724821526
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 724821526
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Propagated: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1110858882
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "user_service",
+      "id" : "7",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "56"
+      } ],
+      "ports" : [ {
+        "id" : "106",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin|api_gateway|config_server|oauth\nforward admin|api_gateway|config_server|oauth",
+        "id" : "172",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1352551763
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.message_broker, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.internal, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 779263978
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 779263978
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.authentication, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.authentication, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.entrypoint, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.web_application, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Incoming: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.web_application, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 553209498
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 553209498
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1059143319
+      }, {
+        "message" : "Incoming: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1059143319
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "kafka",
+      "id" : "8",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "65"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "66",
+        "labelTypeValueId" : "67"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "68"
+      } ],
+      "ports" : [ {
+        "id" : "130",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.message_broker,Stereotype.infrastructural,Stereotype.restful_http,Stereotype.message_consumer_kafka,ConsumerTopic.todomail if TRUE from reminder|zookeeper\nforward reminder|zookeeper",
+        "id" : "118",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.internal, Stereotype.local_logging, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Propagated: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.internal, Stereotype.local_logging, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Propagated: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.internal, Stereotype.local_logging, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      }, {
+        "message" : "Incoming: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "mailer",
+      "id" : "9",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "41"
+      } ],
+      "ports" : [ {
+        "id" : "111",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin|config_server|kafka\nforward admin|config_server|kafka",
+        "id" : "116",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin|config_server|kafka\nforward admin|config_server|kafka",
+        "id" : "186",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1871794198
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1395746279
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Incoming: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.internal, Stereotype.local_logging, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.internal, Stereotype.local_logging, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Incoming: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.configuration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 566172447
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 566172447
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1520445161
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1520445161
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1235193859
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1235193859
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_broker, Stereotype.infrastructural, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      }, {
+        "message" : "Incoming: Stereotype.message_broker, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.message_consumer_kafka, ConsumerTopic.todomail, Stereotype.internal, Stereotype.local_logging, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "reminder",
+      "id" : "10",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "20"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "25"
+      } ],
+      "ports" : [ {
+        "id" : "125",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin|config_server\nforward admin|config_server",
+        "id" : "123",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http,Stereotype.message_producer_kafka,ProducerTopic.todomail if TRUE from admin|config_server\nforward admin|config_server",
+        "id" : "131",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.internal,Stereotype.local_logging,Stereotype.restful_http if TRUE from admin|config_server\nforward admin|config_server",
+        "id" : "174",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 843997922
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 270030125
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 757791711
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1823659498
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1765570369
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1765570369
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2101036614
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2101036614
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 724821526
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 724821526
+      }, {
+        "message" : "Propagated: Stereotype.internal, Stereotype.local_logging, Stereotype.restful_http, Stereotype.message_producer_kafka, ProducerTopic.todomail, Stereotype.administration_server, Stereotype.infrastructural",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 968689662
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "api_gateway",
+      "id" : "11",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "77"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "78"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "79"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "80"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "81"
+      }, {
+        "labelTypeId" : "82",
+        "labelTypeValueId" : "83"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "84"
+      } ],
+      "ports" : [ {
+        "id" : "136",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.circuit_breaker,Stereotype.resource_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.local_logging,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.load_balanced_link,Stereotype.feign_connection,LoadBalancer.Ribbon if TRUE from admin|config_server|eureka_server|proxy\nforward admin|config_server|eureka_server|proxy",
+        "id" : "143",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.gateway,Stereotype.circuit_breaker,Stereotype.resource_server,Stereotype.infrastructural,Stereotype.csrf_disabled,Stereotype.local_logging,Stereotype.entrypoint,Stereotype.restful_http if TRUE from admin|config_server|eureka_server|proxy\nforward admin|config_server|eureka_server|proxy",
+        "id" : "178",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 439639148
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1797686173
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.internal, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 396842715
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.service_discovery, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.authentication, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.circuit_breaker, Stereotype.authentication, Stereotype.entrypoint, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 360708344
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1243265953
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.web_application, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Incoming: Stereotype.web_application, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Incoming: Stereotype.service_discovery, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2044982340
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.administration_server, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.service_discovery, Stereotype.configuration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 542994308
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 350895823
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 350895823
+      }, {
+        "message" : "Propagated: Stereotype.gateway, Stereotype.circuit_breaker, Stereotype.resource_server, Stereotype.infrastructural, Stereotype.csrf_disabled, Stereotype.local_logging, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.web_application, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1962233742
+      }, {
+        "message" : "Incoming: Stereotype.web_application, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1962233742
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "oauth",
+      "id" : "12",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "90"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "91"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "78"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "92"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "81"
+      }, {
+        "labelTypeId" : "93",
+        "labelTypeValueId" : "94"
+      }, {
+        "labelTypeId" : "82",
+        "labelTypeValueId" : "83"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "95"
+      } ],
+      "ports" : [ {
+        "id" : "149",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.authorization_server,Stereotype.tokenstore,Stereotype.infrastructural,Stereotype.circuit_breaker,Stereotype.local_logging,Stereotype.authentication,Stereotype.entrypoint,Stereotype.restful_http,Stereotype.auth_provider,Stereotype.load_balanced_link,Stereotype.feign_connection,LoadBalancer.Ribbon if TRUE from admin|config_server|user\nforward admin|config_server|user\nassign Stereotype.gateway if TRUE",
+        "id" : "152",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.authorization_server,Stereotype.tokenstore,Stereotype.infrastructural,Stereotype.circuit_breaker,Stereotype.local_logging,Stereotype.authentication,Stereotype.entrypoint,Stereotype.restful_http if TRUE from admin|config_server|user\nforward admin|config_server|user",
+        "id" : "155",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.authorization_server,Stereotype.tokenstore,Stereotype.infrastructural,Stereotype.circuit_breaker,Stereotype.local_logging,Stereotype.authentication,Stereotype.entrypoint,Stereotype.restful_http if TRUE from admin|config_server|user\nforward admin|config_server|user",
+        "id" : "180",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1053901932
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 781975304
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Incoming: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1410669831
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 756028938
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1244383007
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.administration_server, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 553209498
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 553209498
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.auth_provider, Stereotype.load_balanced_link, Stereotype.feign_connection, LoadBalancer.Ribbon, Stereotype.user_stereotype, Stereotype.encrypted_connection, Stereotype.gateway",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1059143319
+      }, {
+        "message" : "Incoming: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1059143319
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 203267136
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 307418240
+      }, {
+        "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 307418240
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.administration_server, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1505273857
+      }, {
+        "message" : "Incoming: Stereotype.administration_server, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1505273857
+      }, {
+        "message" : "Propagated: Stereotype.authorization_server, Stereotype.tokenstore, Stereotype.infrastructural, Stereotype.circuit_breaker, Stereotype.local_logging, Stereotype.authentication, Stereotype.entrypoint, Stereotype.restful_http, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 476182975
+      }, {
+        "message" : "Incoming: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 476182975
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "proxy",
+      "id" : "13",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "50"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "23"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "51"
+      }, {
+        "labelTypeId" : "52",
+        "labelTypeValueId" : "53"
+      } ],
+      "ports" : [ {
+        "id" : "159",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.web_application,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http,Stereotype.authenticated_request if TRUE from user\nforward user",
+        "id" : "164",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Stereotype.web_application,Stereotype.infrastructural,Stereotype.local_logging,Stereotype.restful_http if TRUE from user\nforward user",
+        "id" : "170",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.web_application, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1761678320
+      }, {
+        "message" : "Incoming: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1761678320
+      }, {
+        "message" : "Propagated: Stereotype.web_application, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Incoming: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1730559415
+      }, {
+        "message" : "Propagated: Stereotype.web_application, Stereotype.infrastructural, Stereotype.local_logging, Stereotype.restful_http, Stereotype.authenticated_request, Stereotype.user_stereotype, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1962233742
+      }, {
+        "message" : "Incoming: Stereotype.user_stereotype, Stereotype.restful_http, Stereotype.encrypted_connection",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1962233742
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "zookeeper",
+      "id" : "14",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "28"
+      }, {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "29"
+      }, {
+        "labelTypeId" : "24",
+        "labelTypeValueId" : "30"
+      }, {
+        "labelTypeId" : "31",
+        "labelTypeValueId" : "32"
+      } ],
+      "ports" : [ {
+        "behavior" : "assign Stereotype.configuration_server,Stereotype.infrastructural,Stereotype.restful_http if TRUE",
+        "id" : "167",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1978443480
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "jmx_monitoring",
+      "id" : "15",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "20"
+      } ],
+      "ports" : [ ],
+      "annotations" : [ ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "todo_infra",
+      "id" : "16",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "17",
+        "labelTypeValueId" : "20"
+      } ],
+      "ports" : [ ],
+      "annotations" : [ ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "17",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "20",
+      "text" : "internal"
+    }, {
+      "id" : "23",
+      "text" : "local_logging"
+    }, {
+      "id" : "28",
+      "text" : "configuration_server"
+    }, {
+      "id" : "29",
+      "text" : "infrastructural"
+    }, {
+      "id" : "35",
+      "text" : "administration_server"
+    }, {
+      "id" : "44",
+      "text" : "logging_server"
+    }, {
+      "id" : "50",
+      "text" : "web_application"
+    }, {
+      "id" : "65",
+      "text" : "message_broker"
+    }, {
+      "id" : "71",
+      "text" : "service_discovery"
+    }, {
+      "id" : "77",
+      "text" : "gateway"
+    }, {
+      "id" : "78",
+      "text" : "circuit_breaker"
+    }, {
+      "id" : "79",
+      "text" : "resource_server"
+    }, {
+      "id" : "80",
+      "text" : "csrf_disabled"
+    }, {
+      "id" : "81",
+      "text" : "entrypoint"
+    }, {
+      "id" : "87",
+      "text" : "user_stereotype"
+    }, {
+      "id" : "90",
+      "text" : "authorization_server"
+    }, {
+      "id" : "91",
+      "text" : "tokenstore"
+    }, {
+      "id" : "92",
+      "text" : "authentication"
+    }, {
+      "id" : "99",
+      "text" : "restful_http"
+    }, {
+      "id" : "120",
+      "text" : "message_consumer_kafka"
+    }, {
+      "id" : "133",
+      "text" : "message_producer_kafka"
+    }, {
+      "id" : "145",
+      "text" : "load_balanced_link"
+    }, {
+      "id" : "146",
+      "text" : "feign_connection"
+    }, {
+      "id" : "154",
+      "text" : "auth_provider"
+    }, {
+      "id" : "166",
+      "text" : "authenticated_request"
+    }, {
+      "id" : "906b9be0-988e-33c1-a025-50cd9e1b7af4",
+      "text" : "encrypted_connection"
+    } ]
+  }, {
+    "id" : "24",
+    "name" : "Port",
+    "values" : [ {
+      "id" : "25",
+      "text" : "8015"
+    }, {
+      "id" : "30",
+      "text" : "2181"
+    }, {
+      "id" : "36",
+      "text" : "8026"
+    }, {
+      "id" : "41",
+      "text" : "8020"
+    }, {
+      "id" : "45",
+      "text" : "5044"
+    }, {
+      "id" : "51",
+      "text" : "80"
+    }, {
+      "id" : "56",
+      "text" : "8016"
+    }, {
+      "id" : "61",
+      "text" : "8888"
+    }, {
+      "id" : "68",
+      "text" : "9092"
+    }, {
+      "id" : "72",
+      "text" : "8010"
+    }, {
+      "id" : "84",
+      "text" : "8018"
+    }, {
+      "id" : "95",
+      "text" : "8017"
+    } ]
+  }, {
+    "id" : "31",
+    "name" : "ConfigurationServer",
+    "values" : [ {
+      "id" : "32",
+      "text" : "ZooKeeper"
+    }, {
+      "id" : "62",
+      "text" : "SpringCloudConfig"
+    } ]
+  }, {
+    "id" : "37",
+    "name" : "AdministrationServer",
+    "values" : [ {
+      "id" : "38",
+      "text" : "SpringBootAdmin"
+    } ]
+  }, {
+    "id" : "46",
+    "name" : "LoggingServer",
+    "values" : [ {
+      "id" : "47",
+      "text" : "Logstash"
+    } ]
+  }, {
+    "id" : "52",
+    "name" : "WebApplication",
+    "values" : [ {
+      "id" : "53",
+      "text" : "Nginx"
+    } ]
+  }, {
+    "id" : "66",
+    "name" : "MessageBroker",
+    "values" : [ {
+      "id" : "67",
+      "text" : "Kafka"
+    } ]
+  }, {
+    "id" : "73",
+    "name" : "ServiceDiscovery",
+    "values" : [ {
+      "id" : "74",
+      "text" : "Eureka"
+    } ]
+  }, {
+    "id" : "82",
+    "name" : "CircuitBreaker",
+    "values" : [ {
+      "id" : "83",
+      "text" : "Hystrix"
+    } ]
+  }, {
+    "id" : "93",
+    "name" : "AuthorizationServer",
+    "values" : [ {
+      "id" : "94",
+      "text" : "SpringOAuth2"
+    } ]
+  }, {
+    "id" : "121",
+    "name" : "ConsumerTopic",
+    "values" : [ {
+      "id" : "122",
+      "text" : "todomail"
+    } ]
+  }, {
+    "id" : "134",
+    "name" : "ProducerTopic",
+    "values" : [ {
+      "id" : "135",
+      "text" : "todomail"
+    } ]
+  }, {
+    "id" : "147",
+    "name" : "LoadBalancer",
+    "values" : [ {
+      "id" : "148",
+      "text" : "Ribbon"
+    } ]
+  } ],
+  "mode" : "edit",
+  "constraints" : [ ]
+}
