@@ -21,54 +21,57 @@ public class Node {
     private List<AbstractVertex<?>> previous;
     private Map<Pin, Flow> pinFlowMap;
     private Map<Pin, DFDVertex> pinDFDVertexMap;
-    
-    public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg, Constraint constraint){
+
+    public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg, Constraint constraint) {
         this.tfg = tfg;
-        
+
         if (constraint != null)
             violatingConstraints.add(constraint);
-        
+
         name = vertex.getReferencedElement()
                 .getId();
-        
+
         isForwarding = determineForwarding(vertex);
-        
+
         previous = vertex.getPreviousElements();
-        
+
         pinFlowMap = vertex.getPinFlowMap();
-        
+
         pinDFDVertexMap = vertex.getPinDFDVertexMap();
-        
+
     }
-    
-    
-    public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg){
-        this ( vertex, tfg, null);
+
+    public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg) {
+        this(vertex, tfg, null);
     }
-    
+
     public boolean determineForwarding(DFDVertex vertex) {
-        var assignments = vertex.getReferencedElement().getBehavior().getAssignment();
+        var assignments = vertex.getReferencedElement()
+                .getBehavior()
+                .getAssignment();
         for (var assignment : assignments) {
-            if (assignment.getClass().toString().contains("Forwarding"))
+            if (assignment.getClass()
+                    .toString()
+                    .contains("Forwarding"))
                 return true;
-        }        
+        }
         return false;
     }
-    
+
     public List<AbstractVertex<?>> getPrevious() {
         return previous;
     }
-    
-    public List<Mitigation> getpossibleMitigations(){
+
+    public List<Mitigation> getpossibleMitigations() {
         List<Mitigation> mitigations = new ArrayList<>();
         for (var constraint : violatingConstraints) {
             for (var mitigation : constraint.getMitigations()) {
                 switch (mitigation.type) {
                     case Node -> {
-                        List<Mitigation> req= new ArrayList<>();
-                        for(var r : mitigation.required)
+                        List<Mitigation> req = new ArrayList<>();
+                        for (var r : mitigation.required)
                             req.add(new Mitigation(new Term(this.name, r.label), r.cost, List.of()));
-                        
+
                         mitigations.add(new Mitigation(new Term(this.name, mitigation.label), mitigation.cost, req));
                     }
                     case Data -> {
@@ -77,34 +80,42 @@ public class Node {
                 }
             }
         }
-        
+
         return mitigations;
     }
-    
-    private List<Mitigation> getDataMitigations(MitigationStrategy mitigation){
+
+    private List<Mitigation> getDataMitigations(MitigationStrategy mitigation) {
         List<Mitigation> mitigations = new ArrayList<>();
-        
+
         for (var vertex : previous) {
             Node node = new Node((DFDVertex) vertex, tfg);
-            List<Mitigation> req= new ArrayList<>();
-            for(var r : mitigation.required)
+            List<Mitigation> req = new ArrayList<>();
+            for (var r : mitigation.required)
                 req.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(r.label.label())), r.cost, List.of()));
-            mitigations.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())), mitigation.cost, req));
-            
+            mitigations.add(
+                    new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())), mitigation.cost, req));
+
             if (node.isForwarding) {
-                //need to discuss whether forwarding should be prioritized or not & if the user should decide
+                // need to discuss whether forwarding should be prioritized or not & if the user should decide
                 mitigations.addAll(node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost, MitigationType.Data)));
             }
         }
-        
+
         return mitigations;
     }
+
     private String getOutpin(DFDVertex vertex) {
-        Pin pin = pinDFDVertexMap.entrySet().stream()
-        .filter(e -> e.getValue().equals(vertex)).map(Map.Entry::getKey).findFirst().get();
-        
+        Pin pin = pinDFDVertexMap.entrySet()
+                .stream()
+                .filter(e -> e.getValue()
+                        .equals(vertex))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .get();
+
         var flow = pinFlowMap.get(pin);
-        
-        return flow.getSourcePin().getId();
+
+        return flow.getSourcePin()
+                .getId();
     }
 }

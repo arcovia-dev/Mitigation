@@ -9,12 +9,7 @@ import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.ilp.Constraint;
-import dev.arcovia.mitigation.ilp.MitigationType;
-import dev.arcovia.mitigation.ilp.MitigationStrategy;
 import dev.arcovia.mitigation.ilp.OptimizationManager;
-import dev.arcovia.mitigation.sat.IncomingDataLabel;
-import dev.arcovia.mitigation.sat.Label;
 
 public class BasicTest {
     private final String MinDFD = "models/mindfd.json";
@@ -25,17 +20,18 @@ public class BasicTest {
             .toVertex()
             .withCharacteristic("Location", "nonEU")
             .create();
-    
+
     @Test
-    public void minTest(){
+    public void minTest() {
         var optimization = new OptimizationManager(MinDFD, List.of(constraint));
-        
+
         var result = optimization.repair();
-        
+
         var dfdConverter = new DFD2WebConverter();
-        dfdConverter.convert(result).save("models/" ,"mindfd-repaired.json");
-        
+        dfdConverter.convert(result)
+                .save("models/", "mindfd-repaired.json");
+
         assertTrue(optimization.isViolationFree(result, List.of(constraint)));
     }
-    
+
 }

@@ -3,7 +3,6 @@ package dev.arcovia.mitigation.ilp.tests;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
@@ -14,7 +13,6 @@ import org.dataflowanalysis.examplemodels.TuhhModels;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.ilp.Constraint;
 import dev.arcovia.mitigation.ilp.OptimizationManager;
 import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.ModelCostCalculator;
@@ -91,54 +89,52 @@ public class TUHH_Test {
             .withCharacteristic("Stereotype", "local_logging")
             .withoutCharacteristic("Stereotype", "log_sanitization")
             .create();
-    
-    final List<AnalysisConstraint> analysisConstraints = List.of(entryViaGatewayOnly,
-            nonInternalGateway, authenticatedRequest,transformedEntry
-            , tokenValidation, loginAttempts, encryptedEntry,encryptedInternals
-            ,localLogging,logSanitization);
-    
+
+    final List<AnalysisConstraint> analysisConstraints = List.of(entryViaGatewayOnly, nonInternalGateway, authenticatedRequest, transformedEntry,
+            tokenValidation, loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
+
     @Test
     public void main() throws StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
         List<Long> scalabilityValues = new ArrayList<>();
-        
+
         for (var model : tuhhModels.keySet()) {
             for (int variant : tuhhModels.get(model)) {
                 String name = model + "_" + variant;
 
                 System.out.println(name);
-                
+
                 DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
-                
+
                 var optimization = new OptimizationManager(dfd, analysisConstraints);
-                
+
                 long startTime = System.currentTimeMillis();
                 var result = optimization.repair();
                 long endTime = System.currentTimeMillis();
-                
-                scalabilityValues.add(endTime-startTime);
-                
+
+                scalabilityValues.add(endTime - startTime);
+
                 var dfdConverter = new DFD2WebConverter();
-                dfdConverter.convert(result).save("models/" ,"temp-repaired.json");
-                
+                dfdConverter.convert(result)
+                        .save("models/", "temp-repaired.json");
+
                 assertTrue(optimization.isViolationFree(result, analysisConstraints));
             }
         }
         System.out.println(scalabilityValues);
     }
-    
+
     final Map<Label, Integer> minCosts = Map.ofEntries(entry(new Label("Stereotype", "gateway"), 1),
             entry(new Label("Stereotype", "authenticated_request"), 1), entry(new Label("Stereotype", "transform_identity_representation"), 1),
             entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 1),
             entry(new Label("Stereotype", "encrypted_connection"), 1), entry(new Label("Stereotype", "log_sanitization"), 1),
             entry(new Label("Stereotype", "local_logging"), 1));
-    
+
     @Test
     public void efficiencyTest() throws StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
         List<String> modelRepairMoreExpensive = new ArrayList<>();
-        
-        
+
         for (var model : tuhhModels.keySet()) {
             if (!tuhhModels.get(model)
                     .contains(0))
@@ -160,28 +156,29 @@ public class TUHH_Test {
                 };
                 if (constraint == null)
                     continue;
-                
+
                 DataFlowDiagramAndDictionary dfd = loadDFD(model, model + "_0");
                 System.out.println("Comparing to " + model + "_" + variant);
-                
+
                 var optimization = new OptimizationManager(dfd, constraint);
-                
+
                 var repairedDfd = optimization.repair();
-                
+
                 var dfdConverter = new DFD2WebConverter();
                 dfdConverter.convert(repairedDfd)
-                .save("efficencyTest/", model + "_" + variant + "-repaired.json");
-                
+                        .save("efficencyTest/", model + "_" + variant + "-repaired.json");
+
                 List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
                 for (var cons : constraint) {
                     var translation = new CNFTranslation(cons);
-                    dev.arcovia.mitigation.sat.Constraint c  = translation.constructCNF().get(0);
+                    dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF()
+                            .get(0);
                     satConstraint.add(c);
                 }
-                
+
                 var ilpCost = optimization.getCost();
                 var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts).calculateCost();
-                
+
                 System.out.println(ilpCost + " <= " + tuhhCost + " : " + (ilpCost <= tuhhCost));
                 if (ilpCost > tuhhCost) {
                     modelRepairMoreExpensive.add(model + "_" + variant);
@@ -189,29 +186,29 @@ public class TUHH_Test {
             }
         }
         System.out.println(modelRepairMoreExpensive);
-        
+
     }
-    
-    
+
+    @Disabled
     @Test
     public void runSpecific() throws StandaloneInitializationException {
         String model = "jferrater";
         int variant = 8;
         String name = model + "_" + variant;
-       
-        
+
         DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
-        
+
         var optimization = new OptimizationManager(dfd, List.of(encryptedInternals));
-        
+
         var result = optimization.repair();
-        
+
         var dfdConverter = new DFD2WebConverter();
-        dfdConverter.convert(result).save("models/" ,"temp-repaired.json");
-        
+        dfdConverter.convert(result)
+                .save("models/", "temp-repaired.json");
+
         assertTrue(optimization.isViolationFree(result, analysisConstraints));
     }
-    
+
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
         final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
         final String location = Paths.get("scenarios", "dfd", "TUHH-Models")

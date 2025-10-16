@@ -30,57 +30,56 @@ import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.Term;
 
-
 public class OptimizationManager {
     private final DataFlowDiagramAndDictionary dfd;
-    
+
     Map<String, String> outPinToAss = new HashMap<>();
-    
+
     private final Logger logger = Logger.getLogger(OptimizationManager.class);
-    
+
     private final List<Constraint> constraints;
-     
-    private Set<Node> violatingNodes = new HashSet<>(); 
-    
+
+    private Set<Node> violatingNodes = new HashSet<>();
+
     private List<List<Mitigation>> mitigations = new ArrayList<>();
     private Set<Mitigation> allMitigations = new HashSet<>();
-    
+
     private List<Term> actions;
-    
+
     public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        this.constraints = getConstraints(constraints);        
+        this.constraints = getConstraints(constraints);
     }
-    
+
     public OptimizationManager(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
         this.dfd = dfd;
-        this.constraints = getConstraints(constraints);        
+        this.constraints = getConstraints(constraints);
     }
-    
-    public DataFlowDiagramAndDictionary repair(){
+
+    public DataFlowDiagramAndDictionary repair() {
         analyseConstraints();
-        
+
         analyseDFD();
-        
-        for (var node : violatingNodes) {            
+
+        for (var node : violatingNodes) {
             addMitigations(node.getpossibleMitigations());
         }
-        
+
         var solver = new ILPSolver();
         var result = solver.solve(mitigations, allMitigations);
-        
+
         actions = getActions(result);
-        
+
         applyActions(dfd, actions);
-        
+
         return dfd;
     }
-    
+
     public int getCost() {
         return actions.size();
     }
-    
-    public boolean isViolationFree(DataFlowDiagramAndDictionary dfd,List<AnalysisConstraint> constraints) {
+
+    public boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
                 .useCustomResourceProvider(resourceProvider)
@@ -89,15 +88,16 @@ public class OptimizationManager {
         analysis.initializeAnalysis();
         var flowGraph = analysis.findFlowGraphs();
         flowGraph.evaluate();
-        
-        for(var constraint : constraints) {
+
+        for (var constraint : constraints) {
             List<DSLResult> results = constraint.findViolations(flowGraph);
-            if (!results.isEmpty()) return false;
-        }    
+            if (!results.isEmpty())
+                return false;
+        }
         return true;
     }
-    
-    private List<Term> getActions (List<Mitigation> result){
+
+    private List<Term> getActions(List<Mitigation> result) {
         List<Mitigation> additoonal = new ArrayList<>();
         for (var mit : result) {
             additoonal.addAll(mit.required());
@@ -109,9 +109,9 @@ public class OptimizationManager {
         }
         return actions;
     }
-    
+
     private void analyseConstraints() {
-        for (var constraint: constraints) {
+        for (var constraint : constraints) {
             for (var mitigation : constraint.getMitigations()) {
                 var additionalMitigations = getAdditionalMitigations(mitigation.label);
                 if (additionalMitigations != null) {
@@ -120,36 +120,37 @@ public class OptimizationManager {
             }
         }
     }
-    
+
     private List<MitigationStrategy> getAdditionalMitigations(CompositeLabel label) {
-        for (var constraint: constraints) {
-            if (constraint.isPrecondition(label)) return constraint.getMitigations();
+        for (var constraint : constraints) {
+            if (constraint.isPrecondition(label))
+                return constraint.getMitigations();
         }
         return null;
     }
-    
+
     private void addMitigations(List<Mitigation> mitigation) {
-        //done to prevent having the same Mitigation twice by replacing duplicates with the original/first appearance              
+        // done to prevent having the same Mitigation twice by replacing duplicates with the original/first appearance
         List<Mitigation> merged = mitigation.stream()
                 .map(u -> allMitigations.stream()
                         .filter(u::equals)
                         .findFirst()
                         .orElse(u))
-                        .collect(Collectors.toList());
-        
+                .collect(Collectors.toList());
+
         mitigations.add(merged);
         allMitigations.addAll(merged);
     }
-    
+
     private List<Constraint> getConstraints(List<AnalysisConstraint> constraints) {
         List<Constraint> constraintList = new ArrayList<>();
-        
-        for(var constraint : constraints)
+
+        for (var constraint : constraints)
             constraintList.add(new Constraint(constraint));
-        
+
         return constraintList;
     }
-    
+
     private void analyseDFD() {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
@@ -159,17 +160,17 @@ public class OptimizationManager {
         analysis.initializeAnalysis();
         var flowGraph = analysis.findFlowGraphs();
         flowGraph.evaluate();
-        
-        for(var constraint : constraints) {
+
+        for (var constraint : constraints) {
             List<DSLResult> results = constraint.dsl.findViolations(flowGraph);
-            for( var result : results) {
+            for (var result : results) {
                 var tfg = result.getTransposeFlowGraph();
                 for (var vertex : result.getMatchedVertices())
                     violatingNodes.add(new Node((DFDVertex) vertex, tfg, constraint));
             }
-        }        
+        }
     }
-    
+
     private void applyActions(DataFlowDiagramAndDictionary dfd, List<Term> actions) {
         deriveOutPinsToAssignmentsMap(dfd);
         var dd = dfd.dataDictionary();
@@ -197,7 +198,7 @@ public class OptimizationManager {
                             }
                             if (assignment instanceof SetAssignment cast) {
                                 cast.getOutputLabels()
-                                .add(label);
+                                        .add(label);
                             }
                             if (assignment instanceof ForwardingAssignment) {
                                 var ddFactory = datadictionaryFactory.eINSTANCE;
@@ -285,7 +286,7 @@ public class OptimizationManager {
         }
         return label;
     }
-    
+
     private void deriveOutPinsToAssignmentsMap(DataFlowDiagramAndDictionary dfd) {
         for (var node : dfd.dataFlowDiagram()
                 .getNodes()) {
