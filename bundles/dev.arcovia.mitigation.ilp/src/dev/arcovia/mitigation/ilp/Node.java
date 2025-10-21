@@ -14,6 +14,7 @@ import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import dev.arcovia.mitigation.sat.Term;
 
 public class Node {
+    private final double Epsilon = 0.01; 
     private final String name;
     private List<Constraint> violatingConstraints = new ArrayList<>();
     protected AbstractTransposeFlowGraph tfg;
@@ -96,8 +97,8 @@ public class Node {
                     new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())), mitigation.cost, req));
 
             if (node.isForwarding) {
-                // need to discuss whether forwarding should be prioritized or not & if the user should decide
-                mitigations.addAll(node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost, MitigationType.Data)));
+                // need to discuss whether forwarding should be prioritized or not & if the user should decide --> Impact set
+                mitigations.addAll(node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost-Epsilon, MitigationType.Data)));
             }
         }
 

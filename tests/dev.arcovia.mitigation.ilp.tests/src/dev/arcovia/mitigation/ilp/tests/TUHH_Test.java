@@ -176,9 +176,15 @@ public class TUHH_Test {
                     satConstraint.add(c);
                 }
 
-                var ilpCost = optimization.getCost();
-                var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts).calculateCost();
-
+                var ilpCost = new ModelCostCalculator(repairedDfd, satConstraint, minCosts).calculateCostWithoutForwarding();
+                var numactions = optimization.getCost();
+                
+                if (numactions < ilpCost) {
+                    System.out.println(variant + " Actions:" + numactions + " Cost: " + ilpCost);
+                }
+                
+                var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts).calculateCostWithoutForwarding();
+                
                 System.out.println(ilpCost + " <= " + tuhhCost + " : " + (ilpCost <= tuhhCost));
                 if (ilpCost > tuhhCost) {
                     modelRepairMoreExpensive.add(model + "_" + variant);
@@ -189,19 +195,29 @@ public class TUHH_Test {
 
     }
 
-    @Disabled
+    
     @Test
     public void runSpecific() throws StandaloneInitializationException {
-        String model = "jferrater";
-        int variant = 8;
+        String model = "anilallewar";
+        int variant = 0;
         String name = model + "_" + variant;
 
         DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
 
-        var optimization = new OptimizationManager(dfd, List.of(encryptedInternals));
+        var optimization = new OptimizationManager(dfd, List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway));
 
         var result = optimization.repair();
+        
+        List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
+        for (var cons : List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway)) {
+            var translation = new CNFTranslation(cons);
+            dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF()
+                    .get(0);
+            satConstraint.add(c);
+        }
 
+        var ilpCost = new ModelCostCalculator(result, satConstraint, minCosts).calculateCostWithoutForwarding();
+        
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(result)
                 .save("models/", "temp-repaired.json");
