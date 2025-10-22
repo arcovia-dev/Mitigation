@@ -41,6 +41,7 @@ public class Sat {
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
+    private boolean subsumptionOf;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the
@@ -55,11 +56,12 @@ public class Sat {
      * @throws TimeoutException if the solver exceeds the allocated time without finding a solution.
      * @throws IOException if an error occurs during file writing operations.
      */
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean subsumptionOf)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
         this.constraints = constraints;
+        this.subsumptionOf = subsumptionOf;
 
         termToLiteral = new BiMap<>();
         flowToLiteral = new BiMap<>();
@@ -109,20 +111,24 @@ public class Sat {
                     .toList();
 
             // Store unique solutions
-            if (!solutions.contains(deltaTerms)) {
+            if (!solutions.contains(deltaTerms) || subsumptionOf) {
                 solutions.add(deltaTerms);
             }
 
             // Prohibit current solution
             var negated = new VecInt();
+          
             for (var literal : deltaTerms) {
                 negated.push(-termToLiteral.getValue(literal));
             }
-            if (!negated.isEmpty()) {
+            
+            if (!negated.isEmpty()&& !subsumptionOf)
                 addClause(negated);
-            }
 
+            
             if (solutions.size() > 10000) {
+                if (subsumptionOf) return solutions;
+                
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
         }
