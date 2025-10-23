@@ -186,25 +186,32 @@ public class TUHHTest {
         System.out.println("Put these into violations.py");
         System.out.println(violationsBefore);
         System.out.println(violationsAfter);
+        
+        double averageRuntime = scalabilityValues.stream()
+                .mapToDouble(s -> s.runtimeInMilliseconds())
+                .average()
+                .orElse(0.0);
+        
+        System.out.println(averageRuntime);
 
         assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_7"));
     }
 
-    @Disabled
+    
     @Test
     void specificTUHHTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var dfdConverter = new DFD2WebConverter();
-        String model = "mudigal-technologies";
-        int variant = 7;
+        String model = "koushikkothagal";
+        int variant = 0;
 
         String name = model + "_" + variant;
         dfdConverter.convert(loadDFD(model, name))
                 .save("testresults/", "specific_" + name + "-repaired.json");
 
-        var repairedDfdCosts = runRepair(model, name, true, constraints, costs).repairedDfd();
+        var repairedDfdCosts = runRepair(model, name, true, List.of(entryViaGatewayOnly, nonInternalGateway), costs).repairedDfd();
         dfdConverter.convert(repairedDfdCosts)
                 .save("testresults/", "specific_" + name + "-repaired.json");
-        assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraints));
+        assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, List.of(entryViaGatewayOnly, nonInternalGateway)));
     }
 
     private int extractClauseCount(String filePath) throws IOException {
@@ -229,7 +236,7 @@ public class TUHHTest {
         var dfd = loadDFD(model, name);
         if (!store)
             name = "aName";
-        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap);
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap, true, true);
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
