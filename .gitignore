@@ -73,5 +73,6 @@ xtend-gen/
 
 tests/dev.arcovia.mitigation.sat.tests/testresults/*.json
 tests/dev.arcovia.mitigation.sat.tests/efficencyTest/*.json
+tests/dev.arcovia.mitigation.ilp.tests/efficencyTest/*.json
 !*literalMapping.json
 *.lp
