@@ -19,17 +19,13 @@ import com.google.ortools.linearsolver.MPVariable;
 public class ILPSolver {
     private BiMap<MPVariable, Mitigation> mitigationMap = new BiMap<>();
 
-    public ILPSolver() {
-
-    }
-
     public List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations) {
         Loader.loadNativeLibraries();
         MPSolver solver = MPSolver.createSolver("CBC_MIXED_INTEGER_PROGRAMMING");
 
-        for (Mitigation m : allMitigations) {
-            MPVariable var = solver.makeIntVar(0, 1, m.toString());
-            mitigationMap.put(var, m);
+        for (Mitigation mitigation : allMitigations) {
+            MPVariable var = solver.makeIntVar(0, 1, mitigation.toString());
+            mitigationMap.put(var, mitigation);
         }
         Integer counter = 0;
         for (var constraint : mitigations) {
@@ -41,13 +37,13 @@ public class ILPSolver {
             }
         }
 
-        MPObjective obj = solver.objective();
+        MPObjective objective = solver.objective();
 
         for (var mitigation : allMitigations) {
-            obj.setCoefficient(mitigationMap.getKey(mitigation), mitigation.cost());
+        	objective.setCoefficient(mitigationMap.getKey(mitigation), mitigation.cost());
         }
 
-        obj.setMinimization();
+        objective.setMinimization();
 
         String lpModel = solver.exportModelAsLpFormat(false);
         try (FileWriter writer = new FileWriter("model.lp")) {

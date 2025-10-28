@@ -49,7 +49,7 @@ public class Constraint {
                 .get(0)
                 .literals();
 
-        List<MitigationStrategy> mit = new ArrayList<>();
+        List<MitigationStrategy> mitigations = new ArrayList<>();
 
         for (var lit : literals) {
             if (lit.positive()) {
@@ -61,11 +61,11 @@ public class Constraint {
                 else
                     type = MitigationType.Data;
 
-                mit.add(new MitigationStrategy(lit.compositeLabel(), 1, type));
+                mitigations.add(new MitigationStrategy(lit.compositeLabel(), 1, type));
             }
         }
 
-        return mit;
+        return mitigations;
     }
 
 }

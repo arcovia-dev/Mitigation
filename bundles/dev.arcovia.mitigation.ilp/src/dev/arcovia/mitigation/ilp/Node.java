@@ -63,17 +63,13 @@ public class Node {
         return previous;
     }
 
-    public List<Mitigation> getpossibleMitigations() {
+    public List<Mitigation> getPossibleMitigations() {
         List<Mitigation> mitigations = new ArrayList<>();
         for (var constraint : violatingConstraints) {
             for (var mitigation : constraint.getMitigations()) {
                 switch (mitigation.type) {
                     case Node -> {
-                        List<Mitigation> req = new ArrayList<>();
-                        for (var r : mitigation.required)
-                            req.add(new Mitigation(new Term(this.name, r.label), r.cost, List.of()));
-
-                        mitigations.add(new Mitigation(new Term(this.name, mitigation.label), mitigation.cost, req));
+                        mitigations.add(new Mitigation(new Term(this.name, mitigation.label), mitigation.cost, getAllRequiredMitigations(mitigation)));
                     }
                     case Data -> {
                         mitigations.addAll(getDataMitigations(mitigation));
@@ -90,11 +86,9 @@ public class Node {
 
         for (var vertex : previous) {
             Node node = new Node((DFDVertex) vertex, tfg);
-            List<Mitigation> req = new ArrayList<>();
-            for (var r : mitigation.required)
-                req.add(new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(r.label.label())), r.cost, List.of()));
+            
             mitigations.add(
-                    new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())), mitigation.cost, req));
+                    new Mitigation(new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())), mitigation.cost, getAllRequiredMitigations(mitigation)));
 
             if (node.isForwarding) {
                 // need to discuss whether forwarding should be prioritized or not & if the user should decide --> Impact set
@@ -103,6 +97,14 @@ public class Node {
         }
 
         return mitigations;
+    }
+    
+    private List<Mitigation> getAllRequiredMitigations(MitigationStrategy mitigation){
+    	List<Mitigation> requiredMitgations = new ArrayList<>();
+        for (var requiredMitgation : mitigation.required)
+        	requiredMitgations.add(new Mitigation(new Term(this.name, requiredMitgation.label), requiredMitgation.cost, getAllRequiredMitigations(requiredMitgation)));
+        
+        return requiredMitgations;
     }
 
     private String getOutpin(DFDVertex vertex) {

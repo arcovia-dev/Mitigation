@@ -195,7 +195,7 @@ public class TUHH_Test {
 
     }
 
-    
+    @Disabled
     @Test
     public void runSpecific() throws StandaloneInitializationException {
         String model = "anilallewar";

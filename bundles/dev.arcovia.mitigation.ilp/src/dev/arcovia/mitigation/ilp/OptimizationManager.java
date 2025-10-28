@@ -33,7 +33,7 @@ import dev.arcovia.mitigation.sat.Term;
 public class OptimizationManager {
     private final DataFlowDiagramAndDictionary dfd;
 
-    Map<String, String> outPinToAss = new HashMap<>();
+    Map<String, String> outPinToAssignmentMap = new HashMap<>();
 
     private final Logger logger = Logger.getLogger(OptimizationManager.class);
 
@@ -62,7 +62,7 @@ public class OptimizationManager {
         analyseDFD();
 
         for (var node : violatingNodes) {
-            addMitigations(node.getpossibleMitigations());
+            addMitigations(node.getPossibleMitigations());
         }
 
         var solver = new ILPSolver();
@@ -98,11 +98,11 @@ public class OptimizationManager {
     }
 
     private List<Term> getActions(List<Mitigation> result) {
-        List<Mitigation> additoonal = new ArrayList<>();
+        List<Mitigation> additional = new ArrayList<>();
         for (var mit : result) {
-            additoonal.addAll(mit.required());
+        	additional.addAll(mit.required());
         }
-        result.addAll(additoonal);
+        result.addAll(additional);
         List<Term> actions = new ArrayList<>();
         for (var mit : result) {
             actions.add(mit.mitigation());
@@ -183,7 +183,7 @@ public class OptimizationManager {
                     List<Assignment> newAssignments = new ArrayList<>();
                     for (var assignment : behavior.getAssignment()) {
                         if (assignment.getId()
-                                .equals(outPinToAss.get(action.domain()))) {
+                                .equals(outPinToAssignmentMap.get(action.domain()))) {
                             var type = action.compositeLabel()
                                     .label()
                                     .type();
@@ -293,7 +293,7 @@ public class OptimizationManager {
             for (var assignment : node.getBehavior()
                     .getAssignment()) {
                 var outPin = assignment.getOutputPin();
-                outPinToAss.put(outPin.getId(), assignment.getId());
+                outPinToAssignmentMap.put(outPin.getId(), assignment.getId());
             }
         }
     }
