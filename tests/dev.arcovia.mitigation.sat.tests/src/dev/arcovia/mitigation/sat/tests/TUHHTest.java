@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -73,8 +74,6 @@ public class TUHHTest {
             entry(new Label("Stereotype", "login_attempts_regulation"), 4), entry(new Label("Stereotype", "encrypted_connection"), 5),
             entry(new Label("Stereotype", "log_sanitization"), 3), entry(new Label("Stereotype", "local_logging"), 2));
     
-    final List<Boolean> complexityReductions = List.of(false, false, false, false);
-
     /*
      * Returns a shallow copy of the constraint list
      */
@@ -121,6 +120,49 @@ public class TUHHTest {
     }
 
     private record Scalability(int amountClause, long runtimeInMilliseconds) {
+    }
+    
+    @Test
+    public void complexityTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
+        var tuhhModels = TuhhModels.getTuhhModels();
+        
+        Map<String,List<Scalability>> complexityValues = new HashMap<>();
+
+        for (boolean deactivateSubsumption : new boolean[]{false}) {
+            for (boolean deactivateViolating : new boolean[]{false, true}) {
+                for (boolean deactivateOnlyRepairingLabels : new boolean[]{false}) {
+                    for (boolean deactivateMinDFD : new boolean[]{false}) {
+
+                        var complexityReductions = List.of(deactivateSubsumption,deactivateViolating,deactivateOnlyRepairingLabels,deactivateMinDFD);
+                       
+                        
+                        List<Scalability> scalabilityValues = new ArrayList<>();
+                        
+                        for (var model : tuhhModels.keySet()) {
+                            for (int variant : tuhhModels.get(model)) {
+                                
+                                String name = model + "_" + variant;
+                                
+
+                                System.out.println(name);
+
+                                var repairResult = runRepair(model, name, variant == 0, constraints, costs, complexityReductions);
+                                var repairedDfdCosts = repairResult.repairedDfd();
+
+                                int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
+                                scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
+                         
+                                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraints));
+                            }
+                        }
+                        
+                        complexityValues.put(complexityReductions.stream().map(b -> b ? "1" : "0").collect(Collectors.joining()), scalabilityValues);
+                    }
+                }
+            }
+        }
+        
+        System.out.println(complexityValues);
     }
 
     @Test
@@ -232,6 +274,19 @@ public class TUHHTest {
         if (!store)
             name = "aName";
         Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap);
+        long startTime = System.currentTimeMillis();
+        var repairedDfd = mechanic.repair();
+        long endTime = System.currentTimeMillis();
+        int violationsAfter = new Mechanic(repairedDfd, null, null).amountOfViolations(repairedDfd, constraints);
+        return new RepairResult(repairedDfd, mechanic.getViolations(), violationsAfter, endTime - startTime);
+    }
+    
+    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints, Map<Label, Integer> costMap, List<Boolean> complexityReductions)
+            throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
+        var dfd = loadDFD(model, name);
+        if (!store)
+            name = "aName";
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap, complexityReductions);
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
