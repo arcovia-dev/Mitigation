@@ -247,7 +247,7 @@ public class Sat {
                         .map(Flow::sink)
                         .toList();
                 for (InPin sinkPin : relevantInPins) {
-                    for (Label label : labels) {
+                    for (Label label : getConstraintLabels()) {
                         var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
                         var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label));
 
@@ -367,7 +367,10 @@ public class Sat {
     }
 
     private void extractConstraintLabels() {
-    	if (allLabels != null) labels = (Set<Label>) allLabels;
+    	if (allLabels != null) {
+    		labels = (Set<Label>) allLabels;
+    		return;
+    	}
         labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
@@ -375,6 +378,17 @@ public class Sat {
                         .label());
             }
         }
+    }
+    
+    private Set<Label> getConstraintLabels(){
+    	Set<Label> labels = new HashSet<>();
+        for (Constraint constraint : constraints) {
+            for (Literal literal : constraint.literals()) {
+                labels.add(literal.compositeLabel()
+                        .label());
+            }
+        }
+        return labels;
     }
 
     private VecInt clause(int... literals) {

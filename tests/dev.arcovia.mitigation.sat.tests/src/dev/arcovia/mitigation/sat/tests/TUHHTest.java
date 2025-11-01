@@ -129,8 +129,8 @@ public class TUHHTest {
         Map<String,List<Scalability>> complexityValues = new HashMap<>();
 
         for (boolean deactivateSubsumption : new boolean[]{false}) {
-            for (boolean deactivateViolating : new boolean[]{false, true}) {
-                for (boolean deactivateOnlyRepairingLabels : new boolean[]{false}) {
+            for (boolean deactivateViolating : new boolean[]{false}) {
+                for (boolean deactivateOnlyRepairingLabels : new boolean[]{false,true}) {
                     for (boolean deactivateMinDFD : new boolean[]{false}) {
 
                         var complexityReductions = List.of(deactivateSubsumption,deactivateViolating,deactivateOnlyRepairingLabels,deactivateMinDFD);
@@ -140,19 +140,34 @@ public class TUHHTest {
                         
                         for (var model : tuhhModels.keySet()) {
                             for (int variant : tuhhModels.get(model)) {
+                            	String name = model + "_" + variant;
                                 
-                                String name = model + "_" + variant;
-                                
-
                                 System.out.println(name);
-
-                                var repairResult = runRepair(model, name, variant == 0, constraints, costs, complexityReductions);
-                                var repairedDfdCosts = repairResult.repairedDfd();
-
-                                int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
-                                scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
-                         
-                                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraints));
+                                
+                            	for (int i : List.of(1,2,4,5,7,8,10,11)) {
+	                            	List<Constraint> constraint = switch (i) {
+	                                case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
+	                                case 2 -> List.of(authenticatedRequest);
+	                                case 4 -> List.of(transformedEntry);
+	                                case 5 -> List.of(tokenValidation);
+	                                case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
+	                                case 8 -> List.of(encryptedInternals);
+	                                case 10 -> List.of(localLogging);
+	                                case 11 -> List.of(localLogging, logSanitization);
+	                                default -> null;
+	                            	};
+	                            	
+	                            	if (constraint == null || i == variant)
+	                            		continue;
+	
+	                                var repairResult = runRepair(model, name, variant == 0, constraint, costs, complexityReductions);
+	                                var repairedDfdCosts = repairResult.repairedDfd();
+	
+	                                int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
+	                                scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
+	                         
+	                                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraint));
+                            	}
                             }
                         }
                         

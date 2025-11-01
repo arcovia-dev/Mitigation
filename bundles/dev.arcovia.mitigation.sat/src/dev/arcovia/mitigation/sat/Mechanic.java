@@ -1,5 +1,7 @@
 package dev.arcovia.mitigation.sat;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -160,6 +162,10 @@ public class Mechanic {
         // If there are no violations repairs are not needed
         if(violatingTFGs.isEmpty()){
             logger.warn("Analysis has no violations found in DFD");
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(("testresults/" + dfdName + ".cnf")))) {
+                writer.write("p cnf " + 0 + " " + 0);
+                writer.newLine();
+            }
             return dfd;
         }
         
@@ -170,12 +176,6 @@ public class Mechanic {
         
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
-
-        // If there are no violations repairs are not needed
-        if (nodes.isEmpty()) {
-            logger.warn("Analysis has no violations found in DFD");
-            return dfd;
-        }
         
         Set<Label> allLabels = null;
         
