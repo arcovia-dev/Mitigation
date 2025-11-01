@@ -73,7 +73,7 @@ public class TUHHTest {
             entry(new Label("Stereotype", "login_attempts_regulation"), 4), entry(new Label("Stereotype", "encrypted_connection"), 5),
             entry(new Label("Stereotype", "log_sanitization"), 3), entry(new Label("Stereotype", "local_logging"), 2));
     
-    final List<Boolean> complexityReductions = List.of(false, false, false, true);
+    final List<Boolean> complexityReductions = List.of(false, false, false, false);
 
     /*
      * Returns a shallow copy of the constraint list
