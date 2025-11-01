@@ -40,13 +40,15 @@ public class Mechanic {
     private final DataFlowDiagramAndDictionary dfd;
     private final List<Constraint> constraints;
     private final Map<Label, Integer> costs;
-    private final List<Node> nodes;
-    private final List<Flow> flows;
+    private List<Node> nodes;
+    private List<Flow> flows;
     private final String dfdName;
     private int violations = 0;
     
-    private boolean subsumptionOf = false;
-    private boolean violatingOf = false;
+    private boolean deactivateSubsumption = false;
+    private boolean deactivateViolating = false;
+    private boolean deactivateOnlyRepairingLabels = false;
+    private boolean deactivateMinDFD = false;
     
     private final Logger logger = Logger.getLogger(Mechanic.class);
     
@@ -61,15 +63,17 @@ public class Mechanic {
      * @param constraints the list of constraints to be applied to the DFD
      * @param costs the map associating labels with their respective integer costs
      */
-    public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints, Map<Label, Integer> costs, boolean subsumptionOf, boolean violatingOf) {
+    public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints, Map<Label, Integer> costs, List<Boolean> complexityReductions) {
         this.dfd = dfd;
         this.dfdName = dfdName;
         this.constraints = constraints;
         this.costs = costs;
         this.nodes = new ArrayList<>();
         this.flows = new ArrayList<>();
-        this.subsumptionOf = subsumptionOf;
-        this.violatingOf = violatingOf;
+        this.deactivateSubsumption = complexityReductions.get(0);
+        this.deactivateViolating = complexityReductions.get(1);
+        this.deactivateOnlyRepairingLabels = complexityReductions.get(2);
+        this.deactivateMinDFD = complexityReductions.get(3);
     }
     
     
@@ -149,22 +153,37 @@ public class Mechanic {
     public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
         
-        if (!violatingTFGs.isEmpty() && this.violatingOf) {
+        if (!violatingTFGs.isEmpty() && this.deactivateViolating) {
             violatingTFGs = getAllTFGs(dfd);
+        }
+
+        // If there are no violations repairs are not needed
+        if(violatingTFGs.isEmpty()){
+            logger.warn("Analysis has no violations found in DFD");
+            return dfd;
         }
         
         deriveOutPinsToAssignmentsMap(dfd);
 
+        if (deactivateMinDFD)
+        	return TFGBasedRepair(violatingTFGs);
+        
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
 
-        // IF there are no violations repairs are not needed
+        // If there are no violations repairs are not needed
         if (nodes.isEmpty()) {
             logger.warn("Analysis has no violations found in DFD");
             return dfd;
         }
+        
+        Set<Label> allLabels = null;
+        
+        if (deactivateOnlyRepairingLabels) {
+        	allLabels = getAllLabels();
+        }
 
-        var solutions = new Sat().solve(nodes, flows, constraints, dfdName, subsumptionOf);
+        var solutions = new Sat().solve(nodes, flows, constraints, dfdName, deactivateSubsumption, allLabels);
         List<Term> flatendNodes = getFlatNodes(nodes);
 
         List<Term> chosenSolution = getChosenSolution(solutions, flatendNodes);
@@ -210,6 +229,53 @@ public class Mechanic {
      */
     public int getViolations() {
         return violations;
+    }
+    
+    private DataFlowDiagramAndDictionary TFGBasedRepair(List<AbstractTransposeFlowGraph> violatingTFGs) throws ContradictionException, TimeoutException, IOException {
+    	Set<Term> ALLsolutions = new HashSet<>();
+    	
+    	for (var tfg : violatingTFGs) {
+    		getNodesAndFlows(List.of(tfg));
+            sortNodesAndFlows();
+            
+            Set<Label> allLabels = null;
+            
+            if (deactivateOnlyRepairingLabels) {
+            	allLabels = getAllLabels();
+            }
+            
+            var solutions = new Sat().solve(nodes, flows, constraints, dfdName, deactivateSubsumption, allLabels);
+            List<Term> flatendNodes = getFlatNodes(nodes);
+
+            ALLsolutions.addAll(getChosenSolution(solutions, flatendNodes));
+
+    	}
+    	getNodesAndFlows(violatingTFGs);
+        sortNodesAndFlows();
+    	List<Term> flatendNodes = getFlatNodes(nodes);
+    	
+    	List<Term> solutions= new ArrayList<Term>();
+    	
+    	for (var solution : ALLsolutions) solutions.add(solution);
+        
+    	List<Term> actions = getActions(solutions, flatendNodes);
+
+        applyActions(dfd, actions);
+
+        return dfd;
+    }
+    
+    
+    
+    private Set<Label> getAllLabels(){
+    	Set<Label> labels = new HashSet<>();
+    	
+    	for (var labelType : dfd.dataDictionary().getLabelTypes()) {
+    		for (var label : labelType.getLabel()) {
+    			labels.add(new Label(labelType.getEntityName(), label.getEntityName()));
+    		}
+    	}
+    	return labels;
     }
 
     private List<Term> getChosenSolution(List<List<Term>> solutions, List<Term> flatendNodes) {

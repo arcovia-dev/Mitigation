@@ -72,6 +72,8 @@ public class TUHHTest {
             entry(new Label("Stereotype", "transform_identity_representation"), 3), entry(new Label("Stereotype", "token_validation"), 1),
             entry(new Label("Stereotype", "login_attempts_regulation"), 4), entry(new Label("Stereotype", "encrypted_connection"), 5),
             entry(new Label("Stereotype", "log_sanitization"), 3), entry(new Label("Stereotype", "local_logging"), 2));
+    
+    final List<Boolean> complexityReductions = List.of(false, false, false, true);
 
     /*
      * Returns a shallow copy of the constraint list
@@ -236,7 +238,7 @@ public class TUHHTest {
         var dfd = loadDFD(model, name);
         if (!store)
             name = "aName";
-        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap, true, true);
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap, complexityReductions);
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();

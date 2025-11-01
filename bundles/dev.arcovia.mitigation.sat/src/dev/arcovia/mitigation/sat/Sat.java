@@ -41,7 +41,8 @@ public class Sat {
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
-    private boolean subsumptionOf;
+    private boolean deactivateSubsumption;
+    private Set<Label> allLabels = null;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the
@@ -56,12 +57,13 @@ public class Sat {
      * @throws TimeoutException if the solver exceeds the allocated time without finding a solution.
      * @throws IOException if an error occurs during file writing operations.
      */
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean subsumptionOf)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean deactivateSubsumption, Set<Label> allLabel)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
         this.constraints = constraints;
-        this.subsumptionOf = subsumptionOf;
+        this.deactivateSubsumption = deactivateSubsumption;
+        this.allLabels = allLabel;
 
         termToLiteral = new BiMap<>();
         flowToLiteral = new BiMap<>();
@@ -111,7 +113,7 @@ public class Sat {
                     .toList();
 
             // Store unique solutions
-            if (!solutions.contains(deltaTerms) || subsumptionOf) {
+            if (!solutions.contains(deltaTerms) || deactivateSubsumption) {
                 solutions.add(deltaTerms);
             }
 
@@ -122,12 +124,12 @@ public class Sat {
                 negated.push(-termToLiteral.getValue(literal));
             }
             
-            if (!negated.isEmpty()&& !subsumptionOf)
+            if (!negated.isEmpty()&& !deactivateSubsumption)
                 addClause(negated);
 
             
             if (solutions.size() > 10000) {
-                if (subsumptionOf) return solutions;
+                if (deactivateSubsumption) return solutions;
                 
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
@@ -365,6 +367,7 @@ public class Sat {
     }
 
     private void extractConstraintLabels() {
+    	if (allLabels != null) labels = (Set<Label>) allLabels;
         labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
