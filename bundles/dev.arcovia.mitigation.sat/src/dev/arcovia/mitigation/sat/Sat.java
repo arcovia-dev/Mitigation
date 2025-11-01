@@ -41,6 +41,8 @@ public class Sat {
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
+    private boolean deactivateSubsumption;
+    private Set<Label> allLabels = null;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the
@@ -55,11 +57,13 @@ public class Sat {
      * @throws TimeoutException if the solver exceeds the allocated time without finding a solution.
      * @throws IOException if an error occurs during file writing operations.
      */
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean deactivateSubsumption, Set<Label> allLabel)
             throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
         this.constraints = constraints;
+        this.deactivateSubsumption = deactivateSubsumption;
+        this.allLabels = allLabel;
 
         termToLiteral = new BiMap<>();
         flowToLiteral = new BiMap<>();
@@ -109,20 +113,24 @@ public class Sat {
                     .toList();
 
             // Store unique solutions
-            if (!solutions.contains(deltaTerms)) {
+            if (!solutions.contains(deltaTerms) || deactivateSubsumption) {
                 solutions.add(deltaTerms);
             }
 
             // Prohibit current solution
             var negated = new VecInt();
+          
             for (var literal : deltaTerms) {
                 negated.push(-termToLiteral.getValue(literal));
             }
-            if (!negated.isEmpty()) {
+            
+            if (!negated.isEmpty()&& !deactivateSubsumption)
                 addClause(negated);
-            }
 
-            if (solutions.size() > 10000) {
+            
+            if (solutions.size() > 1000) {
+                if (deactivateSubsumption) return solutions;
+                
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
         }
@@ -239,7 +247,7 @@ public class Sat {
                         .map(Flow::sink)
                         .toList();
                 for (InPin sinkPin : relevantInPins) {
-                    for (Label label : labels) {
+                    for (Label label : getConstraintLabels()) {
                         var incomingFlowData = flowData(new Flow(sourcePin, sinkPin), new IncomingDataLabel(label));
                         var outgoingDataTerm = term(sourcePin.id(), new OutgoingDataLabel(label));
 
@@ -359,6 +367,10 @@ public class Sat {
     }
 
     private void extractConstraintLabels() {
+    	if (allLabels != null) {
+    		labels = (Set<Label>) allLabels;
+    		return;
+    	}
         labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
@@ -366,6 +378,17 @@ public class Sat {
                         .label());
             }
         }
+    }
+    
+    private Set<Label> getConstraintLabels(){
+    	Set<Label> labels = new HashSet<>();
+        for (Constraint constraint : constraints) {
+            for (Literal literal : constraint.literals()) {
+                labels.add(literal.compositeLabel()
+                        .label());
+            }
+        }
+        return labels;
     }
 
     private VecInt clause(int... literals) {
