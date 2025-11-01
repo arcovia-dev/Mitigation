@@ -231,7 +231,7 @@ public class TUHHTest {
         var dfd = loadDFD(model, name);
         if (!store)
             name = "aName";
-        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap, complexityReductions);
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap);
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
