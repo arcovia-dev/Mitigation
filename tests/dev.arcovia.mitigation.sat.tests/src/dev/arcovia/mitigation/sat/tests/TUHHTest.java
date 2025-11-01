@@ -189,13 +189,6 @@ public class TUHHTest {
         System.out.println(violationsBefore);
         System.out.println(violationsAfter);
         
-        double averageRuntime = scalabilityValues.stream()
-                .mapToDouble(s -> s.runtimeInMilliseconds())
-                .average()
-                .orElse(0.0);
-        
-        System.out.println(averageRuntime);
-
         assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_7"));
     }
 
