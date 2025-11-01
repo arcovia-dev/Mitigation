@@ -72,10 +72,10 @@ public class Mechanic {
         this.costs = costs;
         this.nodes = new ArrayList<>();
         this.flows = new ArrayList<>();
-        this.deactivateSubsumption = complexityReductions.get(0);
-        this.deactivateViolating = complexityReductions.get(1);
-        this.deactivateOnlyRepairingLabels = complexityReductions.get(2);
-        this.deactivateMinDFD = complexityReductions.get(3);
+        this.deactivateViolating = complexityReductions.get(0);
+        this.deactivateOnlyRepairingLabels = complexityReductions.get(1);
+        this.deactivateMinDFD = complexityReductions.get(2);
+        this.deactivateSubsumption = complexityReductions.get(3);
     }
     
     
@@ -235,6 +235,8 @@ public class Mechanic {
     	Set<Term> ALLsolutions = new HashSet<>();
     	
     	for (var tfg : violatingTFGs) {
+    		if (!checkConstraints(tfg, constraints)) continue;
+    		
     		getNodesAndFlows(List.of(tfg));
             sortNodesAndFlows();
             
