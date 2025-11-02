@@ -164,7 +164,9 @@ public class TUHHTest {
 	                                var repairedDfdCosts = repairResult.repairedDfd();
 	
 	                                int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
-	                                scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
+	                                if (amountClauses > 0 ) {
+	                                    scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
+	                                }	                                
 	                         
 	                                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraint));
                             	}
