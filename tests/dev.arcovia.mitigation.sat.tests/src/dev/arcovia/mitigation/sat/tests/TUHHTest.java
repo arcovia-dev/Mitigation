@@ -128,10 +128,10 @@ public class TUHHTest {
         
         Map<String,List<Scalability>> complexityValues = new HashMap<>();
 
-        for (boolean deactivateViolating: new boolean[]{false, true}) {
-            for (boolean deactivateOnlyRepairingLabels: new boolean[]{false,true}) {
-                for (boolean deactivateMinDFD : new boolean[]{false, true}) {
-                    for (boolean deactivateSubsumption : new boolean[]{false,true}) {
+        for (boolean deactivateViolating: new boolean[]{true, false}) {
+            for (boolean deactivateOnlyRepairingLabels: new boolean[]{true, false}) {
+                for (boolean deactivateMinDFD : new boolean[]{true, false}) {
+                    for (boolean deactivateSubsumption : new boolean[]{true, false}) {
 
                         var complexityReductions = List.of(deactivateViolating,deactivateOnlyRepairingLabels,deactivateMinDFD,deactivateSubsumption);
                        System.out.println(complexityReductions);
