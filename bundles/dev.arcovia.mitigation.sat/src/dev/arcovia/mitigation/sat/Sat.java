@@ -128,7 +128,7 @@ public class Sat {
                 addClause(negated);
 
             
-            if (solutions.size() > 1000) {
+            if (solutions.size() > 10000) {
                 if (deactivateSubsumption) return solutions;
                 
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");

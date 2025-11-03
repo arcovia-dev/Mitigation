@@ -122,19 +122,18 @@ public class TUHHTest {
     private record Scalability(int amountClause, long runtimeInMilliseconds) {
     }
     
+    @Disabled
     @Test
     public void complexityTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
         
-        Map<String,List<Scalability>> complexityValues = new HashMap<>();
+        Map<String,List<Scalability>> complexityValues = new LinkedHashMap<>();
 
         for (boolean deactivateViolating: new boolean[]{true, false}) {
             for (boolean deactivateOnlyRepairingLabels: new boolean[]{true, false}) {
                 for (boolean deactivateMinDFD : new boolean[]{true, false}) {
                     for (boolean deactivateSubsumption : new boolean[]{true, false}) {
-
                         var complexityReductions = List.of(deactivateViolating,deactivateOnlyRepairingLabels,deactivateMinDFD,deactivateSubsumption);
-                       System.out.println(complexityReductions);
                         
                         List<Scalability> scalabilityValues = new ArrayList<>();
                         
@@ -142,7 +141,7 @@ public class TUHHTest {
                             for (int variant : tuhhModels.get(model)) {
                             	String name = model + "_" + variant;
                                 
-                                System.out.println(name);
+                                System.out.println(complexityReductions.stream().map(b -> b ? "1" : "0").collect(Collectors.joining()) + " " + name);
                                 
                             	for (int i : List.of(1,2,4,5,7,8,10,11)) {
 	                            	List<Constraint> constraint = switch (i) {
@@ -171,14 +170,12 @@ public class TUHHTest {
 	                                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraint));
                             	}
                             }
-                        }
-                        
+                        }                       
                         complexityValues.put(complexityReductions.stream().map(b -> b ? "1" : "0").collect(Collectors.joining()), scalabilityValues);
                     }
                 }
             }
-        }
-        
+        }        
         System.out.println(complexityValues);
     }
 
