@@ -371,13 +371,7 @@ public class Sat {
     		labels = (Set<Label>) allLabels;
     		return;
     	}
-        labels = new HashSet<>();
-        for (Constraint constraint : constraints) {
-            for (Literal literal : constraint.literals()) {
-                labels.add(literal.compositeLabel()
-                        .label());
-            }
-        }
+        labels = getConstraintLabels();
     }
     
     private Set<Label> getConstraintLabels(){
