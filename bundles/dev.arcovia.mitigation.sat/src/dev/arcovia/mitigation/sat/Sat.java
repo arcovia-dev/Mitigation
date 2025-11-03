@@ -369,7 +369,7 @@ public class Sat {
     }
 
     private void extractConstraintLabels() {
-    	Set<Label> labels = new HashSet<>();
+    	labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
                 labels.add(literal.compositeLabel()
