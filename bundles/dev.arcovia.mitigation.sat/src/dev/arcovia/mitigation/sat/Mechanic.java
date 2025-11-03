@@ -46,11 +46,11 @@ public class Mechanic {
     private List<Flow> flows;
     private final String dfdName;
     private int violations = 0;
-    
-    private boolean deactivateSubsumption = false;
+
     private boolean deactivateViolating = false;
     private boolean deactivateOnlyRepairingLabels = false;
     private boolean deactivateMinDFD = false;
+    private boolean deactivateSubsumption = false;
     
     private final Logger logger = Logger.getLogger(Mechanic.class);
     
