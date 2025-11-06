@@ -127,7 +127,7 @@ public class TUHHTest {
     public void complexityTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
         
-        Map<String,List<Scalability>> complexityValues = new LinkedHashMap<>();
+        Map<String,List<Long>> complexityValues = new LinkedHashMap<>();
 
         for (boolean deactivateViolating: new boolean[]{true, false}) {
             for (boolean deactivateOnlyRepairingLabels: new boolean[]{true, false}) {
@@ -135,7 +135,7 @@ public class TUHHTest {
                     for (boolean deactivateSubsumption : new boolean[]{true, false}) {
                         var complexityReductions = List.of(deactivateViolating,deactivateOnlyRepairingLabels,deactivateMinDFD,deactivateSubsumption);
                         
-                        List<Scalability> scalabilityValues = new ArrayList<>();
+                        List<Long> runtimes = new ArrayList<>();
                         
                         for (var model : tuhhModels.keySet()) {
                             for (int variant : tuhhModels.get(model)) {
@@ -163,15 +163,15 @@ public class TUHHTest {
 	                                var repairedDfdCosts = repairResult.repairedDfd();
 	
 	                                int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
-	                                if (amountClauses > 0 ) {
-	                                    scalabilityValues.add(new Scalability(amountClauses, repairResult.runtimeInMilliseconds));
+	                                if (amountClauses > 0) {
+	                                    runtimes.add(repairResult.runtimeInMilliseconds);
 	                                }	                                
 	                         
 	                                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraint));
                             	}
                             }
                         }                       
-                        complexityValues.put(complexityReductions.stream().map(b -> b ? "1" : "0").collect(Collectors.joining()), scalabilityValues);
+                        complexityValues.put(complexityReductions.stream().map(b -> b ? "1" : "0").collect(Collectors.joining()), runtimes);
                     }
                 }
             }
