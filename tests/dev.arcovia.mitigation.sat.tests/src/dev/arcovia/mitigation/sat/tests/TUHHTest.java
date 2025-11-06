@@ -73,7 +73,7 @@ public class TUHHTest {
             entry(new Label("Stereotype", "transform_identity_representation"), 3), entry(new Label("Stereotype", "token_validation"), 1),
             entry(new Label("Stereotype", "login_attempts_regulation"), 4), entry(new Label("Stereotype", "encrypted_connection"), 5),
             entry(new Label("Stereotype", "log_sanitization"), 3), entry(new Label("Stereotype", "local_logging"), 2));
-    
+
     /*
      * Returns a shallow copy of the constraint list
      */
@@ -121,61 +121,66 @@ public class TUHHTest {
 
     private record Scalability(int amountClause, long runtimeInMilliseconds) {
     }
-    
+
     @Disabled
     @Test
     public void complexityTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
-        
-        Map<String,List<Long>> complexityValues = new LinkedHashMap<>();
 
-        for (boolean deactivateViolating: new boolean[]{true, false}) {
-            for (boolean deactivateOnlyRepairingLabels: new boolean[]{true, false}) {
-                for (boolean deactivateMinDFD : new boolean[]{true, false}) {
-                    for (boolean deactivateSubsumption : new boolean[]{true, false}) {
-                        var complexityReductions = List.of(deactivateViolating,deactivateOnlyRepairingLabels,deactivateMinDFD,deactivateSubsumption);
-                        
+        Map<String, List<Long>> complexityValues = new LinkedHashMap<>();
+
+        for (boolean deactivateViolating : new boolean[] {true, false}) {
+            for (boolean deactivateOnlyRepairingLabels : new boolean[] {true, false}) {
+                for (boolean deactivateMinDFD : new boolean[] {true, false}) {
+                    for (boolean deactivateSubsumption : new boolean[] {true, false}) {
+                        var complexityReductions = List.of(deactivateViolating, deactivateOnlyRepairingLabels, deactivateMinDFD,
+                                deactivateSubsumption);
+
                         List<Long> runtimes = new ArrayList<>();
-                        
+
                         for (var model : tuhhModels.keySet()) {
                             for (int variant : tuhhModels.get(model)) {
-                            	String name = model + "_" + variant;
-                                
-                                System.out.println(complexityReductions.stream().map(b -> b ? "1" : "0").collect(Collectors.joining()) + " " + name);
-                                
-                            	for (int i : List.of(1,2,4,5,7,8,10,11)) {
-	                            	List<Constraint> constraint = switch (i) {
-	                                case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
-	                                case 2 -> List.of(authenticatedRequest);
-	                                case 4 -> List.of(transformedEntry);
-	                                case 5 -> List.of(tokenValidation);
-	                                case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
-	                                case 8 -> List.of(encryptedInternals);
-	                                case 10 -> List.of(localLogging);
-	                                case 11 -> List.of(localLogging, logSanitization);
-	                                default -> null;
-	                            	};
-	                            	
-	                            	if (constraint == null || i == variant)
-	                            		continue;
-	
-	                                var repairResult = runRepair(model, name, variant == 0, constraint, costs, complexityReductions);
-	                                var repairedDfdCosts = repairResult.repairedDfd();
-	
-	                                int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
-	                                if (amountClauses > 0) {
-	                                    runtimes.add(repairResult.runtimeInMilliseconds);
-	                                }	                                
-	                         
-	                                assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraint));
-                            	}
+                                String name = model + "_" + variant;
+
+                                System.out.println(complexityReductions.stream()
+                                        .map(b -> b ? "1" : "0")
+                                        .collect(Collectors.joining()) + " " + name);
+
+                                for (int i : List.of(1, 2, 4, 5, 7, 8, 10, 11)) {
+                                    List<Constraint> constraint = switch (i) {
+                                        case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
+                                        case 2 -> List.of(authenticatedRequest);
+                                        case 4 -> List.of(transformedEntry);
+                                        case 5 -> List.of(tokenValidation);
+                                        case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
+                                        case 8 -> List.of(encryptedInternals);
+                                        case 10 -> List.of(localLogging);
+                                        case 11 -> List.of(localLogging, logSanitization);
+                                        default -> null;
+                                    };
+
+                                    if (constraint == null || i == variant)
+                                        continue;
+
+                                    var repairResult = runRepair(model, name, variant == 0, constraint, costs, complexityReductions);
+                                    var repairedDfdCosts = repairResult.repairedDfd();
+
+                                    int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
+                                    if (amountClauses > 0) {
+                                        runtimes.add(repairResult.runtimeInMilliseconds);
+                                    }
+
+                                    assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraint));
+                                }
                             }
-                        }                       
-                        complexityValues.put(complexityReductions.stream().map(b -> b ? "1" : "0").collect(Collectors.joining()), runtimes);
+                        }
+                        complexityValues.put(complexityReductions.stream()
+                                .map(b -> b ? "1" : "0")
+                                .collect(Collectors.joining()), runtimes);
                     }
                 }
             }
-        }        
+        }
         System.out.println(complexityValues);
     }
 
@@ -244,7 +249,7 @@ public class TUHHTest {
         System.out.println("Put these into violations.py");
         System.out.println(violationsBefore);
         System.out.println(violationsAfter);
-        
+
         assertEquals(modelRepairMoreExpensive, List.of("callistaenterprise_2", "apssouza22_7"));
     }
 
@@ -294,9 +299,9 @@ public class TUHHTest {
         int violationsAfter = new Mechanic(repairedDfd, null, null).amountOfViolations(repairedDfd, constraints);
         return new RepairResult(repairedDfd, mechanic.getViolations(), violationsAfter, endTime - startTime);
     }
-    
-    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints, Map<Label, Integer> costMap, List<Boolean> complexityReductions)
-            throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
+
+    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints, Map<Label, Integer> costMap,
+            List<Boolean> complexityReductions) throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
         var dfd = loadDFD(model, name);
         if (!store)
             name = "aName";

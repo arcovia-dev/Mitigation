@@ -57,8 +57,8 @@ public class Sat {
      * @throws TimeoutException if the solver exceeds the allocated time without finding a solution.
      * @throws IOException if an error occurs during file writing operations.
      */
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean deactivateSubsumption, Set<Label> allLabel)
-            throws ContradictionException, TimeoutException, IOException {
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean deactivateSubsumption,
+            Set<Label> allLabel) throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
         this.constraints = constraints;
@@ -119,18 +119,18 @@ public class Sat {
 
             // Prohibit current solution
             var negated = new VecInt();
-          
+
             for (var literal : deltaTerms) {
                 negated.push(-termToLiteral.getValue(literal));
             }
-            
-            if (!negated.isEmpty()&& !deactivateSubsumption)
+
+            if (!negated.isEmpty() && !deactivateSubsumption)
                 addClause(negated);
 
-            
             if (solutions.size() > 10000) {
-                if (deactivateSubsumption) return solutions;
-                
+                if (deactivateSubsumption)
+                    return solutions;
+
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
         }
@@ -285,7 +285,7 @@ public class Sat {
         // Node has incoming data if received via at least one flow (Above needs not be excluded since above clauses need to be
         // fulfilled)
         var labelsToUse = allLabels != null ? allLabels : labels;
-        
+
         for (Label label : labelsToUse) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
@@ -369,7 +369,7 @@ public class Sat {
     }
 
     private void extractConstraintLabels() {
-    	labels = new HashSet<>();
+        labels = new HashSet<>();
         for (Constraint constraint : constraints) {
             for (Literal literal : constraint.literals()) {
                 labels.add(literal.compositeLabel()
