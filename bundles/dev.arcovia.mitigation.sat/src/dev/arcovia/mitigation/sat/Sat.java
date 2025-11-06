@@ -41,6 +41,8 @@ public class Sat {
     private List<Constraint> constraints;
     private List<VecInt> dimacsClauses;
     private int maxLiteral;
+    private boolean deactivateSubsumption;
+    private Set<Label> allLabels = null;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the
@@ -55,11 +57,13 @@ public class Sat {
      * @throws TimeoutException if the solver exceeds the allocated time without finding a solution.
      * @throws IOException if an error occurs during file writing operations.
      */
-    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName)
-            throws ContradictionException, TimeoutException, IOException {
+    public List<List<Term>> solve(List<Node> nodes, List<Flow> flows, List<Constraint> constraints, String dfdName, boolean deactivateSubsumption,
+            Set<Label> allLabel) throws ContradictionException, TimeoutException, IOException {
         this.nodes = nodes;
         this.flows = flows;
         this.constraints = constraints;
+        this.deactivateSubsumption = deactivateSubsumption;
+        this.allLabels = allLabel;
 
         termToLiteral = new BiMap<>();
         flowToLiteral = new BiMap<>();
@@ -109,20 +113,24 @@ public class Sat {
                     .toList();
 
             // Store unique solutions
-            if (!solutions.contains(deltaTerms)) {
+            if (!solutions.contains(deltaTerms) || deactivateSubsumption) {
                 solutions.add(deltaTerms);
             }
 
             // Prohibit current solution
             var negated = new VecInt();
+
             for (var literal : deltaTerms) {
                 negated.push(-termToLiteral.getValue(literal));
             }
-            if (!negated.isEmpty()) {
+
+            if (!negated.isEmpty() && !deactivateSubsumption)
                 addClause(negated);
-            }
 
             if (solutions.size() > 10000) {
+                if (deactivateSubsumption)
+                    return solutions;
+
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
             }
         }
@@ -276,7 +284,9 @@ public class Sat {
         }
         // Node has incoming data if received via at least one flow (Above needs not be excluded since above clauses need to be
         // fulfilled)
-        for (Label label : labels) {
+        var labelsToUse = allLabels != null ? allLabels : labels;
+
+        for (Label label : labelsToUse) {
             for (Node sinkNode : nodes) {
                 for (InPin sinkPin : sinkNode.inPins()
                         .keySet()) {
