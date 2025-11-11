@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class TUHH_Test {
 	final AnalysisConstraint entryViaGatewayOnly = new ConstraintDSL().ofData().withLabel("Stereotype", "entrypoint")
@@ -98,7 +99,11 @@ public class TUHH_Test {
 	public void efficiencyTest() throws StandaloneInitializationException {
 		var tuhhModels = TuhhModels.getTuhhModels();
 		List<String> modelRepairMoreExpensive = new ArrayList<>();
-
+		
+		Map<String, Integer> tuhhCosts = new LinkedHashMap<>();
+        Map<String, Integer> ilpCosts = new LinkedHashMap<>();
+        
+		
 		for (var model : tuhhModels.keySet()) {
 			if (!tuhhModels.get(model).contains(0))
 				continue;
@@ -139,11 +144,6 @@ public class TUHH_Test {
 
 				var ilpCost = new ModelCostCalculator(repairedDfd, satConstraint, minCosts)
 						.calculateCostWithoutForwarding();
-				var numactions = optimization.getCost();
-
-				if (numactions < ilpCost) {
-					System.out.println(variant + " Actions:" + numactions + " Cost: " + ilpCost);
-				}
 
 				var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts)
 						.calculateCostWithoutForwarding();
@@ -152,10 +152,16 @@ public class TUHH_Test {
 				if (ilpCost > tuhhCost) {
 					modelRepairMoreExpensive.add(model + "_" + variant);
 				}
+				ilpCosts.put(model + "_" + variant, ilpCost);
+                tuhhCosts.put(model + "_" + variant, tuhhCost);
+                
+				
 			}
 		}
 		System.out.println(modelRepairMoreExpensive);
-
+		
+		System.out.println(ilpCosts);
+        System.out.println(tuhhCosts);
 	}
 
 	@Disabled
