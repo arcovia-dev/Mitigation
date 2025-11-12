@@ -112,14 +112,30 @@ public class OptimizationManager {
 	private void analyseConstraints() {
 		for (var constraint : constraints) {
 			for (var mitigation : constraint.getMitigations()) {
-			    if (mitigation.type.toString().startsWith("Delete")) continue;
-				var additionalMitigations = getAdditionalMitigations(mitigation.label);
-				if (additionalMitigations != null) {
-					mitigation.addRequired(additionalMitigations);
-				}
+			    if (mitigation.type.toString().startsWith("Delete")) {
+			        setAdditonalConstraints(mitigation);
+			    }
+			    
+			    else {
+			        var additionalMitigations = getAdditionalMitigations(mitigation.label);
+	                if (additionalMitigations != null) {
+	                    mitigation.addRequired(additionalMitigations);
+	                }
+			    }
+				
 			}
 		}
 	}
+	private void setAdditonalConstraints(MitigationStrategy mitigation) {
+	    for (var constraint : constraints) {
+	        for (var mit : constraint.getMitigations()) {
+	            if (!mitigation.type.toString().startsWith("Delete") && mit.label.equals(mitigation.label)) {
+	                mitigation.addConstraint(constraint);
+	            }
+	        }
+	    }
+	}
+	
 
 	private List<MitigationStrategy> getAdditionalMitigations(CompositeLabel label) {
 		for (var constraint : constraints) {

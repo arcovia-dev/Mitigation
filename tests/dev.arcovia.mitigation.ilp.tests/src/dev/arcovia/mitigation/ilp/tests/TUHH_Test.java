@@ -164,26 +164,18 @@ public class TUHH_Test {
         System.out.println(tuhhCosts);
 	}
 
-	@Disabled
+	
 	@Test
 	public void runSpecific() throws StandaloneInitializationException {
-		String model = "anilallewar";
-		int variant = 0;
+		String model = "mudigal-technologies";
+		int variant = 2;
 		String name = model + "_" + variant;
 
 		DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
 
-		var optimization = new OptimizationManager(dfd,
-				List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway));
+		var optimization = new OptimizationManager(dfd,analysisConstraints);
 
 		var result = optimization.repair();
-
-		List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
-		for (var cons : List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway)) {
-			var translation = new CNFTranslation(cons);
-			dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF().get(0);
-			satConstraint.add(c);
-		}
 
 		var dfdConverter = new DFD2WebConverter();
 		dfdConverter.convert(result).save("models/", "temp-repaired.json");

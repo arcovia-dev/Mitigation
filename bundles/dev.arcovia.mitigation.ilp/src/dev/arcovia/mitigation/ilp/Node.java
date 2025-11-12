@@ -22,13 +22,15 @@ public class Node {
 	private List<AbstractVertex<?>> previous;
 	private Map<Pin, Flow> pinFlowMap;
 	private Map<Pin, DFDVertex> pinDFDVertexMap;
+	private final DFDVertex vertex;
 
 	public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg, Constraint constraint) {
 		this.tfg = tfg;
 
 		if (constraint != null)
 			violatingConstraints.add(constraint);
-
+		
+		this.vertex = vertex;
 		name = vertex.getReferencedElement().getId();
 
 		isForwarding = determineForwarding(vertex);
@@ -71,11 +73,12 @@ public class Node {
 					mitigations.addAll(getDataMitigations(mitigation,ActionType.Adding));
 				}
                 case DeleteNodeLabel -> {
+                    mitigation.checkIfAllowed(vertex);
                     mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Removing), mitigation.cost,
                             getAllRequiredMitigations(mitigation)));
                 }
                 case DeleteDataLabel-> {
-                    mitigations.addAll(getDataMitigations(mitigation,ActionType.Adding));    
+                    mitigations.addAll(getDataMitigations(mitigation,ActionType.Removing));    
                 }                    
 				}
 			}
