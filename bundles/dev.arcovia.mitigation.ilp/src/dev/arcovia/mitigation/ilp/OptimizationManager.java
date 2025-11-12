@@ -44,7 +44,7 @@ public class OptimizationManager {
 	private List<List<Mitigation>> mitigations = new ArrayList<>();
 	private Set<Mitigation> allMitigations = new HashSet<>();
 
-	private List<Term> actions;
+	private List<ActionTerm> actions;
 
 	public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
 		this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
@@ -96,13 +96,13 @@ public class OptimizationManager {
 		return true;
 	}
 
-	private List<Term> getActions(List<Mitigation> result) {
+	private List<ActionTerm> getActions(List<Mitigation> result) {
 		List<Mitigation> additional = new ArrayList<>();
 		for (var mit : result) {
 			additional.addAll(mit.required());
 		}
 		result.addAll(additional);
-		List<Term> actions = new ArrayList<>();
+		List<ActionTerm> actions = new ArrayList<>();
 		for (var mit : result) {
 			actions.add(mit.mitigation());
 		}
@@ -112,6 +112,7 @@ public class OptimizationManager {
 	private void analyseConstraints() {
 		for (var constraint : constraints) {
 			for (var mitigation : constraint.getMitigations()) {
+			    if (mitigation.type.toString().startsWith("Delete")) continue;
 				var additionalMitigations = getAdditionalMitigations(mitigation.label);
 				if (additionalMitigations != null) {
 					mitigation.addRequired(additionalMitigations);
@@ -166,51 +167,99 @@ public class OptimizationManager {
 		}
 	}
 
-	private void applyActions(DataFlowDiagramAndDictionary dfd, List<Term> actions) {
+	private void applyActions(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
 		deriveOutPinsToAssignmentsMap(dfd);
 		var dd = dfd.dataDictionary();
 
 		for (var action : actions) {
-			if (action.compositeLabel().category().equals(LabelCategory.OutgoingData)) {
-				for (var behavior : dd.getBehavior()) {
-					List<Assignment> newAssignments = new ArrayList<>();
-					for (var assignment : behavior.getAssignment()) {
-						if (assignment.getId().equals(outPinToAssignmentMap.get(action.domain()))) {
-							var type = action.compositeLabel().label().type();
-							var value = action.compositeLabel().label().value();
-							var label = getOrCreateLabel(dd, type, value);
+		    if (action.type().equals(ActionType.Adding)) {
+		        if (action.compositeLabel().category().equals(LabelCategory.OutgoingData)) {
+	                for (var behavior : dd.getBehavior()) {
+	                    List<Assignment> newAssignments = new ArrayList<>();
+	                    for (var assignment : behavior.getAssignment()) {
+	                        if (assignment.getId().equals(outPinToAssignmentMap.get(action.domain()))) {
+	                            var type = action.compositeLabel().label().type();
+	                            var value = action.compositeLabel().label().value();
+	                            var label = getOrCreateLabel(dd, type, value);
 
-							if (assignment instanceof Assignment cast) {
-								cast.getOutputLabels().add(label);
-							}
-							if (assignment instanceof SetAssignment cast) {
-								cast.getOutputLabels().add(label);
-							}
-							if (assignment instanceof ForwardingAssignment) {
-								var ddFactory = datadictionaryFactory.eINSTANCE;
-								var assign = ddFactory.createAssignment();
-								assign.getOutputLabels().add(label);
-								assign.setOutputPin(assignment.getOutputPin());
-								var ddTrue = ddFactory.createTRUE();
-								assign.setTerm(ddTrue);
-								newAssignments.add(assign);
-							}
-						}
-					}
-					if (!newAssignments.isEmpty())
-						behavior.getAssignment().addAll(newAssignments);
-				}
-			} else if (action.compositeLabel().category().equals(LabelCategory.Node)) {
-				for (var node : dfd.dataFlowDiagram().getNodes()) {
-					if (node.getId().equals(action.domain())) {
-						var type = action.compositeLabel().label().type();
-						var value = action.compositeLabel().label().value();
-						var label = getOrCreateLabel(dd, type, value);
+	                            if (assignment instanceof Assignment cast) {
+	                                cast.getOutputLabels().add(label);
+	                            }
+	                            if (assignment instanceof SetAssignment cast) {
+	                                cast.getOutputLabels().add(label);
+	                            }
+	                            if (assignment instanceof ForwardingAssignment) {
+	                                var ddFactory = datadictionaryFactory.eINSTANCE;
+	                                var assign = ddFactory.createAssignment();
+	                                assign.getOutputLabels().add(label);
+	                                assign.setOutputPin(assignment.getOutputPin());
+	                                var ddTrue = ddFactory.createTRUE();
+	                                assign.setTerm(ddTrue);
+	                                newAssignments.add(assign);
+	                            }
+	                        }
+	                    }
+	                    if (!newAssignments.isEmpty())
+	                        behavior.getAssignment().addAll(newAssignments);
+	                }
+	            } else if (action.compositeLabel().category().equals(LabelCategory.Node)) {
+	                for (var node : dfd.dataFlowDiagram().getNodes()) {
+	                    if (node.getId().equals(action.domain())) {
+	                        var type = action.compositeLabel().label().type();
+	                        var value = action.compositeLabel().label().value();
+	                        var label = getOrCreateLabel(dd, type, value);
 
-						node.getProperties().add(label);
-					}
-				}
-			}
+	                        node.getProperties().add(label);
+	                    }
+	                }
+	            }
+		    }
+		    
+		    else {
+		        if (action.compositeLabel().category().equals(LabelCategory.OutgoingData)) {
+		            for (var behavior : dd.getBehavior()) {
+                        List<Assignment> newAssignments = new ArrayList<>();
+                        for (var assignment : behavior.getAssignment()) {
+                            if (assignment.getId().equals(outPinToAssignmentMap.get(action.domain()))) {
+                                var type = action.compositeLabel().label().type();
+                                var value = action.compositeLabel().label().value();
+                                var label = getOrCreateLabel(dd, type, value);
+
+                                if (assignment instanceof Assignment cast) {
+                                    cast.getOutputLabels().remove(label);
+                                }
+                                if (assignment instanceof SetAssignment cast) {
+                                    cast.getOutputLabels().remove(label);
+                                }
+                                if (assignment instanceof ForwardingAssignment) {
+                                    var ddFactory = datadictionaryFactory.eINSTANCE;
+                                    var assign = ddFactory.createAssignment();
+                                    assign.getOutputLabels().add(label);
+                                    assign.setOutputPin(assignment.getOutputPin());
+                                    var ddTrue = ddFactory.createNOT();
+                                    assign.setTerm(ddTrue);
+                                    newAssignments.add(assign);
+                                }
+                            }
+                        }
+                        if (!newAssignments.isEmpty())
+                            behavior.getAssignment().addAll(newAssignments);
+                    }
+		        }
+		        else if (action.compositeLabel().category().equals(LabelCategory.Node)) {
+                    for (var node : dfd.dataFlowDiagram().getNodes()) {
+                        if (node.getId().equals(action.domain())) {
+                            var type = action.compositeLabel().label().type();
+                            var value = action.compositeLabel().label().value();
+                            var label = getOrCreateLabel(dd, type, value);
+
+                            node.getProperties().remove(label);
+                        }
+                    }
+                }
+		        
+		    }
+			
 		}
 	}
 

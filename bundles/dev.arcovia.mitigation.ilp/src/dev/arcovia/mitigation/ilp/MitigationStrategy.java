@@ -18,6 +18,9 @@ public class MitigationStrategy {
 	}
 
 	public void addRequired(List<MitigationStrategy> required) {
-		this.required.addAll(required);
+	    for (var mitigation : required) {
+	        if (!mitigation.type.toString().startsWith("Delete"))
+	            this.required.add(mitigation);
+	    }
 	}
 }

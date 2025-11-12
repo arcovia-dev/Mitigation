@@ -20,7 +20,7 @@ public class BasicTest {
 			.resolve("minsat.json").toString();
 
 	AnalysisConstraint constraint = new ConstraintDSL().ofData().withLabel("Sensitivity", "Personal")
-			.withoutLabel("Encryption", "Encrypted").neverFlows().toVertex().withCharacteristic("Location", "nonEU")
+			.neverFlows().toVertex().withCharacteristic("Location", "nonEU")
 			.create();
 
 	@Test

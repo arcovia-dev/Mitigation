@@ -1,5 +1,5 @@
 package dev.arcovia.mitigation.ilp;
 
 public enum MitigationType {
-	Node, Data
+	NodeLabel, DataLabel, DeleteNodeLabel, DeleteDataLabel
 }

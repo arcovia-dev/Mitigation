@@ -63,13 +63,20 @@ public class Node {
 		for (var constraint : violatingConstraints) {
 			for (var mitigation : constraint.getMitigations()) {
 				switch (mitigation.type) {
-				case Node -> {
-					mitigations.add(new Mitigation(new Term(this.name, mitigation.label), mitigation.cost,
+				case NodeLabel -> {
+					mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Adding), mitigation.cost,
 							getAllRequiredMitigations(mitigation)));
 				}
-				case Data -> {
-					mitigations.addAll(getDataMitigations(mitigation));
+				case DataLabel -> {
+					mitigations.addAll(getDataMitigations(mitigation,ActionType.Adding));
 				}
+                case DeleteNodeLabel -> {
+                    mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Removing), mitigation.cost,
+                            getAllRequiredMitigations(mitigation)));
+                }
+                case DeleteDataLabel-> {
+                    mitigations.addAll(getDataMitigations(mitigation,ActionType.Adding));    
+                }                    
 				}
 			}
 		}
@@ -77,21 +84,21 @@ public class Node {
 		return mitigations;
 	}
 
-	private List<Mitigation> getDataMitigations(MitigationStrategy mitigation) {
+	private List<Mitigation> getDataMitigations(MitigationStrategy mitigation, ActionType type) {
 		List<Mitigation> mitigations = new ArrayList<>();
 
 		for (var vertex : previous) {
 			Node node = new Node((DFDVertex) vertex, tfg);
 
 			mitigations.add(new Mitigation(
-					new Term(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label())),
+					new ActionTerm(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label()), type),
 					mitigation.cost, getAllRequiredMitigations(mitigation)));
 
 			if (node.isForwarding) {
 				// need to discuss whether forwarding should be prioritized or not & if the user
 				// should decide --> Impact set
 				mitigations.addAll(node.getDataMitigations(
-						new MitigationStrategy(mitigation.label, mitigation.cost - Epsilon, MitigationType.Data)));
+						new MitigationStrategy(mitigation.label, mitigation.cost - Epsilon, MitigationType.DataLabel),type));
 			}
 		}
 
@@ -100,10 +107,16 @@ public class Node {
 
 	private List<Mitigation> getAllRequiredMitigations(MitigationStrategy mitigation) {
 		List<Mitigation> requiredMitgations = new ArrayList<>();
-		for (var requiredMitgation : mitigation.required)
-			requiredMitgations.add(new Mitigation(new Term(this.name, requiredMitgation.label), requiredMitgation.cost,
-					getAllRequiredMitigations(requiredMitgation)));
+		for (var requiredMitgation : mitigation.required) {
+		    ActionType type;
+		    if (requiredMitgation.type.toString().startsWith("Delete")) type = ActionType.Removing;
+		    else type = ActionType.Adding;
+            
+            requiredMitgations.add(new Mitigation(new ActionTerm(this.name, requiredMitgation.label, type), requiredMitgation.cost,
+                    getAllRequiredMitigations(requiredMitgation)));
 
+		}
+		    
 		return requiredMitgations;
 	}
 
