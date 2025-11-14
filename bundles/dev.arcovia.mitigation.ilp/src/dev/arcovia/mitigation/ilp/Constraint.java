@@ -16,44 +16,54 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Constraint {
-	public final AnalysisConstraint dsl;
-	private final List<MitigationStrategy> mitigations;
+    public final AnalysisConstraint dsl;
+    private final List<MitigationStrategy> mitigations;
 
-	public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
-		this.dsl = dsl;
-		this.mitigations = mitigations;
-	}
+    public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
+        this.dsl = dsl;
+        this.mitigations = mitigations;
+    }
 
-	public Constraint(AnalysisConstraint dsl) {
-		this.dsl = dsl;
-		this.mitigations = determineMitigations();
+    public Constraint(AnalysisConstraint dsl) {
+        this.dsl = dsl;
+        this.mitigations = determineMitigations();
 
-	}
+    }
 
-	public List<MitigationStrategy> getMitigations() {
-		return new ArrayList<>(mitigations);
-	}
+    public List<MitigationStrategy> getMitigations() {
+        return new ArrayList<>(mitigations);
+    }
 
-	public boolean isPrecondition(CompositeLabel label) {
-		var translation = new CNFTranslation(dsl);
-		var literals = translation.constructCNF().get(0).literals();
-		
-		for (var lit : literals) {
-			if (!lit.positive() && lit.compositeLabel().equals(label))
-				return true;
-		}
-		return false;
-	}
-	
-	public void removeMitigation(MitigationStrategy mitgation) {
-	    mitigations.remove(mitgation);
-	}
-	
-	public boolean isMatched(DFDVertex node) {
-	    var translation = new CNFTranslation(dsl);
-	    List<String> negativeLiterals = new ArrayList<>();
+    public boolean isPrecondition(CompositeLabel label) {
+        var translation = new CNFTranslation(dsl);
+        var literals = translation.constructCNF()
+                .get(0)
+                .literals();
+
+        for (var lit : literals) {
+            if (!lit.positive() && lit.compositeLabel()
+                    .equals(label))
+                return true;
+        }
+        return false;
+    }
+
+    public void removeMitigation(MitigationStrategy mitgation) {
+        mitigations.remove(mitgation);
+    }
+
+    /***
+     * This functions determines whether a Node matches the Antecedent of this constraint.
+     * @param node
+     * @return
+     */
+    public boolean isMatched(DFDVertex node) {
+        var translation = new CNFTranslation(dsl);
+        List<String> negativeLiterals = new ArrayList<>();
         List<String> positiveLiterals = new ArrayList<>();
-        for (var literal : translation.constructCNF().get(0).literals()) {
+        for (var literal : translation.constructCNF()
+                .get(0)
+                .literals()) {
             if (literal.positive())
                 positiveLiterals.add(literal.compositeLabel()
                         .toString());
@@ -61,7 +71,7 @@ public class Constraint {
                 negativeLiterals.add(literal.compositeLabel()
                         .toString());
         }
-        
+
         Set<String> nodeLiterals = new HashSet<>();
         for (var nodeChar : node.getAllVertexCharacteristics()) {
             nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
@@ -71,58 +81,67 @@ public class Constraint {
                 nodeLiterals.add(new IncomingDataLabel(new Label(dataChar.getTypeName(), dataChar.getValueName())).toString());
             }
         }
-        
-        if (nodeLiterals.containsAll(negativeLiterals)) return true;
-        
+
+        if (nodeLiterals.containsAll(negativeLiterals))
+            return true;
+
         return false;
-	}
-	
-	private List<MitigationStrategy> determineMitigations() {
-		var translation = new CNFTranslation(dsl);
-		
-		if(translation.constructCNF().size() > 1 ) {
-		    System.out.println("this constraint is not supportet - yet");
-		}
-		    
-		
-		var literals = translation.constructCNF().get(0).literals();
+    }
 
-		List<MitigationStrategy> mitigations = new ArrayList<>();
-		
-		var neverFlows = dsl.getVertexDestinationSelectors().getSelectors().toString();
-		
-		for (var lit : literals) {
-			if (lit.positive()) {
-				MitigationType type;
+    private List<MitigationStrategy> determineMitigations() {
+        var translation = new CNFTranslation(dsl);
 
-				if (lit.compositeLabel().category() == LabelCategory.Node)
-					type = MitigationType.NodeLabel;
-				else
-					type = MitigationType.DataLabel;
+        if (translation.constructCNF()
+                .size() > 1) {
+            System.out.println("this constraint is not supportet - yet");
+        }
 
-				mitigations.add(new MitigationStrategy(lit.compositeLabel(), 1, type));
-			}
-			else {
-                var label = lit.compositeLabel().label().type() + "." + lit.compositeLabel().label().value();
-                
+        var literals = translation.constructCNF()
+                .get(0)
+                .literals();
+
+        List<MitigationStrategy> mitigations = new ArrayList<>();
+
+        var neverFlows = dsl.getVertexDestinationSelectors()
+                .getSelectors()
+                .toString();
+
+        for (var lit : literals) {
+            if (lit.positive()) {
+                MitigationType type;
+
+                if (lit.compositeLabel()
+                        .category() == LabelCategory.Node)
+                    type = MitigationType.NodeLabel;
+                else
+                    type = MitigationType.DataLabel;
+
+                mitigations.add(new MitigationStrategy(lit.compositeLabel(), 1, type));
+            } else {
+                var label = lit.compositeLabel()
+                        .label()
+                        .type() + "."
+                        + lit.compositeLabel()
+                                .label()
+                                .value();
+
                 if (neverFlows.contains(label)) {
                     MitigationType type;
 
-                    if (lit.compositeLabel().category() == LabelCategory.Node)
+                    if (lit.compositeLabel()
+                            .category() == LabelCategory.Node)
                         type = MitigationType.DeleteNodeLabel;
                     else
                         type = MitigationType.DeleteDataLabel;
 
                     mitigations.add(new MitigationStrategy(lit.compositeLabel(), 1000, type));
-                
-                }
-                
-            }
-		}
-		
-		
 
-		return mitigations;
-	}
+                }
+
+            }
+        }
+
+        return mitigations;
+    }
 
 }

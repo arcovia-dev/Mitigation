@@ -26,169 +26,208 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class TUHH_Test {
-	final AnalysisConstraint entryViaGatewayOnly = new ConstraintDSL().ofData().withLabel("Stereotype", "entrypoint")
-			.withoutLabel("Stereotype", "gateway").neverFlows().toVertex().withCharacteristic("Stereotype", "internal")
-			.create();
-	final AnalysisConstraint nonInternalGateway = new ConstraintDSL().ofData().neverFlows().toVertex()
-			.withCharacteristic("Stereotype", "gateway").withCharacteristic("Stereotype", "internal").create();
-	final AnalysisConstraint authenticatedRequest = new ConstraintDSL().ofData()
-			.withoutLabel("Stereotype", "authenticated_request").neverFlows().toVertex()
-			.withCharacteristic("Stereotype", "internal").create();
-	final AnalysisConstraint transformedEntry = new ConstraintDSL().ofData().withLabel("Stereotype", "entrypoint")
-			.withoutLabel("Stereotype", "transform_identity_representation").neverFlows().toVertex()
-			.withCharacteristic("Stereotype", "internal").create();
-	final AnalysisConstraint tokenValidation = new ConstraintDSL().ofData().withLabel("Stereotype", "entrypoint")
-			.withoutLabel("Stereotype", "token_validation").neverFlows().toVertex()
-			.withCharacteristic("Stereotype", "internal").create();
-	final AnalysisConstraint loginAttempts = new ConstraintDSL().ofData().neverFlows().toVertex()
-			.withCharacteristic("Stereotype", "authorization_server")
-			.withoutCharacteristic("Stereotype", "login_attempts_regulation").create();
-	final AnalysisConstraint encryptedEntry = new ConstraintDSL().ofData().withLabel("Stereotype", "entrypoint")
-			.withoutLabel("Stereotype", "encrypted_connection").neverFlows().toVertex().create();
-	final AnalysisConstraint encryptedInternals = new ConstraintDSL().ofData().withLabel("Stereotype", "internal")
-			.withoutLabel("Stereotype", "encrypted_connection").neverFlows().toVertex().create();
-	final AnalysisConstraint localLogging = new ConstraintDSL().ofData().neverFlows().toVertex()
-			.withCharacteristic("Stereotype", "internal").withoutCharacteristic("Stereotype", "local_logging").create();
-	final AnalysisConstraint logSanitization = new ConstraintDSL().ofData().neverFlows().toVertex()
-			.withCharacteristic("Stereotype", "local_logging").withoutCharacteristic("Stereotype", "log_sanitization")
-			.create();
+    final AnalysisConstraint entryViaGatewayOnly = new ConstraintDSL().ofData()
+            .withLabel("Stereotype", "entrypoint")
+            .withoutLabel("Stereotype", "gateway")
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "internal")
+            .create();
+    final AnalysisConstraint nonInternalGateway = new ConstraintDSL().ofData()
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "gateway")
+            .withCharacteristic("Stereotype", "internal")
+            .create();
+    final AnalysisConstraint authenticatedRequest = new ConstraintDSL().ofData()
+            .withoutLabel("Stereotype", "authenticated_request")
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "internal")
+            .create();
+    final AnalysisConstraint transformedEntry = new ConstraintDSL().ofData()
+            .withLabel("Stereotype", "entrypoint")
+            .withoutLabel("Stereotype", "transform_identity_representation")
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "internal")
+            .create();
+    final AnalysisConstraint tokenValidation = new ConstraintDSL().ofData()
+            .withLabel("Stereotype", "entrypoint")
+            .withoutLabel("Stereotype", "token_validation")
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "internal")
+            .create();
+    final AnalysisConstraint loginAttempts = new ConstraintDSL().ofData()
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "authorization_server")
+            .withoutCharacteristic("Stereotype", "login_attempts_regulation")
+            .create();
+    final AnalysisConstraint encryptedEntry = new ConstraintDSL().ofData()
+            .withLabel("Stereotype", "entrypoint")
+            .withoutLabel("Stereotype", "encrypted_connection")
+            .neverFlows()
+            .toVertex()
+            .create();
+    final AnalysisConstraint encryptedInternals = new ConstraintDSL().ofData()
+            .withLabel("Stereotype", "internal")
+            .withoutLabel("Stereotype", "encrypted_connection")
+            .neverFlows()
+            .toVertex()
+            .create();
+    final AnalysisConstraint localLogging = new ConstraintDSL().ofData()
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "internal")
+            .withoutCharacteristic("Stereotype", "local_logging")
+            .create();
+    final AnalysisConstraint logSanitization = new ConstraintDSL().ofData()
+            .neverFlows()
+            .toVertex()
+            .withCharacteristic("Stereotype", "local_logging")
+            .withoutCharacteristic("Stereotype", "log_sanitization")
+            .create();
 
-	final List<AnalysisConstraint> analysisConstraints = List.of(entryViaGatewayOnly, nonInternalGateway,
-			authenticatedRequest, transformedEntry, tokenValidation, loginAttempts, encryptedEntry, encryptedInternals,
-			localLogging, logSanitization);
+    final List<AnalysisConstraint> analysisConstraints = List.of(entryViaGatewayOnly, nonInternalGateway, authenticatedRequest, transformedEntry,
+            tokenValidation, loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
-	@Test
-	public void main() throws StandaloneInitializationException {
-		var tuhhModels = TuhhModels.getTuhhModels();
-		List<Long> scalabilityValues = new ArrayList<>();
+    @Test
+    public void main() throws StandaloneInitializationException {
+        var tuhhModels = TuhhModels.getTuhhModels();
+        List<Long> scalabilityValues = new ArrayList<>();
 
-		for (var model : tuhhModels.keySet()) {
-			for (int variant : tuhhModels.get(model)) {
-				String name = model + "_" + variant;
+        for (var model : tuhhModels.keySet()) {
+            for (int variant : tuhhModels.get(model)) {
+                String name = model + "_" + variant;
 
-				System.out.println(name);
+                System.out.println(name);
 
-				DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
+                DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
 
-				var optimization = new OptimizationManager(dfd, analysisConstraints);
+                var optimization = new OptimizationManager(dfd, analysisConstraints);
 
-				long startTime = System.currentTimeMillis();
-				var result = optimization.repair();
-				long endTime = System.currentTimeMillis();
+                long startTime = System.currentTimeMillis();
+                var result = optimization.repair();
+                long endTime = System.currentTimeMillis();
 
-				scalabilityValues.add(endTime - startTime);
+                scalabilityValues.add(endTime - startTime);
 
-				var dfdConverter = new DFD2WebConverter();
-				dfdConverter.convert(result).save("models/", "temp-repaired.json");
+                var dfdConverter = new DFD2WebConverter();
+                dfdConverter.convert(result)
+                        .save("models/", "temp-repaired.json");
 
-				assertTrue(optimization.isViolationFree(result, analysisConstraints));
-			}
-		}
-		System.out.println(scalabilityValues);
-	}
+                assertTrue(optimization.isViolationFree(result, analysisConstraints));
+            }
+        }
+        System.out.println(scalabilityValues);
+    }
 
-	final Map<Label, Integer> minCosts = Map.ofEntries(entry(new Label("Stereotype", "gateway"), 1),
-			entry(new Label("Stereotype", "authenticated_request"), 1),
-			entry(new Label("Stereotype", "transform_identity_representation"), 1),
-			entry(new Label("Stereotype", "token_validation"), 1),
-			entry(new Label("Stereotype", "login_attempts_regulation"), 1),
-			entry(new Label("Stereotype", "encrypted_connection"), 1),
-			entry(new Label("Stereotype", "log_sanitization"), 1), entry(new Label("Stereotype", "local_logging"), 1));
+    final Map<Label, Integer> minCosts = Map.ofEntries(entry(new Label("Stereotype", "gateway"), 1),
+            entry(new Label("Stereotype", "authenticated_request"), 1), entry(new Label("Stereotype", "transform_identity_representation"), 1),
+            entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 1),
+            entry(new Label("Stereotype", "encrypted_connection"), 1), entry(new Label("Stereotype", "log_sanitization"), 1),
+            entry(new Label("Stereotype", "local_logging"), 1));
 
-	@Test
-	public void efficiencyTest() throws StandaloneInitializationException {
-		var tuhhModels = TuhhModels.getTuhhModels();
-		List<String> modelRepairMoreExpensive = new ArrayList<>();
-		
-		Map<String, Integer> tuhhCosts = new LinkedHashMap<>();
+    @Test
+    public void efficiencyTest() throws StandaloneInitializationException {
+        var tuhhModels = TuhhModels.getTuhhModels();
+        List<String> modelRepairMoreExpensive = new ArrayList<>();
+
+        Map<String, Integer> tuhhCosts = new LinkedHashMap<>();
         Map<String, Integer> ilpCosts = new LinkedHashMap<>();
-        
-		
-		for (var model : tuhhModels.keySet()) {
-			if (!tuhhModels.get(model).contains(0))
-				continue;
 
-			System.out.println("Checking " + model);
+        for (var model : tuhhModels.keySet()) {
+            if (!tuhhModels.get(model)
+                    .contains(0))
+                continue;
 
-			for (int variant : tuhhModels.get(model)) {
-				List<AnalysisConstraint> constraint = switch (variant) {
-				case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
-				case 2 -> List.of(authenticatedRequest);
-				case 4 -> List.of(transformedEntry);
-				case 5 -> List.of(tokenValidation);
-				case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
-				case 8 -> List.of(encryptedInternals);
-				case 10 -> List.of(localLogging);
-				case 11 -> List.of(localLogging, logSanitization);
-				default -> null;
-				};
-				if (constraint == null)
-					continue;
+            System.out.println("Checking " + model);
 
-				DataFlowDiagramAndDictionary dfd = loadDFD(model, model + "_0");
-				System.out.println("Comparing to " + model + "_" + variant);
+            for (int variant : tuhhModels.get(model)) {
+                List<AnalysisConstraint> constraint = switch (variant) {
+                    case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
+                    case 2 -> List.of(authenticatedRequest);
+                    case 4 -> List.of(transformedEntry);
+                    case 5 -> List.of(tokenValidation);
+                    case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
+                    case 8 -> List.of(encryptedInternals);
+                    case 10 -> List.of(localLogging);
+                    case 11 -> List.of(localLogging, logSanitization);
+                    default -> null;
+                };
+                if (constraint == null)
+                    continue;
 
-				var optimization = new OptimizationManager(dfd, constraint);
+                DataFlowDiagramAndDictionary dfd = loadDFD(model, model + "_0");
+                System.out.println("Comparing to " + model + "_" + variant);
 
-				var repairedDfd = optimization.repair();
+                var optimization = new OptimizationManager(dfd, constraint);
 
-				var dfdConverter = new DFD2WebConverter();
-				dfdConverter.convert(repairedDfd).save("efficencyTest/", model + "_" + variant + "-repaired.json");
+                var repairedDfd = optimization.repair();
 
-				List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
-				for (var cons : constraint) {
-					var translation = new CNFTranslation(cons);
-					dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF().get(0);
-					satConstraint.add(c);
-				}
+                var dfdConverter = new DFD2WebConverter();
+                dfdConverter.convert(repairedDfd)
+                        .save("efficencyTest/", model + "_" + variant + "-repaired.json");
 
-				var ilpCost = new ModelCostCalculator(repairedDfd, satConstraint, minCosts)
-						.calculateCostWithoutForwarding();
+                List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
+                for (var cons : constraint) {
+                    var translation = new CNFTranslation(cons);
+                    dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF()
+                            .get(0);
+                    satConstraint.add(c);
+                }
 
-				var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts)
-						.calculateCostWithoutForwarding();
+                var ilpCost = new ModelCostCalculator(repairedDfd, satConstraint, minCosts).calculateCostWithoutForwarding();
 
-				System.out.println(ilpCost + " <= " + tuhhCost + " : " + (ilpCost <= tuhhCost));
-				if (ilpCost > tuhhCost) {
-					modelRepairMoreExpensive.add(model + "_" + variant);
-				}
-				ilpCosts.put(model + "_" + variant, ilpCost);
+                var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts)
+                        .calculateCostWithoutForwarding();
+
+                System.out.println(ilpCost + " <= " + tuhhCost + " : " + (ilpCost <= tuhhCost));
+                if (ilpCost > tuhhCost) {
+                    modelRepairMoreExpensive.add(model + "_" + variant);
+                }
+                ilpCosts.put(model + "_" + variant, ilpCost);
                 tuhhCosts.put(model + "_" + variant, tuhhCost);
-                
-				
-			}
-		}
-		System.out.println(modelRepairMoreExpensive);
-		
-		System.out.println(ilpCosts);
+
+            }
+        }
+        System.out.println(modelRepairMoreExpensive);
+
+        System.out.println(ilpCosts);
         System.out.println(tuhhCosts);
-	}
+    }
 
-	
-	@Test
-	public void runSpecific() throws StandaloneInitializationException {
-		String model = "mudigal-technologies";
-		int variant = 2;
-		String name = model + "_" + variant;
+    @Disabled
+    @Test
+    public void runSpecific() throws StandaloneInitializationException {
+        String model = "mudigal-technologies";
+        int variant = 2;
+        String name = model + "_" + variant;
 
-		DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
+        DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
 
-		var optimization = new OptimizationManager(dfd,analysisConstraints);
+        var optimization = new OptimizationManager(dfd, analysisConstraints);
 
-		var result = optimization.repair();
+        var result = optimization.repair();
 
-		var dfdConverter = new DFD2WebConverter();
-		dfdConverter.convert(result).save("models/", "temp-repaired.json");
+        var dfdConverter = new DFD2WebConverter();
+        dfdConverter.convert(result)
+                .save("models/", "temp-repaired.json");
 
-		assertTrue(optimization.isViolationFree(result, analysisConstraints));
-	}
+        assertTrue(optimization.isViolationFree(result, analysisConstraints));
+    }
 
-	private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
-		final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
-		final String location = Paths.get("scenarios", "dfd", "TUHH-Models").toString();
-		var dfd = new DataFlowDiagramAndDictionary(PROJECT_NAME,
-				Paths.get(location, model, (name + ".dataflowdiagram")).toString(),
-				Paths.get(location, model, (name + ".datadictionary")).toString(), Activator.class);
-		return dfd;
-	}
+    private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
+        final String PROJECT_NAME = "org.dataflowanalysis.examplemodels";
+        final String location = Paths.get("scenarios", "dfd", "TUHH-Models")
+                .toString();
+        var dfd = new DataFlowDiagramAndDictionary(PROJECT_NAME, Paths.get(location, model, (name + ".dataflowdiagram"))
+                .toString(),
+                Paths.get(location, model, (name + ".datadictionary"))
+                        .toString(),
+                Activator.class);
+        return dfd;
+    }
 }

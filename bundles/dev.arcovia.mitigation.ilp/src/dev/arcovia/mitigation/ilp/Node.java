@@ -14,121 +14,134 @@ import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import dev.arcovia.mitigation.sat.Term;
 
 public class Node {
-	private final double Epsilon = 0.01;
-	private final String name;
-	private List<Constraint> violatingConstraints = new ArrayList<>();
-	protected AbstractTransposeFlowGraph tfg;
-	private final boolean isForwarding;
-	private List<AbstractVertex<?>> previous;
-	private Map<Pin, Flow> pinFlowMap;
-	private Map<Pin, DFDVertex> pinDFDVertexMap;
-	private final DFDVertex vertex;
+    private final double Epsilon = 0.01;
+    private final String name;
+    private List<Constraint> violatingConstraints = new ArrayList<>();
+    protected AbstractTransposeFlowGraph tfg;
+    private final boolean isForwarding;
+    private List<AbstractVertex<?>> previous;
+    private Map<Pin, Flow> pinFlowMap;
+    private Map<Pin, DFDVertex> pinDFDVertexMap;
+    private final DFDVertex vertex;
 
-	public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg, Constraint constraint) {
-		this.tfg = tfg;
+    public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg, Constraint constraint) {
+        this.tfg = tfg;
 
-		if (constraint != null)
-			violatingConstraints.add(constraint);
-		
-		this.vertex = vertex;
-		name = vertex.getReferencedElement().getId();
+        if (constraint != null)
+            violatingConstraints.add(constraint);
 
-		isForwarding = determineForwarding(vertex);
+        this.vertex = vertex;
+        name = vertex.getReferencedElement()
+                .getId();
 
-		previous = vertex.getPreviousElements();
+        isForwarding = determineForwarding(vertex);
 
-		pinFlowMap = vertex.getPinFlowMap();
+        previous = vertex.getPreviousElements();
 
-		pinDFDVertexMap = vertex.getPinDFDVertexMap();
+        pinFlowMap = vertex.getPinFlowMap();
 
-	}
+        pinDFDVertexMap = vertex.getPinDFDVertexMap();
 
-	public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg) {
-		this(vertex, tfg, null);
-	}
+    }
 
-	public boolean determineForwarding(DFDVertex vertex) {
-		var assignments = vertex.getReferencedElement().getBehavior().getAssignment();
-		for (var assignment : assignments) {
-			if (assignment.getClass().toString().contains("Forwarding"))
-				return true;
-		}
-		return false;
-	}
+    public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg) {
+        this(vertex, tfg, null);
+    }
 
-	public List<AbstractVertex<?>> getPrevious() {
-		return previous;
-	}
+    public boolean determineForwarding(DFDVertex vertex) {
+        var assignments = vertex.getReferencedElement()
+                .getBehavior()
+                .getAssignment();
+        for (var assignment : assignments) {
+            if (assignment.getClass()
+                    .toString()
+                    .contains("Forwarding"))
+                return true;
+        }
+        return false;
+    }
 
-	public List<Mitigation> getPossibleMitigations() {
-		List<Mitigation> mitigations = new ArrayList<>();
-		for (var constraint : violatingConstraints) {
-			for (var mitigation : constraint.getMitigations()) {
-				switch (mitigation.type) {
-				case NodeLabel -> {
-					mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Adding), mitigation.cost,
-							getAllRequiredMitigations(mitigation)));
-				}
-				case DataLabel -> {
-					mitigations.addAll(getDataMitigations(mitigation,ActionType.Adding));
-				}
-                case DeleteNodeLabel -> {
-                    mitigation.checkIfAllowed(vertex);
-                    mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Removing), mitigation.cost,
-                            getAllRequiredMitigations(mitigation)));
+    public List<AbstractVertex<?>> getPrevious() {
+        return previous;
+    }
+
+    public List<Mitigation> getPossibleMitigations() {
+        List<Mitigation> mitigations = new ArrayList<>();
+        for (var constraint : violatingConstraints) {
+            for (var mitigation : constraint.getMitigations()) {
+                switch (mitigation.type) {
+                    case NodeLabel -> {
+                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Adding), mitigation.cost,
+                                getAllRequiredMitigations(mitigation)));
+                    }
+                    case DataLabel -> {
+                        mitigations.addAll(getDataMitigations(mitigation, ActionType.Adding));
+                    }
+                    case DeleteNodeLabel -> {
+                        mitigation.checkIfAllowed(vertex);
+                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Removing), mitigation.cost,
+                                getAllRequiredMitigations(mitigation)));
+                    }
+                    case DeleteDataLabel -> {
+                        mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
+                    }
                 }
-                case DeleteDataLabel-> {
-                    mitigations.addAll(getDataMitigations(mitigation,ActionType.Removing));    
-                }                    
-				}
-			}
-		}
+            }
+        }
 
-		return mitigations;
-	}
+        return mitigations;
+    }
 
-	private List<Mitigation> getDataMitigations(MitigationStrategy mitigation, ActionType type) {
-		List<Mitigation> mitigations = new ArrayList<>();
+    private List<Mitigation> getDataMitigations(MitigationStrategy mitigation, ActionType type) {
+        List<Mitigation> mitigations = new ArrayList<>();
 
-		for (var vertex : previous) {
-			Node node = new Node((DFDVertex) vertex, tfg);
+        for (var vertex : previous) {
+            Node node = new Node((DFDVertex) vertex, tfg);
 
-			mitigations.add(new Mitigation(
-					new ActionTerm(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label()), type),
-					mitigation.cost, getAllRequiredMitigations(mitigation)));
+            mitigations.add(new Mitigation(new ActionTerm(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label()), type),
+                    mitigation.cost, getAllRequiredMitigations(mitigation)));
 
-			if (node.isForwarding) {
-				// need to discuss whether forwarding should be prioritized or not & if the user
-				// should decide --> Impact set
-				mitigations.addAll(node.getDataMitigations(
-						new MitigationStrategy(mitigation.label, mitigation.cost - Epsilon, MitigationType.DataLabel),type));
-			}
-		}
+            if (node.isForwarding) {
+                // need to discuss whether forwarding should be prioritized or not & if the user
+                // should decide --> Impact set
+                mitigations.addAll(
+                        node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost - Epsilon, MitigationType.DataLabel), type));
+            }
+        }
 
-		return mitigations;
-	}
+        return mitigations;
+    }
 
-	private List<Mitigation> getAllRequiredMitigations(MitigationStrategy mitigation) {
-		List<Mitigation> requiredMitgations = new ArrayList<>();
-		for (var requiredMitgation : mitigation.required) {
-		    ActionType type;
-		    if (requiredMitgation.type.toString().startsWith("Delete")) type = ActionType.Removing;
-		    else type = ActionType.Adding;
-            
+    private List<Mitigation> getAllRequiredMitigations(MitigationStrategy mitigation) {
+        List<Mitigation> requiredMitgations = new ArrayList<>();
+        for (var requiredMitgation : mitigation.required) {
+            ActionType type;
+            if (requiredMitgation.type.toString()
+                    .startsWith("Delete"))
+                type = ActionType.Removing;
+            else
+                type = ActionType.Adding;
+
             requiredMitgations.add(new Mitigation(new ActionTerm(this.name, requiredMitgation.label, type), requiredMitgation.cost,
                     getAllRequiredMitigations(requiredMitgation)));
 
-		}
-		    
-		return requiredMitgations;
-	}
+        }
 
-	private String getOutpin(DFDVertex vertex) {
-		Pin pin = pinDFDVertexMap.entrySet().stream().filter(e -> e.getValue().equals(vertex)).map(Map.Entry::getKey)
-				.findFirst().get();
+        return requiredMitgations;
+    }
 
-		var flow = pinFlowMap.get(pin);
+    private String getOutpin(DFDVertex vertex) {
+        Pin pin = pinDFDVertexMap.entrySet()
+                .stream()
+                .filter(e -> e.getValue()
+                        .equals(vertex))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .get();
 
-		return flow.getSourcePin().getId();
-	}
+        var flow = pinFlowMap.get(pin);
+
+        return flow.getSourcePin()
+                .getId();
+    }
 }
