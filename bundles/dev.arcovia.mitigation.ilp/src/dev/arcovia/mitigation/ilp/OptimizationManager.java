@@ -55,6 +55,15 @@ public class OptimizationManager {
         this.dfd = dfd;
         this.constraints = getConstraints(constraints);
     }
+    
+    public OptimizationManager(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, boolean addAdditionalMitigations) {
+        this.dfd = dfd;
+        this.constraints = constraints;
+        
+        if (addAdditionalMitigations) {
+        	for (var constraint: this.constraints) constraint.findAlternativeMitigations();
+        }
+    }
 
     public DataFlowDiagramAndDictionary repair() {
         analyseConstraints();
@@ -181,13 +190,8 @@ public class OptimizationManager {
         var flowGraph = analysis.findFlowGraphs();
         flowGraph.evaluate();
 
-        for (var constraint : constraints) {
-            List<DSLResult> results = constraint.dsl.findViolations(flowGraph);
-            for (var result : results) {
-                var tfg = result.getTransposeFlowGraph();
-                for (var vertex : result.getMatchedVertices())
-                    violatingNodes.add(new Node((DFDVertex) vertex, tfg, constraint));
-            }
+        for (var constraint : constraints) {        	
+            violatingNodes.addAll(constraint.determineViolations(flowGraph));
         }
     }
 
