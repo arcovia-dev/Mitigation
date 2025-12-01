@@ -46,6 +46,7 @@ public class Constraint {
     }
 
     public boolean isPrecondition(CompositeLabel label) {
+    	if (dsl == null) return false;
         var translation = new CNFTranslation(dsl);
         var literals = translation.constructCNF()
                 .get(0)
@@ -75,8 +76,7 @@ public class Constraint {
     }
     
     public Set<Node> determineViolations(DFDFlowGraphCollection flowGraph){
-    	if (this.dsl != null) return getDSLViolations(flowGraph);
-    	else return evalFunction.evaluate(flowGraph);
+    	return evalFunction.evaluate(flowGraph);
     }
     
     private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
@@ -96,6 +96,7 @@ public class Constraint {
      * @return
      */
     public boolean isMatched(DFDVertex node) {
+    	//protection if no dsl is provided
         var translation = new CNFTranslation(dsl);
         List<String> negativeLiterals = new ArrayList<>();
         List<String> positiveLiterals = new ArrayList<>();
