@@ -129,11 +129,11 @@ public class TUHHTest {
 
         Map<String, List<Long>> complexityValues = new LinkedHashMap<>();
 
-        for (boolean deactivateViolating : new boolean[] {true, false}) {
+        for (boolean deactivateViolatingTFGSOnly : new boolean[] {true, false}) {
             for (boolean deactivateOnlyRepairingLabels : new boolean[] {true, false}) {
-                for (boolean deactivateMinDFD : new boolean[] {true, false}) {
+                for (boolean deactivateSimultaneouslyRepair : new boolean[] {true, false}) {
                     for (boolean deactivateSubsumption : new boolean[] {true, false}) {
-                        var complexityReductions = List.of(deactivateViolating, deactivateOnlyRepairingLabels, deactivateMinDFD,
+                        var complexityReductions = List.of(deactivateViolatingTFGSOnly, deactivateOnlyRepairingLabels, deactivateSimultaneouslyRepair,
                                 deactivateSubsumption);
 
                         List<Long> runtimes = new ArrayList<>();

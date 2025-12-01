@@ -47,9 +47,9 @@ public class Mechanic {
     private final String dfdName;
     private int violations = 0;
 
-    private boolean deactivateDFDViolationAnalysis = false;
+    private boolean deactivateViolatingTFGSOnly = false;
     private boolean deactivateOnlyRepairingLabels = false;
-    private boolean deactivateSimoultaneouseRepair = false;
+    private boolean deactivateSimultaneouslyRepair = false;
     private boolean deactivateSubsumption = false;
 
     private final Logger logger = Logger.getLogger(Mechanic.class);
@@ -70,9 +70,9 @@ public class Mechanic {
         this.costs = costs;
         this.nodes = new ArrayList<>();
         this.flows = new ArrayList<>();
-        this.deactivateDFDViolationAnalysis = complexityReductions.get(0);
+        this.deactivateViolatingTFGSOnly = complexityReductions.get(0);
         this.deactivateOnlyRepairingLabels = complexityReductions.get(1);
-        this.deactivateSimoultaneouseRepair = complexityReductions.get(2);
+        this.deactivateSimultaneouslyRepair = complexityReductions.get(2);
         this.deactivateSubsumption = complexityReductions.get(3);
     }
 
@@ -151,7 +151,7 @@ public class Mechanic {
     public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
 
-        if (!violatingTFGs.isEmpty() && this.deactivateDFDViolationAnalysis) {
+        if (!violatingTFGs.isEmpty() && this.deactivateViolatingTFGSOnly) {
             violatingTFGs = getAllTFGs(dfd);
         }
 
@@ -167,7 +167,7 @@ public class Mechanic {
 
         deriveOutPinsToAssignmentsMap(dfd);
 
-        if (deactivateSimoultaneouseRepair)
+        if (deactivateSimultaneouslyRepair)
             return TFGBasedRepair(violatingTFGs);
 
         getNodesAndFlows(violatingTFGs);
