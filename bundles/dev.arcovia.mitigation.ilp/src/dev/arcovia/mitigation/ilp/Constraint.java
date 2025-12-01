@@ -1,7 +1,9 @@
 package dev.arcovia.mitigation.ilp;
 
+import org.dataflowanalysis.analysis.dfd.core.DFDFlowGraphCollection;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
+import org.dataflowanalysis.analysis.dsl.result.DSLResult;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
@@ -16,18 +18,27 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Constraint {
-    public final AnalysisConstraint dsl;
+    private final AnalysisConstraint dsl;
+    private final EvaluationFunction evalFunction;
     private final List<MitigationStrategy> mitigations;
 
     public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
         this.dsl = dsl;
+        this.evalFunction = this::getDSLViolations;
         this.mitigations = mitigations;
     }
 
     public Constraint(AnalysisConstraint dsl) {
         this.dsl = dsl;
+        this.evalFunction = this::getDSLViolations;
         this.mitigations = determineMitigations();
 
+    }
+    
+    public Constraint(EvaluationFunction evaluate, List<MitigationStrategy> mitigations) {
+    	this.dsl = null;
+    	this.evalFunction = evaluate;
+    	this.mitigations = mitigations;
     }
 
     public List<MitigationStrategy> getMitigations() {
@@ -50,6 +61,33 @@ public class Constraint {
 
     public void removeMitigation(MitigationStrategy mitgation) {
         mitigations.remove(mitgation);
+    }
+    
+    public void findAlternativeMitigations() {
+    	if (dsl == null) return;
+    	
+    	var mitigations = determineMitigations();
+    	
+    	for (var mitigation : mitigations) {
+    		if (!this.mitigations.contains(mitigation)) this.mitigations.add(mitigation);
+    	}
+    		
+    }
+    
+    public Set<Node> determineViolations(DFDFlowGraphCollection flowGraph){
+    	if (this.dsl != null) return getDSLViolations(flowGraph);
+    	else return evalFunction.evaluate(flowGraph);
+    }
+    
+    private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
+    	Set<Node> violatingNodes = new HashSet<>();
+    	List<DSLResult> results = this.dsl.findViolations(flowGraph);
+        for (var result : results) {
+            var tfg = result.getTransposeFlowGraph();
+            for (var vertex : result.getMatchedVertices())
+                violatingNodes.add(new Node((DFDVertex) vertex, tfg, this));
+        }
+        return violatingNodes;
     }
 
     /***
