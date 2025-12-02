@@ -1,5 +1,7 @@
 package dev.arcovia.mitigation.sat;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -40,12 +42,39 @@ public class Mechanic {
     private final DataFlowDiagramAndDictionary dfd;
     private final List<Constraint> constraints;
     private final Map<Label, Integer> costs;
-    private final List<Node> nodes;
-    private final List<Flow> flows;
+    private List<Node> nodes;
+    private List<Flow> flows;
     private final String dfdName;
     private int violations = 0;
 
+    private boolean deactivateViolatingTFGsOnly = false;
+    private boolean deactivateOnlyRepairingLabels = false;
+    private boolean deactivateSimultaneouseRepair = false;
+    private boolean deactivateSubsumption = false;
+
     private final Logger logger = Logger.getLogger(Mechanic.class);
+
+    /**
+     * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location, constraints, and mapping
+     * of costs for specific labels. This constructor initializes the DFD, its associated name, constraints, costs, and
+     * prepares the internal data structures for nodes and flows.
+     * @param dfdLocation the file location of the Web Data Flow Diagram (DFD)
+     * @param constraints the list of constraints to be applied to the DFD
+     * @param costs the map associating labels with their respective integer costs
+     */
+    public Mechanic(DataFlowDiagramAndDictionary dfd, String dfdName, List<Constraint> constraints, Map<Label, Integer> costs,
+            List<Boolean> complexityReductions) {
+        this.dfd = dfd;
+        this.dfdName = dfdName;
+        this.constraints = constraints;
+        this.costs = costs;
+        this.nodes = new ArrayList<>();
+        this.flows = new ArrayList<>();
+        this.deactivateViolatingTFGsOnly = complexityReductions.get(0);
+        this.deactivateOnlyRepairingLabels = complexityReductions.get(1);
+        this.deactivateSimultaneouseRepair = complexityReductions.get(2);
+        this.deactivateSubsumption = complexityReductions.get(3);
+    }
 
     /**
      * Constructs a new Mechanic instance with the specified Web Data Flow Diagram (DFD) location, constraints, and mapping
@@ -121,18 +150,36 @@ public class Mechanic {
      */
     public DataFlowDiagramAndDictionary repair() throws ContradictionException, TimeoutException, IOException {
         List<AbstractTransposeFlowGraph> violatingTFGs = determineViolatingTFGs(dfd, constraints);
+
+        if (!violatingTFGs.isEmpty() && this.deactivateViolatingTFGsOnly) {
+            violatingTFGs = getAllTFGs(dfd);
+        }
+
+        // If there are no violations repairs are not needed
+        if (violatingTFGs.isEmpty()) {
+            logger.warn("Analysis has no violations found in DFD");
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(("testresults/" + dfdName + ".cnf")))) {
+                writer.write("p cnf " + 0 + " " + 0);
+                writer.newLine();
+            }
+            return dfd;
+        }
+
         deriveOutPinsToAssignmentsMap(dfd);
+
+        if (deactivateSimultaneouseRepair)
+            return TFGBasedRepair(violatingTFGs);
 
         getNodesAndFlows(violatingTFGs);
         sortNodesAndFlows();
 
-        // IF there are no violations repairs are not needed
-        if (nodes.isEmpty()) {
-            logger.warn("Analysis has no violations found in DFD");
-            return dfd;
+        Set<Label> allLabels = null;
+
+        if (deactivateOnlyRepairingLabels) {
+            allLabels = getAllLabels();
         }
 
-        var solutions = new Sat().solve(nodes, flows, constraints, dfdName);
+        var solutions = new Sat().solve(nodes, flows, constraints, dfdName, deactivateSubsumption, allLabels);
         List<Term> flatendNodes = getFlatNodes(nodes);
 
         List<Term> chosenSolution = getChosenSolution(solutions, flatendNodes);
@@ -180,6 +227,57 @@ public class Mechanic {
         return violations;
     }
 
+    private DataFlowDiagramAndDictionary TFGBasedRepair(List<AbstractTransposeFlowGraph> violatingTFGs)
+            throws ContradictionException, TimeoutException, IOException {
+        Set<Term> ALLsolutions = new HashSet<>();
+
+        for (var tfg : violatingTFGs) {
+            if (!checkConstraints(tfg, constraints))
+                continue;
+
+            getNodesAndFlows(List.of(tfg));
+            sortNodesAndFlows();
+
+            Set<Label> allLabels = null;
+
+            if (deactivateOnlyRepairingLabels) {
+                allLabels = getAllLabels();
+            }
+
+            var solutions = new Sat().solve(nodes, flows, constraints, dfdName, deactivateSubsumption, allLabels);
+            List<Term> flatendNodes = getFlatNodes(nodes);
+
+            ALLsolutions.addAll(getChosenSolution(solutions, flatendNodes));
+
+        }
+        getNodesAndFlows(violatingTFGs);
+        sortNodesAndFlows();
+        List<Term> flatendNodes = getFlatNodes(nodes);
+
+        List<Term> solutions = new ArrayList<Term>();
+
+        for (var solution : ALLsolutions)
+            solutions.add(solution);
+
+        List<Term> actions = getActions(solutions, flatendNodes);
+
+        applyActions(dfd, actions);
+
+        return dfd;
+    }
+
+    private Set<Label> getAllLabels() {
+        Set<Label> labels = new HashSet<>();
+
+        for (var labelType : dfd.dataDictionary()
+                .getLabelTypes()) {
+            for (var label : labelType.getLabel()) {
+                labels.add(new Label(labelType.getEntityName(), label.getEntityName()));
+            }
+        }
+        return labels;
+    }
+
     private List<Term> getChosenSolution(List<List<Term>> solutions, List<Term> flatendNodes) {
         if (costs != null) {
             for (var constraint : constraints) {
@@ -197,6 +295,23 @@ public class Mechanic {
         } else {
             return getMinimalSolution(solutions);
         }
+    }
+
+    private List<AbstractTransposeFlowGraph> getAllTFGs(DataFlowDiagramAndDictionary dfd) {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        Set<AbstractTransposeFlowGraph> violatingTransposeFlowGraphs = new HashSet<>();
+
+        for (var tfg : flowGraph.getTransposeFlowGraphs()) {
+            violatingTransposeFlowGraphs.add(tfg);
+        }
+        return new ArrayList<>(violatingTransposeFlowGraphs);
     }
 
     private List<AbstractTransposeFlowGraph> determineViolatingTFGs(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints) {
