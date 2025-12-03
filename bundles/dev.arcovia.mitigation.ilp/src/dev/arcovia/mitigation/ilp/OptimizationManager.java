@@ -56,8 +56,8 @@ public class OptimizationManager {
         this.constraints = getConstraints(constraints);
     }
     
-    public OptimizationManager(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, boolean addAdditionalMitigations) {
-        this.dfd = dfd;
+    public OptimizationManager(String dfdLocation, List<Constraint> constraints, boolean addAdditionalMitigations) {
+        this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));;
         this.constraints = constraints;
         
         if (addAdditionalMitigations) {

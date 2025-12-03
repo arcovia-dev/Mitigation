@@ -19,7 +19,7 @@ import java.util.HashSet;
 
 public class Constraint {
     private final AnalysisConstraint dsl;
-    private final EvaluationFunction evalFunction;
+    private EvaluationFunction evalFunction;
     private final List<MitigationStrategy> mitigations;
 
     public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
@@ -35,10 +35,14 @@ public class Constraint {
 
     }
     
-    public Constraint(EvaluationFunction evaluate, List<MitigationStrategy> mitigations) {
+    public Constraint(List<MitigationStrategy> mitigations) {
     	this.dsl = null;
-    	this.evalFunction = evaluate;
+    	this.evalFunction = null;
     	this.mitigations = mitigations;
+    }
+    
+    public void addEvalFunction(EvaluationFunction evaluate) {
+        this.evalFunction = evaluate;
     }
 
     public List<MitigationStrategy> getMitigations() {
