@@ -343,9 +343,10 @@ public class Mechanic {
     private boolean checkAllConstraints(AbstractTransposeFlowGraph tfg, List<Constraint> constraints) {
         boolean violation = false;
         for (var constraint : constraints) {
-            if (checkConstraint(tfg, constraint.literals()))
+            if (checkConstraint(tfg, constraint.literals())) {
                 violation = true;
-            violations++;
+                violations++;
+            }
         }
         return violation;
     }
