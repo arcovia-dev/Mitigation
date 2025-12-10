@@ -11,7 +11,6 @@ import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 
 import dev.arcovia.mitigation.sat.OutgoingDataLabel;
-import dev.arcovia.mitigation.sat.Term;
 
 public class Node {
     private final double Epsilon = 0.01;
@@ -85,10 +84,30 @@ public class Node {
                     case DeleteDataLabel -> {
                         mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
                     }
+                    case AddFlow -> throw new UnsupportedOperationException("Unimplemented case: " + mitigation.type);
+                    case AddNode -> {
+                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddNode), mitigation.cost,
+                                getAllRequiredMitigations(mitigation)));
+                        mitigations.addAll(getNodeAdditionMitigations(mitigation));
+                    }
+                    default -> throw new IllegalArgumentException("Unexpected value: " + mitigation.type);
                 }
             }
         }
 
+        return mitigations;
+    }
+    
+    private List<Mitigation> getNodeAdditionMitigations(MitigationStrategy mitigation){
+        List<Mitigation> mitigations = new ArrayList<>();
+
+        for (var vertex : previous) {
+            Node node = new Node((DFDVertex) vertex, tfg);
+            mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddNode), mitigation.cost,
+                    getAllRequiredMitigations(mitigation)));
+            mitigations.addAll(
+                    node.getNodeAdditionMitigations(mitigation));
+        }
         return mitigations;
     }
 

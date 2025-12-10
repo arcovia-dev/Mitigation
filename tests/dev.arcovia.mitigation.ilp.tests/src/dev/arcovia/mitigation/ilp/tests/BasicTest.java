@@ -56,7 +56,7 @@ public class BasicTest {
         dfdConverter.convert(result)
                 .save("models/", "mindfd-repaired.json");
 
-        assertTrue(optimization.isViolationFree(result, List.of(constraint)));
+        assertTrue(optimization.isViolationFree(result));
     }
     
     @Test
@@ -120,7 +120,7 @@ public class BasicTest {
         dfdConverter.convert(result)
                 .save("models/", "mindfd-repaired.json");
 
-        assertTrue(optimization.isViolationFree(result, List.of(constraint)));
+        assertTrue(optimization.isViolationFree(result));
     }
 
 }
