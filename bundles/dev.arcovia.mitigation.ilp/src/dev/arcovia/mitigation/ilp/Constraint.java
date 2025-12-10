@@ -24,13 +24,33 @@ public class Constraint {
 
     public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
         this.dsl = dsl;
-        this.evalFunction = this::getDSLViolations;
+        this.evalFunction = new EvaluationFunction() {
+            @Override
+            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+                return getDSLViolations(flowGraph);
+            }
+
+            @Override
+            public boolean isMatched(DFDVertex vertex) {
+                return DSLIsMatched(vertex);
+            }
+        };
         this.mitigations = mitigations;
     }
 
     public Constraint(AnalysisConstraint dsl) {
         this.dsl = dsl;
-        this.evalFunction = this::getDSLViolations;
+        this.evalFunction = new EvaluationFunction() {
+            @Override
+            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+                return getDSLViolations(flowGraph);
+            }
+
+            @Override
+            public boolean isMatched(DFDVertex vertex) {
+                return DSLIsMatched(vertex);
+            }
+        };
         this.mitigations = determineMitigations();
 
     }
@@ -100,7 +120,13 @@ public class Constraint {
      * @return
      */
     public boolean isMatched(DFDVertex node) {
+        return evalFunction.isMatched(node);
+    }
+        
+    private boolean DSLIsMatched (DFDVertex node) {
     	//protection if no dsl is provided
+        if (dsl == null) return false;
+        
         var translation = new CNFTranslation(dsl);
         List<String> negativeLiterals = new ArrayList<>();
         List<String> positiveLiterals = new ArrayList<>();
