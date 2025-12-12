@@ -26,7 +26,7 @@ import dev.arcovia.mitigation.sat.NodeLabel;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 public class AddNodeAndFlowsTest {
-    private final Constraint customConstraint = new Constraint(List.of(new MitigationStrategy(new NodeLabel(new Label("Stereotype", "logging_server")), 1, MitigationType.AddNode)));
+    private final Constraint customConstraint = new Constraint(List.of(new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "logging_server"))), 1, MitigationType.AddNode)));
     
     private final EvaluationFunction evalFunction = new EvaluationFunction() {            
         @Override

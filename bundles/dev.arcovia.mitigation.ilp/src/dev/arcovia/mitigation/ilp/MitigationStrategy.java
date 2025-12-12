@@ -8,13 +8,13 @@ import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import dev.arcovia.mitigation.sat.CompositeLabel;
 
 public class MitigationStrategy {
-    CompositeLabel label;
+    List<CompositeLabel> label;
     double cost;
     MitigationType type;
     List<MitigationStrategy> required = new ArrayList<>();
     List<Constraint> notAllowedIfViolated = new ArrayList<>();
 
-    public MitigationStrategy(CompositeLabel label, double cost, MitigationType type) {
+    public MitigationStrategy(List<CompositeLabel> label, double cost, MitigationType type) {
         this.label = label;
         this.cost = cost;
         this.type = type;

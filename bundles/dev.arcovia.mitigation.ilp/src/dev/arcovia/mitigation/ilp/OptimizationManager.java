@@ -11,10 +11,8 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
-import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
-import org.dataflowanalysis.analysis.dsl.result.DSLResult;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.web2dfd.Web2DFDConverter;
 import org.dataflowanalysis.converter.web2dfd.WebEditorConverterModel;
@@ -29,7 +27,7 @@ import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
-import dev.arcovia.mitigation.sat.Term;
+import dev.arcovia.mitigation.sat.NodeLabel;
 
 public class OptimizationManager {
     private final DataFlowDiagramAndDictionary dfd;
@@ -159,10 +157,12 @@ public class OptimizationManager {
         }
     }
 
-    private List<MitigationStrategy> getAdditionalMitigations(CompositeLabel label) {
-        for (var constraint : constraints) {
-            if (constraint.isPrecondition(label))
-                return constraint.getMitigations();
+    private List<MitigationStrategy> getAdditionalMitigations(List<CompositeLabel> labels) {
+        for (var label : labels) {
+            for (var constraint : constraints) {
+                if (constraint.isPrecondition(label))
+                    return constraint.getMitigations();
+            }
         }
         return null;
     }
@@ -212,7 +212,7 @@ public class OptimizationManager {
         for (var action : actions) {
             if (action.type()
                     .equals(ActionType.Adding)) {
-                if (action.compositeLabel()
+                if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.OutgoingData)) {
                     for (var behavior : dd.getBehavior()) {
@@ -220,10 +220,10 @@ public class OptimizationManager {
                         for (var assignment : behavior.getAssignment()) {
                             if (assignment.getId()
                                     .equals(outPinToAssignmentMap.get(action.domain()))) {
-                                var type = action.compositeLabel()
+                                var type = action.compositeLabels().get(0)
                                         .label()
                                         .type();
-                                var value = action.compositeLabel()
+                                var value = action.compositeLabels().get(0)
                                         .label()
                                         .value();
                                 var label = getOrCreateLabel(dd, type, value);
@@ -252,17 +252,17 @@ public class OptimizationManager {
                             behavior.getAssignment()
                                     .addAll(newAssignments);
                     }
-                } else if (action.compositeLabel()
+                } else if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.Node)) {
                     for (var node : dfd.dataFlowDiagram()
                             .getNodes()) {
                         if (node.getId()
                                 .equals(action.domain())) {
-                            var type = action.compositeLabel()
+                            var type = action.compositeLabels().get(0)
                                     .label()
                                     .type();
-                            var value = action.compositeLabel()
+                            var value = action.compositeLabels().get(0)
                                     .label()
                                     .value();
                             var label = getOrCreateLabel(dd, type, value);
@@ -275,7 +275,7 @@ public class OptimizationManager {
             }
 
             else {
-                if (action.compositeLabel()
+                if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.OutgoingData)) {
                     for (var behavior : dd.getBehavior()) {
@@ -283,10 +283,10 @@ public class OptimizationManager {
                         for (var assignment : behavior.getAssignment()) {
                             if (assignment.getId()
                                     .equals(outPinToAssignmentMap.get(action.domain()))) {
-                                var type = action.compositeLabel()
+                                var type = action.compositeLabels().get(0)
                                         .label()
                                         .type();
-                                var value = action.compositeLabel()
+                                var value = action.compositeLabels().get(0)
                                         .label()
                                         .value();
                                 var label = getOrCreateLabel(dd, type, value);
@@ -315,17 +315,17 @@ public class OptimizationManager {
                             behavior.getAssignment()
                                     .addAll(newAssignments);
                     }
-                } else if (action.compositeLabel()
+                } else if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.Node)) {
                     for (var node : dfd.dataFlowDiagram()
                             .getNodes()) {
                         if (node.getId()
                                 .equals(action.domain())) {
-                            var type = action.compositeLabel()
+                            var type = action.compositeLabels().get(0)
                                     .label()
                                     .type();
-                            var value = action.compositeLabel()
+                            var value = action.compositeLabels().get(0)
                                     .label()
                                     .value();
                             var label = getOrCreateLabel(dd, type, value);
@@ -349,7 +349,7 @@ public class OptimizationManager {
                 .findFirst()
                 .orElseThrow();
                 
-                var name = action.compositeLabel().label().value();
+                var name = action.compositeLabels().get(0).label().value();
                 var behaviorOld = node.getBehavior();
                 
                 var dfdFactory = dataflowdiagramFactory.eINSTANCE;
@@ -357,15 +357,20 @@ public class OptimizationManager {
                 var vertex = dfdFactory.createProcess();
                 vertex.setEntityName(name);
                 
-                var type = action.compositeLabel()
-                        .label()
-                        .type();
-                var value = action.compositeLabel()
-                        .label()
-                        .value();
-                var label = getOrCreateLabel(dd, type, value);
+                List<Label> outgoingLabels = new ArrayList<>();
                 
-                vertex.getProperties().add(label);
+                for (var label : action.compositeLabels() ) {
+                    var type = label.label().type();
+                    var value = label.label().value();
+                    var dfdLabel = getOrCreateLabel(dd, type, value);
+                    
+                    if (label instanceof NodeLabel) {
+                        vertex.getProperties().add(dfdLabel);
+                    }
+                    else {
+                        outgoingLabels.add(dfdLabel);
+                    }
+                }              
                 
                 var ddFactory = datadictionaryFactory.eINSTANCE;
                 
@@ -391,6 +396,16 @@ public class OptimizationManager {
                     
                     assign.setOutputPin(assignment.getOutputPin());
                     assign.getInputPins().add(inPin);
+                    
+                    if (!outgoingLabels.isEmpty()) {
+                        var setAssign = ddFactory.createAssignment();
+                        setAssign.setOutputPin(assignment.getOutputPin());
+                        setAssign.getInputPins().add(inPin);
+                        setAssign.getOutputLabels().addAll(outgoingLabels);
+                        setAssign.setTerm(ddFactory.createTRUE());
+                        
+                        behaviorNew.getAssignment().add(setAssign);
+                    }
                     
                     behaviorNew.getAssignment().add(assign);
                     behaviorNew.getOutPin().add(assignment.getOutputPin());

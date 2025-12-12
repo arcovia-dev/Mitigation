@@ -11,6 +11,7 @@ import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 
 import dev.arcovia.mitigation.sat.OutgoingDataLabel;
+import dev.arcovia.mitigation.sat.CompositeLabel;
 
 public class Node {
     private final double Epsilon = 0.01;
@@ -116,8 +117,14 @@ public class Node {
 
         for (var vertex : previous) {
             Node node = new Node((DFDVertex) vertex, tfg);
+            
+            List <CompositeLabel> outGoingLabels = new ArrayList<>();
+            
+            for (var label : mitigation.label) {
+                outGoingLabels.add(new OutgoingDataLabel(label.label()));
+            }
 
-            mitigations.add(new Mitigation(new ActionTerm(getOutpin((DFDVertex) vertex), new OutgoingDataLabel(mitigation.label.label()), type),
+            mitigations.add(new Mitigation(new ActionTerm(getOutpin((DFDVertex) vertex), outGoingLabels, type),
                     mitigation.cost, getAllRequiredMitigations(mitigation)));
 
             if (node.isForwarding) {
