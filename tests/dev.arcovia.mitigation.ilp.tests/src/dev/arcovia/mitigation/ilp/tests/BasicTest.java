@@ -103,8 +103,10 @@ public class BasicTest {
                     }
                 }
 
-                if (nodeLiterals.containsAll(negativeLiterals))
+                if (nodeLiterals.containsAll(negativeLiterals)) {
                     return true;
+                }
+                    
 
                 return false;
             }
