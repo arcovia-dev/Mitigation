@@ -1,7 +1,9 @@
 package dev.arcovia.mitigation.ilp;
 
+import org.dataflowanalysis.analysis.dfd.core.DFDFlowGraphCollection;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
+import org.dataflowanalysis.analysis.dsl.result.DSLResult;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
@@ -16,18 +18,51 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Constraint {
-    public final AnalysisConstraint dsl;
+    private final AnalysisConstraint dsl;
+    private EvaluationFunction evalFunction;
     private final List<MitigationStrategy> mitigations;
 
     public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
         this.dsl = dsl;
+        this.evalFunction = new EvaluationFunction() {
+            @Override
+            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+                return getDSLViolations(flowGraph);
+            }
+
+            @Override
+            public boolean isMatched(DFDVertex vertex) {
+                return DSLIsMatched(vertex);
+            }
+        };
         this.mitigations = mitigations;
     }
 
     public Constraint(AnalysisConstraint dsl) {
         this.dsl = dsl;
+        this.evalFunction = new EvaluationFunction() {
+            @Override
+            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+                return getDSLViolations(flowGraph);
+            }
+
+            @Override
+            public boolean isMatched(DFDVertex vertex) {
+                return DSLIsMatched(vertex);
+            }
+        };
         this.mitigations = determineMitigations();
 
+    }
+    
+    public Constraint(List<MitigationStrategy> mitigations) {
+    	this.dsl = null;
+    	this.evalFunction = null;
+    	this.mitigations = mitigations;
+    }
+    
+    public void addEvalFunction(EvaluationFunction evaluate) {
+        this.evalFunction = evaluate;
     }
 
     public List<MitigationStrategy> getMitigations() {
@@ -35,6 +70,7 @@ public class Constraint {
     }
 
     public boolean isPrecondition(CompositeLabel label) {
+    	if (dsl == null) return false;
         var translation = new CNFTranslation(dsl);
         var literals = translation.constructCNF()
                 .get(0)
@@ -51,6 +87,32 @@ public class Constraint {
     public void removeMitigation(MitigationStrategy mitgation) {
         mitigations.remove(mitgation);
     }
+    
+    public void findAlternativeMitigations() {
+    	if (dsl == null) return;
+    	
+    	var mitigations = determineMitigations();
+    	
+    	for (var mitigation : mitigations) {
+    		if (!this.mitigations.contains(mitigation)) this.mitigations.add(mitigation);
+    	}
+    		
+    }
+    
+    public Set<Node> determineViolations(DFDFlowGraphCollection flowGraph){
+    	return evalFunction.evaluate(flowGraph);
+    }
+    
+    private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
+    	Set<Node> violatingNodes = new HashSet<>();
+    	List<DSLResult> results = this.dsl.findViolations(flowGraph);
+        for (var result : results) {
+            var tfg = result.getTransposeFlowGraph();
+            for (var vertex : result.getMatchedVertices())
+                violatingNodes.add(new Node((DFDVertex) vertex, tfg, this));
+        }
+        return violatingNodes;
+    }
 
     /***
      * This functions determines whether a Node matches the Antecedent of this constraint.
@@ -58,6 +120,13 @@ public class Constraint {
      * @return
      */
     public boolean isMatched(DFDVertex node) {
+        return evalFunction.isMatched(node);
+    }
+        
+    private boolean DSLIsMatched (DFDVertex node) {
+    	//protection if no dsl is provided
+        if (dsl == null) return false;
+        
         var translation = new CNFTranslation(dsl);
         List<String> negativeLiterals = new ArrayList<>();
         List<String> positiveLiterals = new ArrayList<>();
