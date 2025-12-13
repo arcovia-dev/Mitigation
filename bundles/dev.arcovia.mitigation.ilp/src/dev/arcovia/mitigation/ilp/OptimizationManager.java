@@ -11,10 +11,8 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
-import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
-import org.dataflowanalysis.analysis.dsl.result.DSLResult;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.web2dfd.Web2DFDConverter;
 import org.dataflowanalysis.converter.web2dfd.WebEditorConverterModel;
@@ -25,10 +23,11 @@ import org.dataflowanalysis.dfd.datadictionary.Label;
 import org.dataflowanalysis.dfd.datadictionary.LabelType;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
+import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
-import dev.arcovia.mitigation.sat.Term;
+import dev.arcovia.mitigation.sat.NodeLabel;
 
 public class OptimizationManager {
     private final DataFlowDiagramAndDictionary dfd;
@@ -64,6 +63,15 @@ public class OptimizationManager {
         	for (var constraint: this.constraints) constraint.findAlternativeMitigations();
         }
     }
+    
+    public OptimizationManager(DataFlowDiagramAndDictionary dfd, List<Constraint> constraints, boolean addAdditionalMitigations) {
+        this.dfd = dfd;
+        this.constraints = constraints;
+        
+        if (addAdditionalMitigations) {
+            for (var constraint: this.constraints) constraint.findAlternativeMitigations();
+        }
+    }
 
     public DataFlowDiagramAndDictionary repair() {
         analyseConstraints();
@@ -88,7 +96,7 @@ public class OptimizationManager {
         return actions.size();
     }
 
-    public boolean isViolationFree(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
+    public boolean isViolationFree(DataFlowDiagramAndDictionary dfd) {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
                 .useCustomResourceProvider(resourceProvider)
@@ -97,10 +105,10 @@ public class OptimizationManager {
         analysis.initializeAnalysis();
         var flowGraph = analysis.findFlowGraphs();
         flowGraph.evaluate();
-
-        for (var constraint : constraints) {
-            List<DSLResult> results = constraint.findViolations(flowGraph);
-            if (!results.isEmpty())
+        
+        for (var constraint : this.constraints) {
+            var result = constraint.determineViolations(flowGraph);
+            if (!result.isEmpty())
                 return false;
         }
         return true;
@@ -149,10 +157,12 @@ public class OptimizationManager {
         }
     }
 
-    private List<MitigationStrategy> getAdditionalMitigations(CompositeLabel label) {
-        for (var constraint : constraints) {
-            if (constraint.isPrecondition(label))
-                return constraint.getMitigations();
+    private List<MitigationStrategy> getAdditionalMitigations(List<CompositeLabel> labels) {
+        for (var label : labels) {
+            for (var constraint : constraints) {
+                if (constraint.isPrecondition(label))
+                    return constraint.getMitigations();
+            }
         }
         return null;
     }
@@ -202,7 +212,7 @@ public class OptimizationManager {
         for (var action : actions) {
             if (action.type()
                     .equals(ActionType.Adding)) {
-                if (action.compositeLabel()
+                if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.OutgoingData)) {
                     for (var behavior : dd.getBehavior()) {
@@ -210,10 +220,10 @@ public class OptimizationManager {
                         for (var assignment : behavior.getAssignment()) {
                             if (assignment.getId()
                                     .equals(outPinToAssignmentMap.get(action.domain()))) {
-                                var type = action.compositeLabel()
+                                var type = action.compositeLabels().get(0)
                                         .label()
                                         .type();
-                                var value = action.compositeLabel()
+                                var value = action.compositeLabels().get(0)
                                         .label()
                                         .value();
                                 var label = getOrCreateLabel(dd, type, value);
@@ -242,17 +252,17 @@ public class OptimizationManager {
                             behavior.getAssignment()
                                     .addAll(newAssignments);
                     }
-                } else if (action.compositeLabel()
+                } else if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.Node)) {
                     for (var node : dfd.dataFlowDiagram()
                             .getNodes()) {
                         if (node.getId()
                                 .equals(action.domain())) {
-                            var type = action.compositeLabel()
+                            var type = action.compositeLabels().get(0)
                                     .label()
                                     .type();
-                            var value = action.compositeLabel()
+                            var value = action.compositeLabels().get(0)
                                     .label()
                                     .value();
                             var label = getOrCreateLabel(dd, type, value);
@@ -265,7 +275,7 @@ public class OptimizationManager {
             }
 
             else {
-                if (action.compositeLabel()
+                if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.OutgoingData)) {
                     for (var behavior : dd.getBehavior()) {
@@ -273,10 +283,10 @@ public class OptimizationManager {
                         for (var assignment : behavior.getAssignment()) {
                             if (assignment.getId()
                                     .equals(outPinToAssignmentMap.get(action.domain()))) {
-                                var type = action.compositeLabel()
+                                var type = action.compositeLabels().get(0)
                                         .label()
                                         .type();
-                                var value = action.compositeLabel()
+                                var value = action.compositeLabels().get(0)
                                         .label()
                                         .value();
                                 var label = getOrCreateLabel(dd, type, value);
@@ -295,8 +305,8 @@ public class OptimizationManager {
                                     assign.getOutputLabels()
                                             .add(label);
                                     assign.setOutputPin(assignment.getOutputPin());
-                                    var ddTrue = ddFactory.createNOT();
-                                    assign.setTerm(ddTrue);
+                                    var ddNOT = ddFactory.createNOT();
+                                    assign.setTerm(ddNOT);
                                     newAssignments.add(assign);
                                 }
                             }
@@ -305,17 +315,17 @@ public class OptimizationManager {
                             behavior.getAssignment()
                                     .addAll(newAssignments);
                     }
-                } else if (action.compositeLabel()
+                } else if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.Node)) {
                     for (var node : dfd.dataFlowDiagram()
                             .getNodes()) {
                         if (node.getId()
                                 .equals(action.domain())) {
-                            var type = action.compositeLabel()
+                            var type = action.compositeLabels().get(0)
                                     .label()
                                     .type();
-                            var value = action.compositeLabel()
+                            var value = action.compositeLabels().get(0)
                                     .label()
                                     .value();
                             var label = getOrCreateLabel(dd, type, value);
@@ -329,6 +339,118 @@ public class OptimizationManager {
             }
 
         }
+        for (var action : actions) {
+            if (action.type()
+                    .equals(ActionType.AddNode)) {
+                
+                org.dataflowanalysis.dfd.dataflowdiagram.Node node = dfd.dataFlowDiagram().getNodes()
+                .stream()
+                .filter(n -> n.getId().equals(action.domain()))
+                .findFirst()
+                .orElseThrow();
+                
+                var name = action.compositeLabels().get(0).label().value();
+                var behaviorOld = node.getBehavior();
+                
+                var dfdFactory = dataflowdiagramFactory.eINSTANCE;
+                
+                var vertex = dfdFactory.createProcess();
+                vertex.setEntityName(name);
+                
+                List<Label> outgoingLabels = new ArrayList<>();
+                
+                for (var label : action.compositeLabels() ) {
+                    var type = label.label().type();
+                    var value = label.label().value();
+                    var dfdLabel = getOrCreateLabel(dd, type, value);
+                    
+                    if (label instanceof NodeLabel) {
+                        vertex.getProperties().add(dfdLabel);
+                    }
+                    else {
+                        outgoingLabels.add(dfdLabel);
+                    }
+                }              
+                
+                var ddFactory = datadictionaryFactory.eINSTANCE;
+                
+                var behaviorNew = ddFactory.createBehavior();    
+                
+                var inPin = ddFactory.createPin();
+                
+                behaviorNew.getInPin().add(inPin);
+                
+                Set<Label> allLabels = new HashSet<>();
+                
+                for (var assignment: behaviorOld.getAssignment()) {
+                    
+                    if (assignment instanceof Assignment cast)
+                        allLabels.addAll(cast.getOutputLabels());
+                    
+                    else if (assignment instanceof SetAssignment cast) 
+                        allLabels.addAll(cast.getOutputLabels());
+                    
+                    else continue;
+                    
+                    var assign = ddFactory.createForwardingAssignment();
+                    
+                    assign.setOutputPin(assignment.getOutputPin());
+                    assign.getInputPins().add(inPin);
+                    
+                    if (!outgoingLabels.isEmpty()) {
+                        var setAssign = ddFactory.createAssignment();
+                        setAssign.setOutputPin(assignment.getOutputPin());
+                        setAssign.getInputPins().add(inPin);
+                        setAssign.getOutputLabels().addAll(outgoingLabels);
+                        setAssign.setTerm(ddFactory.createTRUE());
+                        
+                        behaviorNew.getAssignment().add(setAssign);
+                    }
+                    
+                    behaviorNew.getAssignment().add(assign);
+                    behaviorNew.getOutPin().add(assignment.getOutputPin());
+                }
+                
+                vertex.setBehavior(behaviorNew);
+                
+                
+                for (var flow: dfd.dataFlowDiagram().getFlows()) {
+                    if (flow.getSourceNode() == node) {
+                        flow.setSourceNode(vertex);
+                        flow.setEntityName(name);
+                    }
+                }
+                
+                var flow = dfdFactory.createFlow();
+                
+                var outPin = ddFactory.createPin();
+                
+                flow.setDestinationNode(vertex);
+                flow.setDestinationPin(inPin);
+                flow.setSourceNode(node);
+                flow.setSourcePin(outPin);
+                
+                var assignmentNew = ddFactory.createAssignment();
+                
+                assignmentNew.setOutputPin(outPin);
+                
+                assignmentNew.getOutputLabels().addAll(allLabels);
+                
+                var ddTrue = ddFactory.createTRUE();
+                
+                assignmentNew.setTerm(ddTrue);
+                
+                behaviorOld.getAssignment().retainAll(List.of(assignmentNew));
+                behaviorOld.getAssignment().add(assignmentNew);
+                behaviorOld.getOutPin().retainAll(List.of(outPin));
+                behaviorOld.getOutPin().add(outPin);
+                
+                dfd.dataFlowDiagram().getNodes().add(vertex);
+                dd.getBehavior().add(behaviorNew);
+                dfd.dataFlowDiagram().getFlows().add(flow);
+            }
+        }
+        
     }
 
     private Label getOrCreateLabel(DataDictionary dd, String type, String value) {

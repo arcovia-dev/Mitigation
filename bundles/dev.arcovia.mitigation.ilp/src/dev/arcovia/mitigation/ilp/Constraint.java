@@ -185,7 +185,7 @@ public class Constraint {
                 else
                     type = MitigationType.DataLabel;
 
-                mitigations.add(new MitigationStrategy(lit.compositeLabel(), 1, type));
+                mitigations.add(new MitigationStrategy(List.of(lit.compositeLabel()), 1, type));
             } else {
                 var label = lit.compositeLabel()
                         .label()
@@ -203,7 +203,7 @@ public class Constraint {
                     else
                         type = MitigationType.DeleteDataLabel;
 
-                    mitigations.add(new MitigationStrategy(lit.compositeLabel(), 1000, type));
+                    mitigations.add(new MitigationStrategy(List.of(lit.compositeLabel()), 1000, type));
 
                 }
 
