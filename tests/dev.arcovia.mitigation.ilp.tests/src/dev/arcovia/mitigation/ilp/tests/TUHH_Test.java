@@ -118,7 +118,7 @@ public class TUHH_Test {
                 dfdConverter.convert(result)
                         .save("models/", "temp-repaired.json");
 
-                assertTrue(optimization.isViolationFree(result, analysisConstraints));
+                assertTrue(optimization.isViolationFree(result));
             }
         }
         System.out.println(scalabilityValues);
@@ -216,7 +216,7 @@ public class TUHH_Test {
         dfdConverter.convert(result)
                 .save("models/", "temp-repaired.json");
 
-        assertTrue(optimization.isViolationFree(result, analysisConstraints));
+        assertTrue(optimization.isViolationFree(result));
     }
 
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {

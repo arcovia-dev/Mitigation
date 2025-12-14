@@ -22,10 +22,8 @@ import dev.arcovia.mitigation.ilp.MitigationStrategy;
 import dev.arcovia.mitigation.ilp.MitigationType;
 import dev.arcovia.mitigation.ilp.Node;
 import dev.arcovia.mitigation.ilp.OptimizationManager;
-import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;
-import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.ilp.EvaluationFunction;
@@ -56,12 +54,12 @@ public class BasicTest {
         dfdConverter.convert(result)
                 .save("models/", "mindfd-repaired.json");
 
-        assertTrue(optimization.isViolationFree(result, List.of(constraint)));
+        assertTrue(optimization.isViolationFree(result));
     }
     
     @Test
     public void customConstraintTest() {
-        var customConstraint = new Constraint(List.of(new MitigationStrategy(new NodeLabel(new Label("Location", "nonEU")), 1, MitigationType.DeleteNodeLabel)));
+        var customConstraint = new Constraint(List.of(new MitigationStrategy(List.of(new NodeLabel(new Label("Location", "nonEU"))), 1, MitigationType.DeleteNodeLabel)));
         
         var evalFunction = new EvaluationFunction() {            
             @Override
@@ -122,7 +120,7 @@ public class BasicTest {
         dfdConverter.convert(result)
                 .save("models/", "mindfd-repaired.json");
 
-        assertTrue(optimization.isViolationFree(result, List.of(constraint)));
+        assertTrue(optimization.isViolationFree(result));
     }
 
 }
