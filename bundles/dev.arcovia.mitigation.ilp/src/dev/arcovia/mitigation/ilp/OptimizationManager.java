@@ -23,6 +23,7 @@ import org.dataflowanalysis.dfd.datadictionary.Label;
 import org.dataflowanalysis.dfd.datadictionary.LabelType;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
+import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
@@ -42,6 +43,8 @@ public class OptimizationManager {
 
     private List<List<Mitigation>> mitigations = new ArrayList<>();
     private Set<Mitigation> allMitigations = new HashSet<>();
+    
+    private List<List<Mitigation>> contradictions = new ArrayList<>();
 
     private List<ActionTerm> actions;
 
@@ -81,9 +84,15 @@ public class OptimizationManager {
         for (var node : violatingNodes) {
             addMitigations(node.getPossibleMitigations());
         }
+        
+        for (var mitigation : allMitigations) {
+            if (mitigation.mitigation().type().toString().startsWith("Remove")) {
+                contradictions.addAll(determineContradictions(mitigation));
+            }
+        }
 
         var solver = new ILPSolver();
-        var result = solver.solve(mitigations, allMitigations);
+        var result = solver.solve(mitigations, allMitigations, contradictions);
 
         actions = getActions(result);
 
@@ -112,6 +121,16 @@ public class OptimizationManager {
                 return false;
         }
         return true;
+    }
+    
+    private List<List<Mitigation>> determineContradictions(Mitigation domainMitigation){
+        List<List<Mitigation>> contradiction = new ArrayList<>();
+        for (var mitigation : allMitigations) {
+            if (mitigation.mitigation().domain().equals(domainMitigation.mitigation().domain()) && mitigation.mitigation().type().toString().startsWith("Add")) {
+                contradiction.add(List.of(domainMitigation,mitigation));
+            }
+        }
+        return contradiction;
     }
 
     private List<ActionTerm> getActions(List<Mitigation> result) {
@@ -207,6 +226,20 @@ public class OptimizationManager {
 
     private void applyActions(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
         deriveOutPinsToAssignmentsMap(dfd);
+        
+        addAndRemoveLabels(dfd, actions);
+        
+        //Adding Nodes
+        addNodes(dfd, actions);
+        
+        //Removing Nodes & flows
+
+        removeNodes(dfd, actions);
+        
+        removeFlows(dfd, actions);
+    }
+    
+    private void addAndRemoveLabels(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
         var dd = dfd.dataDictionary();
 
         for (var action : actions) {
@@ -274,7 +307,8 @@ public class OptimizationManager {
                 }
             }
 
-            else {
+            else if (action.type()
+            .equals(ActionType.Removing)){
                 if (action.compositeLabels().get(0)
                         .category()
                         .equals(LabelCategory.OutgoingData)) {
@@ -339,6 +373,10 @@ public class OptimizationManager {
             }
 
         }
+    }
+    
+    private void addNodes(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
+        var dd = dfd.dataDictionary();
         for (var action : actions) {
             if (action.type()
                     .equals(ActionType.AddNode)) {
@@ -450,9 +488,158 @@ public class OptimizationManager {
                 dfd.dataFlowDiagram().getFlows().add(flow);
             }
         }
-        
     }
+    
+    private void removeNodes(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
+        var dd = dfd.dataDictionary();
+        var dataFlowDiagram = dfd.dataFlowDiagram();
+        var ddFactory = datadictionaryFactory.eINSTANCE;
+        var dfdFactory = dataflowdiagramFactory.eINSTANCE;
+        for (var action : actions) {
+            if (action.type()
+                    .equals(ActionType.RemoveNode)){
+                org.dataflowanalysis.dfd.dataflowdiagram.Node node = dfd.dataFlowDiagram().getNodes()
+                        .stream()
+                        .filter(n -> n.getId().equals(action.domain()))
+                        .findFirst()
+                        .orElseThrow();
+                
+                var nodeBehavior = node.getBehavior();
+                
+                List<Flow> flowsToNode = dataFlowDiagram.getFlows().stream().filter(n -> n.getDestinationNode().equals(node)).toList();
+                
+                List<org.dataflowanalysis.dfd.dataflowdiagram.Node> previouseNodes = new ArrayList<>();
+                
+                for (Flow flow : flowsToNode) {
+                    previouseNodes.add(flow.getSourceNode());
+                }
+                
+                
+                for (var assignment : nodeBehavior.getAssignment()) {
+                    if (assignment instanceof ForwardingAssignment) {
+                        var outPin = assignment.getOutputPin();
+                        
+                        var destinationFlow = dataFlowDiagram.getFlows().stream().filter(n -> n.getSourcePin().equals(outPin)).findFirst().orElseThrow();
+                        
+                        var destinationNode = destinationFlow.getDestinationNode();
+                        
+                        var destinationPin = destinationFlow.getDestinationPin();
+                        
+                        for (var vertex : previouseNodes) {
+                            var relevantFlow = dataFlowDiagram.getFlows().stream().filter(n -> n.getSourceNode().equals(vertex)&& n.getDestinationNode().equals(node)).findFirst().orElseThrow();
+                            
+                            var vertexBehavior = vertex.getBehavior();
+                            
+                            var relevantAssignments = vertexBehavior.getAssignment().stream().filter(n -> n.getOutputPin().equals(relevantFlow.getSourcePin())).toList();
+                            
+                            
+                            for (var relevantAssignment : relevantAssignments) {
+                                
+                                if (relevantAssignment instanceof ForwardingAssignment cast) {
 
+                                    var newOutPin = ddFactory.createPin();
+                                    
+                                    
+                                    var assignmentNew = ddFactory.createForwardingAssignment();
+                                    
+                                    assignmentNew.setOutputPin(newOutPin);
+                                    
+                                    assignmentNew.getInputPins().addAll(cast.getInputPins());
+                                    
+                                    vertexBehavior.getOutPin().add(newOutPin);
+                                   
+                                    vertexBehavior.getAssignment().add(assignmentNew); 
+                                    
+                                    vertexBehavior.getOutPin().add(newOutPin);
+                                    
+                                    
+                                    
+                                    var flow = dfdFactory.createFlow();
+                                    flow.setDestinationNode(destinationNode);
+                                    flow.setDestinationPin(destinationPin);
+                                    flow.setSourceNode(vertex);
+                                    flow.setSourcePin(newOutPin);
+                                    flow.setEntityName(vertex.getEntityName() + "_" + destinationNode.getEntityName());
+                                    dataFlowDiagram.getFlows().add(flow);
+                                    
+                                }
+                                
+                                else {
+                                    Set<Label> outputLabels = new HashSet<>();
+                                    
+                                    if (relevantAssignment instanceof Assignment cast)
+                                        outputLabels.addAll(cast.getOutputLabels());
+                                    
+                                    else if (relevantAssignment instanceof SetAssignment cast) 
+                                        outputLabels.addAll(cast.getOutputLabels());
+                                    
+                                    var newOutPin = ddFactory.createPin();
+                                    
+                                    var assignmentNew = ddFactory.createAssignment();
+                                    
+                                    assignmentNew.setOutputPin(newOutPin);
+                                    
+                                    vertexBehavior.getOutPin().add(newOutPin);
+                                    
+                                    assignmentNew.getOutputLabels().addAll(outputLabels);
+                                    
+                                    var ddTrue = ddFactory.createTRUE();
+                                    
+                                    assignmentNew.setTerm(ddTrue);
+                                    
+                                    vertexBehavior.getAssignment().add(assignmentNew);
+                                    
+                                    var flow = dfdFactory.createFlow();
+                                    flow.setDestinationNode(destinationNode);
+                                    flow.setDestinationPin(destinationPin);
+                                    flow.setSourceNode(vertex);
+                                    flow.setSourcePin(newOutPin);
+                                    flow.setEntityName(vertex.getEntityName() + "_" + destinationNode.getEntityName());
+                                    dataFlowDiagram.getFlows().add(flow);
+                                }
+                                
+                                vertexBehavior.getAssignment().remove(relevantAssignment);
+                            }
+                            
+                            vertexBehavior.getOutPin().remove(relevantFlow.getSourcePin());
+                        }
+                        
+                    }
+                    
+                }
+                
+                for (var flow : dataFlowDiagram.getFlows().stream().filter(n -> n.getDestinationNode().equals(node)).toList()) {
+                    dfd.dataFlowDiagram().getFlows().remove(flow);
+                }
+                for (var flow : dataFlowDiagram.getFlows().stream().filter(n -> n.getSourceNode().equals(node)).toList()) {
+                    dfd.dataFlowDiagram().getFlows().remove(flow);
+                }
+                
+                
+                dd.getBehavior().remove(nodeBehavior);
+                dataFlowDiagram.getNodes().remove(node);                                                                                          
+                
+            }
+        }
+    }
+    
+    private void removeFlows(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
+        var dd = dfd.dataDictionary();
+        var dataFlowDiagram = dfd.dataFlowDiagram();
+        for (var action : actions) {
+            if (action.type()
+                    .equals(ActionType.RemoveFlow)){
+                var flow = dataFlowDiagram.getFlows().stream().filter(n -> n.getEntityName().equals(action.domain())).findFirst().orElseThrow();
+                
+                var assignment = flow.getSourceNode().getBehavior().getAssignment().stream().filter(n -> n.getOutputPin().equals(flow.getSourcePin())).findFirst().orElseThrow();
+                
+                flow.getSourceNode().getBehavior().getAssignment().remove(assignment);
+                flow.getSourceNode().getBehavior().getOutPin().remove(flow.getSourcePin());
+                dataFlowDiagram.getFlows().remove(flow);
+            }
+        }
+    }
+    
     private Label getOrCreateLabel(DataDictionary dd, String type, String value) {
         var optionalLabel = dd.getLabelTypes()
                 .stream()

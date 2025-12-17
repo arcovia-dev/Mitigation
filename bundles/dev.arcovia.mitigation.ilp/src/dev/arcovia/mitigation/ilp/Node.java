@@ -85,13 +85,24 @@ public class Node {
                     case DeleteDataLabel -> {
                         mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
                     }
-                    case AddFlow -> throw new UnsupportedOperationException("Unimplemented case: " + mitigation.type);
                     case AddNode -> {
                         mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddNode), mitigation.cost,
                                 getAllRequiredMitigations(mitigation)));
                         mitigations.addAll(getNodeAdditionMitigations(mitigation));
                     }
+                    case DeleteNode -> {
+                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.RemoveNode), mitigation.cost,
+                                getAllRequiredMitigations(mitigation)));
+                    }                    
+                    case DeleteFlow -> {
+                        for (var incomingFlow : this.vertex.getPinFlowMap().values()) {
+                            mitigations.add(new Mitigation(new ActionTerm(incomingFlow.getEntityName(), null, ActionType.RemoveFlow), mitigation.cost,
+                                    getAllRequiredMitigations(mitigation)));
+                        }
+                    }
+                    
                     default -> throw new IllegalArgumentException("Unexpected value: " + mitigation.type);
+                    
                 }
             }
         }

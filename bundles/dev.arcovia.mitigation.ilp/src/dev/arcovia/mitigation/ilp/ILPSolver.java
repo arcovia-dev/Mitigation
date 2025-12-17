@@ -19,7 +19,7 @@ import com.google.ortools.linearsolver.MPVariable;
 public class ILPSolver {
     private BiMap<MPVariable, Mitigation> mitigationMap = new BiMap<>();
 
-    public List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations) {
+    public List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations, List<List<Mitigation>> contradictions) {
         Loader.loadNativeLibraries();
         MPSolver solver = MPSolver.createSolver("CBC_MIXED_INTEGER_PROGRAMMING");
 
@@ -34,6 +34,15 @@ public class ILPSolver {
             counter++;
             for (var mitigation : constraint) {
                 cover.setCoefficient(mitigationMap.getKey(mitigation), 1.0);
+            }
+        }
+        
+        for (var contradiction : contradictions) {
+            // if a contradicting pair is selected it implies that the other is not selected
+            MPConstraint conflict  = solver.makeConstraint(Double.NEGATIVE_INFINITY, 1.0, counter.toString());
+            counter++;
+            for (var mitigation : contradiction) {
+                conflict.setCoefficient(mitigationMap.getKey(mitigation), 1.0);
             }
         }
 
