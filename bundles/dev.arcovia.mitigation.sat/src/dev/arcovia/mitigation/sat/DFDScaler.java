@@ -23,30 +23,30 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 
 public class DFDScaler {
-    public static DataFlowDiagramAndDictionary scaleDFD(DataFlowDiagramAndDictionary dfd, int scaling) {
+    public static DataFlowDiagramAndDictionary scaleDFD(DataFlowDiagramAndDictionary dfd, int scalingNodes, int scalingFlows) {
 
         var dd = dfd.dataDictionary();
         var dataFlowDiagram = dfd.dataFlowDiagram();
         
-        duplicateNodes(dataFlowDiagram, dd, scaling);
+        duplicateNodes(dataFlowDiagram, dd, scalingNodes);
         
-        duplicateFlows(dataFlowDiagram, dd, scaling);
+        duplicateFlows(dataFlowDiagram, dd, scalingFlows);
 
         return dfd;
     }
 
     public static DataFlowDiagramAndDictionary scaleDFD(DataFlowDiagramAndDictionary dfd) {
-        return scaleDFD(dfd, 5);
+        return scaleDFD(dfd, 5, 5);
     }
 
     public static DataFlowDiagramAndDictionary scaleDFD(String dfdLocation) {
         var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        return scaleDFD(dfd, 5);
+        return scaleDFD(dfd, 5, 5);
     }
 
-    public static DataFlowDiagramAndDictionary scaleDFD(String dfdLocation, int scaling) {
+    public static DataFlowDiagramAndDictionary scaleDFD(String dfdLocation, int scalingNodes, int scalingFlows) {
         var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        return scaleDFD(dfd, scaling);
+        return scaleDFD(dfd, scalingNodes, scalingFlows);
     }
     private static void duplicateNodes(DataFlowDiagram dataFlowDiagram, DataDictionary dd, int scaling) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;

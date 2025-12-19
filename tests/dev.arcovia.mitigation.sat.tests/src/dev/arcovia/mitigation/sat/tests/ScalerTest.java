@@ -11,7 +11,7 @@ public class ScalerTest {
     
     @Test
     public void scale() {
-        var scaledDfd = DFDScaler.scaleDFD(MIN_SAT, 2);
+        var scaledDfd = DFDScaler.scaleDFD(MIN_SAT, 2, 1);
                 
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
