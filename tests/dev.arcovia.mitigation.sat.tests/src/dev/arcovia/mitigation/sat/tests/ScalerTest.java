@@ -11,8 +11,8 @@ public class ScalerTest {
     
     @Test
     public void scale() {
-        var scaledDfd = DFDScaler.scaleDFD(MIN_SAT);
-        
+        var scaledDfd = DFDScaler.scaleDFD(MIN_SAT, 2);
+                
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
         .save("testresults/", "minsat-scaled.json");
