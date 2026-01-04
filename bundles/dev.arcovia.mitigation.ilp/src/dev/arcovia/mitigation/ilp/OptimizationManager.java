@@ -85,6 +85,8 @@ public class OptimizationManager {
             addMitigations(node.getPossibleMitigations());
         }
         
+        
+        
         for (var mitigation : allMitigations) {
             if (mitigation.mitigation().type().toString().startsWith("Remove")) {
                 contradictions.addAll(determineContradictions(mitigation));
@@ -135,9 +137,12 @@ public class OptimizationManager {
 
     private List<ActionTerm> getActions(List<Mitigation> result) {
         List<Mitigation> additional = new ArrayList<>();
-        for (var mit : result) {
-            additional.addAll(mit.required());
-        }
+        /*for (var mit : result) {
+            if (mit.required().size() == 1) {
+                additional.addAll(mit.required().get(0));
+            }
+        }*/
+        
         result.addAll(additional);
         List<ActionTerm> actions = new ArrayList<>();
         for (var mit : result) {
@@ -157,7 +162,7 @@ public class OptimizationManager {
                 else {
                     var additionalMitigations = getAdditionalMitigations(mitigation.label);
                     if (additionalMitigations != null) {
-                        mitigation.addRequired(additionalMitigations);
+                        mitigation.addRequired(List.of(additionalMitigations));
                     }
                 }
 
@@ -189,6 +194,8 @@ public class OptimizationManager {
     private void addMitigations(List<Mitigation> mitigation) {
         // done to prevent having the same Mitigation twice by replacing duplicates with
         // the original/first appearance
+        
+        
         List<Mitigation> merged = mitigation.stream()
                 .map(u -> allMitigations.stream()
                         .filter(u::equals)
@@ -197,6 +204,22 @@ public class OptimizationManager {
                 .collect(Collectors.toList());
 
         mitigations.add(merged);
+        
+        List<Mitigation> mitigationAdding = new ArrayList<>();
+        for (var mit : mitigation) {
+            mitigationAdding.add(mit);
+            for (var required : mit.required()) {
+                mitigationAdding.addAll(required);
+            }
+        }
+        
+        merged = mitigationAdding.stream()
+                .map(u -> allMitigations.stream()
+                        .filter(u::equals)
+                        .findFirst()
+                        .orElse(u))
+                .collect(Collectors.toList());
+        
         allMitigations.addAll(merged);
     }
 

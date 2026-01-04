@@ -149,18 +149,21 @@ public class Node {
         return mitigations;
     }
 
-    private List<Mitigation> getAllRequiredMitigations(MitigationStrategy mitigation) {
-        List<Mitigation> requiredMitgations = new ArrayList<>();
-        for (var requiredMitgation : mitigation.required) {
-            ActionType type;
-            if (requiredMitgation.type.toString()
-                    .startsWith("Delete"))
-                type = ActionType.Removing;
-            else
-                type = ActionType.Adding;
-
-            requiredMitgations.add(new Mitigation(new ActionTerm(this.name, requiredMitgation.label, type), requiredMitgation.cost,
-                    getAllRequiredMitigations(requiredMitgation)));
+    private List<List<Mitigation>> getAllRequiredMitigations(MitigationStrategy mitigation) {
+        List<List<Mitigation>> requiredMitgations = new ArrayList<>();
+        for (var mitgations : mitigation.required) {
+            List<Mitigation> requiredMitgation = new ArrayList<>();
+            for (var mitgation : mitgations) {
+                ActionType type;
+                if (mitgation.type.toString()
+                        .startsWith("Delete"))
+                    type = ActionType.Removing;
+                else
+                    type = ActionType.Adding;
+                requiredMitgation.add(new Mitigation(new ActionTerm(this.name, mitgation.label, type), mitgation.cost,
+                        getAllRequiredMitigations(mitgation)));    
+            }
+            requiredMitgations.add(requiredMitgation);
 
         }
 
