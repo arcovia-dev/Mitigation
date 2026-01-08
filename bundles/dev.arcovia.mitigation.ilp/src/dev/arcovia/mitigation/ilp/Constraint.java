@@ -21,6 +21,7 @@ public class Constraint {
     private final AnalysisConstraint dsl;
     private EvaluationFunction evalFunction;
     private final List<MitigationStrategy> mitigations;
+    private List<CompositeLabel> preconditionLabel = new ArrayList<>();
 
     public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
         this.dsl = dsl;
@@ -70,7 +71,9 @@ public class Constraint {
     }
 
     public boolean isPrecondition(CompositeLabel label) {
-    	if (dsl == null) return false;
+    	if (dsl == null) {
+    	    return preconditionLabel.contains(label);
+    	}
         var translation = new CNFTranslation(dsl);
         var literals = translation.constructCNF()
                 .get(0)
@@ -82,6 +85,10 @@ public class Constraint {
                 return true;
         }
         return false;
+    }
+    
+    public void addPrecondition(CompositeLabel label) {
+        preconditionLabel.add(label);
     }
 
     public void removeMitigation(MitigationStrategy mitgation) {

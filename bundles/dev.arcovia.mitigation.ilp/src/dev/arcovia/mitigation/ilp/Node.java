@@ -90,6 +90,11 @@ public class Node {
                                 getAllRequiredMitigations(mitigation)));
                         mitigations.addAll(getNodeAdditionMitigations(mitigation));
                     }
+                    case AddSink -> {
+                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddSink), mitigation.cost,
+                                getAllRequiredMitigations(mitigation)));
+                        mitigations.addAll(getSinkAdditionMitigations(mitigation));
+                    }
                     case DeleteNode -> {
                         mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.RemoveNode), mitigation.cost,
                                 getAllRequiredMitigations(mitigation)));
@@ -122,6 +127,20 @@ public class Node {
         }
         return mitigations;
     }
+    
+    private List<Mitigation> getSinkAdditionMitigations(MitigationStrategy mitigation){
+        List<Mitigation> mitigations = new ArrayList<>();      
+        
+        for (var flow : vertex.getPinFlowMap().values()) {
+            if (vertex.getAllOutgoingDataCharacteristics().isEmpty()) continue;
+            Node node = new Node((DFDVertex) flow.getDestinationNode(), tfg);
+            mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddSink), mitigation.cost,
+                    getAllRequiredMitigations(mitigation)));
+            mitigations.addAll(
+                    node.getSinkAdditionMitigations(mitigation));
+        }
+        return mitigations;
+    }
 
     private List<Mitigation> getDataMitigations(MitigationStrategy mitigation, ActionType type) {
         List<Mitigation> mitigations = new ArrayList<>();
@@ -139,8 +158,6 @@ public class Node {
                     mitigation.cost, getAllRequiredMitigations(mitigation)));
 
             if (node.isForwarding) {
-                // need to discuss whether forwarding should be prioritized or not & if the user
-                // should decide --> Impact set
                 mitigations.addAll(
                         node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost - Epsilon, MitigationType.DataLabel), type));
             }
@@ -158,15 +175,24 @@ public class Node {
                 if (mitgation.type.toString()
                         .startsWith("Delete"))
                     type = ActionType.Removing;
-                else
+                
+                else if (mitgation.type == MitigationType.AddNode) {
+                    type = ActionType.AddNode;;   
+                }
+                else if (mitgation.type == MitigationType.AddSink) {
+                    type = ActionType.AddSink;;   
+                }
+                
+                else {
                     type = ActionType.Adding;
+                }
+                
                 requiredMitgation.add(new Mitigation(new ActionTerm(this.name, mitgation.label, type), mitgation.cost,
                         getAllRequiredMitigations(mitgation)));    
             }
             requiredMitgations.add(requiredMitgation);
 
         }
-
         return requiredMitgations;
     }
 

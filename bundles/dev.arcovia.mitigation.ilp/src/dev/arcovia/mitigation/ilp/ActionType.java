@@ -5,5 +5,6 @@ public enum ActionType {
     Removing,
     AddNode,
     RemoveNode,
-    RemoveFlow
+    RemoveFlow,
+    AddSink
 }

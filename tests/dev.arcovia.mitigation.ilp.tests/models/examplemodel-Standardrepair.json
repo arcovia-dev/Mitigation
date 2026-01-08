@@ -1,0 +1,659 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "admin",
+      "id" : "ug8oal",
+      "type" : "edge:arrow",
+      "sourceId" : "dwh5sd",
+      "targetId" : "3fbuli",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "admin",
+      "id" : "i8cpby",
+      "type" : "edge:arrow",
+      "sourceId" : "rc2o8d",
+      "targetId" : "5eeix",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "configuration",
+      "id" : "sxkmzd",
+      "type" : "edge:arrow",
+      "sourceId" : "jllj9",
+      "targetId" : "s3ki79",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "auth_server",
+      "id" : "v21xf",
+      "type" : "edge:arrow",
+      "sourceId" : "qiyh9m",
+      "targetId" : "s3ki79",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "configuration",
+      "id" : "7u3x7l",
+      "type" : "edge:arrow",
+      "sourceId" : "0cmgr",
+      "targetId" : "10glpd",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "auth_server",
+      "id" : "pnbbug",
+      "type" : "edge:arrow",
+      "sourceId" : "0u4cim",
+      "targetId" : "10glpd",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "~",
+      "id" : "10npkk",
+      "type" : "edge:arrow",
+      "sourceId" : "j4x2yf",
+      "targetId" : "7cjz1n",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "store",
+      "id" : "9ifhr",
+      "type" : "edge:arrow",
+      "sourceId" : "l2sixh",
+      "targetId" : "973q3n",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "~",
+      "id" : "unzbr7",
+      "type" : "edge:arrow",
+      "sourceId" : "lbbv1m",
+      "targetId" : "973q3n",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "aName",
+      "id" : "_XB6hmuycEfCUE5Ep_5puVg",
+      "type" : "edge:arrow",
+      "sourceId" : "_XB6hm-ycEfCUE5Ep_5puVg",
+      "targetId" : "_XB6hk-ycEfCUE5Ep_5puVg",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "aName",
+      "id" : "_XB7IpeycEfCUE5Ep_5puVg",
+      "type" : "edge:arrow",
+      "sourceId" : "_XB7IpuycEfCUE5Ep_5puVg",
+      "targetId" : "_XB7Io-ycEfCUE5Ep_5puVg",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "aName",
+      "id" : "_XB7vsOycEfCUE5Ep_5puVg",
+      "type" : "edge:arrow",
+      "sourceId" : "_XB7vseycEfCUE5Ep_5puVg",
+      "targetId" : "_XB7Io-ycEfCUE5Ep_5puVg",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "aName",
+      "id" : "_XB7vtOycEfCUE5Ep_5puVg",
+      "type" : "edge:arrow",
+      "sourceId" : "_XB7vteycEfCUE5Ep_5puVg",
+      "targetId" : "_XB7Io-ycEfCUE5Ep_5puVg",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "User",
+      "id" : "ogbobb",
+      "type" : "node:input-output",
+      "labels" : [ {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "exjpgu"
+      }, {
+        "labelTypeId" : "dyw688",
+        "labelTypeValueId" : "fceady"
+      } ],
+      "ports" : [ {
+        "id" : "7cjz1n",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Data.request,Stereotype.entrypoint,Stereotype.authenticated_request,Data.personal,User.user if TRUE",
+        "id" : "_XB6hm-ycEfCUE5Ep_5puVg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: Data.response",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2008746677
+      }, {
+        "message" : "Propagated: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1414744767
+      }, {
+        "message" : "Propagated: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 438228197
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "Admin",
+      "id" : "jh621q",
+      "type" : "node:input-output",
+      "labels" : [ {
+        "labelTypeId" : "dyw688",
+        "labelTypeValueId" : "0ffb8"
+      } ],
+      "ports" : [ {
+        "behavior" : "set User.admin,Stereotype.authenticated_request,Encryption.encrypted",
+        "id" : "dwh5sd",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set User.admin,Stereotype.authenticated_request,Encryption.encrypted",
+        "id" : "rc2o8d",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1112075608
+      }, {
+        "message" : "Propagated: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1898751355
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "configuration_server",
+      "id" : "doxuqn",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "mo8hoo"
+      }, {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+      }, {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      } ],
+      "ports" : [ {
+        "id" : "5eeix",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Data.configuration",
+        "id" : "0cmgr",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Data.configuration,Stereotype.authenticated_request",
+        "id" : "jllj9",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign Data.configuration,Stereotype.authenticated_request if TRUE",
+        "id" : "_XB7vseycEfCUE5Ep_5puVg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1112075608
+      }, {
+        "message" : "Propagated: Data.configuration",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1164241227
+      }, {
+        "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 665565246
+      }, {
+        "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1776486598
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "admin_console",
+      "id" : "89ui8v",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "mo8hoo"
+      }, {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+      }, {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      } ],
+      "ports" : [ {
+        "id" : "3fbuli",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "assign  if TRUE",
+        "id" : "_XB7IpuycEfCUE5Ep_5puVg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1898751355
+      }, {
+        "message" : "Propagated: ",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1164394344
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "Storage",
+      "id" : "ildidp",
+      "type" : "node:storage",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      }, {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "q4up6j"
+      } ],
+      "ports" : [ {
+        "id" : "973q3n",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: Data.configuration",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1164241227
+      }, {
+        "message" : "Incoming: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1414744767
+      }, {
+        "message" : "Incoming: ",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1366581056
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "user_service",
+      "id" : "0wxv4i",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "mo8hoo"
+      }, {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+      }, {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+      } ],
+      "ports" : [ {
+        "id" : "s3ki79",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward",
+        "id" : "lbbv1m",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward auth_server|configuration\nassign  if TRUE",
+        "id" : "_XB7vteycEfCUE5Ep_5puVg",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: ",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1366581056
+      }, {
+        "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1776486598
+      }, {
+        "message" : "Incoming: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1776486598
+      }, {
+        "message" : "Propagated: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 438228197
+      }, {
+        "message" : "Incoming: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 438228197
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "Service_registry",
+      "id" : "hiiut",
+      "type" : "node:function",
+      "labels" : [ ],
+      "ports" : [ {
+        "id" : "10glpd",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "set Data.response",
+        "id" : "j4x2yf",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward auth_server|configuration",
+        "id" : "l2sixh",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Data.response",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2008746677
+      }, {
+        "message" : "Propagated: Data.configuration",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1164241227
+      }, {
+        "message" : "Incoming: Data.configuration",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1164241227
+      }, {
+        "message" : "Propagated: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1414744767
+      }, {
+        "message" : "Incoming: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1414744767
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "auth_server",
+      "id" : "_XB6hkOycEfCUE5Ep_5puVg",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "4a6883fd-dc01-3d50-a09d-8304b6337173"
+      } ],
+      "ports" : [ {
+        "id" : "_XB6hk-ycEfCUE5Ep_5puVg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward aName\nforward aName\nforward aName",
+        "id" : "qiyh9m",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      }, {
+        "behavior" : "forward aName\nforward aName\nforward aName",
+        "id" : "0u4cim",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1414744767
+      }, {
+        "message" : "Incoming: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1414744767
+      }, {
+        "message" : "Propagated: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 438228197
+      }, {
+        "message" : "Incoming: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 438228197
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "logging_server",
+      "id" : "_XB7IoeycEfCUE5Ep_5puVg",
+      "type" : "node:function",
+      "labels" : [ {
+        "labelTypeId" : "lw0ew35",
+        "labelTypeValueId" : "d283cec3-a227-3b75-8289-5d7054ec866d"
+      } ],
+      "ports" : [ {
+        "id" : "_XB7Io-ycEfCUE5Ep_5puVg",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: ",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1164394344
+      }, {
+        "message" : "Incoming: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 665565246
+      }, {
+        "message" : "Incoming: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1776486598
+      }, {
+        "message" : "Incoming: Data.request, Stereotype.entrypoint, Stereotype.authenticated_request, Data.personal, User.user",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 438228197
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "4h3wzk",
+    "name" : "Sensitivity",
+    "values" : [ {
+      "id" : "zzvphn",
+      "text" : "Personal"
+    }, {
+      "id" : "veaan9",
+      "text" : "Public"
+    } ]
+  }, {
+    "id" : "gvia09",
+    "name" : "Location",
+    "values" : [ {
+      "id" : "g10hr",
+      "text" : "EU"
+    }, {
+      "id" : "5hnugm",
+      "text" : "nonEU"
+    } ]
+  }, {
+    "id" : "84rllz",
+    "name" : "Encryption",
+    "values" : [ {
+      "id" : "2r6xe6",
+      "text" : "Encrypted"
+    }, {
+      "id" : "5031e998-9ae1-3b3b-a509-b7d4220c0ddf",
+      "text" : "encrypted"
+    } ]
+  }, {
+    "id" : "dyw688",
+    "name" : "User",
+    "values" : [ {
+      "id" : "fceady",
+      "text" : "user"
+    }, {
+      "id" : "0ffb8",
+      "text" : "admin"
+    } ]
+  }, {
+    "id" : "e835yt",
+    "name" : "Data",
+    "values" : [ {
+      "id" : "80smq",
+      "text" : "request"
+    }, {
+      "id" : "vyroej",
+      "text" : "response"
+    }, {
+      "id" : "sggpp",
+      "text" : "configuration"
+    }, {
+      "id" : "grccy6",
+      "text" : "personal"
+    } ]
+  }, {
+    "id" : "lw0ew35",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "mo8hoo",
+      "text" : "internal"
+    }, {
+      "id" : "exjpgu",
+      "text" : "entrypoint"
+    }, {
+      "id" : "q4up6j",
+      "text" : "Storage"
+    }, {
+      "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
+      "text" : "log_sanitization"
+    }, {
+      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
+      "text" : "local_logging"
+    }, {
+      "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
+      "text" : "authenticated_request"
+    }, {
+      "id" : "4a6883fd-dc01-3d50-a09d-8304b6337173",
+      "text" : "auth_server"
+    }, {
+      "id" : "d283cec3-a227-3b75-8289-5d7054ec866d",
+      "text" : "logging_server"
+    } ]
+  } ],
+  "mode" : "edit",
+  "constraints" : [ ]
+}

@@ -137,12 +137,6 @@ public class OptimizationManager {
 
     private List<ActionTerm> getActions(List<Mitigation> result) {
         List<Mitigation> additional = new ArrayList<>();
-        /*for (var mit : result) {
-            if (mit.required().size() == 1) {
-                additional.addAll(mit.required().get(0));
-            }
-        }*/
-        
         result.addAll(additional);
         List<ActionTerm> actions = new ArrayList<>();
         for (var mit : result) {
@@ -162,7 +156,7 @@ public class OptimizationManager {
                 else {
                     var additionalMitigations = getAdditionalMitigations(mitigation.label);
                     if (additionalMitigations != null) {
-                        mitigation.addRequired(List.of(additionalMitigations));
+                        mitigation.addRequired(additionalMitigations);
                     }
                 }
 
@@ -181,14 +175,33 @@ public class OptimizationManager {
         }
     }
 
-    private List<MitigationStrategy> getAdditionalMitigations(List<CompositeLabel> labels) {
+    private List<List<MitigationStrategy>> getAdditionalMitigations(List<CompositeLabel> labels) {
+        List<List<MitigationStrategy>> required = new ArrayList<>();
         for (var label : labels) {
             for (var constraint : constraints) {
                 if (constraint.isPrecondition(label))
-                    return constraint.getMitigations();
+                    if (required.isEmpty()) {
+                        for (var mitigation : constraint.getMitigations()) {
+                            if(mitigation.label.contains(label)) continue;
+                            required.add(List.of(mitigation));
+                        }
+                    }
+                    else {
+                        List<List<MitigationStrategy>> newRequired = new ArrayList<>();
+                        for (var requieredMitgation : required) {
+                            for (MitigationStrategy mitigation : constraint.getMitigations()) {
+                                if(mitigation.label.contains(label)) continue;
+                                List<MitigationStrategy> temp = new ArrayList<>(requieredMitgation);
+                                temp.add(mitigation);
+                                newRequired.add(temp);
+                            } 
+                        }
+                        required = newRequired;
+                    }
+
             }
         }
-        return null;
+        return required;
     }
 
     private void addMitigations(List<Mitigation> mitigation) {
@@ -252,14 +265,18 @@ public class OptimizationManager {
         
         addAndRemoveLabels(dfd, actions);
         
-        //Adding Nodes
-        addNodes(dfd, actions);
+        
         
         //Removing Nodes & flows
 
         removeNodes(dfd, actions);
         
         removeFlows(dfd, actions);
+        
+        //Adding Nodes
+        addNodes(dfd, actions);
+        
+        addSinks(dfd, actions);
     }
     
     private void addAndRemoveLabels(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
@@ -451,11 +468,10 @@ public class OptimizationManager {
                     else if (assignment instanceof SetAssignment cast) 
                         allLabels.addAll(cast.getOutputLabels());
                     
-                    else continue;
-                    
                     var assign = ddFactory.createForwardingAssignment();
                     
                     assign.setOutputPin(assignment.getOutputPin());
+                    
                     assign.getInputPins().add(inPin);
                     
                     if (!outgoingLabels.isEmpty()) {
@@ -470,6 +486,7 @@ public class OptimizationManager {
                     
                     behaviorNew.getAssignment().add(assign);
                     behaviorNew.getOutPin().add(assignment.getOutputPin());
+                    
                 }
                 
                 vertex.setBehavior(behaviorNew);
@@ -508,6 +525,114 @@ public class OptimizationManager {
                 
                 dfd.dataFlowDiagram().getNodes().add(vertex);
                 dd.getBehavior().add(behaviorNew);
+                dfd.dataFlowDiagram().getFlows().add(flow);
+            }
+        }
+    }
+    
+    private void addSinks(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
+        var dd = dfd.dataDictionary();
+        List<org.dataflowanalysis.dfd.dataflowdiagram.Node> sinks = new ArrayList<>();
+        
+        for (var action : actions) {
+            if (action.type()
+                    .equals(ActionType.AddSink)) {
+                
+                org.dataflowanalysis.dfd.dataflowdiagram.Node node = dfd.dataFlowDiagram().getNodes()
+                .stream()
+                .filter(n -> n.getId().equals(action.domain()))
+                .findFirst()
+                .orElseThrow();
+
+                var behavior = node.getBehavior();
+                
+                var dfdFactory = dataflowdiagramFactory.eINSTANCE;
+                var ddFactory = datadictionaryFactory.eINSTANCE;
+                
+                var name = action.compositeLabels().get(0).label().value();
+                
+                org.dataflowanalysis.dfd.dataflowdiagram.Node vertex;
+                
+                if(sinks.stream().anyMatch(sink -> sink.getEntityName().equals(name))) {
+                    vertex = sinks.stream()
+                            .filter(sink -> sink.getEntityName().equals(name))
+                            .findFirst().get();
+                }
+                
+                else {
+                    vertex = dfdFactory.createProcess();
+                    vertex.setEntityName(name);
+                    
+                    var behaviorNew = ddFactory.createBehavior();    
+                    
+                    var inPin = ddFactory.createPin();
+                    
+                    behaviorNew.getInPin().add(inPin);
+                    
+                    vertex.setBehavior(behaviorNew);
+                    
+                    dd.getBehavior().add(behaviorNew);
+                    
+                    sinks.add(vertex);
+                }
+                
+                for (var label : action.compositeLabels() ) {
+                    var type = label.label().type();
+                    var value = label.label().value();
+                    var dfdLabel = getOrCreateLabel(dd, type, value);
+                    
+                    if (label instanceof NodeLabel) {
+                        vertex.getProperties().add(dfdLabel);
+                    }
+                }              
+                
+                Set<Label> allLabels = new HashSet<>();
+                
+                var isForwarding = false;
+                
+                for (var assignment: behavior.getAssignment()) {
+                    
+                    if (assignment instanceof Assignment cast)
+                        allLabels.addAll(cast.getOutputLabels());
+                    
+                    else if (assignment instanceof SetAssignment cast) 
+                        allLabels.addAll(cast.getOutputLabels());
+                    
+                    else isForwarding = true;
+                    
+                }
+                
+                
+                var flow = dfdFactory.createFlow();
+                
+                var outPin = ddFactory.createPin();
+                
+                flow.setDestinationNode(vertex);
+                flow.setDestinationPin(vertex.getBehavior().getInPin().get(0));
+                flow.setSourceNode(node);
+                flow.setSourcePin(outPin);
+                
+                var assignmentNew = ddFactory.createAssignment();
+                
+                assignmentNew.setOutputPin(outPin);
+                
+                assignmentNew.getOutputLabels().addAll(allLabels);
+                
+                var ddTrue = ddFactory.createTRUE();
+                
+                assignmentNew.setTerm(ddTrue);
+                
+                if (isForwarding) {
+                    var forwardingAssignment = ddFactory.createForwardingAssignment();
+                    forwardingAssignment.getInputPins().addAll(node.getBehavior().getInPin());
+                    forwardingAssignment.setOutputPin(outPin);
+                    behavior.getAssignment().add(forwardingAssignment);
+                }
+                
+                behavior.getAssignment().add(assignmentNew);
+                behavior.getOutPin().add(outPin);
+                
+                dfd.dataFlowDiagram().getNodes().add(vertex);
                 dfd.dataFlowDiagram().getFlows().add(flow);
             }
         }
@@ -658,6 +783,8 @@ public class OptimizationManager {
                 
                 flow.getSourceNode().getBehavior().getAssignment().remove(assignment);
                 flow.getSourceNode().getBehavior().getOutPin().remove(flow.getSourcePin());
+                
+         
                 dataFlowDiagram.getFlows().remove(flow);
             }
         }
