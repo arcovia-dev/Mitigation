@@ -264,7 +264,10 @@ public class OptimizationManager {
         deriveOutPinsToAssignmentsMap(dfd);
         
         addAndRemoveLabels(dfd, actions);
+      //Adding Nodes
+        addNodes(dfd, actions);
         
+        addSinks(dfd, actions);
         
         
         //Removing Nodes & flows
@@ -273,10 +276,7 @@ public class OptimizationManager {
         
         removeFlows(dfd, actions);
         
-        //Adding Nodes
-        addNodes(dfd, actions);
         
-        addSinks(dfd, actions);
     }
     
     private void addAndRemoveLabels(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
@@ -502,7 +502,7 @@ public class OptimizationManager {
                 var flow = dfdFactory.createFlow();
                 
                 var outPin = ddFactory.createPin();
-                
+                flow.setEntityName(name);
                 flow.setDestinationNode(vertex);
                 flow.setDestinationPin(inPin);
                 flow.setSourceNode(node);
@@ -606,21 +606,25 @@ public class OptimizationManager {
                 var flow = dfdFactory.createFlow();
                 
                 var outPin = ddFactory.createPin();
-                
+                flow.setEntityName(name);
                 flow.setDestinationNode(vertex);
                 flow.setDestinationPin(vertex.getBehavior().getInPin().get(0));
                 flow.setSourceNode(node);
                 flow.setSourcePin(outPin);
                 
-                var assignmentNew = ddFactory.createAssignment();
+                if (!allLabels.isEmpty()) {
+                    var assignmentNew = ddFactory.createAssignment();
+                    
+                    assignmentNew.setOutputPin(outPin);
+                    
+                    assignmentNew.getOutputLabels().addAll(allLabels);
+                    
+                    var ddTrue = ddFactory.createTRUE();
+                    
+                    assignmentNew.setTerm(ddTrue);
+                    behavior.getAssignment().add(assignmentNew);
+                }
                 
-                assignmentNew.setOutputPin(outPin);
-                
-                assignmentNew.getOutputLabels().addAll(allLabels);
-                
-                var ddTrue = ddFactory.createTRUE();
-                
-                assignmentNew.setTerm(ddTrue);
                 
                 if (isForwarding) {
                     var forwardingAssignment = ddFactory.createForwardingAssignment();
@@ -629,7 +633,7 @@ public class OptimizationManager {
                     behavior.getAssignment().add(forwardingAssignment);
                 }
                 
-                behavior.getAssignment().add(assignmentNew);
+                
                 behavior.getOutPin().add(outPin);
                 
                 dfd.dataFlowDiagram().getNodes().add(vertex);
