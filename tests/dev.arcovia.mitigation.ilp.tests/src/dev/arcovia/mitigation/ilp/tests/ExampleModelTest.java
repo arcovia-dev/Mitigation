@@ -126,18 +126,20 @@ public class ExampleModelTest {
             .create());
     
     private final Constraint personalLogging = new Constraint(new ConstraintDSL().ofData()
-            .withLabel("Sensitivity", "Personal")
+            .withLabel("Data", "personal")
             .neverFlows()
             .toVertex()
             .withCharacteristic("Logging", "Server")
             .create());
     
+    private final MitigationStrategy repairNonEu = new MitigationStrategy(List.of(new NodeLabel(new Label("Location", "nonEU"))), 0.5, MitigationType.DeleteNodeLabel);
+    
     private final Constraint personalStorageNonEu = new Constraint(new ConstraintDSL().ofData()
-            .withLabel("Sensitivity", "Personal")
+            .withLabel("Data", "personal")
             .neverFlows()
             .toVertex()
             .withCharacteristic("Location", "nonEU")
-            .create());
+            .create(), List.of(repairNonEu));
     
     private final Constraint adminStorage = new Constraint(new ConstraintDSL().ofData()
             .withLabel("User", "admin")
@@ -159,6 +161,7 @@ public class ExampleModelTest {
     
     
     public void setup() {
+        repairNonEu.addRequired(List.of(List.of(new MitigationStrategy(List.of(new NodeLabel(new Label("Location", "EU"))), 0.5, MitigationType.NodeLabel))));
         loggingServer.addEvalFunction(evalLoggingServer);
         loggingServer.addPrecondition(new NodeLabel(new Label("Stereotype", "local_logging")));
         authServer.addEvalFunction(evalauthServer);
@@ -168,8 +171,9 @@ public class ExampleModelTest {
     @Test
     public void StandardTest(){
         setup();
+        
         var optimization = new OptimizationManager(Model, Constraints, false);
-
+        
         var result = optimization.repair();
         
         result.save("models/", "examplemodel-Standardrepair");
