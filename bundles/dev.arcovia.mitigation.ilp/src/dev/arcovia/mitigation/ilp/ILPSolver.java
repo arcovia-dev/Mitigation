@@ -45,33 +45,38 @@ public class ILPSolver {
                 conflict.setCoefficient(mitigationMap.getKey(mitigation), 1.0);
             }
         }
-      //required implementation
+        //required implementation
         for (Mitigation mitigation : allMitigations) {
-            //if (mitigation.required().size() <= 2) continue;
             
-            var x = mitigationMap.getKey(mitigation);
+            var mitigationValue = mitigationMap.getKey(mitigation);
             
-            List<MPVariable> yVars = new ArrayList<>();
+            List<MPVariable> requiredAlternatives = new ArrayList<>();
             int clauseIdx = 0;
+            
+            //each clause is a list of alternative literals
             for(List<Mitigation> clause : mitigation.required()) {
-                MPVariable y = solver.makeIntVar(0, 1, "req_" + safeName(mitigation.mitigation().toString()) + "_" + clauseIdx);
-                yVars.add(y);
                 
+                MPVariable parentElement = solver.makeIntVar(0, 1, "required_" + safeName(mitigation.mitigation().toString()) + "_" + clauseIdx);
+                requiredAlternatives.add(parentElement);
+                
+                //if the parent element is chosen all Children need to be chosen as well
                 for (Mitigation m : clause) {
-                    MPVariable variable = mitigationMap.getKey(m);
-                    MPConstraint c = solver.makeConstraint(Double.NEGATIVE_INFINITY, 0.0,
-                            "req_le_" + counter);
+                    MPVariable childrenVariable = mitigationMap.getKey(m);
+                    MPConstraint childEnforcement = solver.makeConstraint(Double.NEGATIVE_INFINITY, 0.0,
+                            "required_child_" + counter);
                     counter++;
-                    c.setCoefficient(y, 1.0);
-                    c.setCoefficient(variable, -1.0);
+                    childEnforcement.setCoefficient(parentElement, 1.0);
+                    childEnforcement.setCoefficient(childrenVariable, -1.0);
                 }
                 
-                // y >= sum(vars) - (k-1)  <=>  y - sum(vars) >= -(k-1)
+                // if all children are satisfied, parent is satisfied as well:
+                // clauseSatisfied >= sum(literals) - (k-1)
                 int k = clause.size();
                 MPConstraint c2 = solver.makeConstraint(-(k - 1), Double.POSITIVE_INFINITY,
-                        "req_ge_" + counter);
+                        "required_parent_" + counter);
                 counter++;
-                c2.setCoefficient(y, 1.0);
+                c2.setCoefficient(parentElement, 1.0);
+                
                 for (Mitigation m : clause) {
                     MPVariable v = mitigationMap.getKey(m);
                     c2.setCoefficient(v, -1.0);
@@ -80,13 +85,17 @@ public class ILPSolver {
                 clauseIdx++;
                 
             }
-            if (!yVars.isEmpty()) {
-                // sum(y_i) >= xVar  <=>  sum(y_i) - xVar >= 0
-                MPConstraint gate = solver.makeConstraint(0.0, Double.POSITIVE_INFINITY,
-                        "req_gate_" + counter);
+            //if the mitigationValue is chosen, one of the alternatives needs to be chosen
+            if (!requiredAlternatives.isEmpty()) {
+                MPConstraint required = solver.makeConstraint(0.0, Double.POSITIVE_INFINITY,
+                        "required_cover_" + counter);
                 counter++;
-                for (MPVariable y : yVars) gate.setCoefficient(y, 1.0);
-                gate.setCoefficient(x, -1.0);
+                
+                for (MPVariable y : requiredAlternatives) {
+                    required.setCoefficient(y, 1.0);
+                }
+                
+                required.setCoefficient(mitigationValue, -1.0);
             }
             
         }
@@ -112,8 +121,8 @@ public class ILPSolver {
             List<Mitigation> chosen = new ArrayList<>();
             for (MPVariable var : solver.variables()) {
                 if (var.solutionValue() > 0.5) {
-                    // skip auxiliary variables (yVars)
-                    if (var.name().startsWith("req_") || var.name().startsWith("y_")) {
+                    // skip auxiliary variables introduced by required semantic
+                    if (var.name().startsWith("required_") || var.name().startsWith("y_")) {
                         continue;
                     }
                     
