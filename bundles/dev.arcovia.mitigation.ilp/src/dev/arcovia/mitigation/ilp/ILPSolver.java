@@ -140,7 +140,14 @@ public class ILPSolver {
             return null;
         }
     }
-    
+    /***
+     * Returns a string that is valid for LP/MPS export by:
+     * - replacing all whitespace and illegal characters with _
+     * - if only a number or an empty string is used it is set to variable x_(number)
+     * @param s any arbitrary string
+     * @return s
+     * 
+     */
     private static String safeName(String s) {
         s = s.trim().replaceAll("\\s+", "_").replaceAll("[^A-Za-z0-9_]", "_");
         if (s.isEmpty() || Character.isDigit(s.charAt(0))) s = "x_" + s;
