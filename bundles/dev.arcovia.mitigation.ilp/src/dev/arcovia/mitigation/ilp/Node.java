@@ -85,13 +85,24 @@ public class Node {
                     case DeleteDataLabel -> {
                         mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
                     }
-                    case AddFlow -> throw new UnsupportedOperationException("Unimplemented case: " + mitigation.type);
                     case AddNode -> {
                         mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddNode), mitigation.cost,
                                 getAllRequiredMitigations(mitigation)));
                         mitigations.addAll(getNodeAdditionMitigations(mitigation));
                     }
+                    case DeleteNode -> {
+                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.RemoveNode), mitigation.cost,
+                                getAllRequiredMitigations(mitigation)));
+                    }                    
+                    case DeleteFlow -> {
+                        for (var incomingFlow : this.vertex.getPinFlowMap().values()) {
+                            mitigations.add(new Mitigation(new ActionTerm(incomingFlow.getEntityName(), null, ActionType.RemoveFlow), mitigation.cost,
+                                    getAllRequiredMitigations(mitigation)));
+                        }
+                    }
+                    
                     default -> throw new IllegalArgumentException("Unexpected value: " + mitigation.type);
+                    
                 }
             }
         }
@@ -138,18 +149,21 @@ public class Node {
         return mitigations;
     }
 
-    private List<Mitigation> getAllRequiredMitigations(MitigationStrategy mitigation) {
-        List<Mitigation> requiredMitgations = new ArrayList<>();
-        for (var requiredMitgation : mitigation.required) {
-            ActionType type;
-            if (requiredMitgation.type.toString()
-                    .startsWith("Delete"))
-                type = ActionType.Removing;
-            else
-                type = ActionType.Adding;
-
-            requiredMitgations.add(new Mitigation(new ActionTerm(this.name, requiredMitgation.label, type), requiredMitgation.cost,
-                    getAllRequiredMitigations(requiredMitgation)));
+    private List<List<Mitigation>> getAllRequiredMitigations(MitigationStrategy mitigation) {
+        List<List<Mitigation>> requiredMitgations = new ArrayList<>();
+        for (var mitgations : mitigation.required) {
+            List<Mitigation> requiredMitgation = new ArrayList<>();
+            for (var mitgation : mitgations) {
+                ActionType type;
+                if (mitgation.type.toString()
+                        .startsWith("Delete"))
+                    type = ActionType.Removing;
+                else
+                    type = ActionType.Adding;
+                requiredMitgation.add(new Mitigation(new ActionTerm(this.name, mitgation.label, type), mitgation.cost,
+                        getAllRequiredMitigations(mitgation)));    
+            }
+            requiredMitgations.add(requiredMitgation);
 
         }
 

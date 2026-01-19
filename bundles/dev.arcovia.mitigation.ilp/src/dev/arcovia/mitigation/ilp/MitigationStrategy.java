@@ -11,7 +11,7 @@ public class MitigationStrategy {
     List<CompositeLabel> label;
     double cost;
     MitigationType type;
-    List<MitigationStrategy> required = new ArrayList<>();
+    List<List<MitigationStrategy>> required = new ArrayList<>();
     List<Constraint> notAllowedIfViolated = new ArrayList<>();
 
     public MitigationStrategy(List<CompositeLabel> label, double cost, MitigationType type) {
@@ -20,11 +20,18 @@ public class MitigationStrategy {
         this.type = type;
     }
 
-    public void addRequired(List<MitigationStrategy> required) {
-        for (var mitigation : required) {
-            if (!mitigation.type.toString()
-                    .startsWith("Delete"))
-                this.required.add(mitigation);
+    public void addRequired(List<List<MitigationStrategy>> required) {
+        for (var mitigations : required) {
+            List<MitigationStrategy> requiredMitigations = new ArrayList<>();
+            for (var mitigation : mitigations) {
+                if (!mitigation.type.toString()
+                        .startsWith("Delete"))
+                    requiredMitigations.add(mitigation);
+            }
+            if (!requiredMitigations.isEmpty()) {
+                this.required.add(requiredMitigations);
+            }
+            
         }
     }
 

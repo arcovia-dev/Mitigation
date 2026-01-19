@@ -6,5 +6,6 @@ public enum MitigationType {
     DeleteNodeLabel,
     DeleteDataLabel,
     AddNode,
-    AddFlow
+    DeleteNode,
+    DeleteFlow
 }
