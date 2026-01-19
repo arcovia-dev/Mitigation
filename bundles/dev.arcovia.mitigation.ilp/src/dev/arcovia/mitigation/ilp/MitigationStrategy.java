@@ -28,7 +28,9 @@ public class MitigationStrategy {
                         .startsWith("Delete"))
                     requiredMitigations.add(mitigation);
             }
-            if (!requiredMitigations.isEmpty())this.required.add(requiredMitigations);
+            if (!requiredMitigations.isEmpty()) {
+                this.required.add(requiredMitigations);
+            }
             
         }
     }
