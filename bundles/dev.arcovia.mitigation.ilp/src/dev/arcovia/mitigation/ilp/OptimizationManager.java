@@ -136,8 +136,6 @@ public class OptimizationManager {
     }
 
     private List<ActionTerm> getActions(List<Mitigation> result) {
-        List<Mitigation> additional = new ArrayList<>();        
-        result.addAll(additional);
         List<ActionTerm> actions = new ArrayList<>();
         for (var mit : result) {
             actions.add(mit.mitigation());
