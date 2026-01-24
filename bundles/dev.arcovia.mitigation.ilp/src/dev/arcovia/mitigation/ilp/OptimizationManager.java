@@ -83,9 +83,7 @@ public class OptimizationManager {
 
         for (var node : violatingNodes) {
             addMitigations(node.getPossibleMitigations());
-        }
-        
-        
+        }       
         
         for (var mitigation : allMitigations) {
             if (mitigation.mitigation().type().toString().startsWith("Remove")) {
@@ -415,17 +413,19 @@ public class OptimizationManager {
     
     private void addNodes(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
         var dd = dfd.dataDictionary();
+        var dataFlowDiagram = dfd.dataFlowDiagram();
         for (var action : actions) {
             if (action.type()
                     .equals(ActionType.AddNode)) {
+                var flow = dataFlowDiagram.getFlows()
+                        .stream()
+                        .filter(f -> f.getId().equals(action.domain()))
+                        .findFirst().orElseThrow();
                 
-                org.dataflowanalysis.dfd.dataflowdiagram.Node node = dfd.dataFlowDiagram().getNodes()
-                .stream()
-                .filter(n -> n.getId().equals(action.domain()))
-                .findFirst()
-                .orElseThrow();
+                var node = flow.getSourceNode();
                 
                 var name = action.compositeLabels().get(0).label().value();
+                
                 var behaviorOld = node.getBehavior();
                 
                 var dfdFactory = dataflowdiagramFactory.eINSTANCE;
@@ -458,72 +458,43 @@ public class OptimizationManager {
                 
                 Set<Label> allLabels = new HashSet<>();
                 
-                for (var assignment: behaviorOld.getAssignment()) {
-                    
-                    if (assignment instanceof Assignment cast)
-                        allLabels.addAll(cast.getOutputLabels());
-                    
-                    else if (assignment instanceof SetAssignment cast) 
-                        allLabels.addAll(cast.getOutputLabels());
-                    
-                    var assign = ddFactory.createForwardingAssignment();
-                    
-                    assign.setOutputPin(assignment.getOutputPin());
-                    
-                    assign.getInputPins().add(inPin);
-                    
-                    if (!outgoingLabels.isEmpty()) {
-                        var setAssign = ddFactory.createAssignment();
-                        setAssign.setOutputPin(assignment.getOutputPin());
-                        setAssign.getInputPins().add(inPin);
-                        setAssign.getOutputLabels().addAll(outgoingLabels);
-                        setAssign.setTerm(ddFactory.createTRUE());
-                        
-                        behaviorNew.getAssignment().add(setAssign);
-                    }
-                    
-                    behaviorNew.getAssignment().add(assign);
-                    behaviorNew.getOutPin().add(assignment.getOutputPin());
-                    
+                var sink = flow.getDestinationNode();
+                var inPinOld = flow.getDestinationPin();
+                
+                flow.setDestinationNode(vertex);
+                flow.setDestinationPin(inPin);
+                
+                var outPin = ddFactory.createPin();
+                behaviorNew.getOutPin().add(outPin);
+                
+                if (!outgoingLabels.isEmpty()) {
+                    var assignment = ddFactory.createSetAssignment();
+                    assignment.setOutputPin(outPin);
+                    assignment.getOutputLabels().addAll(outgoingLabels);
+                    behaviorNew.getAssignment().add(assignment);
                 }
+                
+                var assign = ddFactory.createForwardingAssignment();
+                
+                assign.setOutputPin(outPin);
+                
+                assign.getInputPins().add(inPin);
+                
+                behaviorNew.getAssignment().add(assign);
                 
                 vertex.setBehavior(behaviorNew);
                 
+                var flowNew = dfdFactory.createFlow();
                 
-                for (var flow: dfd.dataFlowDiagram().getFlows()) {
-                    if (flow.getSourceNode() == node) {
-                        flow.setSourceNode(vertex);
-                        flow.setEntityName(name);
-                    }
-                }
-                
-                var flow = dfdFactory.createFlow();
-                
-                var outPin = ddFactory.createPin();
-                flow.setEntityName(name);
-                flow.setDestinationNode(vertex);
-                flow.setDestinationPin(inPin);
-                flow.setSourceNode(node);
-                flow.setSourcePin(outPin);
-                
-                var assignmentNew = ddFactory.createAssignment();
-                
-                assignmentNew.setOutputPin(outPin);
-                
-                assignmentNew.getOutputLabels().addAll(allLabels);
-                
-                var ddTrue = ddFactory.createTRUE();
-                
-                assignmentNew.setTerm(ddTrue);
-                
-                behaviorOld.getAssignment().retainAll(List.of(assignmentNew));
-                behaviorOld.getAssignment().add(assignmentNew);
-                behaviorOld.getOutPin().retainAll(List.of(outPin));
-                behaviorOld.getOutPin().add(outPin);
+                flowNew.setEntityName(name);
+                flowNew.setDestinationNode(sink);
+                flowNew.setDestinationPin(inPinOld);
+                flowNew.setSourceNode(vertex);
+                flowNew.setSourcePin(outPin);
                 
                 dfd.dataFlowDiagram().getNodes().add(vertex);
                 dd.getBehavior().add(behaviorNew);
-                dfd.dataFlowDiagram().getFlows().add(flow);
+                dfd.dataFlowDiagram().getFlows().add(flowNew);
             }
         }
     }
@@ -779,7 +750,7 @@ public class OptimizationManager {
         for (var action : actions) {
             if (action.type()
                     .equals(ActionType.RemoveFlow)){
-                var flow = dataFlowDiagram.getFlows().stream().filter(n -> n.getEntityName().equals(action.domain())).findFirst().orElseThrow();
+                var flow = dataFlowDiagram.getFlows().stream().filter(n -> n.getId().equals(action.domain())).findFirst().orElseThrow();
                 
                 var assignment = flow.getSourceNode().getBehavior().getAssignment().stream().filter(n -> n.getOutputPin().equals(flow.getSourcePin())).findFirst().orElseThrow();
                 

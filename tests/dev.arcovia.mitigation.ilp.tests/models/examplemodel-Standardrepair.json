@@ -18,14 +18,14 @@
       "id" : "v21xf",
       "type" : "edge:arrow",
       "sourceId" : "qiyh9m",
-      "targetId" : "s3ki79",
+      "targetId" : "_q2xOs_kqEfCnKtGh0ZfIJw",
       "labels" : null,
       "ports" : null,
       "annotations" : null,
       "children" : [ ],
       "routingPoints" : [ ]
     }, {
-      "text" : "auth_server",
+      "text" : "~",
       "id" : "unzbr7",
       "type" : "edge:arrow",
       "sourceId" : "lbbv1m",
@@ -103,10 +103,10 @@
       "routingPoints" : [ ]
     }, {
       "text" : "auth_server",
-      "id" : "_RIswlO-_EfCisf8N7uKkLQ",
+      "id" : "_q2xOtvkqEfCnKtGh0ZfIJw",
       "type" : "edge:arrow",
-      "sourceId" : "_RIswle-_EfCisf8N7uKkLQ",
-      "targetId" : "_RIswku-_EfCisf8N7uKkLQ",
+      "sourceId" : "_q2xOtPkqEfCnKtGh0ZfIJw",
+      "targetId" : "s3ki79",
       "labels" : null,
       "ports" : null,
       "annotations" : null,
@@ -114,10 +114,10 @@
       "routingPoints" : [ ]
     }, {
       "text" : "logging_server",
-      "id" : "_RItXpO-_EfCisf8N7uKkLQ",
+      "id" : "_q2x1wfkqEfCnKtGh0ZfIJw",
       "type" : "edge:arrow",
-      "sourceId" : "_RItXpe-_EfCisf8N7uKkLQ",
-      "targetId" : "_RItXou-_EfCisf8N7uKkLQ",
+      "sourceId" : "_q2x1wvkqEfCnKtGh0ZfIJw",
+      "targetId" : "_q2xOufkqEfCnKtGh0ZfIJw",
       "labels" : null,
       "ports" : null,
       "annotations" : null,
@@ -125,10 +125,10 @@
       "routingPoints" : [ ]
     }, {
       "text" : "logging_server",
-      "id" : "_RItXpu-_EfCisf8N7uKkLQ",
+      "id" : "_q2x1xPkqEfCnKtGh0ZfIJw",
       "type" : "edge:arrow",
-      "sourceId" : "_RItXp--_EfCisf8N7uKkLQ",
-      "targetId" : "_RItXou-_EfCisf8N7uKkLQ",
+      "sourceId" : "_q2x1xfkqEfCnKtGh0ZfIJw",
+      "targetId" : "_q2xOufkqEfCnKtGh0ZfIJw",
       "labels" : null,
       "ports" : null,
       "annotations" : null,
@@ -136,10 +136,10 @@
       "routingPoints" : [ ]
     }, {
       "text" : "logging_server",
-      "id" : "_RItXqu-_EfCisf8N7uKkLQ",
+      "id" : "_q2x1yPkqEfCnKtGh0ZfIJw",
       "type" : "edge:arrow",
-      "sourceId" : "_RItXq--_EfCisf8N7uKkLQ",
-      "targetId" : "_RItXou-_EfCisf8N7uKkLQ",
+      "sourceId" : "_q2x1yfkqEfCnKtGh0ZfIJw",
+      "targetId" : "_q2xOufkqEfCnKtGh0ZfIJw",
       "labels" : null,
       "ports" : null,
       "annotations" : null,
@@ -162,20 +162,25 @@
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Incoming: ",
+        "message" : "Incoming: Data.configuration, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 2062667107
+        "tfg" : 2041082602
+      }, {
+        "message" : "Incoming: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2005091068
       }, {
         "message" : "Incoming: User.user, Data.request, Stereotype.entrypoint",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 144467413
+        "tfg" : 2011418913
       }, {
         "message" : "Incoming: Data.configuration",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 262815725
+        "tfg" : 923389249
       } ],
       "children" : [ ],
       "position" : {
@@ -207,27 +212,27 @@
         "message" : "Propagated: User.user, Data.request, Stereotype.entrypoint",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 144467413
+        "tfg" : 2011418913
       }, {
         "message" : "Incoming: User.user, Data.request, Stereotype.entrypoint",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 144467413
+        "tfg" : 2011418913
       }, {
         "message" : "Propagated: Data.configuration",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 262815725
+        "tfg" : 923389249
       }, {
         "message" : "Incoming: Data.configuration",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 262815725
+        "tfg" : 923389249
       }, {
         "message" : "Propagated: Data.response",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1649498695
+        "tfg" : 227333736
       } ],
       "children" : [ ],
       "position" : {
@@ -244,40 +249,66 @@
         "labelTypeValueId" : "mo8hoo"
       }, {
         "labelTypeId" : "lw0ew35",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       }, {
         "labelTypeId" : "lw0ew35",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
       } ],
       "ports" : [ {
         "id" : "s3ki79",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "assign  if TRUE",
-        "id" : "_RIswle-_EfCisf8N7uKkLQ",
+        "behavior" : "forward auth_server|configuration",
+        "id" : "lbbv1m",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "id" : "_RItXpe-_EfCisf8N7uKkLQ",
+        "behavior" : "forward auth_server|configuration",
+        "id" : "_q2x1wvkqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Propagated: ",
+        "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 2062667107
-      }, {
-        "message" : "Incoming: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 941403433
+        "tfg" : 2041082602
       }, {
         "message" : "Incoming: Data.configuration, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 159917166
+        "tfg" : 2041082602
+      }, {
+        "message" : "Propagated: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2005091068
+      }, {
+        "message" : "Incoming: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2005091068
+      }, {
+        "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 167136865
+      }, {
+        "message" : "Incoming: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 167136865
+      }, {
+        "message" : "Propagated: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1894574555
+      }, {
+        "message" : "Incoming: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1894574555
       } ],
       "children" : [ ],
       "position" : {
@@ -312,20 +343,25 @@
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Propagated: User.user, Data.request, Stereotype.entrypoint",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 144467413
-      }, {
         "message" : "Propagated: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 941403433
+        "tfg" : 2005091068
+      }, {
+        "message" : "Propagated: User.user, Data.request, Stereotype.entrypoint",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2011418913
       }, {
         "message" : "Incoming: Data.response",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1649498695
+        "tfg" : 227333736
+      }, {
+        "message" : "Propagated: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1894574555
       } ],
       "children" : [ ],
       "position" : {
@@ -362,31 +398,36 @@
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "assign Data.configuration,Stereotype.authenticated_request if TRUE",
-        "id" : "_RItXp--_EfCisf8N7uKkLQ",
+        "behavior" : "assign Stereotype.authenticated_request,Data.configuration if TRUE",
+        "id" : "_q2x1xfkqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "annotations" : [ {
+        "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 2041082602
+      }, {
         "message" : "Propagated: Data.configuration",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 262815725
+        "tfg" : 923389249
+      }, {
+        "message" : "Incoming: User.admin, Encryption.encrypted, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1626730887
       }, {
         "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 159917166
+        "tfg" : 167136865
       }, {
-        "message" : "Incoming: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "message" : "Propagated: Stereotype.authenticated_request, Data.configuration",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1012552887
-      }, {
-        "message" : "Propagated: Data.configuration, Stereotype.authenticated_request",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 688988404
+        "tfg" : 456674872
       } ],
       "children" : [ ],
       "position" : {
@@ -403,10 +444,10 @@
         "labelTypeValueId" : "mo8hoo"
       }, {
         "labelTypeId" : "lw0ew35",
-        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
+        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
       }, {
         "labelTypeId" : "lw0ew35",
-        "labelTypeValueId" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"
+        "labelTypeValueId" : "1bda72ae-9223-39cb-9607-a8067798e736"
       } ],
       "ports" : [ {
         "id" : "3fbuli",
@@ -414,20 +455,20 @@
         "children" : [ ]
       }, {
         "behavior" : "forward admin",
-        "id" : "_RItXq--_EfCisf8N7uKkLQ",
+        "id" : "_q2x1yfkqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Propagated: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "message" : "Propagated: User.admin, Encryption.encrypted, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1098568947
+        "tfg" : 1418652945
       }, {
-        "message" : "Incoming: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "message" : "Incoming: User.admin, Encryption.encrypted, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1098568947
+        "tfg" : 1418652945
       } ],
       "children" : [ ],
       "position" : {
@@ -444,26 +485,26 @@
         "labelTypeValueId" : "0ffb8"
       } ],
       "ports" : [ {
-        "behavior" : "set User.admin,Stereotype.authenticated_request,Encryption.encrypted",
+        "behavior" : "set User.admin,Encryption.encrypted,Stereotype.authenticated_request",
         "id" : "dwh5sd",
         "type" : "port:dfd-output",
         "children" : [ ]
       }, {
-        "behavior" : "set User.admin,Stereotype.authenticated_request,Encryption.encrypted",
+        "behavior" : "set User.admin,Encryption.encrypted,Stereotype.authenticated_request",
         "id" : "rc2o8d",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Propagated: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "message" : "Propagated: User.admin, Encryption.encrypted, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1012552887
+        "tfg" : 1626730887
       }, {
-        "message" : "Propagated: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "message" : "Propagated: User.admin, Encryption.encrypted, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1098568947
+        "tfg" : 1418652945
       } ],
       "children" : [ ],
       "position" : {
@@ -473,32 +514,42 @@
       "size" : null
     }, {
       "text" : "auth_server",
-      "id" : "_RIsJg--_EfCisf8N7uKkLQ",
+      "id" : "_q2xOsPkqEfCnKtGh0ZfIJw",
       "type" : "node:function",
       "labels" : [ {
         "labelTypeId" : "lw0ew35",
         "labelTypeValueId" : "4a6883fd-dc01-3d50-a09d-8304b6337173"
       } ],
       "ports" : [ {
-        "id" : "_RIswku-_EfCisf8N7uKkLQ",
+        "id" : "_q2xOs_kqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward auth_server",
-        "id" : "lbbv1m",
+        "behavior" : "forward process",
+        "id" : "_q2xOtPkqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Propagated: ",
+        "message" : "Propagated: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 2062667107
+        "tfg" : 2005091068
       }, {
-        "message" : "Incoming: ",
+        "message" : "Incoming: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 2062667107
+        "tfg" : 2005091068
+      }, {
+        "message" : "Propagated: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1894574555
+      }, {
+        "message" : "Incoming: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1894574555
       } ],
       "children" : [ ],
       "position" : {
@@ -508,14 +559,14 @@
       "size" : null
     }, {
       "text" : "logging_server",
-      "id" : "_RItXoO-_EfCisf8N7uKkLQ",
+      "id" : "_q2xOt_kqEfCnKtGh0ZfIJw",
       "type" : "node:function",
       "labels" : [ {
         "labelTypeId" : "lw0ew35",
         "labelTypeValueId" : "d283cec3-a227-3b75-8289-5d7054ec866d"
       } ],
       "ports" : [ {
-        "id" : "_RItXou-_EfCisf8N7uKkLQ",
+        "id" : "_q2xOufkqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-input",
         "children" : [ ]
       } ],
@@ -523,12 +574,22 @@
         "message" : "Incoming: Data.configuration, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 688988404
+        "tfg" : 167136865
       }, {
-        "message" : "Incoming: User.admin, Stereotype.authenticated_request, Encryption.encrypted",
+        "message" : "Incoming: Data.personal, User.user, Stereotype.entrypoint, Stereotype.authenticated_request",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1098568947
+        "tfg" : 1894574555
+      }, {
+        "message" : "Incoming: Stereotype.authenticated_request, Data.configuration",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 456674872
+      }, {
+        "message" : "Incoming: User.admin, Encryption.encrypted, Stereotype.authenticated_request",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1418652945
       } ],
       "children" : [ ],
       "position" : {
@@ -610,11 +671,11 @@
       "id" : "8ab7aa02-d13e-363c-b9c7-168a812039ae",
       "text" : "authenticated_request"
     }, {
-      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
-      "text" : "local_logging"
-    }, {
       "id" : "1bda72ae-9223-39cb-9607-a8067798e736",
       "text" : "log_sanitization"
+    }, {
+      "id" : "0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9",
+      "text" : "local_logging"
     }, {
       "id" : "4a6883fd-dc01-3d50-a09d-8304b6337173",
       "text" : "auth_server"
