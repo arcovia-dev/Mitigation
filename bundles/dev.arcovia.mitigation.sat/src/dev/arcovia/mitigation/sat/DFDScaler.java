@@ -25,16 +25,15 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 
 public class DFDScaler {
     DataFlowDiagramAndDictionary dfd;
-    
+
     public DFDScaler(DataFlowDiagramAndDictionary dfd) {
         this.dfd = dfd;
     }
-    
+
     public DFDScaler(String dfdLocation) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
     }
 
-    
     /***
      * Scaling the entire DFD, their nodes and flows
      * @param scalingNodes
@@ -45,96 +44,110 @@ public class DFDScaler {
 
         var dd = dfd.dataDictionary();
         var dataFlowDiagram = dfd.dataFlowDiagram();
-        
+
         duplicateNodes(dataFlowDiagram, dd, scalingNodes);
-        
+
         duplicateFlows(dataFlowDiagram, dd, scalingFlows);
 
         return dfd;
-    }  
+    }
+
     /***
      * Number of Lables is scaled by adding scalingAmount Labels to the dfd (annotated to every node &flow)
      * @param scalingAmount
      * @return
      */
-    public DataFlowDiagramAndDictionary scaleLabels(int scalingAmount) {        
+    public DataFlowDiagramAndDictionary scaleLabels(int scalingAmount) {
         var ddFactory = datadictionaryFactory.eINSTANCE;
-        
+
         var labelType = ddFactory.createLabelType();
-        labelType.setEntityName("dummyCategory");        
-        
-        for (int i = 0; i<scalingAmount; i++) {
+        labelType.setEntityName("dummyCategory");
+
+        for (int i = 0; i < scalingAmount; i++) {
             var label = ddFactory.createLabel();
             label.setEntityName("dummy_" + i);
-            labelType.getLabel().add(label);
-            
+            labelType.getLabel()
+                    .add(label);
+
         }
-        
-        dfd.dataDictionary().getLabelTypes()
-        .add(labelType);
-        
-        for (var node : dfd.dataFlowDiagram().getNodes()) {
-            node.getProperties().addAll(labelType.getLabel());
+
+        dfd.dataDictionary()
+                .getLabelTypes()
+                .add(labelType);
+
+        for (var node : dfd.dataFlowDiagram()
+                .getNodes()) {
+            node.getProperties()
+                    .addAll(labelType.getLabel());
         }
-        for (var behavior : dfd.dataDictionary().getBehavior()) {
+        for (var behavior : dfd.dataDictionary()
+                .getBehavior()) {
             for (var assignment : behavior.getAssignment()) {
                 if (assignment instanceof SetAssignment cast) {
-                    cast.getOutputLabels().addAll(labelType.getLabel());
-                }
-                else if (assignment instanceof Assignment cast) {
-                    cast.getOutputLabels().addAll(labelType.getLabel());
+                    cast.getOutputLabels()
+                            .addAll(labelType.getLabel());
+                } else if (assignment instanceof Assignment cast) {
+                    cast.getOutputLabels()
+                            .addAll(labelType.getLabel());
                 }
             }
         }
-        
+
         return dfd;
     }
+
     /***
      * Number of LableTypes is scaled by adding scalingAmount Labels to the dfd (annotated to every node &flow)
      * @param scalingAmount
      * @return
      */
-    public DataFlowDiagramAndDictionary scaleLabelTypes(int scalingAmount) {        
+    public DataFlowDiagramAndDictionary scaleLabelTypes(int scalingAmount) {
         var ddFactory = datadictionaryFactory.eINSTANCE;
-        
+
         var label = ddFactory.createLabel();
-        label.setEntityName("dummyLabel");        
-        
+        label.setEntityName("dummyLabel");
+
         List<LabelType> labelTypes = new ArrayList<>();
-        
-        for (int i = 0; i<scalingAmount; i++) {
+
+        for (int i = 0; i < scalingAmount; i++) {
             var labelType = ddFactory.createLabelType();
             labelType.setEntityName("dummyType_" + i);
-            labelType.getLabel().add(label);
-            dfd.dataDictionary().getLabelTypes()
-            .add(labelType);
+            labelType.getLabel()
+                    .add(label);
+            dfd.dataDictionary()
+                    .getLabelTypes()
+                    .add(labelType);
             labelTypes.add(labelType);
         }
 
-        for (var node : dfd.dataFlowDiagram().getNodes()) {
-            for (var labelType: labelTypes) {
-                node.getProperties().addAll(labelType.getLabel());
+        for (var node : dfd.dataFlowDiagram()
+                .getNodes()) {
+            for (var labelType : labelTypes) {
+                node.getProperties()
+                        .addAll(labelType.getLabel());
             }
         }
-        
-        for (var behavior : dfd.dataDictionary().getBehavior()) {
+
+        for (var behavior : dfd.dataDictionary()
+                .getBehavior()) {
             for (var assignment : behavior.getAssignment()) {
                 if (assignment instanceof SetAssignment cast) {
-                    for (var labelType: labelTypes) {
-                        cast.getOutputLabels().addAll(labelType.getLabel());
+                    for (var labelType : labelTypes) {
+                        cast.getOutputLabels()
+                                .addAll(labelType.getLabel());
                     }
-                }
-                else if (assignment instanceof Assignment cast) {
-                    for (var labelType: labelTypes) {
-                        cast.getOutputLabels().addAll(labelType.getLabel());
+                } else if (assignment instanceof Assignment cast) {
+                    for (var labelType : labelTypes) {
+                        cast.getOutputLabels()
+                                .addAll(labelType.getLabel());
                     }
                 }
             }
         }
-        
-        
+
         return dfd;
     }
+
     /***
      * Scaling the length of a tfg, by chaining scalingAmount sinks to an existing sink
      * @param scalingAmount
@@ -143,13 +156,16 @@ public class DFDScaler {
     public DataFlowDiagramAndDictionary scaleTFGLength(int scalingAmount) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
-        
-        var nodes = dfd.dataFlowDiagram().getNodes();
-        
+
+        var nodes = dfd.dataFlowDiagram()
+                .getNodes();
+
         Node sink = null;
-        
+
         for (var node : nodes) {
-            if (node.getBehavior().getAssignment().isEmpty()) {
+            if (node.getBehavior()
+                    .getAssignment()
+                    .isEmpty()) {
                 sink = node;
                 break;
             }
@@ -157,43 +173,58 @@ public class DFDScaler {
         if (sink == null) {
             return dfd;
         }
-        
-        for (int i = 0; i<scalingAmount; i++) {
+
+        for (int i = 0; i < scalingAmount; i++) {
             var node = dfdFactory.createStore();
             node.setEntityName("dummyNode_" + i);
-            
-            node.getProperties().addAll(sink.getProperties());
-            
+
+            node.getProperties()
+                    .addAll(sink.getProperties());
+
             var behavior = ddFactory.createBehavior();
             var inPin = ddFactory.createPin();
-            behavior.getInPin().add(inPin);
+            behavior.getInPin()
+                    .add(inPin);
             node.setBehavior(behavior);
-            
-            dfd.dataDictionary().getBehavior().add(behavior);
-            
+
+            dfd.dataDictionary()
+                    .getBehavior()
+                    .add(behavior);
+
             var outPin = ddFactory.createPin();
-            sink.getBehavior().getOutPin().add(outPin);
-            
+            sink.getBehavior()
+                    .getOutPin()
+                    .add(outPin);
+
             var forwarding = ddFactory.createForwardingAssignment();
             forwarding.setOutputPin(outPin);
-            forwarding.getInputPins().addAll(sink.getBehavior().getInPin());
-            
-            sink.getBehavior().getAssignment().add(forwarding);
-            dfd.dataFlowDiagram().getNodes().add(node);
-            
+            forwarding.getInputPins()
+                    .addAll(sink.getBehavior()
+                            .getInPin());
+
+            sink.getBehavior()
+                    .getAssignment()
+                    .add(forwarding);
+            dfd.dataFlowDiagram()
+                    .getNodes()
+                    .add(node);
+
             var flow = dfdFactory.createFlow();
             flow.setEntityName("dummyFlow_" + i);
             flow.setDestinationNode(node);
             flow.setDestinationPin(inPin);
             flow.setSourceNode(sink);
             flow.setSourcePin(outPin);
-            
-            dfd.dataFlowDiagram().getFlows().add(flow);
+
+            dfd.dataFlowDiagram()
+                    .getFlows()
+                    .add(flow);
             sink = node;
         }
-        
+
         return dfd;
     }
+
     /***
      * Scaling the amount of TFGs of a dfd by duplicating a random flow scalingAmount times
      * @param scalingAmount
@@ -202,62 +233,74 @@ public class DFDScaler {
     public DataFlowDiagramAndDictionary scaleTFGAmount(int scalingAmount) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
-        
-        var flow = dfd.dataFlowDiagram().getFlows().get(0);
+
+        var flow = dfd.dataFlowDiagram()
+                .getFlows()
+                .get(0);
         var source = flow.getSourceNode();
         var sourcePin = flow.getSourcePin();
         var destination = flow.getDestinationNode();
         var destinationPin = flow.getDestinationPin();
-        
+
         var sourceBehavior = source.getBehavior();
-        
-        List<AbstractAssignment> assignments = sourceBehavior.getAssignment().stream().filter(assign -> assign.getOutputPin().equals(sourcePin)).toList();
-        
+
+        List<AbstractAssignment> assignments = sourceBehavior.getAssignment()
+                .stream()
+                .filter(assign -> assign.getOutputPin()
+                        .equals(sourcePin))
+                .toList();
+
         for (int i = 0; i < scalingAmount; i++) {
             flow = dfdFactory.createFlow();
             flow.setSourceNode(source);
             flow.setDestinationNode(destination);
             flow.setDestinationPin(destinationPin);
             flow.setEntityName("dummyFlow_" + i);
-            
+
             var outPin = ddFactory.createPin();
             flow.setSourcePin(outPin);
-            sourceBehavior.getOutPin().add(outPin);
-            
+            sourceBehavior.getOutPin()
+                    .add(outPin);
+
             for (var assignment : assignments) {
                 if (assignment instanceof Assignment cast) {
                     var newAssignment = ddFactory.createAssignment();
                     newAssignment.setOutputPin(outPin);
-                    newAssignment.getInputPins().add(destinationPin);
-                    newAssignment.getOutputLabels().addAll(cast.getOutputLabels());
+                    newAssignment.getInputPins()
+                            .add(destinationPin);
+                    newAssignment.getOutputLabels()
+                            .addAll(cast.getOutputLabels());
                     newAssignment.setTerm(ddFactory.createTRUE());
-                    sourceBehavior.getAssignment().add(newAssignment);
-                }
-                else if (assignment instanceof SetAssignment cast) {
+                    sourceBehavior.getAssignment()
+                            .add(newAssignment);
+                } else if (assignment instanceof SetAssignment cast) {
                     var newAssignment = ddFactory.createSetAssignment();
                     newAssignment.setOutputPin(outPin);
-                    newAssignment.getOutputLabels().addAll(cast.getOutputLabels());
-                    sourceBehavior.getAssignment().add(newAssignment);
-                }
-                else if (assignment instanceof ForwardingAssignment cast){
+                    newAssignment.getOutputLabels()
+                            .addAll(cast.getOutputLabels());
+                    sourceBehavior.getAssignment()
+                            .add(newAssignment);
+                } else if (assignment instanceof ForwardingAssignment cast) {
                     var newAssignment = ddFactory.createForwardingAssignment();
-                    
+
                     newAssignment.setOutputPin(outPin);
-                    newAssignment.getInputPins().addAll(cast.getInputPins());
-                    sourceBehavior.getAssignment().add(newAssignment);
+                    newAssignment.getInputPins()
+                            .addAll(cast.getInputPins());
+                    sourceBehavior.getAssignment()
+                            .add(newAssignment);
                 }
             }
-            
-            dfd.dataFlowDiagram().getFlows().add(flow);
+
+            dfd.dataFlowDiagram()
+                    .getFlows()
+                    .add(flow);
         }
-        
-        
-        
+
         return dfd;
     }
-    
+
     /***
-     * Copying the entire DFD to achieve the scalingAmount of Nodes 
+     * Copying the entire DFD to achieve the scalingAmount of Nodes
      * @param dataFlowDiagram
      * @param dd
      * @param scalingAmount
@@ -265,13 +308,12 @@ public class DFDScaler {
     private void duplicateNodes(DataFlowDiagram dataFlowDiagram, DataDictionary dd, int scalingAmount) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
-        
+
         Map<Node, List<Node>> scalingMapNodes = new HashMap<>();
         Map<Pin, List<Pin>> scalingMapPins = new HashMap<>();
-        
+
         List<Node> newNodes = new ArrayList<>();
-   
-         
+
         for (var node : dataFlowDiagram.getNodes()) {
             scalingMapNodes.put(node, new ArrayList<Node>());
             for (int i = 0; i < scalingAmount; i++) {
@@ -279,111 +321,125 @@ public class DFDScaler {
 
                 if (node instanceof ExternalImpl) {
                     newNode = dfdFactory.createExternal();
-                }
-                else if (node instanceof StoreImpl) {
+                } else if (node instanceof StoreImpl) {
                     newNode = dfdFactory.createStore();
-                }
-                else {
+                } else {
                     newNode = dfdFactory.createProcess();
                 }
-                newNode.getProperties().addAll(node.getProperties());
-                
+                newNode.getProperties()
+                        .addAll(node.getProperties());
+
                 var nodeBehavior = node.getBehavior();
-                
+
                 var newBehavior = ddFactory.createBehavior();
-                
+
                 for (var pin : nodeBehavior.getInPin()) {
                     if (scalingMapPins.get(pin) == null) {
                         scalingMapPins.put(pin, new ArrayList<Pin>());
                     }
                     var inPin = ddFactory.createPin();
-                    newBehavior.getInPin().add(inPin);
-                    scalingMapPins.get(pin).add(inPin);
+                    newBehavior.getInPin()
+                            .add(inPin);
+                    scalingMapPins.get(pin)
+                            .add(inPin);
                 }
                 for (var pin : nodeBehavior.getOutPin()) {
                     if (scalingMapPins.get(pin) == null) {
                         scalingMapPins.put(pin, new ArrayList<Pin>());
                     }
                     var outPin = ddFactory.createPin();
-                    newBehavior.getOutPin().add(outPin);
-                    scalingMapPins.get(pin).add(outPin);
+                    newBehavior.getOutPin()
+                            .add(outPin);
+                    scalingMapPins.get(pin)
+                            .add(outPin);
                 }
-                
-                
+
                 for (var assignment : nodeBehavior.getAssignment()) {
                     if (assignment instanceof ForwardingAssignment cast) {
                         var newAssignment = ddFactory.createForwardingAssignment();
-                        
-                        for (var pin: cast.getInputPins()) {
-                            newAssignment.getInputPins().add(scalingMapPins.get(pin).get(i));
+
+                        for (var pin : cast.getInputPins()) {
+                            newAssignment.getInputPins()
+                                    .add(scalingMapPins.get(pin)
+                                            .get(i));
                         }
-                        newAssignment.setOutputPin(scalingMapPins.get(cast.getOutputPin()).get(i));
-                                                
-                        newBehavior.getAssignment().add(newAssignment);
-                    }
-                    else if (assignment instanceof Assignment cast) {
+                        newAssignment.setOutputPin(scalingMapPins.get(cast.getOutputPin())
+                                .get(i));
+
+                        newBehavior.getAssignment()
+                                .add(newAssignment);
+                    } else if (assignment instanceof Assignment cast) {
                         var newAssignment = ddFactory.createAssignment();
-                        
-                        newAssignment.setOutputPin(scalingMapPins.get(cast.getOutputPin()).get(i));
-                        
+
+                        newAssignment.setOutputPin(scalingMapPins.get(cast.getOutputPin())
+                                .get(i));
+
                         newAssignment.getOutputLabels()
-                        .addAll(cast.getOutputLabels());
+                                .addAll(cast.getOutputLabels());
 
                         var ddTrue = ddFactory.createTRUE();
-        
+
                         newAssignment.setTerm(ddTrue);
-                        
-                        
-                        newBehavior.getAssignment().add(newAssignment);
-                    }
-                    else if (assignment instanceof SetAssignment cast) {
+
+                        newBehavior.getAssignment()
+                                .add(newAssignment);
+                    } else if (assignment instanceof SetAssignment cast) {
                         var newAssignment = ddFactory.createAssignment();
-                        
-                        newAssignment.setOutputPin(scalingMapPins.get(cast.getOutputPin()).get(i));
-                        
+
+                        newAssignment.setOutputPin(scalingMapPins.get(cast.getOutputPin())
+                                .get(i));
+
                         newAssignment.getOutputLabels()
-                        .addAll(cast.getOutputLabels());
+                                .addAll(cast.getOutputLabels());
 
                         var ddTrue = ddFactory.createTRUE();
-        
+
                         newAssignment.setTerm(ddTrue);
-                        
-                        newBehavior.getAssignment().add(newAssignment);
+
+                        newBehavior.getAssignment()
+                                .add(newAssignment);
                     }
                 }
-                dd.getBehavior().add(newBehavior);
+                dd.getBehavior()
+                        .add(newBehavior);
                 newNode.setBehavior(newBehavior);
-                newNode.setEntityName(node.getEntityName()+ "_"+ i);
+                newNode.setEntityName(node.getEntityName() + "_" + i);
                 newNodes.add(newNode);
-                scalingMapNodes.get(node).add(newNode);
+                scalingMapNodes.get(node)
+                        .add(newNode);
             }
         }
-        dataFlowDiagram.getNodes().addAll(newNodes);
-        
+        dataFlowDiagram.getNodes()
+                .addAll(newNodes);
+
         List<Flow> newFlows = new ArrayList<>();
         for (var flow : dataFlowDiagram.getFlows()) {
             var sourePin = flow.getSourcePin();
             var sourceNode = flow.getSourceNode();
             var destinationPin = flow.getDestinationPin();
             var destinationNode = flow.getDestinationNode();
-            
-            for(int i = 0; i < scalingAmount; i++) {
+
+            for (int i = 0; i < scalingAmount; i++) {
                 var copyFlow = dfdFactory.createFlow();
-                copyFlow.setDestinationNode(scalingMapNodes.get(destinationNode).get(i));
-                copyFlow.setDestinationPin(scalingMapPins.get(destinationPin).get(i));
-                copyFlow.setSourceNode(scalingMapNodes.get(sourceNode).get(i));
-                copyFlow.setSourcePin(scalingMapPins.get(sourePin).get(i));
-                copyFlow.setEntityName(flow.getEntityName()+"_"+i);
+                copyFlow.setDestinationNode(scalingMapNodes.get(destinationNode)
+                        .get(i));
+                copyFlow.setDestinationPin(scalingMapPins.get(destinationPin)
+                        .get(i));
+                copyFlow.setSourceNode(scalingMapNodes.get(sourceNode)
+                        .get(i));
+                copyFlow.setSourcePin(scalingMapPins.get(sourePin)
+                        .get(i));
+                copyFlow.setEntityName(flow.getEntityName() + "_" + i);
 
                 newFlows.add(copyFlow);
             }
         }
         dataFlowDiagram.getFlows()
-        .addAll(newFlows);
+                .addAll(newFlows);
     }
-    
+
     /***
-     * Multiplying all flows by scalingAmount 
+     * Multiplying all flows by scalingAmount
      * @param dataFlowDiagram
      * @param dd
      * @param scalingAmount
@@ -403,8 +459,8 @@ public class DFDScaler {
                 copyFlow.setDestinationNode(flow.getDestinationNode());
                 copyFlow.setDestinationPin(flow.getDestinationPin());
                 copyFlow.setSourceNode(flow.getSourceNode());
-                copyFlow.setEntityName(flow.getEntityName()+"-"+i);
-                
+                copyFlow.setEntityName(flow.getEntityName() + "-" + i);
+
                 var outPin = ddFactory.createPin();
 
                 copyFlow.setSourcePin(outPin);
