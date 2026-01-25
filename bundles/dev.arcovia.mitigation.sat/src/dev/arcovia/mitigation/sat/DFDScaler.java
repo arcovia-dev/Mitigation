@@ -24,7 +24,19 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 
 public class DFDScaler {
-    public static DataFlowDiagramAndDictionary scaleDFD(DataFlowDiagramAndDictionary dfd, int scalingNodes, int scalingFlows) {
+    DataFlowDiagramAndDictionary dfd;
+    int scaling = 5;
+    public DFDScaler(DataFlowDiagramAndDictionary dfd) {
+        this.dfd = dfd;
+    }
+    
+    public DFDScaler(String dfdLocation) {
+        this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
+    }
+
+    
+    
+    public DataFlowDiagramAndDictionary scaleDFD(int scalingNodes, int scalingFlows) {
 
         var dd = dfd.dataDictionary();
         var dataFlowDiagram = dfd.dataFlowDiagram();
@@ -36,30 +48,17 @@ public class DFDScaler {
         return dfd;
     }
 
-    public static DataFlowDiagramAndDictionary scaleDFD(DataFlowDiagramAndDictionary dfd) {
-        return scaleDFD(dfd, 5, 5);
-    }
-
-    public static DataFlowDiagramAndDictionary scaleDFD(String dfdLocation) {
-        var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        return scaleDFD(dfd, 5, 5);
-    }
-
-    public static DataFlowDiagramAndDictionary scaleDFD(String dfdLocation, int scalingNodes, int scalingFlows) {
-        var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        return scaleDFD(dfd, scalingNodes, scalingFlows);
-    }
+    public DataFlowDiagramAndDictionary scaleDFD() {
+        return scaleDFD(scaling,scaling);
+    }   
     
-    public static DataFlowDiagramAndDictionary scaleLabels(String dfdLocation, int scaling) {
-        var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        
+    public DataFlowDiagramAndDictionary scaleLabels(int scaling) {        
         var ddFactory = datadictionaryFactory.eINSTANCE;
         
         var labelType = ddFactory.createLabelType();
         labelType.setEntityName("dummyCategory");        
         
         for (int i = 0; i<scaling; i++) {
-
             var label = ddFactory.createLabel();
             label.setEntityName("dummy_" + i);
             labelType.getLabel().add(label);
@@ -70,17 +69,23 @@ public class DFDScaler {
         .add(labelType);
         
         for (var node : dfd.dataFlowDiagram().getNodes()) {
-            for (var label: labelType.getLabel()) {
-                node.getProperties().add(label);
+            node.getProperties().addAll(labelType.getLabel());
+        }
+        for (var behavior : dfd.dataDictionary().getBehavior()) {
+            for (var assignment : behavior.getAssignment()) {
+                if (assignment instanceof SetAssignment cast) {
+                    cast.getOutputLabels().addAll(labelType.getLabel());
+                }
+                else if (assignment instanceof Assignment cast) {
+                    cast.getOutputLabels().addAll(labelType.getLabel());
+                }
             }
         }
         
         return dfd;
     }
     
-    public static DataFlowDiagramAndDictionary scaleLabelTypes(String dfdLocation, int scaling) {
-        var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-        
+    public DataFlowDiagramAndDictionary scaleLabelTypes(int scaling) {        
         var ddFactory = datadictionaryFactory.eINSTANCE;
         
         var label = ddFactory.createLabel();
@@ -99,15 +104,30 @@ public class DFDScaler {
 
         for (var node : dfd.dataFlowDiagram().getNodes()) {
             for (var labelType: labelTypes) {
-                node.getProperties().add(labelType.getLabel().get(0));
+                node.getProperties().addAll(labelType.getLabel());
             }
         }
+        
+        for (var behavior : dfd.dataDictionary().getBehavior()) {
+            for (var assignment : behavior.getAssignment()) {
+                if (assignment instanceof SetAssignment cast) {
+                    for (var labelType: labelTypes) {
+                        cast.getOutputLabels().addAll(labelType.getLabel());
+                    }
+                }
+                else if (assignment instanceof Assignment cast) {
+                    for (var labelType: labelTypes) {
+                        cast.getOutputLabels().addAll(labelType.getLabel());
+                    }
+                }
+            }
+        }
+        
         
         return dfd;
     }
     
-    public static DataFlowDiagramAndDictionary scaleLTFGLength(String dfdLocation, int scaling) {
-        var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
+    public DataFlowDiagramAndDictionary scaleLTFGLength(int scaling) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
         
@@ -127,6 +147,7 @@ public class DFDScaler {
             var node = dfdFactory.createStore();
             node.setEntityName("dummyNode_" + i);
             
+            node.getProperties().addAll(sink.getProperties());
             
             var behavior = ddFactory.createBehavior();
             var inPin = ddFactory.createPin();
@@ -140,7 +161,7 @@ public class DFDScaler {
             
             var forwarding = ddFactory.createForwardingAssignment();
             forwarding.setOutputPin(outPin);
-            forwarding.getInputPins().add(inPin);
+            forwarding.getInputPins().addAll(sink.getBehavior().getInPin());
             
             sink.getBehavior().getAssignment().add(forwarding);
             dfd.dataFlowDiagram().getNodes().add(node);
@@ -159,8 +180,7 @@ public class DFDScaler {
         return dfd;
     }
     
-    public static DataFlowDiagramAndDictionary scaleLTFGAmount(String dfdLocation, int scaling) {
-        var dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
+    public DataFlowDiagramAndDictionary scaleLTFGAmount(int scaling) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
         
@@ -218,7 +238,7 @@ public class DFDScaler {
     }
     
     
-    private static void duplicateNodes(DataFlowDiagram dataFlowDiagram, DataDictionary dd, int scaling) {
+    private void duplicateNodes(DataFlowDiagram dataFlowDiagram, DataDictionary dd, int scaling) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
         
@@ -339,7 +359,7 @@ public class DFDScaler {
     }
     
 
-    private static void duplicateFlows(DataFlowDiagram dataFlowDiagram, DataDictionary dd, int scaling) {
+    private void duplicateFlows(DataFlowDiagram dataFlowDiagram, DataDictionary dd, int scaling) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
         Map<Pin, List<Pin>> scalingMap = new HashMap<>();
