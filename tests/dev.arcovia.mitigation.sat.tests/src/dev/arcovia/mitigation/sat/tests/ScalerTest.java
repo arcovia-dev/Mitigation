@@ -43,11 +43,13 @@ public class ScalerTest {
                 .save("testresults/", "scaledLabels.json");
         
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        
-        var node = scaledDfd.dataFlowDiagram().getNodes().get(0);
-        var unscaledNode = dfd.dataFlowDiagram().getNodes().get(0);
-        
-        assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
+              
+        for (int i = 0; i< dfd.dataFlowDiagram().getNodes().size(); i++) {
+            var node = scaledDfd.dataFlowDiagram().getNodes().get(i);
+            var unscaledNode = dfd.dataFlowDiagram().getNodes().get(i);
+            
+            assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
+        }
     }
 
     @Test
@@ -62,10 +64,14 @@ public class ScalerTest {
         
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
         
-        var node = scaledDfd.dataFlowDiagram().getNodes().get(0);
-        var unscaledNode = dfd.dataFlowDiagram().getNodes().get(0);
+        for (int i = 0; i< dfd.dataFlowDiagram().getNodes().size(); i++) {
+            var node = scaledDfd.dataFlowDiagram().getNodes().get(i);
+            var unscaledNode = dfd.dataFlowDiagram().getNodes().get(i);
+            
+            assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
+        }
         
-        assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
+        
         
         assertTrue(dfd.dataDictionary().getLabelTypes().size() + 2 == scaledDfd.dataDictionary().getLabelTypes().size());
     }
@@ -115,6 +121,7 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledALL.json");
+        System.out.println("nummmer" + getNumberTFGs(scaledDfd));
     }
 
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
