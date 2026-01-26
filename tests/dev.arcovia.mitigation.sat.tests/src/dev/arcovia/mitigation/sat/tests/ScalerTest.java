@@ -1,8 +1,11 @@
 package dev.arcovia.mitigation.sat.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
@@ -70,11 +73,11 @@ public class ScalerTest {
             
             assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
         }
+        var labelTypes = getLabelTypeNames(scaledDfd);
+        labelTypes.removeAll(getLabelTypeNames(dfd));
         
-        
-        
-        assertTrue(dfd.dataDictionary().getLabelTypes().size() + 2 == scaledDfd.dataDictionary().getLabelTypes().size());
-    }
+        assertEquals(List.of("dummyType_0", "dummyType_1"), labelTypes);
+        }
 
     @Test
     public void scaleTFGLength() throws StandaloneInitializationException {
@@ -87,7 +90,13 @@ public class ScalerTest {
                 .save("testresults/", "scaledLength.json");
         
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        assertTrue(getMaxTFGLength(dfd) + 2 == getMaxTFGLength(scaledDfd));
+        
+        
+        
+        var nodeNames = getNodeNames(scaledDfd);
+        nodeNames.removeAll(getNodeNames(dfd));
+        
+        assertEquals(List.of("dummyNode_0", "dummyNode_1"), nodeNames);
         
     }
 
@@ -102,8 +111,6 @@ public class ScalerTest {
                 .save("testresults/", "scaledTFGAmount.json");
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
         
-        System.out.println("nummmer" + getNumberTFGs(dfd));
-        System.out.println("nummmer" + getNumberTFGs(scaledDfd));
         assertTrue(getNumberTFGs(dfd) * 2 <= getNumberTFGs(scaledDfd));
     }
 
@@ -121,7 +128,6 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledALL.json");
-        System.out.println("nummmer" + getNumberTFGs(scaledDfd));
     }
 
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
@@ -166,4 +172,21 @@ public class ScalerTest {
         
         return flowGraph.getTransposeFlowGraphs().size();
     }
+    private List<String> getNodeNames(DataFlowDiagramAndDictionary dfd){
+        var nodes = dfd.dataFlowDiagram().getNodes();
+        List<String> names = new ArrayList<>();
+        for (var node : nodes) {
+            names.add(node.getEntityName());
+        }
+        return names;
+    }
+    private List<String> getLabelTypeNames(DataFlowDiagramAndDictionary dfd){
+        var types = dfd.dataDictionary().getLabelTypes();
+        List<String> names = new ArrayList<>();
+        for (var type : types) {
+            names.add(type.getEntityName());
+        }
+        return names;
+    }
+    
 }
