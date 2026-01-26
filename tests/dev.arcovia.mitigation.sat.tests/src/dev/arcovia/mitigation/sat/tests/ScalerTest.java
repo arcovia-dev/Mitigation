@@ -11,6 +11,7 @@ import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +52,10 @@ public class ScalerTest {
             var node = scaledDfd.dataFlowDiagram().getNodes().get(i);
             var unscaledNode = dfd.dataFlowDiagram().getNodes().get(i);
             
-            assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
+            var labelNames = getLabelNames(node);
+            labelNames.removeAll(getLabelNames(unscaledNode));
+            
+            assertEquals(List.of("dummy_0", "dummy_1"), labelNames);
         }
     }
 
@@ -140,26 +144,7 @@ public class ScalerTest {
                         .toString(),
                 Activator.class);
     }
-    private int getMaxTFGLength(DataFlowDiagramAndDictionary dfd) {
-        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
-        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
-                .useCustomResourceProvider(resourceProvider)
-                .build();
 
-        analysis.initializeAnalysis();
-        var flowGraph = analysis.findFlowGraphs();
-        flowGraph.evaluate();
-        
-        int length = 0;
-        
-        for (var tfg : flowGraph.getTransposeFlowGraphs()) {
-            if (tfg.getVertices().size() > length) {
-                length = tfg.getVertices().size();
-            }
-        }
-        
-        return length;
-    }
     private int getNumberTFGs(DataFlowDiagramAndDictionary dfd) {
         var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
         var analysis = new DFDDataFlowAnalysisBuilder().standalone()
@@ -186,6 +171,16 @@ public class ScalerTest {
         for (var type : types) {
             names.add(type.getEntityName());
         }
+        return names;
+    }
+    
+    private List<String> getLabelNames(Node node){
+        List<String> names = new ArrayList<>();
+        
+        for(var label: node.getProperties()) {
+            names.add(label.getEntityName());
+        }
+       
         return names;
     }
     
