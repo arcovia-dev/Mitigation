@@ -1,7 +1,11 @@
 package dev.arcovia.mitigation.sat.tests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.nio.file.Paths;
 
+import org.dataflowanalysis.analysis.dfd.DFDDataFlowAnalysisBuilder;
+import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.examplemodels.Activator;
@@ -22,6 +26,10 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaled.json");
+        
+        dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
+        
+        assertTrue(getNumberTFGs(dfd) * 6 <= getNumberTFGs(scaledDfd));
     }
 
     @Test
@@ -33,6 +41,13 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledLabels.json");
+        
+        dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
+        
+        var node = scaledDfd.dataFlowDiagram().getNodes().get(0);
+        var unscaledNode = dfd.dataFlowDiagram().getNodes().get(0);
+        
+        assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
     }
 
     @Test
@@ -44,6 +59,15 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledLabelTypes.json");
+        
+        dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
+        
+        var node = scaledDfd.dataFlowDiagram().getNodes().get(0);
+        var unscaledNode = dfd.dataFlowDiagram().getNodes().get(0);
+        
+        assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
+        
+        assertTrue(dfd.dataDictionary().getLabelTypes().size() + 2 == scaledDfd.dataDictionary().getLabelTypes().size());
     }
 
     @Test
@@ -55,17 +79,26 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledLength.json");
+        
+        dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
+        assertTrue(getMaxTFGLength(dfd) + 2 == getMaxTFGLength(scaledDfd));
+        
     }
 
     @Test
     public void scaleTFGNumber() throws StandaloneInitializationException {
         var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
         var scaler = new DFDScaler(dfd);
-        var scaledDfd = scaler.scaleTFGAmount(2);
+        var scaledDfd = scaler.scaleTFGAmount(1);
 
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledTFGAmount.json");
+        dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
+        
+        System.out.println("nummmer" + getNumberTFGs(dfd));
+        System.out.println("nummmer" + getNumberTFGs(scaledDfd));
+        assertTrue(getNumberTFGs(dfd) * 2 <= getNumberTFGs(scaledDfd));
     }
 
     @Test
@@ -75,8 +108,9 @@ public class ScalerTest {
         var scaledDfd = scaler.scaleLabels(20);
 
         scaledDfd = scaler.scaleLabelTypes(20);
-        scaledDfd = scaler.scaleTFGAmount(10);
+        
         scaledDfd = scaler.scaleTFGLength(5);
+        scaledDfd = scaler.scaleTFGAmount(5);
 
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
@@ -92,5 +126,37 @@ public class ScalerTest {
                 Paths.get(location, model, (name + ".datadictionary"))
                         .toString(),
                 Activator.class);
+    }
+    private int getMaxTFGLength(DataFlowDiagramAndDictionary dfd) {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        
+        int length = 0;
+        
+        for (var tfg : flowGraph.getTransposeFlowGraphs()) {
+            if (tfg.getVertices().size() > length) {
+                length = tfg.getVertices().size();
+            }
+        }
+        
+        return length;
+    }
+    private int getNumberTFGs(DataFlowDiagramAndDictionary dfd) {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        
+        return flowGraph.getTransposeFlowGraphs().size();
     }
 }
