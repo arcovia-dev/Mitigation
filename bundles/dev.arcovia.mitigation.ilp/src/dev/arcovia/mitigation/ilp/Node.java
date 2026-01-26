@@ -23,6 +23,7 @@ public class Node {
     private Map<Pin, Flow> pinFlowMap;
     private Map<Pin, DFDVertex> pinDFDVertexMap;
     private final DFDVertex vertex;
+    private final Flow outgoingFlow;
 
     public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg, Constraint constraint) {
         this.tfg = tfg;
@@ -41,7 +42,10 @@ public class Node {
         pinFlowMap = vertex.getPinFlowMap();
 
         pinDFDVertexMap = vertex.getPinDFDVertexMap();
-
+        
+        DFDVertex sink = (DFDVertex) tfg.getSink();
+        
+        outgoingFlow = this.getOutgoingFlow(sink, null);
     }
 
     public Node(DFDVertex vertex, AbstractTransposeFlowGraph tfg) {
@@ -86,9 +90,17 @@ public class Node {
                         mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
                     }
                     case AddNode -> {
-                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddNode), mitigation.cost,
+                        
+                        mitigations.add(new Mitigation(new ActionTerm(this.outgoingFlow.getId(), mitigation.label, ActionType.AddNode), mitigation.cost,
                                 getAllRequiredMitigations(mitigation)));
                         mitigations.addAll(getNodeAdditionMitigations(mitigation));
+                        
+                        
+                    }
+                    case AddSink -> {
+                        mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddSink), mitigation.cost,
+                                getAllRequiredMitigations(mitigation)));
+                        mitigations.addAll(getSinkAdditionMitigations(mitigation));
                     }
                     case DeleteNode -> {
                         mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.RemoveNode), mitigation.cost,
@@ -96,7 +108,7 @@ public class Node {
                     }                    
                     case DeleteFlow -> {
                         for (var incomingFlow : this.vertex.getPinFlowMap().values()) {
-                            mitigations.add(new Mitigation(new ActionTerm(incomingFlow.getEntityName(), null, ActionType.RemoveFlow), mitigation.cost,
+                            mitigations.add(new Mitigation(new ActionTerm(incomingFlow.getId(), null, ActionType.RemoveFlow), mitigation.cost,
                                     getAllRequiredMitigations(mitigation)));
                         }
                     }
@@ -115,11 +127,26 @@ public class Node {
 
         for (var vertex : previous) {
             Node node = new Node((DFDVertex) vertex, tfg);
-            mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddNode), mitigation.cost,
+            mitigations.add(new Mitigation(new ActionTerm(node.outgoingFlow.getId(), mitigation.label, ActionType.AddNode), mitigation.cost -0.1,
                     getAllRequiredMitigations(mitigation)));
             mitigations.addAll(
                     node.getNodeAdditionMitigations(mitigation));
         }
+        return mitigations;
+    }
+    
+    private List<Mitigation> getSinkAdditionMitigations(MitigationStrategy mitigation){
+        List<Mitigation> mitigations = new ArrayList<>();      
+        
+        
+        if (vertex.getAllOutgoingDataCharacteristics().isEmpty()) return mitigations;;
+        
+        Node node = new Node((DFDVertex) outgoingFlow.getDestinationNode(), tfg);
+        mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddSink), mitigation.cost,
+                getAllRequiredMitigations(mitigation)));
+        mitigations.addAll(
+                node.getSinkAdditionMitigations(mitigation));
+       
         return mitigations;
     }
 
@@ -139,8 +166,6 @@ public class Node {
                     mitigation.cost, getAllRequiredMitigations(mitigation)));
 
             if (node.isForwarding) {
-                // need to discuss whether forwarding should be prioritized or not & if the user
-                // should decide --> Impact set
                 mitigations.addAll(
                         node.getDataMitigations(new MitigationStrategy(mitigation.label, mitigation.cost - Epsilon, MitigationType.DataLabel), type));
             }
@@ -158,15 +183,24 @@ public class Node {
                 if (mitgation.type.toString()
                         .startsWith("Delete"))
                     type = ActionType.Removing;
-                else
+                
+                else if (mitgation.type == MitigationType.AddNode) {
+                    type = ActionType.AddNode;;   
+                }
+                else if (mitgation.type == MitigationType.AddSink) {
+                    type = ActionType.AddSink;;   
+                }
+                
+                else {
                     type = ActionType.Adding;
+                }
+                
                 requiredMitgation.add(new Mitigation(new ActionTerm(this.name, mitgation.label, type), mitgation.cost,
                         getAllRequiredMitigations(mitgation)));    
             }
             requiredMitgations.add(requiredMitgation);
 
         }
-
         return requiredMitgations;
     }
 
@@ -183,5 +217,30 @@ public class Node {
 
         return flow.getSourcePin()
                 .getId();
+    }
+    
+    private Flow getOutgoingFlow(DFDVertex sink, Flow flow) {
+        
+        if (vertex.equals(sink)) {
+            return flow;
+        }
+        for (var previouse : sink.getPreviousElements()) {
+            var previouseFlow = getOutgoingFlow((DFDVertex) previouse, getIncominFlow(sink, (DFDVertex) previouse));
+            
+            if (previouseFlow != null){
+                return previouseFlow;
+            }
+        }
+        return null;
+    }
+    
+    private Flow getIncominFlow(DFDVertex sink, DFDVertex source) {
+        
+        for (Map.Entry<Pin, DFDVertex> entry : sink.getPinDFDVertexMap().entrySet()) {
+            if (source.equals(entry.getValue())) {
+                return sink.getPinFlowMap().get(entry.getKey());
+            }
+        }
+        return null;
     }
 }

@@ -3,11 +3,11 @@
     "type" : "graph",
     "id" : "root",
     "children" : [ {
-      "text" : "logging_server",
+      "text" : "github_repository",
       "id" : "67",
       "type" : "edge:arrow",
       "sourceId" : "66",
-      "targetId" : "65",
+      "targetId" : "_q3fnc_kqEfCnKtGh0ZfIJw",
       "labels" : null,
       "ports" : null,
       "annotations" : null,
@@ -179,11 +179,11 @@
       "children" : [ ],
       "routingPoints" : [ ]
     }, {
-      "text" : "aName",
-      "id" : "_yTxflNX7EfCpnPTKSsMo-Q",
+      "text" : "logging_server",
+      "id" : "_q3fndvkqEfCnKtGh0ZfIJw",
       "type" : "edge:arrow",
-      "sourceId" : "_yTxfldX7EfCpnPTKSsMo-Q",
-      "targetId" : "_yTxfktX7EfCpnPTKSsMo-Q",
+      "sourceId" : "_q3fndPkqEfCnKtGh0ZfIJw",
+      "targetId" : "65",
       "labels" : null,
       "ports" : null,
       "annotations" : null,
@@ -201,56 +201,56 @@
         "labelTypeValueId" : "55"
       } ],
       "ports" : [ {
-        "behavior" : "assign Stereotype.github_repository,Protocol.HTTPS,Stereotype.restful_http if TRUE",
-        "id" : "_yTxfldX7EfCpnPTKSsMo-Q",
+        "behavior" : "assign Stereotype.github_repository,Stereotype.restful_http,Protocol.HTTPS if TRUE",
+        "id" : "66",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 363397863
+        "tfg" : 756350453
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1016162524
+        "tfg" : 1124266523
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
+        "tfg" : 982853345
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1419125235
+        "tfg" : 219248538
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 132171928
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
+        "tfg" : 1083700990
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1192841350
       } ],
       "children" : [ ],
       "position" : {
@@ -284,47 +284,47 @@
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 363397863
+        "tfg" : 756350453
       }, {
         "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1016162524
+        "tfg" : 1124266523
       }, {
         "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
+        "tfg" : 982853345
       }, {
         "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1419125235
+        "tfg" : 219248538
       }, {
         "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 132171928
       }, {
         "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
         "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
+        "tfg" : 1083700990
       }, {
         "message" : "Incoming: Stereotype.internal, Stereotype.restful_http, Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       }, {
         "message" : "Incoming: Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1192841350
       } ],
       "children" : [ ],
       "position" : {
@@ -393,92 +393,92 @@
         "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 363397863
+        "tfg" : 756350453
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 363397863
-      }, {
-        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 1016162524
-      }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 1016162524
+        "tfg" : 756350453
       }, {
         "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
+        "tfg" : 1124266523
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
-      }, {
-        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 1419125235
-      }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 1419125235
+        "tfg" : 1124266523
       }, {
         "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 982853345
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 982853345
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 219248538
+      }, {
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 219248538
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 132171928
+      }, {
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 132171928
       }, {
         "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
         "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
+        "tfg" : 1083700990
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
-      }, {
-        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.github_repository, Protocol.HTTPS",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 938199512
-      }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
-        "icon" : "tag",
-        "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1083700990
       }, {
         "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1178395857
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1178395857
+      }, {
+        "message" : "Propagated: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.github_repository, Protocol.HTTPS",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1192841350
+      }, {
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1192841350
       } ],
       "children" : [ ],
       "position" : {
@@ -514,12 +514,12 @@
         "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1016162524
+        "tfg" : 1124266523
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1016162524
+        "tfg" : 1124266523
       } ],
       "children" : [ ],
       "position" : {
@@ -555,12 +555,12 @@
         "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
+        "tfg" : 982853345
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
+        "tfg" : 982853345
       } ],
       "children" : [ ],
       "position" : {
@@ -596,12 +596,12 @@
         "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1419125235
+        "tfg" : 219248538
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1419125235
+        "tfg" : 219248538
       } ],
       "children" : [ ],
       "position" : {
@@ -637,22 +637,22 @@
         "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 132171928
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 132171928
       }, {
         "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
         "message" : "Incoming: Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.restful_http, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       } ],
       "children" : [ ],
       "position" : {
@@ -688,22 +688,22 @@
         "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
+        "tfg" : 1083700990
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
+        "tfg" : 1083700990
       }, {
         "message" : "Propagated: Stereotype.internal, Stereotype.restful_http, Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       }, {
         "message" : "Incoming: Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.restful_http, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       } ],
       "children" : [ ],
       "position" : {
@@ -770,32 +770,32 @@
         "message" : "Propagated: Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.restful_http, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
         "message" : "Propagated: Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.restful_http, Stereotype.feign_connection, Stereotype.load_balanced_link, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, LoadBalancer.Ribbon, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       }, {
         "message" : "Propagated: Stereotype.infrastructural, Stereotype.monitoring_dashboard, Stereotype.circuit_breaker, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.configuration_server, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1192841350
       }, {
         "message" : "Incoming: Stereotype.configuration_server, Stereotype.infrastructural, Stereotype.restful_http, Stereotype.circuit_breaker_link, CircuitBreaker.Hystrix, Stereotype.github_repository, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1192841350
       } ],
       "children" : [ ],
       "position" : {
@@ -805,112 +805,112 @@
       "size" : null
     }, {
       "text" : "logging_server",
-      "id" : "_yTxfkNX7EfCpnPTKSsMo-Q",
+      "id" : "_q3fncPkqEfCnKtGh0ZfIJw",
       "type" : "node:function",
       "labels" : [ {
         "labelTypeId" : "11",
         "labelTypeValueId" : "d283cec3-a227-3b75-8289-5d7054ec866d"
       } ],
       "ports" : [ {
-        "id" : "_yTxfktX7EfCpnPTKSsMo-Q",
+        "id" : "_q3fnc_kqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-input",
         "children" : [ ]
       }, {
-        "behavior" : "forward aName",
-        "id" : "66",
+        "behavior" : "forward github_repository",
+        "id" : "_q3fndPkqEfCnKtGh0ZfIJw",
         "type" : "port:dfd-output",
         "children" : [ ]
       } ],
       "annotations" : [ {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 363397863
+        "tfg" : 756350453
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 363397863
+        "tfg" : 756350453
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1016162524
+        "tfg" : 1124266523
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1016162524
+        "tfg" : 1124266523
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
+        "tfg" : 982853345
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 858423246
+        "tfg" : 982853345
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1419125235
+        "tfg" : 219248538
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1419125235
+        "tfg" : 219248538
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 132171928
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 88301993
+        "tfg" : 132171928
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 841166421
+        "tfg" : 1395023957
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
+        "tfg" : 1083700990
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 1377301456
+        "tfg" : 1083700990
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 938199512
+        "tfg" : 1178395857
       }, {
-        "message" : "Propagated: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Propagated: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1192841350
       }, {
-        "message" : "Incoming: Stereotype.github_repository, Protocol.HTTPS, Stereotype.restful_http",
+        "message" : "Incoming: Stereotype.github_repository, Stereotype.restful_http, Protocol.HTTPS",
         "icon" : "tag",
         "color" : "#FFFFFF",
-        "tfg" : 691779749
+        "tfg" : 1192841350
       } ],
       "children" : [ ],
       "position" : {
