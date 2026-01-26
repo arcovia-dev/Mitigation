@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -121,6 +122,68 @@ public class TUHHTest {
     private record Scalability(int amountClause, long runtimeInMilliseconds) {
     }
 
+    @Disabled
+    @Test
+    public void complexityTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
+        var tuhhModels = TuhhModels.getTuhhModels();
+
+        Map<String, List<Long>> complexityValues = new LinkedHashMap<>();
+
+        for (boolean deactivateViolatingTFGsOnly : new boolean[] {true, false}) {
+            for (boolean deactivateOnlyRepairingLabels : new boolean[] {true, false}) {
+                for (boolean deactivateSimultaneouseRepair : new boolean[] {true, false}) {
+                    for (boolean deactivateSubsumption : new boolean[] {true, false}) {
+                        var complexityReductions = List.of(deactivateViolatingTFGsOnly, deactivateOnlyRepairingLabels, deactivateSimultaneouseRepair,
+                                deactivateSubsumption);
+
+                        List<Long> runtimes = new ArrayList<>();
+
+                        for (var model : tuhhModels.keySet()) {
+                            for (int variant : tuhhModels.get(model)) {
+                                String name = model + "_" + variant;
+
+                                System.out.println(complexityReductions.stream()
+                                        .map(b -> b ? "1" : "0")
+                                        .collect(Collectors.joining()) + " " + name);
+
+                                for (int i : List.of(1, 2, 4, 5, 7, 8, 10, 11)) {
+                                    List<Constraint> constraint = switch (i) {
+                                        case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
+                                        case 2 -> List.of(authenticatedRequest);
+                                        case 4 -> List.of(transformedEntry);
+                                        case 5 -> List.of(tokenValidation);
+                                        case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
+                                        case 8 -> List.of(encryptedInternals);
+                                        case 10 -> List.of(localLogging);
+                                        case 11 -> List.of(localLogging, logSanitization);
+                                        default -> null;
+                                    };
+
+                                    if (constraint == null || i == variant)
+                                        continue;
+
+                                    var repairResult = runRepair(model, name, variant == 0, constraint, costs, complexityReductions);
+                                    var repairedDfdCosts = repairResult.repairedDfd();
+
+                                    int amountClauses = extractClauseCount("testresults/" + (variant == 0 ? name : "aName") + ".cnf");
+                                    if (amountClauses > 0) {
+                                        runtimes.add(repairResult.runtimeInMilliseconds);
+                                    }
+
+                                    assertTrue(new Mechanic(repairedDfdCosts, null, null).isViolationFree(repairedDfdCosts, constraint));
+                                }
+                            }
+                        }
+                        complexityValues.put(complexityReductions.stream()
+                                .map(b -> b ? "1" : "0")
+                                .collect(Collectors.joining()), runtimes);
+                    }
+                }
+            }
+        }
+        System.out.println(complexityValues);
+    }
+
     @Test
     void efficiencyTest() throws ContradictionException, TimeoutException, IOException, StandaloneInitializationException {
         var tuhhModels = TuhhModels.getTuhhModels();
@@ -230,6 +293,19 @@ public class TUHHTest {
         if (!store)
             name = "aName";
         Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap);
+        long startTime = System.currentTimeMillis();
+        var repairedDfd = mechanic.repair();
+        long endTime = System.currentTimeMillis();
+        int violationsAfter = new Mechanic(repairedDfd, null, null).amountOfViolations(repairedDfd, constraints);
+        return new RepairResult(repairedDfd, mechanic.getViolations(), violationsAfter, endTime - startTime);
+    }
+
+    private RepairResult runRepair(String model, String name, Boolean store, List<Constraint> constraints, Map<Label, Integer> costMap,
+            List<Boolean> complexityReductions) throws StandaloneInitializationException, ContradictionException, IOException, TimeoutException {
+        var dfd = loadDFD(model, name);
+        if (!store)
+            name = "aName";
+        Mechanic mechanic = new Mechanic(dfd, name, constraints, costMap, complexityReductions);
         long startTime = System.currentTimeMillis();
         var repairedDfd = mechanic.repair();
         long endTime = System.currentTimeMillis();
