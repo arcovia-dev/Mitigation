@@ -104,8 +104,6 @@ public class DFDScaler {
     public DataFlowDiagramAndDictionary scaleLabelTypes(int scalingAmount) {
         var ddFactory = datadictionaryFactory.eINSTANCE;
 
-        
-
         List<LabelType> labelTypes = new ArrayList<>();
 
         for (int i = 0; i < scalingAmount; i++) {
@@ -173,7 +171,7 @@ public class DFDScaler {
         if (sinks.isEmpty()) {
             return dfd;
         }
-        
+
         for (var sink : sinks) {
             for (int i = 0; i < scalingAmount; i++) {
                 var node = dfdFactory.createStore();
@@ -221,9 +219,8 @@ public class DFDScaler {
                         .getFlows()
                         .add(flow);
                 sink = node;
-            }  
+            }
         }
-        
 
         return dfd;
     }
@@ -236,7 +233,7 @@ public class DFDScaler {
     public DataFlowDiagramAndDictionary scaleTFGAmount(int scalingAmount) {
         var dfdFactory = dataflowdiagramFactory.eINSTANCE;
         var ddFactory = datadictionaryFactory.eINSTANCE;
-        
+
         var nodes = dfd.dataFlowDiagram()
                 .getNodes();
 
@@ -252,16 +249,20 @@ public class DFDScaler {
         if (sinks.isEmpty()) {
             return dfd;
         }
-        
+
         List<Flow> flows = new ArrayList<>();
-        
+
         for (var sink : sinks) {
-            var inPins = sink.getBehavior().getInPin();
+            var inPins = sink.getBehavior()
+                    .getInPin();
             flows.addAll(dfd.dataFlowDiagram()
-                    .getFlows().stream().filter(flow -> inPins.contains(flow.getDestinationPin())).toList());
-            
+                    .getFlows()
+                    .stream()
+                    .filter(flow -> inPins.contains(flow.getDestinationPin()))
+                    .toList());
+
         }
-        
+
         for (var flow : flows) {
             var source = flow.getSourceNode();
             var sourcePin = flow.getSourcePin();
@@ -322,7 +323,6 @@ public class DFDScaler {
                         .add(flow);
             }
         }
-        
 
         return dfd;
     }

@@ -30,9 +30,9 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaled.json");
-        
+
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        
+
         assertTrue(getNumberTFGs(dfd) * 6 <= getNumberTFGs(scaledDfd));
     }
 
@@ -45,16 +45,22 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledLabels.json");
-        
+
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-              
-        for (int i = 0; i< dfd.dataFlowDiagram().getNodes().size(); i++) {
-            var node = scaledDfd.dataFlowDiagram().getNodes().get(i);
-            var unscaledNode = dfd.dataFlowDiagram().getNodes().get(i);
-            
+
+        for (int i = 0; i < dfd.dataFlowDiagram()
+                .getNodes()
+                .size(); i++) {
+            var node = scaledDfd.dataFlowDiagram()
+                    .getNodes()
+                    .get(i);
+            var unscaledNode = dfd.dataFlowDiagram()
+                    .getNodes()
+                    .get(i);
+
             var labelNames = getLabelNames(node);
             labelNames.removeAll(getLabelNames(unscaledNode));
-            
+
             assertEquals(List.of("dummy_0", "dummy_1"), labelNames);
         }
     }
@@ -68,20 +74,28 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledLabelTypes.json");
-        
+
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        
-        for (int i = 0; i< dfd.dataFlowDiagram().getNodes().size(); i++) {
-            var node = scaledDfd.dataFlowDiagram().getNodes().get(i);
-            var unscaledNode = dfd.dataFlowDiagram().getNodes().get(i);
-            
-            assertTrue(node.getProperties().size() - 2 == unscaledNode.getProperties().size());
+
+        for (int i = 0; i < dfd.dataFlowDiagram()
+                .getNodes()
+                .size(); i++) {
+            var node = scaledDfd.dataFlowDiagram()
+                    .getNodes()
+                    .get(i);
+            var unscaledNode = dfd.dataFlowDiagram()
+                    .getNodes()
+                    .get(i);
+
+            assertTrue(node.getProperties()
+                    .size() - 2 == unscaledNode.getProperties()
+                            .size());
         }
         var labelTypes = getLabelTypeNames(scaledDfd);
         labelTypes.removeAll(getLabelTypeNames(dfd));
-        
+
         assertEquals(List.of("dummyType_0", "dummyType_1"), labelTypes);
-        }
+    }
 
     @Test
     public void scaleTFGLength() throws StandaloneInitializationException {
@@ -92,16 +106,14 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledLength.json");
-        
+
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        
-        
-        
+
         var nodeNames = getNodeNames(scaledDfd);
         nodeNames.removeAll(getNodeNames(dfd));
-        
+
         assertEquals(List.of("dummyNode_0", "dummyNode_1"), nodeNames);
-        
+
     }
 
     @Test
@@ -114,7 +126,7 @@ public class ScalerTest {
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledTFGAmount.json");
         dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        
+
         assertTrue(getNumberTFGs(dfd) * 2 <= getNumberTFGs(scaledDfd));
     }
 
@@ -125,7 +137,7 @@ public class ScalerTest {
         var scaledDfd = scaler.scaleLabels(20);
 
         scaledDfd = scaler.scaleLabelTypes(20);
-        
+
         scaledDfd = scaler.scaleTFGLength(5);
         scaledDfd = scaler.scaleTFGAmount(5);
 
@@ -154,34 +166,39 @@ public class ScalerTest {
         analysis.initializeAnalysis();
         var flowGraph = analysis.findFlowGraphs();
         flowGraph.evaluate();
-        
-        return flowGraph.getTransposeFlowGraphs().size();
+
+        return flowGraph.getTransposeFlowGraphs()
+                .size();
     }
-    private List<String> getNodeNames(DataFlowDiagramAndDictionary dfd){
-        var nodes = dfd.dataFlowDiagram().getNodes();
+
+    private List<String> getNodeNames(DataFlowDiagramAndDictionary dfd) {
+        var nodes = dfd.dataFlowDiagram()
+                .getNodes();
         List<String> names = new ArrayList<>();
         for (var node : nodes) {
             names.add(node.getEntityName());
         }
         return names;
     }
-    private List<String> getLabelTypeNames(DataFlowDiagramAndDictionary dfd){
-        var types = dfd.dataDictionary().getLabelTypes();
+
+    private List<String> getLabelTypeNames(DataFlowDiagramAndDictionary dfd) {
+        var types = dfd.dataDictionary()
+                .getLabelTypes();
         List<String> names = new ArrayList<>();
         for (var type : types) {
             names.add(type.getEntityName());
         }
         return names;
     }
-    
-    private List<String> getLabelNames(Node node){
+
+    private List<String> getLabelNames(Node node) {
         List<String> names = new ArrayList<>();
-        
-        for(var label: node.getProperties()) {
+
+        for (var label : node.getProperties()) {
             names.add(label.getEntityName());
         }
-       
+
         return names;
     }
-    
+
 }
