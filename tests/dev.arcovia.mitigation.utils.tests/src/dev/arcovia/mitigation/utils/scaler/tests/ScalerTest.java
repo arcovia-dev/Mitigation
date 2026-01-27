@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.sat.tests;
+package dev.arcovia.mitigation.utils.scaler.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,11 +15,10 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.sat.DFDScaler;
+import dev.arcovia.mitigation.utils.scaler.DFDScaler;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
-public class ScalerTest {
-    public final String MIN_SAT = "models/minsat.json";
+public class ScalerTest { 
 
     @Test
     public void scaleDFD() throws StandaloneInitializationException {

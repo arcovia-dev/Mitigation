@@ -5,9 +5,11 @@ Bundle-SymbolicName: dev.arcovia.mitigation.utils
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: dev.arcovia.mitigation.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Export-Package: dev.arcovia.mitigation.utils.dsl
+Export-Package: dev.arcovia.mitigation.utils.dsl,
+ dev.arcovia.mitigation.utils.scaler
 Require-Bundle: dev.arcovia.mitigation.sat;bundle-version="1.0.0",
  org.dataflowanalysis.analysis;bundle-version="4.0.0",
  org.dataflowanalysis.converter;bundle-version="4.0.0",
  org.dataflowanalysis.analysis.dfd;bundle-version="4.0.0",
- org.dataflowanalysis.dfd.datadictionary;bundle-version="4.0.0"
+ org.dataflowanalysis.dfd.datadictionary;bundle-version="4.0.0",
+ org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="4.0.0"
