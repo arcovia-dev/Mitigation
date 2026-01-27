@@ -15,6 +15,7 @@
 	<modules>
 		<module>dev.arcovia.mitigation.ranking.tests</module>
 		<module>dev.arcovia.mitigation.sat.tests</module>
+		<module>dev.arcovia.mitigation.utils.tests</module>
 	</modules>
 	
 </project>

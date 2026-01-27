@@ -3,15 +3,16 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SatTests
 Bundle-SymbolicName: dev.arcovia.mitigation.sat.tests
 Bundle-Version: 1.0.0.qualifier
+Export-Package: dev.arcovia.mitigation.sat.tests
 Import-Package: org.junit.jupiter.api;version="5.8.1",
  org.junit.jupiter.api.function;version="5.8.1",
  org.junit.jupiter.params;version="5.8.1",
  org.junit.jupiter.params.provider;version="5.8.1"
 Require-Bundle: org.dataflowanalysis.converter,
  org.sat4j.core;bundle-version="2.3.6",
- org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
- org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",
- dev.arcovia.mitigation.sat;bundle-version="1.0.0",
+ org.dataflowanalysis.dfd.datadictionary,
+ org.dataflowanalysis.dfd.dataflowdiagram,
+ dev.arcovia.mitigation.sat,
  org.dataflowanalysis.examplemodels,
  org.dataflowanalysis.analysis,
  org.apache.log4j,
