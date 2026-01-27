@@ -74,3 +74,5 @@ xtend-gen/
 tests/dev.arcovia.mitigation.sat.tests/testresults/*.json
 tests/dev.arcovia.mitigation.sat.tests/efficencyTest/*.json
 !*literalMapping.json
+tests/dev.arcovia.mitigation.utils.tests/testresults/scaledTFGAmount.json
+*.json

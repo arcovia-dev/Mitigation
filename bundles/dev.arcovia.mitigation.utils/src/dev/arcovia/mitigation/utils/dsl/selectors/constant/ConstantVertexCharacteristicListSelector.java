@@ -1,0 +1,41 @@
+package dev.arcovia.mitigation.utils.dsl.selectors.constant;
+
+import org.dataflowanalysis.analysis.dsl.selectors.VertexCharacteristicsListSelector;
+import org.dataflowanalysis.analysis.dsl.selectors.VertexCharacteristicsSelector;
+
+import dev.arcovia.mitigation.utils.dsl.nodes.BranchNode;
+import dev.arcovia.mitigation.utils.dsl.nodes.ConjunctionNode;
+import dev.arcovia.mitigation.utils.dsl.nodes.DisjunctionNode;
+
+/**
+ * Wraps a {@link VertexCharacteristicsListSelector} to add constant vertex characteristic literals to a
+ * {@link BranchNode}. Handles inversion by creating conjunction or disjunction nodes and recursively adding literals
+ * for each vertex characteristic in the selector.
+ */
+public class ConstantVertexCharacteristicListSelector implements ConstantDataSelector {
+    private final VertexCharacteristicsListSelector selector;
+
+    /**
+     * Constructs a {@link ConstantVertexCharacteristicListSelector} wrapping the given
+     * {@link VertexCharacteristicsListSelector}.
+     * @param selector the {@link VertexCharacteristicsListSelector} to wrap
+     */
+    public ConstantVertexCharacteristicListSelector(VertexCharacteristicsListSelector selector) {
+        this.selector = selector;
+    }
+
+    /**
+     * Adds literals to the root node based on the vertex characteristics of this selector. Creates a conjunction or
+     * disjunction node depending on the inversion flag, and adds corresponding constant vertex characteristic selectors as
+     * predicates.
+     * @param root the {@link BranchNode} to which literals are added
+     */
+    @Override
+    public void addLiterals(BranchNode root) {
+        var node = selector.isInverted() ? new ConjunctionNode() : new DisjunctionNode();
+        root.addPredicate(node);
+        selector.getVertexCharacteristics()
+                .forEach(it -> new ConstantVertexCharacteristicSelector(new VertexCharacteristicsSelector(null, it, selector.isInverted()))
+                        .addLiterals(node));
+    }
+}
