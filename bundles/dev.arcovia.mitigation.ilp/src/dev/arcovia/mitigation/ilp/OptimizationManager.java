@@ -30,6 +30,7 @@ import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.NodeLabel;
 
+
 public class OptimizationManager {
     private final DataFlowDiagramAndDictionary dfd;
 
@@ -98,6 +99,40 @@ public class OptimizationManager {
 
         applyActions(dfd, actions);
 
+        return dfd;
+    }
+    
+    public DataFlowDiagramAndDictionary repair(timeMeasurement timer) {
+        timer.start();
+        analyseConstraints();
+        
+        timer.constraints();
+        
+        analyseDFD();
+        
+        timer.analysis();
+        
+        for (var node : violatingNodes) {
+            addMitigations(node.getPossibleMitigations());
+        }       
+        
+        for (var mitigation : allMitigations) {
+            if (mitigation.mitigation().type().toString().startsWith("Remove")) {
+                contradictions.addAll(determineContradictions(mitigation));
+            }
+        }
+
+        var solver = new ILPSolver();
+        var result = solver.solve(mitigations, allMitigations, contradictions);
+        
+        timer.solving();
+        
+        actions = getActions(result);
+
+        applyActions(dfd, actions);
+        
+        timer.stop();
+        
         return dfd;
     }
 
