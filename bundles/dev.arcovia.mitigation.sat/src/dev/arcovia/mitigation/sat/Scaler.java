@@ -1,10 +1,15 @@
 package dev.arcovia.mitigation.sat;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
+import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.web2dfd.Web2DFDConverter;
 import org.dataflowanalysis.converter.web2dfd.WebEditorConverterModel;
@@ -23,14 +28,18 @@ import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 
-public class DFDScaler {
+public class Scaler {
     DataFlowDiagramAndDictionary dfd;
-
-    public DFDScaler(DataFlowDiagramAndDictionary dfd) {
+    
+    public Scaler() {
+        this.dfd = null;
+    }
+    
+    public Scaler(DataFlowDiagramAndDictionary dfd) {
         this.dfd = dfd;
     }
 
-    public DFDScaler(String dfdLocation) {
+    public Scaler(String dfdLocation) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
     }
 
@@ -326,7 +335,54 @@ public class DFDScaler {
 
         return dfd;
     }
-
+    
+    /***
+     * Scales constraints in 4 dimesnions
+     * @param numberConstraints that get returned
+     * @param numberMatchedLabels: Labels that are positve before neverflows, therefore need to be matched
+     * @param numberWtihout: Labels that are negative before neverflows, data without those characteristics
+     * @param numberViolating: Labels that are positve after neverflows, therefore cause a violation if present
+     * @param scaledLabel
+     * @return
+     */
+    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberMatchedLabels, int numberWtihout, int numberViolating, int scaledLabel){
+        List<AnalysisConstraint> constraints = new ArrayList<>();
+        
+        for (int i = 0; i< numberConstraints; i++) {
+            Set<String> matched = new HashSet<>();
+            Set<String> without = new HashSet<>();
+            Set<String> violating = new HashSet<>();
+            
+            ThreadLocalRandom rnd = ThreadLocalRandom.current();
+            
+            while(matched.size()< numberMatchedLabels) {
+                matched.add(String.valueOf(rnd.nextInt(0, scaledLabel/2-1)));
+            }
+            while(without.size()< numberMatchedLabels) {
+                without.add(String.valueOf(rnd.nextInt(scaledLabel/2, scaledLabel)));
+            }
+            while(violating.size()< numberMatchedLabels) {
+                violating.add(String.valueOf(rnd.nextInt(scaledLabel, scaledLabel*3)));
+            }
+            
+            
+            
+            AnalysisConstraint constraint = new ConstraintDSL().ofData()
+                    .withLabel("dummyCategory", new ArrayList<>(matched))
+                    .withoutLabel("dummyCategory", new ArrayList<>(without))
+                    .neverFlows()
+                    .toVertex()
+                    .withCharacteristic("dummyCategory", new ArrayList<>(violating))
+                    .create();
+            
+            constraints.add(constraint);
+        }
+        
+        
+        return constraints;
+    }
+    
+    
     /***
      * Copying the entire DFD to achieve the scalingAmount of Nodes
      * @param dataFlowDiagram

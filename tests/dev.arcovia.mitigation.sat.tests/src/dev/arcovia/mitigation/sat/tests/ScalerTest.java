@@ -15,7 +15,8 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.sat.DFDScaler;
+import dev.arcovia.mitigation.sat.Scaler;
+import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 public class ScalerTest {
@@ -24,7 +25,7 @@ public class ScalerTest {
     @Test
     public void scaleDFD() throws StandaloneInitializationException {
         var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        var scaler = new DFDScaler(dfd);
+        var scaler = new Scaler(dfd);
         var scaledDfd = scaler.scaleDFD(2, 1);
 
         var dfdConverter = new DFD2WebConverter();
@@ -39,7 +40,7 @@ public class ScalerTest {
     @Test
     public void scaleLabel() throws StandaloneInitializationException {
         var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        var scaler = new DFDScaler(dfd);
+        var scaler = new Scaler(dfd);
         var scaledDfd = scaler.scaleLabels(2);
 
         var dfdConverter = new DFD2WebConverter();
@@ -68,7 +69,7 @@ public class ScalerTest {
     @Test
     public void scaleLabelTyepes() throws StandaloneInitializationException {
         var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        var scaler = new DFDScaler(dfd);
+        var scaler = new Scaler(dfd);
         var scaledDfd = scaler.scaleLabelTypes(2);
 
         var dfdConverter = new DFD2WebConverter();
@@ -100,7 +101,7 @@ public class ScalerTest {
     @Test
     public void scaleTFGLength() throws StandaloneInitializationException {
         var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        var scaler = new DFDScaler(dfd);
+        var scaler = new Scaler(dfd);
         var scaledDfd = scaler.scaleTFGLength(2);
 
         var dfdConverter = new DFD2WebConverter();
@@ -119,7 +120,7 @@ public class ScalerTest {
     @Test
     public void scaleTFGNumber() throws StandaloneInitializationException {
         var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        var scaler = new DFDScaler(dfd);
+        var scaler = new Scaler(dfd);
         var scaledDfd = scaler.scaleTFGAmount(1);
 
         var dfdConverter = new DFD2WebConverter();
@@ -133,7 +134,7 @@ public class ScalerTest {
     @Test
     public void scaleAll() throws StandaloneInitializationException {
         var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
-        var scaler = new DFDScaler(dfd);
+        var scaler = new Scaler(dfd);
         var scaledDfd = scaler.scaleLabels(20);
 
         scaledDfd = scaler.scaleLabelTypes(20);
@@ -144,6 +145,19 @@ public class ScalerTest {
         var dfdConverter = new DFD2WebConverter();
         dfdConverter.convert(scaledDfd)
                 .save("testresults/", "scaledALL.json");
+    }
+    
+    @Test
+    public void scaleConstraints() {
+        var scaler = new Scaler();
+        var constraints = scaler.scaleConstraint(500, 50, 50, 50, 5000);
+        
+        for (var constraint : constraints) {
+            var translation = new CNFTranslation(constraint);
+            translation.constructCNF();
+        }
+        
+        assertTrue(constraints.size() == 500);
     }
 
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {
