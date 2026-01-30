@@ -1,10 +1,15 @@
 package dev.arcovia.mitigation.sat;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
+import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.web2dfd.Web2DFDConverter;
 import org.dataflowanalysis.converter.web2dfd.WebEditorConverterModel;
@@ -23,14 +28,18 @@ import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 
-public class DFDScaler {
+public class Scaler {
     DataFlowDiagramAndDictionary dfd;
-
-    public DFDScaler(DataFlowDiagramAndDictionary dfd) {
+    
+    public Scaler() {
+        this.dfd = null;
+    }
+    
+    public Scaler(DataFlowDiagramAndDictionary dfd) {
         this.dfd = dfd;
     }
 
-    public DFDScaler(String dfdLocation) {
+    public Scaler(String dfdLocation) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
     }
 
@@ -326,7 +335,62 @@ public class DFDScaler {
 
         return dfd;
     }
-
+    
+    /***
+     * Constraints in Usage:
+     * - numberWithLabel + numberWithCharacteristic <= numberDummyLabels
+     * - use constraints only on DFD scaled using the scaleLabels function
+     * Scales constraints in 5 dimesnions
+     * @param numberConstraints that get returned
+     * @param numberWithLabel: Labels that are positve before neverflows
+     * @param numberWithoutLabel: Labels that are negative before neverflows
+     * @param numberWithCharacteristic: Labels that are positve after neverflows
+     * @param numberWithoutCharacteristic: Labels that are negative after neverflows
+     * @param numberDummyLabels: The number of dummy Labels in the scaled DFD (number you previous scaled DFDLabels by)
+     * @return
+     */
+    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberWithLabel, int numberWithoutLabel, int numberWithCharacteristic, int numberWithoutCharacteristic, int numberDummyLabels){
+        List<AnalysisConstraint> constraints = new ArrayList<>();
+        
+        for (int i = 0; i< numberConstraints; i++) {
+            Set<String> withLabel = new HashSet<>();
+            Set<String> withoutLabel = new HashSet<>();
+            Set<String> withCharacteristic = new HashSet<>();
+            Set<String> withoutCharacteristic = new HashSet<>();
+            
+            ThreadLocalRandom rnd = ThreadLocalRandom.current();
+            
+            while(withLabel.size() < numberWithLabel) {
+                withLabel.add(String.valueOf(rnd.nextInt(0, numberDummyLabels/2 - 1)));
+            }
+            while(withCharacteristic.size() < numberWithCharacteristic) {
+                withCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels/2, numberDummyLabels)));
+            }
+            while(withoutLabel.size() < numberWithoutLabel) {
+                withoutLabel.add(String.valueOf(rnd.nextInt(numberDummyLabels+1, numberDummyLabels*3)));
+            }
+            while(withoutCharacteristic.size() < numberWithoutCharacteristic) {
+                withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
+            }
+                       
+            
+            AnalysisConstraint constraint = new ConstraintDSL().ofData()
+                    .withLabel("dummyCategory", new ArrayList<>(withLabel))
+                    .withoutLabel("dummyCategory", new ArrayList<>(withoutLabel))
+                    .neverFlows()
+                    .toVertex()
+                    .withCharacteristic("dummyCategory", new ArrayList<>(withCharacteristic))
+                    .withoutCharacteristic("dummyCategory", new ArrayList<>(withoutCharacteristic))
+                    .create();
+            
+            constraints.add(constraint);
+        }
+        
+        
+        return constraints;
+    }
+    
+    
     /***
      * Copying the entire DFD to achieve the scalingAmount of Nodes
      * @param dataFlowDiagram
