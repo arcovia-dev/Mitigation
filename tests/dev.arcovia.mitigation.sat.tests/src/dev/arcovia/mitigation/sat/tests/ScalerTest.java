@@ -150,7 +150,7 @@ public class ScalerTest {
     @Test
     public void scaleConstraints() {
         var scaler = new Scaler();
-        var constraints = scaler.scaleConstraint(500, 50, 50, 50, 5000);
+        var constraints = scaler.scaleConstraint(500, 50, 50, 50, 50, 5000);
         
         for (var constraint : constraints) {
             var translation = new CNFTranslation(constraint);
