@@ -6,6 +6,7 @@ import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.result.DSLResult;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
+import dev.arcovia.mitigation.sat.Literal;
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.LabelCategory;
@@ -167,14 +168,13 @@ public class Constraint {
     private List<MitigationStrategy> determineMitigations() {
         var translation = new CNFTranslation(dsl);
 
-        if (translation.constructCNF()
-                .size() > 1) {
-            System.out.println("this constraint is not supportet - yet");
+        
+        
+        Set<Literal> literals = new HashSet<>();
+        
+        for (var lit : translation.constructCNF()) {
+            literals.addAll(lit.literals());
         }
-
-        var literals = translation.constructCNF()
-                .get(0)
-                .literals();
 
         List<MitigationStrategy> mitigations = new ArrayList<>();
 
