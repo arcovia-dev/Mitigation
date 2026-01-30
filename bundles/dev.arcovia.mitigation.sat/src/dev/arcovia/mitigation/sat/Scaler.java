@@ -363,7 +363,7 @@ public class Scaler {
             while(withLabel.size() < numberWithLabel) {
                 withLabel.add(String.valueOf(rnd.nextInt(0, numberPositiveLabels/2 - 1)));
             }
-            while(withoutLabel.size() < numberWithCharacteristic) {
+            while(withCharacteristic.size() < numberWithCharacteristic) {
                 withCharacteristic.add(String.valueOf(rnd.nextInt(numberPositiveLabels/2, numberPositiveLabels)));
             }
             while(withoutLabel.size() < numberWithoutLabel) {
