@@ -27,11 +27,11 @@ public class PerformanceTest {
     // 20.000 input literals need roughly 16 GB of heap size memory
     private static final long expectedMemoryInGigabyte = 16;
 
-    @BeforeEach
+    /*@BeforeEach
     void beforeEach() {
         assertEquals(expectedMemoryInGigabyte * 1024 * 1024 * 1024, Runtime.getRuntime()
                 .maxMemory(), "Incorrect JVM heap size");
-    }
+    }*/
 
     // This test is only to generate data for evaluating performance, it should be disabled in normal use
     @Disabled
@@ -61,13 +61,14 @@ public class PerformanceTest {
         logger.info(translation.getCNFStatistics());
     }
 
-    private static final int maxInputLiterals = 7000;
-    private static final int start = 6000;
-    private static final int step = 100;
+    private static final int maxInputLiterals = 5000;
+    private static final int start = 100;
+    private static final int step = 50;
+    private static final int repeat = 10;
 
     private static final int count = 1 + (maxInputLiterals - start) / step;
-    private static final int[] outputLiterals = new int[count];
-    private static final int[] outputTime = new int[count];
+    private static final int[] outputLiterals = new int[count*repeat];
+    private static final int[] outputTime = new int[count*repeat];
 
     private static IntStream inputLiterals() {
         int[] inputs = new int[count];
@@ -77,7 +78,6 @@ public class PerformanceTest {
         return Arrays.stream(inputs);
     }
 
-    @Disabled
     @ParameterizedTest()
     @MethodSource("inputLiterals")
     public void multipleInputPerformanceTest(int input) {
@@ -87,22 +87,24 @@ public class PerformanceTest {
         for (int i = 0; i < literals; i++) {
             longList.add(Integer.toString(i));
         }
-
+        
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
                 .withLabel("DataLabel", longList)
                 .neverFlows()
                 .toVertex()
                 .withCharacteristic("NodeLabel", longList)
                 .create();
-
-        var timeStart = System.currentTimeMillis();
-        var translation = new CNFTranslation(constraint);
-        translation.constructCNF();
-        var timeEnd = System.currentTimeMillis();
-        var time = timeEnd - timeStart;
-        logger.info("\n " + literals + " Literals | " + time + " ms");
-        outputLiterals[input] = literals;
-        outputTime[input] = Math.toIntExact(time);
+        
+        for (int i = 0 ; i < repeat; i++) {
+            var timeStart = System.currentTimeMillis();
+            var translation = new CNFTranslation(constraint);
+            translation.constructCNF();
+            var timeEnd = System.currentTimeMillis();
+            var time = timeEnd - timeStart;
+            logger.info("\n " + literals + " Literals | " + time + " ms");
+            outputLiterals[input*repeat+i] = literals;
+            outputTime[input*repeat+i] = Math.toIntExact(time);  
+        }        
     }
 
     @AfterEach
