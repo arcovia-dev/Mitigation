@@ -346,10 +346,10 @@ public class Scaler {
      * @param numberWithoutLabel: Labels that are negative before neverflows
      * @param numberWithCharacteristic: Labels that are positve after neverflows
      * @param numberWithoutCharacteristic: Labels that are negative after neverflows
-     * @param scaledLabel: The number of positive Labels in the scaled DFD
+     * @param numberPositiveLabels: The number of positive Labels in the scaled DFD (number you previous scaled DFDLabels by)
      * @return
      */
-    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberWithLabel, int numberWithoutLabel, int numberWithCharacteristic, int numberWithoutNodeCharacteristic, int scaledLabel){
+    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberWithLabel, int numberWithoutLabel, int numberWithCharacteristic, int numberWithoutCharacteristic, int numberPositiveLabels){
         List<AnalysisConstraint> constraints = new ArrayList<>();
         
         for (int i = 0; i< numberConstraints; i++) {
@@ -361,16 +361,16 @@ public class Scaler {
             ThreadLocalRandom rnd = ThreadLocalRandom.current();
             
             while(withLabel.size() < numberWithLabel) {
-                withLabel.add(String.valueOf(rnd.nextInt(0, scaledLabel/2 - 1)));
+                withLabel.add(String.valueOf(rnd.nextInt(0, numberPositiveLabels/2 - 1)));
             }
             while(withoutLabel.size() < numberWithCharacteristic) {
-                withCharacteristic.add(String.valueOf(rnd.nextInt(scaledLabel/2, scaledLabel)));
+                withCharacteristic.add(String.valueOf(rnd.nextInt(numberPositiveLabels/2, numberPositiveLabels)));
             }
             while(withoutLabel.size() < numberWithoutLabel) {
-                withoutLabel.add(String.valueOf(rnd.nextInt(scaledLabel+1, scaledLabel*3)));
+                withoutLabel.add(String.valueOf(rnd.nextInt(numberPositiveLabels+1, numberPositiveLabels*3)));
             }
-            while(withCharacteristic.size() < numberWithoutNodeCharacteristic) {
-                withoutCharacteristic.add(String.valueOf(rnd.nextInt(scaledLabel*3 + 1, scaledLabel*6)));
+            while(withCharacteristic.size() < numberWithoutCharacteristic) {
+                withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberPositiveLabels*3 + 1, numberPositiveLabels*6)));
             }
                        
             
