@@ -338,7 +338,7 @@ public class Scaler {
     
     /***
      * Constraints in Usage:
-     * - numberWithLabel + numberWithCharacteristic <= scaled Label
+     * - numberWithLabel + numberWithCharacteristic <= numberDummyLabels
      * - use constraints only on DFD scaled using the scaleLabels function
      * Scales constraints in 5 dimesnions
      * @param numberConstraints that get returned
@@ -346,7 +346,7 @@ public class Scaler {
      * @param numberWithoutLabel: Labels that are negative before neverflows
      * @param numberWithCharacteristic: Labels that are positve after neverflows
      * @param numberWithoutCharacteristic: Labels that are negative after neverflows
-     * @param numberPositiveLabels: The number of positive Labels in the scaled DFD (number you previous scaled DFDLabels by)
+     * @param numberDummyLabels: The number of dummy Labels in the scaled DFD (number you previous scaled DFDLabels by)
      * @return
      */
     public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberWithLabel, int numberWithoutLabel, int numberWithCharacteristic, int numberWithoutCharacteristic, int numberPositiveLabels){
