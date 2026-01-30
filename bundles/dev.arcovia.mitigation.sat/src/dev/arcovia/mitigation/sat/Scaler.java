@@ -337,42 +337,50 @@ public class Scaler {
     }
     
     /***
-     * Scales constraints in 4 dimesnions
+     * Constraints in Usage:
+     * - numberWithLabel + numberWithCharacteristic <= scaled Label
+     * - use constraints only on DFD scaled using the scaleLabels function
+     * Scales constraints in 5 dimesnions
      * @param numberConstraints that get returned
-     * @param numberMatchedLabels: Labels that are positve before neverflows, therefore need to be matched
-     * @param numberWtihout: Labels that are negative before neverflows, data without those characteristics
-     * @param numberViolating: Labels that are positve after neverflows, therefore cause a violation if present
-     * @param scaledLabel
+     * @param numberWithLabel: Labels that are positve before neverflows
+     * @param numberWithoutLabel: Labels that are negative before neverflows
+     * @param numberWithCharacteristic: Labels that are positve after neverflows
+     * @param numberWithoutNodeCharacteristic: Labels that are negative after neverflows
+     * @param scaledLabel: The number of positive Labels in the scaled DFD
      * @return
      */
-    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberMatchedLabels, int numberWtihout, int numberViolating, int scaledLabel){
+    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberWithLabel, int numberWithoutLabel, int numberWithCharacteristic, int numberWithoutNodeCharacteristic, int scaledLabel){
         List<AnalysisConstraint> constraints = new ArrayList<>();
         
         for (int i = 0; i< numberConstraints; i++) {
-            Set<String> matched = new HashSet<>();
-            Set<String> without = new HashSet<>();
-            Set<String> violating = new HashSet<>();
+            Set<String> withLabel = new HashSet<>();
+            Set<String> withoutLabel = new HashSet<>();
+            Set<String> withCharacteristic = new HashSet<>();
+            Set<String> withoutCharacteristic = new HashSet<>();
             
             ThreadLocalRandom rnd = ThreadLocalRandom.current();
             
-            while(matched.size()< numberMatchedLabels) {
-                matched.add(String.valueOf(rnd.nextInt(0, scaledLabel/2-1)));
+            while(withLabel.size() < numberWithLabel) {
+                withLabel.add(String.valueOf(rnd.nextInt(0, scaledLabel/2 - 1)));
             }
-            while(without.size()< numberMatchedLabels) {
-                without.add(String.valueOf(rnd.nextInt(scaledLabel/2, scaledLabel)));
+            while(withoutLabel.size() < numberWithCharacteristic) {
+                withCharacteristic.add(String.valueOf(rnd.nextInt(scaledLabel/2, scaledLabel)));
             }
-            while(violating.size()< numberMatchedLabels) {
-                violating.add(String.valueOf(rnd.nextInt(scaledLabel, scaledLabel*3)));
+            while(withoutLabel.size() < numberWithoutLabel) {
+                withoutLabel.add(String.valueOf(rnd.nextInt(scaledLabel+1, scaledLabel*3)));
             }
-            
-            
+            while(withCharacteristic.size() < numberWithoutNodeCharacteristic) {
+                withoutCharacteristic.add(String.valueOf(rnd.nextInt(scaledLabel*3 + 1, scaledLabel*6)));
+            }
+                       
             
             AnalysisConstraint constraint = new ConstraintDSL().ofData()
-                    .withLabel("dummyCategory", new ArrayList<>(matched))
-                    .withoutLabel("dummyCategory", new ArrayList<>(without))
+                    .withLabel("dummyCategory", new ArrayList<>(withLabel))
+                    .withoutLabel("dummyCategory", new ArrayList<>(withoutLabel))
                     .neverFlows()
                     .toVertex()
-                    .withCharacteristic("dummyCategory", new ArrayList<>(violating))
+                    .withCharacteristic("dummyCategory", new ArrayList<>(withCharacteristic))
+                    .withoutCharacteristic("dummyCategory", new ArrayList<>(withoutCharacteristic))
                     .create();
             
             constraints.add(constraint);
