@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
@@ -57,7 +60,6 @@ public class PerformanceEval {
     }
     
     @Test
-    
     public void scaleTFGAmount() {
         List<Integer>  scalings = List.of(0,0,1,2,4,8,16,32,64,128,256,512,1024,2024, 10000, 100000);
         // results [860, 2, 2, 2, 1, 3, 2, 2, 3, 4, 5, 7, 5, 13, 63, 3692]
@@ -79,5 +81,24 @@ public class PerformanceEval {
         }
         System.out.println(results);
     }
+    
+    @Test
+    public void scaleConstraintLabel() {
+        timeMeasurement timer = new timeMeasurement();
+        
+        var scaler = new DFDScaler(MinDFD);
+        var scaledDFD = scaler.scaleLabels(30);
+        
+        var constraints = getScaledConstraint(5, 1, 1, 1, 30);
+        
+        var optimization = new OptimizationManager(scaledDFD, constraints);
+        var dfd = optimization.repair(timer);
+       
+        
+        assertTrue(optimization.isViolationFree(dfd));  
+    }
+    
+    
+    
 
 }

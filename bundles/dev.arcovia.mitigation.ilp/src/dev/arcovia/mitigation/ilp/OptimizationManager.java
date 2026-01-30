@@ -48,6 +48,8 @@ public class OptimizationManager {
     private List<List<Mitigation>> contradictions = new ArrayList<>();
 
     private List<ActionTerm> actions;
+    
+    private List<Mitigation> result;
 
     public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
@@ -93,7 +95,7 @@ public class OptimizationManager {
         }
 
         var solver = new ILPSolver();
-        var result = solver.solve(mitigations, allMitigations, contradictions);
+        result = solver.solve(mitigations, allMitigations, contradictions);
 
         actions = getActions(result);
 
@@ -123,7 +125,7 @@ public class OptimizationManager {
         }
 
         var solver = new ILPSolver();
-        var result = solver.solve(mitigations, allMitigations, contradictions);
+        result = solver.solve(mitigations, allMitigations, contradictions);
         
         timer.solving();
         
@@ -137,7 +139,11 @@ public class OptimizationManager {
     }
 
     public int getCost() {
-        return actions.size();
+        int cost = 0;
+        for (var mitigation : result) {
+            cost += mitigation.cost();
+        }
+        return cost;
     }
 
     public boolean isViolationFree(DataFlowDiagramAndDictionary dfd) {
