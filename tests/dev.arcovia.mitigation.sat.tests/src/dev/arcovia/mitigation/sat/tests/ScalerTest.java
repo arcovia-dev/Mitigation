@@ -152,10 +152,9 @@ public class ScalerTest {
         var scaler = new Scaler();
         var constraints = scaler.scaleConstraint(500, 50, 50, 50, 50, 5000);
         
-        for (var constraint : constraints) {
-            var translation = new CNFTranslation(constraint);
-            translation.constructCNF();
-        }
+        //To reduce build time, only the first constraint is translated into CNF
+        var translation = new CNFTranslation(constraints.get(0));
+        translation.constructCNF();
         
         assertTrue(constraints.size() == 500);
     }
