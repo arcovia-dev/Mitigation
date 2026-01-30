@@ -349,7 +349,7 @@ public class Scaler {
      * @param numberDummyLabels: The number of dummy Labels in the scaled DFD (number you previous scaled DFDLabels by)
      * @return
      */
-    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberWithLabel, int numberWithoutLabel, int numberWithCharacteristic, int numberWithoutCharacteristic, int numberPositiveLabels){
+    public List<AnalysisConstraint> scaleConstraint(int numberConstraints, int numberWithLabel, int numberWithoutLabel, int numberWithCharacteristic, int numberWithoutCharacteristic, int numberDummyLabels){
         List<AnalysisConstraint> constraints = new ArrayList<>();
         
         for (int i = 0; i< numberConstraints; i++) {
@@ -361,16 +361,16 @@ public class Scaler {
             ThreadLocalRandom rnd = ThreadLocalRandom.current();
             
             while(withLabel.size() < numberWithLabel) {
-                withLabel.add(String.valueOf(rnd.nextInt(0, numberPositiveLabels/2 - 1)));
+                withLabel.add(String.valueOf(rnd.nextInt(0, numberDummyLabels/2 - 1)));
             }
             while(withCharacteristic.size() < numberWithCharacteristic) {
-                withCharacteristic.add(String.valueOf(rnd.nextInt(numberPositiveLabels/2, numberPositiveLabels)));
+                withCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels/2, numberDummyLabels)));
             }
             while(withoutLabel.size() < numberWithoutLabel) {
-                withoutLabel.add(String.valueOf(rnd.nextInt(numberPositiveLabels+1, numberPositiveLabels*3)));
+                withoutLabel.add(String.valueOf(rnd.nextInt(numberDummyLabels+1, numberDummyLabels*3)));
             }
-            while(withCharacteristic.size() < numberWithoutCharacteristic) {
-                withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberPositiveLabels*3 + 1, numberPositiveLabels*6)));
+            while(withoutCharacteristic.size() < numberWithoutCharacteristic) {
+                withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
             }
                        
             
