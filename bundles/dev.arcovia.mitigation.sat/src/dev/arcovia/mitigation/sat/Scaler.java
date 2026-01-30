@@ -345,7 +345,7 @@ public class Scaler {
      * @param numberWithLabel: Labels that are positve before neverflows
      * @param numberWithoutLabel: Labels that are negative before neverflows
      * @param numberWithCharacteristic: Labels that are positve after neverflows
-     * @param numberWithoutNodeCharacteristic: Labels that are negative after neverflows
+     * @param numberWithoutCharacteristic: Labels that are negative after neverflows
      * @param scaledLabel: The number of positive Labels in the scaled DFD
      * @return
      */
