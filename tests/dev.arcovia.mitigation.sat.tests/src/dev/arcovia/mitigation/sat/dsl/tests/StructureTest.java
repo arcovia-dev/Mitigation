@@ -39,14 +39,14 @@ public class StructureTest {
     @Disabled
     @Test
     public void fullTest() throws IOException {
-        int n = 100;
+        int inputLiterals = 100;
 
         List<StructureResult> testResults = new ArrayList<>();
         
-        for (int c1 = 0; c1 <= n; c1++) {
-            for (int c2 = c1; c2 <= n; c2++) {
-                for (int c3 = c2; c3 <= n; c3++) {
-                    AnalysisConstraint constraint = getFullConstraint(c1, c2, c3, n);               
+        for (int cut1 = 0; cut1 <= inputLiterals; cut1++) {
+            for (int cut2 = cut1; cut2 <= inputLiterals; cut2++) {
+                for (int cut3 = cut2; cut3 <= inputLiterals; cut3++) {
+                    AnalysisConstraint constraint = getFullConstraint(cut1, cut2, cut3, inputLiterals);               
                     
                     var timeStart = System.currentTimeMillis();
                     var translation = new CNFTranslation(constraint);
@@ -54,10 +54,10 @@ public class StructureTest {
                     var timeEnd = System.currentTimeMillis();
                     var time = timeEnd - timeStart;
 
-                    int dataPos = c1-0;
-                    int dataNeg = c2-c1;
-                    int nodePos = c3-c2;
-                    int nodeNeg = n-c3;
+                    int dataPos = cut1-0;
+                    int dataNeg = cut2-cut1;
+                    int nodePos = cut3-cut2;
+                    int nodeNeg = inputLiterals-cut3;
                     
                     var outputClauses = translation.outputClauses();
                     var outputLiterals = translation.outputLiterals();
@@ -70,7 +70,7 @@ public class StructureTest {
                     //Linear
                     assertEquals((dataNeg + nodeNeg + (dataPos > 0 ? 1 : 0) + (nodePos > 0 ? 1 : 0)), literalsPerClause);
                     
-                    testResults.add(new StructureResult(dataPos, dataNeg, nodePos, nodeNeg, n, outputClauses, outputLiterals, translation.outputLongestClause(),
+                    testResults.add(new StructureResult(dataPos, dataNeg, nodePos, nodeNeg, inputLiterals, outputClauses, outputLiterals, translation.outputLongestClause(),
                             literalsPerClause, Math.toIntExact(time)));
                     logger.info(dataPos + " " + dataNeg + " " + nodePos + " " + nodeNeg);
                 }
@@ -79,26 +79,26 @@ public class StructureTest {
         DataLoader.outputStructureResults(testResults, "structure.json");
     }
     
-    private static AnalysisConstraint getFullConstraint(int c1, int c2, int c3, int n) {
+    private static AnalysisConstraint getFullConstraint(int cut1, int cut2, int cut3, int inputLiterals) {
         List<String> dataPos = new ArrayList<>();
         List<String> dataNeg = new ArrayList<>();
-        List<String> nodesPos = new ArrayList<>();
-        List<String> nodesNeg = new ArrayList<>();
+        List<String> nodePos = new ArrayList<>();
+        List<String> nodeNeg = new ArrayList<>();
 
-        for (int i = 0; i < c1; i++) {
+        for (int i = 0; i < cut1; i++) {
             dataPos.add(Integer.toString(i));
         }
 
-        for (int i = c1; i < c2; i++) {
+        for (int i = cut1; i < cut2; i++) {
             dataNeg.add(Integer.toString(i));
         }
 
-        for (int i = c2; i < c3; i++) {
-            nodesPos.add(Integer.toString(i));
+        for (int i = cut2; i < cut3; i++) {
+            nodePos.add(Integer.toString(i));
         }
 
-        for (int i = c3; i < n; i++) {
-            nodesNeg.add(Integer.toString(i));
+        for (int i = cut3; i < inputLiterals; i++) {
+            nodeNeg.add(Integer.toString(i));
         }
         
         var data = new ConstraintDSL().ofData();
@@ -115,13 +115,13 @@ public class StructureTest {
         
         var node = data.neverFlows().toVertex();
         
-        if(!nodesPos.isEmpty()) {
-            node = node.withCharacteristic("NodeLabel", nodesPos);
+        if(!nodePos.isEmpty()) {
+            node = node.withCharacteristic("NodeLabel", nodePos);
 
         }
         
-        if(!nodesNeg.isEmpty()) {
-            node = node.withoutCharacteristic("NodeLabel", nodesNeg);
+        if(!nodeNeg.isEmpty()) {
+            node = node.withoutCharacteristic("NodeLabel", nodeNeg);
 
         }
         
