@@ -27,11 +27,11 @@ public class PerformanceTest {
     // 20.000 input literals need roughly 16 GB of heap size memory
     private static final long expectedMemoryInGigabyte = 16;
 
-    /*@BeforeEach
+    @BeforeEach
     void beforeEach() {
         assertEquals(expectedMemoryInGigabyte * 1024 * 1024 * 1024, Runtime.getRuntime()
                 .maxMemory(), "Incorrect JVM heap size");
-    }*/
+    }
 
     // This test is only to generate data for evaluating performance, it should be disabled in normal use
     @Disabled
@@ -78,6 +78,8 @@ public class PerformanceTest {
         return Arrays.stream(inputs);
     }
 
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+    @Disabled
     @ParameterizedTest()
     @MethodSource("inputLiterals")
     public void multipleInputPerformanceTest(int input) {

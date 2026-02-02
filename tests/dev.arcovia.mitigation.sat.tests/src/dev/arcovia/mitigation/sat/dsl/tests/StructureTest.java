@@ -29,12 +29,14 @@ public class StructureTest {
     // 20.000 input literals need roughly 16 GB of heap size memory
     private static final long expectedMemoryInGigabyte = 16;
 
-    /*@BeforeEach
+    @BeforeEach
     void beforeEach() {
         assertEquals(expectedMemoryInGigabyte * 1024 * 1024 * 1024, Runtime.getRuntime()
                 .maxMemory(), "Incorrect JVM heap size");
-    }*/
+    }
     
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+    @Disabled
     @Test
     public void fullTest() throws IOException {
         int n = 100;
@@ -70,7 +72,7 @@ public class StructureTest {
                     
                     testResults.add(new StructureResult(dataPos, dataNeg, nodePos, nodeNeg, n, outputClauses, outputLiterals, translation.outputLongestClause(),
                             literalsPerClause, Math.toIntExact(time)));
-                    System.out.println(dataPos + " " + dataNeg + " " + nodePos + " " + nodeNeg);
+                    logger.info(dataPos + " " + dataNeg + " " + nodePos + " " + nodeNeg);
                 }
             }
         }
