@@ -61,8 +61,8 @@ public class PerformanceTest {
         logger.info(translation.getCNFStatistics());
     }
 
-    private static final int maxInputLiterals = 5000;
-    private static final int start = 100;
+    private static final int maxInputLiterals = 900;
+    private static final int start = 50;
     private static final int step = 50;
     private static final int repeat = 10;
 
@@ -87,12 +87,13 @@ public class PerformanceTest {
         for (int i = 0; i < literals; i++) {
             longList.add(Integer.toString(i));
         }
-        
+        //Runtime maximizes at |withLabel|=|withoutCharacteristic|=|withCharacteristic|
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
-                .withLabel("DataLabel", longList)
+                .withLabel("DataPos", longList)
                 .neverFlows()
                 .toVertex()
-                .withCharacteristic("NodeLabel", longList)
+                .withCharacteristic("NodePos", longList)
+                .withoutCharacteristic("NodeNeg", longList)
                 .create();
         
         for (int i = 0 ; i < repeat; i++) {
@@ -102,7 +103,7 @@ public class PerformanceTest {
             var timeEnd = System.currentTimeMillis();
             var time = timeEnd - timeStart;
             logger.info("\n " + literals + " Literals | " + time + " ms");
-            outputLiterals[input*repeat+i] = literals;
+            outputLiterals[input*repeat+i] = literals * 3;
             outputTime[input*repeat+i] = Math.toIntExact(time);  
         }        
     }

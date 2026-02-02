@@ -67,15 +67,14 @@ public class StructureTest {
     
     @Test
     public void fullTest() throws IOException {
-        int n = 10;
-        int faktor = 200;
+        int n = 100;
 
         List<StructureResult> testResults = new ArrayList<>();
         
         for (int c1 = 0; c1 <= n; c1++) {
             for (int c2 = c1; c2 <= n; c2++) {
                 for (int c3 = c2; c3 <= n; c3++) {
-                    AnalysisConstraint constraint = getFullConstraint(c1*faktor,c2*faktor,c3*faktor,n*faktor);               
+                    AnalysisConstraint constraint = getFullConstraint(c1, c2, c3, n);               
                     
                     var timeStart = System.currentTimeMillis();
                     var translation = new CNFTranslation(constraint);
@@ -83,22 +82,34 @@ public class StructureTest {
                     var timeEnd = System.currentTimeMillis();
                     var time = timeEnd - timeStart;
 
+                    int dataPos = c1-0;
+                    int dataNeg = c2-c1;
+                    int nodePos = c3-c2;
+                    int nodeNeg = n-c3;
+                    
                     var outputClauses = translation.outputClauses();
                     var outputLiterals = translation.outputLiterals();
-                    var literalsPerClause = (float) (outputLiterals) / outputClauses;
-
-                    testResults.add(new StructureResult(c1*faktor, c2*faktor, c3*faktor, n*faktor, outputClauses, outputLiterals, translation.outputLongestClause(),
+                    var literalsPerClause = outputLiterals / outputClauses;
+                    
+                    //Quadratic
+                    assertEquals(Math.max(1, dataPos) * Math.max(1, nodePos), outputClauses);
+                    //Cubic
+                    assertEquals(Math.max(1, dataPos) * Math.max(1, nodePos) * (dataNeg + nodeNeg + (dataPos > 0 ? 1 : 0) + (nodePos > 0 ? 1 : 0)), outputLiterals);
+                    //Linear
+                    assertEquals((dataNeg + nodeNeg + (dataPos > 0 ? 1 : 0) + (nodePos > 0 ? 1 : 0)), literalsPerClause);
+                    
+                    testResults.add(new StructureResult(dataPos, dataNeg, nodePos, nodeNeg, n, outputClauses, outputLiterals, translation.outputLongestClause(),
                             literalsPerClause, Math.toIntExact(time)));
-                    System.out.println(c1 + " " + c2 + " " + c3 + " " + n); 
+                    System.out.println(dataPos + " " + dataNeg + " " + nodePos + " " + nodeNeg);
                 }
             }
         }
-        DataLoader.outputTestResults(testResults, "structure_full.json");
-        testResults.sort(Comparator.comparingInt(StructureResult::runtime));
+        DataLoader.outputTestResults(testResults, "structure.json");
+        testResults.sort(Comparator.comparingInt(StructureResult::outputLiterals));
         Map<String,Integer> configsByTime = new LinkedHashMap<>();
         for (var result : testResults) {
-            configsByTime.put(result.cut1()+"_"+(result.cut2()-result.cut1())+"_"+
-        (result.cut3()-result.cut2())+"_"+(result.inputLiterals()-result.cut3()),result.runtime());
+            configsByTime.put(result.dataPos()+"_"+result.dataNeg()+"_"+
+        result.nodePos()+"_"+result.nodeNeg(),result.outputLiterals());
         }
         System.out.println(configsByTime);
     }
@@ -149,16 +160,7 @@ public class StructureTest {
 
         }
         
-        return node.create();
-        
-        /*return new ConstraintDSL().ofData()
-                .withLabel("DataLabel", dataPos)
-                .withoutLabel("DataLabel", dataNeg)
-                .neverFlows()
-                .toVertex()
-                .withCharacteristic("NodeLabel", nodesPos)
-                .withoutCharacteristic("NodeLabel", nodesNeg)
-                .create();*/
+        return node.create();        
     }
     
     @Test
