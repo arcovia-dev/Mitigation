@@ -82,7 +82,7 @@ public abstract class DataLoader {
         printToFile(strToBytes, fileName);
     }
     
-    public static void outputTestResults(List<StructureResult> results, String fileName) throws IOException {
+    public static void outputStructureResults(List<StructureResult> results, String fileName) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(results);
         byte[] strToBytes = jsonString.getBytes();

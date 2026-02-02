@@ -14,11 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.LinkedHashMap;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,8 +23,8 @@ public class StructureTest {
 
     private final Logger logger = Logger.getLogger(StructureTest.class);
 
-    private static final int testCount = 100000;
-    private static final int bound = 1000;
+    private static final int testCount = 10000;
+    private static final int bound = 100;
 
     // 20.000 input literals need roughly 16 GB of heap size memory
     private static final long expectedMemoryInGigabyte = 16;
@@ -38,32 +34,6 @@ public class StructureTest {
         assertEquals(expectedMemoryInGigabyte * 1024 * 1024 * 1024, Runtime.getRuntime()
                 .maxMemory(), "Incorrect JVM heap size");
     }*/
-
-    // This test is only to generate data for evaluating performance, it should be disabled in normal use
-    @Test
-    public void randomLinearTest() throws IOException {
-
-        ReadabilityTestResult[] testResults = new ReadabilityTestResult[testCount];
-
-        for (int i = 0; i < testCount; i++) {
-
-            Random random = new Random();
-            int inputLiterals = random.nextInt(bound) + 1;
-
-            AnalysisConstraint constraint = getRandomLinearConstraint(inputLiterals);
-            var translation = new CNFTranslation(constraint);
-            translation.constructCNF();
-
-            var outputClauses = translation.outputClauses();
-            var outputLiterals = translation.outputLiterals();
-            var literalsPerClause = (float) (outputLiterals) / outputClauses;
-
-            testResults[i] = new ReadabilityTestResult(inputLiterals, outputClauses, outputLiterals, translation.outputLongestClause(),
-                    literalsPerClause);
-        }
-
-        DataLoader.outputTestResults(testResults, "readability_linear.json");
-    }
     
     @Test
     public void fullTest() throws IOException {
@@ -104,14 +74,7 @@ public class StructureTest {
                 }
             }
         }
-        DataLoader.outputTestResults(testResults, "structure.json");
-        testResults.sort(Comparator.comparingInt(StructureResult::outputLiterals));
-        Map<String,Integer> configsByTime = new LinkedHashMap<>();
-        for (var result : testResults) {
-            configsByTime.put(result.dataPos()+"_"+result.dataNeg()+"_"+
-        result.nodePos()+"_"+result.nodeNeg(),result.outputLiterals());
-        }
-        System.out.println(configsByTime);
+        DataLoader.outputStructureResults(testResults, "structure.json");
     }
     
     private static AnalysisConstraint getFullConstraint(int c1, int c2, int c3, int n) {
@@ -162,7 +125,9 @@ public class StructureTest {
         
         return node.create();        
     }
-    
+
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+    @Disabled
     @Test
     public void randomTest() throws IOException {
 
@@ -173,7 +138,7 @@ public class StructureTest {
             Random random = new Random();
             int inputLiterals = random.nextInt(bound) + 1;
 
-            AnalysisConstraint constraint = getRandomConstraint(inputLiterals);
+            AnalysisConstraint constraint = getRandomNonWorstCaseConstraint(inputLiterals);
             var translation = new CNFTranslation(constraint);
             translation.constructCNF();
 
@@ -183,14 +148,12 @@ public class StructureTest {
 
             testResults[i] = new ReadabilityTestResult(inputLiterals, outputClauses, outputLiterals, translation.outputLongestClause(),
                     literalsPerClause);
-            
-            System.out.println(i);
         }
 
-        DataLoader.outputTestResults(testResults, "readability_random.json");
+        DataLoader.outputTestResults(testResults, "readability.json");
     }
 
-    private static AnalysisConstraint getRandomLinearConstraint(int upperBound) {
+    private static AnalysisConstraint getRandomNonWorstCaseConstraint(int upperBound) {
 
         Random random = new Random();
         int splitIndex = random.nextInt(upperBound + 1);
@@ -215,8 +178,9 @@ public class StructureTest {
     }
 
     // This test is only to generate data for evaluating performance, it should be disabled in normal use
+    @Disabled
     @Test
-    public void randomQuadraticTest() throws IOException {
+    public void randomWorstCaseTest() throws IOException {
 
         ReadabilityTestResult[] testResults = new ReadabilityTestResult[testCount];
 
@@ -225,7 +189,7 @@ public class StructureTest {
             Random random = new Random();
             int inputLiterals = random.nextInt(bound) + 1;
 
-            AnalysisConstraint constraint = getRandomQuadraticConstraint(inputLiterals);
+            AnalysisConstraint constraint = getRandomWorstCaseConstraint(inputLiterals);
             var translation = new CNFTranslation(constraint);
             translation.constructCNF();
 
@@ -237,10 +201,10 @@ public class StructureTest {
                     literalsPerClause);
         }
 
-        DataLoader.outputTestResults(testResults, "readability_quadratic.json");
+        DataLoader.outputTestResults(testResults, "readability.json");
     }
 
-    private static AnalysisConstraint getRandomQuadraticConstraint(int upperBound) {
+    private static AnalysisConstraint getRandomWorstCaseConstraint(int upperBound) {
 
         Random random = new Random();
         int splitLeft = random.nextInt(upperBound + 1);
@@ -282,7 +246,7 @@ public class StructureTest {
             dataPos.add(Integer.toString(i));
         }
 
-        for (int i = splitData; i < splitLeft; i++) {
+        for (int i = 0; i < splitLeft - splitData; i++) {
             dataNeg.add(Integer.toString(i));
         }
 
@@ -290,10 +254,10 @@ public class StructureTest {
             nodesPos.add(Integer.toString(i));
         }
 
-        for (int i = splitNodes; i < splitRight; i++) {
+        for (int i = 0; i < splitRight - splitNodes; i++) {
             nodesNeg.add(Integer.toString(i));
         }
-        
+
         return new ConstraintDSL().ofData()
                 .withLabel("DataLabel", dataPos)
                 .withoutLabel("DataLabel", dataNeg)
