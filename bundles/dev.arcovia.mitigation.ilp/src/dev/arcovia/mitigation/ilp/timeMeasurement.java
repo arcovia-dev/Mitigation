@@ -35,7 +35,7 @@ public class timeMeasurement {
     public long getSolvingTime() {
         return solving - dfdAnalysis;
     }
-    public long getIsolatedExecutio() {
+    public long getIsolatedExecution() {
         return endTime - dfdAnalysis + constraints - startTime;
     }
     
