@@ -61,13 +61,14 @@ public class PerformanceTest {
         logger.info(translation.getCNFStatistics());
     }
 
-    private static final int maxInputLiterals = 7000;
-    private static final int start = 6000;
-    private static final int step = 100;
+    private static final int maxInputLiterals = 900;
+    private static final int start = 50;
+    private static final int step = 50;
+    private static final int repeat = 10;
 
     private static final int count = 1 + (maxInputLiterals - start) / step;
-    private static final int[] outputLiterals = new int[count];
-    private static final int[] outputTime = new int[count];
+    private static final int[] outputLiterals = new int[count*repeat];
+    private static final int[] outputTime = new int[count*repeat];
 
     private static IntStream inputLiterals() {
         int[] inputs = new int[count];
@@ -77,6 +78,7 @@ public class PerformanceTest {
         return Arrays.stream(inputs);
     }
 
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
     @Disabled
     @ParameterizedTest()
     @MethodSource("inputLiterals")
@@ -87,22 +89,25 @@ public class PerformanceTest {
         for (int i = 0; i < literals; i++) {
             longList.add(Integer.toString(i));
         }
-
+        //Runtime maximizes at |withLabel|=|withoutCharacteristic|=|withCharacteristic|
         AnalysisConstraint constraint = new ConstraintDSL().ofData()
-                .withLabel("DataLabel", longList)
+                .withLabel("DataPos", longList)
                 .neverFlows()
                 .toVertex()
-                .withCharacteristic("NodeLabel", longList)
+                .withCharacteristic("NodePos", longList)
+                .withoutCharacteristic("NodeNeg", longList)
                 .create();
-
-        var timeStart = System.currentTimeMillis();
-        var translation = new CNFTranslation(constraint);
-        translation.constructCNF();
-        var timeEnd = System.currentTimeMillis();
-        var time = timeEnd - timeStart;
-        logger.info("\n " + literals + " Literals | " + time + " ms");
-        outputLiterals[input] = literals;
-        outputTime[input] = Math.toIntExact(time);
+        
+        for (int i = 0 ; i < repeat; i++) {
+            var timeStart = System.currentTimeMillis();
+            var translation = new CNFTranslation(constraint);
+            translation.constructCNF();
+            var timeEnd = System.currentTimeMillis();
+            var time = timeEnd - timeStart;
+            logger.info("\n " + literals + " Literals | " + time + " ms");
+            outputLiterals[input*repeat+i] = literals * 3;
+            outputTime[input*repeat+i] = Math.toIntExact(time);  
+        }        
     }
 
     @AfterEach

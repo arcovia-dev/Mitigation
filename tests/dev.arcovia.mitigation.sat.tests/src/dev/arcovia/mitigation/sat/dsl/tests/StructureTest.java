@@ -3,6 +3,8 @@ package dev.arcovia.mitigation.sat.dsl.tests;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.ReadabilityTestResult;
+import dev.arcovia.mitigation.sat.dsl.tests.utility.StructureResult;
+
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
@@ -31,6 +33,99 @@ public class StructureTest {
     void beforeEach() {
         assertEquals(expectedMemoryInGigabyte * 1024 * 1024 * 1024, Runtime.getRuntime()
                 .maxMemory(), "Incorrect JVM heap size");
+    }
+    
+    // This test is only to generate data for evaluating performance, it should be disabled in normal use
+    @Disabled
+    @Test
+    public void fullTest() throws IOException {
+        int inputLiterals = 100;
+
+        List<StructureResult> testResults = new ArrayList<>();
+        
+        for (int cut1 = 0; cut1 <= inputLiterals; cut1++) {
+            for (int cut2 = cut1; cut2 <= inputLiterals; cut2++) {
+                for (int cut3 = cut2; cut3 <= inputLiterals; cut3++) {
+                    AnalysisConstraint constraint = getFullConstraint(cut1, cut2, cut3, inputLiterals);               
+                    
+                    var timeStart = System.currentTimeMillis();
+                    var translation = new CNFTranslation(constraint);
+                    translation.constructCNF();
+                    var timeEnd = System.currentTimeMillis();
+                    var time = timeEnd - timeStart;
+
+                    int dataPos = cut1-0;
+                    int dataNeg = cut2-cut1;
+                    int nodePos = cut3-cut2;
+                    int nodeNeg = inputLiterals-cut3;
+                    
+                    var outputClauses = translation.outputClauses();
+                    var outputLiterals = translation.outputLiterals();
+                    var literalsPerClause = outputLiterals / outputClauses;
+                    
+                    //Quadratic
+                    assertEquals(Math.max(1, dataPos) * Math.max(1, nodePos), outputClauses);
+                    //Cubic
+                    assertEquals(Math.max(1, dataPos) * Math.max(1, nodePos) * (dataNeg + nodeNeg + (dataPos > 0 ? 1 : 0) + (nodePos > 0 ? 1 : 0)), outputLiterals);
+                    //Linear
+                    assertEquals((dataNeg + nodeNeg + (dataPos > 0 ? 1 : 0) + (nodePos > 0 ? 1 : 0)), literalsPerClause);
+                    
+                    testResults.add(new StructureResult(dataPos, dataNeg, nodePos, nodeNeg, inputLiterals, outputClauses, outputLiterals, translation.outputLongestClause(),
+                            literalsPerClause, Math.toIntExact(time)));
+                    logger.info(dataPos + " " + dataNeg + " " + nodePos + " " + nodeNeg);
+                }
+            }
+        }
+        DataLoader.outputStructureResults(testResults, "structure.json");
+    }
+    
+    private static AnalysisConstraint getFullConstraint(int cut1, int cut2, int cut3, int inputLiterals) {
+        List<String> dataPos = new ArrayList<>();
+        List<String> dataNeg = new ArrayList<>();
+        List<String> nodePos = new ArrayList<>();
+        List<String> nodeNeg = new ArrayList<>();
+
+        for (int i = 0; i < cut1; i++) {
+            dataPos.add(Integer.toString(i));
+        }
+
+        for (int i = cut1; i < cut2; i++) {
+            dataNeg.add(Integer.toString(i));
+        }
+
+        for (int i = cut2; i < cut3; i++) {
+            nodePos.add(Integer.toString(i));
+        }
+
+        for (int i = cut3; i < inputLiterals; i++) {
+            nodeNeg.add(Integer.toString(i));
+        }
+        
+        var data = new ConstraintDSL().ofData();
+        
+        if(!dataPos.isEmpty()) {
+            data = data.withLabel("DataLabel", dataPos);
+
+        }
+        
+        if(!dataNeg.isEmpty()) {
+            data = data.withoutLabel("DataLabel", dataNeg);
+
+        }
+        
+        var node = data.neverFlows().toVertex();
+        
+        if(!nodePos.isEmpty()) {
+            node = node.withCharacteristic("NodeLabel", nodePos);
+
+        }
+        
+        if(!nodeNeg.isEmpty()) {
+            node = node.withoutCharacteristic("NodeLabel", nodeNeg);
+
+        }
+        
+        return node.create();        
     }
 
     // This test is only to generate data for evaluating performance, it should be disabled in normal use
