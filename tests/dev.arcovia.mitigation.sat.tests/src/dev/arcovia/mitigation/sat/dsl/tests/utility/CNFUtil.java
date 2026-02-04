@@ -65,6 +65,31 @@ public abstract class CNFUtil {
 
         return expectedDifferences.size() > actualDifferences.size() ? expectedDifferences : actualDifferences;
     }
+    
+    /**
+     * Returns the symmetric differences between two lists of CNF {@link Constraint} objects. If the lists are identical,
+     * returns an empty list. Differences are determined by matching constraints.
+     * @param expected the list of expected {@link Constraint} objects
+     * @param actual the list of actual {@link Constraint} objects
+     * @return the list of constraints representing the symmetric differences
+     */
+    public static List<Constraint> getSymmetricDifference(List<Constraint> expected, List<Constraint> actual) {
+        var result = new ArrayList<Constraint>();
+
+        for (Constraint e : expected) {
+            if (actual.stream().noneMatch(a -> matches(e, a))) {
+                result.add(e);
+            }
+        }
+
+        for (Constraint a : actual) {
+            if (expected.stream().noneMatch(e -> matches(e, a))) {
+                result.add(a);
+            }
+        }
+
+        return result;
+    }
 
     /**
      * Checks whether two {@link Constraint} objects match exactly by comparing their literals.
