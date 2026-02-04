@@ -98,6 +98,6 @@ public class TUHHTestDSL {
                 .toList();
 
         logger.info(CNFUtil.cnfToString(converted));
-        assertEquals(Collections.emptyList(), CNFUtil.getGreatestDifference(constraints, converted));
+        assertEquals(Collections.emptyList(), CNFUtil.getSymmetricDifference(constraints, converted));
     }
 }
