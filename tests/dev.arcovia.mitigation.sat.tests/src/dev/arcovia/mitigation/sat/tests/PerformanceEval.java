@@ -1,27 +1,33 @@
-package dev.arcovia.mitigation.ilp.tests;
+package dev.arcovia.mitigation.sat.tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
+import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.sat4j.specs.ContradictionException;
+import org.sat4j.specs.TimeoutException;
 
-import dev.arcovia.mitigation.ilp.OptimizationManager;
 import dev.arcovia.mitigation.sat.Scaler;
 import dev.arcovia.mitigation.sat.timeMeasurement;
+import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.RunConfig;
 import dev.arcovia.mitigation.sat.MeasurementWriter;
+import dev.arcovia.mitigation.sat.Mechanic;
+import dev.arcovia.mitigation.sat.Constraint;
 
 public class PerformanceEval {
-
     private final String MinDFD = "models/sourceSink.json";
 
     AnalysisConstraint constraint = new ConstraintDSL().ofData()
             .withLabel("Sensitivity", "Personal")
+            .withoutLabel("Encryption", "encrypted")
             .neverFlows()
             .toVertex()
             .withCharacteristic("Location", "nonEU")
@@ -38,7 +44,7 @@ public class PerformanceEval {
             List.of(0, 1, 2, 4, 8, 16, 32, 64, 96, 128, 192, 256, 384, 512,
                     768, 1024, 1536, 2024, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000);
 
-    private static final List<Integer> CONSTRAINT_SCALINGS =
+    private static final List<Integer> CONSTRAINT_SCALINGS = 
             List.of(1, 2, 5, 10, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100);
 
     // -----------------------------
@@ -120,10 +126,18 @@ public class PerformanceEval {
             runWithWarmupAndRepeats(writer, cfg, (timer) -> {
                 Scaler scaler = new Scaler(MinDFD);
                 var scaledDFD = scaler.scaleTFGLength(scaling);
-
-                OptimizationManager optimization = new OptimizationManager(scaledDFD, List.of(constraint));
-                var dfd = optimization.repair(timer);
-                assertTrue(optimization.isViolationFree(dfd));
+                
+                var translation = new CNFTranslation(constraint);
+                
+                var constraints = translation.constructCNF();
+                
+                try {
+                    DataFlowDiagramAndDictionary dfd = new Mechanic(scaledDFD, "MinDFD", constraints).repair();
+                    assertTrue(new Mechanic(dfd, null, null).isViolationFree(dfd, constraints));
+                } catch (ContradictionException | TimeoutException | IOException e) {
+                    e.printStackTrace();
+                }
+                
             });
         }
     }
@@ -135,9 +149,17 @@ public class PerformanceEval {
                 Scaler scaler = new Scaler(MinDFD);
                 var scaledDFD = scaler.scaleTFGAmount(scaling);
 
-                OptimizationManager optimization = new OptimizationManager(scaledDFD, List.of(constraint));
-                var dfd = optimization.repair(timer);
-                assertTrue(optimization.isViolationFree(dfd));
+                var translation = new CNFTranslation(constraint);
+                
+                var constraints = translation.constructCNF();
+                
+                try {
+                    DataFlowDiagramAndDictionary dfd = new Mechanic(scaledDFD, "MinDFD", constraints).repair();
+
+                    assertTrue(new Mechanic(dfd, null, null).isViolationFree(dfd, constraints));
+                } catch (ContradictionException | TimeoutException | IOException e) {
+                    e.printStackTrace();
+                }
             });
         }
     }
@@ -189,15 +211,30 @@ public class PerformanceEval {
             Scaler scaler = new Scaler(MinDFD);
             var scaledDFD = scaler.scaleLabels(numberDummyLabels);
 
-            var constraints = scaler.scaleConstraint(
+            var DSLconstraints = scaler.scaleConstraint(
                     amountConstraint, numberWithLabel, numberWithoutLabel,
                     numberWithCharacteristic, numberWithoutCharacteristic,
                     numberDummyLabels
             );
+            
+            List<Constraint> constraints = new ArrayList<>();
+            
+            
+            
+            for (var c : DSLconstraints) {
+                var translation = new CNFTranslation(c);
+                constraints.addAll(translation.constructCNF());
+            }
+            
+            
+            try {
+                DataFlowDiagramAndDictionary dfd = new Mechanic(scaledDFD, "MinDFD", constraints).repair();
 
-            OptimizationManager optimization = new OptimizationManager(scaledDFD, constraints);
-            var dfd = optimization.repair(timer);
-            assertTrue(optimization.isViolationFree(dfd));
+                assertTrue(new Mechanic(dfd, null, null).isViolationFree(dfd, constraints));
+            } catch (ContradictionException | TimeoutException | IOException e) {
+                e.printStackTrace();
+            }
+            
         });
     }
 
@@ -232,7 +269,11 @@ public class PerformanceEval {
 
             timeMeasurement timer = new timeMeasurement();
             try {
+                timer.start();
                 experiment.run(timer);
+                timer.stop();
+                timer.analysis();
+                timer.solving();
                 writer.append(cfg, timer, runType, repeatIndex);
             } catch (OutOfMemoryError oom) {
                 writer.appendFailure(cfg, runType, repeatIndex, "OutOfMemoryError");

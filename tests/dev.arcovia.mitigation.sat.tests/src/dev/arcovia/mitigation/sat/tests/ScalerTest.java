@@ -1,5 +1,6 @@
 package dev.arcovia.mitigation.sat.tests;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,6 +16,8 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.junit.jupiter.api.Test;
 
+import dev.arcovia.mitigation.sat.Constraint;
+import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.Scaler;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
@@ -157,6 +160,27 @@ public class ScalerTest {
         translation.constructCNF();
         
         assertTrue(constraints.size() == 500);
+    }
+    
+    @Test
+    public void testViolations() throws StandaloneInitializationException {
+        var dfd = loadDFD("mudigal-technologies", "mudigal-technologies_7");
+        var scaler = new Scaler(dfd);
+        
+        var scaledDfd = scaler.scaleLabels(20);
+        
+        var DSLconstraints = scaler.scaleConstraint(1, 1, 1, 1, 1, 20);
+        
+        List<Constraint> constraints = new ArrayList<>();
+        
+        
+        
+        for (var c : DSLconstraints) {
+            var translation = new CNFTranslation(c);
+            constraints.addAll(translation.constructCNF());
+        }
+        
+        assertFalse(new Mechanic(scaledDfd, null, null).isViolationFree(scaledDfd, constraints));
     }
 
     private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws StandaloneInitializationException {

@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.ilp;
+package dev.arcovia.mitigation.sat;
 
 public class timeMeasurement {
     private long startTime;
