@@ -38,14 +38,16 @@ public class PerformanceEval {
     // NOTE: no duplicates needed anymore; warmup is explicit below
     // -----------------------------
     private static final List<Integer> TFG_LENGTH_SCALINGS =
-            List.of(0, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512);
+            List.of(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750);
 
     private static final List<Integer> TFG_AMOUNT_SCALINGS =
-            List.of(0, 1, 2, 4, 8, 16, 32, 64, 96, 128, 192, 256, 384, 512,
-                    768, 1024, 1536, 2024, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000);
+            List.of(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 
+                    11000, 12000, 13000, 14000, 15000);
 
     private static final List<Integer> CONSTRAINT_SCALINGS = 
-            List.of(1, 2, 5, 10, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100);
+            List.of(1, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240);
+    private static final List<Integer> CONSTRAINT_SCALINGS_AMOUNT = 
+            List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
 
     // -----------------------------
     // Repeats / Warmup
@@ -167,7 +169,7 @@ public class PerformanceEval {
     private void scaleConstraints(MeasurementWriter writer) {
         int numberDummyLabels = 400;
 
-        for (int s : CONSTRAINT_SCALINGS) {
+        for (int s : CONSTRAINT_SCALINGS_AMOUNT) {
             runConstraintCase(writer, numberDummyLabels, "constraints_amountConstraint", s, 1, 1, 1, 1);
         }
         for (int s : CONSTRAINT_SCALINGS) {
@@ -184,7 +186,7 @@ public class PerformanceEval {
         }
 
         // all together
-        for (int s : CONSTRAINT_SCALINGS) {
+        for (int s : CONSTRAINT_SCALINGS_AMOUNT) {
             int half = s / 2;
             runConstraintCase(writer, numberDummyLabels, "constraints_allTogether", s, half, half, half, half);
         }
