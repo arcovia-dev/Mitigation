@@ -90,10 +90,15 @@ public class Node {
                         mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
                     }
                     case AddNode -> {
-                        
-                        mitigations.add(new Mitigation(new ActionTerm(this.outgoingFlow.getId(), mitigation.label, ActionType.AddNode), mitigation.cost,
-                                getAllRequiredMitigations(mitigation)));
-                        mitigations.addAll(getNodeAdditionMitigations(mitigation));
+                        if (this.outgoingFlow == null) {
+                            mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddSink), mitigation.cost,
+                                    getAllRequiredMitigations(mitigation)));
+                        }
+                        else {
+                            mitigations.add(new Mitigation(new ActionTerm(this.outgoingFlow.getId(), mitigation.label, ActionType.AddNode), mitigation.cost,
+                                    getAllRequiredMitigations(mitigation)));
+                            mitigations.addAll(getNodeAdditionMitigations(mitigation));
+                        }
                         
                         
                     }
@@ -140,12 +145,15 @@ public class Node {
         
         
         if (vertex.getAllOutgoingDataCharacteristics().isEmpty()) return mitigations;;
-        
-        Node node = new Node((DFDVertex) outgoingFlow.getDestinationNode(), tfg);
-        mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddSink), mitigation.cost,
-                getAllRequiredMitigations(mitigation)));
-        mitigations.addAll(
-                node.getSinkAdditionMitigations(mitigation));
+        try {
+            Node node = new Node((DFDVertex) outgoingFlow.getDestinationNode(), tfg);
+            mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddSink), mitigation.cost,
+                    getAllRequiredMitigations(mitigation)));
+            mitigations.addAll(
+                    node.getSinkAdditionMitigations(mitigation));
+        }catch (Exception e) {
+            // TODO: handle exception
+        }
        
         return mitigations;
     }

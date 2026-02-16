@@ -165,6 +165,27 @@ public class OptimizationManager {
         return true;
     }
     
+    public int amountOfViolations() {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        
+        int violations = 0;
+        
+        for (var constraint : this.constraints) {
+            var result = constraint.determineViolations(flowGraph);
+            
+            violations += result.size();
+          
+        }
+        return violations;
+    }
+    
     private List<List<Mitigation>> determineContradictions(Mitigation domainMitigation){
         List<List<Mitigation>> contradiction = new ArrayList<>();
         for (var mitigation : allMitigations) {
@@ -327,7 +348,7 @@ public class OptimizationManager {
                         .category()
                         .equals(LabelCategory.OutgoingData)) {
                     for (var behavior : dd.getBehavior()) {
-                        List<Assignment> newAssignments = new ArrayList<>();
+                        List<SetAssignment> newAssignments = new ArrayList<>();
                         for (var assignment : behavior.getAssignment()) {
                             if (assignment.getId()
                                     .equals(outPinToAssignmentMap.get(action.domain()))) {
@@ -349,12 +370,10 @@ public class OptimizationManager {
                                 }
                                 if (assignment instanceof ForwardingAssignment) {
                                     var ddFactory = datadictionaryFactory.eINSTANCE;
-                                    var assign = ddFactory.createAssignment();
+                                    var assign = ddFactory.createSetAssignment();
                                     assign.getOutputLabels()
                                             .add(label);
                                     assign.setOutputPin(assignment.getOutputPin());
-                                    var ddTrue = ddFactory.createTRUE();
-                                    assign.setTerm(ddTrue);
                                     newAssignments.add(assign);
                                 }
                             }
