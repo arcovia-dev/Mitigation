@@ -361,16 +361,16 @@ public class Scaler {
             ThreadLocalRandom rnd = ThreadLocalRandom.current();
             
             while(withLabel.size() < numberWithLabel) {
-                withLabel.add(String.valueOf(rnd.nextInt(0, numberDummyLabels/2 - 1)));
+                withLabel.add("dummy_" + String.valueOf(rnd.nextInt(0, numberDummyLabels/2 - 1)));
             }
             while(withCharacteristic.size() < numberWithCharacteristic) {
-                withCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels/2, numberDummyLabels)));
+                withCharacteristic.add("dummy_" + String.valueOf(rnd.nextInt(numberDummyLabels/2, numberDummyLabels)));
             }
             while(withoutLabel.size() < numberWithoutLabel) {
-                withoutLabel.add(String.valueOf(rnd.nextInt(numberDummyLabels+1, numberDummyLabels*3)));
+                withoutLabel.add("dummy_" + String.valueOf(rnd.nextInt(numberDummyLabels+1, numberDummyLabels*3)));
             }
             while(withoutCharacteristic.size() < numberWithoutCharacteristic) {
-                withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
+                withoutCharacteristic.add("dummy_" + String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
             }
                        
             
