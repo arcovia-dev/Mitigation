@@ -373,31 +373,31 @@ public class Scaler {
                 withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
             }
             
-            var dslDataSourceSelector = new ConstraintDSL().ofData();
+            var dataSelector = new ConstraintDSL().ofData();
             
             if (!withLabel.isEmpty()) {
-                dslDataSourceSelector = dslDataSourceSelector.withLabel("dummyCategory",
+                dataSelector = dataSelector.withLabel("dummyCategory",
                         new ArrayList<>(withLabel));
             }
             
             if (!withoutLabel.isEmpty()) {
-                dslDataSourceSelector = dslDataSourceSelector.withoutLabel("dummyCategory",
+                dataSelector = dataSelector.withoutLabel("dummyCategory",
                         new ArrayList<>(withoutLabel));
             }
             
-            var nodeDestinationSelector = dslDataSourceSelector.neverFlows().toVertex();
+            var nodeSelector = dataSelector.neverFlows().toVertex();
             
             if (!withCharacteristic.isEmpty()) {
-                nodeDestinationSelector = nodeDestinationSelector.withCharacteristic("dummyCategory",
+                nodeSelector = nodeSelector.withCharacteristic("dummyCategory",
                         new ArrayList<>(withCharacteristic));
             }
             
             if (!withoutCharacteristic.isEmpty()) {
-                nodeDestinationSelector = nodeDestinationSelector.withoutCharacteristic("dummyCategory",
+                nodeSelector = nodeSelector.withoutCharacteristic("dummyCategory",
                         new ArrayList<>(withoutCharacteristic));
             }
             
-            AnalysisConstraint constraint = nodeDestinationSelector.create();
+            AnalysisConstraint constraint = nodeSelector.create();
             
             constraints.add(constraint);
  
