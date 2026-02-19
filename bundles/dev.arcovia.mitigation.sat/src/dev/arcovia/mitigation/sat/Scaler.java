@@ -372,18 +372,34 @@ public class Scaler {
             while(withoutCharacteristic.size() < numberWithoutCharacteristic) {
                 withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
             }
-                       
             
-            AnalysisConstraint constraint = new ConstraintDSL().ofData()
-                    .withLabel("dummyCategory", new ArrayList<>(withLabel))
-                    .withoutLabel("dummyCategory", new ArrayList<>(withoutLabel))
-                    .neverFlows()
-                    .toVertex()
-                    .withCharacteristic("dummyCategory", new ArrayList<>(withCharacteristic))
-                    .withoutCharacteristic("dummyCategory", new ArrayList<>(withoutCharacteristic))
-                    .create();
+            var dslDataSourceSelector = new ConstraintDSL().ofData();
+            
+            if (!withLabel.isEmpty()) {
+                dslDataSourceSelector = dslDataSourceSelector.withLabel("dummyCategory", new ArrayList<>(withLabel));
+            }
+            
+            if (!withoutLabel.isEmpty()) {
+                dslDataSourceSelector = dslDataSourceSelector.withoutLabel("dummyCategory",
+                        new ArrayList<>(withoutLabel));
+            }
+            
+            var nodeDestinationSelector = dslDataSourceSelector.neverFlows().toVertex();
+            
+            if (!withCharacteristic.isEmpty()) {
+                nodeDestinationSelector = nodeDestinationSelector.withCharacteristic("dummyCategory",
+                        new ArrayList<>(withCharacteristic));
+            }
+            
+            if (!withoutCharacteristic.isEmpty()) {
+                nodeDestinationSelector = nodeDestinationSelector.withoutCharacteristic("dummyCategory",
+                        new ArrayList<>(withoutCharacteristic));
+            }
+            
+            AnalysisConstraint constraint = nodeDestinationSelector.create();
             
             constraints.add(constraint);
+ 
         }
         
         
