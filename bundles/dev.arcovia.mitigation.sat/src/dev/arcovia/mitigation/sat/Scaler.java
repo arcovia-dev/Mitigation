@@ -376,7 +376,8 @@ public class Scaler {
             var dslDataSourceSelector = new ConstraintDSL().ofData();
             
             if (!withLabel.isEmpty()) {
-                dslDataSourceSelector = dslDataSourceSelector.withLabel("dummyCategory", new ArrayList<>(withLabel));
+                dslDataSourceSelector = dslDataSourceSelector.withLabel("dummyCategory",
+                        new ArrayList<>(withLabel));
             }
             
             if (!withoutLabel.isEmpty()) {
