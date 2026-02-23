@@ -38,14 +38,14 @@ public class PerformanceEval {
     // NOTE: no duplicates needed anymore; warmup is explicit below
     // -----------------------------
     private static final List<Integer> TFG_LENGTH_SCALINGS =
-            List.of(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750);
+            List.of(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550);
 
     private static final List<Integer> TFG_AMOUNT_SCALINGS =
             List.of(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 
                     11000, 12000, 13000, 14000, 15000);
 
     private static final List<Integer> CONSTRAINT_SCALINGS = 
-            List.of(1, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240);
+            List.of(1, 20, 40, 60, 80, 100, 120, 140, 160, 180);
     private static final List<Integer> CONSTRAINT_SCALINGS_AMOUNT = 
             List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
 
@@ -167,7 +167,7 @@ public class PerformanceEval {
     }
 
     private void scaleConstraints(MeasurementWriter writer) {
-        int numberDummyLabels = 400;
+        int numberDummyLabels = 600;
 
         for (int s : CONSTRAINT_SCALINGS_AMOUNT) {
             runConstraintCase(writer, numberDummyLabels, "constraints_amountConstraint", s, 1, 1, 1, 1);
