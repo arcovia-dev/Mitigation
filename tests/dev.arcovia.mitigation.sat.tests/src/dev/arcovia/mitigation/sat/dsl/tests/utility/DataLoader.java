@@ -81,6 +81,13 @@ public abstract class DataLoader {
         byte[] strToBytes = jsonString.getBytes();
         printToFile(strToBytes, fileName);
     }
+    
+    public static void outputStructureResults(List<StructureResult> results, String fileName) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(results);
+        byte[] strToBytes = jsonString.getBytes();
+        printToFile(strToBytes, fileName);
+    }
 
     private static void printToFile(byte[] strToBytes, String fileName) throws IOException {
         final String OUTPUT_DIRECTORY = "output";

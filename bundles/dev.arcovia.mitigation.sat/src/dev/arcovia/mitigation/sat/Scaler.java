@@ -361,29 +361,46 @@ public class Scaler {
             ThreadLocalRandom rnd = ThreadLocalRandom.current();
             
             while(withLabel.size() < numberWithLabel) {
-                withLabel.add(String.valueOf(rnd.nextInt(0, numberDummyLabels/2 - 1)));
+                withLabel.add("dummy_" + String.valueOf(rnd.nextInt(0, numberDummyLabels/2 - 1)));
             }
             while(withCharacteristic.size() < numberWithCharacteristic) {
-                withCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels/2, numberDummyLabels)));
+                withCharacteristic.add("dummy_" + String.valueOf(rnd.nextInt(numberDummyLabels/2, numberDummyLabels)));
             }
             while(withoutLabel.size() < numberWithoutLabel) {
-                withoutLabel.add(String.valueOf(rnd.nextInt(numberDummyLabels+1, numberDummyLabels*3)));
+                withoutLabel.add("dummy_" + String.valueOf(rnd.nextInt(numberDummyLabels+1, numberDummyLabels*3)));
             }
             while(withoutCharacteristic.size() < numberWithoutCharacteristic) {
-                withoutCharacteristic.add(String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
+                withoutCharacteristic.add("dummy_" + String.valueOf(rnd.nextInt(numberDummyLabels*3 + 1, numberDummyLabels*6)));
             }
-                       
             
-            AnalysisConstraint constraint = new ConstraintDSL().ofData()
-                    .withLabel("dummyCategory", new ArrayList<>(withLabel))
-                    .withoutLabel("dummyCategory", new ArrayList<>(withoutLabel))
-                    .neverFlows()
-                    .toVertex()
-                    .withCharacteristic("dummyCategory", new ArrayList<>(withCharacteristic))
-                    .withoutCharacteristic("dummyCategory", new ArrayList<>(withoutCharacteristic))
-                    .create();
+            var dataSelector = new ConstraintDSL().ofData();
+            
+            if (!withLabel.isEmpty()) {
+                dataSelector = dataSelector.withLabel("dummyCategory",
+                        new ArrayList<>(withLabel));
+            }
+            
+            if (!withoutLabel.isEmpty()) {
+                dataSelector = dataSelector.withoutLabel("dummyCategory",
+                        new ArrayList<>(withoutLabel));
+            }
+            
+            var nodeSelector = dataSelector.neverFlows().toVertex();
+            
+            if (!withCharacteristic.isEmpty()) {
+                nodeSelector = nodeSelector.withCharacteristic("dummyCategory",
+                        new ArrayList<>(withCharacteristic));
+            }
+            
+            if (!withoutCharacteristic.isEmpty()) {
+                nodeSelector = nodeSelector.withoutCharacteristic("dummyCategory",
+                        new ArrayList<>(withoutCharacteristic));
+            }
+            
+            AnalysisConstraint constraint = nodeSelector.create();
             
             constraints.add(constraint);
+ 
         }
         
         
