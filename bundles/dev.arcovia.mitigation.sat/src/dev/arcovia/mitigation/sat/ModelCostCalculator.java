@@ -114,7 +114,6 @@ public class ModelCostCalculator {
 
         return cost;
     }
-    
 
     private void pushLabel(Label label, Pin sourcePin) {
         var destinationPin = sourcePinToDestinationPin.get(sourcePin);
