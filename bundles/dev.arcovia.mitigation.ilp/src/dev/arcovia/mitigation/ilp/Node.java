@@ -146,16 +146,17 @@ public class Node {
         
         if (vertex.getAllOutgoingDataCharacteristics().isEmpty()) return mitigations;;
        
-    	String name = outgoingFlow.getDestinationNode().getEntityName();
+        String name = outgoingFlow.getDestinationNode().getEntityName();
+        DFDVertex vertex = null;
 
-    	DFDVertex vertex = tfg.getVertices().stream()
-    	        .filter(v -> v instanceof DFDVertex)
-    	        .map(v -> (DFDVertex) v)
-    	        .filter(v -> v.getName().equals(name))
-    	        .findFirst()
-    	        .orElse(null);
+        for (var v : tfg.getVertices()) {
+            if (v instanceof DFDVertex dfdVertex &&
+                dfdVertex.getName().equals(name)) {
+                vertex = dfdVertex; // overwrite → last match wins
+            }
+        }
 
-    	Node node = new Node(vertex, tfg);
+        Node node = new Node(vertex, tfg);
         mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddSink), mitigation.cost,
                 getAllRequiredMitigations(mitigation)));
         mitigations.addAll(
