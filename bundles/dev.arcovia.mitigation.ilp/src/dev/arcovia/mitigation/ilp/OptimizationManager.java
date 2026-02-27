@@ -656,7 +656,7 @@ public class OptimizationManager {
                 }
                 
                 
-                if (isForwarding) {
+                if (isForwarding || behavior.getAssignment().isEmpty()) {
                     var forwardingAssignment = ddFactory.createForwardingAssignment();
                     forwardingAssignment.getInputPins().addAll(node.getBehavior().getInPin());
                     forwardingAssignment.setOutputPin(outPin);

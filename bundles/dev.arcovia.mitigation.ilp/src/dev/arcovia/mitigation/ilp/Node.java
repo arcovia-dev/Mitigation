@@ -145,15 +145,22 @@ public class Node {
         
         
         if (vertex.getAllOutgoingDataCharacteristics().isEmpty()) return mitigations;;
-        try {
-            Node node = new Node((DFDVertex) outgoingFlow.getDestinationNode(), tfg);
-            mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddSink), mitigation.cost,
-                    getAllRequiredMitigations(mitigation)));
-            mitigations.addAll(
-                    node.getSinkAdditionMitigations(mitigation));
-        }catch (Exception e) {
-            // TODO: handle exception
-        }
+       
+    	String name = outgoingFlow.getDestinationNode().getEntityName();
+
+    	DFDVertex vertex = tfg.getVertices().stream()
+    	        .filter(v -> v instanceof DFDVertex)
+    	        .map(v -> (DFDVertex) v)
+    	        .filter(v -> v.getName().equals(name))
+    	        .findFirst()
+    	        .orElse(null);
+
+    	Node node = new Node(vertex, tfg);
+        mitigations.add(new Mitigation(new ActionTerm(node.name, mitigation.label, ActionType.AddSink), mitigation.cost,
+                getAllRequiredMitigations(mitigation)));
+        mitigations.addAll(
+                node.getSinkAdditionMitigations(mitigation));
+        
        
         return mitigations;
     }
