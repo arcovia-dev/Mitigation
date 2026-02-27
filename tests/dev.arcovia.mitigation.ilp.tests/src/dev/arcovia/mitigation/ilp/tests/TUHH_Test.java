@@ -447,7 +447,7 @@ public class TUHH_Test {
 
                 String name = model + "_" + 0;
 
-                System.out.println(name);
+                System.out.println(name + "i");
                 
                 DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
 
@@ -464,16 +464,108 @@ public class TUHH_Test {
         System.out.println(amountViolationsConstraint);
     }
     
-    @Disabled
+    //@Disabled
     @Test
     public void runSpecific() throws StandaloneInitializationException {
-        String model = "mudigal-technologies";
-        int variant = 2;
+        String model = "spring-petclinic";
+        int variant = 18;
         String name = model + "_" + variant;
+        
+        final Constraint loggingServer = new Constraint(List.of(new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "logging_server"))), 1, MitigationType.AddSink)));
+        
+        final EvaluationFunction evalLoggingServer = new EvaluationFunction() {            
+            @Override
+            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+                Set<Node> violatingNodes = new HashSet<>();
+                
+                for (var transposeFlowGraph: flowGraph.getTransposeFlowGraphs()) {
+                    for (var node : transposeFlowGraph.getVertices()) {
+                        if (!hasNodeCharacteristic(node, "Stereotype", "local_logging")) {
+                            continue;
+                        }
+                        
+                        if (transposeFlowGraph.stream()
+                                .anyMatch(vertex -> hasNodeCharacteristic(vertex, "Stereotype", "logging_server"))) {
+                            continue;
+                        }
+                        
+                        if (!checkAcrossTFGs(flowGraph.getTransposeFlowGraphs(), node, "Stereotype", "logging_server")) {
+                            var vertex = (DFDVertex) node;
+
+                            violatingNodes.add(new Node(vertex, transposeFlowGraph, loggingServer));
+                        }
+                        
+                        
+                    }
+                }
+                
+                
+                return violatingNodes;
+            }
+
+            @Override
+            public boolean isMatched(DFDVertex node) {
+                return false;
+            }
+        };
+        
+        final MitigationStrategy authServerMit= new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "authorization_server")), new NodeLabel(new Label("Stereotype", "login_attempts_regulation")), new OutgoingDataLabel(new Label("Stereotype", "transform_identity_representation"))), 1, MitigationType.AddNode);
+        
+        final Constraint authServer = new Constraint(List.of(authServerMit));
+        
+        final EvaluationFunction evalauthServer = new EvaluationFunction() {            
+            @Override
+            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+                Set<Node> violatingNodes = new HashSet<>();
+                
+                for (var transposeFlowGraph: flowGraph.getTransposeFlowGraphs()) {
+                    for (var node : transposeFlowGraph.getVertices()) {
+                        if (!hasNodeCharacteristic(node, "Stereotype", "internal") || !hasIncomingCharacteristic(node,"Stereotype", "entrypoint" )) {
+                            continue;
+                        }
+                        
+                        if (transposeFlowGraph.stream()
+                                .anyMatch(vertex -> hasNodeCharacteristic(vertex, "Stereotype", "authorization_server"))) {
+                            continue;
+                        }
+                        
+                        if (!checkAcrossTFGs(flowGraph.getTransposeFlowGraphs(), node, "Stereotype", "authorization_server")) {
+                            var vertex = (DFDVertex) node;
+
+                            violatingNodes.add(new Node(vertex, transposeFlowGraph, authServer));
+                        }
+                        
+                        
+                    }
+                }
+                
+                
+                return violatingNodes;
+            }
+
+            @Override
+            public boolean isMatched(DFDVertex node) {
+                return false;
+            }
+        };
+        
+        List<Constraint> constraints = new ArrayList<>();
+        
+        loggingServer.addEvalFunction(evalLoggingServer);
+        loggingServer.addPrecondition(new NodeLabel(new Label("Stereotype", "local_logging")));
+        authServer.addEvalFunction(evalauthServer);
+        
+        for (var constraint : analysisConstraints) {
+            constraints.add(new Constraint(constraint));
+        }
+        
+        constraints.add(authServer);
+        constraints.add(loggingServer);
+
 
         DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
 
-        var optimization = new OptimizationManager(dfd, analysisConstraints);
+        var optimization = new OptimizationManager(dfd, constraints, false);
 
         var result = optimization.repair();
 
