@@ -29,6 +29,8 @@ import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.NodeLabel;
+import dev.arcovia.mitigation.sat.timeMeasurement;
+
 
 public class OptimizationManager {
     private final DataFlowDiagramAndDictionary dfd;
@@ -47,6 +49,8 @@ public class OptimizationManager {
     private List<List<Mitigation>> contradictions = new ArrayList<>();
 
     private List<ActionTerm> actions;
+    
+    private List<Mitigation> result;
 
     public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
         this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
@@ -92,7 +96,7 @@ public class OptimizationManager {
         }
 
         var solver = new ILPSolver();
-        var result = solver.solve(mitigations, allMitigations, contradictions);
+        result = solver.solve(mitigations, allMitigations, contradictions);
 
         actions = getActions(result);
 
@@ -100,9 +104,47 @@ public class OptimizationManager {
 
         return dfd;
     }
+    
+    public DataFlowDiagramAndDictionary repair(timeMeasurement timer) {
+        timer.start();
+        analyseConstraints();
+        
+        timer.constraints();
+        
+        analyseDFD();
+        
+        timer.analysis();
+        
+        for (var node : violatingNodes) {
+            addMitigations(node.getPossibleMitigations());
+        }       
+        
+        for (var mitigation : allMitigations) {
+            if (mitigation.mitigation().type().toString().startsWith("Remove")) {
+                contradictions.addAll(determineContradictions(mitigation));
+            }
+        }
+
+        var solver = new ILPSolver();
+        result = solver.solve(mitigations, allMitigations, contradictions);
+        
+        timer.solving();
+        
+        actions = getActions(result);
+
+        applyActions(dfd, actions);
+        
+        timer.stop();
+        
+        return dfd;
+    }
 
     public int getCost() {
-        return actions.size();
+        int cost = 0;
+        for (var mitigation : result) {
+            cost += mitigation.cost();
+        }
+        return cost;
     }
 
     public boolean isViolationFree(DataFlowDiagramAndDictionary dfd) {
@@ -123,6 +165,27 @@ public class OptimizationManager {
         return true;
     }
     
+    public int amountOfViolations() {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        
+        int violations = 0;
+        
+        for (var constraint : this.constraints) {
+            var result = constraint.determineViolations(flowGraph);
+            
+            violations += result.size();
+          
+        }
+        return violations;
+    }
+    
     private List<List<Mitigation>> determineContradictions(Mitigation domainMitigation){
         List<List<Mitigation>> contradiction = new ArrayList<>();
         for (var mitigation : allMitigations) {
@@ -131,6 +194,19 @@ public class OptimizationManager {
             }
         }
         return contradiction;
+    }
+    
+    public boolean isCyclic(DataFlowDiagramAndDictionary dfd) {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        
+        return flowGraph.wasCyclic();
     }
 
     private List<ActionTerm> getActions(List<Mitigation> result) {
@@ -285,7 +361,7 @@ public class OptimizationManager {
                         .category()
                         .equals(LabelCategory.OutgoingData)) {
                     for (var behavior : dd.getBehavior()) {
-                        List<Assignment> newAssignments = new ArrayList<>();
+                        List<SetAssignment> newAssignments = new ArrayList<>();
                         for (var assignment : behavior.getAssignment()) {
                             if (assignment.getId()
                                     .equals(outPinToAssignmentMap.get(action.domain()))) {
@@ -307,12 +383,10 @@ public class OptimizationManager {
                                 }
                                 if (assignment instanceof ForwardingAssignment) {
                                     var ddFactory = datadictionaryFactory.eINSTANCE;
-                                    var assign = ddFactory.createAssignment();
+                                    var assign = ddFactory.createSetAssignment();
                                     assign.getOutputLabels()
                                             .add(label);
                                     assign.setOutputPin(assignment.getOutputPin());
-                                    var ddTrue = ddFactory.createTRUE();
-                                    assign.setTerm(ddTrue);
                                     newAssignments.add(assign);
                                 }
                             }
@@ -595,7 +669,7 @@ public class OptimizationManager {
                 }
                 
                 
-                if (isForwarding) {
+                if (isForwarding || behavior.getAssignment().isEmpty()) {
                     var forwardingAssignment = ddFactory.createForwardingAssignment();
                     forwardingAssignment.getInputPins().addAll(node.getBehavior().getInPin());
                     forwardingAssignment.setOutputPin(outPin);
