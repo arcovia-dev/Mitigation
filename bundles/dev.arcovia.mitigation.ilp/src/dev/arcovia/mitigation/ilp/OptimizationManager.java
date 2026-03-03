@@ -195,6 +195,19 @@ public class OptimizationManager {
         }
         return contradiction;
     }
+    
+    public boolean isCyclic(DataFlowDiagramAndDictionary dfd) {
+        var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
+        var analysis = new DFDDataFlowAnalysisBuilder().standalone()
+                .useCustomResourceProvider(resourceProvider)
+                .build();
+
+        analysis.initializeAnalysis();
+        var flowGraph = analysis.findFlowGraphs();
+        flowGraph.evaluate();
+        
+        return flowGraph.wasCyclic();
+    }
 
     private List<ActionTerm> getActions(List<Mitigation> result) {
         List<ActionTerm> actions = new ArrayList<>();

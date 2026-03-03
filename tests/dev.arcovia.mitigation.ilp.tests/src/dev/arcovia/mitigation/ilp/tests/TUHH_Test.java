@@ -313,9 +313,7 @@ public class TUHH_Test {
                 }
                 
                 constraints.add(authServer);
-                constraints.add(loggingServer);
-                
-                
+                constraints.add(loggingServer);                
                 
                 String name = model + "_" + variant;
 
@@ -329,10 +327,13 @@ public class TUHH_Test {
 
                 var repairedDfd = optimization.repair();
                 
-                repairedDfd.save("models/", "temp-repaired");
+                var dfdConverter = new DFD2WebConverter();
+                dfdConverter.convert(repairedDfd)
+                .save("models/", "temp-repaired.json");
                 
-                //No assertion, due to adding sinks and incorrect cyclic resolving
-                //assertTrue(optimization.isViolationFree(repairedDfd));
+                if (!optimization.isCyclic(repairedDfd)) {
+                    assertTrue(optimization.isViolationFree(repairedDfd));
+                }
             }
         }
         
@@ -448,7 +449,7 @@ public class TUHH_Test {
 
                 String name = model + "_" + 0;
 
-                System.out.println(name + "i");
+                System.out.println(name);
                 
                 DataFlowDiagramAndDictionary dfd = loadDFD(model, name);
 
@@ -458,8 +459,10 @@ public class TUHH_Test {
 
                 var repairedDfd = optimization.repair();
                 
-                //No assertion, due to adding sinks and incorrect cyclic resolving
-                //assertTrue(optimization.isViolationFree(repairedDfd));
+                
+                if (!optimization.isCyclic(repairedDfd)) {
+                    assertTrue(optimization.isViolationFree(repairedDfd));
+                }
             }
         }
         System.out.println(amountViolations);
@@ -470,7 +473,7 @@ public class TUHH_Test {
     @Test
     public void runSpecific() throws StandaloneInitializationException {
         String model = "spring-petclinic";
-        int variant = 18;
+        int variant = 3;
         String name = model + "_" + variant;
         
         final Constraint loggingServer = new Constraint(List.of(new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "logging_server"))), 1, MitigationType.AddSink)));
