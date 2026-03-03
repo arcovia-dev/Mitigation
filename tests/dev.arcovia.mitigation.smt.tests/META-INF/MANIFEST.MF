@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SMT Tests
+Bundle-SymbolicName: dev.arcovia.mitigation.smt.tests
+Bundle-Version: 1.0.0.qualifier
+Import-Package: dev.arcovia.mitigation.sat,
+ org.dataflowanalysis.converter.dfd2web,
+ org.junit.jupiter.api;version="5.8.1",
+ org.junit.jupiter.api.function;version="5.8.1",
+ org.junit.jupiter.params;version="5.8.1",
+ org.junit.jupiter.params.provider;version="5.8.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Require-Bundle: 
+ dev.arcovia.mitigation.smt,
+ org.eclipse.core.runtime,
+ org.sat4j.core;bundle-version="2.3.6",
+ org.apache.log4j,
+ org.dataflowanalysis.analysis.dfd,
+ org.dataflowanalysis.analysis,
+ org.dataflowanalysis.examplemodels,
+ org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
+ org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",
+ tools.mdsd.library.standalone.initialization,
+ com.google.guava,
+ dev.arcovia.mitigation.sat
