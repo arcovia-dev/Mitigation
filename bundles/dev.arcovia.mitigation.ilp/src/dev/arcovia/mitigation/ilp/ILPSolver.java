@@ -1,6 +1,7 @@
 package dev.arcovia.mitigation.ilp;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.io.FileWriter;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import dev.arcovia.mitigation.sat.BiMap;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.google.ortools.Loader;
 import com.google.ortools.linearsolver.MPConstraint;
@@ -16,11 +18,22 @@ import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 
+
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 public class ILPSolver {
     private BiMap<MPVariable, Mitigation> mitigationMap = new BiMap<>();
 
     public List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations, List<List<Mitigation>> contradictions) {
-        Loader.loadNativeLibraries();
+        try {
+            loadOrToolsNative();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
         MPSolver solver = MPSolver.createSolver("CBC_MIXED_INTEGER_PROGRAMMING");
 
         for (Mitigation mitigation : allMitigations) {
@@ -153,5 +166,80 @@ public class ILPSolver {
         if (s.isEmpty() || Character.isDigit(s.charAt(0))) s = "x_" + s;
         return s;
     }
+    
+    
+    
+    private static volatile boolean nativeLoaded = false;
+
+    private static synchronized void loadOrToolsNative() throws IOException {
+        if (nativeLoaded) return;
+
+        // Strategy 1: Standard Loader — works in Eclipse IDE (plain classloader, no bundleresource)
+        try {
+            Loader.loadNativeLibraries();
+            nativeLoaded = true;
+            return;
+        } catch (Exception | Error ignored) { }
+
+        // Strategy 2: OSGi/Tycho fallback — extract each DLL individually via getResourceAsStream
+        String platform    = getOrToolsPlatform();
+        String prefix      = "ortools-" + platform + "/";
+        String mainLibName = System.mapLibraryName("jniortools");
+
+        Path tempDir = Files.createTempDirectory("ortools-native");
+        tempDir.toFile().deleteOnExit();
+
+        List<Path> depLibs = new ArrayList<>();
+        Path mainLib = null;
+
+        for (String libName : getNativeLibNames(platform)) {
+            try (InputStream is = ILPSolver.class.getClassLoader()
+                                                 .getResourceAsStream(prefix + libName)) {
+                if (is == null) continue;
+                Path target = tempDir.resolve(libName);
+                Files.copy(is, target, StandardCopyOption.REPLACE_EXISTING);
+                target.toFile().deleteOnExit();
+                if (libName.equals(mainLibName)) mainLib = target;
+                else depLibs.add(target);
+            }
+        }
+
+        if (mainLib == null)
+            throw new IOException("Could not find " + mainLibName + " as classpath resource");
+
+        // Load dependencies first with retry to resolve ordering
+        int passes = depLibs.size() + 1;
+        while (!depLibs.isEmpty() && passes-- > 0) {
+            depLibs.removeIf(p -> {
+                try { System.load(p.toAbsolutePath().toString()); return true; }
+                catch (UnsatisfiedLinkError e) { return false; }
+            });
+        }
+        System.load(mainLib.toAbsolutePath().toString());
+        nativeLoaded = true;
+    }
+
+    private static String[] getNativeLibNames(String platform) {
+        if (platform.startsWith("win")) {
+            // All DLLs present in ortools-win32-x86-64-9.14.6206.jar
+            return new String[] {
+                "abseil_dll.dll", "bz2.dll", "highs.dll", "libprotobuf.dll",
+                "libscip.dll", "libutf8_validity.dll", "ortools.dll",
+                "re2.dll", "zlib1.dll", "jniortools.dll"
+            };
+        }
+        // Linux/macOS — single shared library
+        return new String[] { System.mapLibraryName("jniortools") };
+    }
+
+    private static String getOrToolsPlatform() {
+        String os   = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+        String arch = System.getProperty("os.arch").toLowerCase(Locale.ROOT);
+        if (os.contains("win"))                         return "win32-x86-64";
+        if (os.contains("mac") || os.contains("darwin"))
+            return arch.contains("aarch64") ? "darwin-aarch64" : "darwin-x86-64";
+        return arch.contains("aarch64") ? "linux-aarch64" : "linux-x86-64";
+    }
+
 
 }
