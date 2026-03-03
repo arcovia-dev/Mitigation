@@ -5,6 +5,7 @@ Bundle-SymbolicName: dev.arcovia.mitigation.ilp
 Bundle-Version: 1.0.0.qualifier
 Export-Package: 
  dev.arcovia.mitigation.ilp
+Import-Package: org.osgi.framework;version="1.10.0"
 Require-Bundle: org.dataflowanalysis.converter,
  org.apache.log4j,
  org.dataflowanalysis.analysis,

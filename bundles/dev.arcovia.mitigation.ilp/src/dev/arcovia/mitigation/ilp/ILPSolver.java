@@ -20,10 +20,22 @@ import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 
 
+import com.google.ortools.Loader;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
 
 public class ILPSolver {
     private BiMap<MPVariable, Mitigation> mitigationMap = new BiMap<>();
@@ -175,86 +187,112 @@ public class ILPSolver {
     private static synchronized void loadOrToolsNative() throws IOException {
         if (nativeLoaded) return;
 
-        // Strategy 1: Standard Loader — works in Eclipse IDE (plain classloader, no bundleresource)
+        // Strategy 1: Standard Loader — works in Eclipse IDE (no bundleresource URLs)
         try {
             Loader.loadNativeLibraries();
             nativeLoaded = true;
             return;
-        } catch (Exception | Error ignored) { }
+        } catch (Exception | Error ignored) {}
 
-        // Strategy 2: OSGi/Tycho fallback — extract each DLL individually via getResourceAsStream
-        String platform    = getOrToolsPlatform();
-        String prefix      = "ortools-" + platform + "/";
-        String mainLibName = System.mapLibraryName("jniortools");
+        // Strategy 2: OSGi — use bundle.getEntry() to read JAR file directly
+        String platformJar = getPlatformJarPath();
+        InputStream jarStream = null;
+
+        try {
+            Bundle bundle = FrameworkUtil.getBundle(ILPSolver.class);
+            if (bundle != null) {
+                URL jarUrl = bundle.getEntry(platformJar);
+                if (jarUrl != null) jarStream = jarUrl.openStream();
+            }
+        } catch (Exception ignored) {}
+
+        // Strategy 3: Last resort — classloader stream
+        if (jarStream == null) {
+            jarStream = ILPSolver.class.getClassLoader().getResourceAsStream(platformJar);
+        }
+
+        if (jarStream == null)
+            throw new IOException("Native JAR not found: " + platformJar);
 
         Path tempDir = Files.createTempDirectory("ortools-native");
         tempDir.toFile().deleteOnExit();
 
-        List<Path> depLibs = new ArrayList<>();
-        Path mainLib = null;
-        
-        String osCheck = System.getProperty("os.name").toLowerCase(Locale.ROOT);
-        if (!osCheck.contains("win") && !osCheck.contains("mac")) {
-            try (Stream<Path> files = Files.list(tempDir)) {
-                files.filter(p -> p.getFileName().toString().endsWith(".so"))
-                     .forEach(p -> {
-                         // OR-Tools 9.x uses major version 9 as the soname suffix
-                         Path versionedLink = tempDir.resolve(p.getFileName().toString() + ".9");
-                         try {
-                             Files.createSymbolicLink(versionedLink, p.getFileName()); // relative symlink
-                         } catch (IOException ignored) {}
-                     });
-            }
-        }
+        String mainLibName = System.mapLibraryName("jniortools");
+        List<Path> depLibs  = new ArrayList<>();
+        Path       mainLib  = null;
 
-        for (String libName : getNativeLibNames(platform)) {
-            try (InputStream is = ILPSolver.class.getClassLoader()
-                                                 .getResourceAsStream(prefix + libName)) {
-                if (is == null) continue;
-                Path target = tempDir.resolve(libName);
-                Files.copy(is, target, StandardCopyOption.REPLACE_EXISTING);
-                target.toFile().deleteOnExit();
-                if (libName.equals(mainLibName)) mainLib = target;
-                else depLibs.add(target);
+        // Extract ALL native libs from the platform JAR
+        try (ZipInputStream zip = new ZipInputStream(jarStream)) {
+            ZipEntry entry;
+            while ((entry = zip.getNextEntry()) != null) {
+                if (entry.isDirectory()) continue;
+                String fileName = Path.of(entry.getName()).getFileName().toString();
+                if (fileName.endsWith(".dll") || fileName.endsWith(".so") || fileName.endsWith(".dylib")) {
+                    Path target = tempDir.resolve(fileName);
+                    Files.copy(zip, target, StandardCopyOption.REPLACE_EXISTING);
+                    target.toFile().deleteOnExit();
+                    if (fileName.equals(mainLibName)) mainLib = target;
+                    else depLibs.add(target);
+                }
             }
         }
 
         if (mainLib == null)
-            throw new IOException("Could not find " + mainLibName + " as classpath resource");
+            throw new IOException(mainLibName + " not found in " + platformJar);
 
-        // Load dependencies first with retry to resolve ordering
+        // Linux: libjniortools.so depends on libortools.so.9 (versioned soname).
+        // Loading libortools.so via System.load() registers it under its ELF soname
+        // libortools.so.9, so the dynamic linker can resolve it when loading libjniortools.so.
+        // Additionally create a versioned symlink and load it explicitly to be safe.
+        String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+        if (!os.contains("win") && !os.contains("mac") && !os.contains("darwin")) {
+            List<Path> versionedLinks = new ArrayList<>();
+            for (Path lib : new ArrayList<>(depLibs)) {
+                String name = lib.getFileName().toString();
+                if (name.endsWith(".so")) {
+                    // Create libortools.so.9 → libortools.so (relative symlink)
+                    Path versionedLink = tempDir.resolve(name + ".9");
+                    try {
+                        Files.createSymbolicLink(versionedLink, lib.getFileName());
+                        versionedLinks.add(versionedLink);
+                        versionedLink.toFile().deleteOnExit();
+                    } catch (IOException ignored) {}
+                }
+            }
+            // Add versioned links to depLibs so they are explicitly pre-loaded
+            depLibs.addAll(versionedLinks);
+        }
+
+        // Load all dependency libs with retry loop to handle unknown ordering
         int passes = depLibs.size() + 1;
         while (!depLibs.isEmpty() && passes-- > 0) {
             depLibs.removeIf(p -> {
-                try { System.load(p.toAbsolutePath().toString()); return true; }
-                catch (UnsatisfiedLinkError e) { return false; }
+                try {
+                    System.load(p.toAbsolutePath().toString());
+                    return true;
+                } catch (UnsatisfiedLinkError e) {
+                    return false;
+                }
             });
         }
+
+        // Load the JNI entry point last
         System.load(mainLib.toAbsolutePath().toString());
         nativeLoaded = true;
     }
 
-    private static String[] getNativeLibNames(String platform) {
-        if (platform.startsWith("win")) {
-            // All DLLs present in ortools-win32-x86-64-9.14.6206.jar
-            return new String[] {
-                "abseil_dll.dll", "bz2.dll", "highs.dll", "libprotobuf.dll",
-                "libscip.dll", "libutf8_validity.dll", "ortools.dll",
-                "re2.dll", "zlib1.dll", "jniortools.dll"
-            };
-        }
-        // Linux/macOS — single shared library
-        return new String[] { System.mapLibraryName("jniortools") };
-    }
-
-    private static String getOrToolsPlatform() {
+    private static String getPlatformJarPath() {
         String os   = System.getProperty("os.name").toLowerCase(Locale.ROOT);
         String arch = System.getProperty("os.arch").toLowerCase(Locale.ROOT);
-        if (os.contains("win"))                         return "win32-x86-64";
+        if (os.contains("win"))
+            return "lib/win64/ortools-win32-x86-64-9.14.6206.jar";
         if (os.contains("mac") || os.contains("darwin"))
-            return arch.contains("aarch64") ? "darwin-aarch64" : "darwin-x86-64";
-        return arch.contains("aarch64") ? "linux-aarch64" : "linux-x86-64";
+            return arch.contains("aarch64") ? "lib/macos/ortools-linux-aarch64-9.14.6206.jar"
+                                            : "lib/macos/ortools-darwin-x86-64-9.14.6206.jar";
+        return arch.contains("aarch64") ? "lib/linux64/ortools-linux-aarch64-9.14.6206.jar"
+                                        : "lib/linux64/ortools-linux-x86-64-9.14.6206.jar";
     }
+
 
 
 }
