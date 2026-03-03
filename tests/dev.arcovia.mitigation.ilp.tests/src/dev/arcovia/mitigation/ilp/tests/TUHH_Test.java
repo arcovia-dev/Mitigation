@@ -469,7 +469,7 @@ public class TUHH_Test {
         System.out.println(amountViolationsConstraint);
     }
     
-    //@Disabled
+    @Disabled
     @Test
     public void runSpecific() throws StandaloneInitializationException {
         String model = "spring-petclinic";

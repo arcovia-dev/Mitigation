@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -191,6 +192,20 @@ public class ILPSolver {
 
         List<Path> depLibs = new ArrayList<>();
         Path mainLib = null;
+        
+        String osCheck = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+        if (!osCheck.contains("win") && !osCheck.contains("mac")) {
+            try (Stream<Path> files = Files.list(tempDir)) {
+                files.filter(p -> p.getFileName().toString().endsWith(".so"))
+                     .forEach(p -> {
+                         // OR-Tools 9.x uses major version 9 as the soname suffix
+                         Path versionedLink = tempDir.resolve(p.getFileName().toString() + ".9");
+                         try {
+                             Files.createSymbolicLink(versionedLink, p.getFileName()); // relative symlink
+                         } catch (IOException ignored) {}
+                     });
+            }
+        }
 
         for (String libName : getNativeLibNames(platform)) {
             try (InputStream is = ILPSolver.class.getClassLoader()
