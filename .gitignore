@@ -76,4 +76,3 @@ tests/dev.arcovia.mitigation.sat.tests/efficencyTest/*.json
 !*literalMapping.json
 
 tests/dev.arcovia.mitigation.smt.tests/testresults/
-bundles/dev.arcovia.mitigation.smt/lib/*.jar
