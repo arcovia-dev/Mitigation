@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import dev.arcovia.mitigation.sat.BiMap;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import com.google.ortools.Loader;
 import com.google.ortools.linearsolver.MPConstraint;
@@ -20,19 +18,15 @@ import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 
 
-import com.google.ortools.Loader;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -181,20 +175,19 @@ public class ILPSolver {
     }
     
     
-    
     private static volatile boolean nativeLoaded = false;
 
     private static synchronized void loadOrToolsNative() throws IOException {
         if (nativeLoaded) return;
 
-        // Strategy 1: Standard Loader — works in Eclipse IDE (no bundleresource URLs)
+        // Strategy 1: Standard Loader — works in Eclipse IDE
         try {
             Loader.loadNativeLibraries();
             nativeLoaded = true;
             return;
         } catch (Exception | Error ignored) {}
 
-        // Strategy 2: OSGi — use bundle.getEntry() to read JAR file directly
+        // Strategy 2: OSGi — read the native JAR via bundle.getEntry()
         String platformJar = getPlatformJarPath();
         InputStream jarStream = null;
 
@@ -206,10 +199,8 @@ public class ILPSolver {
             }
         } catch (Exception ignored) {}
 
-        // Strategy 3: Last resort — classloader stream
-        if (jarStream == null) {
+        if (jarStream == null)
             jarStream = ILPSolver.class.getClassLoader().getResourceAsStream(platformJar);
-        }
 
         if (jarStream == null)
             throw new IOException("Native JAR not found: " + platformJar);
@@ -217,17 +208,23 @@ public class ILPSolver {
         Path tempDir = Files.createTempDirectory("ortools-native");
         tempDir.toFile().deleteOnExit();
 
-        String mainLibName = System.mapLibraryName("jniortools");
+        String mainLibName = System.mapLibraryName("jniortools"); // e.g. libjniortools.so
         List<Path> depLibs  = new ArrayList<>();
         Path       mainLib  = null;
 
-        // Extract ALL native libs from the platform JAR
         try (ZipInputStream zip = new ZipInputStream(jarStream)) {
             ZipEntry entry;
             while ((entry = zip.getNextEntry()) != null) {
                 if (entry.isDirectory()) continue;
                 String fileName = Path.of(entry.getName()).getFileName().toString();
-                if (fileName.endsWith(".dll") || fileName.endsWith(".so") || fileName.endsWith(".dylib")) {
+
+                // Match .dll, .dylib, .so AND versioned sonames like libortools.so.9
+                boolean isNative = fileName.endsWith(".dll")
+                        || fileName.endsWith(".dylib")
+                        || fileName.endsWith(".so")
+                        || fileName.matches(".*\\.so\\.\\d+.*");
+
+                if (isNative) {
                     Path target = tempDir.resolve(fileName);
                     Files.copy(zip, target, StandardCopyOption.REPLACE_EXISTING);
                     target.toFile().deleteOnExit();
@@ -240,43 +237,15 @@ public class ILPSolver {
         if (mainLib == null)
             throw new IOException(mainLibName + " not found in " + platformJar);
 
-        // Linux: libjniortools.so depends on libortools.so.9 (versioned soname).
-        // Loading libortools.so via System.load() registers it under its ELF soname
-        // libortools.so.9, so the dynamic linker can resolve it when loading libjniortools.so.
-        // Additionally create a versioned symlink and load it explicitly to be safe.
-        String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
-        if (!os.contains("win") && !os.contains("mac") && !os.contains("darwin")) {
-            List<Path> versionedLinks = new ArrayList<>();
-            for (Path lib : new ArrayList<>(depLibs)) {
-                String name = lib.getFileName().toString();
-                if (name.endsWith(".so")) {
-                    // Create libortools.so.9 → libortools.so (relative symlink)
-                    Path versionedLink = tempDir.resolve(name + ".9");
-                    try {
-                        Files.createSymbolicLink(versionedLink, lib.getFileName());
-                        versionedLinks.add(versionedLink);
-                        versionedLink.toFile().deleteOnExit();
-                    } catch (IOException ignored) {}
-                }
-            }
-            // Add versioned links to depLibs so they are explicitly pre-loaded
-            depLibs.addAll(versionedLinks);
-        }
-
-        // Load all dependency libs with retry loop to handle unknown ordering
+        // Load all dependencies first with retry to handle unknown ordering
         int passes = depLibs.size() + 1;
         while (!depLibs.isEmpty() && passes-- > 0) {
             depLibs.removeIf(p -> {
-                try {
-                    System.load(p.toAbsolutePath().toString());
-                    return true;
-                } catch (UnsatisfiedLinkError e) {
-                    return false;
-                }
+                try { System.load(p.toAbsolutePath().toString()); return true; }
+                catch (UnsatisfiedLinkError e) { return false; }
             });
         }
 
-        // Load the JNI entry point last
         System.load(mainLib.toAbsolutePath().toString());
         nativeLoaded = true;
     }
