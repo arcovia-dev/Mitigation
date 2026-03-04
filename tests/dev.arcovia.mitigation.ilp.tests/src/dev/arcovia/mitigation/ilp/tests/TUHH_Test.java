@@ -132,7 +132,9 @@ public class TUHH_Test {
                 dfdConverter.convert(result)
                         .save("models/", "temp-repaired.json");
 
+
                 assertTrue(optimization.isViolationFree(result));
+                
             }
         }
         System.out.println(scalabilityValues);
@@ -469,7 +471,7 @@ public class TUHH_Test {
         System.out.println(amountViolationsConstraint);
     }
     
-    //@Disabled
+    @Disabled
     @Test
     public void runSpecific() throws StandaloneInitializationException {
         String model = "spring-petclinic";

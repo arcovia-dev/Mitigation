@@ -1,6 +1,7 @@
 package dev.arcovia.mitigation.ilp;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.io.FileWriter;
@@ -16,11 +17,30 @@ import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+
 public class ILPSolver {
     private BiMap<MPVariable, Mitigation> mitigationMap = new BiMap<>();
 
     public List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations, List<List<Mitigation>> contradictions) {
-        Loader.loadNativeLibraries();
+        try {
+            loadOrToolsNative();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
         MPSolver solver = MPSolver.createSolver("CBC_MIXED_INTEGER_PROGRAMMING");
 
         for (Mitigation mitigation : allMitigations) {
@@ -153,5 +173,95 @@ public class ILPSolver {
         if (s.isEmpty() || Character.isDigit(s.charAt(0))) s = "x_" + s;
         return s;
     }
+    
+    
+    private static volatile boolean nativeLoaded = false;
+
+    private static synchronized void loadOrToolsNative() throws IOException {
+        if (nativeLoaded) return;
+
+        // Strategy 1: Standard Loader — works in Eclipse IDE
+        try {
+            Loader.loadNativeLibraries();
+            nativeLoaded = true;
+            return;
+        } catch (Exception | Error ignored) {}
+
+        // Strategy 2: OSGi — read the native JAR via bundle.getEntry()
+        String platformJar = getPlatformJarPath();
+        InputStream jarStream = null;
+
+        try {
+            Bundle bundle = FrameworkUtil.getBundle(ILPSolver.class);
+            if (bundle != null) {
+                URL jarUrl = bundle.getEntry(platformJar);
+                if (jarUrl != null) jarStream = jarUrl.openStream();
+            }
+        } catch (Exception ignored) {}
+
+        if (jarStream == null)
+            jarStream = ILPSolver.class.getClassLoader().getResourceAsStream(platformJar);
+
+        if (jarStream == null)
+            throw new IOException("Native JAR not found: " + platformJar);
+
+        Path tempDir = Files.createTempDirectory("ortools-native");
+        tempDir.toFile().deleteOnExit();
+
+        String mainLibName = System.mapLibraryName("jniortools"); // e.g. libjniortools.so
+        List<Path> depLibs  = new ArrayList<>();
+        Path       mainLib  = null;
+
+        try (ZipInputStream zip = new ZipInputStream(jarStream)) {
+            ZipEntry entry;
+            while ((entry = zip.getNextEntry()) != null) {
+                if (entry.isDirectory()) continue;
+                String fileName = Path.of(entry.getName()).getFileName().toString();
+
+                // Match .dll, .dylib, .so AND versioned sonames like libortools.so.9
+                boolean isNative = fileName.endsWith(".dll")
+                        || fileName.endsWith(".dylib")
+                        || fileName.endsWith(".so")
+                        || fileName.matches(".*\\.so\\.\\d+.*");
+
+                if (isNative) {
+                    Path target = tempDir.resolve(fileName);
+                    Files.copy(zip, target, StandardCopyOption.REPLACE_EXISTING);
+                    target.toFile().deleteOnExit();
+                    if (fileName.equals(mainLibName)) mainLib = target;
+                    else depLibs.add(target);
+                }
+            }
+        }
+
+        if (mainLib == null)
+            throw new IOException(mainLibName + " not found in " + platformJar);
+
+        // Load all dependencies first with retry to handle unknown ordering
+        int passes = depLibs.size() + 1;
+        while (!depLibs.isEmpty() && passes-- > 0) {
+            depLibs.removeIf(p -> {
+                try { System.load(p.toAbsolutePath().toString()); return true; }
+                catch (UnsatisfiedLinkError e) { return false; }
+            });
+        }
+
+        System.load(mainLib.toAbsolutePath().toString());
+        nativeLoaded = true;
+    }
+
+    private static String getPlatformJarPath() {
+        String os   = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+        String arch = System.getProperty("os.arch").toLowerCase(Locale.ROOT);
+        if (os.contains("win"))
+            return "lib/win64/ortools-win32-x86-64-9.14.6206.jar";
+        if (os.contains("mac") || os.contains("darwin"))
+            return arch.contains("aarch64") ? "lib/macos/ortools-linux-aarch64-9.14.6206.jar"
+                                            : "lib/macos/ortools-darwin-x86-64-9.14.6206.jar";
+        return arch.contains("aarch64") ? "lib/linux64/ortools-linux-aarch64-9.14.6206.jar"
+                                        : "lib/linux64/ortools-linux-x86-64-9.14.6206.jar";
+    }
+
+
 
 }
