@@ -14,6 +14,9 @@ Export-Package: com.microsoft.z3,
 Automatic-Module-Name: dev.arcovia.mitigation.smt
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ClassPath: ., lib/com.microsoft.z3.jar
+Bundle-Activator: dev.arcovia.mitigation.smt.SmtBundleActivator
+Bundle-ActivationPolicy: lazy
+Import-Package: org.osgi.framework
 Require-Bundle: 
  dev.arcovia.mitigation.sat,
  org.dataflowanalysis.dfd.datadictionary,

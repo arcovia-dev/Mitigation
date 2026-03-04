@@ -34,38 +34,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip install -r tests/dev.arcovia.mitigation.ranking.tests/scripts/uncertaintyRanking/requirements.txt
-      - name: Download Z3 and copy jar and natives
-        shell: bash
-        run: |
-          # Fail if any step fails
-          set -euo pipefail
-
-          Z3_URL="https://github.com/Z3Prover/z3/releases/download/z3-${Z3_VER}/z3-${Z3_VER}-${Z3_ARCH}-glibc-${Z3_GLIBC}.zip"
-          
-          echo "Downloading $Z3_URL"
-          mkdir -p .z3
-          curl -L -o .z3/z3.zip "$Z3_URL"
-          unzip -q .z3/z3.zip -d .z3
-      
-          # Locate extracted bin directory
-          BIN_DIR="$(find .z3 -type d -name bin -print -quit)"
-          if [ -z "$BIN_DIR" ]; then
-            echo "ERROR: Could not find bin directory"
-            exit 1
-          fi
-
-          # Copy Linux native libraries
-          sudo mkdir -p "$Z3_NATIVE_DIR"
-
-          if ls "$BIN_DIR"/*.so* >/dev/null 2>&1; then
-            cp "$BIN_DIR"/*.so* "$Z3_NATIVE_DIR/"
-          else
-            echo "ERROR: No native .so libraries found"
-            exit 1
-          fi
-
-          echo "LD_LIBRARY_PATH=$Z3_NATIVE_DIR" >> "$GITHUB_ENV"
-
       - name: Build and Verify
         run: mvn clean verify 
           

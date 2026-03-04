@@ -49,6 +49,7 @@ import dev.arcovia.mitigation.smt.operations.UnsetAssignmentOperation;
 import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
 import dev.arcovia.mitigation.smt.util.SMTUtil;
 import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.util.Z3NativeLoader;
 
 /**
  * Central orchestrating class for interfacing with the Z3 Prover
@@ -129,6 +130,7 @@ public class SMT {
     public SMT(PreprocessingResult pre, List<AnalysisConstraint> constraints, Config config) {
         this.config = config;
         this.constraints = constraints;
+        Z3NativeLoader.ensureLoaded();
         if (verboseSolver) {
             Global.setParameter("verbose", "2");
         }

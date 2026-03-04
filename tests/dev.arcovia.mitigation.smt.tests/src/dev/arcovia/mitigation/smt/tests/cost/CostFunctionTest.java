@@ -2,6 +2,7 @@ package dev.arcovia.mitigation.smt.tests.cost;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.microsoft.z3.BoolExpr;
@@ -9,8 +10,14 @@ import com.microsoft.z3.Context;
 import com.microsoft.z3.IntExpr;
 
 import dev.arcovia.mitigation.smt.cost.CostFunction;
+import dev.arcovia.mitigation.smt.util.Z3NativeLoader;
 
 class CostFunctionTest {
+
+    @BeforeAll
+    static void loadZ3Natives() {
+        Z3NativeLoader.ensureLoaded();
+    }
 
     @Test
     void emptyBuildIsZero() {

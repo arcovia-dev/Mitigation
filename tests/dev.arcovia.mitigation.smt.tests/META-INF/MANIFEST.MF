@@ -3,13 +3,16 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SMT Tests
 Bundle-SymbolicName: dev.arcovia.mitigation.smt.tests
 Bundle-Version: 1.0.0.qualifier
-Import-Package: dev.arcovia.mitigation.sat,
+Import-Package: org.osgi.framework,
+ dev.arcovia.mitigation.sat,
  org.dataflowanalysis.converter.dfd2web,
  org.junit.jupiter.api;version="5.8.1",
  org.junit.jupiter.api.function;version="5.8.1",
  org.junit.jupiter.params;version="5.8.1",
  org.junit.jupiter.params.provider;version="5.8.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-Activator: dev.arcovia.mitigation.smt.tests.SmtTestsBundleActivator
+Bundle-ActivationPolicy: lazy
 Require-Bundle: 
  dev.arcovia.mitigation.smt,
  org.eclipse.core.runtime,
