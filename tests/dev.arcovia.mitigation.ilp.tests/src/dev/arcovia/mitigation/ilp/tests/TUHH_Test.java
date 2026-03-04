@@ -132,9 +132,9 @@ public class TUHH_Test {
                 dfdConverter.convert(result)
                         .save("models/", "temp-repaired.json");
 
-                if (!optimization.isCyclic(result)) {
-                    assertTrue(optimization.isViolationFree(result));
-                }
+
+                assertTrue(optimization.isViolationFree(result));
+                
             }
         }
         System.out.println(scalabilityValues);
