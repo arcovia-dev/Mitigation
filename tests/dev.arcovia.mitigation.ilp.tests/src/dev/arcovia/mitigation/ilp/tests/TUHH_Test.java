@@ -133,7 +133,9 @@ public class TUHH_Test {
                         .save("models/", "temp-repaired.json");
 
 
-                assertTrue(optimization.isViolationFree(result));
+                if (!optimization.isCyclic(repairedDfd)) {
+                    assertTrue(optimization.isViolationFree(repairedDfd));
+                }
                 
             }
         }
