@@ -13,11 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      Z3_VER: 4.15.5
-      Z3_ARCH: x64
-      Z3_GLIBC: 2.39
-      Z3_NATIVE_DIR: /opt/z3/bin
     steps:
       - name: Checkout
         uses: actions/checkout@v4
