@@ -28,8 +28,16 @@ public class ModificationsTest {
             int removableActions = 0;
             for (Operation action : suggestedActions) {
                 DataFlowDiagramAndDictionary undone = action.undoOperation(dfd);
-                if (Util.countViolations(undone, cfg.constraints()) <= 0)
+                if (Util.countViolations(undone, cfg.constraints()) <= 0) {
                     removableActions++;
+                }
+                // Ensure that operation gets added to the DFD again, so that they are actually tested in isolation
+                dfd = action.doOperation(undone);
+            }
+
+            if (removableActions > 0) {
+                System.out.println("An operation can be removed");
+                System.exit(1);
             }
 
             results.add(new ModificationsResult(cfg.model(), cfg.variantId(), suggestedActions.size(), removableActions));
