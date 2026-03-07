@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
-class TransformLabelCostsTest extends UtilTestBase {
+class TransformLabelCostsTest extends ParsingUtilsTestBase {
 
     @ParameterizedTest
     @MethodSource("cases")

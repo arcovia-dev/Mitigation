@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
-class RelevantNodeLabelsTest extends UtilTestBase {
+class RelevantNodeLabelsTest extends ParsingUtilsTestBase {
 
     @ParameterizedTest
     @MethodSource("nodeConstraintParameters")

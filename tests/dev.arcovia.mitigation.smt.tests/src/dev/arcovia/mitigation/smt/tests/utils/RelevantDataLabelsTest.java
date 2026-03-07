@@ -21,7 +21,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
-class RelevantDataLabelsTest extends UtilTestBase {
+class RelevantDataLabelsTest extends ParsingUtilsTestBase {
 
     @ParameterizedTest
     @MethodSource("constraintParameters")

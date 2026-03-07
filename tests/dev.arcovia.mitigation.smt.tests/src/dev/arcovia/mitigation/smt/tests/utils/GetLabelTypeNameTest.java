@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
-class GetLabelTypeNameTest extends UtilTestBase {
+class GetLabelTypeNameTest extends ParsingUtilsTestBase {
 
     @ParameterizedTest
     @MethodSource("cases")

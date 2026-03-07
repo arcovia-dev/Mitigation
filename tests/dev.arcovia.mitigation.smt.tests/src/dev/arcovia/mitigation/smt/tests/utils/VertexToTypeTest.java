@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
-class VertexToTypeTest extends UtilTestBase {
+class VertexToTypeTest extends ParsingUtilsTestBase {
 
     @ParameterizedTest
     @MethodSource("vertexCases")

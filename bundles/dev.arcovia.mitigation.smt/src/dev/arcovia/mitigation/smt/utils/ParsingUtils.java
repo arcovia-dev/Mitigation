@@ -405,16 +405,14 @@ public class ParsingUtils {
         flowGraphs.evaluate();
 
         List<DSLResult> result = new ArrayList<>();
-        for (int i = 0; i < analysisConstraints.size(); i++) {
-            List<DSLResult> violations = analysisConstraints.get(i)
-                    .findViolations(flowGraphs);
+        for (AnalysisConstraint analysisConstraint : analysisConstraints) {
+            List<DSLResult> violations = analysisConstraint.findViolations(flowGraphs);
             result.addAll(violations);
         }
         if (result.size() > 0) {
             System.out.println("DFA found " + result.size() + " tfg violations");
             return result.size();
         } else {
-            // System.out.println("No confidentiality violations found.");
             return 0;
         }
 

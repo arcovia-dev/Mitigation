@@ -46,7 +46,7 @@ public class ConstraintTranslator {
         List<AbstractSelector> vertexDestination = constr.getVertexDestinationSelectors()
                 .getSelectors();
 
-        Context ctx = smt.getContext();
+        Context context = smt.getContext();
 
         // Vertex Destination Selectors
         List<BoolExpr> allDestinationSelectors = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ConstraintTranslator {
             allDestinationSelectors.add(selectorTranslator.toBool(dstSelector, vertex));
         }
         // This evaluates to true, if no destination selectors are present
-        BoolExpr allDestinationSatisfied = ctx.mkAnd(allDestinationSelectors.toArray(new BoolExpr[0]));
+        BoolExpr allDestinationSatisfied = context.mkAnd(allDestinationSelectors.toArray(new BoolExpr[0]));
 
         // Data Selectors
         List<BoolExpr> allDataSource = new ArrayList<>();
@@ -62,7 +62,7 @@ public class ConstraintTranslator {
             allDataSource.add(selectorTranslator.toBool(source, vertex));
         }
         // Evaluates to true, if no data selectors are present
-        BoolExpr allDataSourceSatisfied = ctx.mkAnd(allDataSource.toArray(new BoolExpr[0]));
+        BoolExpr allDataSourceSatisfied = context.mkAnd(allDataSource.toArray(new BoolExpr[0]));
 
         // Vertex Source Selectors.
         List<BoolExpr> allVertexSource = new ArrayList<>();
@@ -70,12 +70,12 @@ public class ConstraintTranslator {
             allVertexSource.add(selectorTranslator.toBool(source, vertex));
         }
         // Evaluates to true, if no vertex source selectors are present
-        BoolExpr allVertexSourceSatisfied = ctx.mkAnd(allVertexSource.toArray(new BoolExpr[0]));
+        BoolExpr allVertexSourceSatisfied = context.mkAnd(allVertexSource.toArray(new BoolExpr[0]));
 
         // Constraint is satisfied if all selectors are satisfied.
-        BoolExpr allSatisfied = ctx.mkAnd(allDestinationSatisfied, allDataSourceSatisfied, allVertexSourceSatisfied);
+        BoolExpr allSatisfied = context.mkAnd(allDestinationSatisfied, allDataSourceSatisfied, allVertexSourceSatisfied);
         // But all selectors should not be satisfied
-        BoolExpr notAllSatisfied = ctx.mkNot(allSatisfied);
+        BoolExpr notAllSatisfied = context.mkNot(allSatisfied);
 
         return notAllSatisfied;
     }

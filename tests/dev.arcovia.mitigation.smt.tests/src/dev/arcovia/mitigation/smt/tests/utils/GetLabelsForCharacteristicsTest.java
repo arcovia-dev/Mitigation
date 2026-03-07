@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
-class GetLabelsForCharacteristicsTest extends UtilTestBase {
+class GetLabelsForCharacteristicsTest extends ParsingUtilsTestBase {
 
     @ParameterizedTest
     @MethodSource("cases")

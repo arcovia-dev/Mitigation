@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
-class AnalysisCharacteristicsTest extends UtilTestBase {
+class AnalysisCharacteristicsTest extends ParsingUtilsTestBase {
 
     @ParameterizedTest
     @MethodSource("characteristicCases")
