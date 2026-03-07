@@ -33,7 +33,13 @@ import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
  * naming scheme. To mitigate the risk of typos we defined relevant string constants below and use them when creating
  * the naming schemes of expected output. As some cases allow for multiple changes, e.g. one of two labels need to be
  * added or two labels need to be added the resulting formula is not deterministic. Therefore we provide all possible
- * equivalent formulas and check if the output is one of them
+ * equivalent formulas and check if the output is one of them. 
+ * 
+ * About the annotation @TestInstance(TestInstance.Lifecycle.PER_CLASS): Usually JUnit Test Instance lifecycle is per method
+ * instead of per class. However @ParameterizedTest that have a per method lifecycle can only have static
+ * @MethodSource methods. This package uses a cases() method as method source. As this class is extended by the test
+ * classes for individual selectors, its cases() method can not be static as static+abstract are incompatible. Therefore
+ * we change the lifecycle via annotation to allow non-static method sources.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractSelectorConstraintTest {
