@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.smt.Mitigation;
@@ -20,6 +21,7 @@ public class RuntimeComparisonTest {
 
     private static final int RUNS_PER_CONFIGURATION = 100;
 
+    @Disabled
     @Test
     public void testAllForRuntime() throws Exception {
         List<RuntimeResult> runtimeResults = new ArrayList<>();

@@ -24,23 +24,23 @@ class CostConfigBuilderTest {
 
     @Test
     void builderDefaultBuildHasEmptyMapsAndWeighFalse() {
-        CostConfig cfg = new CostConfigBuilder().build();
+        CostConfig config = new CostConfigBuilder().build();
 
-        assertNotNull(cfg.getAddLabelCost());
-        assertNotNull(cfg.getRemoveLabelCost());
-        assertNotNull(cfg.getNodeFactor());
-        assertNotNull(cfg.getPinFactor());
+        assertNotNull(config.addLabelCost());
+        assertNotNull(config.removeLabelCost());
+        assertNotNull(config.nodeFactor());
+        assertNotNull(config.pinFactor());
 
-        assertTrue(cfg.getAddLabelCost()
+        assertTrue(config.addLabelCost()
                 .isEmpty());
-        assertTrue(cfg.getRemoveLabelCost()
+        assertTrue(config.removeLabelCost()
                 .isEmpty());
-        assertTrue(cfg.getNodeFactor()
+        assertTrue(config.nodeFactor()
                 .isEmpty());
-        assertTrue(cfg.getPinFactor()
+        assertTrue(config.pinFactor()
                 .isEmpty());
 
-        assertFalse(cfg.isWeighTFGs());
+        assertFalse(config.weighTFGs());
     }
 
     @Test
@@ -48,14 +48,14 @@ class CostConfigBuilderTest {
         HashMap<String, Integer> labelCost = new HashMap<>();
         labelCost.put("A.B", 7);
 
-        CostConfig cfg = new CostConfigBuilder().withLabelCost(labelCost)
+        CostConfig config = new CostConfigBuilder().withLabelCost(labelCost)
                 .build();
 
-        assertSame(labelCost, cfg.getAddLabelCost());
-        assertSame(labelCost, cfg.getRemoveLabelCost());
-        assertEquals(7, cfg.getAddLabelCost()
+        assertSame(labelCost, config.addLabelCost());
+        assertSame(labelCost, config.removeLabelCost());
+        assertEquals(7, config.addLabelCost()
                 .get("A.B"));
-        assertEquals(7, cfg.getRemoveLabelCost()
+        assertEquals(7, config.removeLabelCost()
                 .get("A.B"));
     }
 
@@ -67,15 +67,15 @@ class CostConfigBuilderTest {
         HashMap<String, Integer> rem = new HashMap<>();
         rem.put("A.B", 2);
 
-        CostConfig cfg = new CostConfigBuilder().withAddLabelCost(add)
+        CostConfig config = new CostConfigBuilder().withAddLabelCost(add)
                 .withRemoveLabelCost(rem)
                 .build();
 
-        assertSame(add, cfg.getAddLabelCost());
-        assertSame(rem, cfg.getRemoveLabelCost());
-        assertEquals(1, cfg.getAddLabelCost()
+        assertSame(add, config.addLabelCost());
+        assertSame(rem, config.removeLabelCost());
+        assertEquals(1, config.addLabelCost()
                 .get("A.B"));
-        assertEquals(2, cfg.getRemoveLabelCost()
+        assertEquals(2, config.removeLabelCost()
                 .get("A.B"));
     }
 
@@ -90,23 +90,23 @@ class CostConfigBuilderTest {
         HashMap<Pin, Integer> pinFactor = new HashMap<>();
         pinFactor.put(p1, 4);
 
-        CostConfig cfg = new CostConfigBuilder().withNodeFactor(nodeFactor)
+        CostConfig config = new CostConfigBuilder().withNodeFactor(nodeFactor)
                 .withPinFactor(pinFactor)
                 .build();
 
-        assertSame(nodeFactor, cfg.getNodeFactor());
-        assertSame(pinFactor, cfg.getPinFactor());
-        assertEquals(3, cfg.getNodeFactor()
+        assertSame(nodeFactor, config.nodeFactor());
+        assertSame(pinFactor, config.pinFactor());
+        assertEquals(3, config.nodeFactor()
                 .get(n1));
-        assertEquals(4, cfg.getPinFactor()
+        assertEquals(4, config.pinFactor()
                 .get(p1));
     }
 
     @Test
     void weighTFGsSetsFlag() {
-        CostConfig cfg = new CostConfigBuilder().weighTFGs(true)
+        CostConfig config = new CostConfigBuilder().weighTFGs(true)
                 .build();
-        assertTrue(cfg.isWeighTFGs());
+        assertTrue(config.weighTFGs());
     }
 
     @Test
@@ -117,15 +117,15 @@ class CostConfigBuilderTest {
         HashMap<String, Integer> m2 = new HashMap<>();
         m2.put("X", 2);
 
-        CostConfig cfg = new CostConfigBuilder().withLabelCost(m1)
+        CostConfig config = new CostConfigBuilder().withLabelCost(m1)
                 .withAddLabelCost(m2) // override only add
                 .build();
 
-        assertSame(m2, cfg.getAddLabelCost());
-        assertSame(m1, cfg.getRemoveLabelCost());
-        assertEquals(2, cfg.getAddLabelCost()
+        assertSame(m2, config.addLabelCost());
+        assertSame(m1, config.removeLabelCost());
+        assertEquals(2, config.addLabelCost()
                 .get("X"));
-        assertEquals(1, cfg.getRemoveLabelCost()
+        assertEquals(1, config.removeLabelCost()
                 .get("X"));
     }
 }

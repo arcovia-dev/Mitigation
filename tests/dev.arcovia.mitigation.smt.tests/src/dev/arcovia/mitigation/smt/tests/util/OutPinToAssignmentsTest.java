@@ -17,10 +17,10 @@ import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.smt.util.Util;
 
-public class OutPinToAssTest {
+public class OutPinToAssignmentsTest {
 
     @Test
-    public void testOutPinToAss() throws Exception {
+    public void testOutPinToAssignments() throws Exception {
         var tuhhModels = TuhhModels.getTuhhModels();
         for (var model : tuhhModels.keySet()) {
             if (!tuhhModels.get(model)
@@ -34,9 +34,9 @@ public class OutPinToAssTest {
                 DataFlowDiagramAndDictionary dfdAndDD = Util.loadDFD(model, model + "_" + i);
                 DataFlowDiagram dfd = dfdAndDD.dataFlowDiagram();
 
-                Map<Pin, List<AbstractAssignment>> outPinToAss = Util.outPinToAss(dfd.getNodes());
+                Map<Pin, List<AbstractAssignment>> outPinToAssignments = Util.outPinToAssignments(dfd.getNodes());
 
-                for (Entry<Pin, List<AbstractAssignment>> entry : outPinToAss.entrySet()) {
+                for (Entry<Pin, List<AbstractAssignment>> entry : outPinToAssignments.entrySet()) {
 
                     Node node = dfd.getNodes()
                             .stream()

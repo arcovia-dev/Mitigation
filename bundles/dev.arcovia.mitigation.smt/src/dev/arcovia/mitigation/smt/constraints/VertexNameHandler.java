@@ -15,7 +15,7 @@ public class VertexNameHandler extends AbstractSelectorHandler<VertexNameSelecto
     @Override
     protected BoolExpr encode(VertexNameSelector selector, DFDVertex vertex, SMT smt) {
 
-        var ctx = smt.getCtx();
+        var context = smt.getContext();
 
         // We can statically evaluate this at encoding time as vertex names are not modifiable
         String select = selector.getName();
@@ -23,12 +23,12 @@ public class VertexNameHandler extends AbstractSelectorHandler<VertexNameSelecto
         if (vertex.getReferencedElement()
                 .getEntityName()
                 .equals(select)) {
-            matches = ctx.mkTrue();
+            matches = context.mkTrue();
         } else {
-            matches = ctx.mkFalse();
+            matches = context.mkFalse();
         }
-        // Maybe invert
-        return selector.isInverted() ? ctx.mkNot(matches) : matches;
+        // Invert if selector is inverted
+        return selector.isInverted() ? context.mkNot(matches) : matches;
     }
 
 }

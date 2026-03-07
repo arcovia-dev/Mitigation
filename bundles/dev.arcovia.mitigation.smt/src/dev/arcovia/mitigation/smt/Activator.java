@@ -8,7 +8,7 @@ import dev.arcovia.mitigation.smt.util.Z3NativeLoader;
 /**
  * Loads the bundled Z3 natives when the SMT bundle starts in OSGi.
  */
-public class SmtBundleActivator implements BundleActivator {
+public class Activator implements BundleActivator {
 
     @Override
     public void start(BundleContext context) {

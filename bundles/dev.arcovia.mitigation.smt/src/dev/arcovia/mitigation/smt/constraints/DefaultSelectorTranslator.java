@@ -43,11 +43,11 @@ public final class DefaultSelectorTranslator implements SelectorTranslator {
     /**
      * Registers a handler for a given selector class
      * @param <T> Type of the DSL selector
-     * @param cls Class of the DSL selector
-     * @param h Handler that should translate selectors of given class.
+     * @param selectorClass Class of the DSL selector
+     * @param selectorHandler Handler that should translate selectors of given class.
      */
-    private <T extends AbstractSelector> void register(Class<T> cls, AbstractSelectorHandler<T> h) {
-        handlers.put(cls, h);
+    private <T extends AbstractSelector> void register(Class<T> selectorClass, AbstractSelectorHandler<T> selectorHandler) {
+        handlers.put(selectorClass, selectorHandler);
     }
 
     @Override
@@ -57,25 +57,54 @@ public final class DefaultSelectorTranslator implements SelectorTranslator {
             throw new IllegalArgumentException("No selector handler registered for " + selector.getClass()
                     .getName());
         }
-        @SuppressWarnings("unchecked")
-        AbstractSelectorHandler<AbstractSelector> h = (AbstractSelectorHandler<AbstractSelector>) handler;
-        return h.encode(selector, vertex, smt);
+        if (handler instanceof DataCharacteristicsHandler castHandler && selector instanceof DataCharacteristicsSelector castSelector) {
+            return castHandler.encode(castSelector, vertex, smt);
+        }
+
+        if (handler instanceof DataCharacteristicListHandler castHandler && selector instanceof DataCharacteristicListSelector castSelector) {
+            return castHandler.encode(castSelector, vertex, smt);
+        }
+
+        if (handler instanceof DataNameHandler castHandler && selector instanceof VariableNameSelector castSelector) {
+            return castHandler.encode(castSelector, vertex, smt);
+        }
+
+        if (handler instanceof VertexCharacteristicListHandler castHandler && selector instanceof VertexCharacteristicsListSelector castSelector) {
+            return castHandler.encode(castSelector, vertex, smt);
+        }
+
+        if (handler instanceof VertexTypeHandler castHandler && selector instanceof VertexTypeSelector castSelector) {
+            return castHandler.encode(castSelector, vertex, smt);
+        }
+
+        if (handler instanceof VertexNameHandler castHandler && selector instanceof VertexNameSelector castSelector) {
+            return castHandler.encode(castSelector, vertex, smt);
+        }
+
+        if (handler instanceof VertexCharacteristicsHandler castHandler && selector instanceof VertexCharacteristicsSelector castSelector) {
+            return castHandler.encode(castSelector, vertex, smt);
+        }
+
+        throw new IllegalArgumentException("Handler " + handler.getClass()
+                .getName() + " cannot encode selector "
+                + selector.getClass()
+                        .getName());
     }
 
     /**
      * Finds correct handler for selector of given class
-     * @param cls Selector class
+     * @param selectorClass Selector class
      * @return Handler for selectors of this class
      */
-    private AbstractSelectorHandler<?> findHandler(Class<?> cls) {
-        var h = handlers.get(cls);
-        if (h != null)
-            return h;
+    private <T extends AbstractSelector> AbstractSelectorHandler<?> findHandler(Class<T> selectorClass) {
+        var handler = handlers.get(selectorClass);
+        if (handler != null)
+            return handler;
 
-        for (var e : handlers.entrySet()) {
-            if (e.getKey()
-                    .isAssignableFrom(cls))
-                return e.getValue();
+        for (var entry : handlers.entrySet()) {
+            if (entry.getKey()
+                    .isAssignableFrom(selectorClass))
+                return entry.getValue();
         }
         return null;
     }

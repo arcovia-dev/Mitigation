@@ -31,7 +31,7 @@ public class Mitigation {
             config = new ConfigBuilder().build();
         }
         Preprocess preprocces = new Preprocess();
-        PreprocessingResult preprocessingResult = preprocces.preprocess(dfd, constraints, config.isOnlyViolatingTFGs());
+        PreprocessingResult preprocessingResult = preprocces.preprocess(dfd, constraints, config.onlyViolatingTFGs());
         SMT smt = new SMT(preprocessingResult, constraints, config);
         return smt.repair();
     }

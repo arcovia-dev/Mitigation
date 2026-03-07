@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.smt.Mitigation;
@@ -35,10 +36,7 @@ public class ModificationsTest {
                 dfd = action.doOperation(undone);
             }
 
-            if (removableActions > 0) {
-                System.out.println("An operation can be removed");
-                System.exit(1);
-            }
+            Assertions.assertEquals(removableActions, 0);
 
             results.add(new ModificationsResult(cfg.model(), cfg.variantId(), suggestedActions.size(), removableActions));
         }

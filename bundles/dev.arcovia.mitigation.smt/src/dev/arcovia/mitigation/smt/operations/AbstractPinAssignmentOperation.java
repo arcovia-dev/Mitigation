@@ -124,6 +124,6 @@ public sealed abstract class AbstractPinAssignmentOperation<T extends AbstractAs
                     .removeIf(a -> a.equals(found.get()));
         }
 
-        return dfd; // your original returned null; returning dfd is usually intended
+        return dfd;
     }
 }

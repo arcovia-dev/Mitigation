@@ -13,12 +13,12 @@ import com.microsoft.z3.IntExpr;
  */
 public final class CostFunction {
 
-    private final Context ctx;
+    private final Context context;
     // Partial cost terms
     private final List<IntExpr> terms = new ArrayList<>();
 
-    private CostFunction(Context ctx) {
-        this.ctx = Objects.requireNonNull(ctx, "ctx");
+    private CostFunction(Context context) {
+        this.context = Objects.requireNonNull(context, "context");
     }
 
     /**
@@ -44,10 +44,10 @@ public final class CostFunction {
         }
 
         // The term evaluates to 1 if the two values differ, else 0.
-        IntExpr base = (IntExpr) ctx.mkITE(ctx.mkXor(cur, ref), ctx.mkInt(1), ctx.mkInt(0));
+        IntExpr base = (IntExpr) context.mkITE(context.mkXor(cur, ref), context.mkInt(1), context.mkInt(0));
 
         // If a relevant weight has been provided, multiply by it here.
-        IntExpr weighted = (weight == 1) ? base : (IntExpr) ctx.mkMul(ctx.mkInt(weight), base);
+        IntExpr weighted = (weight == 1) ? base : (IntExpr) context.mkMul(context.mkInt(weight), base);
 
         terms.add(weighted);
         return this;
@@ -69,11 +69,11 @@ public final class CostFunction {
      */
     public IntExpr build() {
         if (terms.isEmpty()) {
-            return ctx.mkInt(0);
+            return context.mkInt(0);
         }
         if (terms.size() == 1) {
             return terms.get(0);
         }
-        return (IntExpr) ctx.mkAdd(terms.toArray(IntExpr[]::new));
+        return (IntExpr) context.mkAdd(terms.toArray(IntExpr[]::new));
     }
 }

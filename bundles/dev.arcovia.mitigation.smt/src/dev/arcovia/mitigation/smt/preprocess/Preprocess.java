@@ -60,8 +60,8 @@ public class Preprocess {
                     .isConstant()
                     || !data.characteristicValue()
                             .isConstant()) {
-                logger.error("Variable detected in Constraints. Currently not supported. Exiting");
-                System.exit(1);
+                logger.error("Variable detected in Constraints. Currently not supported.");
+                throw new UnsupportedOperationException("Variable detected in constraints. Currently not supported.");
             }
             // First add label type if it does not exist
             String type = data.characteristicType()
@@ -95,7 +95,7 @@ public class Preprocess {
 
         DataFlowDiagram dfd = dfdIn.dataFlowDiagram();
         DataDictionary dd = dfdIn.dataDictionary();
-        Map<Pin, List<AbstractAssignment>> outPinToAss = Util.outPinToAss(dfd.getNodes());
+        Map<Pin, List<AbstractAssignment>> outPinToAss = Util.outPinToAssignments(dfd.getNodes());
 
         // Determine relevant labels based on confidentiality constraints.
         // Labels that appear in negated Vertex Selectors. Adding them could repair violations.

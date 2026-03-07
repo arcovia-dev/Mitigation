@@ -19,29 +19,29 @@ import dev.arcovia.mitigation.smt.util.Util;
 final class VertexTypeHandler extends AbstractSelectorHandler<VertexTypeSelector> {
 
     @Override
-    protected BoolExpr encode(VertexTypeSelector s, DFDVertex vertex, SMT smt) {
-        var ctx = smt.getCtx();
+    protected BoolExpr encode(VertexTypeSelector selector, DFDVertex vertex, SMT smt) {
+        var context = smt.getContext();
 
-        DFDVertexType selectorType = (DFDVertexType) s.getVertexType();
+        DFDVertexType selectorType = (DFDVertexType) selector.getVertexType();
 
         // Can be statically evaluated at encoding time because types are not modifiable
         BoolExpr matches;
         if (selectorType.equals(Util.vertexToType(vertex))) {
-            matches = ctx.mkTrue();
+            matches = context.mkTrue();
         } else {
-            matches = ctx.mkFalse();
+            matches = context.mkFalse();
         }
-        // Maybe invert
-        BoolExpr result = s.isInverted() ? ctx.mkNot(matches) : matches;
+        // Invert if selector is inverted
+        BoolExpr result = selector.isInverted() ? context.mkNot(matches) : matches;
 
-        if (s.isRecursive()) {
+        if (selector.isRecursive()) {
             List<BoolExpr> anyMatches = new ArrayList<BoolExpr>();
             anyMatches.add(result);
             for (AbstractVertex<?> prevAbstract : vertex.getPreviousElements()) {
                 DFDVertex prev = (DFDVertex) prevAbstract;
-                anyMatches.add(encode(s, prev, smt));
+                anyMatches.add(encode(selector, prev, smt));
             }
-            return ctx.mkOr(anyMatches.toArray(new BoolExpr[0]));
+            return context.mkOr(anyMatches.toArray(new BoolExpr[0]));
         } else {
             return result;
         }

@@ -22,10 +22,10 @@ import dev.arcovia.mitigation.smt.util.Util;
 final class VertexCharacteristicListHandler extends AbstractSelectorHandler<VertexCharacteristicsListSelector> {
 
     @Override
-    protected BoolExpr encode(VertexCharacteristicsListSelector s, DFDVertex vertex, SMT smt) {
-        var ctx = smt.getCtx();
+    protected BoolExpr encode(VertexCharacteristicsListSelector selector, DFDVertex vertex, SMT smt) {
+        var context = smt.getContext();
 
-        Set<Label> selectorLabels = Util.getLabelsForCharacteristics(smt.getDD(), s.getVertexCharacteristics());
+        Set<Label> selectorLabels = Util.getLabelsForCharacteristics(smt.getDataDictionary(), selector.getVertexCharacteristics());
 
         // Get labels of node
         Map<Label, BoolExpr> present = smt.getNodeLabels()
@@ -33,25 +33,25 @@ final class VertexCharacteristicListHandler extends AbstractSelectorHandler<Vert
 
         // Check every label of selector
         List<BoolExpr> labelMatches = new ArrayList<>(selectorLabels.size());
-        for (Label lbl : selectorLabels) {
-            BoolExpr has = present.get(lbl);
-            labelMatches.add(has);
+        for (Label label : selectorLabels) {
+            BoolExpr hasLabel = present.get(label);
+            labelMatches.add(hasLabel);
         }
 
         // Matches if any of the selector labels is present
-        BoolExpr matches = ctx.mkOr(labelMatches.toArray(new BoolExpr[0]));
+        BoolExpr matches = context.mkOr(labelMatches.toArray(new BoolExpr[0]));
 
-        // Maybe invert
-        BoolExpr result = s.isInverted() ? ctx.mkNot(matches) : matches;
+        // Invert if selector is inverted
+        BoolExpr result = selector.isInverted() ? context.mkNot(matches) : matches;
 
-        if (s.isRecursive()) {
+        if (selector.isRecursive()) {
             List<BoolExpr> anyMatches = new ArrayList<BoolExpr>();
             anyMatches.add(result);
             for (AbstractVertex<?> prevAbstract : vertex.getPreviousElements()) {
                 DFDVertex prev = (DFDVertex) prevAbstract;
-                anyMatches.add(encode(s, prev, smt));
+                anyMatches.add(encode(selector, prev, smt));
             }
-            return ctx.mkOr(anyMatches.toArray(new BoolExpr[0]));
+            return context.mkOr(anyMatches.toArray(new BoolExpr[0]));
         } else {
             return result;
         }

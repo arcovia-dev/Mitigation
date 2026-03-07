@@ -21,12 +21,12 @@ import dev.arcovia.mitigation.smt.util.Util;
 final class DataCharacteristicListHandler extends AbstractSelectorHandler<DataCharacteristicListSelector> {
 
     @Override
-    protected BoolExpr encode(DataCharacteristicListSelector s, DFDVertex vertex, SMT smt) {
+    protected BoolExpr encode(DataCharacteristicListSelector selector, DFDVertex vertex, SMT smt) {
 
-        var ctx = smt.getCtx();
+        var context = smt.getContext();
 
         // Get labels for selectors
-        Set<Label> selectorLabels = Util.getLabelsForCharacteristics(smt.getDD(), s.getDataCharacteristics());
+        Set<Label> selectorLabels = Util.getLabelsForCharacteristics(smt.getDataDictionary(), selector.getDataCharacteristics());
 
         List<BoolExpr> flowsMatch = new ArrayList<>();
 
@@ -38,24 +38,24 @@ final class DataCharacteristicListHandler extends AbstractSelectorHandler<DataCh
 
             // Check all labels
             List<BoolExpr> anySelectorLabelPresent = new ArrayList<>(selectorLabels.size());
-            for (Label lbl : selectorLabels) {
-                BoolExpr has = flowLabelMap.get(lbl);
-                anySelectorLabelPresent.add(has);
+            for (Label label : selectorLabels) {
+                BoolExpr hasLabel = flowLabelMap.get(label);
+                anySelectorLabelPresent.add(hasLabel);
             }
 
             // Flow matches, if any label is present
-            BoolExpr thisFlowMatches = ctx.mkOr(anySelectorLabelPresent.toArray(new BoolExpr[0]));
+            BoolExpr thisFlowMatches = context.mkOr(anySelectorLabelPresent.toArray(new BoolExpr[0]));
 
             flowsMatch.add(thisFlowMatches);
         }
 
         // Selector never matches if vertex has no incoming flows
         if (flowsMatch.isEmpty()) {
-            return ctx.mkFalse();
+            return context.mkFalse();
         }
         // Selector matches if any flow matches
-        BoolExpr anyFlowMatches = ctx.mkOr(flowsMatch.toArray(new BoolExpr[0]));
-        // Maybe invert
-        return s.isInverted() ? ctx.mkNot(anyFlowMatches) : anyFlowMatches;
+        BoolExpr anyFlowMatches = context.mkOr(flowsMatch.toArray(new BoolExpr[0]));
+        // Invert if selector is inverted
+        return selector.isInverted() ? context.mkNot(anyFlowMatches) : anyFlowMatches;
     }
 }

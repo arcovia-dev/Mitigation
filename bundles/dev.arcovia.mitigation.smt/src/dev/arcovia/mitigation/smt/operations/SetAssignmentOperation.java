@@ -22,13 +22,13 @@ public final class SetAssignmentOperation extends AbstractPinAssignmentOperation
     }
 
     @Override
-    protected boolean isInstance(AbstractAssignment a) {
-        return a instanceof SetAssignment;
+    protected boolean isInstance(AbstractAssignment assignment) {
+        return assignment instanceof SetAssignment;
     }
 
     @Override
-    protected SetAssignment cast(AbstractAssignment a) {
-        return (SetAssignment) a;
+    protected SetAssignment cast(AbstractAssignment assignment) {
+        return (SetAssignment) assignment;
     }
 
     @Override

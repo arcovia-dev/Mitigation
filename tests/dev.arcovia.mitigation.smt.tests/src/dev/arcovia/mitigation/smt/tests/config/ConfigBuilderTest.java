@@ -15,20 +15,20 @@ import dev.arcovia.mitigation.smt.config.CostConfigBuilder;
 class ConfigBuilderTest {
 
     @Test
-    void builder_defaultsMatchConstructorDefaults() {
-        Config cfg = new ConfigBuilder().build();
+    void builderDefaultsMatchConstructorDefaults() {
+        Config config = new ConfigBuilder().build();
 
-        assertTrue(cfg.isOnlyRelevantModifications());
-        assertTrue(cfg.isAddNodeLabels());
-        assertTrue(cfg.isRemoveNodeLabels());
-        assertTrue(cfg.isAddDataLabels());
-        assertTrue(cfg.isRemoveDataLabels());
+        assertTrue(config.onlyRelevantModifications());
+        assertTrue(config.addNodeLabels());
+        assertTrue(config.removeNodeLabels());
+        assertTrue(config.addDataLabels());
+        assertTrue(config.removeDataLabels());
 
-        assertNotNull(cfg.getCostConfig());
+        assertNotNull(config.costConfig());
 
-        assertFalse(cfg.isCheckForViolationsAfter());
-        assertFalse(cfg.isFindExpressionTreeSize());
-        assertFalse(cfg.isOnlyViolatingTFGs());
+        assertFalse(config.checkForViolationsAfter());
+        assertFalse(config.findExpressionTreeSize());
+        assertFalse(config.onlyViolatingTFGs());
     }
 
     @Test
@@ -36,7 +36,7 @@ class ConfigBuilderTest {
         CostConfig cost = new CostConfigBuilder().weighTFGs(true)
                 .build();
 
-        Config cfg = new ConfigBuilder().onlyRelevantModifications(false)
+        Config config = new ConfigBuilder().onlyRelevantModifications(false)
                 .addNodeLabels(false)
                 .removeNodeLabels(false)
                 .addDataLabels(false)
@@ -47,17 +47,17 @@ class ConfigBuilderTest {
                 .onlyViolatingTFGs(true)
                 .build();
 
-        assertFalse(cfg.isOnlyRelevantModifications());
-        assertFalse(cfg.isAddNodeLabels());
-        assertFalse(cfg.isRemoveNodeLabels());
-        assertFalse(cfg.isAddDataLabels());
-        assertFalse(cfg.isRemoveDataLabels());
+        assertFalse(config.onlyRelevantModifications());
+        assertFalse(config.addNodeLabels());
+        assertFalse(config.removeNodeLabels());
+        assertFalse(config.addDataLabels());
+        assertFalse(config.removeDataLabels());
 
-        assertSame(cost, cfg.getCostConfig());
+        assertSame(cost, config.costConfig());
 
-        assertTrue(cfg.isCheckForViolationsAfter());
-        assertTrue(cfg.isFindExpressionTreeSize());
-        assertTrue(cfg.isOnlyViolatingTFGs());
+        assertTrue(config.checkForViolationsAfter());
+        assertTrue(config.findExpressionTreeSize());
+        assertTrue(config.onlyViolatingTFGs());
     }
 
     @Test
@@ -67,7 +67,7 @@ class ConfigBuilderTest {
         CostConfig cost2 = new CostConfigBuilder().weighTFGs(true)
                 .build();
 
-        Config cfg = new ConfigBuilder().onlyRelevantModifications(false)
+        Config config = new ConfigBuilder().onlyRelevantModifications(false)
                 .onlyRelevantModifications(true)
                 .costConfig(cost1)
                 .costConfig(cost2)
@@ -77,9 +77,9 @@ class ConfigBuilderTest {
                 .findExpressionTreeSize(true)
                 .build();
 
-        assertTrue(cfg.isOnlyRelevantModifications());
-        assertSame(cost2, cfg.getCostConfig());
-        assertTrue(cfg.isCheckForViolationsAfter());
-        assertTrue(cfg.isFindExpressionTreeSize());
+        assertTrue(config.onlyRelevantModifications());
+        assertSame(cost2, config.costConfig());
+        assertTrue(config.checkForViolationsAfter());
+        assertTrue(config.findExpressionTreeSize());
     }
 }

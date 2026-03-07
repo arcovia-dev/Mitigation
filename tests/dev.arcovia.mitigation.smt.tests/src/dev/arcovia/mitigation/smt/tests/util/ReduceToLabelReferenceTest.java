@@ -27,9 +27,8 @@ class ReduceToLabelReferenceTest extends UtilTestBase {
         Set<LabelReference> result = Util.reduceToLabelReferences(term);
 
         Set<String> actualLabelNames = result.stream()
-                .map(lr -> lr.getLabel() == null ? null
-                        : lr.getLabel()
-                                .getEntityName())
+                .map(lr -> lr.getLabel()
+                        .getEntityName())
                 .collect(Collectors.toSet());
 
         assertEquals(expectedLabelNames, actualLabelNames);

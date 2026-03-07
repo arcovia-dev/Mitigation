@@ -46,7 +46,7 @@ public class ConstraintTranslator {
         List<AbstractSelector> vertexDestination = constr.getVertexDestinationSelectors()
                 .getSelectors();
 
-        Context ctx = smt.getCtx();
+        Context ctx = smt.getContext();
 
         // Vertex Destination Selectors
         List<BoolExpr> allDestinationSelectors = new ArrayList<>();

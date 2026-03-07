@@ -374,7 +374,7 @@ public class Util {
      * @param nodes List of nodes
      * @return Map
      */
-    public static Map<Pin, List<AbstractAssignment>> outPinToAss(List<Node> nodes) {
+    public static Map<Pin, List<AbstractAssignment>> outPinToAssignments(List<Node> nodes) {
         Map<Pin, List<AbstractAssignment>> outPinToAss = new HashMap<Pin, List<AbstractAssignment>>();
         for (Node n : nodes) {
             Behavior b = n.getBehavior();

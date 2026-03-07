@@ -16,11 +16,11 @@ import dev.arcovia.mitigation.smt.TFGFlow;
  */
 final class DataNameHandler extends AbstractSelectorHandler<VariableNameSelector> {
     @Override
-    protected BoolExpr encode(VariableNameSelector s, DFDVertex vertex, SMT smt) {
+    protected BoolExpr encode(VariableNameSelector selector, DFDVertex vertex, SMT smt) {
 
-        var ctx = smt.getCtx();
+        var context = smt.getContext();
 
-        String selectorName = s.getVariableName();
+        String selectorName = selector.getVariableName();
 
         List<BoolExpr> flowsMatch = new ArrayList<>();
         for (TFGFlow flow : smt.getVertexIncomingFlows()
@@ -29,19 +29,19 @@ final class DataNameHandler extends AbstractSelectorHandler<VariableNameSelector
             if (flow.getFlow()
                     .getEntityName()
                     .equals(selectorName)) {
-                flowsMatch.add(ctx.mkTrue());
+                flowsMatch.add(context.mkTrue());
             } else {
-                flowsMatch.add(ctx.mkFalse());
+                flowsMatch.add(context.mkFalse());
             }
         }
 
         // Selector never matches for no incoming flows
         if (flowsMatch.isEmpty()) {
-            return ctx.mkFalse();
+            return context.mkFalse();
         }
 
         // Selector matches if any incoming flow matches. Selector is not invertable.
-        BoolExpr anyFlowMatches = ctx.mkOr(flowsMatch.toArray(new BoolExpr[0]));
+        BoolExpr anyFlowMatches = context.mkOr(flowsMatch.toArray(new BoolExpr[0]));
         return anyFlowMatches;
     }
 

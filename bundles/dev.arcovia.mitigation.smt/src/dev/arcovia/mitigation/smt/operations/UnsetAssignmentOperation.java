@@ -22,13 +22,13 @@ public final class UnsetAssignmentOperation extends AbstractPinAssignmentOperati
     }
 
     @Override
-    protected boolean isInstance(AbstractAssignment a) {
-        return a instanceof UnsetAssignment;
+    protected boolean isInstance(AbstractAssignment assignment) {
+        return assignment instanceof UnsetAssignment;
     }
 
     @Override
-    protected UnsetAssignment cast(AbstractAssignment a) {
-        return (UnsetAssignment) a;
+    protected UnsetAssignment cast(AbstractAssignment assignment) {
+        return (UnsetAssignment) assignment;
     }
 
     @Override

@@ -14,7 +14,7 @@ Export-Package: com.microsoft.z3,
 Automatic-Module-Name: dev.arcovia.mitigation.smt
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ClassPath: ., lib/com.microsoft.z3.jar
-Bundle-Activator: dev.arcovia.mitigation.smt.SmtBundleActivator
+Bundle-Activator: dev.arcovia.mitigation.smt.Activator
 Bundle-ActivationPolicy: lazy
 Import-Package: org.osgi.framework
 Require-Bundle: 
@@ -30,6 +30,4 @@ Require-Bundle:
  com.fasterxml.jackson.core.jackson-annotations;bundle-version="2.13.2";visibility:=reexport,
  com.fasterxml.jackson.core.jackson-core;bundle-version="2.13.2";visibility:=reexport,
  com.fasterxml.jackson.core.jackson-databind;bundle-version="2.13.2";visibility:=reexport,
- tools.mdsd.library.standalone.initialization,
- org.dataflowanalysis.analysis,
- org.dataflowanalysis.analysis.dfd
+ tools.mdsd.library.standalone.initialization

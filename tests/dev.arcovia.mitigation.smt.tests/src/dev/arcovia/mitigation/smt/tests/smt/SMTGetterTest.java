@@ -56,7 +56,7 @@ public class SMTGetterTest {
                 SMT smt = new SMT(pre, constraint, config);
 
                 // SMT operates on data dictionary with added labels
-                assertEquals(smt.getDD(), dfdWithAddedLabels.dataDictionary());
+                assertEquals(smt.getDataDictionary(), dfdWithAddedLabels.dataDictionary());
 
                 Map<TFGFlow, Map<Label, BoolExpr>> flowLabels = smt.getFlowLabels();
                 // If flow labels are encoded, every flow has labels. Otherwise none
