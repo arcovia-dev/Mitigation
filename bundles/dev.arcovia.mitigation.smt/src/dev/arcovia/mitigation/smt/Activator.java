@@ -3,7 +3,7 @@ package dev.arcovia.mitigation.smt;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import dev.arcovia.mitigation.smt.util.Z3NativeLoader;
+import dev.arcovia.mitigation.smt.utils.Z3NativeLoader;
 
 /**
  * Loads the bundled Z3 natives when the SMT bundle starts in OSGi.

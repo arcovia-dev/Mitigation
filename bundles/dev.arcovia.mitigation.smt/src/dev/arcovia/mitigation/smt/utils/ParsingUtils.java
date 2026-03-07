@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.util;
+package dev.arcovia.mitigation.smt.utils;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -51,9 +51,9 @@ import tools.mdsd.library.standalone.initialization.StandaloneInitializationExce
 /**
  * Contains parsing functions
  */
-public class Util {
+public class ParsingUtils {
 
-    private static final Logger logger = Logger.getLogger(Util.class);
+    private static final Logger logger = Logger.getLogger(ParsingUtils.class);
 
     /**
      * Maps characteristisc to Labels, given a contextual datadictionary
@@ -201,8 +201,8 @@ public class Util {
                 } else if (selector instanceof VertexCharacteristicsSelector cast && (cast.isInverted() == add)) {
                     characteristicsSelectorData.add(cast.getVertexCharacteristics());
                 } else if (selector instanceof ConditionalSelector) {
-                    logger.error("Conditional Selector detected. Currently not supported. Exiting");
-                    System.exit(1);
+                    logger.error("Conditional Selector detected. Currently not supported.");
+                    throw new UnsupportedOperationException("Conditional Selector detected. Currently not supported.");
                 }
             }
         }
@@ -228,8 +228,8 @@ public class Util {
                 } else if (selector instanceof DataCharacteristicListSelector cast && (cast.isInverted() == add)) {
                     characteristicsSelectorData.addAll(cast.getDataCharacteristics());
                 } else if (selector instanceof ConditionalSelector) {
-                    logger.error("Conditional Selector detected. Currently not supported. Exiting");
-                    System.exit(1);
+                    logger.error("Conditional Selector detected. Currently not supported.");
+                    throw new UnsupportedOperationException("Conditional Selector detected. Currently not supported.");
                 }
             }
         }
@@ -429,23 +429,23 @@ public class Util {
         if (term instanceof TRUE)
             return new HashSet<>();
 
-        if (term instanceof NOT n)
-            return reduceToLabelReferences(n.getNegatedTerm());
+        if (term instanceof NOT notTerm)
+            return reduceToLabelReferences(notTerm.getNegatedTerm());
 
-        if (term instanceof OR o)
-            return o.getTerms()
+        if (term instanceof OR orTerm)
+            return orTerm.getTerms()
                     .stream()
                     .flatMap(t -> reduceToLabelReferences(t).stream())
                     .collect(Collectors.toSet());
 
-        if (term instanceof AND a)
-            return a.getTerms()
+        if (term instanceof AND andTerm)
+            return andTerm.getTerms()
                     .stream()
                     .flatMap(t -> reduceToLabelReferences(t).stream())
                     .collect(Collectors.toSet());
 
-        if (term instanceof LabelReference r)
-            return Set.of(r);
+        if (term instanceof LabelReference labelReference)
+            return Set.of(labelReference);
 
         return Set.of();
     }

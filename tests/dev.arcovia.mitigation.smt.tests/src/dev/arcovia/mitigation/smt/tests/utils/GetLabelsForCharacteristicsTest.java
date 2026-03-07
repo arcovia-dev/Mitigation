@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class GetLabelsForCharacteristicsTest extends UtilTestBase {
 
@@ -52,9 +52,9 @@ class GetLabelsForCharacteristicsTest extends UtilTestBase {
         dd.getLabelTypes()
                 .add(typeA);
 
-        var chars = Util.getAnalysisCharacteristics(List.of(constraint));
+        var chars = ParsingUtils.getAnalysisCharacteristics(List.of(constraint));
         List<CharacteristicsSelectorData> data = new ArrayList<>(chars);
-        Set<Label> result = Util.getLabelsForCharacteristics(dd, data);
+        Set<Label> result = ParsingUtils.getLabelsForCharacteristics(dd, data);
 
         Set<Label> expected = expectedLabelNames.stream()
                 .map(labelsByName::get)

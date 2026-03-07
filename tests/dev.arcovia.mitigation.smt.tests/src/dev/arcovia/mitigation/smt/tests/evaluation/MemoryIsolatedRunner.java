@@ -6,7 +6,7 @@ import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 
 import dev.arcovia.mitigation.smt.Mitigation;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class MemoryIsolatedRunner {
 
@@ -21,7 +21,7 @@ public class MemoryIsolatedRunner {
 
         List<AnalysisConstraint> constraints = ConstraintMapProvider.getOrThrow(variantId);
 
-        DataFlowDiagramAndDictionary dfd = Util.loadDFD(model, model + "_0");
+        DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(model, model + "_0");
         Mitigation.run(dfd, constraints, null);
     }
 }

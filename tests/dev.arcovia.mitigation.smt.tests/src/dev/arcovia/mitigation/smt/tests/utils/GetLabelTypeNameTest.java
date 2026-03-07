@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class GetLabelTypeNameTest extends UtilTestBase {
 
@@ -31,7 +31,7 @@ class GetLabelTypeNameTest extends UtilTestBase {
         dd.getLabelTypes()
                 .add(typeB);
 
-        LabelType result = Util.getLabelTypeByName(dd, lookupName);
+        LabelType result = ParsingUtils.getLabelTypeByName(dd, lookupName);
 
         if (shouldExist) {
             assertEquals(lookupName, result.getEntityName());

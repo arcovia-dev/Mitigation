@@ -16,10 +16,10 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
  */
 public class TFGFlow {
 
-    private final Pin srcPin;
-    private final DFDVertex srcVertex;
-    private final Pin dstPin;
-    private final DFDVertex dstVertex;
+    private final Pin sourcePin;
+    private final DFDVertex sourceVertex;
+    private final Pin destinationPin;
+    private final DFDVertex destinationVertex;
     // DFD Flow that this TFGFlow flows along
     private final Flow flow;
     // List of incoming TFG Flows to the same vertex that need to be forwarded,
@@ -34,17 +34,17 @@ public class TFGFlow {
 
     /**
      * Constructs a TFG Flow instance given the input entities
-     * @param srcP Source Pin of this TFG Flow
-     * @param srcVertex Source Vertex of this TFG Flow
-     * @param dstP Destination Pin of this TFG Flow
-     * @param dstVertex Destination Vertex of this TFG Flow
+     * @param sourcePin Source Pin of this TFG Flow
+     * @param sourceVertex Source Vertex of this TFG Flow
+     * @param destinationPin Destination Pin of this TFG Flow
+     * @param destinationVertex Destination Vertex of this TFG Flow
      * @param flow DFD Flow that this TFG Flow represents for a specific TFG
      */
-    public TFGFlow(Pin srcP, DFDVertex srcVertex, Pin dstP, DFDVertex dstVertex, Flow flow) {
-        this.srcPin = srcP;
-        this.srcVertex = srcVertex;
-        this.dstPin = dstP;
-        this.dstVertex = dstVertex;
+    public TFGFlow(Pin sourcePin, DFDVertex sourceVertex, Pin destinationPin, DFDVertex destinationVertex, Flow flow) {
+        this.sourcePin = sourcePin;
+        this.sourceVertex = sourceVertex;
+        this.destinationPin = destinationPin;
+        this.destinationVertex = destinationVertex;
         this.flow = flow;
         this.thisFlowForwards = new HashMap<>();
         this.thisFlowEvaluatesOn = new HashMap<>();
@@ -79,39 +79,40 @@ public class TFGFlow {
      */
     @Override
     public String toString() {
-        return "TFGFlow [flow=" + flow.getEntityName() + " sourceNode " + srcVertex.getName() + " dstNode " + dstVertex.getName() + ",id=" + id + "]";
+        return "TFGFlow [flow=" + flow.getEntityName() + " sourceNode " + sourceVertex.getName() + " destinationNode " + destinationVertex.getName()
+                + ",id=" + id + "]";
     }
 
     /**
      * Returns the Source pin of this TFG Flow
      * @return Source Pin
      */
-    public Pin getSrcPin() {
-        return srcPin;
+    public Pin getSourcePin() {
+        return sourcePin;
     }
 
     /**
      * Returns the source vertex of this TFG Flow
      * @return Source Vertex
      */
-    public DFDVertex getSrcVertex() {
-        return srcVertex;
+    public DFDVertex getSourceVertex() {
+        return sourceVertex;
     }
 
     /**
      * Returns the destination pin of this TFG Flow
      * @return Destination Pin
      */
-    public Pin getDstPin() {
-        return dstPin;
+    public Pin getDestinationPin() {
+        return destinationPin;
     }
 
     /**
      * Returns the destination vertex of this TFG Flow
      * @return Destination Vertex
      */
-    public DFDVertex getDstVertex() {
-        return dstVertex;
+    public DFDVertex getDestinationVertex() {
+        return destinationVertex;
     }
 
     /**

@@ -10,7 +10,7 @@ import com.microsoft.z3.Context;
 import com.microsoft.z3.IntExpr;
 
 import dev.arcovia.mitigation.smt.cost.CostFunction;
-import dev.arcovia.mitigation.smt.util.Z3NativeLoader;
+import dev.arcovia.mitigation.smt.utils.Z3NativeLoader;
 
 class CostFunctionTest {
 
@@ -21,10 +21,10 @@ class CostFunctionTest {
 
     @Test
     void emptyBuildIsZero() {
-        try (Context ctx = new Context()) {
-            IntExpr actual = CostFunction.create(ctx)
+        try (Context context = new Context()) {
+            IntExpr actual = CostFunction.create(context)
                     .build();
-            IntExpr expected = ctx.mkInt(0);
+            IntExpr expected = context.mkInt(0);
 
             assertTrue(actual.simplify()
                     .equals(expected));
@@ -33,16 +33,16 @@ class CostFunctionTest {
 
     @Test
     void addWithWeight1BuildsIteXor() {
-        try (Context ctx = new Context()) {
-            BoolExpr cur = ctx.mkBoolConst("cur");
-            BoolExpr ref = ctx.mkBoolConst("ref");
+        try (Context context = new Context()) {
+            BoolExpr current = context.mkBoolConst("current");
+            BoolExpr reference = context.mkBoolConst("reference");
 
-            IntExpr actual = (IntExpr) CostFunction.create(ctx)
-                    .add(cur, ref, 1)
+            IntExpr actual = (IntExpr) CostFunction.create(context)
+                    .add(current, reference, 1)
                     .build()
                     .simplify();
 
-            IntExpr expected = (IntExpr) ctx.mkITE(ctx.mkXor(cur, ref), ctx.mkInt(1), ctx.mkInt(0))
+            IntExpr expected = (IntExpr) context.mkITE(context.mkXor(current, reference), context.mkInt(1), context.mkInt(0))
                     .simplify();
 
             assertTrue(actual.equals(expected));
@@ -51,16 +51,17 @@ class CostFunctionTest {
 
     @Test
     void addWithWeight5BuildsMulIteXor() {
-        try (Context ctx = new Context()) {
-            BoolExpr cur = ctx.mkBoolConst("cur");
-            BoolExpr ref = ctx.mkBoolConst("ref");
+        try (Context context = new Context()) {
+            BoolExpr current = context.mkBoolConst("current");
+            BoolExpr reference = context.mkBoolConst("reference");
 
-            IntExpr actual = (IntExpr) CostFunction.create(ctx)
-                    .add(cur, ref, 5)
+            IntExpr actual = (IntExpr) CostFunction.create(context)
+                    .add(current, reference, 5)
                     .build()
                     .simplify();
 
-            IntExpr expected = (IntExpr) ctx.mkMul(ctx.mkInt(5), ctx.mkITE(ctx.mkXor(cur, ref), ctx.mkInt(1), ctx.mkInt(0)))
+            IntExpr expected = (IntExpr) context
+                    .mkMul(context.mkInt(5), context.mkITE(context.mkXor(current, reference), context.mkInt(1), context.mkInt(0)))
                     .simplify();
 
             assertTrue(actual.equals(expected));
@@ -69,21 +70,21 @@ class CostFunctionTest {
 
     @Test
     void multipleTermsBecomeAdd() {
-        try (Context ctx = new Context()) {
-            BoolExpr a = ctx.mkBoolConst("a");
-            BoolExpr b = ctx.mkBoolConst("b");
-            BoolExpr c = ctx.mkBoolConst("c");
+        try (Context context = new Context()) {
+            BoolExpr a = context.mkBoolConst("a");
+            BoolExpr b = context.mkBoolConst("b");
+            BoolExpr c = context.mkBoolConst("c");
 
-            IntExpr actual = (IntExpr) CostFunction.create(ctx)
+            IntExpr actual = (IntExpr) CostFunction.create(context)
                     .add(a, b, 1)
                     .add(b, c, 2)
                     .build()
                     .simplify();
 
-            IntExpr t1 = (IntExpr) ctx.mkITE(ctx.mkXor(a, b), ctx.mkInt(1), ctx.mkInt(0));
-            IntExpr t2 = (IntExpr) ctx.mkMul(ctx.mkInt(2), ctx.mkITE(ctx.mkXor(b, c), ctx.mkInt(1), ctx.mkInt(0)));
+            IntExpr t1 = (IntExpr) context.mkITE(context.mkXor(a, b), context.mkInt(1), context.mkInt(0));
+            IntExpr t2 = (IntExpr) context.mkMul(context.mkInt(2), context.mkITE(context.mkXor(b, c), context.mkInt(1), context.mkInt(0)));
 
-            IntExpr expected = (IntExpr) ctx.mkAdd(t1, t2)
+            IntExpr expected = (IntExpr) context.mkAdd(t1, t2)
                     .simplify();
 
             assertTrue(actual.equals(expected));
@@ -92,16 +93,16 @@ class CostFunctionTest {
 
     @Test
     void weightZeroIsIgnored() {
-        try (Context ctx = new Context()) {
-            BoolExpr a = ctx.mkBoolConst("a");
-            BoolExpr b = ctx.mkBoolConst("b");
+        try (Context context = new Context()) {
+            BoolExpr a = context.mkBoolConst("a");
+            BoolExpr b = context.mkBoolConst("b");
 
-            IntExpr actual = (IntExpr) CostFunction.create(ctx)
+            IntExpr actual = (IntExpr) CostFunction.create(context)
                     .add(a, b, 0)
                     .build()
                     .simplify();
 
-            assertTrue(actual.equals(ctx.mkInt(0)));
+            assertTrue(actual.equals(context.mkInt(0)));
         }
     }
 }

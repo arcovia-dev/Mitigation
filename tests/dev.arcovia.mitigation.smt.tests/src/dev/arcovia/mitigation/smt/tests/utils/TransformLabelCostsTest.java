@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class TransformLabelCostsTest extends UtilTestBase {
 
@@ -51,10 +51,10 @@ class TransformLabelCostsTest extends UtilTestBase {
                     labelsByQualifiedName.put(qn, label);
                 });
 
-        Map<Label, Integer> result = Util.transformLabelCosts(dd, input);
+        Map<Label, Integer> result = ParsingUtils.transformLabelCosts(dd, input);
 
         Map<Label, Integer> expected = new HashMap<>();
-        expectedByName.forEach((qn, cost) -> expected.put(labelsByQualifiedName.get(qn), cost));
+        expectedByName.forEach((qualifiedName, cost) -> expected.put(labelsByQualifiedName.get(qualifiedName), cost));
 
         assertEquals(expected, result);
     }

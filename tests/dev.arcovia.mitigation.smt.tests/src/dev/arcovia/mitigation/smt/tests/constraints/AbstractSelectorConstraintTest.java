@@ -35,7 +35,6 @@ import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
  * added or two labels need to be added the resulting formula is not deterministic. Therefore we provide all possible
  * equivalent formulas and check if the output is one of them
  */
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractSelectorConstraintTest {
 
@@ -67,7 +66,7 @@ public abstract class AbstractSelectorConstraintTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("cases")
-    public void selector_constraint_translates_as_expected(SelectorTestCase tc) {
+    public void selectorConstraintTranslatesAsExpected(SelectorTestCase tc) {
         DataFlowDiagramAndDictionary dfdAndDD = DFDProvider.buildTestCase();
 
         AnalysisConstraint constraint = tc.constraint();

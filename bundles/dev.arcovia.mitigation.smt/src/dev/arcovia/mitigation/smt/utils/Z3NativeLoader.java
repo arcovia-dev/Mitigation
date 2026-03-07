@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.util;
+package dev.arcovia.mitigation.smt.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

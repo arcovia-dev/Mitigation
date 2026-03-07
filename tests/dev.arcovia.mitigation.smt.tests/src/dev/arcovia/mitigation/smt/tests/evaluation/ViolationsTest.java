@@ -8,7 +8,7 @@ import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.smt.Mitigation;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class ViolationsTest {
 
@@ -20,16 +20,16 @@ public class ViolationsTest {
         int totalViolations = 0;
 
         for (EvaluationSupport.Configuration cfg : configs) {
-            DataFlowDiagramAndDictionary dfd = Util.loadDFD(cfg.model(), cfg.model() + "_0");
+            DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0");
 
-            int before = Util.countViolations(dfd, cfg.constraints());
+            int before = ParsingUtils.countViolations(dfd, cfg.constraints());
             totalViolations += before;
 
             System.out.println("Running " + cfg.model() + " with constraints " + cfg.variantId());
             DataFlowDiagramAndDictionary repaired = Mitigation.run(dfd, cfg.constraints(), null)
                     .repairedDFD();
 
-            int after = Util.countViolations(repaired, cfg.constraints());
+            int after = ParsingUtils.countViolations(repaired, cfg.constraints());
             if (after > 0) {
                 throw new IllegalStateException("Violations after repair still present for " + cfg.model() + "_" + cfg.variantId());
             }

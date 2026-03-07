@@ -32,19 +32,19 @@ public final class CostFunction {
 
     /**
      * Adds a term to the cost function that adds cost if provided expressions differ
-     * @param cur A boolean expression (usually a modifiable variable)
-     * @param ref A reference (usually a constant value)
+     * @param current A boolean expression (usually a modifiable variable)
+     * @param reference A reference (usually a constant value)
      * @param weight for this term
      * @return Same obejct with an added term
      */
-    public CostFunction add(BoolExpr cur, BoolExpr ref, int weight) {
+    public CostFunction add(BoolExpr current, BoolExpr reference, int weight) {
         // If weight is 0, the term is irrelevant
         if (weight == 0) {
             return this;
         }
 
         // The term evaluates to 1 if the two values differ, else 0.
-        IntExpr base = (IntExpr) context.mkITE(context.mkXor(cur, ref), context.mkInt(1), context.mkInt(0));
+        IntExpr base = (IntExpr) context.mkITE(context.mkXor(current, reference), context.mkInt(1), context.mkInt(0));
 
         // If a relevant weight has been provided, multiply by it here.
         IntExpr weighted = (weight == 1) ? base : (IntExpr) context.mkMul(context.mkInt(weight), base);

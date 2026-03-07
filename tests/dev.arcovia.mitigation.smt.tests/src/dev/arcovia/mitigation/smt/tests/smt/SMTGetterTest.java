@@ -26,7 +26,7 @@ import dev.arcovia.mitigation.smt.config.ConfigBuilder;
 import dev.arcovia.mitigation.smt.preprocess.Preprocess;
 import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.ConstraintMapProvider;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class SMTGetterTest {
 
@@ -47,7 +47,7 @@ public class SMTGetterTest {
                         .contains(i)) {
                     continue;
                 }
-                DataFlowDiagramAndDictionary dfd = Util.loadDFD(model, model + "_0");
+                DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(model, model + "_0");
                 Preprocess preprocess = new Preprocess();
                 PreprocessingResult pre = preprocess.preprocess(dfd, constraint, false);
                 DataFlowDiagramAndDictionary dfdWithAddedLabels = pre.dfd();
@@ -108,12 +108,12 @@ public class SMTGetterTest {
                 Map<DFDVertex, List<TFGFlow>> vertexIncomingFlows = smt.getVertexIncomingFlows();
                 for (Entry<DFDVertex, List<TFGFlow>> entry : vertexIncomingFlows.entrySet()) {
                     for (TFGFlow flow : entry.getValue()) {
-                        assertEquals(entry.getKey(), flow.getDstVertex());
+                        assertEquals(entry.getKey(), flow.getDestinationVertex());
                         assertTrue(entry.getKey()
                                 .getReferencedElement()
                                 .getBehavior()
                                 .getInPin()
-                                .contains(flow.getDstPin()));
+                                .contains(flow.getDestinationPin()));
                     }
                 }
             }

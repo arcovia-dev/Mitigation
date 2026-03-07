@@ -11,16 +11,16 @@ import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.smt.Mitigation;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class SpecificTest {
 
     @Test
     public void newTest() throws Exception {
-        DataFlowDiagramAndDictionary dfd = Util.loadDFD("koushikkothagal", "koushikkothagal_0");
+        DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD("koushikkothagal", "koushikkothagal_0");
         List<AnalysisConstraint> constraints = ConstraintMapProvider.getOrThrow(4);
 
-        System.out.println(Util.countViolations(dfd, constraints));
+        System.out.println(ParsingUtils.countViolations(dfd, constraints));
         System.out.println(Mitigation.run(dfd, constraints, null));
     }
 
@@ -30,7 +30,7 @@ public class SpecificTest {
     public void test() throws Exception {
         List<EvaluationSupport.Configuration> configs = EvaluationSupport.configurations();
         for (EvaluationSupport.Configuration cfg : configs) {
-            DataFlowDiagramAndDictionary base = Util.loadDFD(cfg.model(), cfg.model() + "_0");
+            DataFlowDiagramAndDictionary base = ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0");
             DFDModelResourceProvider dfdModelResourceProvider = new DFDModelResourceProvider(base.dataDictionary(), base.dataFlowDiagram());
             DFDConfidentialityAnalysis dfdConfidentialityAnalysis = new DFDDataFlowAnalysisBuilder().standalone()
                     .useCustomResourceProvider(dfdModelResourceProvider)

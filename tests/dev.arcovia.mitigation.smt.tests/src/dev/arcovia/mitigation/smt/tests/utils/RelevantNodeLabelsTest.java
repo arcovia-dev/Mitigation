@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class RelevantNodeLabelsTest extends UtilTestBase {
 
@@ -31,7 +31,7 @@ class RelevantNodeLabelsTest extends UtilTestBase {
         var ctx = buildConstraintAndDictionary(withoutSingleFrom, withoutMultiFrom, withSingleFrom, withMultiFrom, withoutSingleTo, withoutMultiTo,
                 withSingleTo, withMultiTo);
 
-        Set<Label> result = Util.getRelevantNodeLabelsAdd(ctx.dd, List.of(ctx.constraint));
+        Set<Label> result = ParsingUtils.getRelevantNodeLabelsAdd(ctx.dd, List.of(ctx.constraint));
         assertEquals(resolve(ctx.labelsByName, expectedAddNames), result);
     }
 
@@ -44,7 +44,7 @@ class RelevantNodeLabelsTest extends UtilTestBase {
         var ctx = buildConstraintAndDictionary(withoutSingleFrom, withoutMultiFrom, withSingleFrom, withMultiFrom, withoutSingleTo, withoutMultiTo,
                 withSingleTo, withMultiTo);
 
-        Set<Label> result = Util.getRelevantNodeLabelsRemove(ctx.dd, List.of(ctx.constraint));
+        Set<Label> result = ParsingUtils.getRelevantNodeLabelsRemove(ctx.dd, List.of(ctx.constraint));
         assertEquals(resolve(ctx.labelsByName, expectedRemoveNames), result);
     }
 

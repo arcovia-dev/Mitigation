@@ -13,7 +13,7 @@ import com.microsoft.z3.BoolExpr;
 
 import dev.arcovia.mitigation.smt.SMT;
 import dev.arcovia.mitigation.smt.TFGFlow;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 /**
  * Selector translation logic for Data Characteristics List Selectors
@@ -26,7 +26,7 @@ final class DataCharacteristicListHandler extends AbstractSelectorHandler<DataCh
         var context = smt.getContext();
 
         // Get labels for selectors
-        Set<Label> selectorLabels = Util.getLabelsForCharacteristics(smt.getDataDictionary(), selector.getDataCharacteristics());
+        Set<Label> selectorLabels = ParsingUtils.getLabelsForCharacteristics(smt.getDataDictionary(), selector.getDataCharacteristics());
 
         List<BoolExpr> flowsMatch = new ArrayList<>();
 

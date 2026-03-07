@@ -35,7 +35,7 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import dev.arcovia.mitigation.smt.TFGFlow;
 import dev.arcovia.mitigation.smt.operations.LabelOperation;
 import dev.arcovia.mitigation.smt.operations.LabelTypeOperation;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 /**
  * Given an input DFD and constraints, performs preprocessing
@@ -51,7 +51,7 @@ public class Preprocess {
      * @return DFD that possesses the required labels
      */
     private DataFlowDiagramAndDictionary addMissingLabels(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
-        Set<CharacteristicsSelectorData> characteristicsSelectorData = Util.getAnalysisCharacteristics(constraints);
+        Set<CharacteristicsSelectorData> characteristicsSelectorData = ParsingUtils.getAnalysisCharacteristics(constraints);
 
         DataDictionary dd = dfd.dataDictionary();
 
@@ -66,15 +66,15 @@ public class Preprocess {
             // First add label type if it does not exist
             String type = data.characteristicType()
                     .toString();
-            if (!Util.containsLabelType(dd, type)) {
+            if (!ParsingUtils.containsLabelType(dd, type)) {
                 LabelTypeOperation modifyLabelType = new LabelTypeOperation(type);
                 modifyLabelType.doOperation(dfd);
             }
             // Now add label
             String value = data.characteristicValue()
                     .toString();
-            LabelType parentType = Util.getLabelTypeByName(dd, type);
-            if (!Util.containsLabel(parentType, value)) {
+            LabelType parentType = ParsingUtils.getLabelTypeByName(dd, type);
+            if (!ParsingUtils.containsLabel(parentType, value)) {
                 LabelOperation modifyLabel = new LabelOperation(type, value);
                 modifyLabel.doOperation(dfd);
             }
@@ -95,17 +95,17 @@ public class Preprocess {
 
         DataFlowDiagram dfd = dfdIn.dataFlowDiagram();
         DataDictionary dd = dfdIn.dataDictionary();
-        Map<Pin, List<AbstractAssignment>> outPinToAss = Util.outPinToAssignments(dfd.getNodes());
+        Map<Pin, List<AbstractAssignment>> outPinToAss = ParsingUtils.outPinToAssignments(dfd.getNodes());
 
         // Determine relevant labels based on confidentiality constraints.
         // Labels that appear in negated Vertex Selectors. Adding them could repair violations.
-        Set<Label> relevantNodeLabelsAdd = Util.getRelevantNodeLabelsAdd(dd, analysisConstraints);
+        Set<Label> relevantNodeLabelsAdd = ParsingUtils.getRelevantNodeLabelsAdd(dd, analysisConstraints);
         // Labels that appear in non-negated Vertex Selectors. Removing them could repair violations.
-        Set<Label> relevantNodeLabelsRemove = Util.getRelevantNodeLabelsRemove(dd, analysisConstraints);
+        Set<Label> relevantNodeLabelsRemove = ParsingUtils.getRelevantNodeLabelsRemove(dd, analysisConstraints);
         // Labels that appear in negated Data Selectors. Adding them could repair violations.
-        Set<Label> relevantDataLabelsAdd = Util.getRelevantDataLabelsAdd(dd, analysisConstraints);
+        Set<Label> relevantDataLabelsAdd = ParsingUtils.getRelevantDataLabelsAdd(dd, analysisConstraints);
         // Labels that appear in non-negated Data Selectors. Removing them could repair violations.
-        Set<Label> relevantDataLabelsRemove = Util.getRelevantDataLabelsRemove(dd, analysisConstraints);
+        Set<Label> relevantDataLabelsRemove = ParsingUtils.getRelevantDataLabelsRemove(dd, analysisConstraints);
 
         // Data Labels that are not constraint-relevant also need to be considered if they
         // can modify relevant labels
@@ -123,14 +123,13 @@ public class Preprocess {
         boolean changed;
         do {
             changed = false;
-            for (int i = 0; i < assignStatements.size(); i++) {
-                Assignment assign = assignStatements.get(i);
+            for (Assignment assignment : assignStatements) {
                 /// only consider assignments that could add or remove relevant labels
-                if (Collections.disjoint(assign.getOutputLabels(), relevantDataLabelsAdd)
-                        && Collections.disjoint(assign.getOutputLabels(), relevantDataLabelsRemove)) {
+                if (Collections.disjoint(assignment.getOutputLabels(), relevantDataLabelsAdd)
+                        && Collections.disjoint(assignment.getOutputLabels(), relevantDataLabelsRemove)) {
                     continue;
                 }
-                Set<LabelReference> labelReferences = Util.reduceToLabelReferences(assign.getTerm());
+                Set<LabelReference> labelReferences = ParsingUtils.reduceToLabelReferences(assignment.getTerm());
                 // Add the labels to the relevant data labels
                 for (LabelReference labelRef : labelReferences) {
                     Label label = labelRef.getLabel();
@@ -167,8 +166,7 @@ public class Preprocess {
             // Label propagation needs to be done for constraint evaluation
             flowGraphs.evaluate();
             Set<DFDTransposeFlowGraph> violatingTFGs = new HashSet<>();
-            for (int i = 0; i < analysisConstraints.size(); i++) {
-                AnalysisConstraint analysisConstraint = analysisConstraints.get(i);
+            for (AnalysisConstraint analysisConstraint : analysisConstraints) {
                 List<DSLResult> violations = analysisConstraint.findViolations(flowGraphs);
                 // Add all violating tfgs
                 for (int j = 0; j < violations.size(); j++) {
@@ -228,7 +226,7 @@ public class Preprocess {
                 // Find all flows that leave this vertex because they may forward or Assign.
                 // They exist because they were already created when handling the succeeding vertex
                 List<TFGFlow> thisVertexOutgoingFlows = allTFGFlows.stream()
-                        .filter(x -> x.getSrcVertex()
+                        .filter(x -> x.getSourceVertex()
                                 .equals(vertex))
                         .toList();
                 // Also find all incoming flows to connect them to the outgoing ones
@@ -236,21 +234,21 @@ public class Preprocess {
                 // For every outgoing flow
                 for (TFGFlow tfgFlow : thisVertexOutgoingFlows) {
                     // For every assignment of its source pin
-                    List<AbstractAssignment> thisPinAssigns = outPinToAss.get(tfgFlow.getSrcPin());
+                    List<AbstractAssignment> thisPinAssigns = outPinToAss.get(tfgFlow.getSourcePin());
                     for (AbstractAssignment assign : thisPinAssigns) {
                         // A forward or Assign assignment forwards exactly those flows that flow to a input pin that is referenced
                         // by the assignment within the same tfg
                         if (assign instanceof ForwardingAssignment cast) {
                             List<TFGFlow> thisFlowForwards = allTFGFlowsToThisVertex.stream()
                                     .filter(x -> cast.getInputPins()
-                                            .contains(x.getDstPin()))
+                                            .contains(x.getDestinationPin()))
                                     .toList();
                             tfgFlow.getThisFlowForwards()
                                     .put(cast, thisFlowForwards);
                         } else if (assign instanceof Assignment cast) {
                             List<TFGFlow> thisFlowEvaluatesOn = allTFGFlowsToThisVertex.stream()
                                     .filter(x -> cast.getInputPins()
-                                            .contains(x.getDstPin()))
+                                            .contains(x.getDestinationPin()))
                                     .toList();
                             tfgFlow.getThisFlowEvaluatesOn()
                                     .put(cast, thisFlowEvaluatesOn);

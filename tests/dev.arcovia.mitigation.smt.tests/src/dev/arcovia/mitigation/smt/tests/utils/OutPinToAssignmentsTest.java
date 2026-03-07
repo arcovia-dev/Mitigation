@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +15,7 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Node;
 import org.dataflowanalysis.examplemodels.TuhhModels;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class OutPinToAssignmentsTest {
 
@@ -31,10 +31,10 @@ public class OutPinToAssignmentsTest {
                         .contains(i)) {
                     continue;
                 }
-                DataFlowDiagramAndDictionary dfdAndDD = Util.loadDFD(model, model + "_" + i);
+                DataFlowDiagramAndDictionary dfdAndDD = ParsingUtils.loadDFD(model, model + "_" + i);
                 DataFlowDiagram dfd = dfdAndDD.dataFlowDiagram();
 
-                Map<Pin, List<AbstractAssignment>> outPinToAssignments = Util.outPinToAssignments(dfd.getNodes());
+                Map<Pin, List<AbstractAssignment>> outPinToAssignments = ParsingUtils.outPinToAssignments(dfd.getNodes());
 
                 for (Entry<Pin, List<AbstractAssignment>> entry : outPinToAssignments.entrySet()) {
 

@@ -10,7 +10,7 @@ Export-Package: com.microsoft.z3,
  dev.arcovia.mitigation.smt.cost,
  dev.arcovia.mitigation.smt.operations,
  dev.arcovia.mitigation.smt.preprocess,
- dev.arcovia.mitigation.smt.util
+ dev.arcovia.mitigation.smt.utils
 Automatic-Module-Name: dev.arcovia.mitigation.smt
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ClassPath: ., lib/com.microsoft.z3.jar

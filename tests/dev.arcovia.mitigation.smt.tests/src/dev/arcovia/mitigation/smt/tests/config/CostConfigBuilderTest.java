@@ -111,18 +111,18 @@ class CostConfigBuilderTest {
 
     @Test
     void chainingLastWriteWins() {
-        HashMap<String, Integer> m1 = new HashMap<>();
-        m1.put("X", 1);
+        HashMap<String, Integer> map1 = new HashMap<>();
+        map1.put("X", 1);
 
-        HashMap<String, Integer> m2 = new HashMap<>();
-        m2.put("X", 2);
+        HashMap<String, Integer> map2 = new HashMap<>();
+        map2.put("X", 2);
 
-        CostConfig config = new CostConfigBuilder().withLabelCost(m1)
-                .withAddLabelCost(m2) // override only add
+        CostConfig config = new CostConfigBuilder().withLabelCost(map1)
+                .withAddLabelCost(map2) // override only add
                 .build();
 
-        assertSame(m2, config.addLabelCost());
-        assertSame(m1, config.removeLabelCost());
+        assertSame(map2, config.addLabelCost());
+        assertSame(map1, config.removeLabelCost());
         assertEquals(2, config.addLabelCost()
                 .get("X"));
         assertEquals(1, config.removeLabelCost()

@@ -11,7 +11,7 @@ import org.dataflowanalysis.analysis.dsl.selectors.VertexTypeSelector;
 import com.microsoft.z3.BoolExpr;
 
 import dev.arcovia.mitigation.smt.SMT;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 /**
  * Selector translation logic for VertexTypeSelectors
@@ -26,7 +26,7 @@ final class VertexTypeHandler extends AbstractSelectorHandler<VertexTypeSelector
 
         // Can be statically evaluated at encoding time because types are not modifiable
         BoolExpr matches;
-        if (selectorType.equals(Util.vertexToType(vertex))) {
+        if (selectorType.equals(ParsingUtils.vertexToType(vertex))) {
             matches = context.mkTrue();
         } else {
             matches = context.mkFalse();

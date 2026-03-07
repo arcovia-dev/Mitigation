@@ -47,9 +47,9 @@ import dev.arcovia.mitigation.smt.operations.Operation;
 import dev.arcovia.mitigation.smt.operations.SetAssignmentOperation;
 import dev.arcovia.mitigation.smt.operations.UnsetAssignmentOperation;
 import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
-import dev.arcovia.mitigation.smt.util.SMTUtil;
-import dev.arcovia.mitigation.smt.util.Util;
-import dev.arcovia.mitigation.smt.util.Z3NativeLoader;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
+import dev.arcovia.mitigation.smt.utils.Z3CountingUtils;
+import dev.arcovia.mitigation.smt.utils.Z3NativeLoader;
 
 /**
  * Central orchestrating class for interfacing with the Z3 Prover
@@ -57,48 +57,6 @@ import dev.arcovia.mitigation.smt.util.Z3NativeLoader;
 public class SMT {
     private final Logger logger = Logger.getLogger(getClass());
     private Context context;
-
-    /**
-     * Returns the context that all encoding is done
-     * @return Context
-     */
-    public Context getContext() {
-        return context;
-    }
-
-    /**
-     * Returns a map of all DFDVertices to their respective incoming flows
-     * @return Incoming Flows Map
-     */
-    public Map<DFDVertex, List<TFGFlow>> getVertexIncomingFlows() {
-        return preprocesingResult.vertexIncomingFlows();
-    }
-
-    /**
-     * Returns a Map of mappings of TFG Flow Labels to their respective label expressions
-     * @return Flow Label Map
-     */
-    public Map<TFGFlow, Map<Label, BoolExpr>> getFlowLabels() {
-        return flowLabels;
-    }
-
-    /**
-     * Returns the Datadictionary of the DFD
-     * @return Datadictionary
-     */
-    public DataDictionary getDataDictionary() {
-        return preprocesingResult.dfd()
-                .dataDictionary();
-    }
-
-    /**
-     * Returns a map of mappings of Node Labels to their respective Label Expressions
-     * @return Node Label Map
-     */
-    public Map<Node, Map<Label, BoolExpr>> getNodeLabels() {
-        return nodeLabels;
-    }
-
     private Optimize optimize;
     private PreprocessingResult preprocesingResult;
     private IntExpr costFunction;
@@ -152,9 +110,9 @@ public class SMT {
         }
 
         // Label Costs are parsed from Strings to the concrete Label obejcts
-        Map<Label, Integer> addLabelCost = Util.transformLabelCosts(pre.dfd()
+        Map<Label, Integer> addLabelCost = ParsingUtils.transformLabelCosts(pre.dfd()
                 .dataDictionary(), costConfig.addLabelCost());
-        Map<Label, Integer> removeLabelCost = Util.transformLabelCosts(pre.dfd()
+        Map<Label, Integer> removeLabelCost = ParsingUtils.transformLabelCosts(pre.dfd()
                 .dataDictionary(), costConfig.removeLabelCost());
 
         CostFunction costFunctionBuilder = CostFunction.create(context);
@@ -285,30 +243,31 @@ public class SMT {
     public SolvingResult repair() {
         long before = System.currentTimeMillis();
         // Find solution
-        Status st = optimize.Check();
+        Status status = optimize.Check();
         long after = System.currentTimeMillis();
         long solveTime = after - before;
         // If no solution was found
-        if (st != Status.SATISFIABLE) {
+        if (status != Status.SATISFIABLE) {
             logger.warn("UNSAT");
             context.close();
-            return new SolvingResult(false, null, null, Integer.MAX_VALUE, Optional.empty(), Optional.empty(), solveTime, preprocesingResult.findTFGsTime());
+            return new SolvingResult(false, null, null, Integer.MAX_VALUE, Optional.empty(), Optional.empty(), solveTime,
+                    preprocesingResult.findTFGsTime());
         } else {
             // Fetch variable assignment
-            Model m = optimize.getModel();
+            Model model = optimize.getModel();
             Optional<Long> expressionTreeSize;
             // If expression tree size is requested, calculate it here
             if (config.findExpressionTreeSize()) {
                 BoolExpr[] assertions = optimize.getAssertions();
-                long astNodes = SMTUtil.countAstNodes(assertions);
+                long astNodes = Z3CountingUtils.countAstNodes(assertions);
                 expressionTreeSize = Optional.of(astNodes);
             } else {
                 expressionTreeSize = Optional.empty();
             }
             // Find cost
-            IntExpr costValExpr = (IntExpr) m.eval(costFunction, true);
+            IntExpr costValExpr = (IntExpr) model.eval(costFunction, true);
             // Find repair operations
-            List<Operation> parseActions = parseActions(m);
+            List<Operation> parseActions = parseActions(model);
             DataFlowDiagramAndDictionary dfd = preprocesingResult.dfd();
             // Apply them
             for (int i = 0; i < parseActions.size(); i++) {
@@ -319,12 +278,13 @@ public class SMT {
             // If configured, use DFA to check for violations after
             Optional<Integer> violationsAfter;
             if (config.checkForViolationsAfter()) {
-                violationsAfter = Optional.of(Util.countViolations(dfd, constraints));
+                violationsAfter = Optional.of(ParsingUtils.countViolations(dfd, constraints));
             } else {
                 violationsAfter = Optional.empty();
             }
             context.close();
-            return new SolvingResult(true, dfd, parseActions, cost, expressionTreeSize, violationsAfter, solveTime, preprocesingResult.findTFGsTime());
+            return new SolvingResult(true, dfd, parseActions, cost, expressionTreeSize, violationsAfter, solveTime,
+                    preprocesingResult.findTFGsTime());
         }
     }
 
@@ -366,7 +326,7 @@ public class SMT {
                     .values()
                     .forEach(x -> x.forEach(y -> createDataFlowExpression(y, outPinToAss)));
             flowLabels.put(flow, new HashMap<>());
-            Pin pin = flow.getSrcPin();
+            Pin pin = flow.getSourcePin();
             List<AbstractAssignment> assignments = outPinToAss.get(pin);
             // The expression have to be defined for all relevant labels, even if not all
             // can be added or removed.
@@ -398,9 +358,9 @@ public class SMT {
                         // Forward assignments are evaluated using the preceeding flows (may be emptry).
                         List<TFGFlow> forward = flow.getThisFlowForwards()
                                 .getOrDefault(cast, new ArrayList<>());
-                        for (TFGFlow pre : forward) {
+                        for (TFGFlow preceedingFlow : forward) {
                             // Fetch label expression for previous flow
-                            BoolExpr preLabel = flowLabels.get(pre)
+                            BoolExpr preLabel = flowLabels.get(preceedingFlow)
                                     .get(label);
                             // Label is propagated if the current flow already propagated it or a preceeding
                             // flow has it.
@@ -449,7 +409,7 @@ public class SMT {
      */
     private void createDataFlowExpressions() {
         Set<TFGFlow> allFlows = preprocesingResult.flows();
-        Map<Pin, List<AbstractAssignment>> outPinToAss = Util.outPinToAssignments(preprocesingResult.dfd()
+        Map<Pin, List<AbstractAssignment>> outPinToAss = ParsingUtils.outPinToAssignments(preprocesingResult.dfd()
                 .dataFlowDiagram()
                 .getNodes());
         // Dataflow Expressions only have to be created if data labels are relevant.
@@ -663,59 +623,101 @@ public class SMT {
 
     /**
      * Construct a list of repair operations for the input DFD
-     * @param m contains the variable assignment of the solution that the Z3 Prover found
+     * @param model contains the variable assignment of the solution that the Z3 Prover found
      * @return List of repair operations
      */
-    private List<Operation> parseActions(Model m) {
+    private List<Operation> parseActions(Model model) {
         List<Operation> changes = new ArrayList<>();
 
         // For every modifiable node label
-        for (Node n : nodeLabelRef.keySet()) {
-            Map<Label, BoolExpr> beforeMap = nodeLabelRef.get(n);
-            Map<Label, BoolExpr> afterMap = nodeLabels.get(n);
+        for (Node node : nodeLabelRef.keySet()) {
+            Map<Label, BoolExpr> beforeMap = nodeLabelRef.get(node);
+            Map<Label, BoolExpr> afterMap = nodeLabels.get(node);
 
-            for (Label lbl : beforeMap.keySet()) {
-                BoolExpr beforeExpr = beforeMap.get(lbl);
-                BoolExpr afterExpr = afterMap.get(lbl);
+            for (Label label : beforeMap.keySet()) {
+                BoolExpr beforeExpr = beforeMap.get(label);
+                BoolExpr afterExpr = afterMap.get(label);
                 // Parse to java
-                boolean beforeVal = ((BoolExpr) m.evaluate(beforeExpr, true)).isTrue();
-                boolean afterVal = ((BoolExpr) m.evaluate(afterExpr, true)).isTrue();
+                boolean beforeVal = ((BoolExpr) model.evaluate(beforeExpr, true)).isTrue();
+                boolean afterVal = ((BoolExpr) model.evaluate(afterExpr, true)).isTrue();
 
                 // If it didn't exist in the input, but exists now, create a Add Operation
                 if (!beforeVal && afterVal) {
-                    changes.add(new NodeLabelAddOperation(n, lbl));
+                    changes.add(new NodeLabelAddOperation(node, label));
                     // On the other hand create a Remove Operation
                 } else if (beforeVal && !afterVal) {
-                    changes.add(new NodeLabelRemoveOperation(n, lbl));
+                    changes.add(new NodeLabelRemoveOperation(node, label));
                 }
                 // If it did not change create no operation
             }
         }
         // Evaluate Set Assignments
-        for (Pin p : pinSet.keySet()) {
-            Map<Label, BoolExpr> setMap = pinSet.get(p);
+        for (Pin pin : pinSet.keySet()) {
+            Map<Label, BoolExpr> setMap = pinSet.get(pin);
 
             for (Label label : setMap.keySet()) {
                 BoolExpr setExpr = setMap != null ? setMap.get(label) : null;
                 // If the pin could set the label and it actually did, create the operation
-                if (setExpr != null && ((BoolExpr) m.evaluate(setExpr, true)).isTrue()) {
-                    changes.add(new SetAssignmentOperation(p, label));
+                if (setExpr != null && ((BoolExpr) model.evaluate(setExpr, true)).isTrue()) {
+                    changes.add(new SetAssignmentOperation(pin, label));
                 }
             }
         }
         // Evaluate Unset Assignments
-        for (Pin p : pinUnset.keySet()) {
-            Map<Label, BoolExpr> unsetMap = pinUnset.get(p);
+        for (Pin pin : pinUnset.keySet()) {
+            Map<Label, BoolExpr> unsetMap = pinUnset.get(pin);
             for (Label label : unsetMap.keySet()) {
                 BoolExpr unsetExpr = unsetMap != null ? unsetMap.get(label) : null;
 
                 // If the pin could unset the label and it actually did, create the operation
-                if (unsetExpr != null && ((BoolExpr) m.evaluate(unsetExpr, true)).isTrue()) {
-                    changes.add(new UnsetAssignmentOperation(p, label));
+                if (unsetExpr != null && ((BoolExpr) model.evaluate(unsetExpr, true)).isTrue()) {
+                    changes.add(new UnsetAssignmentOperation(pin, label));
                 }
             }
         }
 
         return changes;
     }
+
+    /**
+     * Returns the context that all encoding is done
+     * @return Context
+     */
+    public Context getContext() {
+        return context;
+    }
+
+    /**
+     * Returns a map of all DFDVertices to their respective incoming flows
+     * @return Incoming Flows Map
+     */
+    public Map<DFDVertex, List<TFGFlow>> getVertexIncomingFlows() {
+        return preprocesingResult.vertexIncomingFlows();
+    }
+
+    /**
+     * Returns a Map of mappings of TFG Flow Labels to their respective label expressions
+     * @return Flow Label Map
+     */
+    public Map<TFGFlow, Map<Label, BoolExpr>> getFlowLabels() {
+        return flowLabels;
+    }
+
+    /**
+     * Returns the Datadictionary of the DFD
+     * @return Datadictionary
+     */
+    public DataDictionary getDataDictionary() {
+        return preprocesingResult.dfd()
+                .dataDictionary();
+    }
+
+    /**
+     * Returns a map of mappings of Node Labels to their respective Label Expressions
+     * @return Node Label Map
+     */
+    public Map<Node, Map<Label, BoolExpr>> getNodeLabels() {
+        return nodeLabels;
+    }
+
 }

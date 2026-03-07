@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.util;
+package dev.arcovia.mitigation.smt.utils;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -11,7 +11,7 @@ import com.microsoft.z3.Expr;
  * Contains relevant utility functions that are needed to convert from DFD representation to z3 representation or the
  * other way around
  */
-public class SMTUtil {
+public class Z3CountingUtils {
 
     /**
      * Counts AST nodes in an array of BoolExpr (Expression tree size). Adds the expression tree size of all root

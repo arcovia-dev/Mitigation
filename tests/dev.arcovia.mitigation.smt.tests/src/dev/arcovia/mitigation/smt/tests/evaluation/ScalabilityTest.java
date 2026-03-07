@@ -17,7 +17,7 @@ import dev.arcovia.mitigation.sat.Scaler;
 import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.SolvingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.SatHelper.RepairResult;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 /**
  * @author Nikolas Rank Compares the runtime of SMT to SAT when different scalability dimensions are considered
@@ -100,14 +100,14 @@ public class ScalabilityTest {
                 }
 
                 for (int runIdx = 0; runIdx < RUNS_PER_CONFIGURATION; runIdx++) {
-                    DataFlowDiagramAndDictionary base = Util.loadDFD(cfg.model(), cfg.model() + "_0");
+                    DataFlowDiagramAndDictionary base = ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0");
                     // Scale
                     ScaleOutput out = scaleFunc.apply(new ScaleInput(base, cfg.constraints(), scaleOrExp));
 
                     // Run Sat repair
                     RepairResult rr = SatHelper.runRepair(out.outputDfd, false, out.outputConstraints, SatHelper.MIN_COSTS);
                     if (runIdx == 0) {
-                        if (rr.violationsAfter() > 0 || Util.countViolations(rr.repairedDfd(), cfg.constraints()) > 0) {
+                        if (rr.violationsAfter() > 0 || ParsingUtils.countViolations(rr.repairedDfd(), cfg.constraints()) > 0) {
                             throw new IllegalStateException("SAT invalid at scale=" + scaleOrExp + " for " + cfg.model() + "_" + cfg.variantId());
                         }
                     }
@@ -157,7 +157,7 @@ public class ScalabilityTest {
 
                 for (int runIdx = 0; runIdx < RUNS_PER_CONFIGURATION; runIdx++) {
 
-                    DataFlowDiagramAndDictionary base = Util.loadDFD(cfg.model(), cfg.model() + "_0");
+                    DataFlowDiagramAndDictionary base = ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0");
                     // Scale respective dimension
                     ScaleOutput out = scaleFunc.apply(new ScaleInput(base, cfg.constraints(), scaleOrExp));
 
@@ -168,7 +168,7 @@ public class ScalabilityTest {
 
                     // Check for violations only once
                     if (runIdx == 0) {
-                        if (!solving.satisfiable() || Util.countViolations(solving.repairedDFD(), cfg.constraints()) > 0) {
+                        if (!solving.satisfiable() || ParsingUtils.countViolations(solving.repairedDFD(), cfg.constraints()) > 0) {
                             throw new IllegalStateException("SMT invalid at scale=" + scaleOrExp + " for " + cfg.model() + "_" + cfg.variantId());
                         }
                     }

@@ -15,7 +15,7 @@ import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.config.Config;
 import dev.arcovia.mitigation.smt.config.ConfigBuilder;
 import dev.arcovia.mitigation.smt.tests.evaluation.SatHelper.RepairResult;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class RuntimeComparisonTest {
 
@@ -31,7 +31,7 @@ public class RuntimeComparisonTest {
             Config config = new ConfigBuilder().findExpressionTreeSize(true)
                     .build();
 
-            long dagSizeAfter = Mitigation.run(Util.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), config)
+            long dagSizeAfter = Mitigation.run(ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), config)
                     .expressionTreeSize()
                     .orElseThrow();
 
@@ -50,7 +50,7 @@ public class RuntimeComparisonTest {
 
         List<Long> runtimes = new ArrayList<>(runs);
         for (int i = 0; i < runs; i++) {
-            DataFlowDiagramAndDictionary dfd = Util.loadDFD(model, model + "_0");
+            DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(model, model + "_0");
             long before = System.currentTimeMillis();
             Mitigation.run(dfd, constraints, null);
             long after = System.currentTimeMillis();
@@ -63,7 +63,7 @@ public class RuntimeComparisonTest {
 
         List<Long> runtimes = new ArrayList<>(runs);
         for (int i = 0; i < runs; i++) {
-            DataFlowDiagramAndDictionary dfd = Util.loadDFD(model, model + "_0");
+            DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(model, model + "_0");
             RepairResult rr = SatHelper.runRepair(dfd, false, constraints, SatHelper.MIN_COSTS);
             runtimes.add(rr.runtimeInMilliseconds());
         }

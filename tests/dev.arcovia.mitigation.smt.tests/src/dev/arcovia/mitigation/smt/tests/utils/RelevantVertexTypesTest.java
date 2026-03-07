@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class RelevantVertexTypesTest extends UtilTestBase {
 
@@ -36,7 +36,7 @@ class RelevantVertexTypesTest extends UtilTestBase {
                 .toVertex()
                 .create();
 
-        assertEquals(expected, Util.getRelevantVertexTypes(List.of(constraint)));
+        assertEquals(expected, ParsingUtils.getRelevantVertexTypes(List.of(constraint)));
     }
 
     static Stream<Arguments> constraintCases() {

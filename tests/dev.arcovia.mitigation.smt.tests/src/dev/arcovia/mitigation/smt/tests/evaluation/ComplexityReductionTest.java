@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.config.Config;
 import dev.arcovia.mitigation.smt.config.ConfigBuilder;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class ComplexityReductionTest {
 
@@ -28,7 +28,7 @@ public class ComplexityReductionTest {
             Config config = new ConfigBuilder().findExpressionTreeSize(true)
                     .build();
 
-            long dagSizeAfter = Mitigation.run(Util.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), config)
+            long dagSizeAfter = Mitigation.run(ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), config)
                     .expressionTreeSize()
                     .orElseThrow();
 
@@ -45,7 +45,7 @@ public class ComplexityReductionTest {
 
         List<Long> runtimes = new ArrayList<>(runs);
         for (int i = 0; i < runs; i++) {
-            DataFlowDiagramAndDictionary dfd = Util.loadDFD(model, model + "_0");
+            DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(model, model + "_0");
             long before = System.currentTimeMillis();
             Mitigation.run(dfd, constraints, null);
             long after = System.currentTimeMillis();
@@ -58,7 +58,7 @@ public class ComplexityReductionTest {
 
         List<Long> runtimesOff = new ArrayList<>(runs);
         for (int i = 0; i < runs; i++) {
-            DataFlowDiagramAndDictionary dfd = Util.loadDFD(model, model + "_0");
+            DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(model, model + "_0");
             Config config = new ConfigBuilder().onlyRelevantModifications(false)
                     .build();
             long before = System.currentTimeMillis();

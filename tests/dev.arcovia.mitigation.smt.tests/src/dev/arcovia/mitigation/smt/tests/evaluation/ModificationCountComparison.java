@@ -15,7 +15,7 @@ import dev.arcovia.mitigation.smt.config.ConfigBuilder;
 import dev.arcovia.mitigation.smt.operations.NodeLabelRemoveOperation;
 import dev.arcovia.mitigation.smt.operations.Operation;
 import dev.arcovia.mitigation.smt.operations.UnsetAssignmentOperation;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class ModificationCountComparison {
 
@@ -40,9 +40,9 @@ public class ModificationCountComparison {
         for (EvaluationSupport.Configuration cfg : configs) {
             System.out.println("Comparing " + cfg.model() + "_" + cfg.variantId());
 
-            DataFlowDiagramAndDictionary baseDfd = Util.loadDFD(cfg.model(), cfg.model() + "_0");
+            DataFlowDiagramAndDictionary baseDfd = ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0");
 
-            DataFlowDiagramAndDictionary inputDfd = Util.loadDFD(cfg.model(), cfg.model() + "_0");
+            DataFlowDiagramAndDictionary inputDfd = ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0");
             SatHelper.RepairResult satRepair = SatHelper.runRepair(inputDfd, false, cfg.constraints(), SatHelper.MIN_COSTS);
 
             DataFlowDiagramAndDictionary repairedDfd = satRepair.repairedDfd();
@@ -62,7 +62,7 @@ public class ModificationCountComparison {
 
             satCost -= baseCost;
 
-            SolvingResult solving = Mitigation.run(Util.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), smtConfig);
+            SolvingResult solving = Mitigation.run(ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), smtConfig);
             int smtCost = solving.repairCost();
 
             if (smtCost > satCost) {
@@ -77,7 +77,7 @@ public class ModificationCountComparison {
                 }
             }
 
-            if (Util.countViolations(solving.repairedDFD(), cfg.constraints()) > 0) {
+            if (ParsingUtils.countViolations(solving.repairedDFD(), cfg.constraints()) > 0) {
                 throw new IllegalStateException("Violations present after SMT repair for " + cfg.model() + "_" + cfg.variantId());
             }
 

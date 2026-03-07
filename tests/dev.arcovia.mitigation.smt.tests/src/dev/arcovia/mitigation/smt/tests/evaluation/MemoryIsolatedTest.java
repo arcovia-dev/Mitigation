@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.config.Config;
 import dev.arcovia.mitigation.smt.config.ConfigBuilder;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class MemoryIsolatedTest {
 
@@ -46,7 +46,7 @@ public class MemoryIsolatedTest {
                 Config config = new ConfigBuilder().findExpressionTreeSize(true)
                         .build();
 
-                long dagSizeAfter = Mitigation.run(Util.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), config)
+                long dagSizeAfter = Mitigation.run(ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0"), cfg.constraints(), config)
                         .expressionTreeSize()
                         .orElseThrow();
 

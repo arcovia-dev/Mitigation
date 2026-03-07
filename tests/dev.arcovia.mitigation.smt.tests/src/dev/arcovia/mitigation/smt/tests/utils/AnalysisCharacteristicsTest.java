@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class AnalysisCharacteristicsTest extends UtilTestBase {
 
@@ -21,7 +21,7 @@ class AnalysisCharacteristicsTest extends UtilTestBase {
     @MethodSource("characteristicCases")
     void testGetAnalysisCharacteristics(AnalysisConstraint constraint, int expectedCount, Set<String> expectedEntries) {
 
-        var result = Util.getAnalysisCharacteristics(List.of(constraint));
+        var result = ParsingUtils.getAnalysisCharacteristics(List.of(constraint));
 
         assertEquals(expectedCount, result.size());
 

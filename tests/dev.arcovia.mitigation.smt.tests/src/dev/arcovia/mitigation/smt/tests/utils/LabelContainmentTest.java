@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class LabelContainmentTest extends UtilTestBase {
 
@@ -31,7 +31,7 @@ class LabelContainmentTest extends UtilTestBase {
         dd.getLabelTypes()
                 .add(typeB);
 
-        boolean result = Util.containsLabelType(dd, lookupName);
+        boolean result = ParsingUtils.containsLabelType(dd, lookupName);
         assertEquals(expected, result);
     }
 
@@ -57,7 +57,7 @@ class LabelContainmentTest extends UtilTestBase {
         type.getLabel()
                 .add(labelC);
 
-        boolean result = Util.containsLabel(type, lookupName);
+        boolean result = ParsingUtils.containsLabel(type, lookupName);
         assertEquals(expected, result);
     }
 

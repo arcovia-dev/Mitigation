@@ -21,14 +21,14 @@ import dev.arcovia.mitigation.smt.constraints.ConstraintTranslator;
 import dev.arcovia.mitigation.smt.preprocess.Preprocess;
 import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.ConstraintMapProvider;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class ConstraintTranslationTest {
 
     @Test
     public void testTranslation() throws Exception {
         Map<Integer, List<AnalysisConstraint>> constraintMap = ConstraintMapProvider.buildConstraintMap();
-        DataFlowDiagramAndDictionary dfd = Util.loadDFD("georgwittberger", "georgwittberger_0");
+        DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD("georgwittberger", "georgwittberger_0");
         List<AnalysisConstraint> constraint = constraintMap.get(7);
 
         Preprocess preprocess = new Preprocess();

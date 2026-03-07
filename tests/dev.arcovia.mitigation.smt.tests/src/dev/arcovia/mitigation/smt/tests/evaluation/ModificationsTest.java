@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.operations.Operation;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class ModificationsTest {
 
@@ -20,7 +20,7 @@ public class ModificationsTest {
         List<EvaluationSupport.Configuration> configs = EvaluationSupport.configurations();
 
         for (EvaluationSupport.Configuration cfg : configs) {
-            DataFlowDiagramAndDictionary dfd = Util.loadDFD(cfg.model(), cfg.model() + "_0");
+            DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(cfg.model(), cfg.model() + "_0");
 
             System.out.println("Running " + cfg.model() + " with constraints " + cfg.variantId());
             List<Operation> suggestedActions = Mitigation.run(dfd, cfg.constraints(), null)
@@ -29,7 +29,7 @@ public class ModificationsTest {
             int removableActions = 0;
             for (Operation action : suggestedActions) {
                 DataFlowDiagramAndDictionary undone = action.undoOperation(dfd);
-                if (Util.countViolations(undone, cfg.constraints()) <= 0) {
+                if (ParsingUtils.countViolations(undone, cfg.constraints()) <= 0) {
                     removableActions++;
                 }
                 // Ensure that operation gets added to the DFD again, so that they are actually tested in isolation

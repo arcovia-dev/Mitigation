@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 /**
  * Common helper methods/objects for evaluation tests.
@@ -67,7 +67,7 @@ public final class EvaluationSupport {
     public void test() throws Exception {
         int max = 0;
         for (Configuration cfg : configurations()) {
-            var dfd = Util.loadDFD(cfg.model, cfg.model + "_0");
+            var dfd = ParsingUtils.loadDFD(cfg.model, cfg.model + "_0");
             if (dfd.dataFlowDiagram()
                     .getNodes()
                     .size() > max) {

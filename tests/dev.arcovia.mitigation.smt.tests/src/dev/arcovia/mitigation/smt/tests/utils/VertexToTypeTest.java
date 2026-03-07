@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,7 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class VertexToTypeTest extends UtilTestBase {
 
@@ -23,7 +23,7 @@ class VertexToTypeTest extends UtilTestBase {
         Node node = vertexSupplier.get();
         DFDVertex vertex = new DFDVertex(node, null, null);
 
-        assertEquals(expectedType, Util.vertexToType(vertex));
+        assertEquals(expectedType, ParsingUtils.vertexToType(vertex));
     }
 
     static Stream<Arguments> vertexCases() {

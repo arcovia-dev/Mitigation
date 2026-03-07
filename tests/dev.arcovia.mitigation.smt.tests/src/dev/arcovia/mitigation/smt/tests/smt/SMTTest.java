@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.SolvingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.ConstraintMapProvider;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class SMTTest {
 
@@ -35,7 +35,7 @@ public class SMTTest {
                         .contains(i)) {
                     continue;
                 }
-                DataFlowDiagramAndDictionary dfd = Util.loadDFD(model, model + "_0");
+                DataFlowDiagramAndDictionary dfd = ParsingUtils.loadDFD(model, model + "_0");
                 long before = System.currentTimeMillis();
                 SolvingResult solvingResult = Mitigation.run(dfd, constraint, null);
                 long after = System.currentTimeMillis();
@@ -51,7 +51,7 @@ public class SMTTest {
                 assertEquals(solvingResult.repairOperations()
                         .size(), cost);
                 // Assert no violations after
-                int violationsAfter = Util.countViolations(solvingResult.repairedDFD(), constraint);
+                int violationsAfter = ParsingUtils.countViolations(solvingResult.repairedDFD(), constraint);
                 assertTrue(violationsAfter == 0);
 
                 // Assert that non-configured optionals are not set

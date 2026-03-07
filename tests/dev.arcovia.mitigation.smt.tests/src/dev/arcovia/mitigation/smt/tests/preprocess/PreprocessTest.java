@@ -26,7 +26,7 @@ import dev.arcovia.mitigation.smt.TFGFlow;
 import dev.arcovia.mitigation.smt.preprocess.Preprocess;
 import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.ConstraintMapProvider;
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 public class PreprocessTest {
 
@@ -48,7 +48,7 @@ public class PreprocessTest {
                     System.out.println("Skipping " + model + " with constraint " + i + " because no model for this constraint is defined");
                     continue;
                 }
-                DataFlowDiagramAndDictionary dfdAndDD = Util.loadDFD(model, model + "_" + i);
+                DataFlowDiagramAndDictionary dfdAndDD = ParsingUtils.loadDFD(model, model + "_" + i);
                 Preprocess pre = new Preprocess();
                 PreprocessingResult preprocessingResult = pre.preprocess(dfdAndDD, constraint, false);
 
@@ -89,53 +89,53 @@ public class PreprocessTest {
                 for (Entry<DFDVertex, List<TFGFlow>> entry : incomingFlowMap.entrySet()) {
                     for (TFGFlow flow : entry.getValue()) {
                         // Assert each flow actually flows to correct vertex
-                        assertEquals(flow.getDstVertex(), entry.getKey());
+                        assertEquals(flow.getDestinationVertex(), entry.getKey());
                         // Destination pin of flow is present at node
                         assertTrue(entry.getKey()
                                 .getPinFlowMap()
                                 .keySet()
-                                .contains(flow.getDstPin()));
+                                .contains(flow.getDestinationPin()));
                         // Flow actually flows from preceeding vertex
                         assertTrue(entry.getKey()
                                 .getPreviousElements()
-                                .contains(flow.getSrcVertex()));
+                                .contains(flow.getSourceVertex()));
                         // Source vertex of flow actually contains source pin of flows
-                        assertTrue(flow.getSrcVertex()
+                        assertTrue(flow.getSourceVertex()
                                 .getReferencedElement()
                                 .getBehavior()
                                 .getOutPin()
-                                .contains(flow.getSrcPin()));
+                                .contains(flow.getSourcePin()));
                         for (Entry<Assignment, List<TFGFlow>> assigns : flow.getThisFlowEvaluatesOn()
                                 .entrySet()) {
                             // Source pin of flow actually contains expected assignment
                             assertEquals(assigns.getKey()
-                                    .getOutputPin(), flow.getSrcPin());
+                                    .getOutputPin(), flow.getSourcePin());
                             for (TFGFlow prev : assigns.getValue()) {
                                 // Evaluated flow actually flows to vertex of our node
-                                assertEquals(prev.getDstVertex(), flow.getSrcVertex());
+                                assertEquals(prev.getDestinationVertex(), flow.getSourceVertex());
                             }
                         }
                         for (Entry<ForwardingAssignment, List<TFGFlow>> forwards : flow.getThisFlowForwards()
                                 .entrySet()) {
                             // Source pin of flow actually contains expected forward
                             assertEquals(forwards.getKey()
-                                    .getOutputPin(), flow.getSrcPin());
+                                    .getOutputPin(), flow.getSourcePin());
                             for (TFGFlow prev : forwards.getValue()) {
                                 // Forwarded flow actually flows to vertex of our node
-                                assertEquals(prev.getDstVertex(), flow.getSrcVertex());
+                                assertEquals(prev.getDestinationVertex(), flow.getSourceVertex());
                             }
                         }
 
                     }
                 }
                 // Assert labels get properly extracted from dfd
-                assertEquals(preprocessingResult.relevantDataLabelsAdd(), Util.getRelevantDataLabelsAdd(preprocessingResult.dfd()
+                assertEquals(preprocessingResult.relevantDataLabelsAdd(), ParsingUtils.getRelevantDataLabelsAdd(preprocessingResult.dfd()
                         .dataDictionary(), constraint));
-                assertEquals(preprocessingResult.relevantDataLabelsRemove(), Util.getRelevantDataLabelsRemove(preprocessingResult.dfd()
+                assertEquals(preprocessingResult.relevantDataLabelsRemove(), ParsingUtils.getRelevantDataLabelsRemove(preprocessingResult.dfd()
                         .dataDictionary(), constraint));
-                assertEquals(preprocessingResult.relevantNodeLabelsAdd(), Util.getRelevantNodeLabelsAdd(preprocessingResult.dfd()
+                assertEquals(preprocessingResult.relevantNodeLabelsAdd(), ParsingUtils.getRelevantNodeLabelsAdd(preprocessingResult.dfd()
                         .dataDictionary(), constraint));
-                assertEquals(preprocessingResult.relevantNodeLabelsRemove(), Util.getRelevantNodeLabelsRemove(preprocessingResult.dfd()
+                assertEquals(preprocessingResult.relevantNodeLabelsRemove(), ParsingUtils.getRelevantNodeLabelsRemove(preprocessingResult.dfd()
                         .dataDictionary(), constraint));
             }
         }

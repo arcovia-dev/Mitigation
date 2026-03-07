@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.smt.tests.util;
+package dev.arcovia.mitigation.smt.tests.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,20 +12,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import dev.arcovia.mitigation.smt.util.Util;
+import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 class ContainsSelectorTest extends UtilTestBase {
 
     @ParameterizedTest
     @MethodSource("vertexNameCases")
     void testContainsVertexNameSelector(AnalysisConstraint constraint, boolean expected) {
-        assertEquals(expected, Util.containsVertexNameSelector(List.of(constraint)));
+        assertEquals(expected, ParsingUtils.containsVertexNameSelector(List.of(constraint)));
     }
 
     @ParameterizedTest
     @MethodSource("vertexTypeCases")
     void testContainsVertexTypeSelector(AnalysisConstraint constraint, boolean expected) {
-        assertEquals(expected, Util.containsVertexTypeSelector(List.of(constraint)));
+        assertEquals(expected, ParsingUtils.containsVertexTypeSelector(List.of(constraint)));
     }
 
     static Stream<Arguments> vertexNameCases() {
