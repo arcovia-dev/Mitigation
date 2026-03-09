@@ -11,7 +11,7 @@ Import-Package: org.osgi.framework,
  org.junit.jupiter.params;version="5.8.1",
  org.junit.jupiter.params.provider;version="5.8.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Bundle-Activator: dev.arcovia.mitigation.smt.tests.SmtTestsBundleActivator
+Bundle-Activator: dev.arcovia.mitigation.smt.tests.Activator
 Bundle-ActivationPolicy: lazy
 Require-Bundle: 
  dev.arcovia.mitigation.smt,

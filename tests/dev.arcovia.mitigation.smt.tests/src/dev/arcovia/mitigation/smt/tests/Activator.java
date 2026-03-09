@@ -8,7 +8,7 @@ import dev.arcovia.mitigation.smt.utils.Z3NativeLoader;
 /**
  * Ensures Z3 natives are loaded before SMT tests touch the Java bindings directly.
  */
-public class SmtTestsBundleActivator implements BundleActivator {
+public class Activator implements BundleActivator {
 
     @Override
     public void start(BundleContext context) {

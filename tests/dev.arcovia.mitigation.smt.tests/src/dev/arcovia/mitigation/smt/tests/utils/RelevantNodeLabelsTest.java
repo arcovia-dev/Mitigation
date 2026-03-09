@@ -28,11 +28,11 @@ class RelevantNodeLabelsTest extends ParsingUtilsTestBase {
             List<List<String>> withMultiFrom, List<String> withoutSingleTo, List<List<String>> withoutMultiTo, List<String> withSingleTo,
             List<List<String>> withMultiTo, Set<String> expectedAddNames, Set<String> expectedRemoveNames) {
 
-        var ctx = buildConstraintAndDictionary(withoutSingleFrom, withoutMultiFrom, withSingleFrom, withMultiFrom, withoutSingleTo, withoutMultiTo,
+        var context = buildConstraintAndDictionary(withoutSingleFrom, withoutMultiFrom, withSingleFrom, withMultiFrom, withoutSingleTo, withoutMultiTo,
                 withSingleTo, withMultiTo);
 
-        Set<Label> result = ParsingUtils.getRelevantNodeLabelsAdd(ctx.dd, List.of(ctx.constraint));
-        assertEquals(resolve(ctx.labelsByName, expectedAddNames), result);
+        Set<Label> result = ParsingUtils.getRelevantNodeLabelsAdd(context.dd, List.of(context.constraint));
+        assertEquals(resolve(context.labelsByName, expectedAddNames), result);
     }
 
     @ParameterizedTest
@@ -41,17 +41,17 @@ class RelevantNodeLabelsTest extends ParsingUtilsTestBase {
             List<List<String>> withMultiFrom, List<String> withoutSingleTo, List<List<String>> withoutMultiTo, List<String> withSingleTo,
             List<List<String>> withMultiTo, Set<String> expectedAddNames, Set<String> expectedRemoveNames) {
 
-        var ctx = buildConstraintAndDictionary(withoutSingleFrom, withoutMultiFrom, withSingleFrom, withMultiFrom, withoutSingleTo, withoutMultiTo,
+        var context = buildConstraintAndDictionary(withoutSingleFrom, withoutMultiFrom, withSingleFrom, withMultiFrom, withoutSingleTo, withoutMultiTo,
                 withSingleTo, withMultiTo);
 
-        Set<Label> result = ParsingUtils.getRelevantNodeLabelsRemove(ctx.dd, List.of(ctx.constraint));
-        assertEquals(resolve(ctx.labelsByName, expectedRemoveNames), result);
+        Set<Label> result = ParsingUtils.getRelevantNodeLabelsRemove(context.dd, List.of(context.constraint));
+        assertEquals(resolve(context.labelsByName, expectedRemoveNames), result);
     }
 
-    private record Ctx(DataDictionary dd, AnalysisConstraint constraint, Map<String, Label> labelsByName) {
+    private record TestContext(DataDictionary dd, AnalysisConstraint constraint, Map<String, Label> labelsByName) {
     }
 
-    private Ctx buildConstraintAndDictionary(List<String> withoutSingleFrom, List<List<String>> withoutMultiFrom, List<String> withSingleFrom,
+    private TestContext buildConstraintAndDictionary(List<String> withoutSingleFrom, List<List<String>> withoutMultiFrom, List<String> withSingleFrom,
             List<List<String>> withMultiFrom, List<String> withoutSingleTo, List<List<String>> withoutMultiTo, List<String> withSingleTo,
             List<List<String>> withMultiTo) {
 
@@ -116,13 +116,13 @@ class RelevantNodeLabelsTest extends ParsingUtilsTestBase {
 
         AnalysisConstraint constraint = toBuilder.create();
 
-        return new Ctx(dd, constraint, labelsByName);
+        return new TestContext(dd, constraint, labelsByName);
     }
 
     private Set<Label> resolve(Map<String, Label> labelsByName, Set<String> names) {
         Set<Label> out = new HashSet<>();
-        for (String n : names)
-            out.add(labelsByName.get(n));
+        for (String name : names)
+            out.add(labelsByName.get(name));
         return out;
     }
 

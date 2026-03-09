@@ -8,12 +8,12 @@ import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Label;
 
-import dev.arcovia.mitigation.smt.TFGFlow;
+import dev.arcovia.mitigation.smt.FlowInstance;
 
 /**
  * Record type that possesses all relevant preprocessing information.
  */
-public record PreprocessingResult(DataFlowDiagramAndDictionary dfd, Set<TFGFlow> flows, Set<DFDVertex> vertices, Set<Label> relevantNodeLabelsAdd,
+public record PreprocessingResult(DataFlowDiagramAndDictionary dfd, Set<FlowInstance> flows, Set<DFDVertex> vertices, Set<Label> relevantNodeLabelsAdd,
         Set<Label> relevantNodeLabelsRemove, Set<Label> relevantDataLabelsAdd, Set<Label> relevantDataLabelsRemove,
-        Map<DFDVertex, List<TFGFlow>> vertexIncomingFlows, long findTFGsTime) {
+        Map<DFDVertex, List<FlowInstance>> vertexIncomingFlows, long findTFGsTime) {
 }

@@ -23,11 +23,11 @@ public final class CostFunction {
 
     /**
      * Factory method for creating a cost function
-     * @param ctx
+     * @param context
      * @return Empty cost function
      */
-    public static CostFunction create(Context ctx) {
-        return new CostFunction(ctx);
+    public static CostFunction create(Context context) {
+        return new CostFunction(context);
     }
 
     /**

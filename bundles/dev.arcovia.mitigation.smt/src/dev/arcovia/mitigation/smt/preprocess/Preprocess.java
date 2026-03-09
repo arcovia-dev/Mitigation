@@ -32,7 +32,7 @@ import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 
-import dev.arcovia.mitigation.smt.TFGFlow;
+import dev.arcovia.mitigation.smt.FlowInstance;
 import dev.arcovia.mitigation.smt.operations.LabelOperation;
 import dev.arcovia.mitigation.smt.operations.LabelTypeOperation;
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
@@ -83,7 +83,7 @@ public class Preprocess {
     }
 
     /**
-     * Performs preprocessing on the incoming DFD. Adds missing labels. Extracts TFG Flows and DFDVertices from TFGs. Finds
+     * Performs preprocessing on the incoming DFD. Adds missing labels. Extracts Flow Instances and DFDVertices from TFGs. Finds
      * relevant node labels and types, as well as data labels based on constraints
      * @param dfdIn Input DFD
      * @param analysisConstraints Input constraints
@@ -185,9 +185,9 @@ public class Preprocess {
         }
 
         Set<DFDVertex> allVertices = new HashSet<>();
-        Set<TFGFlow> allFlows = new HashSet<>();
-        Map<DFDVertex, List<TFGFlow>> allTFGFlowsToVertex = new HashMap<>();
-        // Create flows for each tfg
+        Set<FlowInstance> allFlows = new HashSet<>();
+        Map<DFDVertex, List<FlowInstance>> allFlowInstancesToVertex = new HashMap<>();
+        // Create flow instances for each tfg
         for (DFDTransposeFlowGraph tfg : tfgs) {
             // Find all vertices for this tfg
             List<DFDVertex> vertices = tfg.getVertices()
@@ -195,8 +195,8 @@ public class Preprocess {
                     .filter(DFDVertex.class::isInstance)
                     .map(DFDVertex.class::cast)
                     .toList();
-            // All tfg flows for this tfg.
-            List<TFGFlow> allTFGFlows = new ArrayList<>();
+            // All flow instances for this tfg.
+            List<FlowInstance> allFlowInstancesCurrTFG = new ArrayList<>();
             // Iterate over vertices backwards. This is crucial because the vertex API offers better support
             // for interfacing with preceeding vertices than with suceeding ones. It also eases the creation of correct
             // forwarding and assign relationships between flows.
@@ -208,60 +208,60 @@ public class Preprocess {
                 Map<Pin, Flow> pinFlowMap = vertex.getPinFlowMap();
                 // Create a flow for each incoming pin that is connected to a previous vertex
                 for (Entry<Pin, Flow> pinFlow : pinFlowMap.entrySet()) {
-                    // Find DFD flow that this TFG Flow should model
+                    // Find DFD flow that this flow instance should model
                     Flow flow = pinFlow.getValue();
-                    // Create a new TFG Flow that represents the occurence of said flow for this TFG
-                    TFGFlow tfgFlow = new TFGFlow(flow.getSourcePin(), previousVerticesMap.get(flow.getDestinationPin()), flow.getDestinationPin(),
+                    // Create a new Flow instance that represents the occurence of said flow for this TFG
+                    FlowInstance flowInstance = new FlowInstance(flow.getSourcePin(), previousVerticesMap.get(flow.getDestinationPin()), flow.getDestinationPin(),
                             vertex, flow);
-                    allTFGFlows.add(tfgFlow);
+                    allFlowInstancesCurrTFG.add(flowInstance);
                     // Also keep track of vertices that flows flow to as this is needed for later constraint encoding
-                    List<TFGFlow> allTFGFlowsToThisVertex = allTFGFlowsToVertex.getOrDefault(vertex, new ArrayList<TFGFlow>());
+                    List<FlowInstance> allFlowInstancesToThisVertex = allFlowInstancesToVertex.getOrDefault(vertex, new ArrayList<FlowInstance>());
                     // For this vertex
-                    allTFGFlowsToThisVertex.add(tfgFlow);
+                    allFlowInstancesToThisVertex.add(flowInstance);
                     // For all vertices
-                    allTFGFlowsToVertex.put(vertex, allTFGFlowsToThisVertex);
+                    allFlowInstancesToVertex.put(vertex, allFlowInstancesToThisVertex);
                 }
-                // Create mappings, so we can later know which tfg flows are forwarded by which
+                // Create mappings, so we can later know which flow instances are forwarded by which
                 // and on which flows assign statements have to be evaluated.
                 // Find all flows that leave this vertex because they may forward or Assign.
                 // They exist because they were already created when handling the succeeding vertex
-                List<TFGFlow> thisVertexOutgoingFlows = allTFGFlows.stream()
+                List<FlowInstance> thisVertexOutgoingFlows = allFlowInstancesCurrTFG.stream()
                         .filter(x -> x.getSourceVertex()
                                 .equals(vertex))
                         .toList();
                 // Also find all incoming flows to connect them to the outgoing ones
-                List<TFGFlow> allTFGFlowsToThisVertex = allTFGFlowsToVertex.getOrDefault(vertex, new ArrayList<TFGFlow>());
+                List<FlowInstance> allFlowInstancesToThisVertex = allFlowInstancesToVertex.getOrDefault(vertex, new ArrayList<FlowInstance>());
                 // For every outgoing flow
-                for (TFGFlow tfgFlow : thisVertexOutgoingFlows) {
+                for (FlowInstance flowInstance : thisVertexOutgoingFlows) {
                     // For every assignment of its source pin
-                    List<AbstractAssignment> thisPinAssigns = outPinToAss.get(tfgFlow.getSourcePin());
+                    List<AbstractAssignment> thisPinAssigns = outPinToAss.get(flowInstance.getSourcePin());
                     for (AbstractAssignment assign : thisPinAssigns) {
                         // A forward or Assign assignment forwards exactly those flows that flow to a input pin that is referenced
                         // by the assignment within the same tfg
                         if (assign instanceof ForwardingAssignment cast) {
-                            List<TFGFlow> thisFlowForwards = allTFGFlowsToThisVertex.stream()
+                            List<FlowInstance> thisFlowForwards = allFlowInstancesToThisVertex.stream()
                                     .filter(x -> cast.getInputPins()
                                             .contains(x.getDestinationPin()))
                                     .toList();
-                            tfgFlow.getThisFlowForwards()
+                            flowInstance.getThisFlowForwards()
                                     .put(cast, thisFlowForwards);
                         } else if (assign instanceof Assignment cast) {
-                            List<TFGFlow> thisFlowEvaluatesOn = allTFGFlowsToThisVertex.stream()
+                            List<FlowInstance> thisFlowEvaluatesOn = allFlowInstancesToThisVertex.stream()
                                     .filter(x -> cast.getInputPins()
                                             .contains(x.getDestinationPin()))
                                     .toList();
-                            tfgFlow.getThisFlowEvaluatesOn()
+                            flowInstance.getThisFlowEvaluatesOn()
                                     .put(cast, thisFlowEvaluatesOn);
                         }
                     }
                 }
                 allVertices.add(vertex);
             }
-            allFlows.addAll(allTFGFlows);
+            allFlows.addAll(allFlowInstancesCurrTFG);
         }
 
         PreprocessingResult result = new PreprocessingResult(dfdIn, allFlows, allVertices, relevantNodeLabelsAdd, relevantNodeLabelsRemove,
-                relevantDataLabelsAdd, relevantDataLabelsRemove, allTFGFlowsToVertex, findTFGsTime);
+                relevantDataLabelsAdd, relevantDataLabelsRemove, allFlowInstancesToVertex, findTFGsTime);
 
         return result;
     }

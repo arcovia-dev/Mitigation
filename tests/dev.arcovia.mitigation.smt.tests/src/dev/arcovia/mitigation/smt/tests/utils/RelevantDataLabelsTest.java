@@ -28,10 +28,10 @@ class RelevantDataLabelsTest extends ParsingUtilsTestBase {
     void testGetRelevantDataLabelsAdd(List<String> withoutSingle, List<List<String>> withoutMulti, List<String> withSingle,
             List<List<String>> withMulti, Set<String> expectedAddNames, Set<String> expectedRemoveNames) {
 
-        var ctx = buildConstraintAndDictionary(withoutSingle, withoutMulti, withSingle, withMulti);
+        var context = buildConstraintAndDictionary(withoutSingle, withoutMulti, withSingle, withMulti);
 
-        Set<Label> result = ParsingUtils.getRelevantDataLabelsAdd(ctx.dd, List.of(ctx.constraint));
-        assertEquals(resolve(ctx.labelsByName, expectedAddNames), result);
+        Set<Label> result = ParsingUtils.getRelevantDataLabelsAdd(context.dd, List.of(context.constraint));
+        assertEquals(resolve(context.labelsByName, expectedAddNames), result);
     }
 
     @ParameterizedTest
@@ -39,15 +39,15 @@ class RelevantDataLabelsTest extends ParsingUtilsTestBase {
     void testGetRelevantDataLabelsRemove(List<String> withoutSingle, List<List<String>> withoutMulti, List<String> withSingle,
             List<List<String>> withMulti, Set<String> expectedAddNames, Set<String> expectedRemoveNames) {
 
-        var ctx = buildConstraintAndDictionary(withoutSingle, withoutMulti, withSingle, withMulti);
-        Set<Label> result = ParsingUtils.getRelevantDataLabelsRemove(ctx.dd, List.of(ctx.constraint));
-        assertEquals(resolve(ctx.labelsByName, expectedRemoveNames), result);
+        var context = buildConstraintAndDictionary(withoutSingle, withoutMulti, withSingle, withMulti);
+        Set<Label> result = ParsingUtils.getRelevantDataLabelsRemove(context.dd, List.of(context.constraint));
+        assertEquals(resolve(context.labelsByName, expectedRemoveNames), result);
     }
 
-    private record Ctx(DataDictionary dd, AnalysisConstraint constraint, Map<String, Label> labelsByName) {
+    private record TestContext(DataDictionary dd, AnalysisConstraint constraint, Map<String, Label> labelsByName) {
     }
 
-    private Ctx buildConstraintAndDictionary(List<String> withoutSingle, List<List<String>> withoutMulti, List<String> withSingle,
+    private TestContext buildConstraintAndDictionary(List<String> withoutSingle, List<List<String>> withoutMulti, List<String> withSingle,
             List<List<String>> withMulti) {
 
         DataDictionary dd = ddFactory.createDataDictionary();
@@ -92,13 +92,13 @@ class RelevantDataLabelsTest extends ParsingUtilsTestBase {
                 .toVertex()
                 .create();
 
-        return new Ctx(dd, constraint, labelsByName);
+        return new TestContext(dd, constraint, labelsByName);
     }
 
     private Set<Label> resolve(Map<String, Label> labelsByName, Set<String> names) {
         Set<Label> out = new HashSet<>();
-        for (String n : names)
-            out.add(labelsByName.get(n));
+        for (String name : names)
+            out.add(labelsByName.get(name));
         return out;
     }
 

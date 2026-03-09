@@ -22,7 +22,7 @@ import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.examplemodels.TuhhModels;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.smt.TFGFlow;
+import dev.arcovia.mitigation.smt.FlowInstance;
 import dev.arcovia.mitigation.smt.preprocess.Preprocess;
 import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.ConstraintMapProvider;
@@ -85,9 +85,9 @@ public class PreprocessTest {
                 assertEquals(numFlows, preprocessingResult.flows()
                         .size());
 
-                Map<DFDVertex, List<TFGFlow>> incomingFlowMap = preprocessingResult.vertexIncomingFlows();
-                for (Entry<DFDVertex, List<TFGFlow>> entry : incomingFlowMap.entrySet()) {
-                    for (TFGFlow flow : entry.getValue()) {
+                Map<DFDVertex, List<FlowInstance>> incomingFlowMap = preprocessingResult.vertexIncomingFlows();
+                for (Entry<DFDVertex, List<FlowInstance>> entry : incomingFlowMap.entrySet()) {
+                    for (FlowInstance flow : entry.getValue()) {
                         // Assert each flow actually flows to correct vertex
                         assertEquals(flow.getDestinationVertex(), entry.getKey());
                         // Destination pin of flow is present at node
@@ -105,22 +105,22 @@ public class PreprocessTest {
                                 .getBehavior()
                                 .getOutPin()
                                 .contains(flow.getSourcePin()));
-                        for (Entry<Assignment, List<TFGFlow>> assigns : flow.getThisFlowEvaluatesOn()
+                        for (Entry<Assignment, List<FlowInstance>> assigns : flow.getThisFlowEvaluatesOn()
                                 .entrySet()) {
                             // Source pin of flow actually contains expected assignment
                             assertEquals(assigns.getKey()
                                     .getOutputPin(), flow.getSourcePin());
-                            for (TFGFlow prev : assigns.getValue()) {
+                            for (FlowInstance prev : assigns.getValue()) {
                                 // Evaluated flow actually flows to vertex of our node
                                 assertEquals(prev.getDestinationVertex(), flow.getSourceVertex());
                             }
                         }
-                        for (Entry<ForwardingAssignment, List<TFGFlow>> forwards : flow.getThisFlowForwards()
+                        for (Entry<ForwardingAssignment, List<FlowInstance>> forwards : flow.getThisFlowForwards()
                                 .entrySet()) {
                             // Source pin of flow actually contains expected forward
                             assertEquals(forwards.getKey()
                                     .getOutputPin(), flow.getSourcePin());
-                            for (TFGFlow prev : forwards.getValue()) {
+                            for (FlowInstance prev : forwards.getValue()) {
                                 // Forwarded flow actually flows to vertex of our node
                                 assertEquals(prev.getDestinationVertex(), flow.getSourceVertex());
                             }

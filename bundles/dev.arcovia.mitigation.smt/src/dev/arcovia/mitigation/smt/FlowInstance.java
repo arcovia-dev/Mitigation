@@ -14,33 +14,33 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 /**
  * Represents an instance of a flow of a specific Transpose Flow Graph
  */
-public class TFGFlow {
+public class FlowInstance {
 
     private final Pin sourcePin;
     private final DFDVertex sourceVertex;
     private final Pin destinationPin;
     private final DFDVertex destinationVertex;
-    // DFD Flow that this TFGFlow flows along
+    // DFD Flow that this flow instance flows along
     private final Flow flow;
-    // List of incoming TFG Flows to the same vertex that need to be forwarded,
+    // List of incoming flow instances to the same vertex that need to be forwarded,
     // grouped by Assignment
-    private final Map<ForwardingAssignment, List<TFGFlow>> thisFlowForwards;
-    // List of incoming TFG Flows to the same vertex that each Assignment needs to
+    private final Map<ForwardingAssignment, List<FlowInstance>> thisFlowForwards;
+    // List of incoming flow instances to the same vertex that each Assignment needs to
     // evaluate on
-    private final Map<Assignment, List<TFGFlow>> thisFlowEvaluatesOn;
+    private final Map<Assignment, List<FlowInstance>> thisFlowEvaluatesOn;
 
     private static int counter = 0;
     private final int id;
 
     /**
-     * Constructs a TFG Flow instance given the input entities
-     * @param sourcePin Source Pin of this TFG Flow
-     * @param sourceVertex Source Vertex of this TFG Flow
-     * @param destinationPin Destination Pin of this TFG Flow
-     * @param destinationVertex Destination Vertex of this TFG Flow
-     * @param flow DFD Flow that this TFG Flow represents for a specific TFG
+     * Constructs a flow instance given the input entities
+     * @param sourcePin Source Pin of this Flow Instance
+     * @param sourceVertex Source Vertex of this Flow Instance
+     * @param destinationPin Destination Pin of this Flow Instance
+     * @param destinationVertex Destination Vertex of this Flow Instance
+     * @param flow DFD Flow that this Flow Instance represents for a specific TFG
      */
-    public TFGFlow(Pin sourcePin, DFDVertex sourceVertex, Pin destinationPin, DFDVertex destinationVertex, Flow flow) {
+    public FlowInstance(Pin sourcePin, DFDVertex sourceVertex, Pin destinationPin, DFDVertex destinationVertex, Flow flow) {
         this.sourcePin = sourcePin;
         this.sourceVertex = sourceVertex;
         this.destinationPin = destinationPin;
@@ -70,12 +70,12 @@ public class TFGFlow {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        TFGFlow other = (TFGFlow) obj;
+        FlowInstance other = (FlowInstance) obj;
         return id == other.id;
     }
 
     /**
-     * Returns a reduced String representation of this Flow
+     * Returns a reduced String representation of this Flow instance
      */
     @Override
     public String toString() {
@@ -84,7 +84,7 @@ public class TFGFlow {
     }
 
     /**
-     * Returns the Source pin of this TFG Flow
+     * Returns the Source pin of this Flow instance
      * @return Source Pin
      */
     public Pin getSourcePin() {
@@ -92,7 +92,7 @@ public class TFGFlow {
     }
 
     /**
-     * Returns the source vertex of this TFG Flow
+     * Returns the source vertex of this Flow instance
      * @return Source Vertex
      */
     public DFDVertex getSourceVertex() {
@@ -100,7 +100,7 @@ public class TFGFlow {
     }
 
     /**
-     * Returns the destination pin of this TFG Flow
+     * Returns the destination pin of this Flow instance
      * @return Destination Pin
      */
     public Pin getDestinationPin() {
@@ -108,7 +108,7 @@ public class TFGFlow {
     }
 
     /**
-     * Returns the destination vertex of this TFG Flow
+     * Returns the destination vertex of this Flow instance
      * @return Destination Vertex
      */
     public DFDVertex getDestinationVertex() {
@@ -116,7 +116,7 @@ public class TFGFlow {
     }
 
     /**
-     * Returns the original DFD Flow that this TFG Flow represents a TFG-specific instance of
+     * Returns the original DFD Flow that this Flow instance represents a TFG-specific instance of
      * @return DFD Flow
      */
     public Flow getFlow() {
@@ -124,24 +124,24 @@ public class TFGFlow {
     }
 
     /**
-     * Returns a Map of Forwarding Assignments to the respective TFG Flows that need to be forwarded
+     * Returns a Map of Forwarding Assignments to the respective Flow instances that need to be forwarded
      * @return Forwards Map
      */
-    public Map<ForwardingAssignment, List<TFGFlow>> getThisFlowForwards() {
+    public Map<ForwardingAssignment, List<FlowInstance>> getThisFlowForwards() {
         return thisFlowForwards;
     }
 
     /**
-     * Returns a Map of Assignments to the respective TFG Flows that need to be evaluated
+     * Returns a Map of Assignments to the respective Flow instances that need to be evaluated
      * @return Assignment Map
      */
-    public Map<Assignment, List<TFGFlow>> getThisFlowEvaluatesOn() {
+    public Map<Assignment, List<FlowInstance>> getThisFlowEvaluatesOn() {
         return thisFlowEvaluatesOn;
     }
 
     /**
-     * Returns the id of this TFG Flow
-     * @return TFG Flow Id
+     * Returns the id of this Flow Instance
+     * @return Flow instance id
      */
     public int getId() {
         return id;

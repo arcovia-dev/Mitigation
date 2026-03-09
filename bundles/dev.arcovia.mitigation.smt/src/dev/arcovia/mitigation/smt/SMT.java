@@ -66,8 +66,8 @@ public class SMT {
     private Map<Node, Map<Label, BoolExpr>> nodeLabelRef;
     // Contains the variable Node Labels that the solver modifies to find a solution
     private Map<Node, Map<Label, BoolExpr>> nodeLabels;
-    // Contains the Labels that are propagated along TFG Flows
-    private Map<TFGFlow, Map<Label, BoolExpr>> flowLabels;
+    // Contains the Labels that are propagated along Flow instances
+    private Map<FlowInstance, Map<Label, BoolExpr>> flowLabels;
     // Contains the Set Assignments for each relevant pin x label combination that
     // the solver modifies to find a solution
     private Map<Pin, Map<Label, BoolExpr>> pinSet;
@@ -122,7 +122,7 @@ public class SMT {
 
         // Z3 Expression that represents the cost function
         costFunction = costFunctionBuilder.build();
-        // Encodes propagated labels for TFG Flows into Z3 Expressions
+        // Encodes propagated labels for Flow instances into Z3 Expressions
         createDataFlowExpressions();
         // Asserts the user supplied Confidentiality constraints
         createUserConstraints(constraints);
@@ -305,11 +305,11 @@ public class SMT {
     }
 
     /**
-     * Creates label expressions for a TFG Flow
-     * @param flow The flow that expressions will be created for
-     * @param outPinToAss Mapping of Output pins to their respective assignments
+     * Creates label expressions for a Flow instance
+     * @param flow The flow instances that expressions will be created for
+     * @param outPinToAssignments Mapping of Output pins to their respective assignments
      */
-    private void createDataFlowExpression(TFGFlow flow, Map<Pin, List<AbstractAssignment>> outPinToAss) {
+    private void createDataFlowExpression(FlowInstance flow, Map<Pin, List<AbstractAssignment>> outPinToAssignments) {
         // If the expression for this flow has already been created just return. May
         // happen because of recursion
         if (flowLabels.get(flow) != null) {
@@ -320,14 +320,14 @@ public class SMT {
             // For forwarding assignments
             flow.getThisFlowForwards()
                     .values()
-                    .forEach(x -> x.forEach(y -> createDataFlowExpression(y, outPinToAss)));
+                    .forEach(x -> x.forEach(y -> createDataFlowExpression(y, outPinToAssignments)));
             // For Assign Assignments
             flow.getThisFlowEvaluatesOn()
                     .values()
-                    .forEach(x -> x.forEach(y -> createDataFlowExpression(y, outPinToAss)));
+                    .forEach(x -> x.forEach(y -> createDataFlowExpression(y, outPinToAssignments)));
             flowLabels.put(flow, new HashMap<>());
             Pin pin = flow.getSourcePin();
-            List<AbstractAssignment> assignments = outPinToAss.get(pin);
+            List<AbstractAssignment> assignments = outPinToAssignments.get(pin);
             // The expression have to be defined for all relevant labels, even if not all
             // can be added or removed.
             // This is important so the constraints can later be created on these
@@ -356,9 +356,9 @@ public class SMT {
                         labelExpr = context.mkFalse();
                     } else if (assignment instanceof ForwardingAssignment cast) {
                         // Forward assignments are evaluated using the preceeding flows (may be emptry).
-                        List<TFGFlow> forward = flow.getThisFlowForwards()
+                        List<FlowInstance> forward = flow.getThisFlowForwards()
                                 .getOrDefault(cast, new ArrayList<>());
-                        for (TFGFlow preceedingFlow : forward) {
+                        for (FlowInstance preceedingFlow : forward) {
                             // Fetch label expression for previous flow
                             BoolExpr preLabel = flowLabels.get(preceedingFlow)
                                     .get(label);
@@ -370,7 +370,7 @@ public class SMT {
                     } else if (assignment instanceof Assignment cast && cast.getOutputLabels()
                             .contains(label)) {
                         // Find relevant flows that the term needs to be evaluated on.
-                        List<TFGFlow> evaluateOn = flow.getThisFlowEvaluatesOn()
+                        List<FlowInstance> evaluateOn = flow.getThisFlowEvaluatesOn()
                                 .getOrDefault(cast, new ArrayList<>());
                         // The label is propagated if the term evaluates to true, else it is not
                         // propagated, therefore earlier
@@ -408,8 +408,8 @@ public class SMT {
      * Creates Dataflow expressions for all flows
      */
     private void createDataFlowExpressions() {
-        Set<TFGFlow> allFlows = preprocesingResult.flows();
-        Map<Pin, List<AbstractAssignment>> outPinToAss = ParsingUtils.outPinToAssignments(preprocesingResult.dfd()
+        Set<FlowInstance> allFlows = preprocesingResult.flows();
+        Map<Pin, List<AbstractAssignment>> outPinToAssignments = ParsingUtils.outPinToAssignments(preprocesingResult.dfd()
                 .dataFlowDiagram()
                 .getNodes());
         // Dataflow Expressions only have to be created if data labels are relevant.
@@ -419,8 +419,8 @@ public class SMT {
                 .isEmpty()
                 || !preprocesingResult.relevantDataLabelsRemove()
                         .isEmpty())) {
-            for (TFGFlow flow : allFlows) {
-                createDataFlowExpression(flow, outPinToAss);
+            for (FlowInstance flow : allFlows) {
+                createDataFlowExpression(flow, outPinToAssignments);
             }
         }
     }
@@ -431,7 +431,7 @@ public class SMT {
      * @param evaluateOn Incoming Flows that the Label References of this Term will be evaluated on
      * @return Expression that encodes the term
      */
-    private BoolExpr createTerm(Term term, List<TFGFlow> evaluateOn) {
+    private BoolExpr createTerm(Term term, List<FlowInstance> evaluateOn) {
         // Base case
         if (term instanceof TRUE) {
             return context.mkTrue();
@@ -457,7 +457,7 @@ public class SMT {
         } else if (term instanceof LabelReference cast) {
             Label label = cast.getLabel();
             List<BoolExpr> incomingMatches = new ArrayList<>();
-            for (TFGFlow f : evaluateOn) {
+            for (FlowInstance f : evaluateOn) {
                 BoolExpr evaluateLabel = flowLabels.get(f)
                         .get(label);
                 incomingMatches.add(evaluateLabel);
@@ -691,15 +691,15 @@ public class SMT {
      * Returns a map of all DFDVertices to their respective incoming flows
      * @return Incoming Flows Map
      */
-    public Map<DFDVertex, List<TFGFlow>> getVertexIncomingFlows() {
+    public Map<DFDVertex, List<FlowInstance>> getVertexIncomingFlows() {
         return preprocesingResult.vertexIncomingFlows();
     }
 
     /**
-     * Returns a Map of mappings of TFG Flow Labels to their respective label expressions
+     * Returns a Map of mappings of Flow instance Labels to their respective label expressions
      * @return Flow Label Map
      */
-    public Map<TFGFlow, Map<Label, BoolExpr>> getFlowLabels() {
+    public Map<FlowInstance, Map<Label, BoolExpr>> getFlowLabels() {
         return flowLabels;
     }
 

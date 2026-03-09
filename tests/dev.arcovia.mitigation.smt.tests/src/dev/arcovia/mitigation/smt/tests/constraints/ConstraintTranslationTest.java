@@ -23,6 +23,11 @@ import dev.arcovia.mitigation.smt.preprocess.PreprocessingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.ConstraintMapProvider;
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
+/**
+ * This test predates the implementation of selector specific tests. 
+ * It simply tests if the formula for any vertex is within the set of allowed formulas.
+ *
+ */
 public class ConstraintTranslationTest {
 
     @Test

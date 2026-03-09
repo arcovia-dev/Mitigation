@@ -119,10 +119,10 @@ public final class ConstraintMapProvider {
     }
 
     public static List<AnalysisConstraint> getOrThrow(int variantId) {
-        List<AnalysisConstraint> c = CONSTRAINTS.get(variantId);
-        if (c == null)
+        List<AnalysisConstraint> constraint = CONSTRAINTS.get(variantId);
+        if (constraint == null)
             throw new IllegalArgumentException("Constraint undefined: " + variantId);
-        return c;
+        return constraint;
     }
 
     public void printConstraints() {

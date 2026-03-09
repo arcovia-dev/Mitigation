@@ -12,7 +12,7 @@ import org.dataflowanalysis.dfd.datadictionary.Label;
 import com.microsoft.z3.BoolExpr;
 
 import dev.arcovia.mitigation.smt.SMT;
-import dev.arcovia.mitigation.smt.TFGFlow;
+import dev.arcovia.mitigation.smt.FlowInstance;
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
 
 /**
@@ -29,7 +29,7 @@ final class DataCharacteristicsHandler extends AbstractSelectorHandler<DataChara
 
         List<BoolExpr> flowsMatch = new ArrayList<>();
 
-        for (TFGFlow flow : smt.getVertexIncomingFlows()
+        for (FlowInstance flow : smt.getVertexIncomingFlows()
                 .getOrDefault(vertex, List.of())) {
             Map<Label, BoolExpr> flowLabelMap = smt.getFlowLabels()
                     .get(flow);

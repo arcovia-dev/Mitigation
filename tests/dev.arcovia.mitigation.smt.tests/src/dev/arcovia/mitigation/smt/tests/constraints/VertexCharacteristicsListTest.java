@@ -51,7 +51,7 @@ public class VertexCharacteristicsListTest extends AbstractSelectorConstraintTes
     }
 
     /**
-     * Contains Test cases Vertex Characteristics List should not act recursive as a source selector
+     * Contains Test cases if Vertex Characteristics List should not act recursive as a source selector
      * @return test cases
      */
     private static Stream<SelectorTestCase> vertexCharacteristicsListSourceCasesIfNonRecursive() {

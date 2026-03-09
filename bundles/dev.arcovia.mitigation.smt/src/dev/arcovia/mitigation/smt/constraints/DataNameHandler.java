@@ -9,7 +9,7 @@ import org.dataflowanalysis.analysis.dsl.selectors.VariableNameSelector;
 import com.microsoft.z3.BoolExpr;
 
 import dev.arcovia.mitigation.smt.SMT;
-import dev.arcovia.mitigation.smt.TFGFlow;
+import dev.arcovia.mitigation.smt.FlowInstance;
 
 /**
  * Selector translation logic for Data Name selectors
@@ -23,7 +23,7 @@ final class DataNameHandler extends AbstractSelectorHandler<VariableNameSelector
         String selectorName = selector.getVariableName();
 
         List<BoolExpr> flowsMatch = new ArrayList<>();
-        for (TFGFlow flow : smt.getVertexIncomingFlows()
+        for (FlowInstance flow : smt.getVertexIncomingFlows()
                 .getOrDefault(vertex, List.of())) {
             // Because flow names are not modifiable, we can statically evaluate this at encoding time
             if (flow.getFlow()

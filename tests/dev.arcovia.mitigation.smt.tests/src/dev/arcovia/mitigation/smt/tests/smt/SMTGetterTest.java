@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.z3.BoolExpr;
 
 import dev.arcovia.mitigation.smt.SMT;
-import dev.arcovia.mitigation.smt.TFGFlow;
+import dev.arcovia.mitigation.smt.FlowInstance;
 import dev.arcovia.mitigation.smt.config.Config;
 import dev.arcovia.mitigation.smt.config.ConfigBuilder;
 import dev.arcovia.mitigation.smt.preprocess.Preprocess;
@@ -58,7 +58,7 @@ public class SMTGetterTest {
                 // SMT operates on data dictionary with added labels
                 assertEquals(smt.getDataDictionary(), dfdWithAddedLabels.dataDictionary());
 
-                Map<TFGFlow, Map<Label, BoolExpr>> flowLabels = smt.getFlowLabels();
+                Map<FlowInstance, Map<Label, BoolExpr>> flowLabels = smt.getFlowLabels();
                 // If flow labels are encoded, every flow has labels. Otherwise none
                 if (!(pre.relevantDataLabelsAdd()
                         .isEmpty()
@@ -105,9 +105,9 @@ public class SMTGetterTest {
                 }
 
                 // Vertex incoming flows actually flow to vertex
-                Map<DFDVertex, List<TFGFlow>> vertexIncomingFlows = smt.getVertexIncomingFlows();
-                for (Entry<DFDVertex, List<TFGFlow>> entry : vertexIncomingFlows.entrySet()) {
-                    for (TFGFlow flow : entry.getValue()) {
+                Map<DFDVertex, List<FlowInstance>> vertexIncomingFlows = smt.getVertexIncomingFlows();
+                for (Entry<DFDVertex, List<FlowInstance>> entry : vertexIncomingFlows.entrySet()) {
+                    for (FlowInstance flow : entry.getValue()) {
                         assertEquals(entry.getKey(), flow.getDestinationVertex());
                         assertTrue(entry.getKey()
                                 .getReferencedElement()

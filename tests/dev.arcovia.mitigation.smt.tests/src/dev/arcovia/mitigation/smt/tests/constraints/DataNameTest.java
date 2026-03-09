@@ -30,7 +30,6 @@ public class DataNameTest extends AbstractSelectorConstraintTest {
         secondConstr.addDataSourceSelector(notMatches);
 
         return Stream.of(
-                // Sink constraint should only be satisfied when the label is removed.
                 new SelectorTestCase("with right flow name -> false", firstConstr, List.of(TRUE), List.of(FALSE)),
                 new SelectorTestCase("with wrong flow name -> true", secondConstr, List.of(TRUE), List.of(TRUE)));
     }

@@ -18,8 +18,7 @@ import tools.mdsd.library.standalone.initialization.StandaloneInitializationExce
 public class Mitigation {
 
     /**
-     * Repairs DFD. First it preprocesses, using existing DFA tooling, creates mappings of DFD entities to integers, and
-     * finally repairs
+     * Repairs DFD. First it preprocesses, using existing DFA tooling, encodes into Z3 and finally repairs
      * @param dfd Input dataflow Diagram
      * @param constraints Constraints that the output needs to adhere too
      * @param config Chosen config. If null, the default config is used.
