@@ -14,10 +14,10 @@ import com.microsoft.z3.Expr;
 public class Z3CountingUtils {
 
     /**
-     * Counts AST nodes in an array of BoolExpr (Expression tree size). Adds the expression tree size of all root
+     * Counts nodes in an array of BoolExpr (Expression tree size). Adds the expression tree size of all root
      * expressions.
      */
-    public static long countAstNodes(BoolExpr[] exprs) {
+    public static long countExpressionTreesSize(BoolExpr[] exprs) {
         long total = 0;
 
         for (BoolExpr expr : exprs) {

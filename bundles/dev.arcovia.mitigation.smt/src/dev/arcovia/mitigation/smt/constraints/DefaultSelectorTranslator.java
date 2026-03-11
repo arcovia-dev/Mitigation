@@ -60,30 +60,24 @@ public final class DefaultSelectorTranslator implements SelectorTranslator {
         if (handler instanceof DataCharacteristicsHandler castHandler && selector instanceof DataCharacteristicsSelector castSelector) {
             return castHandler.encode(castSelector, vertex, smt);
         }
-
-        if (handler instanceof DataCharacteristicListHandler castHandler && selector instanceof DataCharacteristicListSelector castSelector) {
+        else if (handler instanceof DataCharacteristicListHandler castHandler && selector instanceof DataCharacteristicListSelector castSelector) {
             return castHandler.encode(castSelector, vertex, smt);
         }
-
-        if (handler instanceof DataNameHandler castHandler && selector instanceof VariableNameSelector castSelector) {
+        else if (handler instanceof DataNameHandler castHandler && selector instanceof VariableNameSelector castSelector) {
             return castHandler.encode(castSelector, vertex, smt);
         }
-
-        if (handler instanceof VertexCharacteristicListHandler castHandler && selector instanceof VertexCharacteristicsListSelector castSelector) {
+        else if (handler instanceof VertexCharacteristicListHandler castHandler && selector instanceof VertexCharacteristicsListSelector castSelector) {
             return castHandler.encode(castSelector, vertex, smt);
         }
-
-        if (handler instanceof VertexTypeHandler castHandler && selector instanceof VertexTypeSelector castSelector) {
+        else if (handler instanceof VertexTypeHandler castHandler && selector instanceof VertexTypeSelector castSelector) {
             return castHandler.encode(castSelector, vertex, smt);
         }
-
-        if (handler instanceof VertexNameHandler castHandler && selector instanceof VertexNameSelector castSelector) {
+        else if (handler instanceof VertexNameHandler castHandler && selector instanceof VertexNameSelector castSelector) {
             return castHandler.encode(castSelector, vertex, smt);
         }
-
-        if (handler instanceof VertexCharacteristicsHandler castHandler && selector instanceof VertexCharacteristicsSelector castSelector) {
+        else if (handler instanceof VertexCharacteristicsHandler castHandler && selector instanceof VertexCharacteristicsSelector castSelector) {
             return castHandler.encode(castSelector, vertex, smt);
-        }
+        } 
 
         throw new IllegalArgumentException("Handler " + handler.getClass()
                 .getName() + " cannot encode selector "

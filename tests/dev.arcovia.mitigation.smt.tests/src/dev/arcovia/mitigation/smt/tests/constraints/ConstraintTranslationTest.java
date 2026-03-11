@@ -51,20 +51,30 @@ public class ConstraintTranslationTest {
                     .toString());
         }
 
-        List<String> expectedExprs = List
-                .of("true",
-                        "(not (and (not Pin_37_unset_entrypoint)\n" + "          (not Pin_34_unset_entrypoint)\n"
-                                + "          (not (or Pin_34_set_encrypted_connection\n" + "                   Pin_37_set_encrypted_connection\n"
-                                + "                   Pin_30_set_encrypted_connection))))",
-                        "(not (and (not Pin_42_unset_entrypoint)\n"
-                                + "          (not (or Pin_42_set_encrypted_connection\n" + "                   Pin_30_set_encrypted_connection))))",
-                        "true",
-                        "(not (and (not Pin_37_unset_entrypoint)\n" + "          (not (or Pin_37_set_encrypted_connection\n"
-                                + "                   Pin_30_set_encrypted_connection))))",
-                        "true", "(not (and (not Pin_39_unset_entrypoint)\n" + "          (not (or Pin_39_set_encrypted_connection\n"
-                                + "                   Pin_30_set_encrypted_connection))))",
-                        "true", "true");
-
+        List<String> expectedExprs = List.of(
+                "true",
+                String.join("\n",
+                        "(not (and (not Pin_37_unset_entrypoint)",
+                        "          (not Pin_34_unset_entrypoint)",
+                        "          (not (or Pin_34_set_encrypted_connection",
+                        "                   Pin_37_set_encrypted_connection",
+                        "                   Pin_30_set_encrypted_connection))))"),
+                String.join("\n",
+                        "(not (and (not Pin_42_unset_entrypoint)",
+                        "          (not (or Pin_42_set_encrypted_connection",
+                        "                   Pin_30_set_encrypted_connection))))"),
+                "true",
+                String.join("\n",
+                        "(not (and (not Pin_37_unset_entrypoint)",
+                        "          (not (or Pin_37_set_encrypted_connection",
+                        "                   Pin_30_set_encrypted_connection))))"),
+                "true",
+                String.join("\n",
+                        "(not (and (not Pin_39_unset_entrypoint)",
+                        "          (not (or Pin_39_set_encrypted_connection",
+                        "                   Pin_30_set_encrypted_connection))))"),
+                "true",
+                "true");
         Set<String> actual = new HashSet<>(actualExprs);
         assertTrue(actual.containsAll(expectedExprs));
         assertEquals(new HashSet<>(expectedExprs), actual);

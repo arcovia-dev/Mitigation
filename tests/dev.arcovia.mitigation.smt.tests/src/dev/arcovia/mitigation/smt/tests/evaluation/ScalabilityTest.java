@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Disabled;
@@ -23,6 +24,7 @@ import dev.arcovia.mitigation.smt.utils.ParsingUtils;
  * @author Nikolas Rank Compares the runtime of SMT to SAT when different scalability dimensions are considered
  */
 public class ScalabilityTest {
+    private static final Logger logger = Logger.getLogger(ScalabilityTest.class);
 
     private static final int RUNS_PER_CONFIGURATION = 10;
     private static final long MAX_TIME_MILLIS = TimeUnit.MINUTES.toMillis(60);
@@ -120,7 +122,8 @@ public class ScalabilityTest {
             }
             results.add(new SATScalabilityResult(scaleOrExp, RUNS_PER_CONFIGURATION, totalRuntimeSat, satRuntimes));
             EvaluationSupport.writeJson(outPath, results);
-            System.out.println("Wrote results to " + outPath);
+            
+            logger.info("Wrote results to " + outPath);
 
             scale++;
             scaleOrExp = maybeExponentiate(scale, name);

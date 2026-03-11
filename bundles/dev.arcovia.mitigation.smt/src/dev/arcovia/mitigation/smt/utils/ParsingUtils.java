@@ -58,12 +58,12 @@ public class ParsingUtils {
     /**
      * Maps characteristisc to Labels, given a contextual datadictionary
      * @param dd Datadictionary that contains labels
-     * @param chars Incoming Characteristics
+     * @param characteristics Incoming Characteristics
      * @return List of labels encoded in characteristics
      */
-    public static Set<Label> getLabelsForCharacteristics(DataDictionary dd, List<CharacteristicsSelectorData> chars) {
+    public static Set<Label> getLabelsForCharacteristics(DataDictionary dd, List<CharacteristicsSelectorData> characteristics) {
         Set<Label> result = new HashSet<>();
-        for (CharacteristicsSelectorData data : chars) {
+        for (CharacteristicsSelectorData data : characteristics) {
             LabelType labelType = getLabelTypeByName(dd, data.characteristicType()
                     .toString());
             Label label = getLabelByName(labelType, data.characteristicValue()

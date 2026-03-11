@@ -47,9 +47,9 @@ final class VertexCharacteristicListHandler extends AbstractSelectorHandler<Vert
         if (selector.isRecursive()) {
             List<BoolExpr> anyMatches = new ArrayList<BoolExpr>();
             anyMatches.add(result);
-            for (AbstractVertex<?> prevAbstract : vertex.getPreviousElements()) {
-                DFDVertex prev = (DFDVertex) prevAbstract;
-                anyMatches.add(encode(selector, prev, smt));
+            for (AbstractVertex<?> prevAbstractVertex : vertex.getPreviousElements()) {
+                DFDVertex prevDfdVertex = (DFDVertex) prevAbstractVertex;
+                anyMatches.add(encode(selector, prevDfdVertex, smt));
             }
             return context.mkOr(anyMatches.toArray(new BoolExpr[0]));
         } else {

@@ -28,20 +28,20 @@ public class LabelOperation extends DataDictionaryOperation {
     @Override
     public DataFlowDiagramAndDictionary doOperation(DataFlowDiagramAndDictionary dfd) {
         // Find correct label type
-        Optional<LabelType> opt = dfd.dataDictionary()
+        Optional<LabelType> optionalLabelType = dfd.dataDictionary()
                 .getLabelTypes()
                 .stream()
                 .filter(x -> x.getEntityName()
                         .equals(type))
                 .findFirst();
-        if (opt.isEmpty()) {
+        if (optionalLabelType.isEmpty()) {
             logger.debug("Couldn't find label type " + type);
         } else {
             // Add label
             Label label = factory.createLabel();
             label.setEntityName(name);
             label.setId(id);
-            opt.get()
+            optionalLabelType.get()
                     .getLabel()
                     .add(label);
         }
@@ -51,17 +51,17 @@ public class LabelOperation extends DataDictionaryOperation {
     @Override
     public DataFlowDiagramAndDictionary undoOperation(DataFlowDiagramAndDictionary dfd) {
         // Find correct label type
-        Optional<LabelType> opt = dfd.dataDictionary()
+        Optional<LabelType> optionalLabelType = dfd.dataDictionary()
                 .getLabelTypes()
                 .stream()
                 .filter(x -> x.getEntityName()
                         .equals(type))
                 .findFirst();
-        if (opt.isEmpty()) {
+        if (optionalLabelType.isEmpty()) {
             logger.debug("Couldn't find label type " + type);
         } else {
             // Remove label
-            opt.get()
+            optionalLabelType.get()
                     .getLabel()
                     .removeIf(x -> x.getEntityName()
                             .equals(name));

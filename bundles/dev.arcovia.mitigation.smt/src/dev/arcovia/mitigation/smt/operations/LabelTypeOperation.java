@@ -22,12 +22,12 @@ public class LabelTypeOperation extends DataDictionaryOperation {
 
     @Override
     public DataFlowDiagramAndDictionary doOperation(DataFlowDiagramAndDictionary dfd) {
-        LabelType newType = factory.createLabelType();
-        newType.setEntityName(name);
-        newType.setId(id);
+        LabelType newLabelType = factory.createLabelType();
+        newLabelType.setEntityName(name);
+        newLabelType.setId(id);
         dfd.dataDictionary()
                 .getLabelTypes()
-                .add(newType);
+                .add(newLabelType);
         logger.debug("Added Label Type " + name);
         return dfd;
     }

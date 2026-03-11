@@ -120,8 +120,8 @@ public class Preprocess {
                 .filter(Assignment.class::isInstance)
                 .map(Assignment.class::cast)
                 .toList();
-        boolean changed;
-        do {
+        boolean changed = true;
+        while (changed) {   
             changed = false;
             for (Assignment assignment : assignStatements) {
                 /// only consider assignments that could add or remove relevant labels
@@ -143,8 +143,8 @@ public class Preprocess {
                     }
                 }
             }
-        } while (changed);
-
+        } 
+        
         DFDModelResourceProvider dfdModelResourceProvider = new DFDModelResourceProvider(dd, dfd);
         DFDConfidentialityAnalysis dfdConfidentialityAnalysis = new DFDDataFlowAnalysisBuilder().standalone()
                 .useCustomResourceProvider(dfdModelResourceProvider)

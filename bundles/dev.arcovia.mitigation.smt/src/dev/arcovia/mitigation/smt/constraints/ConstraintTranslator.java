@@ -33,25 +33,25 @@ public class ConstraintTranslator {
     /**
      * Creates a Boolean expression, that encodes that the given Vertex DOES NOT match the given constraint. In general a
      * constraint matches, if all selectors match.
-     * @param constr input constraint
+     * @param constraint input constraint
      * @param vertex input vertex
      * @return Created expression
      */
-    public BoolExpr translateConstraint(AnalysisConstraint constr, DFDVertex vertex) {
+    public BoolExpr translateConstraint(AnalysisConstraint constraint, DFDVertex vertex) {
         // Differentiate selectors into their roles.
-        List<AbstractSelector> dataSource = constr.getDataSourceSelectors()
+        List<AbstractSelector> dataSource = constraint.getDataSourceSelectors()
                 .getSelectors();
-        List<AbstractSelector> vertexSource = constr.getVertexSourceSelectors()
+        List<AbstractSelector> vertexSource = constraint.getVertexSourceSelectors()
                 .getSelectors();
-        List<AbstractSelector> vertexDestination = constr.getVertexDestinationSelectors()
+        List<AbstractSelector> vertexDestination = constraint.getVertexDestinationSelectors()
                 .getSelectors();
 
         Context context = smt.getContext();
 
         // Vertex Destination Selectors
         List<BoolExpr> allDestinationSelectors = new ArrayList<>();
-        for (AbstractSelector dstSelector : vertexDestination) {
-            allDestinationSelectors.add(selectorTranslator.toBool(dstSelector, vertex));
+        for (AbstractSelector destinationSelector : vertexDestination) {
+            allDestinationSelectors.add(selectorTranslator.toBool(destinationSelector, vertex));
         }
         // This evaluates to true, if no destination selectors are present
         BoolExpr allDestinationSatisfied = context.mkAnd(allDestinationSelectors.toArray(new BoolExpr[0]));

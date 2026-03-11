@@ -72,10 +72,10 @@ public abstract class AbstractSelectorConstraintTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("cases")
-    public void selectorConstraintTranslatesAsExpected(SelectorTestCase tc) {
+    public void selectorConstraintTranslatesAsExpected(SelectorTestCase testCase) {
         DataFlowDiagramAndDictionary dfdAndDD = DFDProvider.buildTestCase();
 
-        AnalysisConstraint constraint = tc.constraint();
+        AnalysisConstraint constraint = testCase.constraint();
         List<AnalysisConstraint> constraints = new ArrayList<>();
         constraints.add(constraint);
 
@@ -118,15 +118,15 @@ public abstract class AbstractSelectorConstraintTest {
 
         String sourceFormula = ((BoolExpr) translator.translateConstraint(constraint, sourceVertex)
                 .simplify()).toString();
-        assertTrue(tc.validSourceFormulas()
+        assertTrue(testCase.validSourceFormulas()
                 .contains(sourceFormula),
-                () -> "Unexpected source formula: " + sourceFormula.toString() + " \nExpected one of: " + tc.validSourceFormulas() + "\nActual: "
+                () -> "Unexpected source formula: " + sourceFormula.toString() + " \nExpected one of: " + testCase.validSourceFormulas() + "\nActual: "
                         + sourceFormula);
         String sinkFormula = ((BoolExpr) translator.translateConstraint(constraint, sinkVertex)
                 .simplify()).toString();
-        assertTrue(tc.validSinkFormulas()
+        assertTrue(testCase.validSinkFormulas()
                 .contains(sinkFormula),
-                () -> "Unexpected sink formula: " + sinkFormula.toString() + "\nExpected one of: " + tc.validSinkFormulas() + "\nActual: "
+                () -> "Unexpected sink formula: " + sinkFormula.toString() + "\nExpected one of: " + testCase.validSinkFormulas() + "\nActual: "
                         + sinkFormula);
 
     }

@@ -63,17 +63,17 @@ public class SMT {
     private Config config;
     private List<AnalysisConstraint> constraints;
     // Contains the Node Labels for each relevant Label in the input DFD
-    private Map<Node, Map<Label, BoolExpr>> nodeLabelRef;
+    private Map<Node, Map<Label, BoolExpr>> nodeLabelInput;
     // Contains the variable Node Labels that the solver modifies to find a solution
     private Map<Node, Map<Label, BoolExpr>> nodeLabels;
     // Contains the Labels that are propagated along Flow instances
     private Map<FlowInstance, Map<Label, BoolExpr>> flowLabels;
     // Contains the Set Assignments for each relevant pin x label combination that
     // the solver modifies to find a solution
-    private Map<Pin, Map<Label, BoolExpr>> pinSet;
+    private Map<Pin, Map<Label, BoolExpr>> pinNewSetAssignments;
     // Contains the Unset Assignments for each relevant pin x label combination that
     // the solver modifies to find a solution
-    private Map<Pin, Map<Label, BoolExpr>> pinUnset;
+    private Map<Pin, Map<Label, BoolExpr>> pinNewUnsetAssignments;
 
     // This flag can be set to true so the solver prints statistics to stdout during
     // solving
@@ -81,11 +81,11 @@ public class SMT {
 
     /**
      * The constructor encodes the problem into the Z3 Solver.
-     * @param pre The preprocessing result that is used as a basis for encoding
+     * @param preprocessingResult The preprocessing result that is used as a basis for encoding
      * @param constraints The user-supplied neverFlows constraints
      * @param config The solving configuration
      */
-    public SMT(PreprocessingResult pre, List<AnalysisConstraint> constraints, Config config) {
+    public SMT(PreprocessingResult preprocessingResult, List<AnalysisConstraint> constraints, Config config) {
         this.config = config;
         this.constraints = constraints;
         Z3NativeLoader.ensureLoaded();
@@ -94,12 +94,12 @@ public class SMT {
         }
         this.context = new Context();
         this.optimize = context.mkOptimize();
-        this.preprocesingResult = pre;
-        nodeLabelRef = new HashMap<>();
+        this.preprocesingResult = preprocessingResult;
+        nodeLabelInput = new HashMap<>();
         nodeLabels = new HashMap<>();
         flowLabels = new HashMap<>();
-        pinSet = new HashMap<>();
-        pinUnset = new HashMap<>();
+        pinNewSetAssignments = new HashMap<>();
+        pinNewUnsetAssignments = new HashMap<>();
         // Initializes Nodes and Pins
         initializeStructure();
 
@@ -110,9 +110,9 @@ public class SMT {
         }
 
         // Label Costs are parsed from Strings to the concrete Label obejcts
-        Map<Label, Integer> addLabelCost = ParsingUtils.transformLabelCosts(pre.dfd()
+        Map<Label, Integer> addLabelCost = ParsingUtils.transformLabelCosts(preprocessingResult.dfd()
                 .dataDictionary(), costConfig.addLabelCost());
-        Map<Label, Integer> removeLabelCost = ParsingUtils.transformLabelCosts(pre.dfd()
+        Map<Label, Integer> removeLabelCost = ParsingUtils.transformLabelCosts(preprocessingResult.dfd()
                 .dataDictionary(), costConfig.removeLabelCost());
 
         CostFunction costFunctionBuilder = CostFunction.create(context);
@@ -141,25 +141,25 @@ public class SMT {
     private CostFunction addNodeLabelCosts(CostFunction cost, CostConfig costConfig, Map<Label, Integer> addLabelCost,
             Map<Label, Integer> removeLabelCost) {
         // For all nodes that have modifiable labels
-        for (Entry<Node, Map<Label, BoolExpr>> map : nodeLabelRef.entrySet()) {
+        for (Entry<Node, Map<Label, BoolExpr>> thisNodeModifiableLabels : nodeLabelInput.entrySet()) {
             // Find the weight of this modifying labels on this node. Defaults to 1
             int nodeCost = costConfig.nodeFactor()
-                    .getOrDefault(map.getKey(), 1);
+                    .getOrDefault(thisNodeModifiableLabels.getKey(), 1);
             // For all modifiable labels
-            for (Entry<Label, BoolExpr> ref : map.getValue()
+            for (Entry<Label, BoolExpr> modifiableLabel : thisNodeModifiableLabels.getValue()
                     .entrySet()) {
                 // Node Label Addition if the node does not have the label
-                if (!map.getKey()
+                if (!thisNodeModifiableLabels.getKey()
                         .getProperties()
-                        .contains(ref.getKey())) {
+                        .contains(modifiableLabel.getKey())) {
                     // Add the cost. If label cost for addition is not defined, default to 1
-                    cost.add(nodeLabels.get(map.getKey())
-                            .get(ref.getKey()), ref.getValue(), addLabelCost.getOrDefault(ref.getKey(), 1) * nodeCost);
+                    cost.add(nodeLabels.get(thisNodeModifiableLabels.getKey())
+                            .get(modifiableLabel.getKey()), modifiableLabel.getValue(), addLabelCost.getOrDefault(modifiableLabel.getKey(), 1) * nodeCost);
                     // Node Label Removal if the node already has the label
                 } else {
                     // If label cost for removal is not defined default to 1
-                    cost.add(nodeLabels.get(map.getKey())
-                            .get(ref.getKey()), ref.getValue(), removeLabelCost.getOrDefault(ref.getKey(), 1) * nodeCost);
+                    cost.add(nodeLabels.get(thisNodeModifiableLabels.getKey())
+                            .get(modifiableLabel.getKey()), modifiableLabel.getValue(), removeLabelCost.getOrDefault(modifiableLabel.getKey(), 1) * nodeCost);
                 }
             }
         }
@@ -175,15 +175,15 @@ public class SMT {
      */
     private CostFunction addPinSetCosts(CostFunction cost, CostConfig costConfig, Map<Label, Integer> addLabelCost) {
         // For all pins that could add labels
-        for (Entry<Pin, Map<Label, BoolExpr>> map : pinSet.entrySet()) {
+        for (Entry<Pin, Map<Label, BoolExpr>> thisPinSetLabels : pinNewSetAssignments.entrySet()) {
             // If pin factor is defined fetch it here, default 1
             int pinCost = costConfig.pinFactor()
-                    .getOrDefault(map.getKey(), 1);
+                    .getOrDefault(thisPinSetLabels.getKey(), 1);
             // For all labels that this pin could set
-            for (Entry<Label, BoolExpr> set : map.getValue()
+            for (Entry<Label, BoolExpr> setLabel : thisPinSetLabels.getValue()
                     .entrySet()) {
                 // Add cost for adding label, label cost dfaults to 1
-                cost.add(set.getValue(), context.mkFalse(), addLabelCost.getOrDefault(set.getKey(), 1) * pinCost);
+                cost.add(setLabel.getValue(), context.mkFalse(), addLabelCost.getOrDefault(setLabel.getKey(), 1) * pinCost);
             }
         }
         return cost;
@@ -198,15 +198,15 @@ public class SMT {
      */
     private CostFunction addPinUnsetCosts(CostFunction cost, CostConfig costConfig, Map<Label, Integer> removeLabelCosts) {
         // For all pins that could remove labels
-        for (Entry<Pin, Map<Label, BoolExpr>> map : pinUnset.entrySet()) {
+        for (Entry<Pin, Map<Label, BoolExpr>> thisPinUnsetLabels : pinNewUnsetAssignments.entrySet()) {
             // If pin factor is defined fetch it here, default 1
             int pinCost = costConfig.pinFactor()
-                    .getOrDefault(map.getKey(), 1);
+                    .getOrDefault(thisPinUnsetLabels.getKey(), 1);
             // For all labels that this pin could remove
-            for (Entry<Label, BoolExpr> unset : map.getValue()
+            for (Entry<Label, BoolExpr> unsetLabel : thisPinUnsetLabels.getValue()
                     .entrySet()) {
                 // Add cost. If removal cost is undefined default to 1
-                cost.add(unset.getValue(), context.mkFalse(), removeLabelCosts.getOrDefault(unset.getKey(), 1) * pinCost);
+                cost.add(unsetLabel.getValue(), context.mkFalse(), removeLabelCosts.getOrDefault(unsetLabel.getKey(), 1) * pinCost);
             }
         }
         return cost;
@@ -255,14 +255,14 @@ public class SMT {
         } else {
             // Fetch variable assignment
             Model model = optimize.getModel();
-            Optional<Long> expressionTreeSize;
+            Optional<Long> expressionTreeSizeOptional;
             // If expression tree size is requested, calculate it here
             if (config.findExpressionTreeSize()) {
                 BoolExpr[] assertions = optimize.getAssertions();
-                long astNodes = Z3CountingUtils.countAstNodes(assertions);
-                expressionTreeSize = Optional.of(astNodes);
+                long expressionTreeSize = Z3CountingUtils.countExpressionTreesSize(assertions);
+                expressionTreeSizeOptional = Optional.of(expressionTreeSize);
             } else {
-                expressionTreeSize = Optional.empty();
+                expressionTreeSizeOptional = Optional.empty();
             }
             // Find cost
             IntExpr costValExpr = (IntExpr) model.eval(costFunction, true);
@@ -283,7 +283,7 @@ public class SMT {
                 violationsAfter = Optional.empty();
             }
             context.close();
-            return new SolvingResult(true, dfd, parseActions, cost, expressionTreeSize, violationsAfter, solveTime,
+            return new SolvingResult(true, dfd, parseActions, cost, expressionTreeSizeOptional, violationsAfter, solveTime,
                     preprocesingResult.findTFGsTime());
         }
     }
@@ -296,10 +296,10 @@ public class SMT {
         ConstraintTranslator constraintTranslator = new ConstraintTranslator(this);
 
         // No vertex should satisfy any constraint
-        for (AnalysisConstraint constr : constraints) {
+        for (AnalysisConstraint constraint : constraints) {
             for (DFDVertex vertex : preprocesingResult.vertices()) {
-                // Assert that the constarint is not satisfied for this vertex
-                optimize.Assert(new BoolExpr[] {constraintTranslator.translateConstraint(constr, vertex)});
+                // Assert that the constraint is not satisfied for this vertex
+                optimize.Assert(new BoolExpr[] {constraintTranslator.translateConstraint(constraint, vertex)});
             }
         }
     }
@@ -338,7 +338,7 @@ public class SMT {
             // Distinct expression for each label
             for (Label label : allDataLabels) {
                 // Initially the label is not propagated
-                BoolExpr labelExpr = context.mkFalse();
+                BoolExpr labelExpression = context.mkFalse();
                 // As the propagated labels are dependent on the ORDER of the assignments we
                 // iterate in that order.
                 // Later Assignments may override earlier ones
@@ -348,58 +348,58 @@ public class SMT {
                     // it will definitely be propagated
                     if (assignment instanceof SetAssignment cast && cast.getOutputLabels()
                             .contains(label)) {
-                        labelExpr = context.mkTrue();
+                        labelExpression = context.mkTrue();
                         // Analogously if a unset assignment removes this label, any earlier state can
                         // be overwritten
                     } else if (assignment instanceof UnsetAssignment cast && cast.getOutputLabels()
                             .contains(label)) {
-                        labelExpr = context.mkFalse();
+                        labelExpression = context.mkFalse();
                     } else if (assignment instanceof ForwardingAssignment cast) {
                         // Forward assignments are evaluated using the preceeding flows (may be emptry).
                         List<FlowInstance> forward = flow.getThisFlowForwards()
                                 .getOrDefault(cast, new ArrayList<>());
                         for (FlowInstance preceedingFlow : forward) {
                             // Fetch label expression for previous flow
-                            BoolExpr preLabel = flowLabels.get(preceedingFlow)
+                            BoolExpr preceedingFlowLabel = flowLabels.get(preceedingFlow)
                                     .get(label);
                             // Label is propagated if the current flow already propagated it or a preceeding
                             // flow has it.
-                            labelExpr = context.mkOr(labelExpr, preLabel);
+                            labelExpression = context.mkOr(labelExpression, preceedingFlowLabel);
                         }
                         // If an Assignment could influence this label
                     } else if (assignment instanceof Assignment cast && cast.getOutputLabels()
                             .contains(label)) {
                         // Find relevant flows that the term needs to be evaluated on.
-                        List<FlowInstance> evaluateOn = flow.getThisFlowEvaluatesOn()
+                        List<FlowInstance> preceedingFlowsToEvaluate = flow.getThisFlowEvaluatesOn()
                                 .getOrDefault(cast, new ArrayList<>());
                         // The label is propagated if the term evaluates to true, else it is not
                         // propagated, therefore earlier
                         // definitions can be overwritten.
-                        labelExpr = createTerm(cast.getTerm(), evaluateOn);
+                        labelExpression = createTerm(cast.getTerm(), preceedingFlowsToEvaluate);
                     }
                 }
                 // After the existing Assignments are evaluated, the modifiable assignments are
                 // evaluated.
                 // If the pin can potentially add this label
-                BoolExpr pinNewSet = pinSet.get(pin)
+                BoolExpr pinNewSetAssignment = pinNewSetAssignments.get(pin)
                         .get(label);
-                if (pinNewSet != null) {
+                if (pinNewSetAssignment != null) {
                     // Propagate it if it already gets propagated, or the set assignment is added.
                     // We can not set this to a constant true in Java Code because the value is a
                     // variable
-                    labelExpr = context.mkOr(labelExpr, pinNewSet);
+                    labelExpression = context.mkOr(labelExpression, pinNewSetAssignment);
                 }
                 // If the pin can potentially remove this label
-                BoolExpr pinNewUnset = pinUnset.get(pin)
+                BoolExpr pinNewUnsetAssignment = pinNewUnsetAssignments.get(pin)
                         .get(label);
-                if (pinNewUnset != null) {
+                if (pinNewUnsetAssignment != null) {
                     // Propagate it if it already gets propagated AND this pin does not remove it.
                     // Once again earlier state can not be overwritten in Java because the unset is
                     // a variable
-                    labelExpr = context.mkAnd(labelExpr, context.mkNot(pinNewUnset));
+                    labelExpression = context.mkAnd(labelExpression, context.mkNot(pinNewUnsetAssignment));
                 }
                 flowLabels.get(flow)
-                        .put(label, labelExpr);
+                        .put(label, labelExpression);
             }
         }
     }
@@ -428,28 +428,28 @@ public class SMT {
     /**
      * Creates a Boolean Expression that represents the Logical Term of an Assign Statement.
      * @param term Assignment Term
-     * @param evaluateOn Incoming Flows that the Label References of this Term will be evaluated on
+     * @param flowsToEvaluate Incoming Flows that the Label References of this Term will be evaluated on
      * @return Expression that encodes the term
      */
-    private BoolExpr createTerm(Term term, List<FlowInstance> evaluateOn) {
+    private BoolExpr createTerm(Term term, List<FlowInstance> flowsToEvaluate) {
         // Base case
         if (term instanceof TRUE) {
             return context.mkTrue();
             // Recursive not
         } else if (term instanceof NOT cast) {
-            return context.mkNot(createTerm(cast.getNegatedTerm(), evaluateOn));
+            return context.mkNot(createTerm(cast.getNegatedTerm(), flowsToEvaluate));
             // Recursive AND
         } else if (term instanceof AND cast) {
             List<Term> subTerms = cast.getTerms();
             List<BoolExpr> subExprs = subTerms.stream()
-                    .map(x -> createTerm(x, evaluateOn))
+                    .map(x -> createTerm(x, flowsToEvaluate))
                     .toList();
             return context.mkAnd(subExprs.toArray(new BoolExpr[0]));
             // Recursive OR
         } else if (term instanceof OR cast) {
             List<Term> subTerms = cast.getTerms();
             List<BoolExpr> subExprs = subTerms.stream()
-                    .map(x -> createTerm(x, evaluateOn))
+                    .map(x -> createTerm(x, flowsToEvaluate))
                     .toList();
             return context.mkOr(subExprs.toArray(new BoolExpr[0]));
             // Label References evaluate to true, if any of the evaluated flows propagate
@@ -457,7 +457,7 @@ public class SMT {
         } else if (term instanceof LabelReference cast) {
             Label label = cast.getLabel();
             List<BoolExpr> incomingMatches = new ArrayList<>();
-            for (FlowInstance f : evaluateOn) {
+            for (FlowInstance f : flowsToEvaluate) {
                 BoolExpr evaluateLabel = flowLabels.get(f)
                         .get(label);
                 incomingMatches.add(evaluateLabel);
@@ -500,24 +500,24 @@ public class SMT {
         // constraint-relevant labels.
         if (config.onlyRelevantModifications()) {
             for (Pin pin : allOutPins) {
-                Map<Label, BoolExpr> set = new HashMap<>();
+                Map<Label, BoolExpr> setAssignments = new HashMap<>();
 
                 for (Label label : dataLabelsAdd) {
                     // Creates variable, that encodes, whether this output pin adds the specified
                     // label
-                    set.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_set_" + label.getEntityName()));
+                    setAssignments.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_set_" + label.getEntityName()));
                 }
-                pinSet.put(pin, set);
+                pinNewSetAssignments.put(pin, setAssignments);
             }
             for (Pin pin : allOutPins) {
-                Map<Label, BoolExpr> unset = new HashMap<>();
+                Map<Label, BoolExpr> unsetAssignments = new HashMap<>();
 
                 for (Label label : dataLabelsRemove) {
                     // Creates variable, that encodes, whether this output pin removes the specified
                     // label
-                    unset.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_unset_" + label.getEntityName()));
+                    unsetAssignments.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_unset_" + label.getEntityName()));
                 }
-                pinUnset.put(pin, unset);
+                pinNewUnsetAssignments.put(pin, unsetAssignments);
             }
         } else {
             // Older case. This creates useless decision variables as certain Set and Unset
@@ -527,15 +527,15 @@ public class SMT {
             allDataLabels.addAll(dataLabelsRemove);
             allDataLabels.addAll(dataLabelsAdd);
             for (Pin pin : allOutPins) {
-                Map<Label, BoolExpr> set = new HashMap<>();
-                Map<Label, BoolExpr> unset = new HashMap<>();
+                Map<Label, BoolExpr> setAssignments = new HashMap<>();
+                Map<Label, BoolExpr> unsetAssignments = new HashMap<>();
 
                 for (Label label : allDataLabels) {
-                    set.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_set_" + label.getEntityName()));
-                    unset.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_unset_" + label.getEntityName()));
+                    setAssignments.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_set_" + label.getEntityName()));
+                    unsetAssignments.put(label, context.mkBoolConst("Pin_" + pin.getId() + "_unset_" + label.getEntityName()));
                 }
-                pinSet.put(pin, set);
-                pinUnset.put(pin, unset);
+                pinNewSetAssignments.put(pin, setAssignments);
+                pinNewUnsetAssignments.put(pin, unsetAssignments);
             }
         }
     }
@@ -591,7 +591,7 @@ public class SMT {
                     }
                 }
                 if (!allNodeLabels.isEmpty()) {
-                    nodeLabelRef.put(node, thisNodeLabelRef);
+                    nodeLabelInput.put(node, thisNodeLabelRef);
                     nodeLabels.put(node, thisNodeLabelVar);
                 }
             }
@@ -613,7 +613,7 @@ public class SMT {
                         thisNodeLabelVar.put(label, context.mkBoolConst(node.getEntityName() + "_label_" + label.getEntityName()));
                     }
 
-                    nodeLabelRef.put(node, thisNodeLabelRef);
+                    nodeLabelInput.put(node, thisNodeLabelRef);
                     nodeLabels.put(node, thisNodeLabelVar);
                 }
             }
@@ -630,47 +630,47 @@ public class SMT {
         List<Operation> changes = new ArrayList<>();
 
         // For every modifiable node label
-        for (Node node : nodeLabelRef.keySet()) {
-            Map<Label, BoolExpr> beforeMap = nodeLabelRef.get(node);
+        for (Node node : nodeLabelInput.keySet()) {
+            Map<Label, BoolExpr> beforeMap = nodeLabelInput.get(node);
             Map<Label, BoolExpr> afterMap = nodeLabels.get(node);
 
             for (Label label : beforeMap.keySet()) {
-                BoolExpr beforeExpr = beforeMap.get(label);
-                BoolExpr afterExpr = afterMap.get(label);
+                BoolExpr beforeExpression = beforeMap.get(label);
+                BoolExpr afterExpression = afterMap.get(label);
                 // Parse to java
-                boolean beforeVal = ((BoolExpr) model.evaluate(beforeExpr, true)).isTrue();
-                boolean afterVal = ((BoolExpr) model.evaluate(afterExpr, true)).isTrue();
+                boolean beforeValue = ((BoolExpr) model.evaluate(beforeExpression, true)).isTrue();
+                boolean afterValue = ((BoolExpr) model.evaluate(afterExpression, true)).isTrue();
 
                 // If it didn't exist in the input, but exists now, create a Add Operation
-                if (!beforeVal && afterVal) {
+                if (!beforeValue && afterValue) {
                     changes.add(new NodeLabelAddOperation(node, label));
                     // On the other hand create a Remove Operation
-                } else if (beforeVal && !afterVal) {
+                } else if (beforeValue && !afterValue) {
                     changes.add(new NodeLabelRemoveOperation(node, label));
                 }
                 // If it did not change create no operation
             }
         }
         // Evaluate Set Assignments
-        for (Pin pin : pinSet.keySet()) {
-            Map<Label, BoolExpr> setMap = pinSet.get(pin);
+        for (Pin pin : pinNewSetAssignments.keySet()) {
+            Map<Label, BoolExpr> newSetAssignments = pinNewSetAssignments.get(pin);
 
-            for (Label label : setMap.keySet()) {
-                BoolExpr setExpr = setMap != null ? setMap.get(label) : null;
+            for (Label label : newSetAssignments.keySet()) {
+                BoolExpr setExpression = newSetAssignments != null ? newSetAssignments.get(label) : null;
                 // If the pin could set the label and it actually did, create the operation
-                if (setExpr != null && ((BoolExpr) model.evaluate(setExpr, true)).isTrue()) {
+                if (setExpression != null && ((BoolExpr) model.evaluate(setExpression, true)).isTrue()) {
                     changes.add(new SetAssignmentOperation(pin, label));
                 }
             }
         }
         // Evaluate Unset Assignments
-        for (Pin pin : pinUnset.keySet()) {
-            Map<Label, BoolExpr> unsetMap = pinUnset.get(pin);
-            for (Label label : unsetMap.keySet()) {
-                BoolExpr unsetExpr = unsetMap != null ? unsetMap.get(label) : null;
+        for (Pin pin : pinNewUnsetAssignments.keySet()) {
+            Map<Label, BoolExpr> newUnsetAssignments = pinNewUnsetAssignments.get(pin);
+            for (Label label : newUnsetAssignments.keySet()) {
+                BoolExpr unsetExpression = newUnsetAssignments != null ? newUnsetAssignments.get(label) : null;
 
                 // If the pin could unset the label and it actually did, create the operation
-                if (unsetExpr != null && ((BoolExpr) model.evaluate(unsetExpr, true)).isTrue()) {
+                if (unsetExpression != null && ((BoolExpr) model.evaluate(unsetExpression, true)).isTrue()) {
                     changes.add(new UnsetAssignmentOperation(pin, label));
                 }
             }

@@ -1,6 +1,6 @@
 package dev.arcovia.mitigation.smt.tests.cost;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,7 @@ class CostFunctionTest {
                     .build();
             IntExpr expected = context.mkInt(0);
 
-            assertTrue(actual.simplify()
-                    .equals(expected));
+            assertEquals(actual.simplify(), expected);
         }
     }
 
@@ -45,7 +44,7 @@ class CostFunctionTest {
             IntExpr expected = (IntExpr) context.mkITE(context.mkXor(current, reference), context.mkInt(1), context.mkInt(0))
                     .simplify();
 
-            assertTrue(actual.equals(expected));
+            assertEquals(actual, expected);
         }
     }
 
@@ -64,7 +63,7 @@ class CostFunctionTest {
                     .mkMul(context.mkInt(5), context.mkITE(context.mkXor(current, reference), context.mkInt(1), context.mkInt(0)))
                     .simplify();
 
-            assertTrue(actual.equals(expected));
+            assertEquals(actual, expected);
         }
     }
 
@@ -81,13 +80,13 @@ class CostFunctionTest {
                     .build()
                     .simplify();
 
-            IntExpr t1 = (IntExpr) context.mkITE(context.mkXor(a, b), context.mkInt(1), context.mkInt(0));
-            IntExpr t2 = (IntExpr) context.mkMul(context.mkInt(2), context.mkITE(context.mkXor(b, c), context.mkInt(1), context.mkInt(0)));
+            IntExpr term1 = (IntExpr) context.mkITE(context.mkXor(a, b), context.mkInt(1), context.mkInt(0));
+            IntExpr term2 = (IntExpr) context.mkMul(context.mkInt(2), context.mkITE(context.mkXor(b, c), context.mkInt(1), context.mkInt(0)));
 
-            IntExpr expected = (IntExpr) context.mkAdd(t1, t2)
+            IntExpr expected = (IntExpr) context.mkAdd(term1, term2)
                     .simplify();
 
-            assertTrue(actual.equals(expected));
+            assertEquals(actual, expected);
         }
     }
 
@@ -102,7 +101,7 @@ class CostFunctionTest {
                     .build()
                     .simplify();
 
-            assertTrue(actual.equals(context.mkInt(0)));
+            assertEquals(actual, context.mkInt(0));
         }
     }
 }

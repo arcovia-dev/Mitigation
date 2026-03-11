@@ -21,8 +21,8 @@ Require-Bundle:
  org.dataflowanalysis.analysis.dfd,
  org.dataflowanalysis.analysis,
  org.dataflowanalysis.examplemodels,
- org.dataflowanalysis.dfd.datadictionary;bundle-version="2.0.0",
- org.dataflowanalysis.dfd.dataflowdiagram;bundle-version="2.0.0",
+ org.dataflowanalysis.dfd.datadictionary,
+ org.dataflowanalysis.dfd.dataflowdiagram,
  tools.mdsd.library.standalone.initialization,
  com.google.guava,
  dev.arcovia.mitigation.sat

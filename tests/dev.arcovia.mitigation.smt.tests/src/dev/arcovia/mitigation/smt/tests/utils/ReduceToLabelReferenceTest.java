@@ -27,7 +27,7 @@ class ReduceToLabelReferenceTest extends ParsingUtilsTestBase {
         Set<LabelReference> result = ParsingUtils.reduceToLabelReferences(term);
 
         Set<String> actualLabelNames = result.stream()
-                .map(lr -> lr.getLabel()
+                .map(labelReference -> labelReference.getLabel()
                         .getEntityName())
                 .collect(Collectors.toSet());
 
@@ -63,11 +63,11 @@ class ReduceToLabelReferenceTest extends ParsingUtilsTestBase {
     }
 
     private static LabelReference ref(String labelName) {
-        Label l = ddFactory.createLabel();
-        l.setEntityName(labelName);
+        Label label = ddFactory.createLabel();
+        label.setEntityName(labelName);
 
-        LabelReference r = ddFactory.createLabelReference();
-        r.setLabel(l);
-        return r;
+        LabelReference reference = ddFactory.createLabelReference();
+        reference.setLabel(label);
+        return reference;
     }
 }

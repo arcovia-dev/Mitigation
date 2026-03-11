@@ -104,24 +104,24 @@ public sealed abstract class AbstractPinAssignmentOperation<T extends AbstractAs
             return dfd;
         }
 
-        // Find the assignment that was added earlier. This could remove the wrong
-        // assignment if an identical one exists.
-        Optional<T> found = behavior.get()
-                .getAssignment()
-                .stream()
-                .filter(a -> a.getOutputPin()
-                        .equals(pin))
-                .filter(this::isInstance)
-                .map(this::cast)
-                .filter(a -> outputLabelEquals(a, label))
-                .findAny();
+        //Find the last equal assignment, i.e. the one that was added earlier
+        Optional<T> found = Optional.empty();
+        List<AbstractAssignment> assignments = behavior.get().getAssignment();
+        for (int i = assignments.size() - 1; i >= 0; i--) {
+            AbstractAssignment assignment = assignments.get(i);
+            if (assignment.getOutputPin().equals(pin) && this.isInstance(assignment) && outputLabelEquals(cast(assignment), label)) {
+                found = Optional.of(cast(assignment));
+                break;
+            }
+        }
 
         if (found.isEmpty()) {
             logger.debug("Couldn't find matching " + assignmentName() + " for pin " + pin + " with Labels " + label);
         } else {
+            T assignment = found.get();
             behavior.get()
                     .getAssignment()
-                    .removeIf(a -> a.equals(found.get()));
+                    .removeIf(a -> a.equals(assignment));
         }
 
         return dfd;
