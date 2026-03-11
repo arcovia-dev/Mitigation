@@ -140,7 +140,7 @@ public class SMT {
      */
     private CostFunction addNodeLabelCosts(CostFunction cost, CostConfig costConfig, Map<Label, Integer> addLabelCost,
             Map<Label, Integer> removeLabelCost) {
-        // For all nodes that have modifiable labels
+        // For all nodes that have modifiable labels    
         for (Entry<Node, Map<Label, BoolExpr>> thisNodeModifiableLabels : nodeLabelInput.entrySet()) {
             // Find the weight of this modifying labels on this node. Defaults to 1
             int nodeCost = costConfig.nodeFactor()
@@ -175,15 +175,15 @@ public class SMT {
      */
     private CostFunction addPinSetCosts(CostFunction cost, CostConfig costConfig, Map<Label, Integer> addLabelCost) {
         // For all pins that could add labels
-        for (Entry<Pin, Map<Label, BoolExpr>> thisPinSetLabels : pinNewSetAssignments.entrySet()) {
+        for (Entry<Pin, Map<Label, BoolExpr>> thisPinSetLabelAssignments : pinNewSetAssignments.entrySet()) {
             // If pin factor is defined fetch it here, default 1
             int pinCost = costConfig.pinFactor()
-                    .getOrDefault(thisPinSetLabels.getKey(), 1);
+                    .getOrDefault(thisPinSetLabelAssignments.getKey(), 1);
             // For all labels that this pin could set
-            for (Entry<Label, BoolExpr> setLabel : thisPinSetLabels.getValue()
+            for (Entry<Label, BoolExpr> setLabelAssignment : thisPinSetLabelAssignments.getValue()
                     .entrySet()) {
                 // Add cost for adding label, label cost dfaults to 1
-                cost.add(setLabel.getValue(), context.mkFalse(), addLabelCost.getOrDefault(setLabel.getKey(), 1) * pinCost);
+                cost.add(setLabelAssignment.getValue(), context.mkFalse(), addLabelCost.getOrDefault(setLabelAssignment.getKey(), 1) * pinCost);
             }
         }
         return cost;
@@ -198,15 +198,15 @@ public class SMT {
      */
     private CostFunction addPinUnsetCosts(CostFunction cost, CostConfig costConfig, Map<Label, Integer> removeLabelCosts) {
         // For all pins that could remove labels
-        for (Entry<Pin, Map<Label, BoolExpr>> thisPinUnsetLabels : pinNewUnsetAssignments.entrySet()) {
+        for (Entry<Pin, Map<Label, BoolExpr>> thisPinUnsetLabelAssignments : pinNewUnsetAssignments.entrySet()) {
             // If pin factor is defined fetch it here, default 1
             int pinCost = costConfig.pinFactor()
-                    .getOrDefault(thisPinUnsetLabels.getKey(), 1);
+                    .getOrDefault(thisPinUnsetLabelAssignments.getKey(), 1);
             // For all labels that this pin could remove
-            for (Entry<Label, BoolExpr> unsetLabel : thisPinUnsetLabels.getValue()
+            for (Entry<Label, BoolExpr> unsetLabelAssignment : thisPinUnsetLabelAssignments.getValue()
                     .entrySet()) {
                 // Add cost. If removal cost is undefined default to 1
-                cost.add(unsetLabel.getValue(), context.mkFalse(), removeLabelCosts.getOrDefault(unsetLabel.getKey(), 1) * pinCost);
+                cost.add(unsetLabelAssignment.getValue(), context.mkFalse(), removeLabelCosts.getOrDefault(unsetLabelAssignment.getKey(), 1) * pinCost);
             }
         }
         return cost;
