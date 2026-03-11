@@ -37,9 +37,9 @@ final class VertexTypeHandler extends AbstractSelectorHandler<VertexTypeSelector
         if (selector.isRecursive()) {
             List<BoolExpr> anyMatches = new ArrayList<BoolExpr>();
             anyMatches.add(result);
-            for (AbstractVertex<?> prevAbstract : vertex.getPreviousElements()) {
-                DFDVertex prev = (DFDVertex) prevAbstract;
-                anyMatches.add(encode(selector, prev, smt));
+            for (AbstractVertex<?> previousAbstractVertex : vertex.getPreviousElements()) {
+                DFDVertex previousDfdVertex = (DFDVertex) previousAbstractVertex;
+                anyMatches.add(encode(selector, previousDfdVertex, smt));
             }
             return context.mkOr(anyMatches.toArray(new BoolExpr[0]));
         } else {
