@@ -559,22 +559,22 @@ public class SMT {
                     .dataFlowDiagram()
                     .getNodes()) {
                 Set<Label> thisNodeLabels = new HashSet<>(node.getProperties());
-                Map<Label, BoolExpr> thisNodeLabelRef = new HashMap<>();
+                Map<Label, BoolExpr> thisNodeLabelInput = new HashMap<>();
                 Map<Label, BoolExpr> thisNodeLabelVar = new HashMap<>();
                 // For all relevant labels
                 for (Label label : allNodeLabels) {
                     // If label can be added or removed. This means it appears in negated and
                     // non-negated selectors.
                     if (nodeLabelsAdd.contains(label) && nodeLabelsRemove.contains(label)) {
-                        // The ref encodes the presence of the label in the input DFD
-                        thisNodeLabelRef.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
+                        // The input encodes the presence of the label in the input DFD
+                        thisNodeLabelInput.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
                         // Modifiable var
                         thisNodeLabelVar.put(label, context.mkBoolConst(node.getEntityName() + "_label_" + label.getEntityName()));
                     }
                     // If label can only be added, only create it for nodes that do not posses the
                     // label. This is the case if it only appears in a negated selector.
                     else if (nodeLabelsAdd.contains(label) && !thisNodeLabels.contains(label)) {
-                        thisNodeLabelRef.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
+                        thisNodeLabelInput.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
 
                         thisNodeLabelVar.put(label, context.mkBoolConst(node.getEntityName() + "_label_" + label.getEntityName()));
                     }
@@ -582,7 +582,7 @@ public class SMT {
                     // label.
                     // This is the if it only appears in non-negated selector.
                     else if (nodeLabelsRemove.contains(label) && thisNodeLabels.contains(label)) {
-                        thisNodeLabelRef.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
+                        thisNodeLabelInput.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
                         thisNodeLabelVar.put(label, context.mkBoolConst(node.getEntityName() + "_label_" + label.getEntityName()));
                     } else {
                         // If label can neither be added or removed, make it static. No reference is
@@ -591,7 +591,7 @@ public class SMT {
                     }
                 }
                 if (!allNodeLabels.isEmpty()) {
-                    nodeLabelInput.put(node, thisNodeLabelRef);
+                    nodeLabelInput.put(node, thisNodeLabelInput);
                     nodeLabels.put(node, thisNodeLabelVar);
                 }
             }
@@ -604,16 +604,16 @@ public class SMT {
                         .getNodes()) {
                     Set<Label> thisNodeLabels = new HashSet<>(node.getProperties());
 
-                    Map<Label, BoolExpr> thisNodeLabelRef = new HashMap<>();
+                    Map<Label, BoolExpr> thisNodeLabelInput = new HashMap<>();
                     Map<Label, BoolExpr> thisNodeLabelVar = new HashMap<>();
 
                     for (Label label : allNodeLabels) {
-                        thisNodeLabelRef.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
+                        thisNodeLabelInput.put(label, thisNodeLabels.contains(label) ? context.mkTrue() : context.mkFalse());
 
                         thisNodeLabelVar.put(label, context.mkBoolConst(node.getEntityName() + "_label_" + label.getEntityName()));
                     }
 
-                    nodeLabelInput.put(node, thisNodeLabelRef);
+                    nodeLabelInput.put(node, thisNodeLabelInput);
                     nodeLabels.put(node, thisNodeLabelVar);
                 }
             }
