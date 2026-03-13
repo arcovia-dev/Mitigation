@@ -128,8 +128,8 @@ public final class ConstraintMapProvider {
     public void printConstraints() {
         for (Entry<Integer, List<AnalysisConstraint>> entry : CONSTRAINTS.entrySet()) {
             System.out.println(entry.getKey());
-            for (AnalysisConstraint constr : entry.getValue()) {
-                System.out.println(constr);
+            for (AnalysisConstraint constraint : entry.getValue()) {
+                System.out.println(constraint);
             }
         }
     }

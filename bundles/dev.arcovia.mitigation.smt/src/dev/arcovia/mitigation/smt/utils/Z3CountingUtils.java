@@ -41,8 +41,8 @@ public class Z3CountingUtils {
             Expr<?> cur = stack.pop();
             count++;
 
-            int n = cur.getNumArgs();
-            for (int i = 0; i < n; i++) {
+            int numArgs = cur.getNumArgs();
+            for (int i = 0; i < numArgs; i++) {
                 stack.push(cur.getArgs()[i]);
             }
         }

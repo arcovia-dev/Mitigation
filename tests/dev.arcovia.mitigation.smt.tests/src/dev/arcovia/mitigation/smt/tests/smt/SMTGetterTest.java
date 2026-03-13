@@ -94,9 +94,9 @@ public class SMTGetterTest {
                             dfdWithAddedLabels.dataFlowDiagram()
                                     .getNodes()
                                     .size());
-                    for (Node n : dfdWithAddedLabels.dataFlowDiagram()
+                    for (Node node : dfdWithAddedLabels.dataFlowDiagram()
                             .getNodes()) {
-                        Map<Label, BoolExpr> labels = nodeLabels.get(n);
+                        Map<Label, BoolExpr> labels = nodeLabels.get(node);
                         assertEquals(expectedNodeLabels, labels.keySet());
                     }
                 } else {

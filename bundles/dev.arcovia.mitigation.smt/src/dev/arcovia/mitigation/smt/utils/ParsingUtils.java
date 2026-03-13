@@ -105,10 +105,10 @@ public class ParsingUtils {
      * @param node
      * @return Type of the Node
      */
-    public static DFDVertexType nodeToType(Node n) {
-        if (n instanceof External) {
+    public static DFDVertexType nodeToType(Node node) {
+        if (node instanceof External) {
             return DFDVertexType.EXTERNAL;
-        } else if (n instanceof org.dataflowanalysis.dfd.dataflowdiagram.Process) {
+        } else if (node instanceof org.dataflowanalysis.dfd.dataflowdiagram.Process) {
             return DFDVertexType.PROCESS;
         } else {
             return DFDVertexType.STORE;
@@ -122,10 +122,10 @@ public class ParsingUtils {
      */
     public static Set<DFDVertexType> getRelevantVertexTypes(List<AnalysisConstraint> constraints) {
         Set<DFDVertexType> result = new HashSet<>();
-        for (AnalysisConstraint constr : constraints) {
-            List<AbstractSelector> allSelectors = constr.getVertexDestinationSelectors()
+        for (AnalysisConstraint constraint : constraints) {
+            List<AbstractSelector> allSelectors = constraint.getVertexDestinationSelectors()
                     .getSelectors();
-            allSelectors.addAll(constr.getVertexSourceSelectors()
+            allSelectors.addAll(constraint.getVertexSourceSelectors()
                     .getSelectors());
             for (AbstractSelector selector : allSelectors) {
                 if (selector instanceof VertexTypeSelector cast) {
@@ -190,10 +190,10 @@ public class ParsingUtils {
      */
     private static List<CharacteristicsSelectorData> getAnalysisNodeCharacteristics(List<AnalysisConstraint> constraints, boolean add) {
         List<CharacteristicsSelectorData> characteristicsSelectorData = new ArrayList<>();
-        for (AnalysisConstraint constr : constraints) {
-            List<AbstractSelector> allSelectors = constr.getVertexDestinationSelectors()
+        for (AnalysisConstraint constraint : constraints) {
+            List<AbstractSelector> allSelectors = constraint.getVertexDestinationSelectors()
                     .getSelectors();
-            allSelectors.addAll(constr.getVertexSourceSelectors()
+            allSelectors.addAll(constraint.getVertexSourceSelectors()
                     .getSelectors());
             for (AbstractSelector selector : allSelectors) {
                 if (selector instanceof VertexCharacteristicsListSelector cast && (cast.isInverted() == add)) {
@@ -219,8 +219,8 @@ public class ParsingUtils {
     private static List<CharacteristicsSelectorData> getAnalysisDataCharacteristics(List<AnalysisConstraint> constraints, boolean add) {
         List<CharacteristicsSelectorData> characteristicsSelectorData = new ArrayList<>();
 
-        for (AnalysisConstraint constr : constraints) {
-            List<AbstractSelector> allSelectors = constr.getDataSourceSelectors()
+        for (AnalysisConstraint constraint : constraints) {
+            List<AbstractSelector> allSelectors = constraint.getDataSourceSelectors()
                     .getSelectors();
             for (AbstractSelector selector : allSelectors) {
                 if (selector instanceof DataCharacteristicsSelector cast && (cast.isInverted() == add)) {
@@ -376,15 +376,15 @@ public class ParsingUtils {
      */
     public static Map<Pin, List<AbstractAssignment>> outPinToAssignments(List<Node> nodes) {
         Map<Pin, List<AbstractAssignment>> outPinToAss = new HashMap<Pin, List<AbstractAssignment>>();
-        for (Node n : nodes) {
-            Behavior b = n.getBehavior();
-            for (int i = 0; i < b.getAssignment()
+        for (Node node : nodes) {
+            Behavior behavior = node.getBehavior();
+            for (int i = 0; i < behavior.getAssignment()
                     .size(); i++) {
-                AbstractAssignment a = b.getAssignment()
+                AbstractAssignment assignment = behavior.getAssignment()
                         .get(i);
-                List<AbstractAssignment> list = outPinToAss.getOrDefault(a.getOutputPin(), new ArrayList<AbstractAssignment>());
-                list.add(a);
-                outPinToAss.put(a.getOutputPin(), list);
+                List<AbstractAssignment> list = outPinToAss.getOrDefault(assignment.getOutputPin(), new ArrayList<AbstractAssignment>());
+                list.add(assignment);
+                outPinToAss.put(assignment.getOutputPin(), list);
             }
         }
         return outPinToAss;
