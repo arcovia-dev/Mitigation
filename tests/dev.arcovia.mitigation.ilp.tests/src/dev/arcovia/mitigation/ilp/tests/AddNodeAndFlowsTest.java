@@ -35,15 +35,18 @@ public class AddNodeAndFlowsTest {
             
             for (var transposeFlowGraph: flowGraph.getTransposeFlowGraphs()) {
                 if (transposeFlowGraph.stream()
-                        .anyMatch(node -> hasNodeCharacteristic(node, "Stereotype", "logging_server")))
-                    return violatingNodes;
+                        .anyMatch(node -> hasNodeCharacteristic(node, "Stereotype", "logging_server"))) {
+                	return violatingNodes;
+                }
             }
             
             for (var transposeFlowGraph: flowGraph.getTransposeFlowGraphs()) {
                 for (var node : transposeFlowGraph.getVertices()) {
                     var vertex = (DFDVertex) node;
                     
-                    if(vertex.getAllOutgoingDataCharacteristics().isEmpty()) continue;
+                    if(vertex.getAllOutgoingDataCharacteristics().isEmpty()) {
+                    	continue;
+                    }
                     
                     violatingNodes.add(new Node(vertex, transposeFlowGraph, customConstraint));
                 }
@@ -70,7 +73,7 @@ public class AddNodeAndFlowsTest {
     
     
     @Test
-    public void addNodeTest() throws StandaloneInitializationException {
+    public void addNodeTest() throws Exception {
         String model = "jferrater";
         int variant = 0;
         String name = model + "_" + variant;

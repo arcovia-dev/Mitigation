@@ -175,8 +175,8 @@ public class ScalerTest {
         
         
         
-        for (var c : DSLconstraints) {
-            var translation = new CNFTranslation(c);
+        for (var constraint : DSLconstraints) {
+            var translation = new CNFTranslation(constraint);
             constraints.addAll(translation.constructCNF());
         }
         

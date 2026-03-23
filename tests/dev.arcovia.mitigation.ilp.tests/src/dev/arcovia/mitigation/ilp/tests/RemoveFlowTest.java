@@ -44,7 +44,7 @@ public class RemoveFlowTest {
     Constraint constraint = new Constraint(dsl, List.of(new MitigationStrategy(List.of(new OutgoingDataLabel(new Label("Sensitivity","Personal"))), 1, MitigationType.DeleteFlow)));
 
     @Test
-    public void test() {
+    public void test() throws Exception {
         var optimization = new OptimizationManager(MinDFD, List.of(constraint), false);
 
         var result = optimization.repair();

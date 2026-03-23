@@ -40,7 +40,7 @@ public class RemoveNodeTest {
     Constraint constraint = new Constraint(dsl, List.of(new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype","internal"))), 1, MitigationType.DeleteNode)));
 
     @Test
-    public void SetAssignmentIntoDeletedNode() {
+    public void SetAssignmentIntoDeletedNode() throws Exception {
         var optimization = new OptimizationManager(MinDFD, List.of(constraint), false);
 
         var result = optimization.repair();

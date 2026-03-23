@@ -19,205 +19,192 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Constraint {
-    private final AnalysisConstraint dsl;
-    private EvaluationFunction evalFunction;
-    private final List<MitigationStrategy> mitigations;
-    private List<CompositeLabel> preconditionLabel = new ArrayList<>();
+	private final AnalysisConstraint dslConstraint;
+	private EvaluationFunction evaluationFunction;
+	private final List<MitigationStrategy> mitigations;
+	private List<CompositeLabel> preconditionLabel = new ArrayList<>();
 
-    public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
-        this.dsl = dsl;
-        this.evalFunction = new EvaluationFunction() {
-            @Override
-            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
-                return getDSLViolations(flowGraph);
-            }
+	public Constraint(AnalysisConstraint dsl, List<MitigationStrategy> mitigations) {
+		this.dslConstraint = dsl;
+		this.evaluationFunction = new EvaluationFunction() {
+			@Override
+			public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+				return getDSLViolations(flowGraph);
+			}
 
-            @Override
-            public boolean isMatched(DFDVertex vertex) {
-                return DSLIsMatched(vertex);
-            }
-        };
-        this.mitigations = mitigations;
-    }
+			@Override
+			public boolean isMatched(DFDVertex vertex) {
+				return DSLIsMatched(vertex);
+			}
+		};
+		this.mitigations = mitigations;
+	}
 
-    public Constraint(AnalysisConstraint dsl) {
-        this.dsl = dsl;
-        this.evalFunction = new EvaluationFunction() {
-            @Override
-            public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
-                return getDSLViolations(flowGraph);
-            }
+	public Constraint(AnalysisConstraint dslConstraint) {
+		this.dslConstraint = dslConstraint;
+		this.evaluationFunction = new EvaluationFunction() {
+			@Override
+			public Set<Node> evaluate(DFDFlowGraphCollection flowGraph) {
+				return getDSLViolations(flowGraph);
+			}
 
-            @Override
-            public boolean isMatched(DFDVertex vertex) {
-                return DSLIsMatched(vertex);
-            }
-        };
-        this.mitigations = determineMitigations();
+			@Override
+			public boolean isMatched(DFDVertex vertex) {
+				return DSLIsMatched(vertex);
+			}
+		};
+		this.mitigations = determineMitigations();
 
-    }
-    
-    public Constraint(List<MitigationStrategy> mitigations) {
-    	this.dsl = null;
-    	this.evalFunction = null;
-    	this.mitigations = mitigations;
-    }
-    
-    public void addEvalFunction(EvaluationFunction evaluate) {
-        this.evalFunction = evaluate;
-    }
+	}
 
-    public List<MitigationStrategy> getMitigations() {
-        return new ArrayList<>(mitigations);
-    }
+	public Constraint(List<MitigationStrategy> mitigations) {
+		this.dslConstraint = null;
+		this.evaluationFunction = null;
+		this.mitigations = mitigations;
+	}
 
-    public boolean isPrecondition(CompositeLabel label) {
-    	if (dsl == null) {
-    	    return preconditionLabel.contains(label);
-    	}
-        var translation = new CNFTranslation(dsl);
-        var literals = translation.constructCNF()
-                .get(0)
-                .literals();
+	public void addEvalFunction(EvaluationFunction evaluationFunction) {
+		this.evaluationFunction = evaluationFunction;
+	}
 
-        for (var lit : literals) {
-            if (!lit.positive() && lit.compositeLabel()
-                    .equals(label))
-                return true;
-        }
-        return false;
-    }
-    
-    public void addPrecondition(CompositeLabel label) {
-        preconditionLabel.add(label);
-    }
+	public List<MitigationStrategy> getMitigations() {
+		return new ArrayList<>(mitigations);
+	}
 
-    public void removeMitigation(MitigationStrategy mitgation) {
-        mitigations.remove(mitgation);
-    }
-    
-    public void findAlternativeMitigations() {
-    	if (dsl == null) return;
-    	
-    	var mitigations = determineMitigations();
-    	
-    	for (var mitigation : mitigations) {
-    		if (!this.mitigations.contains(mitigation)) this.mitigations.add(mitigation);
-    	}
-    		
-    }
-    
-    public Set<Node> determineViolations(DFDFlowGraphCollection flowGraph){
-    	return evalFunction.evaluate(flowGraph);
-    }
-    
-    private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
-    	Set<Node> violatingNodes = new HashSet<>();
-    	List<DSLResult> results = this.dsl.findViolations(flowGraph);
-        for (var result : results) {
-            var tfg = result.getTransposeFlowGraph();
-            for (var vertex : result.getMatchedVertices())
-                violatingNodes.add(new Node((DFDVertex) vertex, tfg, this));
-        }
-        return violatingNodes;
-    }
+	public boolean isPrecondition(CompositeLabel label) {
+		if (dslConstraint == null) {
+			return preconditionLabel.contains(label);
+		}
+		var translation = new CNFTranslation(dslConstraint);
+		var literals = translation.constructCNF().get(0).literals();
 
-    /***
-     * This functions determines whether a Node matches the Antecedent of this constraint.
-     * @param node
-     * @return
-     */
-    public boolean isMatched(DFDVertex node) {
-        return evalFunction.isMatched(node);
-    }
-        
-    private boolean DSLIsMatched (DFDVertex node) {
-    	//protection if no dsl is provided
-        if (dsl == null) return false;
-        
-        var translation = new CNFTranslation(dsl);
-        List<String> negativeLiterals = new ArrayList<>();
-        List<String> positiveLiterals = new ArrayList<>();
-        for (var literal : translation.constructCNF()
-                .get(0)
-                .literals()) {
-            if (literal.positive())
-                positiveLiterals.add(literal.compositeLabel()
-                        .toString());
-            else
-                negativeLiterals.add(literal.compositeLabel()
-                        .toString());
-        }
+		for (var literal : literals) {
+			if (!literal.positive() && literal.compositeLabel().equals(label))
+				return true;
+		}
+		return false;
+	}
 
-        Set<String> nodeLiterals = new HashSet<>();
-        for (var nodeChar : node.getAllVertexCharacteristics()) {
-            nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
-        }
-        for (var variables : node.getAllIncomingDataCharacteristics()) {
-            for (var dataChar : variables.getAllCharacteristics()) {
-                nodeLiterals.add(new IncomingDataLabel(new Label(dataChar.getTypeName(), dataChar.getValueName())).toString());
-            }
-        }
+	public void addPrecondition(CompositeLabel label) {
+		preconditionLabel.add(label);
+	}
 
-        if (nodeLiterals.containsAll(negativeLiterals))
-            return true;
+	public void removeMitigation(MitigationStrategy mitgation) {
+		mitigations.remove(mitgation);
+	}
 
-        return false;
-    }
+	public void findAlternativeMitigations() {
+		if (dslConstraint == null) {
+			return;
+		}
 
-    private List<MitigationStrategy> determineMitigations() {
-        var translation = new CNFTranslation(dsl);
+		var mitigations = determineMitigations();
 
-        
-        
-        Set<Literal> literals = new HashSet<>();
-        
-        for (var lit : translation.constructCNF()) {
-            literals.addAll(lit.literals());
-        }
+		for (var mitigation : mitigations) {
+			if (!this.mitigations.contains(mitigation))
+				this.mitigations.add(mitigation);
+		}
 
-        List<MitigationStrategy> mitigations = new ArrayList<>();
+	}
 
-        var neverFlows = dsl.getVertexDestinationSelectors()
-                .getSelectors()
-                .toString();
+	public Set<Node> determineViolations(DFDFlowGraphCollection flowGraph) {
+		return evaluationFunction.evaluate(flowGraph);
+	}
 
-        for (var lit : literals) {
-            if (lit.positive()) {
-                MitigationType type;
+	private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
+		Set<Node> violatingNodes = new HashSet<>();
+		List<DSLResult> results = this.dslConstraint.findViolations(flowGraph);
+		for (var result : results) {
+			var tfg = result.getTransposeFlowGraph();
+			for (var vertex : result.getMatchedVertices())
+				violatingNodes.add(new Node((DFDVertex) vertex, tfg, this));
+		}
+		return violatingNodes;
+	}
 
-                if (lit.compositeLabel()
-                        .category() == LabelCategory.Node)
-                    type = MitigationType.NodeLabel;
-                else
-                    type = MitigationType.DataLabel;
+	/***
+	 * This functions determines whether a Node matches the Antecedent of this
+	 * constraint.
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public boolean isMatched(DFDVertex node) {
+		return evaluationFunction.isMatched(node);
+	}
 
-                mitigations.add(new MitigationStrategy(List.of(lit.compositeLabel()), 1, type));
-            } else {
-                var label = lit.compositeLabel()
-                        .label()
-                        .type() + "."
-                        + lit.compositeLabel()
-                                .label()
-                                .value();
+	private boolean DSLIsMatched(DFDVertex node) {
+		// protection if no dsl is provided
+		if (dslConstraint == null) {
+			return false;
+		}
 
-                if (neverFlows.contains(label)) {
-                    MitigationType type;
+		var translation = new CNFTranslation(dslConstraint);
+		List<String> negativeLiterals = new ArrayList<>();
+		List<String> positiveLiterals = new ArrayList<>();
+		for (var literal : translation.constructCNF().get(0).literals()) {
+			if (literal.positive())
+				positiveLiterals.add(literal.compositeLabel().toString());
+			else
+				negativeLiterals.add(literal.compositeLabel().toString());
+		}
 
-                    if (lit.compositeLabel()
-                            .category() == LabelCategory.Node)
-                        type = MitigationType.DeleteNodeLabel;
-                    else
-                        type = MitigationType.DeleteDataLabel;
+		Set<String> nodeLiterals = new HashSet<>();
+		for (var nodeChar : node.getAllVertexCharacteristics()) {
+			nodeLiterals.add(new NodeLabel(new Label(nodeChar.getTypeName(), nodeChar.getValueName())).toString());
+		}
+		for (var variables : node.getAllIncomingDataCharacteristics()) {
+			for (var dataChar : variables.getAllCharacteristics()) {
+				nodeLiterals.add(
+						new IncomingDataLabel(new Label(dataChar.getTypeName(), dataChar.getValueName())).toString());
+			}
+		}
 
-                    mitigations.add(new MitigationStrategy(List.of(lit.compositeLabel()), 1000, type));
+		return nodeLiterals.containsAll(negativeLiterals);
+	}
 
-                }
+	private List<MitigationStrategy> determineMitigations() {
+		var translation = new CNFTranslation(dslConstraint);
 
-            }
-        }
+		Set<Literal> literals = new HashSet<>();
 
-        return mitigations;
-    }
+		for (var literal : translation.constructCNF()) {
+			literals.addAll(literal.literals());
+		}
+
+		List<MitigationStrategy> mitigations = new ArrayList<>();
+
+		var neverFlows = dslConstraint.getVertexDestinationSelectors().getSelectors().toString();
+
+		for (var literal : literals) {
+			if (literal.positive()) {
+				MitigationType type;
+
+				if (literal.compositeLabel().category() == LabelCategory.Node)
+					type = MitigationType.NodeLabel;
+				else
+					type = MitigationType.DataLabel;
+
+				mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1, type));
+			} else {
+				var label = literal.compositeLabel().label().type() + "." + literal.compositeLabel().label().value();
+
+				if (neverFlows.contains(label)) {
+					MitigationType type;
+
+					if (literal.compositeLabel().category() == LabelCategory.Node)
+						type = MitigationType.DeleteNodeLabel;
+					else
+						type = MitigationType.DeleteDataLabel;
+
+					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1000, type));
+
+				}
+
+			}
+		}
+
+		return mitigations;
+	}
 
 }

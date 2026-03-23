@@ -29,6 +29,7 @@ import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 import dev.arcovia.mitigation.ilp.EvaluationFunction;
 
 public class BasicTest {
+	private static final boolean DEBUG = false;
     Path current = Paths.get(System.getProperty("user.dir"));
 
     private final String MinDFD = current.getParent()
@@ -45,20 +46,22 @@ public class BasicTest {
             .create();
 
     @Test
-    public void minTest() {
+    public void minTest() throws Exception {
         var optimization = new OptimizationManager(MinDFD, List.of(constraint));
 
         var result = optimization.repair();
 
         var dfdConverter = new DFD2WebConverter();
-        dfdConverter.convert(result)
-                .save("models/", "mindfd-repaired.json");
+        if(DEBUG) {
+        	dfdConverter.convert(result)
+            .save("models/", "mindfd-repaired.json");
+        }
 
         assertTrue(optimization.isViolationFree(result));
     }
     
     @Test
-    public void customConstraintTest() {
+    public void customConstraintTest() throws Exception {
         var customConstraint = new Constraint(List.of(new MitigationStrategy(List.of(new NodeLabel(new Label("Location", "nonEU"))), 1, MitigationType.DeleteNodeLabel)));
         
         var evalFunction = new EvaluationFunction() {            
@@ -83,12 +86,14 @@ public class BasicTest {
                 for (var literal : translation.constructCNF()
                         .get(0)
                         .literals()) {
-                    if (literal.positive())
+                    if (literal.positive()) {
                         positiveLiterals.add(literal.compositeLabel()
                                 .toString());
-                    else
+                    }
+                    else {
                         negativeLiterals.add(literal.compositeLabel()
                                 .toString());
+                    }
                 }
 
                 Set<String> nodeLiterals = new HashSet<>();
@@ -101,12 +106,7 @@ public class BasicTest {
                     }
                 }
 
-                if (nodeLiterals.containsAll(negativeLiterals)) {
-                    return true;
-                }
-                    
-
-                return false;
+                return nodeLiterals.containsAll(negativeLiterals);
             }
         };
         
@@ -117,8 +117,10 @@ public class BasicTest {
         var result = optimization.repair();
 
         var dfdConverter = new DFD2WebConverter();
+        if(DEBUG) {
         dfdConverter.convert(result)
                 .save("models/", "mindfd-repaired.json");
+        }
 
         assertTrue(optimization.isViolationFree(result));
     }

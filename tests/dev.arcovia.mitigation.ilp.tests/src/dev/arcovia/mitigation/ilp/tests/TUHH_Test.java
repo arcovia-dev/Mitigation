@@ -108,7 +108,7 @@ public class TUHH_Test {
             tokenValidation, loginAttempts, encryptedEntry, encryptedInternals, localLogging, logSanitization);
 
     @Test
-    public void main() throws StandaloneInitializationException {
+    public void main() throws Exception {
         var tuhhModels = TuhhModels.getTuhhModels();
         List<Long> scalabilityValues = new ArrayList<>();
 
@@ -149,7 +149,7 @@ public class TUHH_Test {
             entry(new Label("Stereotype", "local_logging"), 1));
 
     @Test
-    public void efficiencyTest() throws StandaloneInitializationException {
+    public void efficiencyTest() throws Exception {
         var tuhhModels = TuhhModels.getTuhhModels();
         List<String> modelRepairMoreExpensive = new ArrayList<>();
 
@@ -219,7 +219,7 @@ public class TUHH_Test {
     
 
     @Test
-    public void runCompleteTUHH() throws StandaloneInitializationException {
+    public void runCompleteTUHH() throws Exception {
         var tuhhModels = TuhhModels.getTuhhModels();
         
         Map<String, Integer> amountViolations = new HashMap<>();       
@@ -475,7 +475,7 @@ public class TUHH_Test {
     
     @Disabled
     @Test
-    public void runSpecific() throws StandaloneInitializationException {
+    public void runSpecific() throws Exception {
         String model = "spring-petclinic";
         int variant = 3;
         String name = model + "_" + variant;

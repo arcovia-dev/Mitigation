@@ -44,7 +44,7 @@ public class Sat {
     private boolean deactivateSubsumption;
     private Set<Label> allLabels = null;
     
-    private static final boolean SCALINGTEST = true;
+    private static final boolean SCALINGTEST = false;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the
@@ -129,7 +129,7 @@ public class Sat {
             if (!negated.isEmpty() && !deactivateSubsumption)
                 addClause(negated);
 
-            if (solutions.size() > 100000) {
+            if (solutions.size() > 10000) {
                 if (deactivateSubsumption || SCALINGTEST)
                     return solutions;
 

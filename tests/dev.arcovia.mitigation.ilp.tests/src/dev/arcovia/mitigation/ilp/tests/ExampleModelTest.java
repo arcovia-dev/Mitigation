@@ -169,7 +169,7 @@ public class ExampleModelTest {
     
     
     @Test
-    public void StandardTest(){
+    public void StandardTest() throws Exception{
         setup();
         
         var optimization = new OptimizationManager(Model, Constraints, false);
@@ -190,20 +190,20 @@ public class ExampleModelTest {
     private boolean hasNodeCharacteristic(AbstractVertex<?> node, String type, String value) {
         return node.getAllVertexCharacteristics()
                 .stream()
-                .anyMatch(n -> n.getTypeName()
+                .anyMatch(vertex -> vertex.getTypeName()
                         .equals(type)
-                        && n.getValueName()
+                        && vertex.getValueName()
                                 .equals(value));
     }
     
     private boolean hasIncomingCharacteristic(AbstractVertex<?> node, String type, String value) {
         return node.getAllIncomingDataCharacteristics()
                 .stream()
-                .anyMatch(v -> v.getAllCharacteristics()
+                .anyMatch(vertex -> vertex.getAllCharacteristics()
                         .stream()
-                        .anyMatch(c -> c.getTypeName()
+                        .anyMatch(characteristic -> characteristic.getTypeName()
                                 .equals(type)
-                                && c.getValueName()
+                                && characteristic.getValueName()
                                         .equals(value)));
     }
     
