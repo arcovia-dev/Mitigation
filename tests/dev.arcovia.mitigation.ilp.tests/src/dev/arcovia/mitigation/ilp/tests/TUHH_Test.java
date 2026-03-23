@@ -158,8 +158,9 @@ public class TUHH_Test {
 
         for (var model : tuhhModels.keySet()) {
             if (!tuhhModels.get(model)
-                    .contains(0))
-                continue;
+                    .contains(0)) {
+            	continue;
+            }
 
             System.out.println("Checking " + model);
 
@@ -266,9 +267,9 @@ public class TUHH_Test {
                     }
                 };
                 
-                final MitigationStrategy authServerMit= new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "authorization_server")), new NodeLabel(new Label("Stereotype", "login_attempts_regulation")), new OutgoingDataLabel(new Label("Stereotype", "transform_identity_representation"))), 1, MitigationType.AddNode);
+                final MitigationStrategy authServerMitigation= new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "authorization_server")), new NodeLabel(new Label("Stereotype", "login_attempts_regulation")), new OutgoingDataLabel(new Label("Stereotype", "transform_identity_representation"))), 1, MitigationType.AddNode);
                 
-                final Constraint authServer = new Constraint(List.of(authServerMit));
+                final Constraint authServer = new Constraint(List.of(authServerMitigation));
                 
                 final EvaluationFunction evalauthServer = new EvaluationFunction() {            
                     @Override
@@ -346,8 +347,9 @@ public class TUHH_Test {
         
         for (var model : tuhhModels.keySet()) {
             if (!tuhhModels.get(model)
-                    .contains(0))
-                continue;
+                    .contains(0)) {
+            	continue;
+            }
 
             System.out.println("Checking " + model);
             
@@ -389,9 +391,9 @@ public class TUHH_Test {
                 }
             };
             
-            final MitigationStrategy authServerMit= new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "authorization_server")), new NodeLabel(new Label("Stereotype", "login_attempts_regulation")), new OutgoingDataLabel(new Label("Stereotype", "transform_identity_representation"))), 1, MitigationType.AddNode);
+            final MitigationStrategy authServerMitigation= new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "authorization_server")), new NodeLabel(new Label("Stereotype", "login_attempts_regulation")), new OutgoingDataLabel(new Label("Stereotype", "transform_identity_representation"))), 1, MitigationType.AddNode);
             
-            final Constraint authServer = new Constraint(List.of(authServerMit));
+            final Constraint authServer = new Constraint(List.of(authServerMitigation));
             
             final EvaluationFunction evalauthServer = new EvaluationFunction() {            
                 @Override
@@ -448,8 +450,9 @@ public class TUHH_Test {
                     case 12 -> List.of(new Constraint(localLogging), new Constraint(logSanitization), loggingServer);
                     default -> null;
                 };
-                if (constraint == null)
-                    continue;
+                if (constraint == null) {
+                	continue;
+                }
 
                 String name = model + "_" + 0;
 
@@ -518,9 +521,9 @@ public class TUHH_Test {
             }
         };
         
-        final MitigationStrategy authServerMit= new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "authorization_server")), new NodeLabel(new Label("Stereotype", "login_attempts_regulation")), new OutgoingDataLabel(new Label("Stereotype", "transform_identity_representation"))), 1, MitigationType.AddNode);
+        final MitigationStrategy authServerMitigation= new MitigationStrategy(List.of(new NodeLabel(new Label("Stereotype", "authorization_server")), new NodeLabel(new Label("Stereotype", "login_attempts_regulation")), new OutgoingDataLabel(new Label("Stereotype", "transform_identity_representation"))), 1, MitigationType.AddNode);
         
-        final Constraint authServer = new Constraint(List.of(authServerMit));
+        final Constraint authServer = new Constraint(List.of(authServerMitigation));
         
         final EvaluationFunction evalauthServer = new EvaluationFunction() {            
             @Override
