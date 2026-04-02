@@ -176,8 +176,9 @@ public class TUHH_Test {
                     case 11 -> List.of(localLogging, logSanitization);
                     default -> null;
                 };
-                if (constraint == null)
-                    continue;
+                if (constraint == null) {
+					continue;
+				}
 
                 DataFlowDiagramAndDictionary dfd = loadDFD(model, model + "_0");
                 System.out.println("Comparing to " + model + "_" + variant);

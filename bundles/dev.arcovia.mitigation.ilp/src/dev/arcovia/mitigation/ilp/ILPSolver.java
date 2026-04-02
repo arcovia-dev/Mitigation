@@ -148,8 +148,9 @@ public class ILPSolver {
 
 					Optional<Mitigation> mitigation = allMitigations.stream()
 							.filter(m -> variable.name().equals(m.toString())).findFirst();
-					if (mitigation.isPresent())
+					if (mitigation.isPresent()) {
 						chosen.add(mitigation.get());
+					}
 				}
 			}
 			return chosen;
@@ -170,8 +171,9 @@ public class ILPSolver {
 	 */
 	private static String safeName(String s) {
 		s = s.trim().replaceAll("\\s+", "_").replaceAll("[^A-Za-z0-9_]", "_");
-		if (s.isEmpty() || Character.isDigit(s.charAt(0)))
+		if (s.isEmpty() || Character.isDigit(s.charAt(0))) {
 			s = "x_" + s;
+		}
 		return s;
 	}
 
@@ -205,11 +207,13 @@ public class ILPSolver {
 		} catch (Exception ignored) {
 		}
 
-		if (jarStream == null)
+		if (jarStream == null) {
 			jarStream = ILPSolver.class.getClassLoader().getResourceAsStream(platformJar);
+		}
 
-		if (jarStream == null)
+		if (jarStream == null) {
 			throw new IOException("Native JAR not found: " + platformJar);
+		}
 
 		Path tempDir = Files.createTempDirectory("ortools-native");
 		tempDir.toFile().deleteOnExit();
@@ -234,10 +238,11 @@ public class ILPSolver {
 					Path target = tempDir.resolve(fileName);
 					Files.copy(zip, target, StandardCopyOption.REPLACE_EXISTING);
 					target.toFile().deleteOnExit();
-					if (fileName.equals(mainLibName))
+					if (fileName.equals(mainLibName)) {
 						mainLib = target;
-					else
+					} else {
 						depLibs.add(target);
+					}
 				}
 			}
 		}

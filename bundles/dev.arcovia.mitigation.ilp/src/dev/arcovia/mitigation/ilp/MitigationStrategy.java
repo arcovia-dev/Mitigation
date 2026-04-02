@@ -41,8 +41,9 @@ public class MitigationStrategy {
 
 	public boolean checkIfAllowed(DFDVertex vertex) {
 		for (var constraint : notAllowedIfViolated) {
-			if (constraint.isMatched(vertex))
+			if (constraint.isMatched(vertex)) {
 				return false;
+			}
 		}
 		return true;
 	}

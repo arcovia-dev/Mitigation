@@ -246,7 +246,9 @@ public class PerformanceEval {
             int repeatIndex = i;
 
             String runId = MeasurementWriter.runId(cfg, runType, repeatIndex);
-            if (writer.isDone(runId)) continue;
+            if (writer.isDone(runId)) {
+				continue;
+			}
 
             timeMeasurement timer = new timeMeasurement();
             try {
@@ -269,7 +271,9 @@ public class PerformanceEval {
 
     private static String safeMsg(Throwable t) {
         String m = t.getMessage();
-        if (m == null) return "";
+        if (m == null) {
+			return "";
+		}
         return m.length() > 200 ? m.substring(0, 200) : m;
     }
 

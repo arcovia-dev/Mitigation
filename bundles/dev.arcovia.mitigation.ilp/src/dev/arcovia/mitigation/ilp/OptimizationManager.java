@@ -67,8 +67,9 @@ public class OptimizationManager {
 		this.constraints = constraints;
 
 		if (addAdditionalMitigations) {
-			for (var constraint : this.constraints)
+			for (var constraint : this.constraints) {
 				constraint.findAlternativeMitigations();
+			}
 		}
 	}
 
@@ -78,8 +79,9 @@ public class OptimizationManager {
 		this.constraints = constraints;
 
 		if (addAdditionalMitigations) {
-			for (var constraint : this.constraints)
+			for (var constraint : this.constraints) {
 				constraint.findAlternativeMitigations();
+			}
 		}
 	}
 
@@ -161,8 +163,9 @@ public class OptimizationManager {
 
 		for (var constraint : this.constraints) {
 			var result = constraint.determineViolations(flowGraph);
-			if (!result.isEmpty())
+			if (!result.isEmpty()) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -250,19 +253,21 @@ public class OptimizationManager {
 		List<List<MitigationStrategy>> required = new ArrayList<>();
 		for (var label : labels) {
 			for (var constraint : constraints) {
-				if (constraint.isPrecondition(label))
+				if (constraint.isPrecondition(label)) {
 					if (required.isEmpty()) {
 						for (var mitigation : constraint.getMitigations()) {
-							if (mitigation.label.contains(label))
+							if (mitigation.label.contains(label)) {
 								continue;
+							}
 							required.add(List.of(mitigation));
 						}
 					} else {
 						List<List<MitigationStrategy>> newRequired = new ArrayList<>();
 						for (var requieredMitgation : required) {
 							for (MitigationStrategy mitigation : constraint.getMitigations()) {
-								if (mitigation.label.contains(label))
+								if (mitigation.label.contains(label)) {
 									continue;
+								}
 								List<MitigationStrategy> temp = new ArrayList<>(requieredMitgation);
 								temp.add(mitigation);
 								newRequired.add(temp);
@@ -270,6 +275,7 @@ public class OptimizationManager {
 						}
 						required = newRequired;
 					}
+				}
 
 			}
 		}
@@ -302,8 +308,9 @@ public class OptimizationManager {
 	private List<Constraint> getConstraints(List<AnalysisConstraint> constraints) {
 		List<Constraint> constraintList = new ArrayList<>();
 
-		for (var constraint : constraints)
+		for (var constraint : constraints) {
 			constraintList.add(new Constraint(constraint));
+		}
 
 		return constraintList;
 	}
@@ -368,8 +375,9 @@ public class OptimizationManager {
 								}
 							}
 						}
-						if (!newAssignments.isEmpty())
+						if (!newAssignments.isEmpty()) {
 							behavior.getAssignment().addAll(newAssignments);
+						}
 					}
 				} else if (action.compositeLabels().get(0).category().equals(LabelCategory.Node)) {
 					for (var node : dfd.dataFlowDiagram().getNodes()) {
@@ -411,8 +419,9 @@ public class OptimizationManager {
 								}
 							}
 						}
-						if (!newAssignments.isEmpty())
+						if (!newAssignments.isEmpty()) {
 							behavior.getAssignment().addAll(newAssignments);
+						}
 					}
 				} else if (action.compositeLabels().get(0).category().equals(LabelCategory.Node)) {
 					for (var node : dfd.dataFlowDiagram().getNodes()) {
@@ -571,14 +580,13 @@ public class OptimizationManager {
 
 				for (var assignment : behavior.getAssignment()) {
 
-					if (assignment instanceof Assignment cast)
+					if (assignment instanceof Assignment cast) {
 						allLabels.addAll(cast.getOutputLabels());
-
-					else if (assignment instanceof SetAssignment cast)
+					} else if (assignment instanceof SetAssignment cast) {
 						allLabels.addAll(cast.getOutputLabels());
-
-					else
+					} else {
 						isForwarding = true;
+					}
 
 				}
 
@@ -692,11 +700,11 @@ public class OptimizationManager {
 								else {
 									Set<Label> outputLabels = new HashSet<>();
 
-									if (relevantAssignment instanceof Assignment cast)
+									if (relevantAssignment instanceof Assignment cast) {
 										outputLabels.addAll(cast.getOutputLabels());
-
-									else if (relevantAssignment instanceof SetAssignment cast)
+									} else if (relevantAssignment instanceof SetAssignment cast) {
 										outputLabels.addAll(cast.getOutputLabels());
+									}
 
 									var newOutPin = ddFactory.createPin();
 

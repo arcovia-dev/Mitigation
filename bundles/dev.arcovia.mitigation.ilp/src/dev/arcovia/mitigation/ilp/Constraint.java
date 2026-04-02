@@ -79,8 +79,9 @@ public class Constraint {
 		var literals = translation.constructCNF().get(0).literals();
 
 		for (var literal : literals) {
-			if (!literal.positive() && literal.compositeLabel().equals(label))
+			if (!literal.positive() && literal.compositeLabel().equals(label)) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -101,8 +102,9 @@ public class Constraint {
 		var mitigations = determineMitigations();
 
 		for (var mitigation : mitigations) {
-			if (!this.mitigations.contains(mitigation))
+			if (!this.mitigations.contains(mitigation)) {
 				this.mitigations.add(mitigation);
+			}
 		}
 
 	}
@@ -116,8 +118,9 @@ public class Constraint {
 		List<DSLResult> results = this.dslConstraint.findViolations(flowGraph);
 		for (var result : results) {
 			var tfg = result.getTransposeFlowGraph();
-			for (var vertex : result.getMatchedVertices())
+			for (var vertex : result.getMatchedVertices()) {
 				violatingNodes.add(new Node((DFDVertex) vertex, tfg, this));
+			}
 		}
 		return violatingNodes;
 	}
@@ -143,10 +146,11 @@ public class Constraint {
 		List<String> negativeLiterals = new ArrayList<>();
 		List<String> positiveLiterals = new ArrayList<>();
 		for (var literal : translation.constructCNF().get(0).literals()) {
-			if (literal.positive())
+			if (literal.positive()) {
 				positiveLiterals.add(literal.compositeLabel().toString());
-			else
+			} else {
 				negativeLiterals.add(literal.compositeLabel().toString());
+			}
 		}
 
 		Set<String> nodeLiterals = new HashSet<>();
@@ -180,10 +184,11 @@ public class Constraint {
 			if (literal.positive()) {
 				MitigationType type;
 
-				if (literal.compositeLabel().category() == LabelCategory.Node)
+				if (literal.compositeLabel().category() == LabelCategory.Node) {
 					type = MitigationType.NodeLabel;
-				else
+				} else {
 					type = MitigationType.DataLabel;
+				}
 
 				mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1, type));
 			} else {
@@ -192,10 +197,11 @@ public class Constraint {
 				if (neverFlows.contains(label)) {
 					MitigationType type;
 
-					if (literal.compositeLabel().category() == LabelCategory.Node)
+					if (literal.compositeLabel().category() == LabelCategory.Node) {
 						type = MitigationType.DeleteNodeLabel;
-					else
+					} else {
 						type = MitigationType.DeleteDataLabel;
+					}
 
 					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1000, type));
 
