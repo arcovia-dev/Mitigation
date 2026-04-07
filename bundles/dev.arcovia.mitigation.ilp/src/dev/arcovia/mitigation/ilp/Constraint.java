@@ -11,7 +11,7 @@ import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.LabelCategory;
 import dev.arcovia.mitigation.sat.NodeLabel;
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 
 import java.util.List;
 import java.util.Set;

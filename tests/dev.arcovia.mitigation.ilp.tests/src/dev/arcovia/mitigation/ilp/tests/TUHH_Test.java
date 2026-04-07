@@ -28,7 +28,7 @@ import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.ModelCostCalculator;
 import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.sat.OutgoingDataLabel;
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 import static java.util.Map.entry;

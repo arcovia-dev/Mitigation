@@ -17,6 +17,7 @@ Require-Bundle: org.dataflowanalysis.converter,
  org.apache.log4j,
  tools.mdsd.library.standalone.initialization,
  com.google.guava,
- org.dataflowanalysis.analysis.dfd
+ org.dataflowanalysis.analysis.dfd,
+ dev.arcovia.mitigation.utils
 Automatic-Module-Name: dev.arcovia.mitigation.sat.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17

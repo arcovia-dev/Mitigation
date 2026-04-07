@@ -14,7 +14,7 @@ import org.sat4j.specs.TimeoutException;
 import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.Mechanic;
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 public final class SatHelper {

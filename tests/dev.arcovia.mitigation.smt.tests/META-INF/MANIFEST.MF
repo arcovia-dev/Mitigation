@@ -25,4 +25,5 @@ Require-Bundle:
  org.dataflowanalysis.dfd.dataflowdiagram,
  tools.mdsd.library.standalone.initialization,
  com.google.guava,
- dev.arcovia.mitigation.sat
+ dev.arcovia.mitigation.sat,
+ dev.arcovia.mitigation.utils
