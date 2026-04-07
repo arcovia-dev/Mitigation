@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Smt
+Bundle-SymbolicName: dev.arcovia.mitigation.smt
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.microsoft.z3,
+ dev.arcovia.mitigation.smt,
+ dev.arcovia.mitigation.smt.config,
+ dev.arcovia.mitigation.smt.constraints,
+ dev.arcovia.mitigation.smt.cost,
+ dev.arcovia.mitigation.smt.operations,
+ dev.arcovia.mitigation.smt.preprocess,
+ dev.arcovia.mitigation.smt.utils
+Automatic-Module-Name: dev.arcovia.mitigation.smt
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-ClassPath: ., lib/com.microsoft.z3.jar
+Bundle-Activator: dev.arcovia.mitigation.smt.Activator
+Bundle-ActivationPolicy: lazy
+Import-Package: org.osgi.framework
+Require-Bundle: 
+ dev.arcovia.mitigation.sat,
+ org.dataflowanalysis.dfd.datadictionary,
+ org.dataflowanalysis.dfd.dataflowdiagram,
+ org.dataflowanalysis.converter,
+ org.apache.log4j,
+ org.dataflowanalysis.analysis.dfd,
+ org.dataflowanalysis.analysis,
+ org.dataflowanalysis.examplemodels,
+ org.eclipse.emf.ecore.xmi,
+ com.fasterxml.jackson.core.jackson-annotations;bundle-version="2.13.2";visibility:=reexport,
+ com.fasterxml.jackson.core.jackson-core;bundle-version="2.13.2";visibility:=reexport,
+ com.fasterxml.jackson.core.jackson-databind;bundle-version="2.13.2";visibility:=reexport,
+ tools.mdsd.library.standalone.initialization
