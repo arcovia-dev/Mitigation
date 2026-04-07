@@ -43,6 +43,8 @@ public class Sat {
     private int maxLiteral;
     private boolean deactivateSubsumption;
     private Set<Label> allLabels = null;
+    
+    private static final boolean SCALINGTEST = false;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the
@@ -128,7 +130,7 @@ public class Sat {
                 addClause(negated);
 
             if (solutions.size() > 10000) {
-                if (deactivateSubsumption)
+                if (deactivateSubsumption || SCALINGTEST)
                     return solutions;
 
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");

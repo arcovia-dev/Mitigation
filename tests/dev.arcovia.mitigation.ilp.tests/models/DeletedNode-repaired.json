@@ -1,0 +1,103 @@
+{
+  "model" : {
+    "type" : "graph",
+    "id" : "root",
+    "children" : [ {
+      "text" : "user_db",
+      "id" : "_MkaD4NtkEfCj7NiqoM8ChQ",
+      "type" : "edge:arrow",
+      "sourceId" : "_MkZc0NtkEfCj7NiqoM8ChQ",
+      "targetId" : "scljwi",
+      "labels" : null,
+      "ports" : null,
+      "annotations" : null,
+      "children" : [ ],
+      "routingPoints" : [ ]
+    }, {
+      "text" : "db",
+      "id" : "8j2r1g",
+      "type" : "node:storage",
+      "labels" : [ {
+        "labelTypeId" : "gvia09",
+        "labelTypeValueId" : "5hnugm"
+      } ],
+      "ports" : [ {
+        "id" : "scljwi",
+        "type" : "port:dfd-input",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Incoming: Sensitivity.Personal",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1074844820
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    }, {
+      "text" : "user",
+      "id" : "7oii5l",
+      "type" : "node:input-output",
+      "labels" : [ ],
+      "ports" : [ {
+        "behavior" : "assign Sensitivity.Personal if TRUE",
+        "id" : "_MkZc0NtkEfCj7NiqoM8ChQ",
+        "type" : "port:dfd-output",
+        "children" : [ ]
+      } ],
+      "annotations" : [ {
+        "message" : "Propagated: Sensitivity.Personal",
+        "icon" : "tag",
+        "color" : "#FFFFFF",
+        "tfg" : 1074844820
+      } ],
+      "children" : [ ],
+      "position" : {
+        "x" : 0.0,
+        "y" : 0.0
+      },
+      "size" : null
+    } ]
+  },
+  "labelTypes" : [ {
+    "id" : "4h3wzk",
+    "name" : "Sensitivity",
+    "values" : [ {
+      "id" : "zzvphn",
+      "text" : "Personal"
+    }, {
+      "id" : "veaan9",
+      "text" : "Public"
+    } ]
+  }, {
+    "id" : "gvia09",
+    "name" : "Location",
+    "values" : [ {
+      "id" : "g10hr",
+      "text" : "EU"
+    }, {
+      "id" : "5hnugm",
+      "text" : "nonEU"
+    } ]
+  }, {
+    "id" : "84rllz",
+    "name" : "Encryption",
+    "values" : [ {
+      "id" : "2r6xe6",
+      "text" : "Encrypted"
+    } ]
+  }, {
+    "id" : "76rllz",
+    "name" : "Stereotype",
+    "values" : [ {
+      "id" : "456xe6",
+      "text" : "internal"
+    } ]
+  } ],
+  "mode" : "edit",
+  "constraints" : [ ]
+}

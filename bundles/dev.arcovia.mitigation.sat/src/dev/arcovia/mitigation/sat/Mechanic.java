@@ -24,6 +24,7 @@ import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.LabelType;
+import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.sat4j.specs.ContradictionException;
@@ -621,6 +622,10 @@ public class Mechanic {
                             var label = getOrCreateLabel(dd, type, value);
 
                             if (assignment instanceof Assignment cast) {
+                                cast.getOutputLabels()
+                                        .add(label);
+                            }
+                            if (assignment instanceof SetAssignment cast) {
                                 cast.getOutputLabels()
                                         .add(label);
                             }
