@@ -10,7 +10,9 @@
 	<classpathentry kind="lib" path="lib/ortools-java-9.14.6206.jar"/>
 	<classpathentry kind="lib" path="lib/linux64/ortools-linux-x86-64-9.14.6206.jar"/>
 	<classpathentry kind="lib" path="lib/win64/ortools-win32-x86-64-9.14.6206.jar"/>
-	<classpathentry kind="lib" path="lib/macos/ortools-linux-aarch64-9.14.6206.jar"/>
+	<classpathentry kind="lib" path="lib/linux64/ortools-linux-aarch64-9.14.6206.jar"/>
+	<classpathentry kind="lib" path="lib/macos/ortools-darwin-x86-64-9.14.6206.jar"/>
+	<classpathentry kind="lib" path="lib/macos/ortools-darwin-aarch64-9.14.6206.jar"/>
 	<classpathentry kind="lib" path="lib/protobuf-java-3.24.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

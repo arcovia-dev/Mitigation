@@ -275,7 +275,7 @@ public class ILPSolver {
 			return "lib/win64/ortools-win32-x86-64-9.14.6206.jar";
 		}
 		else if (os.contains("mac") || os.contains("darwin")) {
-			return arch.contains("aarch64") ? "lib/macos/ortools-linux-aarch64-9.14.6206.jar"
+			return arch.contains("aarch64") ? "lib/macos/ortools-darwin-aarch64-9.14.6206.jar"
 					: "lib/macos/ortools-darwin-x86-64-9.14.6206.jar";
 		}
 		return arch.contains("aarch64") ? "lib/linux64/ortools-linux-aarch64-9.14.6206.jar"
