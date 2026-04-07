@@ -78,3 +78,5 @@ tests/dev.arcovia.mitigation.ilp.tests/efficencyTest/*.json
 *.lp
 tests/dev.arcovia.mitigation.ilp.tests/models/temp-repaired.json
 tests/dev.arcovia.mitigation.ilp.tests/models/mindfd-repaired.json
+
+tests/dev.arcovia.mitigation.smt.tests/testresults/
