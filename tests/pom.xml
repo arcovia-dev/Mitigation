@@ -15,8 +15,8 @@
 	<modules>
 		<module>dev.arcovia.mitigation.sat.tests</module>
 		<module>dev.arcovia.mitigation.ilp.tests</module>
-		<module>dev.arcovia.mitigation.ranking.tests</module>
 		<module>dev.arcovia.mitigation.smt.tests</module>
+		<module>dev.arcovia.mitigation.ranking.tests</module>
 	</modules>
 	
 </project>
