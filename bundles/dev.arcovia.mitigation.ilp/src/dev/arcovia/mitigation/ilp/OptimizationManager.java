@@ -28,10 +28,11 @@ import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
+import dev.arcovia.mitigation.sat.MitigationApproach;
 import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.sat.timeMeasurement;
 
-public class OptimizationManager {
+public class OptimizationManager implements MitigationApproach{
 	private final DataFlowDiagramAndDictionary dfd;
 
 	Map<String, String> outPinToAssignmentMap = new HashMap<>();
@@ -50,6 +51,8 @@ public class OptimizationManager {
 	private List<ActionTerm> actions;
 
 	private List<Mitigation> result;
+	
+	private boolean isRestritedToLabelAddition = false;
 
 	public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
 		this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
@@ -91,7 +94,7 @@ public class OptimizationManager {
 		analyseDFD();
 
 		for (var node : violatingNodes) {
-			addMitigations(node.getPossibleMitigations());
+			addMitigations(node.getPossibleMitigations(isRestritedToLabelAddition));
 		}
 
 		for (var mitigation : allMitigations) {
@@ -121,7 +124,7 @@ public class OptimizationManager {
 		timer.analysis();
 
 		for (var node : violatingNodes) {
-			addMitigations(node.getPossibleMitigations());
+			addMitigations(node.getPossibleMitigations(isRestritedToLabelAddition));
 		}
 
 		for (var mitigation : allMitigations) {
@@ -143,7 +146,12 @@ public class OptimizationManager {
 
 		return dfd;
 	}
-
+	
+	@Override
+	public void restrictToLabelAddition() {
+		isRestritedToLabelAddition = true;
+	}
+	
 	public int getCost() {
 		int cost = 0;
 		for (var mitigation : result) {
