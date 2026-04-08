@@ -3,9 +3,9 @@ package dev.arcovia.mitigation.utils.dsl;
 import java.util.*;
 
 import dev.arcovia.mitigation.sat.*;
-import dev.arcovia.mitigation.sat.utils.selectors.conditional.DynamicConditionalSelector;
-import dev.arcovia.mitigation.sat.utils.selectors.conditional.DynamicEmptySetOperationConditionalSelector;
-import dev.arcovia.mitigation.sat.utils.selectors.conditional.DynamicVariableConditionalSelector;
+import dev.arcovia.mitigation.utils.dsl.selectors.conditional.DynamicConditionalSelector;
+import dev.arcovia.mitigation.utils.dsl.selectors.conditional.DynamicEmptySetOperationConditionalSelector;
+import dev.arcovia.mitigation.utils.dsl.selectors.conditional.DynamicVariableConditionalSelector;
 import dev.arcovia.mitigation.utils.dsl.selectors.constant.*;
 import dev.arcovia.mitigation.utils.dsl.selectors.dynamic.DynamicDataCharacteristicSelector;
 import dev.arcovia.mitigation.utils.dsl.selectors.dynamic.DynamicDataSelector;

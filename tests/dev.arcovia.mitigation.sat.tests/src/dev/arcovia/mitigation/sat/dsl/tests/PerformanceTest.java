@@ -1,6 +1,6 @@
 package dev.arcovia.mitigation.sat.dsl.tests;
 
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;

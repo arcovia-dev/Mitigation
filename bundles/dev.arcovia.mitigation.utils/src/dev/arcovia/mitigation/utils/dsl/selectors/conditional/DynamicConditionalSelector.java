@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.sat.utils.selectors.conditional;
+package dev.arcovia.mitigation.utils.dsl.selectors.conditional;
 
 import dev.arcovia.mitigation.utils.dsl.nodes.BranchNode;
 import dev.arcovia.mitigation.utils.dsl.selectors.dynamic.DynamicDataSelector;

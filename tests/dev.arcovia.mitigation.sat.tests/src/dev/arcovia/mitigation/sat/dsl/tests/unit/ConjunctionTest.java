@@ -1,7 +1,7 @@
 package dev.arcovia.mitigation.sat.dsl.tests.unit;
 
 import dev.arcovia.mitigation.sat.Constraint;
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
 import dev.arcovia.mitigation.sat.dsl.tests.dummy.DInData;
 import dev.arcovia.mitigation.sat.dsl.tests.dummy.DNode;

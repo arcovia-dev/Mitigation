@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.sat.utils.selectors.conditional;
+package dev.arcovia.mitigation.utils.dsl.selectors.conditional;
 
 import dev.arcovia.mitigation.sat.IncomingDataLabel;
 import dev.arcovia.mitigation.sat.Label;

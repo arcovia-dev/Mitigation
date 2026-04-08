@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.Scaler;
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 public class ScalerTest {

@@ -1,6 +1,6 @@
 package dev.arcovia.mitigation.sat.dsl.tests;
 
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.ReadabilityTestResult;
 import dev.arcovia.mitigation.sat.dsl.tests.utility.StructureResult;

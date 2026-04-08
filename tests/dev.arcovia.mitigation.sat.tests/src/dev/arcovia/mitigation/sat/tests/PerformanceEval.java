@@ -16,7 +16,7 @@ import org.sat4j.specs.TimeoutException;
 
 import dev.arcovia.mitigation.sat.Scaler;
 import dev.arcovia.mitigation.sat.timeMeasurement;
-import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import dev.arcovia.mitigation.sat.RunConfig;
 import dev.arcovia.mitigation.sat.MeasurementWriter;
 import dev.arcovia.mitigation.sat.Mechanic;
