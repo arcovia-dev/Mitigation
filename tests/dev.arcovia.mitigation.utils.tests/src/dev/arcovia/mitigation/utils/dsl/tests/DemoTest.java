@@ -1,18 +1,20 @@
-package dev.arcovia.mitigation.sat.dsl.tests;
+package dev.arcovia.mitigation.utils.dsl.tests;
 
 import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.Literal;
 import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.utils.dsl.BaseFormula;
 import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
-import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
+import dev.arcovia.mitigation.utils.dsl.tests.utility.CNFUtil;
+import dev.arcovia.mitigation.utils.dsl.tests.utility.DataLoader;
+
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.analysis.dsl.selectors.Intersection;
 import org.dataflowanalysis.analysis.dsl.variable.ConstraintVariable;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Test;
-import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
+
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 
 import org.apache.log4j.Logger;

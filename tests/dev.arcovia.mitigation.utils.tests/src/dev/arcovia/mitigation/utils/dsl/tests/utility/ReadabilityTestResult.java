@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.sat.dsl.tests.utility;
+package dev.arcovia.mitigation.utils.dsl.tests.utility;
 
 /**
  * Represents the results of a readability test for CNF formulas.

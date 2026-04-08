@@ -16,6 +16,8 @@ import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.arcovia.mitigation.sat.*;
+import dev.arcovia.mitigation.utils.core.ModelCostCalculator;
+
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.converter.dfd2web.DFD2WebConverter;
 import org.dataflowanalysis.examplemodels.Activator;

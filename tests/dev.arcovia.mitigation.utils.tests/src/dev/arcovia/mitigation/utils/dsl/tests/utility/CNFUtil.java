@@ -1,8 +1,9 @@
-package dev.arcovia.mitigation.sat.dsl.tests.utility;
+package dev.arcovia.mitigation.utils.dsl.tests.utility;
 
 import dev.arcovia.mitigation.sat.*;
-import dev.arcovia.mitigation.sat.dsl.tests.dummy.DInData;
-import dev.arcovia.mitigation.sat.dsl.tests.dummy.DNode;
+import dev.arcovia.mitigation.utils.dsl.tests.dummy.DInData;
+import dev.arcovia.mitigation.utils.dsl.tests.dummy.DNode;
+
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

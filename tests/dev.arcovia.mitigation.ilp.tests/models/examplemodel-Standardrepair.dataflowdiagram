@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dataflowdiagram:DataFlowDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" id="_IVqtMDM1EfG3FvS7DrYDsw">
+  <flows id="pnbbug" entityName="User_request" sourceNode="ogbobb" destinationNode="hiiut">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#10glpd"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#0u4cim"/>
+  </flows>
+  <flows id="v21xf" entityName="process" sourceNode="ogbobb" destinationNode="_IWB5kDM1EfG3FvS7DrYDsw">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#_IWCgojM1EfG3FvS7DrYDsw"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#qiyh9m"/>
+  </flows>
+  <flows id="unzbr7" entityName="" sourceNode="0wxv4i" destinationNode="ildidp">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#973q3n"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#lbbv1m"/>
+  </flows>
+  <flows id="10npkk" entityName="" sourceNode="hiiut" destinationNode="ogbobb">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#7cjz1n"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#j4x2yf"/>
+  </flows>
+  <flows id="9ifhr" entityName="store" sourceNode="hiiut" destinationNode="ildidp">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#973q3n"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#l2sixh"/>
+  </flows>
+  <flows id="7u3x7l" entityName="configuration" sourceNode="doxuqn" destinationNode="hiiut">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#10glpd"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#0cmgr"/>
+  </flows>
+  <flows id="sxkmzd" entityName="configuration" sourceNode="doxuqn" destinationNode="0wxv4i">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#s3ki79"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#jllj9"/>
+  </flows>
+  <flows id="ug8oal" entityName="admin" sourceNode="jh621q" destinationNode="89ui8v">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#3fbuli"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#dwh5sd"/>
+  </flows>
+  <flows id="i8cpby" entityName="admin" sourceNode="jh621q" destinationNode="doxuqn">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#5eeix"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#rc2o8d"/>
+  </flows>
+  <flows id="_IWCgpTM1EfG3FvS7DrYDsw" entityName="auth_server" sourceNode="_IWB5kDM1EfG3FvS7DrYDsw" destinationNode="0wxv4i">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#s3ki79"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#_IWCgozM1EfG3FvS7DrYDsw"/>
+  </flows>
+  <flows id="_IWDuwTM1EfG3FvS7DrYDsw" entityName="logging_server" sourceNode="89ui8v" destinationNode="_IWDHsDM1EfG3FvS7DrYDsw">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#_IWDHsjM1EfG3FvS7DrYDsw"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#_IWDuwjM1EfG3FvS7DrYDsw"/>
+  </flows>
+  <flows id="_IWEV0DM1EfG3FvS7DrYDsw" entityName="logging_server" sourceNode="0wxv4i" destinationNode="_IWDHsDM1EfG3FvS7DrYDsw">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#_IWDHsjM1EfG3FvS7DrYDsw"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#_IWEV0TM1EfG3FvS7DrYDsw"/>
+  </flows>
+  <flows id="_IWEV0zM1EfG3FvS7DrYDsw" entityName="logging_server" sourceNode="doxuqn" destinationNode="_IWDHsDM1EfG3FvS7DrYDsw">
+    <destinationPin href="examplemodel-Standardrepair.datadictionary#_IWDHsjM1EfG3FvS7DrYDsw"/>
+    <sourcePin href="examplemodel-Standardrepair.datadictionary#_IWEV1DM1EfG3FvS7DrYDsw"/>
+  </flows>
+  <nodes xsi:type="dataflowdiagram:Store" id="ildidp" entityName="Storage">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IVqtRzM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#q4up6j"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#g10hr"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="hiiut" entityName="Service_registry">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IVqtSjM1EfG3FvS7DrYDsw"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="0wxv4i" entityName="user_service">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IVqtTzM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#mo8hoo"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#1bda72ae-9223-39cb-9607-a8067798e736"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="ogbobb" entityName="User">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IVqtUzM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#exjpgu"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#fceady"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="doxuqn" entityName="configuration_server">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IVqtWDM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#mo8hoo"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#1bda72ae-9223-39cb-9607-a8067798e736"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="89ui8v" entityName="admin_console">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IVqtXTM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#mo8hoo"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#0fac8e8a-a38d-3e28-96ac-67f5d5f8fee9"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#1bda72ae-9223-39cb-9607-a8067798e736"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:External" id="jh621q" entityName="Admin">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IVqtYTM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#0ffb8"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="_IWB5kDM1EfG3FvS7DrYDsw" entityName="auth_server">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IWCgoTM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#4a6883fd-dc01-3d50-a09d-8304b6337173"/>
+  </nodes>
+  <nodes xsi:type="dataflowdiagram:Process" id="_IWDHsDM1EfG3FvS7DrYDsw" entityName="logging_server">
+    <behavior href="examplemodel-Standardrepair.datadictionary#_IWDHsTM1EfG3FvS7DrYDsw"/>
+    <properties href="examplemodel-Standardrepair.datadictionary#d283cec3-a227-3b75-8289-5d7054ec866d"/>
+  </nodes>
+</dataflowdiagram:DataFlowDiagram>

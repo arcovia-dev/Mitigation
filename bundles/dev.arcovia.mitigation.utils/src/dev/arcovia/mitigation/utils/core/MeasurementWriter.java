@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.sat;
+package dev.arcovia.mitigation.utils.core;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

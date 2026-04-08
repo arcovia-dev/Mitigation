@@ -1,10 +1,11 @@
-package dev.arcovia.mitigation.sat.dsl.tests.unit;
+package dev.arcovia.mitigation.utils.dsl.tests.unit;
 
 import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
-import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
-import dev.arcovia.mitigation.sat.dsl.tests.dummy.DInData;
-import dev.arcovia.mitigation.sat.dsl.tests.dummy.DNode;
+import dev.arcovia.mitigation.utils.dsl.tests.dummy.DInData;
+import dev.arcovia.mitigation.utils.dsl.tests.dummy.DNode;
+import dev.arcovia.mitigation.utils.dsl.tests.utility.CNFUtil;
+
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;

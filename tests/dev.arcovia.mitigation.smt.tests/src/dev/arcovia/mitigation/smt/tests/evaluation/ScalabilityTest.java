@@ -14,11 +14,11 @@ import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.sat.Scaler;
 import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.SolvingResult;
 import dev.arcovia.mitigation.smt.tests.evaluation.SatHelper.RepairResult;
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
+import dev.arcovia.mitigation.utils.core.Scaler;
 
 /**
  * @author Nikolas Rank Compares the runtime of SMT to SAT when different scalability dimensions are considered

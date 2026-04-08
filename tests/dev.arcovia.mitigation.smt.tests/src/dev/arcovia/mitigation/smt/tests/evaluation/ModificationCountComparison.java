@@ -7,7 +7,6 @@ import java.util.List;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.junit.jupiter.api.Test;
 
-import dev.arcovia.mitigation.sat.ModelCostCalculator;
 import dev.arcovia.mitigation.smt.Mitigation;
 import dev.arcovia.mitigation.smt.SolvingResult;
 import dev.arcovia.mitigation.smt.config.Config;
@@ -16,6 +15,7 @@ import dev.arcovia.mitigation.smt.operations.NodeLabelRemoveOperation;
 import dev.arcovia.mitigation.smt.operations.Operation;
 import dev.arcovia.mitigation.smt.operations.UnsetAssignmentOperation;
 import dev.arcovia.mitigation.smt.utils.ParsingUtils;
+import dev.arcovia.mitigation.utils.core.ModelCostCalculator;
 
 public class ModificationCountComparison {
 

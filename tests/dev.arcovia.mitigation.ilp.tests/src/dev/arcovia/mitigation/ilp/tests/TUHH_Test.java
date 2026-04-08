@@ -25,9 +25,9 @@ import dev.arcovia.mitigation.ilp.MitigationStrategy;
 import dev.arcovia.mitigation.ilp.MitigationType;
 import dev.arcovia.mitigation.ilp.Node;
 import dev.arcovia.mitigation.sat.Label;
-import dev.arcovia.mitigation.sat.ModelCostCalculator;
 import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.sat.OutgoingDataLabel;
+import dev.arcovia.mitigation.utils.core.ModelCostCalculator;
 import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 

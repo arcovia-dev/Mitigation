@@ -1,7 +1,7 @@
-package dev.arcovia.mitigation.sat.dsl.tests.dummy;
+package dev.arcovia.mitigation.utils.dsl.tests.dummy;
 
 import dev.arcovia.mitigation.sat.LabelCategory;
-import dev.arcovia.mitigation.sat.dsl.tests.utility.CNFUtil;
+import dev.arcovia.mitigation.utils.dsl.tests.utility.CNFUtil;
 
 /**
  * A dummy representation of a node for testing CNF generation.

@@ -14,11 +14,11 @@ import org.junit.jupiter.api.Test;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 
-import dev.arcovia.mitigation.sat.Scaler;
-import dev.arcovia.mitigation.sat.timeMeasurement;
+import dev.arcovia.mitigation.utils.core.MeasurementWriter;
+import dev.arcovia.mitigation.utils.core.RunConfig;
+import dev.arcovia.mitigation.utils.core.Scaler;
+import dev.arcovia.mitigation.utils.core.timeMeasurement;
 import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
-import dev.arcovia.mitigation.sat.RunConfig;
-import dev.arcovia.mitigation.sat.MeasurementWriter;
 import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.Constraint;
 

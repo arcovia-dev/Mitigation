@@ -1,7 +1,8 @@
-package dev.arcovia.mitigation.sat.dsl.tests.utility;
+package dev.arcovia.mitigation.utils.dsl.tests.utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.examplemodels.Activator;
 import tools.mdsd.library.standalone.initialization.StandaloneInitializationException;
 import tools.mdsd.modelingfoundations.identifier.NamedElement;

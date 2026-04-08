@@ -1,10 +1,14 @@
-package dev.arcovia.mitigation.sat;
+package dev.arcovia.mitigation.utils.core;
 
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.dfd.datadictionary.Assignment;
 import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
 import org.dataflowanalysis.dfd.datadictionary.impl.LabelTypeImpl;
+
+import dev.arcovia.mitigation.sat.Constraint;
+import dev.arcovia.mitigation.sat.Label;
+import dev.arcovia.mitigation.sat.Vertex;
 
 import java.util.ArrayList;
 import java.util.HashMap;

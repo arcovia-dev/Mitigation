@@ -1,8 +1,9 @@
-package dev.arcovia.mitigation.sat.dsl.tests;
+package dev.arcovia.mitigation.utils.dsl.tests;
 
 import dev.arcovia.mitigation.sat.*;
 import dev.arcovia.mitigation.utils.dsl.CNFTranslation;
-import dev.arcovia.mitigation.sat.dsl.tests.utility.DataLoader;
+import dev.arcovia.mitigation.utils.dsl.tests.utility.DataLoader;
+
 import org.apache.log4j.Logger;
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.examplemodels.results.ExpectedCharacteristic;

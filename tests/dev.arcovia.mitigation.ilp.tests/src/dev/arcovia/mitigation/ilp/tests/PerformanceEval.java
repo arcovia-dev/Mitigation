@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ilp.OptimizationManager;
-import dev.arcovia.mitigation.sat.Scaler;
-import dev.arcovia.mitigation.sat.timeMeasurement;
-import dev.arcovia.mitigation.sat.RunConfig;
-import dev.arcovia.mitigation.sat.MeasurementWriter;
+import dev.arcovia.mitigation.utils.core.MeasurementWriter;
+import dev.arcovia.mitigation.utils.core.RunConfig;
+import dev.arcovia.mitigation.utils.core.Scaler;
+import dev.arcovia.mitigation.utils.core.timeMeasurement;
 
 public class PerformanceEval {
 

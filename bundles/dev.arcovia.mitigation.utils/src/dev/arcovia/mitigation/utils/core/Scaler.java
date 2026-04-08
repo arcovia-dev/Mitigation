@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.sat;
+package dev.arcovia.mitigation.utils.core;
 
 import java.util.HashMap;
 import java.util.HashSet;
