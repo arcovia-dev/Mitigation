@@ -17,6 +17,7 @@ Require-Bundle: dev.arcovia.mitigation.sat,
  org.dataflowanalysis.examplemodels,
  org.dataflowanalysis.converter,
  org.dataflowanalysis.dfd.datadictionary,
- dev.arcovia.mitigation.sat.tests
+ dev.arcovia.mitigation.sat.tests,
+ org.dataflowanalysis.analysis.dfd
 Automatic-Module-Name: dev.arcovia.mitigation.utils.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17

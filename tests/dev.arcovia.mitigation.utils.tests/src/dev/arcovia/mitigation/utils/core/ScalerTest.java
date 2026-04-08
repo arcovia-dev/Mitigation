@@ -1,4 +1,4 @@
-package dev.arcovia.mitigation.sat.tests;
+package dev.arcovia.mitigation.utils.core;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
