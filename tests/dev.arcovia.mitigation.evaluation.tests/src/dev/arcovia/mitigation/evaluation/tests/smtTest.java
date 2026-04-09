@@ -8,7 +8,7 @@ import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import dev.arcovia.mitigation.sat.MitigationApproach;
 import dev.arcovia.mitigation.smt.Mechanic;
 
-public class smtTest extends TestBase{
+public class smtTest extends TestBase {
 
 	@Override
 	protected MitigationApproach getApproach(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {

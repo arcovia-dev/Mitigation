@@ -11,18 +11,18 @@ import dev.arcovia.mitigation.sat.Constraint;
 import dev.arcovia.mitigation.sat.MitigationApproach;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 
-public class satTest extends TestBase{
+public class satTest extends TestBase {
 
 	@Override
 	protected MitigationApproach getApproach(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
 		List<Constraint> translatedConstraints = new ArrayList<>();
-		
+
 		for (var constraint : constraints) {
-            var translation = new CNFTranslation(constraint);
-            translatedConstraints.addAll(translation.constructCNF());
-        }
-		
-		return new Mechanic(dfd, " ",translatedConstraints);
+			var translation = new CNFTranslation(constraint);
+			translatedConstraints.addAll(translation.constructCNF());
+		}
+
+		return new Mechanic(dfd, " ", translatedConstraints);
 	}
 
 	@Override
