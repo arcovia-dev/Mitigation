@@ -181,6 +181,12 @@ public class Mechanic implements MitigationApproach{
         }
 
         var solutions = new Sat().solve(nodes, flows, constraints, dfdName, deactivateSubsumption, allLabels);
+        
+        if(solutions.isEmpty()) {
+        	logger.error("No solution found!");
+        	return dfd;
+        }
+        
         List<Term> flatendNodes = getFlatNodes(nodes);
 
         List<Term> chosenSolution = getChosenSolution(solutions, flatendNodes);

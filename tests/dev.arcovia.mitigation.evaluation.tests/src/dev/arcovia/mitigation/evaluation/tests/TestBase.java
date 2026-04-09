@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -19,15 +20,20 @@ import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.dataflowanalysis.examplemodels.TuhhModels;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import dev.arcovia.mitigation.sat.Label;
+import dev.arcovia.mitigation.sat.MeasurementWriter;
 import dev.arcovia.mitigation.sat.MitigationApproach;
 import dev.arcovia.mitigation.sat.ModelCostCalculator;
+import dev.arcovia.mitigation.sat.RunConfig;
 import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
+import dev.arcovia.mitigation.sat.timeMeasurement;
+import dev.arcovia.mitigation.sat.Scaler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -212,6 +218,134 @@ public abstract class TestBase {
 	    mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
 		
 	}
+	
+	
+	private static final String SCALE_DFD = "models/sourceSink.json";
+
+	private static final AnalysisConstraint scalabilityConstraint = new ConstraintDSL().ofData()
+	        .withLabel("Sensitivity", "Personal")
+	        .withoutLabel("Encryption", "encrypted")
+	        .neverFlows()
+	        .toVertex()
+	        .withCharacteristic("Location", "nonEU")
+	        .create();
+
+	private static final List<Integer> TFG_LENGTH_SCALINGS =
+	        List.of(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550);
+
+	private static final List<Integer> TFG_AMOUNT_SCALINGS =
+	        List.of(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
+	                11000, 12000, 13000, 14000, 15000);
+
+	private static final List<Integer> CONSTRAINT_SCALINGS =
+	        List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+	                40, 60, 80, 100, 120, 140, 160, 180);
+
+	private static final int MEASUREMENT_REPEATS = 3;
+	private static final int FLUSH_EVERY = 3;
+	private static boolean WARMUP = false;
+
+	@Test
+	@Disabled("Long-running scalability experiment — run via evaluateScalability()")
+	void evaluateScalability() throws Throwable {
+	    Path outDir = Paths.get("results");
+	    Files.createDirectories(outDir);
+	    Path csv = outDir.resolve(getApproachName().toLowerCase() + "_performance_measurements.json");
+	    Set<String> done = MeasurementWriter.loadDoneRunIds(csv);
+
+	    try (MeasurementWriter writer = new MeasurementWriter(csv, done, FLUSH_EVERY)) {
+	        scaleTFGLength(writer);
+	        scaleTFGAmount(writer);
+	        scaleConstraints(writer);
+	    }
+	}
+	
+	
+	private void scaleTFGLength(MeasurementWriter writer) throws Throwable {
+	    for (int scaling : TFG_LENGTH_SCALINGS) {
+	        RunConfig cfg = RunConfig.forTFG("tfg_length", scaling, 0);
+	        runWithWarmupAndRepeats(writer, cfg, () -> {
+	            var dfd = new Scaler(SCALE_DFD).scaleTFGLength(scaling);
+	            getApproach(dfd, List.of(scalabilityConstraint)).repair();
+	        });
+	    }
+	}
+
+	private void scaleTFGAmount(MeasurementWriter writer) throws Throwable {
+	    for (int scaling : TFG_AMOUNT_SCALINGS) {
+	        RunConfig cfg = RunConfig.forTFG("tfg_amount", 0, scaling);
+	        runWithWarmupAndRepeats(writer, cfg, () -> {
+	            var dfd = new Scaler(SCALE_DFD).scaleTFGAmount(scaling);
+	            getApproach(dfd, List.of(scalabilityConstraint)).repair();
+	        });
+	    }
+	}
+
+	private void scaleConstraints(MeasurementWriter writer) throws Throwable {
+	    int dummyLabels = 600;
+	    for (int s : CONSTRAINT_SCALINGS)
+	        runConstraintCase(writer, dummyLabels, "constraints_amountConstraint",   s, 1, 1, 1, 1);
+	    for (int s : CONSTRAINT_SCALINGS)
+	        runConstraintCase(writer, dummyLabels, "constraints_numberWithLabel",    1, s, 1, 1, 1);
+	    for (int s : CONSTRAINT_SCALINGS)
+	        runConstraintCase(writer, dummyLabels, "constraints_numberWithoutLabel", 1, 1, s, 1, 1);
+	    for (int s : CONSTRAINT_SCALINGS)
+	        runConstraintCase(writer, dummyLabels, "constraints_numberWithCharacteristic",    1, 1, 1, s, 1);
+	    for (int s : CONSTRAINT_SCALINGS)
+	        runConstraintCase(writer, dummyLabels, "constraints_numberWithoutCharacteristic", 1, 1, 1, 1, s);
+	    for (int s : CONSTRAINT_SCALINGS) {
+	        int half = s / 2;
+	        runConstraintCase(writer, dummyLabels, "constraints_allTogether", s, half, half, half, half);
+	    }
+	}
+
+	private void runConstraintCase(MeasurementWriter writer, int dummyLabels, String name,
+	        int amount, int withLabel, int withoutLabel, int withChar, int withoutChar) throws Throwable {
+	    RunConfig cfg = RunConfig.forConstraints(name, amount, withLabel, withoutLabel,
+	            withChar, withoutChar, dummyLabels);
+	    runWithWarmupAndRepeats(writer, cfg, () -> {
+	        Scaler scaler = new Scaler(SCALE_DFD);
+	        DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(dummyLabels);
+	        List<AnalysisConstraint> constraints = scaler.scaleConstraint(amount, withLabel, withoutLabel,
+	                withChar, withoutChar, dummyLabels);
+	        getApproach(dfd, constraints).repair();
+	    });
+	}
+
+
+	private void runWithWarmupAndRepeats(MeasurementWriter writer, RunConfig cfg,
+	        RunnableExperiment experiment) throws Throwable {
+	    if (!WARMUP) {
+	        try {
+	            experiment.run();
+	            WARMUP = true;
+	        } catch (Throwable t) { throw new RuntimeException(t); }
+	    }
+	    for (int i = 0; i < MEASUREMENT_REPEATS; i++) {
+	        if (writer.isDone(MeasurementWriter.runId(cfg, "measurement", i))) continue;
+	        timeMeasurement timer = new timeMeasurement();
+	        try {
+	            timer.start();
+	            experiment.run();
+	            timer.stop();
+	            writer.append(cfg, timer, "measurement", i);
+	        } catch (OutOfMemoryError oom) {
+	            writer.appendFailure(cfg, "measurement", i, "OutOfMemoryError");
+	            throw oom;
+	        } catch (Throwable t) {
+	            String msg = t.getMessage();
+	            writer.appendFailure(cfg, "measurement", i,
+	                    t.getClass().getSimpleName() + ": " + (msg != null ? msg.substring(0, Math.min(200, msg.length())) : ""));
+	            throw t;
+	        }
+	    }
+	}
+
+	@FunctionalInterface
+	private interface RunnableExperiment { void run() throws Exception; }
+	
+	
+	
 	
 	private int determineViolations(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
 		var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());

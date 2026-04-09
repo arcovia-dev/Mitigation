@@ -19,9 +19,7 @@ public class satTest extends TestBase{
 		
 		for (var constraint : constraints) {
             var translation = new CNFTranslation(constraint);
-            Constraint translatedConstraint = translation.constructCNF()
-                    .get(0);
-            translatedConstraints.add(translatedConstraint);
+            translatedConstraints.addAll(translation.constructCNF());
         }
 		
 		return new Mechanic(dfd, " ",translatedConstraints);
