@@ -1,12 +1,14 @@
 package dev.arcovia.mitigation.evaluation.tests;
 
 
+import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -22,7 +24,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.MitigationApproach;
+import dev.arcovia.mitigation.sat.ModelCostCalculator;
+import dev.arcovia.mitigation.sat.dsl.CNFTranslation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -126,7 +131,7 @@ public abstract class TestBase {
 		
 		int violationsAfter = determineViolations(repairedDFD, analysisConstraints);
 		
-		assertEquals(violationsAfter, 0);
+		assertEquals(0, violationsAfter);
 		
 	    ObjectMapper mapper = new ObjectMapper();
 	    Path out = Path.of("results/violation_results.json");
@@ -140,6 +145,73 @@ public abstract class TestBase {
 	}
 	
 	
+	static Stream<Arguments> tuhhModelProviderBaseModel() {
+	    return TuhhModels.getTuhhModels()
+	            .entrySet()
+	            .stream()
+	            .filter(model -> model.getValue().contains(0))
+	            .flatMap(entity -> entity.getValue().stream()
+	                    .map(model -> Arguments.of(entity.getKey(), model)));
+	}
+	
+	final Map<Label, Integer> minCosts = Map.ofEntries(entry(new Label("Stereotype", "gateway"), 1),
+            entry(new Label("Stereotype", "authenticated_request"), 1), entry(new Label("Stereotype", "transform_identity_representation"), 1),
+            entry(new Label("Stereotype", "token_validation"), 1), entry(new Label("Stereotype", "login_attempts_regulation"), 1),
+            entry(new Label("Stereotype", "encrypted_connection"), 1), entry(new Label("Stereotype", "log_sanitization"), 1),
+            entry(new Label("Stereotype", "local_logging"), 1));
+
+	@ParameterizedTest
+	@MethodSource("tuhhModelProviderBaseModel")
+	void evaluateCost(String model, int variant) throws Exception {
+		Thread.sleep(2);
+		String name = model + "_" + 0;
+		
+		List<AnalysisConstraint> constraints = switch (variant) {
+        case 1 -> List.of(entryViaGatewayOnly, nonInternalGateway);
+        case 2 -> List.of(authenticatedRequest);
+        case 4 -> List.of(transformedEntry);
+        case 5 -> List.of(tokenValidation);
+        case 7 -> List.of(encryptedEntry, entryViaGatewayOnly, nonInternalGateway);
+        case 8 -> List.of(encryptedInternals);
+        case 10 -> List.of(localLogging);
+        case 11 -> List.of(localLogging, logSanitization);
+        default -> null;
+	    };
+	    if (constraints == null) {
+			return;
+		}
+		
+		var dfd = loadDFD(model, name);
+		
+		MitigationApproach approach = getApproach(dfd, constraints);
+		
+		var repairedDFD = approach.repair(); 
+	
+		
+		List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
+		for (var constraint : constraints) {
+            var translation = new CNFTranslation(constraint);
+            dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF()
+                    .get(0);
+            satConstraint.add(c);
+        }
+
+        var approachCost = new ModelCostCalculator(repairedDFD, satConstraint, minCosts).calculateCostWithoutForwarding();
+
+        var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts)
+                .calculateCostWithoutForwarding();
+        
+        ObjectMapper mapper = new ObjectMapper();
+	    Path out = Path.of("results/efficiency_results.json");
+
+	    List<CostResult> existing = Files.exists(out)
+	            ? mapper.readValue(out.toFile(), new TypeReference<List<CostResult>>() {})
+	            : new ArrayList<>();
+
+	    existing.add(new CostResult(getApproachName(),model, variant, approachCost, tuhhCost));
+	    mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
+		
+	}
 	
 	private int determineViolations(DataFlowDiagramAndDictionary dfd, List<AnalysisConstraint> constraints) {
 		var resourceProvider = new DFDModelResourceProvider(dfd.dataDictionary(), dfd.dataFlowDiagram());
@@ -166,6 +238,14 @@ public abstract class TestBase {
 	        String modelName,
 	        int violationsBefore,
 	        int violationsAfter
+	) {}
+	
+	public record CostResult(
+			String Approach,
+	        String model,
+	        int variant,
+	        int approachCost,
+	        int tuhhCost
 	) {}
 
 	private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws Exception {
