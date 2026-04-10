@@ -263,8 +263,10 @@ public class OptimizationManager implements MitigationApproach{
 			for (var constraint : constraints) {
 				if (constraint.isPrecondition(label)) {
 					if (required.isEmpty()) {
+						
 						for (var mitigation : constraint.getMitigations()) {
-							if (mitigation.label.contains(label)) {
+							if (mitigation.label.contains(label)
+									&& !mitigation.type.toString().startsWith("Delete")) {
 								continue;
 							}
 							required.add(List.of(mitigation));
@@ -273,7 +275,8 @@ public class OptimizationManager implements MitigationApproach{
 						List<List<MitigationStrategy>> newRequired = new ArrayList<>();
 						for (var requieredMitgation : required) {
 							for (MitigationStrategy mitigation : constraint.getMitigations()) {
-								if (mitigation.label.contains(label)) {
+								if (mitigation.label.contains(label)
+										&& !mitigation.type.toString().startsWith("Delete")) {
 									continue;
 								}
 								List<MitigationStrategy> temp = new ArrayList<>(requieredMitgation);

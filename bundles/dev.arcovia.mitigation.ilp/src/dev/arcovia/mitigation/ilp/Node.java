@@ -12,6 +12,7 @@ import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 
 import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import dev.arcovia.mitigation.sat.CompositeLabel;
+import dev.arcovia.mitigation.sat.LabelCategory;
 
 public class Node {
 	private static final double EPSILON = 0.01;
@@ -219,8 +220,28 @@ public class Node {
 					type = ActionType.Adding;
 				}
 
-				requiredMitgation.add(new Mitigation(new ActionTerm(this.name, mitgation.label, type), mitgation.cost,
-						getAllRequiredMitigations(mitgation)));
+				
+				if (mitgation.type == MitigationType.DeleteDataLabel
+						|| mitgation.type == MitigationType.DataLabel) {
+					List<CompositeLabel> outLabels = new ArrayList<>();
+					for (var label : mitgation.label) {
+						if (label.category() == LabelCategory.IncomingData) {
+							outLabels.add(new OutgoingDataLabel(label.label()));
+						} else {
+							outLabels.add(label);
+						}
+					}
+					for (var assignment : vertex.getReferencedElement().getBehavior().getAssignment()) {
+						String pinId = assignment.getOutputPin().getId();
+						requiredMitgation.add(new Mitigation(
+								new ActionTerm(pinId, outLabels, type), mitgation.cost,
+								getAllRequiredMitigations(mitgation)));
+					}
+				} else {
+					requiredMitgation.add(new Mitigation(
+							new ActionTerm(this.name, mitgation.label, type), mitgation.cost,
+							getAllRequiredMitigations(mitgation)));
+				}
 			}
 			requiredMitgations.add(requiredMitgation);
 

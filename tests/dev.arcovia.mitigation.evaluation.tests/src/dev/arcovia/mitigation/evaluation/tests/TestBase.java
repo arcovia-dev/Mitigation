@@ -17,6 +17,8 @@ import org.dataflowanalysis.analysis.dfd.resource.DFDModelResourceProvider;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.converter.web2dfd.Web2DFDConverter;
+import org.dataflowanalysis.converter.web2dfd.WebEditorConverterModel;
 import org.dataflowanalysis.examplemodels.Activator;
 import org.dataflowanalysis.examplemodels.TuhhModels;
 import org.junit.jupiter.api.Disabled;
@@ -209,6 +211,27 @@ public abstract class TestBase {
 		}
 	}
 
+	
+	final AnalysisConstraint encryptedPersonalData = new ConstraintDSL().ofData().withLabel("Sensitivity", "Personal")
+			.withoutLabel("Encryption", "Encrypted").neverFlows().toVertex().withCharacteristic("Location", "nonEU")
+			.create();
+	
+	final AnalysisConstraint encryptedNonEu = new ConstraintDSL().ofData().withLabel("Encryption", "Encrypted").neverFlows().toVertex().withCharacteristic("Location", "EU")
+			.create();
+	
+	@Test
+	@Disabled
+	void forwardingEdgeCase() throws Exception {
+		var dfdLocation = "models/forwardingEdgeCase.json";
+		DataFlowDiagramAndDictionary dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
+		
+		var repairedDFD = getApproach(dfd, List.of(encryptedPersonalData,encryptedNonEu )).repair();
+		
+		var violations = determineViolations(repairedDFD, List.of(encryptedPersonalData,encryptedNonEu));
+		
+		assertEquals(0, violations);
+	}
+	
 	private void scaleTFGLength(MeasurementWriter writer) throws Throwable {
 		for (int scaling : TFG_LENGTH_SCALINGS) {
 			RunConfig cfg = RunConfig.forTFG("tfg_length", scaling, 0);

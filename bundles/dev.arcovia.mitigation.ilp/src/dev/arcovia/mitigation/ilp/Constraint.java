@@ -205,6 +205,8 @@ public class Constraint {
 
 					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1000, type));
 
+				} else if (literal.compositeLabel().category() == LabelCategory.IncomingData) {
+					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1000, MitigationType.DeleteDataLabel));
 				}
 
 			}
