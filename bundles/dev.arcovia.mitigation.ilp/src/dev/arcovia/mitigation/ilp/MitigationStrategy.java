@@ -25,7 +25,7 @@ public class MitigationStrategy {
 			List<MitigationStrategy> requiredMitigations = new ArrayList<>();
 			for (var mitigation : mitigations) {
 				if (!mitigation.type.toString().startsWith("Delete")
-						|| mitigation.type == MitigationType.DeleteDataLabel) {
+						|| mitigation.type == MitigationType.DeleteDataLabel || mitigation.type == MitigationType.DeleteNodeLabel) {
 					requiredMitigations.add(mitigation);
 				}
 			}
