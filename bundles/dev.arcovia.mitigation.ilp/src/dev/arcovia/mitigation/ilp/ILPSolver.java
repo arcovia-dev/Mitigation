@@ -40,7 +40,7 @@ public class ILPSolver {
 			throw new Exception("Unable to load required libariers used by google orTools");
 
 		}
-		MPSolver solver = MPSolver.createSolver("CBC_MIXED_INTEGER_PROGRAMMING");
+		MPSolver solver = MPSolver.createSolver("SCIP_MIXED_INTEGER_PROGRAMMING");
 
 		for (Mitigation mitigation : allMitigations) {
 			MPVariable var = solver.makeIntVar(0, 1, mitigation.toString());
