@@ -22,7 +22,7 @@ public class satTest extends TestBase {
 			translatedConstraints.addAll(translation.constructCNF());
 		}
 
-		return new Mechanic(dfd, " ", translatedConstraints);
+		return new Mechanic(dfd, "temp", translatedConstraints);
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public abstract class TestBase {
 		assertEquals(0, violationsAfter);
 
 		ObjectMapper mapper = new ObjectMapper();
-		Path out = Path.of("results/violation_results.json");
+		Path out = Path.of("testresults/violation_results.json");
 
 		List<ViolationResult> existing = Files.exists(out)
 				? mapper.readValue(out.toFile(), new TypeReference<List<ViolationResult>>() {
@@ -165,7 +165,7 @@ public abstract class TestBase {
 				.calculateCostWithoutForwarding();
 
 		ObjectMapper mapper = new ObjectMapper();
-		Path out = Path.of("results/efficiency_results.json");
+		Path out = Path.of("testresults/efficiency_results.json");
 
 		List<CostResult> existing = Files.exists(out)
 				? mapper.readValue(out.toFile(), new TypeReference<List<CostResult>>() {
@@ -199,7 +199,7 @@ public abstract class TestBase {
 	@Test
 	@Disabled("Long-running scalability experiment — run via evaluateScalability()")
 	void evaluateScalability() throws Throwable {
-		Path outDir = Paths.get("results");
+		Path outDir = Paths.get("testresults");
 		Files.createDirectories(outDir);
 		Path csv = outDir.resolve(getApproachName().toLowerCase() + "_performance_measurements.json");
 		Set<String> done = MeasurementWriter.loadDoneRunIds(csv);
