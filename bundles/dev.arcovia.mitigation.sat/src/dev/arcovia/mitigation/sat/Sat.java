@@ -44,7 +44,8 @@ public class Sat {
     private boolean deactivateSubsumption;
     private Set<Label> allLabels = null;
     
-    private static final boolean SCALINGTEST = false;
+    private static final boolean SCALING_TEST = true;
+    private static final int TERMINATION_THRESHOLD = 100000;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the
@@ -129,8 +130,8 @@ public class Sat {
             if (!negated.isEmpty() && !deactivateSubsumption)
                 addClause(negated);
 
-            if (solutions.size() > 10000) {
-                if (deactivateSubsumption || SCALINGTEST)
+            if (solutions.size() > TERMINATION_THRESHOLD) {
+                if (deactivateSubsumption || SCALING_TEST)
                     return solutions;
 
                 throw new TimeoutException("Solving needed to be terminated after finding 10.000 solutions");
