@@ -220,7 +220,6 @@ public abstract class TestBase {
 			.create();
 	
 	@Test
-	@Disabled
 	void forwardingEdgeCase() throws Exception {
 		var dfdLocation = "models/forwardingEdgeCase.json";
 		DataFlowDiagramAndDictionary dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));

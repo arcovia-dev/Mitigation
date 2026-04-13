@@ -1,308 +1,614 @@
 [ {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "ewolff-kafka",
   "variant" : 4,
-  "approachCost" : 5,
+  "approachCost" : 1,
   "tuhhCost" : 5
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "ewolff-kafka",
   "variant" : 5,
-  "approachCost" : 5,
+  "approachCost" : 1,
   "tuhhCost" : 14
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "ewolff-kafka",
   "variant" : 7,
-  "approachCost" : 11,
+  "approachCost" : 2,
   "tuhhCost" : 7
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "ewolff-kafka",
   "variant" : 8,
-  "approachCost" : 3,
+  "approachCost" : 1,
   "tuhhCost" : 10
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "anilallewar",
   "variant" : 7,
-  "approachCost" : 25,
+  "approachCost" : 10,
   "tuhhCost" : 8
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "anilallewar",
   "variant" : 8,
-  "approachCost" : 11,
+  "approachCost" : 4,
   "tuhhCost" : 26
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "anilallewar",
   "variant" : 11,
   "approachCost" : 17,
   "tuhhCost" : 22
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "mudigal-technologies",
   "variant" : 2,
-  "approachCost" : 8,
+  "approachCost" : 5,
   "tuhhCost" : 32
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "mudigal-technologies",
   "variant" : 4,
-  "approachCost" : 3,
+  "approachCost" : 2,
   "tuhhCost" : 4
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "mudigal-technologies",
   "variant" : 5,
-  "approachCost" : 3,
+  "approachCost" : 2,
   "tuhhCost" : 53
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "mudigal-technologies",
   "variant" : 7,
-  "approachCost" : 17,
+  "approachCost" : 6,
   "tuhhCost" : 6
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "mudigal-technologies",
   "variant" : 8,
-  "approachCost" : 14,
+  "approachCost" : 5,
   "tuhhCost" : 32
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "mudigal-technologies",
   "variant" : 11,
   "approachCost" : 14,
   "tuhhCost" : 49
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "yidongnan",
   "variant" : 2,
-  "approachCost" : 6,
+  "approachCost" : 4,
   "tuhhCost" : 27
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "yidongnan",
   "variant" : 4,
-  "approachCost" : 2,
+  "approachCost" : 1,
   "tuhhCost" : 6
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "yidongnan",
   "variant" : 5,
-  "approachCost" : 2,
+  "approachCost" : 1,
   "tuhhCost" : 37
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "yidongnan",
   "variant" : 7,
-  "approachCost" : 20,
+  "approachCost" : 8,
   "tuhhCost" : 8
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "yidongnan",
   "variant" : 8,
-  "approachCost" : 14,
+  "approachCost" : 4,
   "tuhhCost" : 27
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 1,
   "approachCost" : 0,
   "tuhhCost" : 0
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 2,
   "approachCost" : 3,
   "tuhhCost" : 5
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 4,
   "approachCost" : 0,
   "tuhhCost" : 0
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 5,
   "approachCost" : 0,
   "tuhhCost" : 9
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 7,
   "approachCost" : 0,
   "tuhhCost" : 1
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 8,
-  "approachCost" : 5,
+  "approachCost" : 4,
   "tuhhCost" : 5
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 10,
   "approachCost" : 3,
   "tuhhCost" : 13
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "koushikkothagal",
   "variant" : 11,
   "approachCost" : 6,
   "tuhhCost" : 26
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "spring-petclinic",
   "variant" : 2,
-  "approachCost" : 6,
+  "approachCost" : 2,
   "tuhhCost" : 25
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "spring-petclinic",
   "variant" : 5,
-  "approachCost" : 3,
+  "approachCost" : 2,
   "tuhhCost" : 36
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "spring-petclinic",
   "variant" : 7,
-  "approachCost" : 23,
+  "approachCost" : 8,
   "tuhhCost" : 10
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "spring-petclinic",
   "variant" : 8,
-  "approachCost" : 13,
+  "approachCost" : 2,
   "tuhhCost" : 25
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "callistaenterprise",
   "variant" : 2,
-  "approachCost" : 9,
+  "approachCost" : 3,
   "tuhhCost" : 29
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "callistaenterprise",
   "variant" : 11,
   "approachCost" : 50,
   "tuhhCost" : 68
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "jferrater",
   "variant" : 2,
-  "approachCost" : 7,
+  "approachCost" : 1,
   "tuhhCost" : 14
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "jferrater",
   "variant" : 5,
   "approachCost" : 0,
   "tuhhCost" : 23
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "jferrater",
   "variant" : 7,
   "approachCost" : 0,
   "tuhhCost" : 1
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "jferrater",
   "variant" : 8,
-  "approachCost" : 5,
+  "approachCost" : 1,
   "tuhhCost" : 15
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "apssouza22",
   "variant" : 2,
-  "approachCost" : 10,
+  "approachCost" : 7,
   "tuhhCost" : 32
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "apssouza22",
   "variant" : 4,
   "approachCost" : 3,
   "tuhhCost" : 3
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "apssouza22",
   "variant" : 7,
-  "approachCost" : 16,
+  "approachCost" : 10,
   "tuhhCost" : 14
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "apssouza22",
   "variant" : 8,
-  "approachCost" : 12,
+  "approachCost" : 5,
   "tuhhCost" : 23
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "sqshq",
   "variant" : 7,
-  "approachCost" : 26,
+  "approachCost" : 8,
   "tuhhCost" : 10
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "sqshq",
   "variant" : 8,
-  "approachCost" : 17,
+  "approachCost" : 10,
   "tuhhCost" : 33
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "sqshq",
   "variant" : 10,
   "approachCost" : 18,
   "tuhhCost" : 48
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "sqshq",
   "variant" : 11,
-  "approachCost" : 24,
+  "approachCost" : 22,
   "tuhhCost" : 96
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "georgwittberger",
   "variant" : 2,
-  "approachCost" : 4,
+  "approachCost" : 1,
   "tuhhCost" : 4
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "georgwittberger",
   "variant" : 4,
-  "approachCost" : 4,
+  "approachCost" : 1,
   "tuhhCost" : 5
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "georgwittberger",
   "variant" : 5,
-  "approachCost" : 4,
+  "approachCost" : 1,
   "tuhhCost" : 9
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "georgwittberger",
   "variant" : 7,
-  "approachCost" : 8,
+  "approachCost" : 2,
   "tuhhCost" : 7
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "georgwittberger",
   "variant" : 8,
   "approachCost" : 1,
   "tuhhCost" : 4
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "georgwittberger",
   "variant" : 10,
   "approachCost" : 3,
   "tuhhCost" : 13
 }, {
-  "Approach" : "SAT",
+  "Approach" : "ILP",
   "model" : "georgwittberger",
   "variant" : 11,
   "approachCost" : 6,
+  "tuhhCost" : 26
+}, {
+  "Approach" : "SMT",
+  "model" : "ewolff-kafka",
+  "variant" : 4,
+  "approachCost" : 1,
+  "tuhhCost" : 5
+}, {
+  "Approach" : "SMT",
+  "model" : "ewolff-kafka",
+  "variant" : 5,
+  "approachCost" : 1,
+  "tuhhCost" : 14
+}, {
+  "Approach" : "SMT",
+  "model" : "ewolff-kafka",
+  "variant" : 7,
+  "approachCost" : 2,
+  "tuhhCost" : 7
+}, {
+  "Approach" : "SMT",
+  "model" : "ewolff-kafka",
+  "variant" : 8,
+  "approachCost" : 1,
+  "tuhhCost" : 10
+}, {
+  "Approach" : "SMT",
+  "model" : "anilallewar",
+  "variant" : 7,
+  "approachCost" : 10,
+  "tuhhCost" : 8
+}, {
+  "Approach" : "SMT",
+  "model" : "anilallewar",
+  "variant" : 8,
+  "approachCost" : 3,
+  "tuhhCost" : 26
+}, {
+  "Approach" : "SMT",
+  "model" : "anilallewar",
+  "variant" : 11,
+  "approachCost" : 15,
+  "tuhhCost" : 22
+}, {
+  "Approach" : "SMT",
+  "model" : "mudigal-technologies",
+  "variant" : 2,
+  "approachCost" : 0,
+  "tuhhCost" : 32
+}, {
+  "Approach" : "SMT",
+  "model" : "mudigal-technologies",
+  "variant" : 4,
+  "approachCost" : 2,
+  "tuhhCost" : 4
+}, {
+  "Approach" : "SMT",
+  "model" : "mudigal-technologies",
+  "variant" : 5,
+  "approachCost" : 2,
+  "tuhhCost" : 53
+}, {
+  "Approach" : "SMT",
+  "model" : "mudigal-technologies",
+  "variant" : 7,
+  "approachCost" : 6,
+  "tuhhCost" : 6
+}, {
+  "Approach" : "SMT",
+  "model" : "mudigal-technologies",
+  "variant" : 8,
+  "approachCost" : 5,
+  "tuhhCost" : 32
+}, {
+  "Approach" : "SMT",
+  "model" : "mudigal-technologies",
+  "variant" : 11,
+  "approachCost" : 12,
+  "tuhhCost" : 49
+}, {
+  "Approach" : "SMT",
+  "model" : "yidongnan",
+  "variant" : 2,
+  "approachCost" : 0,
+  "tuhhCost" : 27
+}, {
+  "Approach" : "SMT",
+  "model" : "yidongnan",
+  "variant" : 4,
+  "approachCost" : 0,
+  "tuhhCost" : 6
+}, {
+  "Approach" : "SMT",
+  "model" : "yidongnan",
+  "variant" : 5,
+  "approachCost" : 0,
+  "tuhhCost" : 37
+}, {
+  "Approach" : "SMT",
+  "model" : "yidongnan",
+  "variant" : 7,
+  "approachCost" : 8,
+  "tuhhCost" : 8
+}, {
+  "Approach" : "SMT",
+  "model" : "yidongnan",
+  "variant" : 8,
+  "approachCost" : 4,
+  "tuhhCost" : 27
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 1,
+  "approachCost" : 0,
+  "tuhhCost" : 0
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 2,
+  "approachCost" : 0,
+  "tuhhCost" : 5
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 4,
+  "approachCost" : 0,
+  "tuhhCost" : 0
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 5,
+  "approachCost" : 0,
+  "tuhhCost" : 9
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 7,
+  "approachCost" : 0,
+  "tuhhCost" : 1
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 8,
+  "approachCost" : 3,
+  "tuhhCost" : 5
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 10,
+  "approachCost" : 0,
+  "tuhhCost" : 13
+}, {
+  "Approach" : "SMT",
+  "model" : "koushikkothagal",
+  "variant" : 11,
+  "approachCost" : 0,
+  "tuhhCost" : 26
+}, {
+  "Approach" : "SMT",
+  "model" : "spring-petclinic",
+  "variant" : 2,
+  "approachCost" : 2,
+  "tuhhCost" : 25
+}, {
+  "Approach" : "SMT",
+  "model" : "spring-petclinic",
+  "variant" : 5,
+  "approachCost" : 2,
+  "tuhhCost" : 36
+}, {
+  "Approach" : "SMT",
+  "model" : "spring-petclinic",
+  "variant" : 7,
+  "approachCost" : 8,
+  "tuhhCost" : 10
+}, {
+  "Approach" : "SMT",
+  "model" : "spring-petclinic",
+  "variant" : 8,
+  "approachCost" : 2,
+  "tuhhCost" : 25
+}, {
+  "Approach" : "SMT",
+  "model" : "callistaenterprise",
+  "variant" : 2,
+  "approachCost" : 2,
+  "tuhhCost" : 29
+}, {
+  "Approach" : "SMT",
+  "model" : "callistaenterprise",
+  "variant" : 11,
+  "approachCost" : 40,
+  "tuhhCost" : 68
+}, {
+  "Approach" : "SMT",
+  "model" : "jferrater",
+  "variant" : 2,
+  "approachCost" : 1,
+  "tuhhCost" : 14
+}, {
+  "Approach" : "SMT",
+  "model" : "jferrater",
+  "variant" : 5,
+  "approachCost" : 0,
+  "tuhhCost" : 23
+}, {
+  "Approach" : "SMT",
+  "model" : "jferrater",
+  "variant" : 7,
+  "approachCost" : 0,
+  "tuhhCost" : 1
+}, {
+  "Approach" : "SMT",
+  "model" : "jferrater",
+  "variant" : 8,
+  "approachCost" : 1,
+  "tuhhCost" : 15
+}, {
+  "Approach" : "SMT",
+  "model" : "apssouza22",
+  "variant" : 2,
+  "approachCost" : 1,
+  "tuhhCost" : 32
+}, {
+  "Approach" : "SMT",
+  "model" : "apssouza22",
+  "variant" : 4,
+  "approachCost" : 0,
+  "tuhhCost" : 3
+}, {
+  "Approach" : "SMT",
+  "model" : "apssouza22",
+  "variant" : 7,
+  "approachCost" : 4,
+  "tuhhCost" : 14
+}, {
+  "Approach" : "SMT",
+  "model" : "apssouza22",
+  "variant" : 8,
+  "approachCost" : 3,
+  "tuhhCost" : 23
+}, {
+  "Approach" : "SMT",
+  "model" : "sqshq",
+  "variant" : 7,
+  "approachCost" : 8,
+  "tuhhCost" : 10
+}, {
+  "Approach" : "SMT",
+  "model" : "sqshq",
+  "variant" : 8,
+  "approachCost" : 7,
+  "tuhhCost" : 33
+}, {
+  "Approach" : "SMT",
+  "model" : "sqshq",
+  "variant" : 10,
+  "approachCost" : 18,
+  "tuhhCost" : 48
+}, {
+  "Approach" : "SMT",
+  "model" : "sqshq",
+  "variant" : 11,
+  "approachCost" : 20,
+  "tuhhCost" : 96
+}, {
+  "Approach" : "SMT",
+  "model" : "georgwittberger",
+  "variant" : 2,
+  "approachCost" : 1,
+  "tuhhCost" : 4
+}, {
+  "Approach" : "SMT",
+  "model" : "georgwittberger",
+  "variant" : 4,
+  "approachCost" : 1,
+  "tuhhCost" : 5
+}, {
+  "Approach" : "SMT",
+  "model" : "georgwittberger",
+  "variant" : 5,
+  "approachCost" : 1,
+  "tuhhCost" : 9
+}, {
+  "Approach" : "SMT",
+  "model" : "georgwittberger",
+  "variant" : 7,
+  "approachCost" : 2,
+  "tuhhCost" : 7
+}, {
+  "Approach" : "SMT",
+  "model" : "georgwittberger",
+  "variant" : 8,
+  "approachCost" : 1,
+  "tuhhCost" : 4
+}, {
+  "Approach" : "SMT",
+  "model" : "georgwittberger",
+  "variant" : 10,
+  "approachCost" : 0,
+  "tuhhCost" : 13
+}, {
+  "Approach" : "SMT",
+  "model" : "georgwittberger",
+  "variant" : 11,
+  "approachCost" : 0,
   "tuhhCost" : 26
 }, {
   "Approach" : "ILP",
@@ -668,7 +974,7 @@
   "Approach" : "SMT",
   "model" : "mudigal-technologies",
   "variant" : 5,
-  "approachCost" : 2,
+  "approachCost" : 0,
   "tuhhCost" : 53
 }, {
   "Approach" : "SMT",
@@ -842,13 +1148,13 @@
   "Approach" : "SMT",
   "model" : "apssouza22",
   "variant" : 7,
-  "approachCost" : 3,
+  "approachCost" : 5,
   "tuhhCost" : 14
 }, {
   "Approach" : "SMT",
   "model" : "apssouza22",
   "variant" : 8,
-  "approachCost" : 2,
+  "approachCost" : 4,
   "tuhhCost" : 23
 }, {
   "Approach" : "SMT",
