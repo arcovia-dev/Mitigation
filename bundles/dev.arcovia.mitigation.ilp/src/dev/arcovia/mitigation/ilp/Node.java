@@ -1,15 +1,21 @@
 package dev.arcovia.mitigation.ilp;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.dataflowanalysis.analysis.core.AbstractTransposeFlowGraph;
 import org.dataflowanalysis.analysis.core.AbstractVertex;
 import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
+import org.dataflowanalysis.dfd.datadictionary.LabelType;
 import org.dataflowanalysis.dfd.datadictionary.Pin;
+import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 
+import dev.arcovia.mitigation.sat.Label;
+import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
@@ -214,13 +220,10 @@ public class Node {
 					type = ActionType.AddNode;
 				} else if (mitgation.type == MitigationType.AddSink) {
 					type = ActionType.AddSink;
-				}
-
-				else {
+				} else {
 					type = ActionType.Adding;
 				}
 
-				
 				if (mitgation.type == MitigationType.DeleteDataLabel
 						|| mitgation.type == MitigationType.DataLabel) {
 					List<CompositeLabel> outLabels = new ArrayList<>();
@@ -231,8 +234,15 @@ public class Node {
 							outLabels.add(label);
 						}
 					}
+					// Only include output pins where the downstream node actually
+					// matches the constraint's destination criteria. If no criteria
+					// are set, include all pins (backwards-compatible).
 					for (var assignment : vertex.getReferencedElement().getBehavior().getAssignment()) {
 						String pinId = assignment.getOutputPin().getId();
+						if (mitgation.destinationNodeLabels != null
+								&& !isDownstreamNodeMatching(pinId, mitgation.destinationNodeLabels)) {
+							continue;
+						}
 						requiredMitgation.add(new Mitigation(
 								new ActionTerm(pinId, outLabels, type), mitgation.cost,
 								getAllRequiredMitigations(mitgation)));
@@ -243,10 +253,49 @@ public class Node {
 							getAllRequiredMitigations(mitgation)));
 				}
 			}
-			requiredMitgations.add(requiredMitgation);
-
+			if (!requiredMitgation.isEmpty()) {
+				requiredMitgations.add(requiredMitgation);
+			}
 		}
 		return requiredMitgations;
+	}
+
+	/**
+	 * Checks whether the downstream node connected to the given output pin
+	 * has all the required node-level labels (e.g., Location.EU).
+	 */
+	private boolean isDownstreamNodeMatching(String outputPinId, List<CompositeLabel> requiredNodeLabels) {
+		var dfdNode = vertex.getReferencedElement();
+		var container = dfdNode.eContainer();
+		if (!(container instanceof DataFlowDiagram diagram)) {
+			return true; // cannot determine → include conservatively
+		}
+		for (var flow : diagram.getFlows()) {
+			if (flow.getSourcePin() != null && flow.getSourcePin().getId().equals(outputPinId)) {
+				var destNode = flow.getDestinationNode();
+				return matchesNodeLabels(destNode, requiredNodeLabels);
+			}
+		}
+		return true; // no matching flow found → include conservatively
+	}
+
+	/**
+	 * Checks whether a DFD node has all the specified node-level labels.
+	 */
+	private boolean matchesNodeLabels(org.dataflowanalysis.dfd.dataflowdiagram.Node dfdNode,
+			List<CompositeLabel> requiredLabels) {
+		Set<String> nodeProps = new HashSet<>();
+		for (var prop : dfdNode.getProperties()) {
+			if (prop.eContainer() instanceof LabelType lt) {
+				nodeProps.add(new NodeLabel(new Label(lt.getEntityName(), prop.getEntityName())).toString());
+			}
+		}
+		for (var required : requiredLabels) {
+			if (!nodeProps.contains(required.toString())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private String getOutpin(DFDVertex vertex) {

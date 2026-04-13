@@ -262,32 +262,45 @@ public class OptimizationManager implements MitigationApproach{
 		for (var label : labels) {
 			for (var constraint : constraints) {
 				if (constraint.isPrecondition(label)) {
-					if (required.isEmpty()) {
-						
-						for (var mitigation : constraint.getMitigations()) {
-							if (mitigation.label.contains(label)
-									&& !mitigation.type.toString().startsWith("Delete")) {
-								continue;
-							}
-							required.add(List.of(mitigation));
+					// Collect alternatives for this constraint, tagging DeleteDataLabel
+					// strategies with the constraint's node-level destination criteria
+					// so that getAllRequiredMitigations can filter pins selectively.
+					List<CompositeLabel> destLabels = constraint.getNodeNegativeLiterals();
+					List<MitigationStrategy> alternatives = new ArrayList<>();
+					for (var mitigation : constraint.getMitigations()) {
+						if (mitigation.label.contains(label)
+								&& !mitigation.type.toString().startsWith("Delete")) {
+							continue;
 						}
-					} else {
-						List<List<MitigationStrategy>> newRequired = new ArrayList<>();
-						for (var requieredMitgation : required) {
-							for (MitigationStrategy mitigation : constraint.getMitigations()) {
-								if (mitigation.label.contains(label)
-										&& !mitigation.type.toString().startsWith("Delete")) {
-									continue;
+						if (mitigation.type == MitigationType.DeleteDataLabel
+								|| mitigation.type == MitigationType.DataLabel) {
+							// Create a copy so we don't mutate the original constraint's strategy
+							var copy = new MitigationStrategy(mitigation.label, mitigation.cost, mitigation.type);
+							copy.destinationNodeLabels = destLabels.isEmpty() ? null : destLabels;
+							alternatives.add(copy);
+						} else {
+							alternatives.add(mitigation);
+						}
+					}
+					if (!alternatives.isEmpty()) {
+						// Cross-product: encode DNF across multiple triggered constraints.
+						if (required.isEmpty()) {
+							for (var mitigation : alternatives) {
+								required.add(new ArrayList<>(List.of(mitigation)));
+							}
+						} else {
+							List<List<MitigationStrategy>> newRequired = new ArrayList<>();
+							for (var existing : required) {
+								for (var mitigation : alternatives) {
+									List<MitigationStrategy> temp = new ArrayList<>(existing);
+									temp.add(mitigation);
+									newRequired.add(temp);
 								}
-								List<MitigationStrategy> temp = new ArrayList<>(requieredMitgation);
-								temp.add(mitigation);
-								newRequired.add(temp);
 							}
+							required = newRequired;
 						}
-						required = newRequired;
 					}
 				}
-
 			}
 		}
 		return required;

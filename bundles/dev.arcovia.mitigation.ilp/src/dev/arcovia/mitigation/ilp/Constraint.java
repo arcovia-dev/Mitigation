@@ -90,6 +90,26 @@ public class Constraint {
 		preconditionLabel.add(label);
 	}
 
+	/**
+	 * Returns the negative Node-level literals from this constraint's CNF.
+	 * These represent the node characteristics that a destination node must have
+	 * for this constraint to be violated (e.g., Location.EU).
+	 */
+	public List<CompositeLabel> getNodeNegativeLiterals() {
+		if (dslConstraint == null) {
+			return List.of();
+		}
+		var translation = new CNFTranslation(dslConstraint);
+		var literals = translation.constructCNF().get(0).literals();
+		List<CompositeLabel> result = new ArrayList<>();
+		for (var literal : literals) {
+			if (!literal.positive() && literal.compositeLabel().category() == LabelCategory.Node) {
+				result.add(literal.compositeLabel());
+			}
+		}
+		return result;
+	}
+
 	public void removeMitigation(MitigationStrategy mitgation) {
 		mitigations.remove(mitgation);
 	}
@@ -206,7 +226,7 @@ public class Constraint {
 					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1000, type));
 
 				} else if (literal.compositeLabel().category() == LabelCategory.IncomingData) {
-					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1000, MitigationType.DeleteDataLabel));
+					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 200, MitigationType.DeleteDataLabel));
 				}
 
 			}
