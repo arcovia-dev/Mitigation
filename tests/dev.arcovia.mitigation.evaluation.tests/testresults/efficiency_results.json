@@ -662,7 +662,7 @@
   "Approach" : "SMT",
   "model" : "mudigal-technologies",
   "variant" : 4,
-  "approachCost" : 0,
+  "approachCost" : 2,
   "tuhhCost" : 4
 }, {
   "Approach" : "SMT",
@@ -794,7 +794,7 @@
   "Approach" : "SMT",
   "model" : "callistaenterprise",
   "variant" : 2,
-  "approachCost" : 2,
+  "approachCost" : 3,
   "tuhhCost" : 29
 }, {
   "Approach" : "SMT",
@@ -842,7 +842,7 @@
   "Approach" : "SMT",
   "model" : "apssouza22",
   "variant" : 7,
-  "approachCost" : 6,
+  "approachCost" : 5,
   "tuhhCost" : 14
 }, {
   "Approach" : "SMT",
@@ -860,7 +860,7 @@
   "Approach" : "SMT",
   "model" : "sqshq",
   "variant" : 8,
-  "approachCost" : 8,
+  "approachCost" : 9,
   "tuhhCost" : 33
 }, {
   "Approach" : "SMT",

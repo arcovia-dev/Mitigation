@@ -990,6 +990,11 @@
   "violationsAfter" : 0
 }, {
   "Approach" : "ILP",
+  "modelName" : "sqshq_0",
+  "violationsBefore" : 344,
+  "violationsAfter" : 0
+}, {
+  "Approach" : "ILP",
   "modelName" : "sqshq_6",
   "violationsBefore" : 203,
   "violationsAfter" : 0

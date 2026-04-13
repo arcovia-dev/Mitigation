@@ -1,10 +1,14 @@
 package dev.arcovia.mitigation.evaluation.tests;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.junit.jupiter.api.AfterAll;
 
 import dev.arcovia.mitigation.sat.Mechanic;
 import dev.arcovia.mitigation.sat.Constraint;
@@ -29,5 +33,11 @@ public class satTest extends TestBase {
 	protected String getApproachName() {
 		return "SAT";
 	}
+		
+    @AfterAll
+    static void cleanup() throws IOException {
+        Files.deleteIfExists(Path.of("testresults/temp.cnf"));
+        Files.deleteIfExists(Path.of("testresults/temp-literalMapping.json"));
+    }
 
 }
