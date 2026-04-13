@@ -1,6 +1,8 @@
 package dev.arcovia.mitigation.ilp;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,16 +37,16 @@ import dev.arcovia.mitigation.sat.timeMeasurement;
 public class OptimizationManager implements MitigationApproach{
 	private final DataFlowDiagramAndDictionary dfd;
 
-	Map<String, String> outPinToAssignmentMap = new HashMap<>();
+	Map<String, String> outPinToAssignmentMap = new LinkedHashMap<>();
 
 	private final Logger logger = Logger.getLogger(OptimizationManager.class);
 
 	private final List<Constraint> constraints;
 
-	private Set<Node> violatingNodes = new HashSet<>();
+	private Set<Node> violatingNodes = new LinkedHashSet<>();
 
 	private List<List<Mitigation>> mitigations = new ArrayList<>();
-	private Set<Mitigation> allMitigations = new HashSet<>();
+	private Set<Mitigation> allMitigations = new LinkedHashSet<>();
 
 	private List<List<Mitigation>> contradictions = new ArrayList<>();
 

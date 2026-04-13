@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class Constraint {
 	private final AnalysisConstraint dslConstraint;
@@ -134,7 +135,7 @@ public class Constraint {
 	}
 
 	private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
-		Set<Node> violatingNodes = new HashSet<>();
+		Set<Node> violatingNodes = new LinkedHashSet<>();
 		List<DSLResult> results = this.dslConstraint.findViolations(flowGraph);
 		for (var result : results) {
 			var tfg = result.getTransposeFlowGraph();
@@ -190,7 +191,7 @@ public class Constraint {
 	private List<MitigationStrategy> determineMitigations() {
 		var translation = new CNFTranslation(dslConstraint);
 
-		Set<Literal> literals = new HashSet<>();
+		Set<Literal> literals = new LinkedHashSet<>();
 
 		for (var literal : translation.constructCNF()) {
 			literals.addAll(literal.literals());
