@@ -152,9 +152,15 @@ public class ILPSolver {
 						chosen.add(mitigation.get());
 					}
 				}
-			}
+			}		
 			return chosen;
-		} else {
+		} 
+		else if (status == MPSolver.ResultStatus.NOT_SOLVED) {
+			return solve(mitigations, allMitigations,contradictions);
+		}
+		
+		else {
+			
 			System.out.println("No feasible solution: " + status);
 			return null;
 		}
