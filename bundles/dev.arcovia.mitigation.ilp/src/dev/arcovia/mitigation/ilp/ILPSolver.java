@@ -30,10 +30,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class ILPSolver {
-	private BiMap<MPVariable, Mitigation> mitigationMap = new BiMap<>();
 
 	public List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations,
 			List<List<Mitigation>> contradictions) throws Exception {
+		return solve(mitigations, allMitigations, contradictions, 3);
+	}
+
+	private List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations,
+			List<List<Mitigation>> contradictions, int retriesLeft) throws Exception {
 		try {
 			loadOrToolsNative();
 		} catch (IOException e) {
@@ -41,6 +45,7 @@ public class ILPSolver {
 
 		}
 		MPSolver solver = MPSolver.createSolver("SCIP_MIXED_INTEGER_PROGRAMMING");
+		BiMap<MPVariable, Mitigation> mitigationMap = new BiMap<>();
 
 		for (Mitigation mitigation : allMitigations) {
 			MPVariable var = solver.makeIntVar(0, 1, mitigation.toString());
@@ -137,32 +142,47 @@ public class ILPSolver {
 
 		MPSolver.ResultStatus status = solver.solve();
 
-		if (status == MPSolver.ResultStatus.OPTIMAL || status == MPSolver.ResultStatus.FEASIBLE) {
-			List<Mitigation> chosen = new ArrayList<>();
-			for (MPVariable variable : solver.variables()) {
-				if (variable.solutionValue() > 0.5) {
-					// skip auxiliary variables introduced by required semantic
-					if (variable.name().startsWith("required_") || variable.name().startsWith("y_")) {
-						continue;
-					}
+		try {
+			if (status == MPSolver.ResultStatus.OPTIMAL || status == MPSolver.ResultStatus.FEASIBLE) {
+				List<Mitigation> chosen = new ArrayList<>();
+				for (MPVariable variable : solver.variables()) {
+					if (variable.solutionValue() > 0.5) {
+						// skip auxiliary variables introduced by required semantic
+						if (variable.name().startsWith("required_") || variable.name().startsWith("y_")) {
+							continue;
+						}
 
-					Optional<Mitigation> mitigation = allMitigations.stream()
-							.filter(m -> variable.name().equals(m.toString())).findFirst();
-					if (mitigation.isPresent()) {
-						chosen.add(mitigation.get());
+						Optional<Mitigation> mitigation = allMitigations.stream()
+								.filter(m -> variable.name().equals(m.toString())).findFirst();
+						if (mitigation.isPresent()) {
+							chosen.add(mitigation.get());
+						}
 					}
 				}
-			}		
-			return chosen;
-		} 
-		else if (status == MPSolver.ResultStatus.NOT_SOLVED) {
-			return solve(mitigations, allMitigations,contradictions);
-		}
-		
-		else {
-			
-			System.out.println("No feasible solution: " + status);
-			return null;
+				if (chosen.isEmpty()) {
+					System.out.println("[ILPSolver] Solver status was " + status
+							+ " but no mitigations were selected (solutionValue() returned 0 for all "
+							+ solver.variables().length + " variables). "
+							+ "This may indicate a stale native SCIP instance (GC finalizer race).");
+				}
+				return chosen;
+			} else if (status == MPSolver.ResultStatus.NOT_SOLVED) {
+				if (retriesLeft <= 0) {
+					System.out.println("Solver returned NOT_SOLVED after all retries, giving up.");
+					return null;
+				}
+				System.out.println("Solver returned NOT_SOLVED, retrying (" + retriesLeft + " retries left)...");
+				return solve(mitigations, allMitigations, contradictions, retriesLeft - 1);
+			} else {
+				System.out.println("No feasible solution: " + status);
+				return null;
+			}
+		} finally {
+			// Explicitly free the native SCIP instance now rather than waiting for GC.
+			// Without this, the finalizer of a previous MPSolver may run during a later
+			// test's solve() call and corrupt SCIP's global state, causing sync_status_
+			// to reset to MUST_RELOAD even when Solve() returned OPTIMAL.
+			solver.delete();
 		}
 	}
 
