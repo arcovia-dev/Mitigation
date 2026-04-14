@@ -23,7 +23,9 @@ import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.Label;
 import org.dataflowanalysis.dfd.datadictionary.LabelType;
+import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
+import org.dataflowanalysis.dfd.datadictionary.UnsetAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
@@ -285,7 +287,7 @@ public class OptimizationManager implements MitigationApproach{
 						if (mitigation.type == MitigationType.DeleteDataLabel
 								|| mitigation.type == MitigationType.DataLabel) {
 							// Create a copy so we don't mutate the original constraint's strategy
-							var copy = new MitigationStrategy(mitigation.label, mitigation.cost, mitigation.type);
+							var copy = new MitigationStrategy(mitigation.label, 10, mitigation.type);
 							copy.destinationNodeLabels = destLabels.isEmpty() ? null : destLabels;
 							alternatives.add(copy);
 						} else {
@@ -430,12 +432,13 @@ public class OptimizationManager implements MitigationApproach{
 				if (action.compositeLabels().get(0).category().equals(LabelCategory.OutgoingData)) {
 					for (var behavior : dd.getBehavior()) {
 						List<Assignment> newAssignments = new ArrayList<>();
+						List<UnsetAssignment> newUnsetAssignments = new ArrayList<>();
 						for (var assignment : behavior.getAssignment()) {
 							if (assignment.getId().equals(outPinToAssignmentMap.get(action.domain()))) {
 								var type = action.compositeLabels().get(0).label().type();
 								var value = action.compositeLabels().get(0).label().value();
 								var label = getOrCreateLabel(dd, type, value);
-
+								
 								if (assignment instanceof Assignment cast) {
 									cast.getOutputLabels().remove(label);
 								}
@@ -444,17 +447,18 @@ public class OptimizationManager implements MitigationApproach{
 								}
 								if (assignment instanceof ForwardingAssignment) {
 									var ddFactory = datadictionaryFactory.eINSTANCE;
-									var assign = ddFactory.createAssignment();
+									UnsetAssignment assign = ddFactory.createUnsetAssignment();
 									assign.getOutputLabels().add(label);
 									assign.setOutputPin(assignment.getOutputPin());
-									var ddNOT = ddFactory.createNOT();
-									assign.setTerm(ddNOT);
-									newAssignments.add(assign);
+									newUnsetAssignments.add(assign);
 								}
 							}
 						}
 						if (!newAssignments.isEmpty()) {
 							behavior.getAssignment().addAll(newAssignments);
+						}
+						if (!newUnsetAssignments.isEmpty()) {
+							behavior.getAssignment().addAll(newUnsetAssignments);
 						}
 					}
 				} else if (action.compositeLabels().get(0).category().equals(LabelCategory.Node)) {

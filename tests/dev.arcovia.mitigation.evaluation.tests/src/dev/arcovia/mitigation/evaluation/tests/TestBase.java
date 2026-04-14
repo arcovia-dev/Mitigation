@@ -126,7 +126,6 @@ public abstract class TestBase {
 	@ParameterizedTest
 	@MethodSource("tuhhModelProviderBaseModel")
 	void evaluateCost(String model, int variant) throws Exception {
-		Thread.sleep(2);
 		String name = model + "_" + 0;
 
 		List<AnalysisConstraint> constraints = switch (variant) {
