@@ -83,8 +83,7 @@ public abstract class TestBase {
 
 	@ParameterizedTest
 	@MethodSource("tuhhModelProvider")
-	void evaluateEffectiveness(String model, int variant) throws Exception {
-		Thread.sleep(2);
+	void evaluateEffectiveness(String model, int variant) throws Exception {	
 		String name = model + "_" + variant;
 
 		var dfd = loadDFD(model, name);

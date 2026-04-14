@@ -33,11 +33,6 @@ public class ILPSolver {
 
 	public List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations,
 			List<List<Mitigation>> contradictions) throws Exception {
-		return solve(mitigations, allMitigations, contradictions, 3);
-	}
-
-	private List<Mitigation> solve(List<List<Mitigation>> mitigations, Set<Mitigation> allMitigations,
-			List<List<Mitigation>> contradictions, int retriesLeft) throws Exception {
 		try {
 			loadOrToolsNative();
 		} catch (IOException e) {
@@ -166,13 +161,6 @@ public class ILPSolver {
 							+ "This may indicate a stale native SCIP instance (GC finalizer race).");
 				}
 				return chosen;
-			} else if (status == MPSolver.ResultStatus.NOT_SOLVED) {
-				if (retriesLeft <= 0) {
-					System.out.println("Solver returned NOT_SOLVED after all retries, giving up.");
-					return null;
-				}
-				System.out.println("Solver returned NOT_SOLVED, retrying (" + retriesLeft + " retries left)...");
-				return solve(mitigations, allMitigations, contradictions, retriesLeft - 1);
 			} else {
 				System.out.println("No feasible solution: " + status);
 				return null;
