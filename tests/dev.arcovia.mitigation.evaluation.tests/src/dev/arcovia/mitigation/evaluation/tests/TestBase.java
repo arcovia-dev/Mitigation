@@ -195,7 +195,7 @@ public abstract class TestBase {
 	private static boolean WARMUP = false;
 
 	@Test
-	//@Disabled("Long-running scalability experiment — run via evaluateScalability()")
+	@Disabled("Long-running scalability experiment — run via evaluateScalability()")
 	void evaluateScalability() throws Throwable {
 		Path outDir = Paths.get("testresults");
 		Files.createDirectories(outDir);
