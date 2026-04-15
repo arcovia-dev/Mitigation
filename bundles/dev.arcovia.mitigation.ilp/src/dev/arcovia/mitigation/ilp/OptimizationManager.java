@@ -1,8 +1,6 @@
 package dev.arcovia.mitigation.ilp;
 
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,9 +21,7 @@ import org.dataflowanalysis.dfd.datadictionary.DataDictionary;
 import org.dataflowanalysis.dfd.datadictionary.ForwardingAssignment;
 import org.dataflowanalysis.dfd.datadictionary.Label;
 import org.dataflowanalysis.dfd.datadictionary.LabelType;
-import org.dataflowanalysis.dfd.datadictionary.Pin;
 import org.dataflowanalysis.dfd.datadictionary.SetAssignment;
-import org.dataflowanalysis.dfd.datadictionary.UnsetAssignment;
 import org.dataflowanalysis.dfd.datadictionary.datadictionaryFactory;
 import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
 import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
@@ -39,16 +35,16 @@ import dev.arcovia.mitigation.sat.timeMeasurement;
 public class OptimizationManager implements MitigationApproach{
 	private final DataFlowDiagramAndDictionary dfd;
 
-	Map<String, String> outPinToAssignmentMap = new LinkedHashMap<>();
+	Map<String, String> outPinToAssignmentMap = new HashMap<>();
 
 	private final Logger logger = Logger.getLogger(OptimizationManager.class);
 
 	private final List<Constraint> constraints;
 
-	private Set<Node> violatingNodes = new LinkedHashSet<>();
+	private Set<Node> violatingNodes = new HashSet<>();
 
 	private List<List<Mitigation>> mitigations = new ArrayList<>();
-	private Set<Mitigation> allMitigations = new LinkedHashSet<>();
+	private Set<Mitigation> allMitigations = new HashSet<>();
 
 	private List<List<Mitigation>> contradictions = new ArrayList<>();
 
@@ -106,11 +102,7 @@ public class OptimizationManager implements MitigationApproach{
 				contradictions.addAll(determineContradictions(mitigation));
 			}
 		}
-		//if no violation found return dfd
-		if (mitigations.isEmpty()) {
-			return dfd;
-		}
-		
+
 		var solver = new ILPSolver();
 		result = solver.solve(mitigations, allMitigations, contradictions);
 
@@ -139,10 +131,6 @@ public class OptimizationManager implements MitigationApproach{
 			if (mitigation.mitigation().type().toString().startsWith("Remove")) {
 				contradictions.addAll(determineContradictions(mitigation));
 			}
-		}
-		//if no violation found return dfd
-		if (mitigations.isEmpty()) {
-			return dfd;
 		}
 
 		var solver = new ILPSolver();
@@ -274,45 +262,29 @@ public class OptimizationManager implements MitigationApproach{
 		for (var label : labels) {
 			for (var constraint : constraints) {
 				if (constraint.isPrecondition(label)) {
-					// Collect alternatives for this constraint, tagging DeleteDataLabel
-					// strategies with the constraint's node-level destination criteria
-					// so that getAllRequiredMitigations can filter pins selectively.
-					List<CompositeLabel> destLabels = constraint.getNodeNegativeLiterals();
-					List<MitigationStrategy> alternatives = new ArrayList<>();
-					for (var mitigation : constraint.getMitigations()) {
-						if (mitigation.label.contains(label)
-								&& !mitigation.type.toString().startsWith("Delete")) {
-							continue;
-						}
-						if (mitigation.type == MitigationType.DeleteDataLabel
-								|| mitigation.type == MitigationType.DataLabel) {
-							// Create a copy so we don't mutate the original constraint's strategy
-							var copy = new MitigationStrategy(mitigation.label, 10, mitigation.type);
-							copy.destinationNodeLabels = destLabels.isEmpty() ? null : destLabels;
-							alternatives.add(copy);
-						} else {
-							alternatives.add(mitigation);
-						}
-					}
-					if (!alternatives.isEmpty()) {
-						// Cross-product: encode DNF across multiple triggered constraints.
-						if (required.isEmpty()) {
-							for (var mitigation : alternatives) {
-								required.add(new ArrayList<>(List.of(mitigation)));
+					if (required.isEmpty()) {
+						for (var mitigation : constraint.getMitigations()) {
+							if (mitigation.label.contains(label)) {
+								continue;
 							}
-						} else {
-							List<List<MitigationStrategy>> newRequired = new ArrayList<>();
-							for (var existing : required) {
-								for (var mitigation : alternatives) {
-									List<MitigationStrategy> temp = new ArrayList<>(existing);
-									temp.add(mitigation);
-									newRequired.add(temp);
+							required.add(List.of(mitigation));
+						}
+					} else {
+						List<List<MitigationStrategy>> newRequired = new ArrayList<>();
+						for (var requieredMitgation : required) {
+							for (MitigationStrategy mitigation : constraint.getMitigations()) {
+								if (mitigation.label.contains(label)) {
+									continue;
 								}
+								List<MitigationStrategy> temp = new ArrayList<>(requieredMitgation);
+								temp.add(mitigation);
+								newRequired.add(temp);
 							}
-							required = newRequired;
 						}
+						required = newRequired;
 					}
 				}
+
 			}
 		}
 		return required;
@@ -432,13 +404,12 @@ public class OptimizationManager implements MitigationApproach{
 				if (action.compositeLabels().get(0).category().equals(LabelCategory.OutgoingData)) {
 					for (var behavior : dd.getBehavior()) {
 						List<Assignment> newAssignments = new ArrayList<>();
-						List<UnsetAssignment> newUnsetAssignments = new ArrayList<>();
 						for (var assignment : behavior.getAssignment()) {
 							if (assignment.getId().equals(outPinToAssignmentMap.get(action.domain()))) {
 								var type = action.compositeLabels().get(0).label().type();
 								var value = action.compositeLabels().get(0).label().value();
 								var label = getOrCreateLabel(dd, type, value);
-								
+
 								if (assignment instanceof Assignment cast) {
 									cast.getOutputLabels().remove(label);
 								}
@@ -447,18 +418,17 @@ public class OptimizationManager implements MitigationApproach{
 								}
 								if (assignment instanceof ForwardingAssignment) {
 									var ddFactory = datadictionaryFactory.eINSTANCE;
-									UnsetAssignment assign = ddFactory.createUnsetAssignment();
+									var assign = ddFactory.createAssignment();
 									assign.getOutputLabels().add(label);
 									assign.setOutputPin(assignment.getOutputPin());
-									newUnsetAssignments.add(assign);
+									var ddNOT = ddFactory.createNOT();
+									assign.setTerm(ddNOT);
+									newAssignments.add(assign);
 								}
 							}
 						}
 						if (!newAssignments.isEmpty()) {
 							behavior.getAssignment().addAll(newAssignments);
-						}
-						if (!newUnsetAssignments.isEmpty()) {
-							behavior.getAssignment().addAll(newUnsetAssignments);
 						}
 					}
 				} else if (action.compositeLabels().get(0).category().equals(LabelCategory.Node)) {

@@ -14,13 +14,6 @@ public class MitigationStrategy {
 	List<List<MitigationStrategy>> required = new ArrayList<>();
 	List<Constraint> notAllowedIfViolated = new ArrayList<>();
 
-	/**
-	 * Node-level labels that a downstream node must have for this required
-	 * DeleteDataLabel/DataLabel mitigation to apply to the pin leading there.
-	 * Null means "apply to all pins" (legacy behaviour).
-	 */
-	List<CompositeLabel> destinationNodeLabels = null;
-
 	public MitigationStrategy(List<CompositeLabel> label, double cost, MitigationType type) {
 		this.label = label;
 		this.cost = cost;
@@ -31,8 +24,7 @@ public class MitigationStrategy {
 		for (var mitigations : required) {
 			List<MitigationStrategy> requiredMitigations = new ArrayList<>();
 			for (var mitigation : mitigations) {
-				if (!mitigation.type.toString().startsWith("Delete")
-						|| mitigation.type == MitigationType.DeleteDataLabel || mitigation.type == MitigationType.DeleteNodeLabel) {
+				if (!mitigation.type.toString().startsWith("Delete")) {
 					requiredMitigations.add(mitigation);
 				}
 			}

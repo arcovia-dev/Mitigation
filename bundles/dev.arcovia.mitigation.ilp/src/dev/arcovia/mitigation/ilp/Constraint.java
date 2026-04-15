@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 
 public class Constraint {
 	private final AnalysisConstraint dslConstraint;
@@ -91,26 +90,6 @@ public class Constraint {
 		preconditionLabel.add(label);
 	}
 
-	/**
-	 * Returns the negative Node-level literals from this constraint's CNF.
-	 * These represent the node characteristics that a destination node must have
-	 * for this constraint to be violated (e.g., Location.EU).
-	 */
-	public List<CompositeLabel> getNodeNegativeLiterals() {
-		if (dslConstraint == null) {
-			return List.of();
-		}
-		var translation = new CNFTranslation(dslConstraint);
-		var literals = translation.constructCNF().get(0).literals();
-		List<CompositeLabel> result = new ArrayList<>();
-		for (var literal : literals) {
-			if (!literal.positive() && literal.compositeLabel().category() == LabelCategory.Node) {
-				result.add(literal.compositeLabel());
-			}
-		}
-		return result;
-	}
-
 	public void removeMitigation(MitigationStrategy mitgation) {
 		mitigations.remove(mitgation);
 	}
@@ -135,7 +114,7 @@ public class Constraint {
 	}
 
 	private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
-		Set<Node> violatingNodes = new LinkedHashSet<>();
+		Set<Node> violatingNodes = new HashSet<>();
 		List<DSLResult> results = this.dslConstraint.findViolations(flowGraph);
 		for (var result : results) {
 			var tfg = result.getTransposeFlowGraph();
@@ -191,7 +170,7 @@ public class Constraint {
 	private List<MitigationStrategy> determineMitigations() {
 		var translation = new CNFTranslation(dslConstraint);
 
-		Set<Literal> literals = new LinkedHashSet<>();
+		Set<Literal> literals = new HashSet<>();
 
 		for (var literal : translation.constructCNF()) {
 			literals.addAll(literal.literals());
@@ -226,8 +205,6 @@ public class Constraint {
 
 					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 1000, type));
 
-				} else if (literal.compositeLabel().category() == LabelCategory.IncomingData) {
-					mitigations.add(new MitigationStrategy(List.of(literal.compositeLabel()), 10000, MitigationType.DeleteDataLabel));
 				}
 
 			}

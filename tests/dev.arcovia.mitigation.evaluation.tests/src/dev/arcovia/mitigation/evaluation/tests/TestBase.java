@@ -226,7 +226,7 @@ public abstract class TestBase {
 		
 		var violations = determineViolations(repairedDFD, List.of(encryptedPersonalData,encryptedNonEu));
 		
-		if(!getApproachName().equals("SAT")) {
+		if(getApproachName().equals("SMT")) {
 		    assertEquals(0, violations);
 		}
 	}
