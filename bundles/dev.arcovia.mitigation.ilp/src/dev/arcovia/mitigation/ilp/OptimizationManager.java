@@ -102,6 +102,11 @@ public class OptimizationManager implements MitigationApproach{
 				contradictions.addAll(determineContradictions(mitigation));
 			}
 		}
+		
+		//if no violation found return dfd
+        if (mitigations.isEmpty()) {
+            return dfd;
+        }
 
 		var solver = new ILPSolver();
 		result = solver.solve(mitigations, allMitigations, contradictions);

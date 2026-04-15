@@ -195,7 +195,7 @@ public abstract class TestBase {
 	private static boolean WARMUP = false;
 
 	@Test
-	@Disabled("Long-running scalability experiment — run via evaluateScalability()")
+	//@Disabled("Long-running scalability experiment — run via evaluateScalability()")
 	void evaluateScalability() throws Throwable {
 		Path outDir = Paths.get("testresults");
 		Files.createDirectories(outDir);
@@ -264,7 +264,7 @@ public abstract class TestBase {
 		for (int s : CONSTRAINT_SCALINGS)
 			runConstraintCase(writer, dummyLabels, "constraints_numberWithoutCharacteristic", 1, 1, 1, 1, s);
 		for (int s : CONSTRAINT_SCALINGS) {
-			int half = s / 2;
+		    int half = (s + 1) / 2;
 			runConstraintCase(writer, dummyLabels, "constraints_allTogether", s, half, half, half, half);
 		}
 	}

@@ -187,7 +187,7 @@ public class PerformanceEval {
 
         // all together
         for (int s : CONSTRAINT_SCALINGS_AMOUNT) {
-            int half = s / 2;
+            int half = (s + 1) / 2;
             runConstraintCase(writer, numberDummyLabels, "constraints_allTogether", s, half, half, half, half);
         }
     }
