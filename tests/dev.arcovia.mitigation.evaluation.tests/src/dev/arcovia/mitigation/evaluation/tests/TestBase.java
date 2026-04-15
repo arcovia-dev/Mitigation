@@ -99,14 +99,14 @@ public abstract class TestBase {
 		assertEquals(0, violationsAfter);
 
 		ObjectMapper mapper = new ObjectMapper();
-		Path out = Path.of("testresults/violation_results.json");
+		Path out = Path.of("testresults/" + getApproachName().toLowerCase() + "_violation_results.json");
 
 		List<ViolationResult> existing = Files.exists(out)
 				? mapper.readValue(out.toFile(), new TypeReference<List<ViolationResult>>() {
 				})
 				: new ArrayList<>();
 
-		existing.add(new ViolationResult(getApproachName(), name, violationsBefore, violationsAfter));
+		existing.add(new ViolationResult(name, violationsBefore, violationsAfter));
 		mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
 	}
 
@@ -163,14 +163,14 @@ public abstract class TestBase {
 				.calculateCostWithoutForwarding();
 
 		ObjectMapper mapper = new ObjectMapper();
-		Path out = Path.of("testresults/efficiency_results.json");
+		Path out = Path.of("testresults/" + getApproachName().toLowerCase() + "_efficiency_results.json");
 
 		List<CostResult> existing = Files.exists(out)
 				? mapper.readValue(out.toFile(), new TypeReference<List<CostResult>>() {
 				})
 				: new ArrayList<>();
 
-		existing.add(new CostResult(getApproachName(), model, variant, approachCost, tuhhCost));
+		existing.add(new CostResult(model, variant, approachCost, tuhhCost));
 		mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
 
 	}
@@ -338,10 +338,10 @@ public abstract class TestBase {
 		return violations;
 	}
 
-	public record ViolationResult(String Approach, String modelName, int violationsBefore, int violationsAfter) {
+	public record ViolationResult(String modelName, int violationsBefore, int violationsAfter) {
 	}
 
-	public record CostResult(String Approach, String model, int variant, int approachCost, int tuhhCost) {
+	public record CostResult(String model, int variant, int approachCost, int tuhhCost) {
 	}
 
 	private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws Exception {
