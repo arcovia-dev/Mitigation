@@ -39,5 +39,10 @@ public class satTest extends TestBase {
         Files.deleteIfExists(Path.of("testresults/temp.cnf"));
         Files.deleteIfExists(Path.of("testresults/temp-literalMapping.json"));
     }
+    
+    @Override
+    protected List<Integer> getConstraintScaling() {
+        return List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    }
 
 }

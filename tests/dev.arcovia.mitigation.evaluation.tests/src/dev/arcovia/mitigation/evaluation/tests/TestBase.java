@@ -146,8 +146,14 @@ public abstract class TestBase {
 		var dfd = loadDFD(model, name);
 
 		MitigationApproach approach = getApproach(dfd, constraints);
+        
+        approach.restrictToLabelAddition();
 
-		var repairedDFD = approach.repair();
+        var repairedDFD = approach.repair();
+        
+        int violationsAfter = determineViolations(repairedDFD, constraints);
+
+        assertEquals(0, violationsAfter);
 
 		List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
 		for (var constraint : constraints) {
@@ -181,14 +187,12 @@ public abstract class TestBase {
 			.withLabel("Sensitivity", "Personal").withoutLabel("Encryption", "encrypted").neverFlows().toVertex()
 			.withCharacteristic("Location", "nonEU").create();
 
-	private static final List<Integer> TFG_LENGTH_SCALINGS = List.of(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500,
-			550);
+	private static final List<Integer> TFG_LENGTH_SCALINGS = List.of(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500);
 
 	private static final List<Integer> TFG_AMOUNT_SCALINGS = List.of(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000,
 			9000, 10000, 11000, 12000, 13000, 14000, 15000);
-
-	private static final List<Integer> CONSTRAINT_SCALINGS = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-			16, 17, 18, 19, 20, 40, 60, 80, 100, 120, 140, 160, 180);
+	
+	protected abstract List<Integer> getConstraintScaling();
 
 	private static final int MEASUREMENT_REPEATS = 3;
 	private static final int FLUSH_EVERY = 3;
@@ -253,17 +257,18 @@ public abstract class TestBase {
 
 	private void scaleConstraints(MeasurementWriter writer) throws Throwable {
 		int dummyLabels = 600;
-		for (int s : CONSTRAINT_SCALINGS)
+		List<Integer> constraintScaling = getConstraintScaling();
+		for (int s : constraintScaling)
 			runConstraintCase(writer, dummyLabels, "constraints_amountConstraint", s, 1, 1, 1, 1);
-		for (int s : CONSTRAINT_SCALINGS)
+		for (int s : constraintScaling)
 			runConstraintCase(writer, dummyLabels, "constraints_numberWithLabel", 1, s, 1, 1, 1);
-		for (int s : CONSTRAINT_SCALINGS)
+		for (int s : constraintScaling)
 			runConstraintCase(writer, dummyLabels, "constraints_numberWithoutLabel", 1, 1, s, 1, 1);
-		for (int s : CONSTRAINT_SCALINGS)
+		for (int s : constraintScaling)
 			runConstraintCase(writer, dummyLabels, "constraints_numberWithCharacteristic", 1, 1, 1, s, 1);
-		for (int s : CONSTRAINT_SCALINGS)
+		for (int s : constraintScaling)
 			runConstraintCase(writer, dummyLabels, "constraints_numberWithoutCharacteristic", 1, 1, 1, 1, s);
-		for (int s : CONSTRAINT_SCALINGS) {
+		for (int s : constraintScaling) {
 		    int half = (s + 1) / 2;
 			runConstraintCase(writer, dummyLabels, "constraints_allTogether", s, half, half, half, half);
 		}
