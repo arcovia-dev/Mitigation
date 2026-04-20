@@ -259,7 +259,7 @@ public abstract class TestBase {
 	private void scaleConstraints(MeasurementWriter writer) throws Throwable {
 		List<Integer> constraintScaling = getConstraintScaling();
 		for (int scaling : constraintScaling) {
-			runConstraintAmount(writer, "constraints_amount", scaling*5);
+			runConstraintAmount(writer, "constraints_amount", scaling);
 		}
 		for (int scaling : constraintScaling) {
             runConstraintComplexity(writer, "constraints_complexity", scaling);
@@ -276,7 +276,7 @@ public abstract class TestBase {
         for (int cut1 = 1; cut1 <= base - 3; cut1++) {
             for (int cut2 = cut1 + 1; cut2 <= base - 2; cut2++) {
                 for (int cut3 = cut2 + 1; cut3 <= base - 1; cut3++) {
-                    constraints.add(getConstraintWithCut(cut1 * factor, cut2 * factor, cut3 * factor, totalLabels));                             
+                    constraints.add(getConstraintWithCut(cut1 * factor, cut2 * factor, cut3 * factor, totalLabels, 0));                             
                 }
             }
         }
@@ -284,26 +284,26 @@ public abstract class TestBase {
         return constraints;
     }
     
-    private static AnalysisConstraint getConstraintWithCut(int cut1, int cut2, int cut3, int inputLiterals) {
+    private static AnalysisConstraint getConstraintWithCut(int cut1, int cut2, int cut3, int inputLiterals, int offset) {
         List<String> dataPos = new ArrayList<>();
         List<String> dataNeg = new ArrayList<>();
         List<String> nodePos = new ArrayList<>();
         List<String> nodeNeg = new ArrayList<>();
 
         for (int i = 0; i < cut1; i++) {
-            dataPos.add("dummy_"+Integer.toString(i));
+            dataPos.add("dummy_"+Integer.toString(i + offset));
         }
 
         for (int i = cut1; i < cut2; i++) {
-            nodePos.add("dummy_"+Integer.toString(i));
+            nodePos.add("dummy_"+Integer.toString(i + offset));
         }
 
         for (int i = cut2; i < cut3; i++) {
-            dataNeg.add("dummy_n"+Integer.toString(i));
+            dataNeg.add("dummy_n"+Integer.toString(i + offset));
         }
 
         for (int i = cut3; i < inputLiterals; i++) {
-            nodeNeg.add("dummy_n"+Integer.toString(i));
+            nodeNeg.add("dummy_n"+Integer.toString(i + offset));
         }
         
         var data = new ConstraintDSL().ofData();
@@ -337,10 +337,10 @@ public abstract class TestBase {
         RunConfig cfg = RunConfig.forConstraints(name, amount, 1, 1, 1, 1, 4);
         runWithWarmupAndRepeats(writer, cfg, () -> {
             Scaler scaler = new Scaler(SCALE_DFD);
-            DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(4);
+            DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(4*amount);
             List<AnalysisConstraint> constraints = new ArrayList<>();
             for(int i = 0; i < amount; i++) {
-                constraints.add(getConstraintWithCut(1,2,3,4));
+                constraints.add(getConstraintWithCut(1,2,3,4, i*4));
             }
             getApproach(dfd, constraints).repair();
         });
