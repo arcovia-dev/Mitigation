@@ -3,6 +3,7 @@ package dev.arcovia.mitigation.evaluation.tests;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -254,35 +255,104 @@ public abstract class TestBase {
 			});
 		}
 	}
-
+	
 	private void scaleConstraints(MeasurementWriter writer) throws Throwable {
-		int dummyLabels = 600;
 		List<Integer> constraintScaling = getConstraintScaling();
-		for (int s : constraintScaling)
-			runConstraintCase(writer, dummyLabels, "constraints_amountConstraint", s, 1, 1, 1, 1);
-		for (int s : constraintScaling)
-			runConstraintCase(writer, dummyLabels, "constraints_numberWithLabel", 1, s, 1, 1, 1);
-		for (int s : constraintScaling)
-			runConstraintCase(writer, dummyLabels, "constraints_numberWithoutLabel", 1, 1, s, 1, 1);
-		for (int s : constraintScaling)
-			runConstraintCase(writer, dummyLabels, "constraints_numberWithCharacteristic", 1, 1, 1, s, 1);
-		for (int s : constraintScaling)
-			runConstraintCase(writer, dummyLabels, "constraints_numberWithoutCharacteristic", 1, 1, 1, 1, s);
-		for (int s : constraintScaling) {
-		    int half = (s + 1) / 2;
-			runConstraintCase(writer, dummyLabels, "constraints_allTogether", s, half, half, half, half);
+		for (int scaling : constraintScaling) {
+			runConstraintAmount(writer, "constraints_amount", scaling*5);
+		}
+		for (int scaling : constraintScaling) {
+            runConstraintComplexity(writer, "constraints_complexity", scaling);
 		}
 	}
+	
+    public List<AnalysisConstraint> getConstraintsWithLabels(int averageLabelsPerBucket) throws IOException {
+        int totalLabels = averageLabelsPerBucket * 4;
+        int base = totalLabels < 8 ? totalLabels : 8;
+        int factor = totalLabels / base;
 
-	private void runConstraintCase(MeasurementWriter writer, int dummyLabels, String name, int amount, int withLabel,
-			int withoutLabel, int withChar, int withoutChar) throws Throwable {
-		RunConfig cfg = RunConfig.forConstraints(name, amount, withLabel, withoutLabel, withChar, withoutChar,
-				dummyLabels);
+        List<AnalysisConstraint> constraints = new ArrayList<>();
+        
+        for (int cut1 = 1; cut1 <= base - 3; cut1++) {
+            for (int cut2 = cut1 + 1; cut2 <= base - 2; cut2++) {
+                for (int cut3 = cut2 + 1; cut3 <= base - 1; cut3++) {
+                    constraints.add(getConstraintWithCut(cut1 * factor, cut2 * factor, cut3 * factor, totalLabels));                             
+                }
+            }
+        }
+
+        return constraints;
+    }
+    
+    private static AnalysisConstraint getConstraintWithCut(int cut1, int cut2, int cut3, int inputLiterals) {
+        List<String> dataPos = new ArrayList<>();
+        List<String> dataNeg = new ArrayList<>();
+        List<String> nodePos = new ArrayList<>();
+        List<String> nodeNeg = new ArrayList<>();
+
+        for (int i = 0; i < cut1; i++) {
+            dataPos.add("dummy_"+Integer.toString(i));
+        }
+
+        for (int i = cut1; i < cut2; i++) {
+            nodePos.add("dummy_"+Integer.toString(i));
+        }
+
+        for (int i = cut2; i < cut3; i++) {
+            dataNeg.add("dummy_n"+Integer.toString(i));
+        }
+
+        for (int i = cut3; i < inputLiterals; i++) {
+            nodeNeg.add("dummy_n"+Integer.toString(i));
+        }
+        
+        var data = new ConstraintDSL().ofData();
+        
+        if(!dataPos.isEmpty()) {
+            data = data.withLabel("dummyCategory", dataPos);
+
+        }
+        
+        if(!dataNeg.isEmpty()) {
+            data = data.withoutLabel("dummyCategory", dataNeg);
+
+        }
+        
+        var node = data.neverFlows().toVertex();
+        
+        if(!nodePos.isEmpty()) {
+            node = node.withCharacteristic("dummyCategory", nodePos);
+
+        }
+        
+        if(!nodeNeg.isEmpty()) {
+            node = node.withoutCharacteristic("dummyCategory", nodeNeg);
+
+        }
+        
+        return node.create();        
+    }
+    
+    private void runConstraintAmount(MeasurementWriter writer, String name, int amount) throws Throwable {
+        RunConfig cfg = RunConfig.forConstraints(name, amount, 1, 1, 1, 1, 4);
+        runWithWarmupAndRepeats(writer, cfg, () -> {
+            Scaler scaler = new Scaler(SCALE_DFD);
+            DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(4);
+            List<AnalysisConstraint> constraints = new ArrayList<>();
+            for(int i = 0; i < amount; i++) {
+                constraints.add(getConstraintWithCut(1,2,3,4));
+            }
+            getApproach(dfd, constraints).repair();
+        });
+    }
+
+	private void runConstraintComplexity(MeasurementWriter writer, String name, int scaling) throws Throwable {
+		RunConfig cfg = RunConfig.forConstraints(name, 35, scaling, scaling, scaling, scaling,
+				scaling * 4);
 		runWithWarmupAndRepeats(writer, cfg, () -> {
 			Scaler scaler = new Scaler(SCALE_DFD);
-			DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(dummyLabels);
-			List<AnalysisConstraint> constraints = scaler.scaleConstraint(amount, withLabel, withoutLabel, withChar,
-					withoutChar, dummyLabels);
+			DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(scaling * 4);
+			List<AnalysisConstraint> constraints = getConstraintsWithLabels(scaling);;
 			getApproach(dfd, constraints).repair();
 		});
 	}
