@@ -310,24 +310,20 @@ public abstract class TestBase {
         
         if(!dataPos.isEmpty()) {
             data = data.withLabel("dummyCategory", dataPos);
-
         }
         
         if(!dataNeg.isEmpty()) {
             data = data.withoutLabel("dummyCategory", dataNeg);
-
         }
         
         var node = data.neverFlows().toVertex();
         
         if(!nodePos.isEmpty()) {
             node = node.withCharacteristic("dummyCategory", nodePos);
-
         }
         
         if(!nodeNeg.isEmpty()) {
             node = node.withoutCharacteristic("dummyCategory", nodeNeg);
-
         }
         
         return node.create();        
