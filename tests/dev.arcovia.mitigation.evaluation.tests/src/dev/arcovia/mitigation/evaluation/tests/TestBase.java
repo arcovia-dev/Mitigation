@@ -181,6 +181,27 @@ public abstract class TestBase {
 		mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
 
 	}
+	
+	final AnalysisConstraint encryptedPersonalData = new ConstraintDSL().ofData().withLabel("Sensitivity", "Personal")
+            .withoutLabel("Encryption", "Encrypted").neverFlows().toVertex().withCharacteristic("Location", "nonEU")
+            .create();
+    
+	final AnalysisConstraint encryptedNonEu = new ConstraintDSL().ofData().withLabel("Encryption", "Encrypted").neverFlows().toVertex().withCharacteristic("Location", "EU")
+            .create();
+    
+    @Test
+    void forwardingEdgeCase() throws Exception {
+        var dfdLocation = "models/forwardingEdgeCase.json";
+        DataFlowDiagramAndDictionary dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
+        
+        var repairedDFD = getApproach(dfd, List.of(encryptedPersonalData,encryptedNonEu )).repair();
+        
+        var violations = determineViolations(repairedDFD, List.of(encryptedPersonalData,encryptedNonEu));
+        
+        if(getApproachName().equals("SMT")) {
+            assertEquals(0, violations);
+        }
+    }
 
 	private static final String SCALE_DFD = "models/sourceSink.json";
 
@@ -209,29 +230,8 @@ public abstract class TestBase {
 		try (MeasurementWriter writer = new MeasurementWriter(csv, done, FLUSH_EVERY)) {
 			scaleTFGLength(writer);
 			scaleTFGAmount(writer);
-			scaleConstraints(writer);
-		}
-	}
-
-	
-	final AnalysisConstraint encryptedPersonalData = new ConstraintDSL().ofData().withLabel("Sensitivity", "Personal")
-			.withoutLabel("Encryption", "Encrypted").neverFlows().toVertex().withCharacteristic("Location", "nonEU")
-			.create();
-	
-	final AnalysisConstraint encryptedNonEu = new ConstraintDSL().ofData().withLabel("Encryption", "Encrypted").neverFlows().toVertex().withCharacteristic("Location", "EU")
-			.create();
-	
-	@Test
-	void forwardingEdgeCase() throws Exception {
-		var dfdLocation = "models/forwardingEdgeCase.json";
-		DataFlowDiagramAndDictionary dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
-		
-		var repairedDFD = getApproach(dfd, List.of(encryptedPersonalData,encryptedNonEu )).repair();
-		
-		var violations = determineViolations(repairedDFD, List.of(encryptedPersonalData,encryptedNonEu));
-		
-		if(getApproachName().equals("SMT")) {
-		    assertEquals(0, violations);
+			scaleConstraintAmount(writer);
+			scaleConstraintComplexity(writer);
 		}
 	}
 	
@@ -256,16 +256,39 @@ public abstract class TestBase {
 			});
 		}
 	}
-	
-	private void scaleConstraints(MeasurementWriter writer) throws Throwable {
-		List<Integer> constraintScaling = getConstraintScaling();
-		for (int scaling : constraintScaling) {
-			runConstraintAmount(writer, "constraints_amount", scaling);
-		}
-		for (int scaling : constraintScaling) {
-            runConstraintComplexity(writer, "constraints_complexity", scaling);
-		}
-	}
+		
+    private void scaleConstraintAmount(MeasurementWriter writer) throws Throwable {
+        List<Integer> constraintScaling = getConstraintScaling();
+        for (int amount : constraintScaling) {
+            RunConfig cfg = RunConfig.forConstraints("constraints_amount", amount, 1, 1, 1, 1, 4);
+            runWithWarmupAndRepeats(writer, cfg, () -> {
+                Scaler scaler = new Scaler(SCALE_DFD);
+                DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(4*amount);
+                List<AnalysisConstraint> constraints = new ArrayList<>();
+                for(int i = 0; i < amount; i++) {
+                    constraints.add(getConstraintWithCut(1,2,3,4, i*4));
+                }
+                var repairedDFD = getApproach(dfd, constraints).repair();
+                assertEquals(0, determineViolations(repairedDFD, constraints));
+            });
+        }
+        
+    }
+
+    private void scaleConstraintComplexity(MeasurementWriter writer) throws Throwable {
+        List<Integer> constraintScaling = getConstraintScaling();
+        for (int scaling : constraintScaling) {
+            RunConfig cfg = RunConfig.forConstraints("constraints_complexity", 35, scaling, scaling, scaling, scaling,
+                    scaling * 4);
+            runWithWarmupAndRepeats(writer, cfg, () -> {
+                Scaler scaler = new Scaler(SCALE_DFD);
+                DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(scaling * 4);
+                List<AnalysisConstraint> constraints = getConstraintsWithLabels(scaling);;
+                var repairedDFD = getApproach(dfd, constraints).repair();
+                assertEquals(0, determineViolations(repairedDFD, constraints));
+            });
+        }
+    }
 	
     public List<AnalysisConstraint> getConstraintsWithLabels(int averageLabelsPerBucket) throws IOException {
         int totalLabels = averageLabelsPerBucket * 4;
@@ -330,32 +353,6 @@ public abstract class TestBase {
         return node.create();        
     }
     
-    private void runConstraintAmount(MeasurementWriter writer, String name, int amount) throws Throwable {
-        RunConfig cfg = RunConfig.forConstraints(name, amount, 1, 1, 1, 1, 4);
-        runWithWarmupAndRepeats(writer, cfg, () -> {
-            Scaler scaler = new Scaler(SCALE_DFD);
-            DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(4*amount);
-            List<AnalysisConstraint> constraints = new ArrayList<>();
-            for(int i = 0; i < amount; i++) {
-                constraints.add(getConstraintWithCut(1,2,3,4, i*4));
-            }
-            var repairedDFD = getApproach(dfd, constraints).repair();
-            assertEquals(0, determineViolations(repairedDFD, constraints));
-        });
-    }
-
-	private void runConstraintComplexity(MeasurementWriter writer, String name, int scaling) throws Throwable {
-		RunConfig cfg = RunConfig.forConstraints(name, 35, scaling, scaling, scaling, scaling,
-				scaling * 4);
-		runWithWarmupAndRepeats(writer, cfg, () -> {
-			Scaler scaler = new Scaler(SCALE_DFD);
-			DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(scaling * 4);
-			List<AnalysisConstraint> constraints = getConstraintsWithLabels(scaling);;
-			var repairedDFD = getApproach(dfd, constraints).repair();
-	        assertEquals(0, determineViolations(repairedDFD, constraints));
-		});
-	}
-
 	private void runWithWarmupAndRepeats(MeasurementWriter writer, RunConfig cfg, RunnableExperiment experiment)
 			throws Throwable {
 
