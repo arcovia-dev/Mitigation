@@ -197,7 +197,6 @@ public abstract class TestBase {
 
 	private static final int MEASUREMENT_REPEATS = 3;
 	private static final int FLUSH_EVERY = 3;
-	private static boolean DID_WARMUP = false;
 
 	@Test
 	@Disabled("Long-running scalability experiment — run via evaluateScalability()")
@@ -208,14 +207,10 @@ public abstract class TestBase {
 		Set<String> done = MeasurementWriter.loadDoneRunIds(csv);
 
 		try (MeasurementWriter writer = new MeasurementWriter(csv, done, FLUSH_EVERY)) {
-		    DID_WARMUP = false;
 			scaleTFGLength(writer);
-			DID_WARMUP = false;
 			scaleTFGAmount(writer);
 			scaleConstraints(writer);
 		}
-		
-		
 	}
 
 	
@@ -264,11 +259,9 @@ public abstract class TestBase {
 	
 	private void scaleConstraints(MeasurementWriter writer) throws Throwable {
 		List<Integer> constraintScaling = getConstraintScaling();
-		DID_WARMUP = false;
 		for (int scaling : constraintScaling) {
 			runConstraintAmount(writer, "constraints_amount", scaling);
 		}
-		DID_WARMUP = false;
 		for (int scaling : constraintScaling) {
             runConstraintComplexity(writer, "constraints_complexity", scaling);
 		}
@@ -365,14 +358,14 @@ public abstract class TestBase {
 
 	private void runWithWarmupAndRepeats(MeasurementWriter writer, RunConfig cfg, RunnableExperiment experiment)
 			throws Throwable {
-		if (!DID_WARMUP) {
-			try {
-				experiment.run();
-				DID_WARMUP = true;
-			} catch (Throwable t) {
-				throw new RuntimeException(t);
-			}
+
+	    //Warmup
+		try {
+			experiment.run();
+		} catch (Throwable t) {
+			throw new RuntimeException(t);
 		}
+
 		for (int i = 0; i < MEASUREMENT_REPEATS; i++) {
 			if (writer.isDone(MeasurementWriter.runId(cfg, "measurement", i)))
 				continue;
