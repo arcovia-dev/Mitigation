@@ -1,6 +1,5 @@
 from pathlib import Path
 import json
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -65,34 +64,41 @@ def _save(fig, name):
 
 
 def plot_comparison(exp, cfg, data_by_approach):
-    """data_by_approach: {approach: DataFrame[x_col, executionTime]}"""
-    # union of all x values across approaches, sorted
     x_col = cfg["x_col"]
-    all_x = sorted({v for df in data_by_approach.values() for v in df[x_col].tolist()})
-    x_idx = np.arange(len(all_x))
-    xlabels = [str(int(v)) if float(v).is_integer() else str(v) for v in all_x]
-
-    def series_for(df):
-        lookup = dict(zip(df[x_col].tolist(), df["executionTime"].tolist()))
-        return np.array([lookup.get(v, np.nan) for v in all_x], dtype=float)
 
     # linear
     fig, ax = plt.subplots()
     for approach, df in data_by_approach.items():
-        ax.plot(x_idx, series_for(df), marker=MARKERS.get(approach, "o"), label=approach)
-    ax.set_xticks(x_idx); ax.set_xticklabels(xlabels, rotation=cfg["rotation"])
-    ax.set_xlabel(cfg["x_label"]); ax.set_ylabel("Mean total execution time in ms")
-    ax.grid(True); ax.legend(loc="upper left")
+        ax.plot(
+            df[x_col],
+            df["executionTime"],
+            marker=MARKERS.get(approach, "o"),
+            label=approach
+        )
+
+    ax.set_xlabel(cfg["x_label"])
+    ax.set_ylabel("Mean total execution time in ms")
+    ax.grid(True)
+    ax.legend(loc="upper left")
+
     _save(fig, f"{cfg['prefix']}_linear")
 
     # log
     fig, ax = plt.subplots()
     for approach, df in data_by_approach.items():
-        ax.plot(x_idx, series_for(df), marker=MARKERS.get(approach, "o"), label=approach)
+        ax.plot(
+            df[x_col],
+            df["executionTime"],
+            marker=MARKERS.get(approach, "o"),
+            label=approach
+        )
+
     ax.set_yscale("symlog")
-    ax.set_xticks(x_idx); ax.set_xticklabels(xlabels, rotation=cfg["rotation"] or 45)
-    ax.set_xlabel(cfg["x_label"]); ax.set_ylabel("Mean total execution time in ms (log scale)")
-    ax.grid(True, which="both"); ax.legend(loc="upper left")
+    ax.set_xlabel(cfg["x_label"])
+    ax.set_ylabel("Mean total execution time in ms (log scale)")
+    ax.grid(True, which="both")
+    ax.legend(loc="upper left")
+
     _save(fig, f"{cfg['prefix']}_log")
 
 
