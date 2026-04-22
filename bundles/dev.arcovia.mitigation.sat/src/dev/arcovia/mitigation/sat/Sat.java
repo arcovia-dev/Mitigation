@@ -44,8 +44,8 @@ public class Sat {
     private boolean deactivateSubsumption;
     private Set<Label> allLabels = null;
     
-    private static final boolean SCALING_TEST = true;
-    private static final int TERMINATION_THRESHOLD = 100000;
+    private static final boolean SCALING_TEST = false;
+    private static final int TERMINATION_THRESHOLD = Integer.MAX_VALUE;
 
     /**
      * Solves a constraint satisfaction problem based on the given nodes, flows, and constraints. The method builds the

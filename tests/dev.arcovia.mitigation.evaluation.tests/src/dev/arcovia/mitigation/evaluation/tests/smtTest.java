@@ -1,5 +1,6 @@
 package dev.arcovia.mitigation.evaluation.tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
@@ -22,7 +23,11 @@ public class smtTest extends TestBase {
 	
 	@Override
     protected List<Integer> getConstraintScaling() {
-        return List.of(1, 2, 4, 6, 8, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
+	    List<Integer> evens = new ArrayList<>();
+        for (int i = 2; i <= 100; i += 2) {
+            evens.add(i);
+        }
+        return evens;
     }
 
 }

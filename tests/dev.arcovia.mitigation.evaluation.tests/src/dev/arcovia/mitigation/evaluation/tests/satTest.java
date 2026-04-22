@@ -42,7 +42,7 @@ public class satTest extends TestBase {
     
     @Override
     protected List<Integer> getConstraintScaling() {
-        return List.of(1, 2, 4, 6, 8, 10, 20, 30, 40, 50);
+        return List.of(2, 4, 6, 8, 10, 12, 14, 16, 18, 20);
     }
 
 }

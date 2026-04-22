@@ -197,7 +197,7 @@ public abstract class TestBase {
 
 	private static final int MEASUREMENT_REPEATS = 3;
 	private static final int FLUSH_EVERY = 3;
-	private static boolean WARMUP = false;
+	private static boolean DID_WARMUP = false;
 
 	@Test
 	@Disabled("Long-running scalability experiment — run via evaluateScalability()")
@@ -212,6 +212,8 @@ public abstract class TestBase {
 			scaleTFGAmount(writer);
 			scaleConstraints(writer);
 		}
+		
+		DID_WARMUP = false;
 	}
 
 	
@@ -241,7 +243,8 @@ public abstract class TestBase {
 			RunConfig cfg = RunConfig.forTFG("tfg_length", scaling, 0);
 			runWithWarmupAndRepeats(writer, cfg, () -> {
 				var dfd = new Scaler(SCALE_DFD).scaleTFGLength(scaling);
-				getApproach(dfd, List.of(scalabilityConstraint)).repair();
+				var repairedDFD = getApproach(dfd, List.of(scalabilityConstraint)).repair();
+                assertEquals(0, determineViolations(repairedDFD, List.of(scalabilityConstraint)));
 			});
 		}
 	}
@@ -251,7 +254,8 @@ public abstract class TestBase {
 			RunConfig cfg = RunConfig.forTFG("tfg_amount", 0, scaling);
 			runWithWarmupAndRepeats(writer, cfg, () -> {
 				var dfd = new Scaler(SCALE_DFD).scaleTFGAmount(scaling);
-				getApproach(dfd, List.of(scalabilityConstraint)).repair();
+				var repairedDFD = getApproach(dfd, List.of(scalabilityConstraint)).repair();
+	            assertEquals(0, determineViolations(repairedDFD, List.of(scalabilityConstraint)));
 			});
 		}
 	}
@@ -338,7 +342,8 @@ public abstract class TestBase {
             for(int i = 0; i < amount; i++) {
                 constraints.add(getConstraintWithCut(1,2,3,4, i*4));
             }
-            getApproach(dfd, constraints).repair();
+            var repairedDFD = getApproach(dfd, constraints).repair();
+            assertEquals(0, determineViolations(repairedDFD, constraints));
         });
     }
 
@@ -349,16 +354,17 @@ public abstract class TestBase {
 			Scaler scaler = new Scaler(SCALE_DFD);
 			DataFlowDiagramAndDictionary dfd = scaler.scaleLabels(scaling * 4);
 			List<AnalysisConstraint> constraints = getConstraintsWithLabels(scaling);;
-			getApproach(dfd, constraints).repair();
+			var repairedDFD = getApproach(dfd, constraints).repair();
+	        assertEquals(0, determineViolations(repairedDFD, constraints));
 		});
 	}
 
 	private void runWithWarmupAndRepeats(MeasurementWriter writer, RunConfig cfg, RunnableExperiment experiment)
 			throws Throwable {
-		if (!WARMUP) {
+		if (!DID_WARMUP) {
 			try {
 				experiment.run();
-				WARMUP = true;
+				DID_WARMUP = true;
 			} catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
