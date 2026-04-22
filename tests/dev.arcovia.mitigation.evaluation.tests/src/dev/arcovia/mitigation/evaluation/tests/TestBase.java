@@ -258,8 +258,7 @@ public abstract class TestBase {
 	}
 		
     private void scaleConstraintAmount(MeasurementWriter writer) throws Throwable {
-        List<Integer> constraintScaling = getConstraintScaling();
-        for (int amount : constraintScaling) {
+        for (int amount : getConstraintScaling()) {
             RunConfig cfg = RunConfig.forConstraints("constraints_amount", amount, 1, 1, 1, 1, 4);
             runWithWarmupAndRepeats(writer, cfg, () -> {
                 Scaler scaler = new Scaler(SCALE_DFD);
@@ -276,8 +275,7 @@ public abstract class TestBase {
     }
 
     private void scaleConstraintComplexity(MeasurementWriter writer) throws Throwable {
-        List<Integer> constraintScaling = getConstraintScaling();
-        for (int scaling : constraintScaling) {
+        for (int scaling : getConstraintScaling()) {
             RunConfig cfg = RunConfig.forConstraints("constraints_complexity", 35, scaling, scaling, scaling, scaling,
                     scaling * 4);
             runWithWarmupAndRepeats(writer, cfg, () -> {
