@@ -208,12 +208,14 @@ public abstract class TestBase {
 		Set<String> done = MeasurementWriter.loadDoneRunIds(csv);
 
 		try (MeasurementWriter writer = new MeasurementWriter(csv, done, FLUSH_EVERY)) {
+		    DID_WARMUP = false;
 			scaleTFGLength(writer);
+			DID_WARMUP = false;
 			scaleTFGAmount(writer);
 			scaleConstraints(writer);
 		}
 		
-		DID_WARMUP = false;
+		
 	}
 
 	
@@ -262,9 +264,11 @@ public abstract class TestBase {
 	
 	private void scaleConstraints(MeasurementWriter writer) throws Throwable {
 		List<Integer> constraintScaling = getConstraintScaling();
+		DID_WARMUP = false;
 		for (int scaling : constraintScaling) {
 			runConstraintAmount(writer, "constraints_amount", scaling);
 		}
+		DID_WARMUP = false;
 		for (int scaling : constraintScaling) {
             runConstraintComplexity(writer, "constraints_complexity", scaling);
 		}
