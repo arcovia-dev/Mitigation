@@ -140,6 +140,8 @@ public class OptimizationManager implements MitigationApproach{
 		
 		//if no violation found return dfd
         if (mitigations.isEmpty()) {
+        	timer.solving();
+        	timer.stop();
             return dfd;
         }
 
