@@ -137,6 +137,11 @@ public class OptimizationManager implements MitigationApproach{
 				contradictions.addAll(determineContradictions(mitigation));
 			}
 		}
+		
+		//if no violation found return dfd
+        if (mitigations.isEmpty()) {
+            return dfd;
+        }
 
 		var solver = new ILPSolver();
 		result = solver.solve(mitigations, allMitigations, contradictions);
@@ -461,12 +466,9 @@ public class OptimizationManager implements MitigationApproach{
 				var flow = dataFlowDiagram.getFlows().stream().filter(f -> f.getId().equals(action.domain()))
 						.findFirst().orElseThrow();
 
-				var node = flow.getSourceNode();
-
 				var name = action.compositeLabels().get(0).label().value();
 
-				var behaviorOld = node.getBehavior();
-
+				
 				var dfdFactory = dataflowdiagramFactory.eINSTANCE;
 
 				var vertex = dfdFactory.createProcess();
@@ -493,8 +495,6 @@ public class OptimizationManager implements MitigationApproach{
 				var inPin = ddFactory.createPin();
 
 				behaviorNew.getInPin().add(inPin);
-
-				Set<Label> allLabels = new HashSet<>();
 
 				var sink = flow.getDestinationNode();
 				var inPinOld = flow.getDestinationPin();
@@ -771,7 +771,6 @@ public class OptimizationManager implements MitigationApproach{
 	}
 
 	private void removeFlows(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
-		var dd = dfd.dataDictionary();
 		var dataFlowDiagram = dfd.dataFlowDiagram();
 		for (var action : actions) {
 			if (action.type().equals(ActionType.RemoveFlow)) {

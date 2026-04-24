@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.examplemodels.TuhhModels;
-import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
