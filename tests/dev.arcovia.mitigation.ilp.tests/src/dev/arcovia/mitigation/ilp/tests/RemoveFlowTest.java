@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import dev.arcovia.mitigation.ilp.OptimizationManager;
 import dev.arcovia.mitigation.sat.Label;
-import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import dev.arcovia.mitigation.ilp.Constraint;
 import dev.arcovia.mitigation.ilp.MitigationStrategy;
