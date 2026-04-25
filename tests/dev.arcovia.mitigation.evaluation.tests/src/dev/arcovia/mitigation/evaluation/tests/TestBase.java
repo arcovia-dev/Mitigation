@@ -145,6 +145,16 @@ public abstract class TestBase {
 		}
 
 		var dfd = loadDFD(model, name);
+		
+		List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
+        for (var constraint : constraints) {
+            var translation = new CNFTranslation(constraint);
+            dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF().get(0);
+            satConstraint.add(c);
+        }
+		
+		int baseCost = new ModelCostCalculator(dfd, satConstraint, minCosts)
+                .calculateCostWithoutForwarding();
 
 		MitigationApproach approach = getApproach(dfd, constraints);
         
@@ -156,18 +166,10 @@ public abstract class TestBase {
 
         assertEquals(0, violationsAfter);
 
-		List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
-		for (var constraint : constraints) {
-			var translation = new CNFTranslation(constraint);
-			dev.arcovia.mitigation.sat.Constraint c = translation.constructCNF().get(0);
-			satConstraint.add(c);
-		}
-
-		var approachCost = new ModelCostCalculator(repairedDFD, satConstraint, minCosts)
+		int repairedCost = new ModelCostCalculator(repairedDFD, satConstraint, minCosts)
 				.calculateCostWithoutForwarding();
-
-		var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts)
-				.calculateCostWithoutForwarding();
+		
+		int approachCost = repairedCost - baseCost;
 
 		ObjectMapper mapper = new ObjectMapper();
 		Path out = Path.of("testresults/" + getApproachName().toLowerCase() + "_efficiency_results.json");
@@ -177,7 +179,7 @@ public abstract class TestBase {
 				})
 				: new ArrayList<>();
 
-		existing.add(new CostResult(model, variant, approachCost, tuhhCost));
+		existing.add(new CostResult(model, variant, approachCost));
 		mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
 
 	}
@@ -410,7 +412,7 @@ public abstract class TestBase {
 	public record ViolationResult(String modelName, int violationsBefore, int violationsAfter) {
 	}
 
-	public record CostResult(String model, int variant, int approachCost, int tuhhCost) {
+	public record CostResult(String model, int variant, int approachCost) {
 	}
 
 	private DataFlowDiagramAndDictionary loadDFD(String model, String name) throws Exception {

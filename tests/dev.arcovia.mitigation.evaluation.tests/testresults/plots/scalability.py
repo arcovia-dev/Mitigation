@@ -12,10 +12,10 @@ OUT_DIR = Path("")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 EXPERIMENTS = {
-    "tfg_length":             {"x_col": "tfgLengthScaling", "x_label": "Length of TFG",                          "prefix": "LengthTfg",             "rotation": 0},
-    "tfg_amount":             {"x_col": "tfgAmountScaling", "x_label": "Amount of TFGs",                         "prefix": "AmountTfg",             "rotation": 45},
-    "constraints_amount":     {"x_col": "amountConstraint", "x_label": "Amount of Constraints",                  "prefix": "AmountConstraints",     "rotation": 0},
-    "constraints_complexity": {"x_col": "numberWithLabel",  "x_label": "Constraint Complexity (all dimensions)", "prefix": "ComplexityConstraints", "rotation": 0},
+    "tfg_length":             {"x_col": "tfgLengthScaling", "x_label": "Length of TFG", "prefix": "tfg_length",             "rotation": 0},
+    "tfg_amount":             {"x_col": "tfgAmountScaling", "x_label": "Amount of TFGs", "prefix": "tfg_amount",             "rotation": 45},
+    "constraints_amount":     {"x_col": "amountConstraint", "x_label": "Amount of Constraints", "prefix": "constraints_amount",     "rotation": 0},
+    "constraints_complexity": {"x_col": "numberWithLabel",  "x_label": "Labels per Constraints", "prefix": "constraints_complexity", "rotation": 0},
 }
 
 MARKERS = {"SAT": "o", "ILP": "s", "SMT": "^"}
@@ -59,7 +59,7 @@ def load_means(json_path):
 
 def _save(fig, name):
     fig.tight_layout()
-    fig.savefig(OUT_DIR / f"{name}.pdf", format="pdf")
+    fig.savefig(OUT_DIR / f"{name}.pdf", format="pdf", bbox_inches='tight')
     plt.close(fig)
 
 
@@ -77,7 +77,7 @@ def plot_comparison(exp, cfg, data_by_approach):
         )
 
     ax.set_xlabel(cfg["x_label"])
-    ax.set_ylabel("Mean total execution time in ms")
+    ax.set_ylabel("Mean execution time in ms")
     ax.grid(True)
     ax.legend(loc="upper left")
 
@@ -95,7 +95,7 @@ def plot_comparison(exp, cfg, data_by_approach):
 
     ax.set_yscale("symlog")
     ax.set_xlabel(cfg["x_label"])
-    ax.set_ylabel("Mean total execution time in ms (log scale)")
+    ax.set_ylabel("Mean execution time in ms (log scale)")
     ax.grid(True, which="both")
     ax.legend(loc="upper left")
 

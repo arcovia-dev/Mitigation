@@ -56,7 +56,7 @@ def save_pdf(before, after, out_path, title=None):
     ax.set_xticklabels(before.columns.astype(str))
     ax.set_yticks(np.arange(before.shape[0]))
     ax.set_yticklabels(before.index)
-    ax.set_xlabel("Constriant")
+    ax.set_xlabel("Constraint")
     if title:
         ax.set_title(title)
 
@@ -81,5 +81,5 @@ def save_pdf(before, after, out_path, title=None):
 for name, path in FILES.items():
     before, after = load_tables(path)
     out = f"{name}_effectiveness.pdf"
-    save_pdf(before, after, out, title=name.upper())
+    save_pdf(before, after, out)
     print(f"wrote {out}")

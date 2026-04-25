@@ -6,15 +6,14 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
 
 FILES = {
-    "SAT": "../sat_efficiency_results.json",
-    "ILP": "../ilp_efficiency_results.json",
-    "SMT": "../smt_efficiency_results.json",
+    "sat": "../sat_efficiency_results.json",
+    "ilp": "../ilp_efficiency_results.json",
+    "smt": "../smt_efficiency_results.json",
 }
 
 F_MODEL    = "model"
 F_VARIANT  = "variant"
 F_APPROACH = "approachCost"
-F_BASELINE = "tuhhCost"
 
 Y_ORDER = [
     "anilallewar", "apssouza22", "callistaenterprise", "ewolff-kafka",
@@ -24,20 +23,19 @@ Y_ORDER = [
 
 
 def load_delta_matrix(path):
-    """Read one JSON file -> pivot table of (model x variant) = approach - baseline."""
     with open(path) as f:
         data = json.load(f)
     rows = [{
         "project":    d[F_MODEL],
         "constraint": int(d[F_VARIANT]),
-        "delta":      float(d[F_APPROACH]) - float(d[F_BASELINE]),
+        "delta":      float(d[F_APPROACH]),
     } for d in data]
     df = pd.DataFrame(rows)
     mat = df.pivot(index="project", columns="constraint", values="delta")
     return mat.reindex(sorted(mat.columns), axis=1)
 
 
-def save_heatmap_pdf(mat, title, vmax, out_path):
+def save_heatmap_pdf(mat, vmax, out_path):
     Z = mat.to_numpy()
     mask = np.isnan(Z)
 
@@ -53,7 +51,6 @@ def save_heatmap_pdf(mat, title, vmax, out_path):
     ax.set_yticks(range(mat.shape[0]))
     ax.set_yticklabels(mat.index, fontweight="bold")
     ax.set_xlabel("Variant")
-    ax.set_title(title)
 
     ax.set_xticks(np.arange(-.5, mat.shape[1], 1), minor=True)
     ax.set_yticks(np.arange(-.5, mat.shape[0], 1), minor=True)
@@ -96,5 +93,5 @@ vmax = max(
 
 # --- Save one PDF per approach ---
 for name, mat in matrices.items():
-    save_heatmap_pdf(mat, title=name.upper(), vmax=vmax, out_path=f"{name}_efficiency.pdf")
+    save_heatmap_pdf(mat, vmax=vmax, out_path=f"{name}_efficiency.pdf")
     print(f"wrote {name}.pdf")
