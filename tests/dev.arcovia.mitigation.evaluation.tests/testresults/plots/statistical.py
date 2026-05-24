@@ -37,9 +37,9 @@ def load_data():
 
 
 def format_p(p):
-    if p < 0.0001:
-        return "p < 0.0001"
-    return f"p = {p:.4f}"
+    if p < 0.00001:
+        return "p < 0.00001"
+    return f"p = {p:.5f}"
 
 
 def slope_expression(method, param_names):
