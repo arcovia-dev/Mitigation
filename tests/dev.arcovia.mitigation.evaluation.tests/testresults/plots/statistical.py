@@ -133,9 +133,9 @@ for experiment, x_col in EXPERIMENTS.items():
 
         print(
             f"{a} vs {b}: "
-            f"Δ exponent = {diff:.2f}, "
+            f"Delta exponent = {diff:.2f}, "
             f"{a} {direction} {b}, "
             f"{format_p(p)}"
         )
 
-    print(f"\nR² = {model.rsquared:.3f}")
+    print(f"\nR_Square = {model.rsquared:.3f}")
