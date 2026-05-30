@@ -131,4 +131,9 @@ def plot_combined_heatmaps(matrices, out_path="combined_efficiency.pdf"):
 
 
 matrices = prepare_matrices(FILES)
+
+for name, mat in matrices.items():
+    total = np.nansum(mat.to_numpy())  # ignores NaNs
+    print(f"{name}: {total:.0f}")
+
 plot_combined_heatmaps(matrices, out_path="combined_efficiency.pdf")
