@@ -31,7 +31,7 @@ EXPERIMENTS = {
     },
 }
 
-MARKERS = {"SAT": "o", "ILP": "s", "SMT": "^"}
+MARKERS = {"SAT": "o", "SMT": "s", "ILP": "^"}
 
 
 def load_means(json_path: Path):
