@@ -37,6 +37,8 @@ def load_tables(path):
     after  = df.pivot(index="project", columns="variant", values="after").sort_index()
     before = before.reindex(sorted(before.columns), axis=1)
     after  = after.reindex(sorted(after.columns),  axis=1)
+    print("Violations before: ",before.sum().sum())
+    print("Violations after: ",after.sum().sum())
     return before, after
 
 
@@ -56,7 +58,7 @@ def save_pdf(before, after, out_path, title=None):
     ax.set_xticklabels(before.columns.astype(str))
     ax.set_yticks(np.arange(before.shape[0]))
     ax.set_yticklabels(before.index)
-    ax.set_xlabel("Constraint")
+    ax.set_xlabel("Variant")
     if title:
         ax.set_title(title)
 
