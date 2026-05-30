@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 APPROACHES = {
     "SAT": Path("../sat_performance_measurements.json"),
-    "ILP": Path("../ilp_performance_measurements.json"),
     "SMT": Path("../smt_performance_measurements.json"),
+    "ILP": Path("../ilp_performance_measurements.json"),
 }
 
 OUT_DIR = Path("")
