@@ -8,13 +8,13 @@ import statsmodels.formula.api as smf
 
 APPROACHES = {
     "SAT": "../sat_performance_measurements.json",
-    "ILP": "../ilp_performance_measurements.json",
     "SMT": "../smt_performance_measurements.json",
+    "ILP": "../ilp_performance_measurements.json",
 }
 
 EXPERIMENTS = {
-    "tfg_length": "tfgLengthScaling",
     "tfg_amount": "tfgAmountScaling",
+    "tfg_length": "tfgLengthScaling",
     "constraints_amount": "amountConstraint",
     "constraints_complexity": "numberWithLabel",
 }
@@ -81,7 +81,7 @@ for experiment, x_col in EXPERIMENTS.items():
 
     sub["approach"] = pd.Categorical(
         sub["approach"],
-        categories=["SAT", "ILP", "SMT"]
+        categories=["SAT", "SMT", "ILP"]
     )
 
     sub["log_input"] = np.log(sub["input_size"])
@@ -95,7 +95,7 @@ for experiment, x_col in EXPERIMENTS.items():
     param_names = list(model.params.index)
 
     slopes = {}
-    for method in ["SAT", "ILP", "SMT"]:
+    for method in ["SAT", "SMT", "ILP"]:
         v = slope_expression(method, param_names)
         slopes[method] = float(v @ model.params)
 
@@ -109,8 +109,8 @@ for experiment, x_col in EXPERIMENTS.items():
 
     print("\nPairwise scaling comparisons:")
     comparisons = [
-        ("ILP", "SAT"),
-        ("SMT", "SAT"),
+        ("SAT","SMT"),
+        ("SAT", "ILP"),
         ("SMT", "ILP"),
     ]
 
