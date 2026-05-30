@@ -16,7 +16,7 @@ EXPERIMENTS = {
     "tfg_amount": "tfgAmountScaling",
     "tfg_length": "tfgLengthScaling",
     "constraints_amount": "amountConstraint",
-    "constraints_complexity": "numberWithLabel",
+    "constraints_complexity": "numberDummyLabels",
 }
 
 

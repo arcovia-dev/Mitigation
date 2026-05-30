@@ -26,7 +26,7 @@ EXPERIMENTS = {
         "x_label": "Number of Constraints",
     },
     "constraints_complexity": {
-        "x_col": "numberWithLabel",
+        "x_col": "numberDummyLabels",
         "x_label": "Labels per Constraint",
     },
 }
