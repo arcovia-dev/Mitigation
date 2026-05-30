@@ -96,7 +96,7 @@ def plot_combined_heatmaps(matrices, out_path="combined_efficiency.pdf"):
         ax.grid(which="minor", color="lightgray", linewidth=0.8)
         ax.tick_params(which="minor", bottom=False, left=False)
 
-        ax.set_xlabel("Variant")
+        ax.set_xlabel("Constraint")
 
         for spine in ax.spines.values():
             spine.set_visible(False)
