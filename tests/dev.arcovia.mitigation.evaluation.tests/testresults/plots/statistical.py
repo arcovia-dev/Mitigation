@@ -109,7 +109,7 @@ for experiment, x_col in EXPERIMENTS.items():
 
     print("\nPairwise scaling comparisons:")
     comparisons = [
-        ("SAT","SMT"),
+        ("SAT", "SMT"),
         ("SAT", "ILP"),
         ("SMT", "ILP"),
     ]
