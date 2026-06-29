@@ -26,3 +26,4 @@ Require-Bundle:
  tools.mdsd.library.standalone.initialization,
  com.google.guava,
  dev.arcovia.mitigation.sat
+Automatic-Module-Name: dev.arcovia.mitigation.smt.tests

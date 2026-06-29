@@ -54,7 +54,7 @@ public class PerformanceEval {
     // Output (CSV) for Jupyter
     // -----------------------------
     private static final Path OUT_DIR = Paths.get("perf-results");
-    private static final Path CSV_FILE = OUT_DIR.resolve("performance_measurements.csv");
+    private static final Path JSON_FILE = OUT_DIR.resolve("performance_measurements.json");
 
     // flush every N lines (low overhead, still crash-safe)
     private static final int FLUSH_EVERY = 3;
@@ -72,9 +72,9 @@ public class PerformanceEval {
         Files.createDirectories(OUT_DIR);
 
         // Load already-done runIds (so you can restart after crash/OOM)
-        Set<String> done = MeasurementWriter.loadDoneRunIds(CSV_FILE);
+        Set<String> done = MeasurementWriter.loadDoneRunIds(JSON_FILE);
 
-        try (MeasurementWriter writer = new MeasurementWriter(CSV_FILE, done, FLUSH_EVERY)) {
+        try (MeasurementWriter writer = new MeasurementWriter(JSON_FILE, done, FLUSH_EVERY)) {
             scaleTFGLength(writer);
             scaleTFGAmount(writer);
             scaleConstraints(writer);
@@ -88,8 +88,8 @@ public class PerformanceEval {
     @Disabled("Long-running performance experiment: run via main() to avoid timeouts and IDE issues")
     public void scaleTFGLength_test() throws Exception {
         Files.createDirectories(OUT_DIR);
-        Set<String> done = MeasurementWriter.loadDoneRunIds(CSV_FILE);
-        try (MeasurementWriter writer = new MeasurementWriter(CSV_FILE, done, FLUSH_EVERY)) {
+        Set<String> done = MeasurementWriter.loadDoneRunIds(JSON_FILE);
+        try (MeasurementWriter writer = new MeasurementWriter(JSON_FILE, done, FLUSH_EVERY)) {
             scaleTFGLength(writer);
         }
     }
@@ -98,8 +98,8 @@ public class PerformanceEval {
     @Disabled("Long-running performance experiment: run via main() to avoid timeouts and IDE issues")
     public void scaleTFGAmount_test() throws Exception {
         Files.createDirectories(OUT_DIR);
-        Set<String> done = MeasurementWriter.loadDoneRunIds(CSV_FILE);
-        try (MeasurementWriter writer = new MeasurementWriter(CSV_FILE, done, FLUSH_EVERY)) {
+        Set<String> done = MeasurementWriter.loadDoneRunIds(JSON_FILE);
+        try (MeasurementWriter writer = new MeasurementWriter(JSON_FILE, done, FLUSH_EVERY)) {
             scaleTFGAmount(writer);
         }
     }
@@ -108,8 +108,8 @@ public class PerformanceEval {
     @Disabled("Long-running performance experiment: run via main() to avoid timeouts and IDE issues")
     public void scaleConstraints_test() throws Exception {
         Files.createDirectories(OUT_DIR);
-        Set<String> done = MeasurementWriter.loadDoneRunIds(CSV_FILE);
-        try (MeasurementWriter writer = new MeasurementWriter(CSV_FILE, done, FLUSH_EVERY)) {
+        Set<String> done = MeasurementWriter.loadDoneRunIds(JSON_FILE);
+        try (MeasurementWriter writer = new MeasurementWriter(JSON_FILE, done, FLUSH_EVERY)) {
             scaleConstraints(writer);
         }
     }
@@ -176,7 +176,7 @@ public class PerformanceEval {
 
         // all together
         for (int s : CONSTRAINT_SCALINGS) {
-            int half = s / 2;
+            int half = (s + 1) / 2;
             runConstraintCase(writer, numberDummyLabels, "constraints_allTogether", s, half, half, half, half);
         }
     }

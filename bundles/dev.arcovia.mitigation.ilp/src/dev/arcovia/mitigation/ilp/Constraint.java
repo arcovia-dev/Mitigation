@@ -54,7 +54,7 @@ public class Constraint {
 			}
 		};
 		this.mitigations = determineMitigations();
-
+		setPreconditionLabels();
 	}
 
 	public Constraint(List<MitigationStrategy> mitigations) {
@@ -72,18 +72,7 @@ public class Constraint {
 	}
 
 	public boolean isPrecondition(CompositeLabel label) {
-		if (dslConstraint == null) {
-			return preconditionLabel.contains(label);
-		}
-		var translation = new CNFTranslation(dslConstraint);
-		var literals = translation.constructCNF().get(0).literals();
-
-		for (var literal : literals) {
-			if (!literal.positive() && literal.compositeLabel().equals(label)) {
-				return true;
-			}
-		}
-		return false;
+	    return preconditionLabel.contains(label);
 	}
 
 	public void addPrecondition(CompositeLabel label) {
@@ -112,6 +101,12 @@ public class Constraint {
 	public Set<Node> determineViolations(DFDFlowGraphCollection flowGraph) {
 		return evaluationFunction.evaluate(flowGraph);
 	}
+	
+	private void setPreconditionLabels(){
+        for (var lit : new CNFTranslation(dslConstraint).constructCNF().get(0).literals()) {
+            if (!lit.positive()) preconditionLabel.add(lit.compositeLabel());
+        }
+    }
 
 	private Set<Node> getDSLViolations(DFDFlowGraphCollection flowGraph) {
 		Set<Node> violatingNodes = new HashSet<>();

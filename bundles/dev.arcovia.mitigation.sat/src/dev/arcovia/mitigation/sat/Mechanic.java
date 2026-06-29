@@ -37,7 +37,7 @@ import org.dataflowanalysis.analysis.dfd.core.DFDVertex;
  * constraints and repairing violations found within the DFD. It provides the ability to assess whether a DFD and its
  * constraints are consistent and suggests corrections to resolve violations.
  */
-public class Mechanic {
+public class Mechanic implements MitigationApproach{
     Map<String, String> outPinToAss = new HashMap<>();
 
     private final DataFlowDiagramAndDictionary dfd;
@@ -181,6 +181,12 @@ public class Mechanic {
         }
 
         var solutions = new Sat().solve(nodes, flows, constraints, dfdName, deactivateSubsumption, allLabels);
+        
+        if(solutions.isEmpty()) {
+        	logger.error("No solution found!");
+        	return dfd;
+        }
+        
         List<Term> flatendNodes = getFlatNodes(nodes);
 
         List<Term> chosenSolution = getChosenSolution(solutions, flatendNodes);
@@ -715,4 +721,9 @@ public class Mechanic {
         }
         return label;
     }
+
+	@Override
+	public void restrictToLabelAddition() {
+		// already restricted due to design		
+	}
 }

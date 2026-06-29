@@ -137,27 +137,37 @@ public class ILPSolver {
 
 		MPSolver.ResultStatus status = solver.solve();
 
-		if (status == MPSolver.ResultStatus.OPTIMAL || status == MPSolver.ResultStatus.FEASIBLE) {
-			List<Mitigation> chosen = new ArrayList<>();
-			for (MPVariable variable : solver.variables()) {
-				if (variable.solutionValue() > 0.5) {
-					// skip auxiliary variables introduced by required semantic
-					if (variable.name().startsWith("required_") || variable.name().startsWith("y_")) {
-						continue;
-					}
+		try {
+		    if (status == MPSolver.ResultStatus.OPTIMAL || status == MPSolver.ResultStatus.FEASIBLE) {
+	            List<Mitigation> chosen = new ArrayList<>();
+	            for (MPVariable variable : solver.variables()) {
+	                if (variable.solutionValue() > 0.5) {
+	                    // skip auxiliary variables introduced by required semantic
+	                    if (variable.name().startsWith("required_") || variable.name().startsWith("y_")) {
+	                        continue;
+	                    }
 
-					Optional<Mitigation> mitigation = allMitigations.stream()
-							.filter(m -> variable.name().equals(m.toString())).findFirst();
-					if (mitigation.isPresent()) {
-						chosen.add(mitigation.get());
-					}
-				}
-			}
-			return chosen;
-		} else {
-			System.out.println("No feasible solution: " + status);
-			return null;
+	                    Optional<Mitigation> mitigation = allMitigations.stream()
+	                            .filter(m -> variable.name().equals(m.toString())).findFirst();
+	                    if (mitigation.isPresent()) {
+	                        chosen.add(mitigation.get());
+	                    }
+	                }
+	            }
+	            return chosen;
+	        } else {
+	            System.out.println("No feasible solution: " + status);
+	            return null;
+	        }
 		}
+		finally {
+            // Explicitly free the native SCIP instance now rather than waiting for GC.
+            // Without this, the finalizer of a previous MPSolver may run during a later
+            // test's solve() call and corrupt SCIP's global state, causing sync_status_
+            // to reset to MUST_RELOAD even when Solve() returned OPTIMAL.
+            solver.delete();
+        }
+		
 	}
 
 	/***

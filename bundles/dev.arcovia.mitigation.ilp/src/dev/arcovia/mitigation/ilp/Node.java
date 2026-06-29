@@ -66,7 +66,7 @@ public class Node {
 		return previous;
 	}
 
-	public List<Mitigation> getPossibleMitigations() {
+	public List<Mitigation> getPossibleMitigations(boolean restrictedToAdding) {
 		List<Mitigation> mitigations = new ArrayList<>();
 		for (var constraint : violatingConstraints) {
 			for (var mitigation : constraint.getMitigations()) {
@@ -79,39 +79,54 @@ public class Node {
 					mitigations.addAll(getDataMitigations(mitigation, ActionType.Adding));
 				}
 				case DeleteNodeLabel -> {
-					mitigation.checkIfAllowed(vertex);
-					mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Removing),
-							mitigation.cost, getAllRequiredMitigations(mitigation)));
+					if (!restrictedToAdding) {
+						mitigation.checkIfAllowed(vertex);
+						mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.Removing),
+								mitigation.cost, getAllRequiredMitigations(mitigation)));
+					}
 				}
 				case DeleteDataLabel -> {
-					mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
+					if (!restrictedToAdding) {
+						mitigations.addAll(getDataMitigations(mitigation, ActionType.Removing));
+					}
 				}
 				case AddNode -> {
-					if (this.outgoingFlow == null) {
-						mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddSink),
-								mitigation.cost, getAllRequiredMitigations(mitigation)));
-					} else {
-						mitigations.add(new Mitigation(
-								new ActionTerm(this.outgoingFlow.getId(), mitigation.label, ActionType.AddNode),
-								mitigation.cost, getAllRequiredMitigations(mitigation)));
-						mitigations.addAll(getNodeAdditionMitigations(mitigation));
+					if (!restrictedToAdding) {
+						if (this.outgoingFlow == null) {
+							mitigations
+									.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddSink),
+											mitigation.cost, getAllRequiredMitigations(mitigation)));
+						} else {
+							mitigations.add(new Mitigation(
+									new ActionTerm(this.outgoingFlow.getId(), mitigation.label, ActionType.AddNode),
+									mitigation.cost, getAllRequiredMitigations(mitigation)));
+							mitigations.addAll(getNodeAdditionMitigations(mitigation));
+						}
+
 					}
 
 				}
 				case AddSink -> {
-					mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddSink),
-							mitigation.cost, getAllRequiredMitigations(mitigation)));
-					mitigations.addAll(getSinkAdditionMitigations(mitigation));
+					if (!restrictedToAdding) {
+						mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.AddSink),
+								mitigation.cost, getAllRequiredMitigations(mitigation)));
+						mitigations.addAll(getSinkAdditionMitigations(mitigation));
+					}
 				}
 				case DeleteNode -> {
-					mitigations.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.RemoveNode),
-							mitigation.cost, getAllRequiredMitigations(mitigation)));
+					if (!restrictedToAdding) {
+						mitigations
+								.add(new Mitigation(new ActionTerm(this.name, mitigation.label, ActionType.RemoveNode),
+										mitigation.cost, getAllRequiredMitigations(mitigation)));
+					}
 				}
 				case DeleteFlow -> {
-					for (var incomingFlow : this.vertex.getPinFlowMap().values()) {
-						mitigations
-								.add(new Mitigation(new ActionTerm(incomingFlow.getId(), null, ActionType.RemoveFlow),
-										mitigation.cost, getAllRequiredMitigations(mitigation)));
+					if (!restrictedToAdding) {
+						for (var incomingFlow : this.vertex.getPinFlowMap().values()) {
+							mitigations.add(
+									new Mitigation(new ActionTerm(incomingFlow.getId(), null, ActionType.RemoveFlow),
+											mitigation.cost, getAllRequiredMitigations(mitigation)));
+						}
 					}
 				}
 
@@ -194,8 +209,7 @@ public class Node {
 				ActionType type;
 				if (mitgation.type.toString().startsWith("Delete")) {
 					type = ActionType.Removing;
-				}
-				else if (mitgation.type == MitigationType.AddNode) {
+				} else if (mitgation.type == MitigationType.AddNode) {
 					type = ActionType.AddNode;
 				} else if (mitgation.type == MitigationType.AddSink) {
 					type = ActionType.AddSink;

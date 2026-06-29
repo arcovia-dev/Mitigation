@@ -1,0 +1,205 @@
+[ {
+  "model" : "ewolff-kafka",
+  "variant" : 4,
+  "approachCost" : 1
+}, {
+  "model" : "ewolff-kafka",
+  "variant" : 5,
+  "approachCost" : 1
+}, {
+  "model" : "ewolff-kafka",
+  "variant" : 7,
+  "approachCost" : 2
+}, {
+  "model" : "ewolff-kafka",
+  "variant" : 8,
+  "approachCost" : 1
+}, {
+  "model" : "anilallewar",
+  "variant" : 7,
+  "approachCost" : 6
+}, {
+  "model" : "anilallewar",
+  "variant" : 8,
+  "approachCost" : 4
+}, {
+  "model" : "anilallewar",
+  "variant" : 11,
+  "approachCost" : 4
+}, {
+  "model" : "mudigal-technologies",
+  "variant" : 2,
+  "approachCost" : 5
+}, {
+  "model" : "mudigal-technologies",
+  "variant" : 4,
+  "approachCost" : 2
+}, {
+  "model" : "mudigal-technologies",
+  "variant" : 5,
+  "approachCost" : 2
+}, {
+  "model" : "mudigal-technologies",
+  "variant" : 7,
+  "approachCost" : 2
+}, {
+  "model" : "mudigal-technologies",
+  "variant" : 8,
+  "approachCost" : 5
+}, {
+  "model" : "mudigal-technologies",
+  "variant" : 11,
+  "approachCost" : 3
+}, {
+  "model" : "yidongnan",
+  "variant" : 2,
+  "approachCost" : 4
+}, {
+  "model" : "yidongnan",
+  "variant" : 4,
+  "approachCost" : 1
+}, {
+  "model" : "yidongnan",
+  "variant" : 5,
+  "approachCost" : 1
+}, {
+  "model" : "yidongnan",
+  "variant" : 7,
+  "approachCost" : 3
+}, {
+  "model" : "yidongnan",
+  "variant" : 8,
+  "approachCost" : 4
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 1,
+  "approachCost" : 0
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 2,
+  "approachCost" : 3
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 4,
+  "approachCost" : 0
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 5,
+  "approachCost" : 0
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 7,
+  "approachCost" : 0
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 8,
+  "approachCost" : 4
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 10,
+  "approachCost" : 3
+}, {
+  "model" : "koushikkothagal",
+  "variant" : 11,
+  "approachCost" : 6
+}, {
+  "model" : "spring-petclinic",
+  "variant" : 2,
+  "approachCost" : 2
+}, {
+  "model" : "spring-petclinic",
+  "variant" : 5,
+  "approachCost" : 2
+}, {
+  "model" : "spring-petclinic",
+  "variant" : 7,
+  "approachCost" : 2
+}, {
+  "model" : "spring-petclinic",
+  "variant" : 8,
+  "approachCost" : 2
+}, {
+  "model" : "callistaenterprise",
+  "variant" : 2,
+  "approachCost" : 3
+}, {
+  "model" : "callistaenterprise",
+  "variant" : 11,
+  "approachCost" : 9
+}, {
+  "model" : "jferrater",
+  "variant" : 2,
+  "approachCost" : 1
+}, {
+  "model" : "jferrater",
+  "variant" : 5,
+  "approachCost" : 0
+}, {
+  "model" : "jferrater",
+  "variant" : 7,
+  "approachCost" : 0
+}, {
+  "model" : "jferrater",
+  "variant" : 8,
+  "approachCost" : 1
+}, {
+  "model" : "apssouza22",
+  "variant" : 2,
+  "approachCost" : 6
+}, {
+  "model" : "apssouza22",
+  "variant" : 4,
+  "approachCost" : 3
+}, {
+  "model" : "apssouza22",
+  "variant" : 7,
+  "approachCost" : 7
+}, {
+  "model" : "apssouza22",
+  "variant" : 8,
+  "approachCost" : 5
+}, {
+  "model" : "sqshq",
+  "variant" : 7,
+  "approachCost" : 3
+}, {
+  "model" : "sqshq",
+  "variant" : 8,
+  "approachCost" : 10
+}, {
+  "model" : "sqshq",
+  "variant" : 10,
+  "approachCost" : 0
+}, {
+  "model" : "sqshq",
+  "variant" : 11,
+  "approachCost" : 4
+}, {
+  "model" : "georgwittberger",
+  "variant" : 2,
+  "approachCost" : 1
+}, {
+  "model" : "georgwittberger",
+  "variant" : 4,
+  "approachCost" : 1
+}, {
+  "model" : "georgwittberger",
+  "variant" : 5,
+  "approachCost" : 1
+}, {
+  "model" : "georgwittberger",
+  "variant" : 7,
+  "approachCost" : 2
+}, {
+  "model" : "georgwittberger",
+  "variant" : 8,
+  "approachCost" : 1
+}, {
+  "model" : "georgwittberger",
+  "variant" : 10,
+  "approachCost" : 3
+}, {
+  "model" : "georgwittberger",
+  "variant" : 11,
+  "approachCost" : 6
+} ]

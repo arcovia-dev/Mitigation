@@ -28,10 +28,11 @@ import org.dataflowanalysis.dfd.dataflowdiagram.dataflowdiagramFactory;
 
 import dev.arcovia.mitigation.sat.CompositeLabel;
 import dev.arcovia.mitigation.sat.LabelCategory;
+import dev.arcovia.mitigation.sat.MitigationApproach;
 import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.sat.timeMeasurement;
 
-public class OptimizationManager {
+public class OptimizationManager implements MitigationApproach{
 	private final DataFlowDiagramAndDictionary dfd;
 
 	Map<String, String> outPinToAssignmentMap = new HashMap<>();
@@ -50,6 +51,8 @@ public class OptimizationManager {
 	private List<ActionTerm> actions;
 
 	private List<Mitigation> result;
+	
+	private boolean isRestritedToLabelAddition = false;
 
 	public OptimizationManager(String dfdLocation, List<AnalysisConstraint> constraints) {
 		this.dfd = new Web2DFDConverter().convert(new WebEditorConverterModel(dfdLocation));
@@ -91,7 +94,7 @@ public class OptimizationManager {
 		analyseDFD();
 
 		for (var node : violatingNodes) {
-			addMitigations(node.getPossibleMitigations());
+			addMitigations(node.getPossibleMitigations(isRestritedToLabelAddition));
 		}
 
 		for (var mitigation : allMitigations) {
@@ -99,6 +102,11 @@ public class OptimizationManager {
 				contradictions.addAll(determineContradictions(mitigation));
 			}
 		}
+		
+		//if no violation found return dfd
+        if (mitigations.isEmpty()) {
+            return dfd;
+        }
 
 		var solver = new ILPSolver();
 		result = solver.solve(mitigations, allMitigations, contradictions);
@@ -121,7 +129,7 @@ public class OptimizationManager {
 		timer.analysis();
 
 		for (var node : violatingNodes) {
-			addMitigations(node.getPossibleMitigations());
+			addMitigations(node.getPossibleMitigations(isRestritedToLabelAddition));
 		}
 
 		for (var mitigation : allMitigations) {
@@ -129,6 +137,13 @@ public class OptimizationManager {
 				contradictions.addAll(determineContradictions(mitigation));
 			}
 		}
+		
+		//if no violation found return dfd
+        if (mitigations.isEmpty()) {
+        	timer.solving();
+        	timer.stop();
+            return dfd;
+        }
 
 		var solver = new ILPSolver();
 		result = solver.solve(mitigations, allMitigations, contradictions);
@@ -143,7 +158,12 @@ public class OptimizationManager {
 
 		return dfd;
 	}
-
+	
+	@Override
+	public void restrictToLabelAddition() {
+		isRestritedToLabelAddition = true;
+	}
+	
 	public int getCost() {
 		int cost = 0;
 		for (var mitigation : result) {
@@ -448,12 +468,9 @@ public class OptimizationManager {
 				var flow = dataFlowDiagram.getFlows().stream().filter(f -> f.getId().equals(action.domain()))
 						.findFirst().orElseThrow();
 
-				var node = flow.getSourceNode();
-
 				var name = action.compositeLabels().get(0).label().value();
 
-				var behaviorOld = node.getBehavior();
-
+				
 				var dfdFactory = dataflowdiagramFactory.eINSTANCE;
 
 				var vertex = dfdFactory.createProcess();
@@ -480,8 +497,6 @@ public class OptimizationManager {
 				var inPin = ddFactory.createPin();
 
 				behaviorNew.getInPin().add(inPin);
-
-				Set<Label> allLabels = new HashSet<>();
 
 				var sink = flow.getDestinationNode();
 				var inPinOld = flow.getDestinationPin();
@@ -758,7 +773,6 @@ public class OptimizationManager {
 	}
 
 	private void removeFlows(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
-		var dd = dfd.dataDictionary();
 		var dataFlowDiagram = dfd.dataFlowDiagram();
 		for (var action : actions) {
 			if (action.type().equals(ActionType.RemoveFlow)) {
