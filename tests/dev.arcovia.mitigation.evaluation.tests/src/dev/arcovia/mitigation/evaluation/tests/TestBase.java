@@ -82,7 +82,6 @@ public abstract class TestBase {
 				.flatMap(entity -> entity.getValue().stream().map(model -> Arguments.of(entity.getKey(), model)));
 	}
 
-	@Disabled
 	@ParameterizedTest
 	@MethodSource("tuhhModelProvider")
 	void evaluateEffectiveness(String model, int variant) throws Exception {	
