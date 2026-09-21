@@ -221,7 +221,7 @@ public class TUHHTest {
                 var repairedDfd = repairResult.repairedDfd();
                 var dfdConverter = new DFD2WebConverter();
                 dfdConverter.convert(repairedDfd)
-                        .save("efficencyTest/", model + "_" + variant + "-repaired.json");
+                        .save("efficiencyTest/", model + "_" + variant + "-repaired.json");
                 var satCost = new ModelCostCalculator(repairedDfd, constraint, minCosts).calculateCost();
                 var tuhhCost = new ModelCostCalculator(loadDFD(model, model + "_" + variant), constraint, minCosts).calculateCost();
 
