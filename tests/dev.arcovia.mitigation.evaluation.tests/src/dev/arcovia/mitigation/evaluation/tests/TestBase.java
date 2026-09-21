@@ -153,8 +153,7 @@ public abstract class TestBase {
             satConstraint.add(c);
         }
 		
-		int baseCost = new ModelCostCalculator(dfd, satConstraint, minCosts)
-                .calculateCostWithoutForwarding();
+		var baseCostCalculator = new ModelCostCalculator(loadDFD(model, name), satConstraint, minCosts);
 
 		MitigationApproach approach = getApproach(dfd, constraints);
         
@@ -166,10 +165,9 @@ public abstract class TestBase {
 
         assertEquals(0, violationsAfter);
 
-		int repairedCost = new ModelCostCalculator(repairedDFD, satConstraint, minCosts)
-				.calculateCostWithoutForwarding();
+		var repairedCostCalculator = new ModelCostCalculator(repairedDFD, satConstraint, minCosts);
 		
-		int approachCost = repairedCost - baseCost;
+		int approachCost = repairedCostCalculator.calculateSymmetricDifferenceCost(baseCostCalculator);
 
 		ObjectMapper mapper = new ObjectMapper();
 		Path out = Path.of("testresults/" + getApproachName().toLowerCase() + "_efficiency_results.json");
@@ -181,6 +179,23 @@ public abstract class TestBase {
 
 		existing.add(new CostResult(model, variant, approachCost));
 		mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
+		
+		if(getApproachName().equals("SAT")) {
+		    var tuhhBaseCostCalculator = new ModelCostCalculator(loadDFD(model, name), satConstraint, minCosts);
+		    var tuhhRepairedCostCalculator = new ModelCostCalculator(loadDFD(model, model + "_" + variant), satConstraint, minCosts);
+		    var tuhhCost = tuhhRepairedCostCalculator.calculateSymmetricDifferenceCost(tuhhBaseCostCalculator);
+		    
+		    mapper = new ObjectMapper();
+	        out = Path.of("testresults/tuhh_efficiency_results.json");
+
+	        existing = Files.exists(out)
+	                ? mapper.readValue(out.toFile(), new TypeReference<List<CostResult>>() {
+	                })
+	                : new ArrayList<>();
+
+	        existing.add(new CostResult(model, variant, tuhhCost));
+	        mapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), existing);
+        }
 
 	}
 	

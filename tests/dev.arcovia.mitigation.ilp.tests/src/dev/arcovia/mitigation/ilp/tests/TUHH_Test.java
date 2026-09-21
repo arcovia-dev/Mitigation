@@ -189,7 +189,7 @@ public class TUHH_Test {
 
                 var dfdConverter = new DFD2WebConverter();
                 dfdConverter.convert(repairedDfd)
-                        .save("efficencyTest/", model + "_" + variant + "-repaired.json");
+                        .save("efficiencyTest/", model + "_" + variant + "-repaired.json");
 
                 List<dev.arcovia.mitigation.sat.Constraint> satConstraint = new ArrayList<>();
                 for (var cons : constraint) {
