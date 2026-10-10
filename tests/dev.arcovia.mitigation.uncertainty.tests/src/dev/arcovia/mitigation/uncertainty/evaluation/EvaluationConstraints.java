@@ -1,10 +1,14 @@
 package dev.arcovia.mitigation.uncertainty.evaluation;
 
 import dev.arcovia.mitigation.ilp.Constraint;
+import dev.arcovia.mitigation.ilp.MitigationStrategy;
+import dev.arcovia.mitigation.ilp.MitigationType;
+import dev.arcovia.mitigation.sat.Label;
+import dev.arcovia.mitigation.sat.OutgoingDataLabel;
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -186,6 +190,29 @@ public final class EvaluationConstraints {
                     .create();
 
     /**
+     * Unencrypted data never reaches a vertex outside the EU.
+     */
+    public static final AnalysisConstraint UNENCRYPTED_NEVER_LEAVES_EU =
+            new ConstraintDSL().ofData()
+                    .withLabel("Encryption", "Unencrypted")
+                    .neverFlows()
+                    .toVertex()
+                    .withCharacteristic("Location", "nonEU")
+                    .create();
+
+    /**
+     * Untrusted data never reaches an external vertex that is not itself trusted.
+     */
+    public static final AnalysisConstraint UNTRUSTED_NEVER_REACHES_UNTRUSTED_EXTERNAL =
+            new ConstraintDSL().ofData()
+                    .withoutLabel("Stereotype", "trusted")
+                    .neverFlows()
+                    .toVertex()
+                    .withCharacteristic("Stereotype", "external")
+                    .withoutCharacteristic("Stereotype", "trusted")
+                    .create();
+
+    /**
      * Identifier, origin, and predicate for every declared constraint, in citation order.
      * Used for automatically generating a latex table.
      */
@@ -200,11 +227,13 @@ public final class EvaluationConstraints {
             new Declared("C8", "microSecEnD variant rule", INTERNAL_MUST_BE_ENCRYPTED),
             new Declared("C9", "microSecEnD variant rule", INTERNAL_MUST_LOG_LOCALLY),
             new Declared("C10", "microSecEnD variant rule", LOGS_MUST_BE_SANITIZED),
-            new Declared("R1", "running example, \\Cref{chap:running-example}", PERSONAL_NEVER_LEAVES_EU),
+            new Declared("R1", "residency control; Banking and ABUNAI per-type cases", PERSONAL_NEVER_LEAVES_EU),
             new Declared("R2", "residency control", PUBLIC_NEVER_LEAVES_EU),
-            new Declared("R3", "residency-and-encryption control", PERSONAL_OUTSIDE_EU_MUST_BE_ENCRYPTED),
+            new Declared("R3", "residency-and-encryption control; running example, \\Cref{chap:running-example}", PERSONAL_OUTSIDE_EU_MUST_BE_ENCRYPTED),
+            new Declared("R4", "ABUNAI behavior test model" + " \\cite{hahner_architecture-based_2025}", UNENCRYPTED_NEVER_LEAVES_EU),
             new Declared("M1", "Online Banking" + " \\cite{niehues_architecture-based_2025}", PERSONAL_NEVER_REACHES_DEVELOPMENT),
-            new Declared("M2", "Online Banking", ENCRYPTED_NEVER_BECOMES_PROCESSABLE)
+            new Declared("M2", "Online Banking", ENCRYPTED_NEVER_BECOMES_PROCESSABLE),
+            new Declared("L1", "LoginFramework, ranking line" + " \\cite{niehues_mitigation_2026}", UNTRUSTED_NEVER_REACHES_UNTRUSTED_EXTERNAL)
     );
 
 
@@ -215,7 +244,33 @@ public final class EvaluationConstraints {
      * @return one constraint per predicate, in the order given
      */
     public static List<Constraint> of(AnalysisConstraint... predicates) {
-        return Arrays.stream(predicates).map(Constraint::new).toList();
+        return of(List.of(predicates));
+    }
+
+    /**
+     * Returns fresh constraints for the given predicates.
+     *
+     * @param predicates the predicates to build
+     * @return one constraint per predicate, in the order given
+     */
+    public static List<Constraint> of(List<AnalysisConstraint> predicates) {
+        return predicates.stream().map(Constraint::new).toList();
+    }
+
+    /**
+     * Returns a fresh constraint whose candidates also include removing a flow into a violating
+     * node.
+     *
+     * @param predicate the predicate to build
+     * @return the constraint with the derived label actions and flow removal as candidates
+     */
+    public static Constraint withFlowRemoval(AnalysisConstraint predicate) {
+        List<MitigationStrategy> strategies = new ArrayList<>();
+        strategies.add(new MitigationStrategy(
+                List.of(new OutgoingDataLabel(new Label("Sensitivity", "Personal"))), 1.0, MitigationType.DeleteFlow));
+        Constraint constraint = new Constraint(predicate, strategies);
+        constraint.findAlternativeMitigations();
+        return constraint;
     }
 
     /**
