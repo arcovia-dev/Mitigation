@@ -1,9 +1,5 @@
 package dev.arcovia.mitigation.uncertainty.verification.solving;
 
-import dev.arcovia.mitigation.uncertainty.solving.NoRobustRepairExistsException;
-import dev.arcovia.mitigation.uncertainty.solving.RobustILPSolver;
-import dev.arcovia.mitigation.uncertainty.solving.RobustSolverResult;
-
 import dev.arcovia.mitigation.cost.ActionType;
 import dev.arcovia.mitigation.cost.RepairCostSpecification;
 import dev.arcovia.mitigation.cost.SharedCostGroup;
@@ -11,6 +7,9 @@ import dev.arcovia.mitigation.ilp.*;
 import dev.arcovia.mitigation.sat.Label;
 import dev.arcovia.mitigation.sat.NodeLabel;
 import dev.arcovia.mitigation.uncertainty.preparation.RepairPreparationResult;
+import dev.arcovia.mitigation.uncertainty.solving.NoRobustRepairExistsException;
+import dev.arcovia.mitigation.uncertainty.solving.RobustILPSolver;
+import dev.arcovia.mitigation.uncertainty.solving.RobustSolverResult;
 import dev.arcovia.mitigation.uncertainty.solving.UncertaintyControlledLabelDetector.ControlledLabelKey;
 import org.junit.jupiter.api.Test;
 
@@ -225,20 +224,20 @@ class RobustILPSolverTest {
     }
 
     @Test
-    void selectsTheThesisRetailProfileAlternatives() throws Exception {
+    void selectsTheCheaperOfTwoCoveringActionsUnderEachProfile() throws Exception {
         Mitigation encrypt = mitigation("encrypt", "Encrypted", "true", 99.0, List.of());
         Mitigation remove = mitigation("remove", "Telemetry", "optional", ActionType.Removing, 99.0, List.of());
         RepairPreparationResult scenario = new RepairPreparationResult(
                 List.of(), Set.of(), List.of(List.of(encrypt, remove)), List.of(encrypt, remove), List.of());
 
-        assertRetailProfile(scenario, encrypt, remove, 1, 4, "encrypt", 1);
-        assertRetailProfile(scenario, encrypt, remove, 20, 6, "remove", 6);
-        assertRetailProfile(scenario, encrypt, remove, 5, 6, "encrypt", 5);
+        assertProfileSelects(scenario, encrypt, remove, 1, 4, "encrypt", 1);
+        assertProfileSelects(scenario, encrypt, remove, 20, 6, "remove", 6);
+        assertProfileSelects(scenario, encrypt, remove, 5, 6, "encrypt", 5);
     }
 
-    private void assertRetailProfile(RepairPreparationResult scenario, Mitigation encrypt, Mitigation remove,
-                                     double encryptCost, double removeCost, String expectedDomain,
-                                     double expectedObjective) throws Exception {
+    private void assertProfileSelects(RepairPreparationResult scenario, Mitigation encrypt, Mitigation remove,
+                                      double encryptCost, double removeCost, String expectedDomain,
+                                      double expectedObjective) throws Exception {
         RepairCostSpecification specification = RepairCostSpecification.builder("retail", "1")
                 .withActionCostOverride(RepairActionKeys.from(encrypt), encryptCost)
                 .withActionCostOverride(RepairActionKeys.from(remove), removeCost)
