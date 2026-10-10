@@ -6,10 +6,8 @@ import dev.arcovia.mitigation.ilp.Constraint;
 import dev.arcovia.mitigation.ilp.OptimizationManager;
 import dev.arcovia.mitigation.uncertainty.UncertaintyAwareOptimizationManager;
 import dev.arcovia.mitigation.uncertainty.evaluation.EvaluationArtifacts;
-import dev.arcovia.mitigation.uncertainty.evaluation.EvaluationConstraints;
 import dev.arcovia.mitigation.uncertainty.evaluation.EvaluationRecord;
 import dev.arcovia.mitigation.uncertainty.loading.LoadedUncertaintyModel;
-import dev.arcovia.mitigation.uncertainty.loading.UncertaintyModelLoader;
 import dev.arcovia.mitigation.uncertainty.pipeline.ScenarioPreparation;
 import dev.arcovia.mitigation.uncertainty.pipeline.ScenarioPreparationService;
 import dev.arcovia.mitigation.uncertainty.solving.NoRobustRepairExistsException;
@@ -75,10 +73,10 @@ public class RobustVsBaselineEvaluationTest {
      * @return the complete comparison measurement
      */
     private ComparisonRow runCaseStudy(CaseStudy study) {
-        var loadedModel = new UncertaintyModelLoader().load(study.spec());
+        var loadedModel = study.model().get();
         var sources = selectSources(loadedModel, study.sourceFilter());
-        var constraints = EvaluationConstraints.of(study.constraint());
-        var pre = new ScenarioPreparationService().prepare(loadedModel.baseModel(), sources, constraints);
+        var constraints = study.constraints().get();
+        var pre = new ScenarioPreparationService(true).prepare(loadedModel.baseModel(), sources, constraints);
         int scenarioCount = pre.size();
         int preViolations = totalViolations(pre);
         long preViolatedScenarios = violatedScenarios(pre);
@@ -101,11 +99,12 @@ public class RobustVsBaselineEvaluationTest {
      * @return the robust measurement
      */
     private ComparisonRow.RobustResult runRobustEvaluation(CaseStudy study, int scenarioCount) {
-        var constraints = EvaluationConstraints.of(study.constraint());
-        var loadedModel = new UncertaintyModelLoader().load(study.spec());
+        var constraints = study.constraints().get();
+        var loadedModel = study.model().get();
         var filteredSources = selectSources(loadedModel, study.sourceFilter());
         var optimizationManager = new UncertaintyAwareOptimizationManager(loadedModel, constraints, false, filteredSources);
         optimizationManager.setRepairCostSpecification(EvaluationArtifacts.costProfile());
+        optimizationManager.setCyclicModelsAllowed(true);
 
         long startTime = System.nanoTime();
         try {
@@ -149,8 +148,8 @@ public class RobustVsBaselineEvaluationTest {
      * @return the nominal measurement
      */
     private ComparisonRow.NominalResult runBaselineEvaluation(CaseStudy study, int scenarioCount) {
-        var constraints = EvaluationConstraints.of(study.constraint());
-        var loadedModel = new UncertaintyModelLoader().load(study.spec());
+        var constraints = study.constraints().get();
+        var loadedModel = study.model().get();
         var filteredSources = selectSources(loadedModel, study.sourceFilter());
         var optimizationManager = new OptimizationManager(loadedModel.baseModel(), constraints, false);
         optimizationManager.setRepairCostSpecification(EvaluationArtifacts.costProfile());
@@ -307,7 +306,7 @@ public class RobustVsBaselineEvaluationTest {
             List<UncertaintySource> sources,
             List<Constraint> constraints
     ) {
-        var result = new RobustRepairValidator(new ScenarioPreparationService())
+        var result = new RobustRepairValidator(new ScenarioPreparationService(true))
                 .validate(model, sources, constraints);
         long violated = result.scenarios().stream()
                 .filter(scenario -> scenario.violationCount() > 0)

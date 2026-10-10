@@ -5,6 +5,8 @@ import dev.arcovia.mitigation.cost.ObjectiveCostBreakdown;
 import dev.arcovia.mitigation.cost.RepairCostSpecification;
 import dev.arcovia.mitigation.uncertainty.evaluation.EvaluationArtifacts;
 import dev.arcovia.mitigation.uncertainty.evaluation.EvaluationRecord;
+import dev.arcovia.mitigation.uncertainty.helper.RecordTableRenderer;
+import dev.arcovia.mitigation.uncertainty.helper.ReportColumn;
 import org.apache.log4j.Logger;
 
 import java.nio.file.Path;
@@ -69,12 +71,8 @@ final class RobustVsBaselineReport {
         StringBuilder report = new StringBuilder();
         report.append("\n");
         report.append("==================== Robust vs. Baseline Repair Evaluation ====================\n");
-        report.append(String.format("%-44s | %5s | %-13s | %-24s | %-30s | %-22s%n",
-                "Case study", "S_full", "B0 pre v/s", "B1 full residual v/s|JΘ",
-                "R full residual v/s|JΘ|outcome", "Verdict"));
-        report.append("-".repeat(150)).append("\n");
-        appendComparisonRows(report, rows);
-        report.append("-".repeat(150)).append("\n");
+        report.append(RecordTableRenderer.render(
+                rows.stream().map(ComparisonReportRow::of).toList(), ComparisonReportRow.class));
         report.append("Legend: v/s = violations/violated scenarios in independent full-space validation. ")
                 .append("Runtimes are recorded but interpreted only by the scalability evaluation.\n\n");
         appendMechanismDiagnostics(report, rows);
@@ -84,21 +82,52 @@ final class RobustVsBaselineReport {
     }
 
     /**
-     * Appends one table row for every comparison case.
+     * One line of the comparison table.
      *
-     * @param report report under construction
-     * @param rows   completed comparison rows
+     * <p>Several cells pair two counts, so they are rendered into strings here instead of being
+     * given a column each. The hand-built table this replaced declared six headings over nine
+     * printed fields, and every row after the second heading was therefore captioned by the wrong
+     * one.
+     *
+     * @param caseStudy      the case, truncated to keep the table within a terminal width
+     * @param scenarioCount  declared scenarios
+     * @param basePre         unrepaired violations over violated scenarios
+     * @param nominalResidual violations left by the uncertainty-unaware arm, over their scenarios
+     * @param nominalObjective the objective that arm reached, or {@code ERR}
+     * @param robustResidual violations left by the robust arm, over their scenarios
+     * @param robustObjective the objective the robust arm reached
+     * @param robustOutcome  how the robust repair ended
+     * @param verdict        the verdict assigned to the case
      */
-    private static void appendComparisonRows(StringBuilder report, List<ComparisonRow> rows) {
-        report.append(rows.stream().map(row -> String.format(Locale.ROOT,
-                        "%-44s | %5d | %4d / %-6d | %4d / %-3d | %-7s | %4d / %-3d | %-4.0f | %-16s | %-22s%n",
-                        truncate(row.context().name(), 44), row.base().scenarioCount(),
-                        row.base().violations(), row.base().violatedScenarios(),
-                        row.nominal().validation().totalViolations(), row.nominal().validation().violatedScenarios(),
-                        row.nominal().objective() < 0 ? "ERR" : String.format(Locale.ROOT, "%.1f", row.nominal().objective()),
-                        row.robust().validation().totalViolations(), row.robust().validation().violatedScenarios(),
-                        row.robust().objective(), row.robust().outcome().name(), row.verdict().label()))
-                .collect(Collectors.joining()));
+    private record ComparisonReportRow(
+            @ReportColumn(value = "Case study", alignment = ReportColumn.Alignment.LEFT) String caseStudy,
+            @ReportColumn("S_full") int scenarioCount,
+            @ReportColumn("B0 pre v/s") String basePre,
+            @ReportColumn("B1 residual v/s") String nominalResidual,
+            @ReportColumn("B1 JΘ") String nominalObjective,
+            @ReportColumn("R residual v/s") String robustResidual,
+            @ReportColumn("R JΘ") String robustObjective,
+            @ReportColumn(value = "R outcome", alignment = ReportColumn.Alignment.LEFT) String robustOutcome,
+            @ReportColumn(value = "Verdict", alignment = ReportColumn.Alignment.LEFT) String verdict) {
+
+        static ComparisonReportRow of(ComparisonRow row) {
+            return new ComparisonReportRow(
+                    truncate(row.context().name(), 44),
+                    row.base().scenarioCount(),
+                    pair(row.base().violations(), row.base().violatedScenarios()),
+                    pair(row.nominal().validation().totalViolations(),
+                            row.nominal().validation().violatedScenarios()),
+                    objective(row.nominal().objective()),
+                    pair(row.robust().validation().totalViolations(),
+                            row.robust().validation().violatedScenarios()),
+                    objective(row.robust().objective()),
+                    row.robust().outcome().name(),
+                    row.verdict().label());
+        }
+
+        private static String pair(long violations, long scenarios) {
+            return violations + " / " + scenarios;
+        }
     }
 
     /**
@@ -140,33 +169,50 @@ final class RobustVsBaselineReport {
         report.append("\n---- Price of robustness (Q4) ----\n");
         report.append("PoR = JO(R)/JO(B1); Util = fraction of declared scenarios in which the nominal\n");
         report.append("repair leaves a violation. Shape counts are additive/subtractive/structural.\n\n");
-        report.append(String.format("%-46s | %-20s | %7s | %7s | %6s | %6s | %-9s | %-9s%n",
-                "Case", "Verdict", "JO(B1)", "JO(R)", "PoR", "Util", "B1 shape", "R shape"));
-        report.append("-".repeat(150)).append("\n");
-        appendPriceRows(report, rows);
+        report.append(RecordTableRenderer.render(
+                rows.stream().map(PriceReportRow::of).toList(), PriceReportRow.class));
+        appendPriceSummary(report, rows);
         appendPriceSummary(report, rows);
         return report.toString();
     }
 
     /**
-     * Appends one price-of-robustness row for each comparison case.
+     * One line of the price-of-robustness table.
      *
-     * @param report report under construction
-     * @param rows   completed comparison rows
+     * @param caseStudy        the case, truncated to keep the table within a terminal width
+     * @param verdict          the verdict assigned to the case
+     * @param nominalObjective the objective of the uncertainty-unaware arm, or {@code n/a}
+     * @param robustObjective  the objective of the robust arm, or {@code n/a}
+     * @param price            the ratio of the two objectives, or {@code n/a}
+     * @param utility          the fraction of declared scenarios the nominal repair leaves violated
+     * @param nominalShape     additive, subtractive and structural counts of the nominal plan
+     * @param robustShape      the same counts for the robust plan
      */
-    private static void appendPriceRows(StringBuilder report, List<ComparisonRow> rows) {
-        for (ComparisonRow row : rows) {
-            double price = row.priceOfRobustness();
-            double utility = row.robustnessUtility();
-            report.append(String.format(Locale.ROOT, "%-46s | %-20s | %7s | %7s | %6s | %6s | %-9s | %-9s%n",
-                    truncate(row.context().name(), 46), truncate(row.verdict().label(), 20),
-                    row.nominal().objective() < 0 ? "n/a" : String.format(Locale.ROOT, "%.1f", row.nominal().objective()),
-                    row.robust().objective() < 0 ? "n/a" : String.format(Locale.ROOT, "%.1f", row.robust().objective()),
-                    Double.isNaN(price) ? "n/a" : String.format(Locale.ROOT, "%.2f", price),
-                    Double.isNaN(utility) ? "n/a" : String.format(Locale.ROOT, "%.2f", utility),
-                    ActionShape.of(row.nominal().costBreakdown()), ActionShape.of(row.robust().costBreakdown())));
+    private record PriceReportRow(
+            @ReportColumn(value = "Case", alignment = ReportColumn.Alignment.LEFT) String caseStudy,
+            @ReportColumn(value = "Verdict", alignment = ReportColumn.Alignment.LEFT) String verdict,
+            @ReportColumn("JO(B1)") String nominalObjective,
+            @ReportColumn("JO(R)") String robustObjective,
+            @ReportColumn("PoR") String price,
+            @ReportColumn("Util") String utility,
+            @ReportColumn(value = "B1 shape", alignment = ReportColumn.Alignment.LEFT) String nominalShape,
+            @ReportColumn(value = "R shape", alignment = ReportColumn.Alignment.LEFT) String robustShape) {
+
+        static PriceReportRow of(ComparisonRow row) {
+            return new PriceReportRow(
+                    truncate(row.context().name(), 46),
+                    truncate(row.verdict().label(), 20),
+                    objective(row.nominal().objective()),
+                    objective(row.robust().objective()),
+                    ratio(row.priceOfRobustness()),
+                    ratio(row.robustnessUtility()),
+                    String.valueOf(ActionShape.of(row.nominal().costBreakdown())),
+                    String.valueOf(ActionShape.of(row.robust().costBreakdown())));
         }
-        report.append("-".repeat(150)).append("\n");
+
+        private static String ratio(double value) {
+            return Double.isNaN(value) ? "n/a" : String.format(Locale.ROOT, "%.2f", value);
+        }
     }
 
     /**
@@ -586,13 +632,10 @@ final class RobustVsBaselineReport {
             int sharedCostGroups) {
     }
 
-    /**
-     * Shortens text to a fixed display width.
-     *
-     * @param value         text to shorten
-     * @param maximumLength maximum output length
-     * @return the original text or an ellipsized version
-     */
+    private static String objective(double value) {
+        return value < 0 ? "n/a" : String.format(Locale.ROOT, "%.1f", value);
+    }
+
     private static String truncate(String value, int maximumLength) {
         return value.length() <= maximumLength ? value : value.substring(0, maximumLength - 1) + "...";
     }
