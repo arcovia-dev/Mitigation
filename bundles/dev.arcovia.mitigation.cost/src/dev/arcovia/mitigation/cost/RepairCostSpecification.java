@@ -159,7 +159,7 @@ public final class RepairCostSpecification {
     }
 
     /**
-     * Returns the impact coefficient \(\beta_I\).
+     * Returns the impact coefficient \(\beta_{\mathrm{Imp}}\).
      *
      * @return the non-negative impact coefficient
      */
@@ -168,7 +168,7 @@ public final class RepairCostSpecification {
     }
 
     /**
-     * Returns the ripple coefficient \(\beta_R\).
+     * Returns the ripple coefficient \(\beta_{\mathrm{Rip}}\).
      *
      * @return the non-negative ripple coefficient
      */
@@ -177,7 +177,7 @@ public final class RepairCostSpecification {
     }
 
     /**
-     * Returns the structural coefficient \(\beta_D\).
+     * Returns the structural coefficient \(\beta_{\mathrm{Str}}\).
      *
      * @return the non-negative structural coefficient
      */
@@ -186,7 +186,7 @@ public final class RepairCostSpecification {
     }
 
     /**
-     * Returns the assurance coefficient \(\beta_Q\).
+     * Returns the assurance coefficient \(\beta_{\mathrm{Assur}}\).
      *
      * @return the non-negative assurance coefficient
      */
@@ -272,10 +272,10 @@ public final class RepairCostSpecification {
         /**
          * Sets the four descriptor coefficients.
          *
-         * @param impactCoefficient     \(\beta_I\)
-         * @param rippleCoefficient     \(\beta_R\)
-         * @param structuralCoefficient \(\beta_D\)
-         * @param assuranceCoefficient  \(\beta_Q\)
+         * @param impactCoefficient     \(\beta_{\mathrm{Imp}}\)
+         * @param rippleCoefficient     \(\beta_{\mathrm{Rip}}\)
+         * @param structuralCoefficient \(\beta_{\mathrm{Str}}\)
+         * @param assuranceCoefficient  \(\beta_{\mathrm{Assur}}\)
          * @return this builder
          */
         public Builder withCoefficients(double impactCoefficient, double rippleCoefficient,

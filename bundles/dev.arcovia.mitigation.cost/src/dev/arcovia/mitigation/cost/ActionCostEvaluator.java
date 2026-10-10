@@ -86,7 +86,7 @@ public final class ActionCostEvaluator {
                                      boolean requireExact) {
         if (baseModel == null) {
             if (requireExact) {
-                throw unavailable("I(a)", actionKey);
+                throw unavailable("Imp(a)", actionKey);
             }
             return 0;
         }
@@ -94,7 +94,7 @@ public final class ActionCostEvaluator {
                 .anyMatch(node -> actionKey.domain().equals(node.getId()));
         if (!nodeExists) {
             if (requireExact) {
-                throw unavailable("I(a)", actionKey);
+                throw unavailable("Imp(a)", actionKey);
             }
             return 0;
         }
@@ -115,14 +115,14 @@ public final class ActionCostEvaluator {
     private double ripple(RepairActionKey actionKey, DataFlowDiagramAndDictionary baseModel, boolean required) {
         if (baseModel == null) {
             if (required) {
-                throw unavailable("R(a)", actionKey);
+                throw unavailable("Rip(a)", actionKey);
             }
             return 0;
         }
         Optional<String> startNodeId = startNodeId(actionKey, baseModel);
         if (startNodeId.isEmpty()) {
             if (required) {
-                throw unavailable("R(a)", actionKey);
+                throw unavailable("Rip(a)", actionKey);
             }
             return 0;
         }
