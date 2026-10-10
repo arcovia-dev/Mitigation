@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.stream.Collectors;
 
 import dev.arcovia.mitigation.sat.BiMap;
 
@@ -69,6 +71,9 @@ public class ILPSolver {
 			DataFlowDiagramAndDictionary baseModel) throws Exception {
 		ensureNativeLibrariesLoaded();
 		MPSolver solver = MPSolver.createSolver("SCIP_MIXED_INTEGER_PROGRAMMING");
+		allMitigations = canonicalOrder(allMitigations);
+		mitigations = canonicalRows(mitigations);
+		contradictions = canonicalRows(contradictions);
 		mitigationMap = new BiMap<>();
 
 		for (Mitigation mitigation : allMitigations) {
@@ -170,6 +175,33 @@ public class ILPSolver {
 			System.out.println("No feasible solution: " + status);
 			return null;
 		}
+	}
+
+	/**
+	 * Orders candidate actions by their canonical key.
+	 *
+	 * @param mitigations the candidate actions in any order
+	 * @return the same actions, sorted by {@link RepairActionKey}
+	 */
+	static Set<Mitigation> canonicalOrder(Set<Mitigation> mitigations) {
+		return mitigations.stream()
+				.sorted(Comparator.comparing(RepairActionKeys::from))
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+	}
+
+	/**
+	 * Orders constraint rows by their members' canonical keys, and each row's members likewise.
+	 *
+	 * @param rows the rows in any order
+	 * @return the rows and their members in canonical order
+	 */
+	public static List<List<Mitigation>> canonicalRows(List<List<Mitigation>> rows) {
+		return rows.stream()
+				.map(row -> row.stream().sorted(Comparator.comparing(RepairActionKeys::from)).toList())
+				.sorted(Comparator.comparing(row -> row.stream()
+						.map(mitigation -> RepairActionKeys.from(mitigation).stableId())
+						.collect(Collectors.joining("|"))))
+				.toList();
 	}
 
 	/***

@@ -215,7 +215,7 @@ public final class RobustILPSolver {
      * @param scenarioPreparation the scenario coverage alternatives
      */
     private void addCoverageConstraints(MPSolver solver, Map<RepairActionKey, MPVariable> mitigationVariables, RepairPreparationResult scenarioPreparation) {
-        List<List<Mitigation>> mitigations = scenarioPreparation.mitigations();
+        List<List<Mitigation>> mitigations = ILPSolver.canonicalRows(scenarioPreparation.mitigations());
         IntStream.range(0, mitigations.size()).forEach(i -> {
             List<Mitigation> coverageAlternatives = mitigations.get(i);
             MPConstraint cover = solver.makeConstraint(1.0, Double.POSITIVE_INFINITY, "cover_" + i);
@@ -236,7 +236,7 @@ public final class RobustILPSolver {
         Set<ContradictionKey> seenContradictions = new LinkedHashSet<>();
 
         for (RepairPreparationResult scenarioPreparation : scenarioPreparations) {
-            for (List<Mitigation> contradiction : scenarioPreparation.contradictions()) {
+            for (List<Mitigation> contradiction : ILPSolver.canonicalRows(scenarioPreparation.contradictions())) {
                 if (contradiction.size() != 2) {
                     continue;
                 }
