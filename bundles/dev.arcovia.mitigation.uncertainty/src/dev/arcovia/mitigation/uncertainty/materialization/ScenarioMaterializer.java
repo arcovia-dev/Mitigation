@@ -6,11 +6,17 @@ import dev.abunai.confidentiality.analysis.model.uncertainty.dfd.*;
 import dev.arcovia.mitigation.ranking.UncertaintySourceMitigationUtils;
 import dev.arcovia.mitigation.uncertainty.enumeration.ScenarioSelection;
 import org.dataflowanalysis.converter.dfd2web.DataFlowDiagramAndDictionary;
+import org.dataflowanalysis.dfd.datadictionary.Behavior;
+import org.dataflowanalysis.dfd.datadictionary.Label;
+import org.dataflowanalysis.dfd.datadictionary.Pin;
+import org.dataflowanalysis.dfd.dataflowdiagram.DataFlowDiagram;
+import org.dataflowanalysis.dfd.dataflowdiagram.Flow;
+import org.dataflowanalysis.dfd.dataflowdiagram.Node;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -68,12 +74,9 @@ public final class ScenarioMaterializer {
             UncertaintySource source,
             UncertaintyScenario scenario
     ) {
-
-
         if (scenario instanceof DFDExternalUncertaintyScenario externalScenario
             && source instanceof DFDExternalUncertaintySource externalSource) {
-            return UncertaintySourceMitigationUtils.chooseExternalScenario(
-                    current.dataFlowDiagram(), current.dataDictionary(), externalSource, externalScenario);
+            return chooseExternalScenario(current, externalSource, externalScenario);
         }
 
         if (scenario instanceof DFDBehaviorUncertaintyScenario behaviorScenario
@@ -84,8 +87,8 @@ public final class ScenarioMaterializer {
 
         if (scenario instanceof DFDInterfaceUncertaintyScenario interfaceScenario
             && source instanceof DFDInterfaceUncertaintySource interfaceSource) {
-            return UncertaintySourceMitigationUtils.chooseInterfaceScenario(
-                    current.dataFlowDiagram(), current.dataDictionary(), interfaceSource, interfaceScenario);
+            return rebindById(UncertaintySourceMitigationUtils.chooseInterfaceScenario(
+                    current.dataFlowDiagram(), current.dataDictionary(), interfaceSource, interfaceScenario));
         }
 
         if (scenario instanceof DFDComponentUncertaintyScenario componentScenario
@@ -96,19 +99,104 @@ public final class ScenarioMaterializer {
 
         if (scenario instanceof DFDConnectorUncertaintyScenario connectorScenario
             && source instanceof DFDConnectorUncertaintySource connectorSource) {
-            return UncertaintySourceMitigationUtils.chooseConnectorScenario(
-                    current.dataFlowDiagram(), current.dataDictionary(), connectorSource, connectorScenario);
+            return rebindById(UncertaintySourceMitigationUtils.chooseConnectorScenario(
+                    current.dataFlowDiagram(), current.dataDictionary(), connectorSource, connectorScenario));
         }
 
         throw new IllegalArgumentException("Unsupported uncertainty scenario type: " + scenario.getClass().getName());
     }
 
     /**
-     * Creates the identifier fragment for one source selection.
+     * Replaces the source's default node labels with the scenario's labels, matching both by id.
      *
-     * @param selection the source selection to identify
-     * @return the source name and alternative id, or {@code default}
+     * @param current  the model before the alternative is applied
+     * @param source   the external source naming the target node and its default labels
+     * @param scenario the alternative naming the replacement labels
+     * @return a model whose diagram is a copy of {@code current}'s and whose dictionary is {@code current}'s;
+     * unchanged when the target node no longer exists
+     * @throws IllegalStateException if a scenario label does not exist in {@code current}'s dictionary
      */
+    private static DataFlowDiagramAndDictionary chooseExternalScenario(DataFlowDiagramAndDictionary current,
+                                                                       DFDExternalUncertaintySource source,
+                                                                       DFDExternalUncertaintyScenario scenario) {
+        var diagram = EcoreUtil.copy(current.dataFlowDiagram());
+        var labels = labelsById(current);
+        var target = diagram.getNodes().stream()
+                .filter(node -> node.getId().equals(source.getTarget().getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (target == null) {
+            return new DataFlowDiagramAndDictionary(diagram, current.dataDictionary());
+        }
+
+        var defaultIds = source.getTargetProperties().stream().map(Label::getId).collect(Collectors.toSet());
+        target.getProperties().removeIf(label -> defaultIds.contains(label.getId()));
+        scenario.getTargetProperties().forEach(alternative -> {
+            var resolved = labels.get(alternative.getId());
+            if (resolved == null) {
+                throw new IllegalStateException("Scenario " + scenario.getEntityName()
+                                                + " sets a label absent from the data dictionary: " + alternative.getId());
+            }
+            if (!target.getProperties().contains(resolved)) {
+                target.getProperties().add(resolved);
+            }
+        });
+        return new DataFlowDiagramAndDictionary(diagram, current.dataDictionary());
+    }
+
+    /**
+     * Points every node behavior, node property, flow endpoint, and flow pin of the diagram at the
+     * element with the same id in the returned model.
+     *
+     * @param model the materialized model to repair in place
+     * @return {@code model}
+     */
+    private static DataFlowDiagramAndDictionary rebindById(DataFlowDiagramAndDictionary model) {
+        var dictionary = model.dataDictionary();
+        var nodes = byId(model.dataFlowDiagram().getNodes(), Node::getId);
+        var behaviors = byId(dictionary.getBehavior(), Behavior::getId);
+        var labels = labelsById(model);
+        var inPins = byId(dictionary.getBehavior().stream()
+                .flatMap(behavior -> behavior.getInPin().stream()).toList(), Pin::getId);
+        var outPins = byId(dictionary.getBehavior().stream()
+                .flatMap(behavior -> behavior.getOutPin().stream()).toList(), Pin::getId);
+
+        model.dataFlowDiagram().getNodes().forEach(node -> {
+            if (node.getBehavior() != null) {
+                node.setBehavior(behaviors.getOrDefault(node.getBehavior().getId(), node.getBehavior()));
+            }
+
+            var properties = node.getProperties().stream()
+                    .map(label -> labels.getOrDefault(label.getId(), label))
+                    .distinct()
+                    .toList();
+            node.getProperties().clear();
+            node.getProperties().addAll(properties);
+        });
+
+        model.dataFlowDiagram().getFlows().forEach(flow -> {
+            flow.setSourceNode(nodes.getOrDefault(flow.getSourceNode().getId(), flow.getSourceNode()));
+            flow.setDestinationNode(nodes.getOrDefault(flow.getDestinationNode().getId(), flow.getDestinationNode()));
+            flow.setSourcePin(outPins.getOrDefault(flow.getSourcePin().getId(), flow.getSourcePin()));
+            flow.setDestinationPin(inPins.getOrDefault(flow.getDestinationPin().getId(), flow.getDestinationPin()));
+        });
+        return model;
+    }
+
+    private static Map<String, Label> labelsById(DataFlowDiagramAndDictionary model) {
+        return byId(model.dataDictionary().getLabelTypes().stream()
+                .flatMap(type -> type.getLabel().stream()).toList(), Label::getId);
+    }
+
+    private static <T> Map<String, T> byId(List<T> elements, Function<T, String> id) {
+        Map<String, T> index = new LinkedHashMap<>();
+        elements.stream()
+                .filter(element -> id.apply(element) != null)
+                .forEach(element -> index.putIfAbsent(id.apply(element), element));
+        return index;
+    }
+
     private String selectionId(ScenarioSelection selection) {
         return selection.scenario()
                 .map(uncertaintyScenario -> selection.source().getEntityName() + ":" + uncertaintyScenario.getId())
