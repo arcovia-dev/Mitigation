@@ -7,16 +7,13 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/plugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lib"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/dev.abunai.confidentiality.analysis.model"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.dataflowanalysis.converter"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/dev.arcovia.mitigation.ranking"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/dev.arcovia.mitigation.ilp"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/dev.arcovia.mitigation.sat"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/dev.abunai.confidentiality.analysis"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/dev.arcovia.mitigation.cost"/>
 	<classpathentry kind="output" path="bin"/>

@@ -8,6 +8,7 @@ import dev.arcovia.mitigation.uncertainty.RobustRepairResult.ValidationStatus;
 import dev.arcovia.mitigation.uncertainty.loading.LoadedUncertaintyModel;
 import dev.arcovia.mitigation.uncertainty.loading.UncertaintyModelLoader;
 import dev.arcovia.mitigation.uncertainty.loading.UncertaintyModelSpec;
+import dev.arcovia.mitigation.uncertainty.materialization.PinWideLabelApplication;
 import dev.arcovia.mitigation.uncertainty.output.RepairOutput;
 import dev.arcovia.mitigation.uncertainty.pipeline.PipelineStage;
 import dev.arcovia.mitigation.uncertainty.pipeline.PipelineTiming;
@@ -455,6 +456,17 @@ public class UncertaintyAwareOptimizationManager extends OptimizationManager {
         DataFlowDiagramAndDictionary repairedModel = deepCopy(uncertaintyBaseModel);
         applyActions(repairedModel, selectedActions);
         return repairedModel;
+    }
+
+    /**
+     * Applies the actions as the baseline does, then completes outgoing-data label actions on the
+     * assignments a selected behavior source can swap in for the same pin, so that the label
+     * survives materialization.
+     */
+    @Override
+    protected void applyActions(DataFlowDiagramAndDictionary dfd, List<ActionTerm> actions) {
+        super.applyActions(dfd, actions);
+        PinWideLabelApplication.complete(dfd.dataDictionary(), actions, selectedUncertaintySources);
     }
 
     /**
