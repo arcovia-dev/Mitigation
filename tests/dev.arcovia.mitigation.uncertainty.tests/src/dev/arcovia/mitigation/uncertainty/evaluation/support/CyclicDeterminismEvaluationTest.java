@@ -87,7 +87,7 @@ public class CyclicDeterminismEvaluationTest {
 
         var violating = constraint.determineViolations(flowGraph).stream().toList();
         var repairSites = violating.stream()
-                .flatMap(node -> node.getPossibleMitigations().stream())
+                .flatMap(node -> node.getPossibleMitigations(false).stream())
                 .map(mitigation -> mitigation.mitigation().domain() + ":" + mitigation.mitigation().type())
                 .collect(Collectors.toCollection(TreeSet::new));
         return new Reading(flowGraph.getTransposeFlowGraphs().size(), flowGraph.wasCyclic(), violating.size(), repairSites);

@@ -111,6 +111,7 @@ public class OptimizationManager implements MitigationApproach{
 
 		//if no violation found return dfd
         if (mitigations.isEmpty()) {
+            recordEmptyRepair();
             return dfd;
         }
 
@@ -149,6 +150,7 @@ public class OptimizationManager implements MitigationApproach{
 
 		//if no violation found return dfd
         if (mitigations.isEmpty()) {
+        	recordEmptyRepair();
         	timer.solving();
         	timer.stop();
             return dfd;
@@ -195,13 +197,23 @@ public class OptimizationManager implements MitigationApproach{
 		return repairCostSpecification;
 	}
 
+    /**
+     * Returns the objective breakdown of the most recent repair.
+     *
+     * @return the completed objective breakdown, or empty before a successful repair
+     */
+    public Optional<ObjectiveCostBreakdown> getObjectiveCostBreakdown() {
+        return Optional.ofNullable(objectiveCostBreakdown);
+    }
+
 	/**
-	 * Returns the objective breakdown of the most recent repair.
-	 *
-	 * @return the completed objective breakdown, or empty before a successful repair
+	 * Records the empty plan with objective 0 when no violation needs repair.
 	 */
-	public Optional<ObjectiveCostBreakdown> getObjectiveCostBreakdown() {
-		return Optional.ofNullable(objectiveCostBreakdown);
+	private void recordEmptyRepair() {
+		result = List.of();
+		actions = List.of();
+		objectiveCostBreakdown = new ObjectiveCostBreakdown(repairCostSpecification.id(),
+				repairCostSpecification.version(), repairCostSpecification.unit(), List.of(), List.of(), 0, 0, 0);
 	}
 
 	/**

@@ -29,7 +29,7 @@ public final class CoverageDerivation {
      */
     public void deriveFor(@NonNull Node violatingNode) {
         Objects.requireNonNull(violatingNode, "violatingNode must not be null");
-        List<Mitigation> mitigationCandidates = violatingNode.getPossibleMitigations();
+        List<Mitigation> mitigationCandidates = violatingNode.getPossibleMitigations(false);
 
         List<Mitigation> coverageAlternatives = mitigationCandidates.stream()
                 .map(this::canonicalize)
