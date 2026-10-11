@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+  <sources xsi:type="dfd:DFDInterfaceUncertaintySource" id="_BRRQufv5Ee6qEO2G6RwOIg">
+    <targetFlow href="default.dataflowdiagram#_NlJ2cPv0Ee6qEO2G6RwOIg"/>
+    <scenarios id="_FK1RUPv7Ee6qEO2G6RwOIg">
+      <targetInPin href="default.datadictionary#_ZlpvsPv7Ee6qEO2G6RwOIg"/>
+      <targetNode xsi:type="dataflowdiagram:Process" href="default.dataflowdiagram#_UbFIQ_v7Ee6qEO2G6RwOIg"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>

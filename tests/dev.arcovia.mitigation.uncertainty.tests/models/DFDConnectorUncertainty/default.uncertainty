@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uncertainty:UncertaintySourceCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:datadictionary="http://dataflowanalysis.org/dfd/datadictionary" xmlns:dataflowdiagram="http://dataflowanalysis.org/dfd/dataflowdiagram" xmlns:dfd="http://abunai.dev/uncertainty/dfd" xmlns:uncertainty="http://abunai.dev/uncertainty" id="_HJksYPvvEe6Ie5mhRfc0tw">
+  <sources xsi:type="dfd:DFDConnectorUncertaintySource" id="_MkaDyvv3Ee6qEO2G6RwOIg">
+    <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="default.datadictionary#_ezj4o_vzEe6qEO2G6RwOIg"/>
+    <targetFlow href="default.dataflowdiagram#_WqBwQPv0Ee6qEO2G6RwOIg"/>
+    <scenarios id="_M8EV0Pv3Ee6qEO2G6RwOIg">
+      <targetAssignments xsi:type="datadictionary:ForwardingAssignment" href="default.datadictionary#_ezj4o_vzEe6qEO2G6RwOIg"/>
+      <targetPin href="default.datadictionary#_ybBqoPv3Ee6qEO2G6RwOIg"/>
+      <targetNode xsi:type="dataflowdiagram:Store" href="default.dataflowdiagram#_TocHMvv3Ee6qEO2G6RwOIg"/>
+    </scenarios>
+  </sources>
+</uncertainty:UncertaintySourceCollection>
