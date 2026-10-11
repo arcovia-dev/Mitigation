@@ -165,16 +165,26 @@ public class ILPSolver {
 
 		MPSolver.ResultStatus status = solver.solve();
 
-		if (status == MPSolver.ResultStatus.OPTIMAL || status == MPSolver.ResultStatus.FEASIBLE) {
-			List<Mitigation> chosen = allMitigations.stream()
+		try {
+		    if (status == MPSolver.ResultStatus.OPTIMAL || status == MPSolver.ResultStatus.FEASIBLE) {
+	            List<Mitigation> chosen = allMitigations.stream()
 					.filter(mitigation -> mitigationMap.getKey(mitigation).solutionValue() > 0.5)
 					.sorted(Comparator.comparing(RepairActionKeys::from))
 					.toList();
-			return new ILPSolverResult(chosen, status.name(), configuredObjective.selectedCostBreakdown());
-		} else {
-			System.out.println("No feasible solution: " + status);
-			return null;
+	            return new ILPSolverResult(chosen, status.name(), configuredObjective.selectedCostBreakdown());
+	        } else {
+	            System.out.println("No feasible solution: " + status);
+	            return null;
+	        }
 		}
+		finally {
+            // Explicitly free the native SCIP instance now rather than waiting for GC.
+            // Without this, the finalizer of a previous MPSolver may run during a later
+            // test's solve() call and corrupt SCIP's global state, causing sync_status_
+            // to reset to MUST_RELOAD even when Solve() returned OPTIMAL.
+            solver.delete();
+        }
+		
 	}
 
 	/**

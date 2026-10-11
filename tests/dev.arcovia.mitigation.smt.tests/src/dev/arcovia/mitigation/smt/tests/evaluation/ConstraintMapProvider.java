@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import org.dataflowanalysis.analysis.dsl.AnalysisConstraint;
 import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
-import org.junit.jupiter.api.Test;
 
 public final class ConstraintMapProvider {
 

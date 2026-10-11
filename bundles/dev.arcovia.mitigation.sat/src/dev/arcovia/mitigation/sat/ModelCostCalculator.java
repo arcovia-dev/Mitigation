@@ -72,47 +72,86 @@ public class ModelCostCalculator {
 
         return cost;
     }
-    public int calculateCostWithoutForwarding() {
+
+    public void changedLabelsWithoutForwarding() {
         determineRelevantLabels();
         for (var label : allRelevantLabels.keySet()) {
             for (var vertex : nodes) {
                 if (vertex.hasVertexLabel(label))
                     allRelevantLabels.get(label)
                             .add("Vertex: " + vertex.name);
-                
+
                 var assignments = vertex.getAssignments();
-                
+
                 for (var assignment : assignments) {
-                    
+
                     List<org.dataflowanalysis.dfd.datadictionary.Label> assignmentLabel = null;
-                    
+
                     if (assignment instanceof Assignment cast) {
                         assignmentLabel = cast.getOutputLabels();
-                                
-                    }
-                    else if (assignment instanceof SetAssignment cast) {
+
+                    } else if (assignment instanceof SetAssignment cast) {
                         assignmentLabel = cast.getOutputLabels();
                     }
-                    if (assignmentLabel == null) continue;
-                    
+                    if (assignmentLabel == null)
+                        continue;
+
                     for (var l : assignmentLabel) {
                         LabelTypeImpl labelType = (LabelTypeImpl) l.eContainer();
-                        
-                        var tempLabel = new Label(labelType.getEntityName(),l.getEntityName());
-                        
-                        if (tempLabel.toString().equals(label.toString())) {
+
+                        var tempLabel = new Label(labelType.getEntityName(), l.getEntityName());
+
+                        if (tempLabel.toString()
+                                .equals(label.toString())) {
                             Pin outpin = assignment.getOutputPin();
                             allRelevantLabels.get(label)
-                            .add("Outgoing: " + outpin.getId() + " from: " + vertex.name);
+                                    .add("Outgoing: " + outpin.getId() + " from: " + vertex.name);
                         }
                     }
                 }
             }
+        }
+    }
+
+    public int calculateCostWithoutForwarding() {
+        changedLabelsWithoutForwarding();
+
+        for (var label : allRelevantLabels.keySet()) {
             cost += allRelevantLabels.get(label)
                     .size() * costs.get(label);
         }
 
         return cost;
+    }
+
+    public int calculateSymmetricDifferenceCost(ModelCostCalculator referenceCalculator) {
+
+        changedLabelsWithoutForwarding();
+        referenceCalculator.changedLabelsWithoutForwarding();
+
+        Set<Label> mergedRelevantLabels = new HashSet<>();
+        mergedRelevantLabels.addAll(allRelevantLabels.keySet());
+        mergedRelevantLabels.addAll(referenceCalculator.allRelevantLabels.keySet());
+
+        int changeCost = 0;
+
+        for (var label : mergedRelevantLabels) {
+            Set<String> currentPlacements = allRelevantLabels.getOrDefault(label, Set.of());
+
+            Set<String> referencePlacements = referenceCalculator.allRelevantLabels.getOrDefault(label, Set.of());
+
+            Set<String> addedPlacements = new HashSet<>(currentPlacements);
+            addedPlacements.removeAll(referencePlacements);
+
+            Set<String> removedPlacements = new HashSet<>(referencePlacements);
+            removedPlacements.removeAll(currentPlacements);
+
+            int labelCost = costs.get(label);
+
+            changeCost += (addedPlacements.size() + removedPlacements.size()) * labelCost;
+        }
+
+        return changeCost;
     }
 
     private void pushLabel(Label label, Pin sourcePin) {
