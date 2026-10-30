@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
 
 FILES = {
+    "HUMAN": "../tuhh_efficiency_results.json",
     "SAT": "../sat_efficiency_results.json",
     "SMT": "../smt_efficiency_results.json",
     "ILP": "../ilp_efficiency_results.json",
@@ -64,18 +65,19 @@ def plot_combined_heatmaps(matrices, out_path="combined_efficiency.pdf"):
 
     cmap = plt.cm.RdYlGn_r.copy()
     cmap.set_bad(color="white")
-    norm = TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax)
+    norm = TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=0.5*vmax)
 
     fig, axes = plt.subplots(
-        1, 3,
-        figsize=(13.8, 5.2),
+        2, 2,
+        figsize=(10.8, 10.2),
+        sharex=True,
         sharey=True,
         constrained_layout=True,
     )
 
     im = None
 
-    for ax, (name, mat) in zip(axes, matrices.items()):
+    for ax, (name, mat) in zip(axes.flat, matrices.items()):
         Z = mat.to_numpy()
         mask = np.isnan(Z)
 
@@ -89,14 +91,12 @@ def plot_combined_heatmaps(matrices, out_path="combined_efficiency.pdf"):
         ax.set_title(name, fontweight="bold")
 
         ax.set_xticks(range(mat.shape[1]))
-        ax.set_xticklabels(mat.columns.astype(int), rotation=30, ha="right")
+        ax.set_xticklabels(mat.columns.astype(int))
 
         ax.set_xticks(np.arange(-0.5, mat.shape[1], 1), minor=True)
         ax.set_yticks(np.arange(-0.5, mat.shape[0], 1), minor=True)
         ax.grid(which="minor", color="lightgray", linewidth=0.8)
         ax.tick_params(which="minor", bottom=False, left=False)
-
-        ax.set_xlabel("Constraint")
 
         for spine in ax.spines.values():
             spine.set_visible(False)
@@ -114,17 +114,24 @@ def plot_combined_heatmaps(matrices, out_path="combined_efficiency.pdf"):
                     color=color,
                     fontsize=8,
                 )
+    for ax in axes[:, 0]:
+        ax.set_yticks(range(next(iter(matrices.values())).shape[0]))
+        ax.set_yticklabels(next(iter(matrices.values())).index)
 
-    axes[0].set_yticks(range(next(iter(matrices.values())).shape[0]))
-    axes[0].set_yticklabels(next(iter(matrices.values())).index)
-
-    for ax in axes[1:]:
+    for ax in axes[:,1]:
         ax.tick_params(
             axis="y",
             which="both",
             left=False,
             labelleft=False
         )
+
+    for ax in axes[0, :]:
+        ax.tick_params(axis="x", which="both", labelbottom=False)
+
+    for ax in axes[1, :]:
+        ax.set_xlabel("Constraint", fontsize=13)
+        ax.tick_params(axis="x", labelsize=11)
 
     fig.savefig(out_path, format="pdf", bbox_inches="tight")
     plt.close(fig)
