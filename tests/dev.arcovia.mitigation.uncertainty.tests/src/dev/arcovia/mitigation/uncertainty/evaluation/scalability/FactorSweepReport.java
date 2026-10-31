@@ -146,6 +146,7 @@ final class FactorSweepReport {
      * Renders every sweep, with the protocol that produced them.
      *
      * @param sweeps       the sweeps, in the order they ran
+     * @param globalWarmupRuns discarded runs of every driver's first point before any sweep
      * @param warmupRuns   discarded runs per point
      * @param measuredRuns measured runs per point
      * @param budgetMs     the wall-clock budget per point
@@ -153,7 +154,7 @@ final class FactorSweepReport {
      * @param maxTimedMib  retained set in MiB from which a point is not timed
      * @return the report text
      */
-    static String render(List<Sweep> sweeps, int warmupRuns, int measuredRuns, long budgetMs,
+    static String render(List<Sweep> sweeps, int globalWarmupRuns, int warmupRuns, int measuredRuns, long budgetMs,
                          long maxNextMib, long maxTimedMib) {
         return sweeps.stream()
                 .map(sweep -> sweep.driver() + " [" + sweep.scope() + "] (" + sweep.fixedDesc() + "), "
@@ -167,10 +168,12 @@ final class FactorSweepReport {
                         Scope: one sweep per cost driver, every other driver held fixed. Drivers do not share a
                         scope, and the scope column says which stages each row covers. Rows of different scopes
                         must not be placed on one axis.
-                        Protocol: %d discarded warm-up and %d measured runs per point. A sweep stops after the
+                        Protocol: %d discarded runs of every driver's first point before any sweep, then
+                        %d discarded warm-up and %d measured runs per point. A sweep stops after the
                         first point whose median run reaches %d ms, whose retained heap reaches %d MiB
                         and so leaves no room for the next point, or whose scenario set alone reaches
                         %d MiB and so leaves no room for its own timed runs.
-                        """.formatted(warmupRuns, measuredRuns, budgetMs, maxNextMib, maxTimedMib), ""));
+                        """.formatted(globalWarmupRuns, warmupRuns, measuredRuns, budgetMs, maxNextMib,
+                        maxTimedMib), ""));
     }
 }

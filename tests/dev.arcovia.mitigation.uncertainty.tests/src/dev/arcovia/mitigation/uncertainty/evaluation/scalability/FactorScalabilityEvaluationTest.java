@@ -34,6 +34,7 @@ class FactorScalabilityEvaluationTest {
 
     private static final Logger LOGGER = Logger.getLogger(FactorScalabilityEvaluationTest.class);
 
+    private static final int GLOBAL_WARMUP_RUNS = Integer.getInteger("arcovia.eval.factorGlobalWarmupRuns", 50);
     private static final int WARMUP_RUNS = Integer.getInteger("arcovia.eval.factorWarmupRuns", 1);
     private static final int MEASURED_RUNS = Integer.getInteger("arcovia.eval.factorMeasuredRuns", 3);
 
@@ -87,6 +88,7 @@ class FactorScalabilityEvaluationTest {
         Path directory = EvaluationArtifacts.createRunDirectory(Path.of(System.getProperty("user.dir")),
                 "factor-scalability");
         List<SweepState> states = factors().stream().map(SweepState::new).toList();
+        warmUpAllDrivers();
 
         // Breadth first
         for (int step = 0; step < MAX_POINTS && states.stream().anyMatch(SweepState::active); step++) {
@@ -108,6 +110,23 @@ class FactorScalabilityEvaluationTest {
         }
         states.forEach(state -> assertFalse(state.points().isEmpty(),
                 "Every sweep must measure at least its first point"));
+    }
+
+    /**
+     * Runs the first point of every driver {@link #GLOBAL_WARMUP_RUNS} times and discards the timings.
+     *
+     * @throws Exception if a warm-up run fails, because the same point would then fail when measured
+     */
+    private static void warmUpAllDrivers() throws Exception {
+        long started = System.nanoTime();
+        for (int run = 0; run < GLOBAL_WARMUP_RUNS; run++) {
+            for (Factor factor : factors()) {
+                factor.subject().executeUs(factor.firstValue());
+            }
+        }
+        System.gc();
+        LOGGER.info("Global warm-up: %d runs of every driver's first point in %d ms".formatted(
+                GLOBAL_WARMUP_RUNS, (System.nanoTime() - started) / 1_000_000));
     }
 
     private Point measure(Factor factor, int value) {
@@ -178,7 +197,7 @@ class FactorScalabilityEvaluationTest {
     private static void writeArtifacts(Path directory, List<Sweep> sweeps) throws Exception {
         EvaluationArtifacts.write(directory, "report.txt", FactorSweepReport.render(
                 sweeps.stream().map(Sweep::asReportSweep).toList(),
-                WARMUP_RUNS, MEASURED_RUNS, BUDGET_MS, MAX_NEXT_MIB, MAX_TIMED_MIB));
+                GLOBAL_WARMUP_RUNS, WARMUP_RUNS, MEASURED_RUNS, BUDGET_MS, MAX_NEXT_MIB, MAX_TIMED_MIB));
         EvaluationArtifacts.write(directory, "summary.csv", RecordCsv.table(FactorSweepReport.FactorRow.class,
                 sweeps.stream().flatMap(sweep -> sweep.rows().stream()).toList()));
         LOGGER.info("Evaluation artefacts: " + directory);
