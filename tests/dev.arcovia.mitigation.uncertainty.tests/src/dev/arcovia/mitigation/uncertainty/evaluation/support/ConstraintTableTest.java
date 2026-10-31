@@ -45,11 +45,17 @@ public class ConstraintTableTest {
                 sb.append("        \\addlinespace\n");
             }
             previousFamily = family;
-            sb.append(String.format("        %s & %s & %s \\\\%n",
-                    entry.id(), latex(predicate(entry)), entry.origin()));
+            var constraint = entry.members().isEmpty() ? latex(predicate(entry)) : together(entry.members());
+            sb.append(String.format("        %s & %s & %s \\\\%n", entry.id(), constraint, entry.origin()));
         }
         sb.append("        \\bottomrule\n");
         return sb.toString();
+    }
+
+    private static String together(List<String> members) {
+        var last = members.get(members.size() - 1);
+        var rest = String.join(", ", members.subList(0, members.size() - 1));
+        return rest + " and " + last + " together";
     }
 
     private static String predicate(EvaluationConstraints.TableRow entry) {

@@ -10,6 +10,7 @@ import org.dataflowanalysis.analysis.dsl.constraint.ConstraintDSL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * The confidentiality constraints the evaluation runs, declared once under the identifiers the
@@ -222,18 +223,32 @@ public final class EvaluationConstraints {
             new Declared("C3", "microSecEnD variant rule", UNAUTHENTICATED_NEVER_REACHES_INTERNAL),
             new Declared("C4", "microSecEnD variant rule", ENTRY_MUST_TRANSFORM_IDENTITY),
             new Declared("C5", "microSecEnD variant rule", ENTRY_MUST_VALIDATE_TOKEN),
-            new Declared("C6", "same rule family; used in the uncertainty cases only", AUTH_SERVER_MUST_REGULATE_LOGINS),
+            new Declared("C6", "same rule family, used in the uncertainty cases only", AUTH_SERVER_MUST_REGULATE_LOGINS),
             new Declared("C7", "microSecEnD variant rule", ENTRY_MUST_BE_ENCRYPTED),
             new Declared("C8", "microSecEnD variant rule", INTERNAL_MUST_BE_ENCRYPTED),
             new Declared("C9", "microSecEnD variant rule", INTERNAL_MUST_LOG_LOCALLY),
             new Declared("C10", "microSecEnD variant rule", LOGS_MUST_BE_SANITIZED),
-            new Declared("R1", "residency control; Banking and ABUNAI per-type cases", PERSONAL_NEVER_LEAVES_EU),
+            new Declared("R1", "residency control, used in the Banking and ABUNAI per-type cases", PERSONAL_NEVER_LEAVES_EU),
             new Declared("R2", "residency control", PUBLIC_NEVER_LEAVES_EU),
-            new Declared("R3", "residency-and-encryption control; running example, \\Cref{chap:running-example}", PERSONAL_OUTSIDE_EU_MUST_BE_ENCRYPTED),
+            new Declared("R3", "residency-and-encryption control, used in the running example, \\Cref{chap:running-example}", PERSONAL_OUTSIDE_EU_MUST_BE_ENCRYPTED),
             new Declared("R4", "ABUNAI behavior test model" + " \\cite{hahner_architecture-based_2025}", UNENCRYPTED_NEVER_LEAVES_EU),
             new Declared("M1", "Online Banking" + " \\cite{niehues_architecture-based_2025}", PERSONAL_NEVER_REACHES_DEVELOPMENT),
             new Declared("M2", "Online Banking", ENCRYPTED_NEVER_BECOMES_PROCESSABLE),
+            new Declared("M3", "Online Banking, same predicate as R1", PERSONAL_NEVER_LEAVES_EU),
             new Declared("L1", "LoginFramework, ranking line" + " \\cite{niehues_mitigation_2026}", UNTRUSTED_NEVER_REACHES_UNTRUSTED_EXTERNAL)
+    );
+
+    /**
+     * Identifier, origin, and members of every constraint set a case checks together, in citation
+     * order. Used for automatically generating a latex table.
+     */
+    private static final List<Combined> COMBINED = List.of(
+            new Combined("V1", "variant of Rank's evaluation" + " \\cite{rank_mitigating_2026}",
+                    List.of(ENTRYPOINT_ONLY_VIA_GATEWAY, GATEWAY_IS_NEVER_INTERNAL)),
+            new Combined("V7", "variant of Rank's evaluation",
+                    List.of(ENTRY_MUST_BE_ENCRYPTED, ENTRYPOINT_ONLY_VIA_GATEWAY, GATEWAY_IS_NEVER_INTERNAL)),
+            new Combined("V11", "variant of Rank's evaluation",
+                    List.of(INTERNAL_MUST_LOG_LOCALLY, LOGS_MUST_BE_SANITIZED))
     );
 
 
@@ -290,24 +305,29 @@ public final class EvaluationConstraints {
     }
 
     /**
-     * Returns one row per declared constraint, in citation order.
+     * Returns one row per declared constraint, then one per combined constraint set, in citation
+     * order.
      *
      * @return the rows of the generated thesis table
      */
     public static List<TableRow> tableRows() {
-        return DECLARED.stream()
-                .map(declared -> new TableRow(declared.id(), declared.dsl().toString(), declared.origin()))
-                .toList();
+        var single = DECLARED.stream()
+                .map(declared -> new TableRow(declared.id(), declared.dsl().toString(), declared.origin(), List.of()));
+        var combined = COMBINED.stream()
+                .map(set -> new TableRow(set.id(), "", set.origin(),
+                        set.members().stream().map(EvaluationConstraints::idOf).toList()));
+        return Stream.concat(single, combined).toList();
     }
 
     /**
      * One row of the generated thesis constraint table.
      *
      * @param id        the identifier the thesis cites
-     * @param predicate the constraint as the analysis serializes it
+     * @param predicate the constraint as the analysis serializes it, empty for a combined set
      * @param origin    where the constraint comes from, in LaTeX
+     * @param members   the identifiers a combined set checks together, empty for a single constraint
      */
-    public record TableRow(String id, String predicate, String origin) {
+    public record TableRow(String id, String predicate, String origin, List<String> members) {
     }
 
     /**
@@ -321,5 +341,8 @@ public final class EvaluationConstraints {
      * @param dsl    builds a fresh analysis constraint
      */
     private record Declared(String id, String origin, AnalysisConstraint dsl) {
+    }
+
+    private record Combined(String id, String origin, List<AnalysisConstraint> members) {
     }
 }
